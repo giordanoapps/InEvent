@@ -1,0 +1,437 @@
+html {
+	background-color: #F2F2F2;
+	color: black;
+}
+
+body {
+	padding: 0;
+	margin: 0 auto;
+	font: 16px Georgia, "Times New Roman", Times, serif;
+	min-width: 960px;
+}
+
+pre {
+	word-wrap: break-word;
+}
+
+.right {
+	float: right;
+}
+
+.left {
+	float: left;
+}
+
+.displayNone {
+	display: none;
+}
+
+.promoImage {
+	width: 512px;
+	height: 512px;
+	margin: 30px;
+	border-radius: 20px;
+	border: 6px solid #D9D9D9;
+	background-position-x: center;
+	background-position-y: center;
+	background-repeat: no-repeat;
+	background-size: contain;
+}
+
+.promoImageReduced {
+	width: 128px !important;
+	height: 128px !important;
+}
+
+.promoImage.mini {
+	width: 256px;
+	height: 256px;
+	margin: 10px auto;
+}
+
+.qq-upload-button {
+	border-radius: 10px;
+	left: 0;
+	right: 0;
+	width: 100% !important;
+	margin: 0 auto;
+}
+
+/* @group Bar */
+
+.bar {
+	background-color: #2D2D2D;
+	color: #BBB;
+	font-family: "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+	width: 100%;
+	z-index: 100;
+	font-size: 1.2em;
+}
+
+.barWrapper {
+	width: 90%;
+	margin: 0 auto;
+	position: relative;
+	max-width: 1170px;
+}
+
+.bar.top {
+	position: static;
+	top: 0;
+	left: 0;
+	right: 0;
+}
+
+.bar.bottom {
+	position: relative;
+}
+
+.bar ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	font-weight: bold;
+}
+
+.bar li {
+	padding: 8px 0px;
+	margin: 0;
+	display: inline-block;
+	cursor: pointer;
+}
+
+.bar > li:hover {
+	color: #a8a6a6;
+}
+
+.bar a {
+	text-decoration: none;
+	color: #BBB;
+}
+
+.bar .leftBar {
+	left: 0;
+	top: 0;
+	width: 50%;
+	text-align: left;
+}
+
+.bar .rightBar {
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 50%;
+	text-align: right;
+	padding: 0;
+}
+
+.bar .first {
+	width: 150px;
+	text-align: right;	
+}
+
+.bar img.downArrow {
+	position: relative;
+	top: 2px;
+	left: 2px;
+}
+
+.bar .secondary {
+	position: absolute;
+	right: 0;
+	background-color: white;
+	z-index: 100;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	border-radius: 0 0 20px 20px;
+	-moz-box-shadow: 1px 1px 5px #000000;
+	-webkit-box-shadow: 1px 1px 5px #000000;
+	box-shadow: 1px 1px 5px #000000;
+	text-align: center;
+	width: 100%;
+	display: none;
+	left: 0;
+}
+
+
+.bar .secondary .promoImage {
+	width: 256px;
+	height: 256px;
+	margin: 10px auto;
+}
+
+.bar .secondary > div {
+	margin: 20px;
+	width: 45%;
+	font-size: 1.4em;
+}
+
+.bar .secondary > div input[type="text"], .bar .secondary > div input[type="password"]  {
+	padding: 8px 20px;
+	width: 90%;
+	background: none repeat scroll 0 0 #CCC;
+	margin: 10px 0 0;
+	color: black;
+	text-align: left;
+	font-size: 1.0em;
+}
+
+.bar .userCompanyBox {
+	border-right: 2px solid #D9D9D9;
+}
+
+.bar .secondary .selectBox {
+	width: 50%;
+	font-size: 0.8em;
+	text-align: center;
+	display: none;
+}
+
+.bar .secondary .selectSelected {
+	border-radius: 20px;
+	border: 6px solid #D9D9D9;
+}
+
+.bar .secondary .selectSelectedOpen {
+	border-radius: 20px 20px 0 0;
+}
+
+.bar .secondary .selectOptions {
+	border-radius: 0 0 20px 20px;
+	border: 6px solid #D9D9D9;
+	border-top: 0;
+	max-height: 200px;
+	overflow: scroll;
+}
+
+
+/* @end */
+
+/* @group Content */
+
+.content {
+	width: 90%;
+	background-color: white;
+	margin: 0 auto;
+	border: 1px solid #D9D9D9;
+	max-width: 1170px;
+	min-width: 960px;
+}
+
+/* @group Features */
+
+.features {
+	font-size: 1.4em;
+	padding: 0 20px;
+}
+
+.featureBox {
+	margin: 0px auto;
+	overflow: hidden;
+	border-bottom: 2px solid #D9D9D9;
+	font-size: inherit;
+	padding: 20px;
+}
+
+.featureBox.header .title {
+	font-size: 3em;
+	width: 70%;
+}
+
+.featureBox .title {
+	border-bottom: 1px solid #D9D9D9;
+	width: 50%;
+	text-align: center;
+	margin: 0.8em auto;
+	padding: 5px;
+	font-size: 2em;
+}
+
+.featureBox.header p {
+	color: gray;
+	padding: 30px;
+	text-align: left;
+}
+
+.featureBox.header p.headline {
+	color: black;
+	font-size: 2em;
+	padding: 10px 0;
+	text-align: center;
+	margin: 30px 0 0;
+}
+
+.featureBox.header p.sub {
+	color: gray;
+	padding: 10px;
+	text-align: center;
+	margin: 0;
+}
+
+.featureBox p {
+	color: gray;
+	padding: 30px;
+	text-align: left;
+	font-size: 1.1em;
+}
+
+.featureBox p.headline {
+	color: black;
+	font-size: 1.5em;
+	padding-bottom: 0px;
+}
+
+.featureBox p.description {
+	padding-top: 0px;
+}
+
+.featureBoxMiniWrapper {
+	border-bottom: 2px solid #D9D9D9;
+	margin: 0 auto;
+	overflow: hidden;
+}
+
+.featureBoxMini {
+	width: 29%;	
+	border-right: 2px solid #D9D9D9;
+	float: left;
+	padding: 2%;
+}
+
+.featureBoxMini:last-child {
+	border: 0;
+}
+
+.featureBoxMini h2 {
+	margin: 0;
+}
+
+/* @end */
+
+/* @group API */
+
+.documentation {
+	overflow: hidden;
+	font-size: 1.2em;
+	border-bottom: 2px solid #D9D9D9;
+}
+
+.menuDocumentation {
+	width: 20%;	
+	margin: 0px auto;
+	font-size: inherit;
+	padding: 10px 20px;
+	float: left;
+	font-size: 1.4em;
+}
+
+.menuDocumentation li {
+	padding: 10px;
+	border-bottom: 2px solid #D9D9D9;
+	cursor: pointer;
+}
+
+.menuDocumentation .optionMenuDocumentationSelected, .menuDocumentation li:hover {
+/*	color: #BBB;*/
+	border-bottom: 2px solid #ae0000;
+}
+
+.contentDocumentation {
+	width: 70%;	
+	font-size: inherit;
+	margin: 0px auto;
+	border-left: 2px solid #D9D9D9;
+	padding: 20px;
+	float: right;
+	text-align: justify;
+}
+
+.contentDocumentation h2 {
+	margin-top: 0;
+}
+
+.contentDocumentation p {
+	margin: 0.5em 0;
+}
+
+.contentDocumentation pre {
+	margin-left: 40px;
+	padding-left: 20px;
+	border-left: 2px solid #333;
+	font-size: 100%;
+}
+
+.contentDocumentation ul {
+	list-style: georgian;
+}
+
+.contentDocumentation li {
+	margin: 0 40px;
+}
+
+.contentDocumentation .documentationBox {
+	display: none;
+	margin-right: 20px;
+}
+
+.contentDocumentation .documentationBoxSelected {
+	display: block;
+}
+
+.contentDocumentation .documentationFunctionBox {
+	margin: 30px;
+}
+
+.contentDocumentation .documentFunctionName {
+	border-bottom: 1px solid #D9D9D9;
+}
+
+.contentDocumentation .documentFunctionDescription {
+	margin-left: 30px;
+	padding-left: 20px;
+	border-left: 2px solid gray;
+	margin-top: 1em;
+	margin-bottom: 1em;
+}
+
+.contentDocumentation .documentationFunctionParametersBox {
+	margin-left: 30px;
+	padding-left: 20px;
+	border-left: 2px solid #D9D9D9;
+}
+
+.contentDocumentation .documentationFunctionParametersBox sub {
+	font-size: 70%;
+	font-style: italic;
+}
+
+/* @end */
+
+/* @end */
+
+/* @group Wrapper */
+
+#wrapper {
+	text-align: center;
+	margin: 10px auto;
+	font-size: 0.8em;
+	font-weight: bold;
+	line-height: 80%;
+	width: 100%;
+	position: relative;
+}
+
+#wrapper p {
+	color: gray;
+	padding: 10px;
+	text-align: center;
+	font-size: 1.5em;
+}
+
+#wrapper a {
+	color: gray;
+	text-decoration: none;
+}
+
+/* @end */
