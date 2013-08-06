@@ -174,7 +174,7 @@
 										<?php if ($core->auth) { ?> checked="true" disabled="disabled" <?php } ?>
 									/>
 									<span class="agreementTitle">
-										Li e estou de acordo com os <a href="terms.php" target="_blank">Termos de Uso do Presença</a>.
+										Li e estou de acordo com os <a href="terms.php" target="_blank">Termos de Uso do InEvent</a>.
 									</span>
 								</p>
 								<p>

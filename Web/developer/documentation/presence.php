@@ -1,8 +1,8 @@
 <!-- PRESENÇA -->
 <div class="documentationBox">
-    <h2>Presença</h2>
+    <h2>InEvent</h2>
 
-    <p>O conteúdo abaixo é referente a ferramenta Presença.</p>
+    <p>O conteúdo abaixo é referente a ferramenta InEvent.</p>
 
     <div class="documentationFunctionBox">
         <p class="documentFunctionName">

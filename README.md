@@ -1,12 +1,12 @@
-Presença
+InEvent
 ========
 
 Português
 ========
 
-Presença é a melhor ferramenta para gerenciar presença dentro de ambientes pré-definidos, tipicamente empresas. Permite a criação de diferentes calendários, cada qual personalizável para atividades específicas. Dentro de cada calendário é possível definir o número de turnos, inclusive com várias pessoas em cada um, tolerância de atraso e tempo para intervalo.
+InEvent é a uma plataforma pioneira dentro do Brasil, procurando oferecer a melhor ferramenta para gerenciar seu evento durante a ocorrência do mesmo. Cria um ambiente em que é cada participante recebe uma linha do tempo personalizada e exclusiva, baseada em dados informados previamente pela organização e capaz de detalhar cada acontecimento dentro do evento. Permite o uso de imagens e texto para a comunicação das informações, além de ser possível atualizar de forma instântanea quaisquer mudanças no cronograma.
 
-O Estúdio Trilha também oferece a versão pronta para uso do Presença, atualmente hospedada em http://presenca.me/ e disponível gratuitamente para uso público. Além da versão Web, conta também com aplicativos para iOS e Android.
+O Estúdio Trilha também oferece a versão pronta para uso do InEvent, atualmente hospedada em http://inevent.us/ e disponível para uso público. Além da versão Web, conta também com aplicativos para iOS e Android.
 
 Instalação
 --------
@@ -19,14 +19,14 @@ Instalação
 
 Sobre
 --------
-Presença é uma criação do Estúdio Trilha.
+InEvent é uma criação do Estúdio Trilha em parceria com a BrainWeb.
 
 English
 ========
 
-Presence is the best tool to manage presence within pre-defined environments, typically companies. Allows the creation of different calendars, each customizable for specific activities. Within each calendar you can set the number of shifts, including several people in each, tolerance and break time.
+InEvent is a pioneer platform within Brazil, looking forward to offer the best tool to manage your event during its occurrence. By creating an environment in which participants are given a custom and exclusive timeline based on their previous choices, information is broadcasted about each occurrence within the event. Allows the use of images and text, as well as being able to instantaneous update any changes in the schedule.
 
-Estúdio Trilha, the company that actively supports the development of this project, also offers a hosted version at http://presenca.me/, which is also free to use. Beyond the Web version, iOS and Android apps are also present.
+Estúdio Trilha, the company that actively supports the development of this project, also offers a hosted version at http://inevent.us/, which is also free to use. Beyond the Web version, iOS and Android apps are also present.
 
 Installation
 --------
@@ -43,4 +43,4 @@ Just open an issue on Github and I'll get to it as soon as possible.
 
 About
 --------
-Presença is brought to you by Estúdio Trilha.
+InEvent is brought to you by Estúdio Trilha & BrainWeb.

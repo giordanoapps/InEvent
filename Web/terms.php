@@ -15,36 +15,36 @@
 					
 					<div class="pageContentBox shrinkInnerWrapper">
 						<p>Última atualização: 12 de março de 2013</p>
-						<p>Obrigado por ter escolhido <b>Presença</b>. Ao acessar ou usar qualquer serviço do Presença, você concorda com os seguintes Termos de Serviço. Se você não concorda com os seguintes Termos de Serviço, por favor não use este serviço.
+						<p>Obrigado por ter escolhido <b>InEvent</b>. Ao acessar ou usar qualquer serviço do InEvent, você concorda com os seguintes Termos de Serviço. Se você não concorda com os seguintes Termos de Serviço, por favor não use este serviço.
 						
 						<p>Estúdio Trilha reserva o direito de trocar ou modificar esses Termos a qualquer momento sem aviso prévio e indicará no topo da página a data em que o documento foi modificado pela última vez. Toda e qualquer mudança efetuada nesse documento passará a ser efetiva a partir do momento em que a versão revisada for publicada em nosso site. Seu uso do serviço após a publicação da versão revisada constitui sua aceitação dos Termos. Qualquer mudança efetuada nesses Termos serão notificadas por email para os que optarem pelo recebimento deste.</p>
 						
 						<h3>Definições</h3>
 						
-						<p>Presença: Plataforma composta por uma aplicação web localizada em "https://www.presenca.me", um aplicativo oficial para a plataforma iOS nomeado "Presença" e um aplicativo oficial para a plataforma Android nomeado "Presença", assim como todos seus serviços associados não referidos aqui.</p>
+						<p>InEvent: Plataforma composta por uma aplicação web localizada em "https://www.presenca.me", um aplicativo oficial para a plataforma iOS nomeado "InEvent" e um aplicativo oficial para a plataforma Android nomeado "InEvent", assim como todos seus serviços associados não referidos aqui.</p>
 						
 						<p>Estabelecimento: Lugar em que a plataforma está cadastrado e em operação, seja este um local público ou privado, de variadas atividades comerciais assim como referido na seção de cadastro nos campos "nome da companhia" e identificada no campo "cnpj" através de seu CNPJ.</p>
 						
-						<p>Contratado: Pessoa Jurídica aqui referida por Estúdio Trilha, empresa cadastrada sobre o MEI 16.916.147/0001-66, localiza em na cidade de São Carlos, no Estado de São Paulo, território brasileiro. Todos os direitos da plataforma Presença e seus serviços associados são direito exclusivo de acesso ao Estúdio Trilha.</p>
+						<p>Contratado: Pessoa Jurídica aqui referida por Estúdio Trilha, empresa cadastrada sobre o MEI 16.916.147/0001-66, localiza em na cidade de São Carlos, no Estado de São Paulo, território brasileiro. Todos os direitos da plataforma InEvent e seus serviços associados são direito exclusivo de acesso ao Estúdio Trilha.</p>
 						
-						<p>Contratante: Pessoa Jurídica que, dentro dos termos da lei, preencheu o formulário de cadastro para obter o Presença em seu estabelecimento comercial.</p>
+						<p>Contratante: Pessoa Jurídica que, dentro dos termos da lei, preencheu o formulário de cadastro para obter o InEvent em seu estabelecimento comercial.</p>
 						
 						<h3>Pessoa Física</h3>
 						
-						<p>Licença: O Presença concede a você uma licença limitada, não exclusiva, intransferível para acessar e usar o Presença apenas em locais legalmente autorizados, salvo conforme expressamente estabelecido nesses Termos. O uso do Presença para fins não especificamente previstos nesse instrumento é expressamente proibido.</p>
+						<p>Licença: O InEvent concede a você uma licença limitada, não exclusiva, intransferível para acessar e usar o InEvent apenas em locais legalmente autorizados, salvo conforme expressamente estabelecido nesses Termos. O uso do InEvent para fins não especificamente previstos nesse instrumento é expressamente proibido.</p>
 						
-						<p>Utilização: Para utilizar o aplicativo oficial do Presença, é necessário ter um dispositivo compatível e obter o software desejado diretamente da loja oficial assim como determinada pelo dispositivo selecionado. Você concorda em jamais praticar, em qualquer instância, o ato de obter ou tentar obter os dados resguardados sigilosamente de outro estabelecimento sobre o qual não tem permissão.</p>
+						<p>Utilização: Para utilizar o aplicativo oficial do InEvent, é necessário ter um dispositivo compatível e obter o software desejado diretamente da loja oficial assim como determinada pelo dispositivo selecionado. Você concorda em jamais praticar, em qualquer instância, o ato de obter ou tentar obter os dados resguardados sigilosamente de outro estabelecimento sobre o qual não tem permissão.</p>
 						
 						<p>Privacidade: Todas as informações associadas as ações realizadas dentro do estabelecimento são confidenciais, ficando ao Estúdio Trilha responsável em não compartilhá-las sob nenhuma circunstância.</p>
 						
 						
 						<h3>Pessoa Jurídica</h3>
 						
-						<p>Licença: O Presença concede a você uma licença limitada, não exclusiva, intransferível para acessar e usar o Presença apenas no local estabelecido como restaurante parceiro cujas informações foram fornecidas no momento de cadastro. Fica a cargo do contratante a responsabilidade de efetuar os pagamentos para obtenção do serviço em plena forma e funcionamento.</p>
+						<p>Licença: O InEvent concede a você uma licença limitada, não exclusiva, intransferível para acessar e usar o InEvent apenas no local estabelecido como restaurante parceiro cujas informações foram fornecidas no momento de cadastro. Fica a cargo do contratante a responsabilidade de efetuar os pagamentos para obtenção do serviço em plena forma e funcionamento.</p>
 						
-						<p>Utilização: Para utilizar a plataforma Presença, é necessário que o contratante efetue um cadastro contendo informações referentes a sua empresa. Neste cadastro, o contratante certifica-se que fornecerá todos os dados corretos e verdadeiros, sob pena do crime de falsidade ideológica. Após o cadastro ser efetuado, é necessário ter um dispositivo compatível (dotado de navegador <a href="http://www.google.com/intl/pt-BR/chrome/browser/">Google Chrome</a>) e utilizar diretamente a aplicação web localizada única e exclusivamente em "https://www.presenca.me". O Estúdio Trilha reserva-se no direito de revogar acesso a plataforma caso o número de acessos e dados seja superior ao volume considerado adequado da empresa, embora ressaltamos que tal fato nunca ocorreu.</p>
+						<p>Utilização: Para utilizar a plataforma InEvent, é necessário que o contratante efetue um cadastro contendo informações referentes a sua empresa. Neste cadastro, o contratante certifica-se que fornecerá todos os dados corretos e verdadeiros, sob pena do crime de falsidade ideológica. Após o cadastro ser efetuado, é necessário ter um dispositivo compatível (dotado de navegador <a href="http://www.google.com/intl/pt-BR/chrome/browser/">Google Chrome</a>) e utilizar diretamente a aplicação web localizada única e exclusivamente em "https://www.presenca.me". O Estúdio Trilha reserva-se no direito de revogar acesso a plataforma caso o número de acessos e dados seja superior ao volume considerado adequado da empresa, embora ressaltamos que tal fato nunca ocorreu.</p>
 						
-						<p>Plano: O contratante poderá escolher entre os planos referidos na página inicial da plataforma Presença, sendo suas durações referidas abaixo apenas por razões legais:</p>
+						<p>Plano: O contratante poderá escolher entre os planos referidos na página inicial da plataforma InEvent, sendo suas durações referidas abaixo apenas por razões legais:</p>
 						<ul>
 							<li>Mensal: licença oferecida pelo período que se inicia no dia do mês contratado e se encerra um dia antes do dia equivalente no mês seguinte.</li>
 							<li>Anual: licença oferecida pelo período de 365 dias.</li>

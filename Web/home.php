@@ -13,7 +13,7 @@
 				<div class="featureBox header">
 					<img class="floatLeft" src="images/logo@512.png" alt="Top bar" />
 					<div class="text">
-						<h2 class="title">Presença</h2>
+						<h2 class="title">InEvent</h2>
 						<p class="headline">Gerenciar presença em sua empresa nunca foi tão simples.</p>
 						<p class="sub">Seu negócio nunca esteve em melhores mãos.</p>
 					</div>
@@ -75,7 +75,7 @@
 			
 			<article class="section">
 				<div class="header">
-					<p class="title">Presença integrada</p>
+					<p class="title">InEvent integrada</p>
 					<p class="description">Controle a presença de todos os membros</p>
 				</div>
 				

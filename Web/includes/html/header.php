@@ -9,14 +9,14 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>Presença - Gerenciar presença em sua empresa nunca foi tão simples!</title>
+	<title>InEvent - Gerenciar presença em sua empresa nunca foi tão simples!</title>
 	
 	<!--[if lt IE 9]>
 	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
 
 	<meta name='language' content='pt-br'>
-	<meta name='description' content='Controle de Presença, para sua empresa junior, simples e fácil.'>
+	<meta name='description' content='Controle de InEvent, para sua empresa junior, simples e fácil.'>
 	<meta name='keywords' content='empresa junior, ej, brasil, controle, presenca, presença, universidade'>
 	<meta name='robots' content='all'>
 	<meta property="og:image" content="http://presenca.me/images/logo@512.png" />

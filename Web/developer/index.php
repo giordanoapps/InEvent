@@ -29,7 +29,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>Presença Developer - Acessar seus dados nunca foi tão fácil!</title>
+	<title>InEvent Developer - Acessar seus dados nunca foi tão fácil!</title>
 	
 	<!--[if lt IE 9]>
 	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -70,7 +70,7 @@
 		<div class="barWrapper">
 			<div class="bar top">
 				<ul class="leftBar">
-					<a href="../" target="_blank"><li>Presença</li></a>
+					<a href="../" target="_blank"><li>InEvent</li></a>
 				</ul>
 				
 				<ul class="rightBar">
@@ -109,7 +109,7 @@
 							<!-- <li>Grupos</li> -->
 							<li>Notificações</li>
 							<li>Membros</li>
-							<li>Presença</li>
+							<li>InEvent</li>
 							<!-- <li>Projetos</li> -->
 						</ul>
 					</div>

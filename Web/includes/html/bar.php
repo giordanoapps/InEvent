@@ -6,7 +6,7 @@
 		<div class="bar top">
 			<ul class="leftBar">
 				<a href="home.php"><li>Home</li></a>
-				<a href="presence.php"><li>Presença</li></a>
+				<a href="presence.php"><li>InEvent</li></a>
 				<!-- <a href="projects.php"><li>Projetos</li></a> -->
 				<a href="members.php"><li>Membros</li></a>
 				<!-- <a href="clients.php"><li>Clientes</li></a> -->
@@ -118,7 +118,7 @@
 	
 		<div class="bar top loginBar">
 			<ul class="leftBar">
-				<a href="home.php"><li>Presença</li></a>
+				<a href="home.php"><li>InEvent</li></a>
 			</ul>
 			
 			<ul class="rightBar">

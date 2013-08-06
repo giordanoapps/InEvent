@@ -2,7 +2,7 @@
 <div class="documentationBox documentationBoxSelected">
     <h2>Uso</h2>
 
-    <p>Para utilizar a API do <b>Presença</b>, basta consultar nossa documentação disponível à esquerda. Abaixo temos um exemplo que será utilizado posteriormente para explicar o envio de requisições.</p>
+    <p>Para utilizar a API do <b>InEvent</b>, basta consultar nossa documentação disponível à esquerda. Abaixo temos um exemplo que será utilizado posteriormente para explicar o envio de requisições.</p>
     
     <h3>URL oficial</h3>
         <pre class="url oficialURL"><?php echo URL ?></pre>
@@ -34,6 +34,6 @@
             </ul>
             
     <h3>Notas</h3>
-    <p>A API do <b>Presença</b> utiliza um RPC-REST híbrido, utilizando o POST carregado como forma de enviar dados que necessitem de mais espaço. Além disso, todas as requisições são encriptadas em 256 bit por padrão.</p>
+    <p>A API do <b>InEvent</b> utiliza um RPC-REST híbrido, utilizando o POST carregado como forma de enviar dados que necessitem de mais espaço. Além disso, todas as requisições são encriptadas em 256 bit por padrão.</p>
     
 </div>
