@@ -351,7 +351,87 @@
 			"file": "Web/home.php",
 			"settings":
 			{
-				"buffer_size": 15142,
+				"buffer_size": 15140,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Web/includes/html/bar.php",
+			"settings":
+			{
+				"buffer_size": 4610,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Web/includes/html/header.php",
+			"settings":
+			{
+				"buffer_size": 2888,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Web/register.php",
+			"settings":
+			{
+				"buffer_size": 2277,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Web/terms.php",
+			"settings":
+			{
+				"buffer_size": 10128,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Web/data.php",
+			"settings":
+			{
+				"buffer_size": 6243,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Web/developer/documentation/howTo.php",
+			"settings":
+			{
+				"buffer_size": 2562,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Web/developer/documentation/presence.php",
+			"settings":
+			{
+				"buffer_size": 2454,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Web/developer/index.php",
+			"settings":
+			{
+				"buffer_size": 4804,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Web/includes/connection.php",
+			"settings":
+			{
+				"buffer_size": 695,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "README.md",
+			"settings":
+			{
+				"buffer_size": 2513,
 				"line_ending": "Unix"
 			}
 		},
@@ -359,7 +439,7 @@
 			"file": "Web/css/default.css",
 			"settings":
 			{
-				"buffer_size": 79215,
+				"buffer_size": 79214,
 				"line_ending": "Unix"
 			}
 		}
@@ -646,6 +726,7 @@
 		"height": 95.0,
 		"where_history":
 		[
+			"/Users/pedro/Sites/InEvent/Web/",
 			"/Users/pedro/Sites/Presenca-dev/Web/",
 			"/Users/pedro/Sites/Presenca/Presenca-develop/Web/",
 			"/Users/pedro/Sites/Presenca-dev/Web/",
@@ -657,6 +738,9 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"Presença",
+			" (",
+			"Presença",
 			"social",
 			"scrollTop",
 			"Garça",
@@ -781,10 +865,7 @@
 			"' DAY)",
 			"DATE_ADD(",
 			"confirm",
-			"plantaoToken",
-			"timestamp",
-			"copyTable",
-			"DAY"
+			"plantaoToken"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -792,6 +873,7 @@
 		"regex": false,
 		"replace_history":
 		[
+			"InEvent",
 			"vector",
 			"64-Pencil",
 			"notificationsForMemberIDWithOffset",
@@ -833,7 +915,7 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 10,
 			"sheets":
 			[
 				{
@@ -841,15 +923,15 @@
 					"file": "Web/home.php",
 					"settings":
 					{
-						"buffer_size": 15142,
+						"buffer_size": 15140,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								955,
-								955
+								948,
+								948
 							]
 						],
 						"settings":
@@ -862,6 +944,276 @@
 						"zoom_level": 1.0
 					},
 					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "Web/includes/html/bar.php",
+					"settings":
+					{
+						"buffer_size": 4610,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "Web/includes/html/header.php",
+					"settings":
+					{
+						"buffer_size": 2888,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "Web/register.php",
+					"settings":
+					{
+						"buffer_size": 2277,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "Web/terms.php",
+					"settings":
+					{
+						"buffer_size": 10128,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								283,
+								283
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "Web/data.php",
+					"settings":
+					{
+						"buffer_size": 6243,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "Web/developer/documentation/howTo.php",
+					"settings":
+					{
+						"buffer_size": 2562,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "Web/developer/documentation/presence.php",
+					"settings":
+					{
+						"buffer_size": 2454,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "Web/developer/index.php",
+					"settings":
+					{
+						"buffer_size": 4804,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "Web/includes/connection.php",
+					"settings":
+					{
+						"buffer_size": 695,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								439,
+								439
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "README.md",
+					"settings":
+					{
+						"buffer_size": 2513,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1083,
+								1083
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Markdown/Markdown.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 15.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
 				}
 			]
 		},
@@ -870,11 +1222,11 @@
 			"sheets":
 			[
 				{
-					"buffer": 1,
+					"buffer": 11,
 					"file": "Web/css/default.css",
 					"settings":
 					{
-						"buffer_size": 79215,
+						"buffer_size": 79214,
 						"regions":
 						{
 						},
@@ -948,6 +1300,14 @@
 		"selected_items":
 		[
 			[
+				"read",
+				"README.md"
+			],
+			[
+				"conn",
+				"Web/includes/connection.php"
+			],
+			[
 				"home",
 				"Web/home.php"
 			],
@@ -1012,16 +1372,8 @@
 				"Web/js/modules/presence.js"
 			],
 			[
-				"conn",
-				"Web/includes/connection.php"
-			],
-			[
 				"me",
 				"Web/developer/api/modules/member.php"
-			],
-			[
-				"read",
-				"README.md"
 			],
 			[
 				"sec",
