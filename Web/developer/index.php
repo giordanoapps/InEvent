@@ -103,28 +103,18 @@
 					<div class="menuDocumentation">
 						<ul>
 							<li class="optionMenuDocumentationCategory optionMenuDocumentationSelected"><b>Como usar</b></li>
-							<!-- <li>Home</li> -->
-							<!-- <li>Clientes</li> -->
-							<!-- <li>Consultores</li> -->
-							<!-- <li>Grupos</li> -->
-							<li>Notificações</li>
-							<li>Membros</li>
-							<li>InEvent</li>
-							<!-- <li>Projetos</li> -->
+							<li>Evento</li>
+							<li>Notificação</li>
+							<li>Pessoa</li>
 						</ul>
 					</div>
 					<div class="contentDocumentation">
 
 						<?php
 							include_once("documentation/howTo.php");
-							// include_once("documentation/home.php");
-							// include_once("documentation/client.php");
-							// include_once("documentation/consultant.php");
-							// include_once("documentation/group.php");
+							include_once("documentation/event.php");
 							include_once("documentation/notification.php");
-							include_once("documentation/member.php");
-							include_once("documentation/presence.php");
-							// include_once("documentation/project.php");
+							include_once("documentation/person.php");
 						?>
 
 						<div class="demoDocumentation">

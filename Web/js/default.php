@@ -18,14 +18,10 @@
 		"select.js",
 		"userSettings.js",
 
-		"index.js",
+		"home.js",
 		"bar.js",
 		"data.js",
 		"location.js",
-		"members.js",
-		// "groups.js",
-		"presence.js",
-		// "projects.js",
 		"register.js",
 	);
 

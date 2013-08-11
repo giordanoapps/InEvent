@@ -10,66 +10,7 @@
 		
 			<article class="section">
 				
-				<div class="featureBox header">
-					<img class="floatLeft" src="images/logo@512.png" alt="Top bar" />
-					<div class="text">
-						<h2 class="title">InEvent</h2>
-						<p class="headline">Gerenciar presença em sua empresa nunca foi tão simples.</p>
-						<p class="sub">Seu negócio nunca esteve em melhores mãos.</p>
-					</div>
-				</div>
 				
-	<!-- 			<ul class="stepByStep">
-					<li>
-						<img src="images/256-egretBlueOrdering.png" alt="Client" class="egret egretOrdering">
-						<p class="title">Veja seu plantão.</p>
-					</li>
-					<li>
-						<img src="images/256-egretGreenReceiving.png" alt="Chef Receiving" class="egret egretReceiving">
-						<p class="title">Clique.</p>
-					</li>
-					<li>
-						<img src="images/256-egretRedDelivering.png" alt="Waiter" class="egret egretDelivering">
-						<p class="title">E depois entrega ao cliente!</p>
-					</li>
-				</ul> -->
-				
-				<div class="coolBox coolBoxSelfish details">
-					<ul>
-						<li>
-							<div>
-								<img src="images/32-Check.png" alt="Sem custos">
-								<div class="text">
-									<p class="title">Sem custos de instalação</p>
-									<p class="description">Sem taxas e contratos, a implementação da plataforma é simples e rápida!</p>
-								</div>
-							</div>
-							<div>
-								<img src="images/32-Heart-Dark.png" alt="Ame seu orçamento">
-								<div class="text">
-									<p class="title">Reduza seus custos</p>
-									<p class="description">Simplifique seu controle e aumente a produtividade de sua empresa.</p>
-								</div>
-							</div>
-						</li>
-						<li>
-							<img src="images/64-Home.png" alt="Plano">
-							<div class="text">
-								<p class="title">Um plano completo</p>
-								<p class="description">Perfeito para suas necessidades!</p>
-								<div class="planWrapper">
-									<div class="plan">
-										<div class="text">
-											<p class="title">Mensal</p>
-											<p class="description"><b>Gratuito</b> com nosso lançamento!</p>
-										</div>
-										<div class="price">R$ 0,00 <span>/mês</span></div>
-									</div>
-								</div>
-							</div>
-						</li>
-					</ul>
-				</div>
 				
 			</article>
 			
@@ -406,18 +347,6 @@
 				
 				<div style="clear: both;"></div>
 		
-			</article>
-			
-		</div>
-		
-		<div id="homeContent" class="pageContent">
-		
-			<article class="section">
-				<div class="header">
-					<p class="title">Pronto para a revolução?</p>
-					<p class="description">Após completar o cadastro, seu sistema já estará pronto para uso dentro de instantes.</p>
-					<p class="bigLink"><a href="data.php">Quero me cadastrar agora!</a></p>
-				</div>
 			</article>
 			
 		</div>

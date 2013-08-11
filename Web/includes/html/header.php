@@ -23,7 +23,6 @@
 	<meta name="apple-itunes-app" content="app-id=594552266">
 	<meta name="google-play-app" content="app-id=com.estudiotrilha.negociopresente">
 
-	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="css/jquery-ui-1.8.21.custom.min.css" type="text/css" />
 	<link rel="stylesheet" href="css/chosen.min.css" type="text/css" />
 
