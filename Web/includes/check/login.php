@@ -22,18 +22,15 @@ if (isset($_POST["name"]) && isset($_POST["password"])) {
 			`member`.`id`,
 			`member`.`name`,
 			`member`.`password`,
-			`member`.`companyID`,
-			`member`.`groupID`,
-			`member`.`permission`,
-			SUM(`loginSessions`.`browser`) AS `sessionAmount`
+			SUM(`memberSessions`.`browser`) AS `sessionAmount`
 		FROM
 			`member`
 		LEFT JOIN
-			`loginSessions` ON `loginSessions`.`memberID` = `member`.`id`
+			`memberSessions` ON `memberSessions`.`memberID` = `member`.`id`
 		WHERE 1
 			AND BINARY `member`.`name` = '$name'
 		GROUP BY
-			`loginSessions`.`memberID`
+			`memberSessions`.`memberID`
 	");
 
 	if (mysql_num_rows($result) == 1) {
@@ -42,22 +39,19 @@ if (isset($_POST["name"]) && isset($_POST["password"])) {
 
 		if (Bcrypt::check($password, $hash)) {
 
-			$core->companyID = mysql_result($result, 0, "companyID");
 			$core->memberID = mysql_result($result, 0, "id");
-			$core->groupID = mysql_result($result, 0, "groupID");
 			$core->name = mysql_result($result, 0, "name");
-			$core->permission = mysql_result($result, 0, "permission");
 
 			// Create a new unique random id for the given session
 			do {
 				$sessionKey = Bcrypt::hash($hash);
 				$resultSession = resourceForQuery(
 					"SELECT
-						`loginSessions`.`id`
+						`memberSessions`.`id`
 					FROM
-						`loginSessions`
+						`memberSessions`
 					WHERE
-						`loginSessions`.`sessionKey` = '$sessionKey'
+						`memberSessions`.`sessionKey` = '$sessionKey'
 				");
 
 			} while (mysql_num_rows($resultSession) != 0);
@@ -65,7 +59,7 @@ if (isset($_POST["name"]) && isset($_POST["password"])) {
 			// Store it on our database
 			$insert = resourceForQuery(
 				"INSERT INTO
-					`loginSessions`
+					`memberSessions`
 					(`memberID`, `browser`, `sessionKey`)
 				VALUES
 					($core->memberID, 1, '$sessionKey')
@@ -76,11 +70,11 @@ if (isset($_POST["name"]) && isset($_POST["password"])) {
 				// Remove the last sessionKey from the database
 				$delete = resourceForQuery(
 					"DELETE FROM
-						`loginSessions`
+						`memberSessions`
 					WHERE 1
-						AND `loginSessions`.`memberID` = $core->memberID
+						AND `memberSessions`.`memberID` = $core->memberID
 					ORDER BY
-						`loginSessions`.`id` ASC
+						`memberSessions`.`id` ASC
 					LIMIT 1
 				");
 			}
@@ -138,26 +132,20 @@ if (isset($_POST["name"]) && isset($_POST["password"])) {
 		"SELECT
 			`member`.`id`,
 			`member`.`name`,
-			`member`.`password`,
-			`member`.`companyID`,
-			`member`.`groupID`,
-			`member`.`permission`
+			`member`.`password`
 		FROM
 			`member`
 		LEFT JOIN
-			`loginSessions` ON `loginSessions`.`memberID` = `member`.`id`
+			`memberSessions` ON `memberSessions`.`memberID` = `member`.`id`
 		WHERE
-			`loginSessions`.`sessionKey` = '$hash'
+			`memberSessions`.`sessionKey` = '$hash'
 	");
 
 	if (mysql_num_rows($result) == 1) {
 		$core->auth = true;
 
-		$core->companyID = mysql_result($result, 0, "companyID");
 		$core->memberID = mysql_result($result, 0, "id");
-		$core->groupID = mysql_result($result, 0, "groupID");
 		$core->name = mysql_result($result, 0, "name");
-		$core->permission = mysql_result($result, 0, "permission");
 
 		// Reset the login count
 		$insert = resourceForQuery(

@@ -9,7 +9,7 @@
 	<?php include_once("includes/html/bar.php") ?>
 	<div id="content">
 
-		<div id="presenceContent" class="pageContent fullPageContent" data-ajax="ajaxPresence">
+		<div id="eventContent" class="pageContent fullPageContent" data-ajax="ajaxPresence">
 			
 			<div class="placerContent">
 				<?php printMonths(0, getMemberCalendarID($core->memberID)); ?>

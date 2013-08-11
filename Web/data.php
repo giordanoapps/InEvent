@@ -13,129 +13,125 @@
 			
 			<div class="boardContent">
 				<div class="boardContentInnerWrapper">
+
+					<div class="pageContentBox">
+						<div class="facebookBox">
+							<img src="images/facebookButton.png" name="" id="" />
+							<!-- <fb:login-button show-faces="true" width="200" max-rows="1"></fb:login-button> -->
+						</div>
+						<div class="standardBox">
+							
+						</div>
+					</div>
 					
 					<div class="pageContentBox">
 						<form method="post" action="#" class="dataForm">
 						
 							<?php
-								$result = resourceForQuery("SELECT * FROM `company` WHERE `id`=$core->companyID");
+								$result = resourceForQuery(
+									"SELECT
+										`member`.`id`,
+										`member`.`name`,
+										`member`.`password`,
+										`member`.`cpf`,
+										`member`.`rg`,
+										`member`.`telephone`,
+										`member`.`email`,
+										`member`.`university`,
+										`member`.`course`
+									FROM
+										`member`
+									WHERE
+										`member`.`id` = $core->memberID
+								");
 								$data = mysql_fetch_assoc($result);
 							?>
 							
-							<p class="inputHeader">Empresa</p>
+							<p class="inputHeader">Pessoa</p>
 							
 							<p class="fullWidth">
-								<span class="inputTitle">Nome:</span>
+								<span class="inputTitle">Nome Completo:</span>
 								<input
 									type="text"
-									name="companyName"
-									id="companyName"
-									class="companyName"
+									name="user"
+									id="user"
+									class="user"
 									<?php if ($core->auth) { ?> readonly="readonly" <?php } ?>
-									value="<?php if ($core->auth) { echo $data["companyName"]; } ?>"
-									placeholder="Nome Fantasia" />
-							</p>
-							
-							<p class="fullWidth">
-								<span class="inputTitle">Endereço:</span>
-								<input
-									type="text"
-									name="address"
-									id="address"
-									class="address"
-									<?php if ($core->auth) { ?> readonly="readonly" <?php } ?>
-									value="<?php if ($core->auth) { echo $data["address"]; } ?>"
-									placeholder="Endereço" />
-							</p>
-							
-							<p class="thirdWidth">
-								<span class="inputTitle">Cidade:</span>
-								<input
-									type="text"
-									name="city"
-									id="city"
-									class="city"
-									<?php if ($core->auth) { ?> readonly="readonly" <?php } ?> 
-									value="<?php if ($core->auth) { echo $data["city"]; } ?>"
-									placeholder="Cidade" />
-							</p>
-							<p class="thirdWidth">
-								<span class="inputTitle">Estado:</span>
-								<input
-									type="text"
-									name="state"
-									id="state"
-									class="state upperCase"
-									<?php if ($core->auth) { ?> readonly="readonly" <?php } ?> 
-									value="<?php if ($core->auth) { echo $data["state"]; } ?>"
-									placeholder="Estado"
-									maxlength="2"
-									list="brazilStates"/>
-							</p>
-							<datalist id="brazilStates">
-								<option value="AC">AC</option>  
-								<option value="AL">AL</option>  
-								<option value="AM">AM</option>  
-								<option value="AP">AP</option>  
-								<option value="BA">BA</option>  
-								<option value="CE">CE</option>  
-								<option value="DF">DF</option>  
-								<option value="ES">ES</option>  
-								<option value="GO">GO</option>  
-								<option value="MA">MA</option>  
-								<option value="MG">MG</option>  
-								<option value="MS">MS</option>  
-								<option value="MT">MT</option>  
-								<option value="PA">PA</option>  
-								<option value="PB">PB</option>  
-								<option value="PE">PE</option>  
-								<option value="PI">PI</option>  
-								<option value="PR">PR</option>  
-								<option value="RJ">RJ</option>  
-								<option value="RN">RN</option>  
-								<option value="RO">RO</option>  
-								<option value="RR">RR</option>  
-								<option value="RS">RS</option>  
-								<option value="SC">SC</option>  
-								<option value="SE">SE</option>  
-								<option value="SP">SP</option>  
-								<option value="TO">TO</option>  
-							</datalist>					
-							<p class="thirdWidth">
-								<span class="inputTitle">CEP:</span>
-								<input
-									type="text"
-									name="zipCode"
-									id="zipCode"
-									class="zipCode"
-									<?php if ($core->auth) { ?> readonly="readonly" <?php } ?>
-									value="<?php if ($core->auth) { echo $data["zipCode"]; } ?>"
-									placeholder="CEP" />
+									value="<?php if ($core->auth) { echo $data["name"]; } ?>"
+									placeholder="Nome Completo"
+								/>
 							</p>
 
-							<?php if (!$core->auth) { ?>
-							<p class="inputHeader">Responsável</p>
-													
 							<p class="halfWidth">
-								<span class="inputTitle">Nome:</span>
+								<span class="inputTitle">CPF:</span>
 								<input
 									type="text"
-									name="bossName"
-									id="bossName"
-									class="bossName"
-									value=""
-									placeholder="Nome do Responsável"
+									name="cpf"
+									id="cpf"
+									class="cpf"
+									<?php if ($core->auth) { ?> readonly="readonly" <?php } ?>
+									value="<?php if ($core->auth) { echo $data["cpf"]; } ?>"
+									placeholder="CPF"
+								/>
+							</p>
+							<p class="halfWidth">
+								<span class="inputTitle">RG:</span>
+								<input
+									type="text"
+									name="rg"
+									id="rg"
+									class="rg"
+									<?php if ($core->auth) { ?> readonly="readonly" <?php } ?>
+									value="<?php if ($core->auth) { echo $data["rg"]; } ?>"
+									placeholder="RG"
+								/>
+							</p>
+							
+							<p class="halfWidth">
+								<span class="inputTitle">Telefone:</span>
+								<input
+									type="text"
+									name="telephone"
+									id="telephone"
+									class="telephone"
+									<?php if ($core->auth) { ?> readonly="readonly" <?php } ?>
+									value="<?php if ($core->auth) { echo $data["telephone"]; } ?>"
+									placeholder="Telefone"
 								/>
 							</p>
 							<p class="halfWidth">
 								<span class="inputTitle">Email:</span>
 								<input
 									type="text"
-									name="bossEmail"
-									id="bossEmail"
-									class="bossEmail"
+									name="email"
+									id="email"
+									class="email"
+									<?php if ($core->auth) { ?> readonly="readonly" <?php } ?>
+									value="<?php if ($core->auth) { echo $data["email"]; } ?>"
+									placeholder="Email"
+								/>
+							</p>
+
+							<p class="halfWidth">
+								<span class="inputTitle">Universidade:</span>
+								<input
+									type="text"
+									name="university"
+									id="university"
+									class="university"
 									value=""
-									placeholder="Email do Responsável"
+									placeholder="Universidade"
+								/>
+							</p>
+							<p class="halfWidth">
+								<span class="inputTitle">Curso:</span>
+								<input
+									type="text"
+									name="course"
+									id="course"
+									class="course"
+									value=""
+									placeholder="Curso"
 								/>
 							</p>
 							
@@ -143,9 +139,9 @@
 								<span class="inputTitle">Senha:</span>
 								<input
 									type="password"
-									name="bossPassword"
-									id="bossPassword"
-									class="bossPassword"
+									name="password"
+									id="password"
+									class="password"
 									value=""
 									placeholder="Senha"
 								/>
@@ -154,15 +150,13 @@
 								<span class="inputTitle">Confirmar Senha:</span>
 								<input
 									type="password"
-									name="bossPasswordConfirm"
-									id="bossPasswordConfirm"
-									class="bossPasswordConfirm"
+									name="passwordConfirm"
+									id="passwordConfirm"
+									class="passwordConfirm"
 									value=""
 									placeholder="Senha"
 								/>
 							</p>
-							
-							<?php } ?>
 							
 							<div class="checkBoxWrapper">
 								<p>
@@ -197,7 +191,7 @@
 					
 					<?php if (!$core->auth) { ?>
 					<ul class="navigator">
-						<a href="location.php" data-lock	="yes"><li>Localização <span class="navigatorHint navigatorHintRight">Próxima</span></li></a>
+						<a href="register.php" data-lock	="yes"><li>Registro <span class="navigatorHint navigatorHintRight">Próxima</span></li></a>
 					</ul>
 					<?php } ?>
 					

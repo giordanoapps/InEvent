@@ -9,46 +9,87 @@ $(document).ready(function() {
 	 */
 	$("#homeContent").live("hashDidLoad", function() {
 
-		// $("body").trigger("click");
+		$(this).focus();
 
+		$(this).find(".section:first-child").addClass("sectionVisible");
+
+		// $(this).find(".deck").first().toggle("bounce", {
+		// 	distance: 12,
+		// 	times: 2
+		// }, 300);
+
+	 $(this).find(".deck").first().delay(1000).show(1000);
 	});
 
 
 // -------------------------------------- PAGE -------------------------------------- //
 
 	/**
-	 * Page initialization
+	 * Change the current cover
 	 * @return {null}
 	 */
 	$("#homeContent").live("loadCover", function(event, y) {
 
+		// Only scroll if no animation is taking place
 		if(!$(this).is(":animated")) {
 
 			var height = 0;
+			var parentHeight = $(this).height() * $(this).children().length;
+			var childHeight = $(this).first().height();
 			var top = parseFloat($(this).css("top")) || 0;
 
-			console.log(y);
+			// Go down
+			if (y > 10 && top > childHeight - parentHeight) {
+				height = -childHeight;
 
-			if (y > 10 && top >= 0) {
-				height = -$(this).first().height();
-			} else if (y < -10 && top + $(this).first().height() < $(this).height()) {
-				height = $(this).first().height();
+			// Go up
+			} else if (y < -10 && top < 0) {
+				height = childHeight;
 			}
 
 			if (height != 0) {
 
+				var nextPosition = top + height;
+
+				var $home = $(this);
+				var $section = $home.find(".section").eq(Math.floor(Math.abs(nextPosition) / Math.abs(height)));
+				var $deck = $section.find(".deck");
+
+				// Hide all the decks to animate them later
+				$home.find(".deck").hide(200);
+
+				// Animate the transition
 				$(this).animate({
-					"top": top + height
-				}, 300, "easeInQuad");
+					"top": nextPosition
+				}, 500, "linear", function() {
+
+					// Mark the current visible section
+					$section.siblings(".sectionVisible").removeClass("sectionVisible").end().addClass("sectionVisible");
+					
+					// Animate the deck
+					$deck.toggle("bounce", {
+						distance: 12,
+						times: 2
+					}, 220);
+
+				});
 
 			}
-
-		} else {
-
-			console.log("not");
 		}
 
 	});
+
+	$("#homeContent").live("keyup", function(event) {
+		
+		var code = (event.keyCode ? event.keyCode : event.which);
+		// Enter keycode
+		if (code == 38) {
+			$(this).trigger("loadCover", [-100]);
+		} else if (code == 40) {
+			$(this).trigger("loadCover", [100]);
+		}
+
+	 });
 
 
 // ------------------------------------- HOME ------------------------------------- //

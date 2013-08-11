@@ -26,48 +26,44 @@ $(document).ready(function() {
 		}
 
 		// Create the basic fields
-		$form.find(".cnpj").mask("99.999.999/9999-99");
-		$form.find(".zipCode").mask("99999-999");
-		$form.find(".bossCPF").mask("999.999.999-99");
+		$form.find(".cpf").mask("999.999.999-99");
 		$form.find(".telephone").np("telephoneVerification");
 
 		var validator = $parent.find(".dataForm").validate({
 	        rules: {
-	            companyName: {
+	            name: {
 					required: true,
 					minlength: 10
 				},
-				address: {
-					required: true,
-					minlength: 10
-				},
-				city: {
-					required: true,
-				},
-				state: {
-					required: true,
-					minlength: 2
-				},
-				zipCode: {
-					required: true,
-					minlength: 8
-				},
-				bossName: {
-					required: true,
-					minlength: 5
-				},
-				bossEmail: { 
+				cpf: "cpf",
+				rg: {
+	                required: true,
+	                minlength: 8
+	            },
+				telephone: {
+	                required: true, 
+	                minlength: 10
+	            },
+				email: {
 	                required: true, 
 	                email: true
 	            },
-				bossPassword: { 
+	            university: {
+	                required: true, 
+	                minlength: 10
+	            },
+	            course: {
+	                required: true, 
+	                minlength: 10
+	            },
+				password: { 
 	                required: true, 
 	                minlength: 6  
 	            }, 
-	            bossPasswordConfirm: { 
+	            passwordConfirm: { 
 	                required: true, 
 	                minlength: 6,
-	                equalTo: "#bossPassword"
+	                equalTo: "#password"
 	            },
 				agreement: {
 					required: true
@@ -77,37 +73,39 @@ $(document).ready(function() {
 				},
 	        }, 
 	        messages: {
-	            companyName: {
-					required: "Insira um Razão Social válida",
-					minlength: jQuery.format("Insira pelo menos {0} caracteres")
-				}, 
-				address: {
-					required: "Insira um endereço válido",
-					minlength: jQuery.format("Insira pelo menos {0} caracteres")
-				},
-				city: {
-					required: "Insira uma cidade válida",
-				},
-				state: {
-					required: "Insira um estado válido",
-					minlength: jQuery.format("Insira pelo menos {0} caracteres")
-				},
-				zipCode: {
-					required: "Insira um CEP válido",
-				},
-				bossName: {
+	            name: {
 					required: "Insira um nome válido",
 					minlength: jQuery.format("Insira pelo menos {0} caracteres")
 				},
-				bossEmail: { 
+				cpf: {
+					required: "Insira um CPF válido",
+					minlength: jQuery.format("Insira pelo menos {0} caracteres")
+				},
+				rg: {
+					required: "Insira um RG válido",
+					minlength: jQuery.format("Insira pelo menos {0} caracteres")
+				},
+				telephone: {
+					required: "Insira um CPF válido",
+					minlength: jQuery.format("Insira pelo menos {0} caracteres")
+				},
+				email: { 
 	                required: "Insira um email válido", 
 	                minlength: jQuery.format("Insira pelo menos {0} caracteres")
 	            },
-				bossPassword: {
+	            university: { 
+	                required: "Insira uma universidade válida", 
+	                minlength: jQuery.format("Insira pelo menos {0} caracteres")
+	            },
+	            course: { 
+	                required: "Insira um curso válido", 
+	                minlength: jQuery.format("Insira pelo menos {0} caracteres")
+	            },
+				password: {
 	                required: "Insira uma senha", 
 	                minlength: jQuery.format("Insira pelo menos {0} caracteres")
 	            }, 
-	            bossPasswordConfirm: {
+	            passwordConfirm: {
 	                required: "Insira uma senha", 
 	                minlength: jQuery.format("Insira pelo menos {0} caracteres"),
 	                equalTo: "Insira a mesma senha"

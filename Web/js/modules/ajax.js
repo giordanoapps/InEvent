@@ -68,37 +68,6 @@ $.fn.ajax = function(method) {
 			// Resize the bar size
 			$(".menuContent").trigger("resizeBar");
 
-			// We must reset the variable
-			$("body").data("lastProportionInfoContainer", 1.0);
-			
-			// And we create the slider
-			$(".sliderBoard").slider({
-				value: 1.0,
-				min: 0.4,
-				max: 1.6,
-				step: 0.15,
-			});
-			
-			$(".sliderBoard").bind("slidestop", function (event, ui) {
-
-				$(".menuContent").trigger("abcd");
-
-				// Load the proportion
-				var lastProportionInfoContainer = $("body").data("lastProportionInfoContainer");
-
-				$infoContainer = $(".infoContainer");
-				var value = ($(this).slider("value"));
-				var width = $infoContainer.width() * value / lastProportionInfoContainer;
-				var height = $infoContainer.height() * value / lastProportionInfoContainer;
-				
-				$infoContainer.width(width);
-				$infoContainer.height(height);
-				$infoContainer.css("font-size", value * 100 + "%");
-			
-				// Save the proportion
-				$("body").data("lastProportionInfoContainer", value);
-			});
-
 			// Load the specific initalizer of each page
 			$("#" + newHash + "Content").trigger("hashDidLoad");
 		}

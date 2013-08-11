@@ -5,6 +5,6 @@
 	 */
     
     // Include query modules
-    include_once("queries/presence.php");
+    include_once("queries/event.php");
 
 ?>

@@ -6,12 +6,8 @@
 		<div class="bar top">
 			<ul class="leftBar">
 				<a href="home.php"><li>Home</li></a>
-				<a href="presence.php"><li>InEvent</li></a>
-				<!-- <a href="projects.php"><li>Projetos</li></a> -->
-				<a href="members.php"><li>Membros</li></a>
-				<!-- <a href="clients.php"><li>Clientes</li></a> -->
-				<!-- <a href="consultants.php"><li>Consultores</li></a> -->
-				<!-- <a href="groups.php"><li>Grupos</li></a> -->
+				<a href="events.php"><li>Eventos</li></a>
+				<!-- <a href="members.php"><li>Membros</li></a> -->
 			</ul>
 			
 			<ul class="rightBar">
@@ -122,11 +118,10 @@
 			</ul>
 			
 			<ul class="rightBar">
-			
+
 				<li onclick="" class="userLoginLeading first">Entrar!</li>
 				
 				<li onclick="" class="userLoginBox secondary">
-				
 					<div class="facebookBox">
 						<img src="images/facebookButton.png" name="" id="" />
 						<!-- <fb:login-button show-faces="true" width="200" max-rows="1"></fb:login-button> -->
@@ -141,7 +136,6 @@
 							<input type="submit" class="singleButton" value="Entrar!" />
 						</form>
 					</div>
-
 				</li>
 				
 			</ul>
