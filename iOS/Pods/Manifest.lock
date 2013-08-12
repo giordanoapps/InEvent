@@ -1,0 +1,13 @@
+PODS:
+  - AKTabBarController (1.0.1)
+  - Reachability (3.0.0)
+
+DEPENDENCIES:
+  - AKTabBarController
+  - Reachability (~> 3.0.0)
+
+SPEC CHECKSUMS:
+  AKTabBarController: d3876684504512be83b90b5eabefce3853af043f
+  Reachability: 500bd76bf6cd8ff2c6fb715fc5f44ef6e4c024f2
+
+COCOAPODS: 0.18.1

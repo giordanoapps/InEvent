@@ -11,8 +11,8 @@
         <p>Para testar a função, basta clicar no ícone <img src="../images/64-Chemical.png" class="tryItOut" alt="Try it out!"> que uma requisição será efetuada para demonstrar o uso da chamada.</p>
         <div class="documentationFunctionBox">
             <p class="documentFunctionName">
-                <span>member.signIn(<b>name</b>, <b>password</b>)</span>
-                <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=member.signIn&name=Nome&password=Senha">
+                <span>person.signIn(<b>name</b>, <b>password</b>)</span>
+                <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=person.signIn&name=Nome&password=Senha">
             </p>
 
             <p class="documentFunctionDescription">Loga um membro na plataforma e retorna o <i>tokenID</i> (60 caracteres) caso a operação tenha sido bem sucedida.</p>
@@ -23,7 +23,7 @@
             </div>
         </div>
         
-        <pre class="url"><?php echo URL ?>?method=member.signIn&member=Nome&password=Senha</pre>
+        <pre class="url"><?php echo URL ?>?method=person.signIn&name=Nome&password=Senha</pre>
     
     <h3>Explicação</h3>
         <p>Existem três seções demarcadas: <b>cabeçalho, retorno e parâmetros</b>, cada qual sendo explicada separadamente:</p>

@@ -1,68 +1,102 @@
 <?php
-// -------------------------------------- NOTIFICATIONS --------------------------------------- //
-	
+// -------------------------------------- NOTIFICAÇÃO --------------------------------------- //
+
 	/**
 	 * Number of notifications
 	 * @var string
 	 */	
 	if ($method === "getNumberOfNotifications") {
 
-		echo notificationCountForMemberID($core->memberID);
+		$tokenID = getToken();
+
+		echo notificationCountForID($core->mapID);
 		
 	} else
 
-	if ($method === "getLastNotificationID") {
-
-		echo notificationGetLastNotificationForMemberID($core->memberID);
-		
-	} else
-	
 	/**
-	 * Get new notifications since notification
+	 * Get notifications
+	 * @var string
+	 */
+	if ($method === "getNotifications") {
+
+		$tokenID = getToken();
+
+		echo json_encode(notificationsForID($core->mapID));
+		
+	} else 
+
+	/**
+	 * Get notifications since notification
 	 * @var string
 	 */
 	if ($method === "getNotificationsSinceNotification") {
+
+		$tokenID = getToken();
+
 		if (isset ($_GET['lastNotificationID'])) {
 			$lastNotificationID = getAttribute($_GET['lastNotificationID']);
 					
-			echo notificationsForMemberIDSinceNotification($core->memberID, $lastNotificationID);
+			echo json_encode(notificationsForIDSinceNotification($core->mapID, $lastNotificationID));
 		} else {
 			http_status_code(400);
 		}
 
-	} else
-	
+	} else 
+
 	/**
-	 * Get notifications with offset
+	 * Get the id of the last notification
 	 * @var string
 	 */
-	if ($method === "getNotificationsWithOffset") {
-		if (isset ($_GET['offset'])) {
-			$offset = getAttribute($_GET['offset']);
+	if ($method === "getLastNotificationID") {
+
+		$tokenID = getToken();
+
+		$query = " LIMIT 1 ";
+
+        $result = resourceForQuery(getNotificationsForMapQueryText($core->mapID, '', $query));
+
+		echo printInformation("notification", $result, true, "json");
+
+	} else 
+
+	/**
+	 * Get notifications within time
+	 * @var string
+	 */
+	if ($method === "getNotificationsWithinTime") {
+
+		$tokenID = getToken();
+
+		if (isset ($_GET['seconds'])) {
+			$seconds = getAttribute($_GET['seconds']);
 					
-			echo notificationsForMemberIDWithOffset($core->memberID, $offset);
+			echo notificationsForIDWithDelay($core->mapID, $seconds);
 		} else {
 			http_status_code(400);
 		}
 
 	} else
-			
+
 	/**
 	 * Get single notification
 	 * @var string
 	 */
 	if ($method === "getSingleNotification") {
+
+		$tokenID = getToken();
+
 		if (isset ($_GET['notificationID'])) {
 			$notificationID = getAttribute($_GET['notificationID']);
 					
-			echo notificationForNotificationID($core->memberID, $notificationID);
+			echo notificationsForNotificationID($core->mapID, $notificationID);
 		} else {
 			http_status_code(400);
 		}
 
-	} else		
-
-{ http_status_code(501); }
+	} else
 	
+	{ http_status_code(501); }
+
+
 // ------------------------------------------------------------------------------------------- //
 ?>

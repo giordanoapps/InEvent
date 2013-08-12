@@ -1,21 +1,9 @@
 <?php include_once("../includes/check/login.php"); ?>
-<?php 
-
-//	$url = explode(".", $_SERVER["SERVER_NAME"]);
-//	$position = array_search("negociopresente", $url);
-//	
-//	
-//	if ($position) {
-//		if ($url[$position-1] != "developer") {
-//			header("Location: http://developer.negociopresente.com/");
-//		}
-//	}
-?>
 <?php
 	if ($globalDev == 1) {
-		define("URL", "http://localhost:8888/Presenca-dev/Web/developer/api/");
+		define("URL", "http://localhost:8888/InEvent/Web/developer/api/");
 	} else {
-		define("URL", "http://presenca.me/developer/api/");
+		define("URL", "http://inevent.us/developer/api/");
 	}
 ?>
 <!--
@@ -39,7 +27,6 @@
 	<link rel="stylesheet" href="../css/jquery-ui-1.8.21.custom.min.css" type="text/css" />
 	<link rel="stylesheet" href="../css/shCore.css" type="text/css" />
 	<link rel="stylesheet" href="../css/shThemeDefault.css" type="text/css" />
-	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
 	
 	<?php if ($globalDev == 1) { ?>
 	
@@ -86,23 +73,13 @@
 			
 			<div class="titleContent">Desenvolvedor</div>
 			
-			<div class="boardContent" data-ajax="ajaxDeveloper">
-		
-				<div class="features menuContent">
-				
-					<div class="featureBox header">
-						<p class="title">Sua API. Nossa API.</p>
-						<p class="description">Acessar seus dados nunca foi tão fácil.</p>
-					</div>
-								
-					<div style="clear: both;"></div>
-			
-				</div>
+			<div class="boardContent">
 		
 				<div class="documentation">
 					<div class="menuDocumentation">
 						<ul>
 							<li class="optionMenuDocumentationCategory optionMenuDocumentationSelected"><b>Como usar</b></li>
+							<li>Atividade</li>
 							<li>Evento</li>
 							<li>Notificação</li>
 							<li>Pessoa</li>
@@ -112,6 +89,7 @@
 
 						<?php
 							include_once("documentation/howTo.php");
+							include_once("documentation/activity.php");
 							include_once("documentation/event.php");
 							include_once("documentation/notification.php");
 							include_once("documentation/person.php");

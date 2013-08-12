@@ -8,36 +8,20 @@
 
 	// Modules
 	switch ($namespace) {
-		case 'client':
-			include_once("modules/client.php");
+		case "activity":
+			include_once("modules/activity.php");
 			break;
 
-		case 'consultant':
-			include_once("modules/consultant.php");
+		case "event":
+			include_once("modules/event.php");
 			break;
 
-		case 'group':
-			include_once("modules/group.php");
-			break;
-
-		case 'home':
-			include_once("modules/home.php");
-			break;
-
-		case 'member':
-			include_once("modules/member.php");
-			break;
-
-		case 'notification':
+		case "notification":
 			include_once("modules/notification.php");
 			break;
 
-		case 'presence':
-			include_once("modules/presence.php");
-			break;
-
-		case 'project':
-			include_once("modules/project.php");
+		case "person":
+			include_once("modules/person.php");
 			break;
 
 		default:

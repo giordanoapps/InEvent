@@ -13,15 +13,6 @@ $(document).ready(function() {
 	});
 
 	/**
-	 * Calculate the position and scroll the menuContent every time the human slides the screen
-	 * @return {null}       
-	 */
-	$(window).scroll(function(event) {
-		// What the y position of the scroll is
-		$("#homeContent").trigger("loadCover", [$(this).scrollTop()]);
-	});
-
-	/**
 	 * Recalculates the window size after the resizing has ended
 	 * @param  {object} event
 	 * @return {null}

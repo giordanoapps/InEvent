@@ -12,26 +12,33 @@ $(document).ready(function() {
 		$content = $(this);
 
 		// Get the saved information
-		var registrationData = JSON.parse(localStorage.getItem("registrationData")) || {};
+		var data = JSON.parse(localStorage.getItem("registrationData")) || {};
 
 		// We send the data to the server
-		$.post('ajaxRegister.php',
-		{
-			registration: registrationData,
-		},
+		$.post('developer/api/?' + $.param({
+			method: "person.enroll",
+			name: data.name,
+			password: data.password,
+			email: data.email,
+			cpf: data.cpf,
+			rg: data.rg,
+			telephone: data.telephone,
+			university: data.university,
+			course: data.course,
+			format: "html"
+		}), {},
 		function(data, textStatus, jqXHR) {
 
 			if (jqXHR.status == 200) {
-				
 				// Show the sucess message
 				$content.find(".registrationComplete").fadeIn(0).delay(5000).fadeOut(300);
 
 				// Remove the registration data
 				localStorage.removeItem("registrationData");
-				registrationData = {};
+				data = {};
 			}
 
-		}, 'html' ).fail(function(data, textStatus, jqXHR) {
+		}, 'html').fail(function(data, textStatus, jqXHR) {
 
 			// Case the company or member is already registered
 			if (jqXHR.status == 409) {

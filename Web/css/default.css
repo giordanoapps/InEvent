@@ -186,7 +186,7 @@ form {
 .barWrapper {
 	position: fixed;
 	width: 100%;
-	background-color: #222;
+	background-color: rgba(0, 0, 0, 0.8);
 	text-align: center;
 	z-index: 25;
 }
@@ -260,7 +260,7 @@ form {
 }
 
 .bar .first:hover {
-	color: #a8a6a6;
+	color: white;
 }
 
 .bar img.downArrow {
@@ -272,7 +272,7 @@ form {
 .bar .secondary {
 	position: absolute;
 	top: 48px;
-	background-color: white;
+	background-color: rgba(255, 255, 255, 0.8);
 	z-index: 100;
 	margin: 0;
 	padding: 0;
@@ -370,7 +370,7 @@ form {
 	-webkit-box-shadow: 1px 1px 5px #000000;
 	box-shadow: 1px 1px 5px #000000;
 	border-radius: 0 0 4px 4px;
-	background-color: #333;
+	background-color: rgba(34, 51, 51, 0.8);
 }
 
 .bar .rightBar .notifications, .bar .rightBar .userSettingsMenu {
@@ -471,7 +471,7 @@ form {
 }
 
 .bar .collectionBox .collectionOptions {
-	background-color: #333;
+	background-color: rgba(34, 34, 34, 0.8);
 	top: 95%;
 }
 
@@ -1069,7 +1069,7 @@ form {
 	height: 100%;
 	width: 100%;
 	min-width: 960px;
-	background-position: center top;
+	background-position: center center;
 	background-repeat: no-repeat;
 	background-size: cover;
 	position: relative;
@@ -1092,7 +1092,7 @@ form {
 
 #homeContent .rightBox {
 	overflow: hidden;
-	padding: 2% 4%;
+	padding: 2% 4% 2% 2%;
 }
 
 #homeContent .title {
@@ -1104,12 +1104,12 @@ form {
 }
 
 #homeContent .bigTitle {
-	font-size: 250%;
+	font-size: 300%;
 }
 
 #homeContent .description {
-	padding-top: 18px;
-	font-size: 120%;
+	padding-top: 10px;
+	font-size: 150%;
 	color: #DBDBDB;
 }
 
@@ -1561,17 +1561,6 @@ form {
 
 /* @group Developer */
 
-.developerContent .features {
-	background-color: #D8D8D8;
-}
-
-.developerContent .menuContent {
-	height: auto;
-	position: static;
-	cursor: default;
-	display: none;
-}
-
 .developerContent p {
 	margin: 10px 0;
 }
@@ -1594,7 +1583,7 @@ form {
 }
 
 .documentation {
-	font-size: 110%;
+	font-size: 100%;
 }
 
 .menuDocumentation {
@@ -1628,8 +1617,8 @@ form {
 	margin-top: 0;
 }
 
-.menuDocumentation .optionMenuDocumentationSelected, .menuDocumentation li:hover {
-/*	color: #BBB;*/
+.menuDocumentation .optionMenuDocumentationSelected,
+.menuDocumentation li:hover {
 	border-bottom: 1px solid #ae0000;
 }
 
@@ -1646,17 +1635,18 @@ form {
 
 .contentDocumentation h2 {
 	margin-top: 0;
+	margin-bottom: 0.5em;
 }
 
 .contentDocumentation p {
-	margin: 50% 0;
+	margin: 0.5em 0;
 }
 
 .contentDocumentation pre {
-	margin-left: 40px;
+	margin-left: 30px;
 	padding-left: 20px;
-	border-left: 2px solid #333;
-	font-size: 100%;
+	border-left: 1px solid #999999;
+	font-size: 90%;
 	word-wrap: break-word;
 }
 
@@ -1664,11 +1654,11 @@ form {
 	word-wrap: break-word;
 	font-family: monospace;
 	white-space: pre;
-	margin: 100% 0px;
+	margin: 1em 0px;
 }
 
 .contentDocumentation .link:hover {
-	color:#356094;
+	color: #356094;
 }
 
 .contentDocumentation ul {
@@ -1691,34 +1681,55 @@ form {
 	display: block;
 }
 
+.contentDocumentation .documentationHeader {
+	font-size: 120%;
+	font-weight: bold;
+	padding: 5px 0px 0px 0px;
+	margin: 0;
+}
+
 .contentDocumentation .documentationFunctionBox {
-	margin: 30px 0 30px 30px;
+	padding: 0 0 5px 30px;
 }
 
 .contentDocumentation .documentFunctionName {
 	border-bottom: 1px solid #D9D9D9;
+	padding: 4px 0;
 }
 
-.contentDocumentation .tryItOut {
+.contentDocumentation .documentFunctionName span:nth-child(2) {
+	float: right;
+}
+
+.contentDocumentation .documentFunctionName span:nth-child(2) img {
 	display: inline-block;
 	vertical-align: middle;
 	width: 24px;
 	height: 24px;
-	cursor: pointer;
-	top: -4px;
+	top: -3px;
+	right: 6px;
 	position: relative;
+}
+
+.contentDocumentation .tryItOut {
+	display: inline-block;
+	vertical-align: bottom;
+	width: 24px;
+	height: 24px;
+	cursor: pointer;
 }
 
 .contentDocumentation .documentFunctionDescription {
 	margin-left: 30px;
-	padding-left: 20px;
-	border-left: 2px solid gray;
-	margin-top: 100%;
-	margin-bottom: 100%;
+	padding-left: 15px;
+	border-left: 1px solid #999999;
+	margin-top: 1em;
+	margin-bottom: 1em;
 }
 
 .contentDocumentation .documentFunctionDescription img {
 	width: 24px;
+	vertical-align: bottom;
 }
 
 .contentDocumentation .documentationFunctionParametersBox {
@@ -1761,8 +1772,9 @@ form {
 	height: 300px;
 }
 
-.demoDocumentation pre, .contentDocumentation .json {
-	font-size: 70%;
+.demoDocumentation pre,
+.contentDocumentation .json {
+	font-size: 80%;
 	margin-left: 30px;
 }
 
@@ -1802,7 +1814,7 @@ form {
 	position: absolute;
 	bottom: 0;
 	width: 100%;
-	background-color: #222;
+	background-color: rgba(0, 0, 0, 0.8);
 	text-align: center;
 }
 

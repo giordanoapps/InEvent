@@ -9,20 +9,30 @@ $(document).ready(function() {
 	 */
 	$("#homeContent").live("hashDidLoad", function() {
 
+		// Focus on the element so the key event may work
 		$(this).focus();
 
+		// Select the first section
 		$(this).find(".section:first-child").addClass("sectionVisible");
+	
+		// Trigger the initial animation		
+		$(this).css("top", $(this).first().height()).trigger("loadCover", [-100]);
 
-		// $(this).find(".deck").first().toggle("bounce", {
-		// 	distance: 12,
-		// 	times: 2
-		// }, 300);
-
-	 $(this).find(".deck").first().delay(1000).show(1000);
 	});
 
 
 // -------------------------------------- PAGE -------------------------------------- //
+
+
+	/**
+	 * Calculate the position and scroll the menuContent every time the human slides the screen
+	 * @return {null}       
+	 */
+	$("#homeContent").live("mousewheel", function(event, delta, deltaX, deltaY) {
+		// What the y position of the scroll is
+		$(this).trigger("loadCover", [deltaY]);
+	});
+
 
 	/**
 	 * Change the current cover
@@ -39,12 +49,12 @@ $(document).ready(function() {
 			var top = parseFloat($(this).css("top")) || 0;
 
 			// Go down
-			if (y > 10 && top > childHeight - parentHeight) {
-				height = -childHeight;
+			if (y > 0.2 && top < 0) {
+				height = childHeight;
 
 			// Go up
-			} else if (y < -10 && top < 0) {
-				height = childHeight;
+			} else if (y < -0.2 && top > childHeight - parentHeight) {
+				height = -childHeight;
 			}
 
 			if (height != 0) {
@@ -83,10 +93,10 @@ $(document).ready(function() {
 		
 		var code = (event.keyCode ? event.keyCode : event.which);
 		// Enter keycode
-		if (code == 38) {
-			$(this).trigger("loadCover", [-100]);
-		} else if (code == 40) {
+		if (code == 33 || code == 38) {
 			$(this).trigger("loadCover", [100]);
+		} else if (code == 34 || code == 40) {
+			$(this).trigger("loadCover", [-100]);
 		}
 
 	 });
@@ -98,57 +108,13 @@ $(document).ready(function() {
 	 * Login button has been clicked
 	 */	
 	$(".userLoginLeading").live("click", function () {
-		$(".userLoginBox").slideToggle(500);
+		
+		$(this).siblings(".userLoginBox").slideToggle(500);
 	
-		if ($(".userRegisterBox").is(":visible")) {
-			$(".userRegisterBox").slideToggle(500);
+		if ($(this).siblings(".userRegisterBox").is(":visible")) {
+			$(this).siblings(".userRegisterBox").slideToggle(500);
 		}
 
-		// Create the scroller
-		$(".userLoginBox .selectOptions").mCustomScrollbar({
-			scrollInertia: 0
-		});
-	});
-	
-	/**
-	 * Register button has been clicked
-	 */
-	$(".userRegisterLeading").live("click", function () {
-		$(".userRegisterBox").slideToggle(500);
-		
-		if ($(".userLoginBox").is(":visible")) {
-			$(".userLoginBox").slideToggle(500);
-		}
-		
-		// Creating the uploader
-		var uploader = new qq.FileUploader({
-			// pass the dom node (ex. $(selector)[0] for jQuery users)
-			element: document.getElementById('file-uploader'),
-			// path to server-side upload script
-			action: 'fileuploader.php',
-			
-			onComplete: function(id, fileName, responseJSON){
-				
-				$(".qq-upload-list").css("display", "none");
-				$(".userRegisterBox .promoImage").css("background-image", "url('uploads/"+responseJSON.fileName+"')");
-				$(".userRegisterBox #file-uploader").css("visibility", "hidden");
-			}
-		});
-	
-	});
-	
-	/**
-	 * Reduce the image size and insert the select box to choose another enterprise
-	 */
-	$(".userLoginBox .promoImage").live("click", function () {
-		$(this).toggleClass("promoImageReduced", 500).siblings(".selectBox").slideToggle(400);
-	});
-
-	/**
-	 * Change the enterprise id on the hidden input of the form
-	 */
-	$(".userLoginBox .selectOptions li").live("click", function () {
-		$(".userMemberBox #enterprise").val($(this).val());
 	});
 
 });

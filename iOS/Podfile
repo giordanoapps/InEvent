@@ -1,0 +1,4 @@
+platform :ios
+xcodeproj 'Garça.xcodeproj'
+pod 'Reachability',  '~> 3.0.0'
+pod 'AKTabBarController'

@@ -6,7 +6,7 @@
 		<div class="bar top">
 			<ul class="leftBar">
 				<a href="home.php"><li>Home</li></a>
-				<a href="events.php"><li>Eventos</li></a>
+				<a href="event.php"><li>Eventos</li></a>
 				<!-- <a href="members.php"><li>Membros</li></a> -->
 			</ul>
 			
@@ -119,8 +119,9 @@
 			
 			<ul class="rightBar">
 
-				<li onclick="" class="userLoginLeading first">Entrar!</li>
+				<a href="data.php"><li class="first">Registrar!</li></a>
 				
+				<li onclick="" class="userLoginLeading first">Entrar!</li>
 				<li onclick="" class="userLoginBox secondary">
 					<div class="facebookBox">
 						<img src="images/facebookButton.png" name="" id="" />

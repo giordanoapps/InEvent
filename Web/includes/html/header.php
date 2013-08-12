@@ -9,19 +9,19 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>InEvent - Gerenciar presença em sua empresa nunca foi tão simples!</title>
+	<title>InEvent - Interação de uma maneira diferente dentro do seu evento!</title>
 	
 	<!--[if lt IE 9]>
 	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
 
 	<meta name='language' content='pt-br'>
-	<meta name='description' content='Controle de InEvent, para sua empresa junior, simples e fácil.'>
-	<meta name='keywords' content='empresa junior, ej, brasil, controle, presenca, presença, universidade'>
+	<meta name='description' content='Eventos em seu aplicativo, para gerenciar e criar timelines personalizadas.'>
+	<meta name='keywords' content='empresa junior, ej, brasil, controle, evento, eventos, universidade'>
 	<meta name='robots' content='all'>
-	<meta property="og:image" content="http://presenca.me/images/logo@512.png" />
-	<meta name="apple-itunes-app" content="app-id=594552266">
-	<meta name="google-play-app" content="app-id=com.estudiotrilha.negociopresente">
+	<meta property="og:image" content="http://inevent.us/images/logo@512.png" />
+	<meta name="apple-itunes-app" content="app-id=687142023">
+	<meta name="google-play-app" content="app-id=com.estudiotrilha.inevent">
 
 	<link rel="stylesheet" href="css/jquery-ui-1.8.21.custom.min.css" type="text/css" />
 	<link rel="stylesheet" href="css/chosen.min.css" type="text/css" />

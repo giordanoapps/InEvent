@@ -1,0 +1,40 @@
+//
+//  ToolItemViewCell.m
+//  Garça
+//
+//  Created by Pedro Góes on 17/03/13.
+//  Copyright (c) 2013 Pedro Góes. All rights reserved.
+//
+
+#import "ToolItemViewCell.h"
+#import "ColorThemeController.h"
+
+@implementation ToolItemViewCell
+
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+{
+    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    if (self) {
+        [self configureCell];
+    }
+    return self;
+}
+
+- (void)configureCell {
+    // We can define the background view and its color
+    [self setBackgroundView:[[UIView alloc] initWithFrame:CGRectZero]];
+    [self.backgroundView setBackgroundColor:[ColorThemeController tableViewCellBackgroundColor]];
+    
+    // We make sure the cell will not be highlighted on touch down
+    [self setSelectionStyle: UITableViewCellSelectionStyleNone];
+    [self.selectedBackgroundView setBackgroundColor:[ColorThemeController tableViewCellSelectedBackgroundColor]];
+}
+
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated
+{
+    [super setSelected:selected animated:animated];
+
+    // Configure the view for the selected state
+}
+
+@end
