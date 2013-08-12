@@ -14,15 +14,15 @@
 			<div class="boardContent">
 				<div class="boardContentInnerWrapper">
 
-					<div class="pageContentBox">
+<!--					<div class="pageContentBox">
 						<div class="facebookBox">
 							<img src="images/facebookButton.png" name="" id="" />
-							<!-- <fb:login-button show-faces="true" width="200" max-rows="1"></fb:login-button> -->
+							<!-- <fb:login-button show-faces="true" width="200" max-rows="1"></fb:login-button> --*>
 						</div>
 						<div class="standardBox">
 							
 						</div>
-					</div>
+					</div>-->
 					
 					<div class="pageContentBox">
 						<form method="post" action="#" class="dataForm">

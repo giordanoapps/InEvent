@@ -1,0 +1,272 @@
+html {
+	color: black;
+}
+
+body {
+	font: 26px Georgia, "Times New Roman", Times, serif; /* Fonte maior */
+	margin: 0 auto;
+}
+
+.justify {
+	text-align: justify;
+}
+
+.description {
+	font-size: 0.9em;
+}
+
+.header {
+	font-size: 2em;
+}
+
+/* @group Content */
+
+#content {
+	text-align: center;
+	font-size: 2em;
+}
+
+/* @end */
+
+/* @group Logo */
+
+#logoContent {
+	width: 80%;
+	margin: 0 auto;
+}
+
+#logoContent a {
+	color: black;
+	text-decoration: none;
+}
+
+#logoContent #logoImagem {
+	width: 100%;
+}
+
+#logoContent #logoNome {
+	width: 342px;
+}
+
+#logoContent h1 {
+	font-size: 2.5em;
+	padding: 0;
+	margin: 20px 0 40px;
+}
+
+#logoContent .sub {
+	font-style: italic;
+	font-size: 1.2em;
+	margin: 1em 0;
+	display: none;
+}
+
+/* @end */
+
+/* @group Menu */
+
+#menuContent {
+	border-bottom: 5px solid #333;
+}
+
+#menuContent ul {
+	text-decoration: none;
+	list-style: none;
+	margin: 0 auto;
+	padding: 0;
+}
+
+#menuContent li {
+	padding: 25px;
+	border-top: 5px solid #333;
+	font-size: 1em;
+}
+
+#menuContent li.selected {
+	background-color: #831D1C;
+}
+
+#menuContent a {
+	text-decoration: none;
+	color: black;
+	cursor: pointer;
+}
+
+#menuContent li.selected {
+	color: white;
+}
+
+#menuContent li:hover {
+
+}
+
+/* @end */
+
+#mainContent {
+	width: 90%;
+	margin: 0 auto;
+}
+
+.projectListType {
+	text-decoration: none;
+	list-style: none;
+	padding: 0;
+	display: block;
+	margin: 1em auto 0;
+	text-align: center;
+}
+
+.projectListType li {
+	cursor: pointer;
+	padding: 35px;
+	margin: 0 auto;
+	border: 2px solid #333;
+	font-size: 0.8em;
+	-moz-box-shadow: 0 0 3px #000000;
+	-webkit-box-shadow: 0 0 3px #000000;
+	box-shadow: 0 0 3px #000000;
+	width: 50%;
+}
+
+.projectListType .companyProjectList {
+	border-radius: 10px 10px 0 0;
+}
+
+.projectListType .memberProjectList {
+	border-radius: 0 0 10px 10px;
+	border-top: 0;
+}
+
+.projectListTypeSelected {
+	box-shadow: inset 1px 1px 10px #0d0d0d !important;
+}
+
+.projectList {
+	text-decoration: none;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.projectList li {
+	padding-bottom: 10px;
+}
+
+.projectList.memberProjectList {
+	display: none;
+}
+
+.box {
+/*	width: 752px;*/
+/*	margin: 0 auto;*/
+}
+
+.projectBox {
+	position: relative;
+	overflow: hidden;
+}
+
+.projectBox img {
+	float: left;
+	width: 170px;
+	height: 170px;
+	margin-right: 40px;
+}
+
+.projectBox .title {
+	text-align: left;
+}
+
+.projectBox .description {
+/*	font-size: 0.7em;*/
+	text-align: justify;
+}
+
+.projectBox .store {
+	text-align: right;
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	margin: 0;
+}
+
+.projectBox .store a {
+	text-decoration: none;
+	color: black;
+}
+
+.aboutTitle {
+	border-bottom: 1px solid #333;
+	width: 100%;
+	text-align: left;
+	margin: 0.6em auto;
+}
+
+.memberBox {
+	height: 1480px;
+	padding-top: 20px;
+	padding-bottom: 10px;
+	position: relative;
+}
+
+.memberBox .seta {
+	display: none;
+}
+
+.memberBox img.foto {
+	width: 512px;
+}
+
+.memberBox img.setaBaixo {
+	position: relative;
+	top: -35px;
+}
+
+.memberBox img.balao {
+	position: relative;
+	top: -135px;
+}
+
+.memberBox .description {
+	font-size: 0.7em;
+	text-align: center;
+	top: -615px;
+	position: relative;
+}
+
+
+/* @group Wrapper */
+
+#wrapper {
+	border-top: 3px solid #333;
+	text-align: center;
+	margin-top: 30px;
+	padding-top: 10px;
+	font-size: 0.8em;
+	padding-bottom: 20px;
+}
+
+#wrapper * {
+	display: inline;
+}
+
+#wrapper ul {
+	display: block;
+}
+
+#wrapper li {
+	margin: 5px;
+	vertical-align: middle;
+}
+
+#wrapper a {
+	text-decoration: none;
+	color: black;
+}
+
+#wrapper ul img {
+	width: 20px;
+}
+
+/* @end */
+

@@ -28,7 +28,8 @@
 
 	<?php if ($globalDev == 1 || true) { ?>
 	
-	<link rel="stylesheet" href="css/default.css" type="text/css" />
+	<link rel="stylesheet" href="css/default.css" type="text/css" media="screen and (min-device-width:490px)" />
+	<link rel="stylesheet" href="css/mobile.css" type="text/css" media="handheld, (max-device-width:480px)" />
 	
 	<script src="js/jquery-1.8.3.min.js" type="text/javascript"></script>
 	<script src="js/jquery-ui-1.8.21.custom.min.js" type="text/javascript"></script>
