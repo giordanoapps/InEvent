@@ -34,9 +34,9 @@
 						<div class="box informationBox">
 							<p class="informationTitle">Informações gerais</p>
 							
-							<p class="firstParagraph">Antes de mais nada, <b>seja bem-vindo ao InEvent!</b> Nossa plataforma foi criada para que você, participante de eventos Brasil afora, pudesse receber o melhor serviço para acompanhar seus dias dentro do.</p>
+							<p class="firstParagraph">Antes de mais nada, <b>seja bem-vindo ao InEvent!</b> Nossa plataforma foi criada para que você, participante de eventos Brasil afora, pudesse receber o melhor serviço para acompanhar seus dias como congressista.</p>
 							
-							<p>Nosso sistema funciona nos aplicativos disponíveis tanto na App Store quanto no Google Play. .</p>
+							<p>Nosso sistema funciona nos aplicativos disponíveis tanto na App Store quanto no Google Play, podendo ser baixados gratuitamente.</p>
 							
 							<p>E sempre que precisar de qualquer ajuda, consulte nossa central de suporte. Nós levamos seu negócio muito a sério e, por isso, nós nunca lhe deixaremos na mão.</p>
 							

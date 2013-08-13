@@ -34,7 +34,7 @@ $(document).ready(function() {
 	 * @return {null}       
 	 */
 	$(".errorBox").bind("ajaxError", function(event, jqXHR, settings) {
-		if (jqXHR.status != 408) {
+		if (data.status != 408) {
 			$(this).fadeToggle(200);
 		}
 	})

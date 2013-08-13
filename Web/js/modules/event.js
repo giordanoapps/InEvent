@@ -26,7 +26,7 @@ $(document).ready(function() {
 			computerState: localStorage.getItem("tokenID") || "no",
 		}, // And we print it on the screen
 		function(data, textStatus, jqXHR) {
-			if (jqXHR.status == 200) {
+			if (data.status == 200) {
 				$("#presenceContent #favoriteTool").trigger("click", [true]);
 			}
 		}, 'html');
@@ -142,7 +142,7 @@ $(document).ready(function() {
 					calendarName: name
 				}, 
 				function(data, textStatus, jqXHR) {
-					if (jqXHR.status == 200) {
+					if (data.status == 200) {
 						// Update the newly created calendar setting it as the selected
 						$thumb.attr("data-value", data);
 						$thumb.find(".calendarThumbArt").trigger("click");
@@ -156,7 +156,7 @@ $(document).ready(function() {
 					calendarName: name
 				}, 
 				function(data, textStatus, jqXHR) {
-					if (jqXHR.status == 200) {
+					if (data.status == 200) {
 						// Update the calendar with its updated name
 						$thumb.find(".title").text(name);
 					}
@@ -183,7 +183,7 @@ $(document).ready(function() {
 			calendarID: calendarID
 		}, 
 		function(data, textStatus, jqXHR) {
-			if (jqXHR.status == 200) {
+			if (data.status == 200) {
 				// Append the content to the left
 				$(".placerContent").html(data);
 
@@ -224,7 +224,7 @@ $(document).ready(function() {
 			getPeriod: timestamp
 		}, 
 		function(data, textStatus, jqXHR) {
-			if (jqXHR.status == 200) {
+			if (data.status == 200) {
 				$(".realContent").fadeOut(0).html(data).fadeIn(500);
 			}
 		}, 'html');
@@ -249,7 +249,7 @@ $(document).ready(function() {
 			showCreateTool: timestamp
 		}, 
 		function(data, textStatus, jqXHR) {
-			if (jqXHR.status == 200) {
+			if (data.status == 200) {
 				$(".realContent").fadeOut(0).html(data).fadeIn(500);
 			}
 		}, 'html');
@@ -428,7 +428,7 @@ $(document).ready(function() {
 			presenceID: presenceID
 		},
 		function(data, textStatus, jqXHR) {
-			if (jqXHR.status == 200) {
+			if (data.status == 200) {
 
 				// Animate and remove old member
 				$photoThumb.fadeOut(600, function() {
@@ -494,7 +494,7 @@ $(document).ready(function() {
 			presenceID: siblingID
 		},
 		function(data, textStatus, jqXHR) {
-			if (jqXHR.status == 200) {
+			if (data.status == 200) {
 
 				// Display a list of available members
 				$picker.html(data).slideDown(300);
@@ -526,7 +526,7 @@ $(document).ready(function() {
 			presenceID: presenceID
 		}, 
 		function(data, textStatus, jqXHR) {
-			if (jqXHR.status == 200) {
+			if (data.status == 200) {
 
 				// Hide the picker
 				$picker.slideUp(600, function() {

@@ -53,9 +53,9 @@
 								<span class="inputTitle">Nome Completo:</span>
 								<input
 									type="text"
-									name="user"
-									id="user"
-									class="user"
+									name="name"
+									id="name"
+									class="name"
 									<?php if ($core->auth) { ?> readonly="readonly" <?php } ?>
 									value="<?php if ($core->auth) { echo $data["name"]; } ?>"
 									placeholder="Nome Completo"

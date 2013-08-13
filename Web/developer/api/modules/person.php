@@ -105,20 +105,22 @@
 
 	if ($method === "enroll") {
 
-		if (isset($_POST["member"]) && isset($_POST["password"]) && isset($_POST["email"])) {
+		if (isset($_POST["name"]) && isset($_POST["password"]) && isset($_POST["email"])) {
 
 			// Make sure that the user is not creating multiple accounts
 			// include_once("../../includes/registrationCheck.php");
 
 			// Get the provided data
 			// Required
-			$name = getAttribute($_POST["member"]);
+			$name = getAttribute($_POST["name"]);
 			$password = getAttribute($_POST["password"]);
 			$email = getAttribute($_POST["email"]);
 
 			// Optional
 			$cpf = getEmptyAttribute($_POST["cpf"]);
 			$rg = getEmptyAttribute($_POST["rg"]);
+			$university = getEmptyAttribute($_POST["university"]);
+			$course = getEmptyAttribute($_POST["course"]);
 			$telephone = getEmptyAttribute($_POST["telephone"]);
 
 			$result = resourceForQuery(
@@ -127,7 +129,7 @@
 				FROM
 					`member`
 				WHERE 0
-					OR `member`.`name` = '$member'
+					OR `member`.`name` = '$name'
 					OR `member`.`email` = '$email'
 			");
 
@@ -139,7 +141,7 @@
 						`member`
 						(`name`, `password`, `cpf`, `rg`, `telephone`, `email`, `university`, `course`)
 					VALUES 
-						($name, '$password', '$cpf', '$rg', '$telephone', '$email', '$university', '$course')
+						('$name', '$password', '$cpf', '$rg', '$telephone', '$email', '$university', '$course')
 				");
 
 				$memberID = mysql_insert_id();
@@ -152,7 +154,7 @@
 					http_status_code(500);
 				}
 			} else {
-				http_status_code(303);
+				http_status_code(409);
 			}
 		} else {
 			http_status_code(400);

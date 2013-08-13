@@ -163,10 +163,10 @@ $(document).ready(function() {
 				}
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
-				if (jqXHR.status == 200) {
+				if (data.status == 200) {
 					$demoDocumentation.find("pre").html(JSON.stringify(jqXHR.responseText, null, 2));
 				} else {
-					$demoDocumentation.find("pre").html(jqXHR.status + " " + jqXHR.statusText);
+					$demoDocumentation.find("pre").html(data.status + " " + data.statusText);
 				}
 			},
 		});
