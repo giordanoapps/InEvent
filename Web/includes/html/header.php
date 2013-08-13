@@ -22,13 +22,14 @@
 	<meta property="og:image" content="http://inevent.us/images/logo@512.png" />
 	<meta name="apple-itunes-app" content="app-id=687142023">
 	<meta name="google-play-app" content="app-id=com.estudiotrilha.inevent">
+	<meta name="viewport" content="width=device-width, maximum-scale=1.0" />
 
 	<link rel="stylesheet" href="css/jquery-ui-1.8.21.custom.min.css" type="text/css" />
 	<link rel="stylesheet" href="css/chosen.min.css" type="text/css" />
 
 	<?php if ($globalDev == 1 || true) { ?>
 	
-	<link rel="stylesheet" href="css/default.css" type="text/css" media="screen and (min-device-width:490px)" />
+	<link rel="stylesheet" href="css/default.css" type="text/css" media="all" />
 	<link rel="stylesheet" href="css/mobile.css" type="text/css" media="handheld, (max-device-width:480px)" />
 	
 	<script src="js/jquery-1.8.3.min.js" type="text/javascript"></script>

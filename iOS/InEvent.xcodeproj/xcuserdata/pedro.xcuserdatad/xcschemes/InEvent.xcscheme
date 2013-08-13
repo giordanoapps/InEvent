@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "EBAAFD1B161FCF020007637B"
-               BuildableName = "Garc&#807;a.app"
+               BuildableName = "InEvent.app"
                BlueprintName = "InEvent"
                ReferencedContainer = "container:InEvent.xcodeproj">
             </BuildableReference>
@@ -43,7 +43,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "EBAAFD1B161FCF020007637B"
-            BuildableName = "Garc&#807;a.app"
+            BuildableName = "InEvent.app"
             BlueprintName = "InEvent"
             ReferencedContainer = "container:InEvent.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "EBAAFD1B161FCF020007637B"
-            BuildableName = "Garc&#807;a.app"
+            BuildableName = "InEvent.app"
             BlueprintName = "InEvent"
             ReferencedContainer = "container:InEvent.xcodeproj">
          </BuildableReference>
@@ -80,7 +80,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "EBAAFD1B161FCF020007637B"
-            BuildableName = "Garc&#807;a.app"
+            BuildableName = "InEvent.app"
             BlueprintName = "InEvent"
             ReferencedContainer = "container:InEvent.xcodeproj">
          </BuildableReference>

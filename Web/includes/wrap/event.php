@@ -1,190 +1,79 @@
 <?php
 
-    function printCalendars($memberID, $permission) {
+    function printTimeline($eventID, $memberID) {
 
-        $result = getCalendarsQuery($memberID);
+        $result = getActivitiesForMemberQuery($eventID, $memberID);
 
-        if (mysql_num_rows($result) > 0 || $permission >= 10) {
-            for ($i = 0; $i < mysql_num_rows($result); $i++) {
-                $entries = mysql_result($result, $i, "entries");
+        ?><ul><?php
+
+        if (mysql_num_rows($result) > 0) {
+
+            while ($data = mysql_fetch_assoc($result)) {
                 ?>
-                <div class="calendarThumb" data-value="<?php echo mysql_result($result, $i, "id") ?>">
-                    <div class="calendarThumbArt <?php if (mysql_result($result, $i, "id") == mysql_result($result, $i, "calendarID")) { ?>calendarThumbArtSelected <?php } ?>">
-                        <p class="entries"><?php echo $entries ?></p>
-                        <p class="label">Registro<?php if ($entries > 2) echo "s" ?></p>
+                <li value="<?php echo $data['id'] ?>" class="scheduleItem <?php if ($invisible) { ?>scheduleItemInvisible<?php } ?>">
+                    <div class="left">
+                        <p class="dateBegin"><span><?php echo date("j/m G:i", $data['dateBegin']) ?></span></p>
+                        <p class="dateEnd"><span><?php echo date("j/m G:i", $data['dateEnd']) ?></span></p>
                     </div>
-                    <p class="title"><?php echo mysql_result($result, $i, "name") ?></p>
-                </div>
-                <?php
-            }
-
-            if ($permission >= 10) {
-                ?>
-                <div class="calendarThumb calendarThumbNew" data-value="0">
-                    <div class="calendarThumbArt">
-                        <img src="images/32-Plus.png" alt="New Calendar">
-                        <p class="entries">1</p>
-                        <p class="label">Registro</p>
+                    <div class="right">
+                        <div class="upper">
+                            <p class="name"><?php echo $data['name'] ?></p>
+                        </div>
+                        <div class="bottom">
+                            <p class="description"><?php echo $data['description'] ?></p>
+                        </div>
                     </div>
-                    <p class="title">Novo</p>
-                </div>
+                </li>
                 <?php
             }
 
         } else {
             ?>
-            <div>
+            <li>
                 <p class="emptyCapital">Nenhum calendário :(</p>
-            </div>
+            </li>
             <?php
         }
+
+        ?></ul><?php
     }
 
-    function createCalendar($name, $companyID, $memberID) {
+   function printActivities($eventID) {
 
-        // Create the calendar
-        $insert = resourceForQuery(
-            "INSERT INTO
-                `shiftCalendar`
-                    (`companyID`, `name`)
-                VALUES
-                    ($companyID, '$name')
-        ");
+        $result = getActivitiesForEventQuery($eventID);
 
-        $calendarID = mysql_insert_id();
+        ?><ul><?php
 
-        // Create a single entry on the calendar
-        $insert = resourceForQuery(
-            "INSERT INTO
-                `shiftMember`
-                    (`calendarID`, `memberID`, `dateBegin`, `dateEnd`)
-                VALUES
-                    ($calendarID, $memberID, FROM_UNIXTIME(0), FROM_UNIXTIME(0))
-        ");
+        if (mysql_num_rows($result) > 0) {
 
-        // Update the calendarID of the current member
-        $insert = resourceForQuery(
-            "UPDATE
-                `member`
-            SET
-                `member`.`calendarID` = $calendarID
-            WHERE
-                `member`.`id` = $memberID
-        ");
-
-        if ($insert) {
-            echo $calendarID;
-        } else {
-            http_status_code(500);
-        }        
-    }
-
-    function printMonths($timestamp, $calendarID) {
-
-        if ($timestamp == 0) {
-            $now = time();
-            $timestamp = $now - 86400 * date("w", $now) - ($now % 86400);
-        }
-
-        ?>
-        
-        <div class="calendarBox">
-            <div class="specialTransition top" id="upArrow">
-                <img src="images/64-Bended-Arrow-Up.png" alt="Previous page">
-            </div>
-            <?php
-                // Get the provided month
-                $currentMonth = date("n", $timestamp);
-
-                // Get the timestamp of this week
-                $weekTimestamp = mktime(0, 0, 0, date("n"), date("j") - date("w"));
-
-                // Print the adjacent months
-                for ($month = $currentMonth - 1; $month <= $currentMonth + 1; $month++) {
-                     ?>
-                    <div class="calendar">
-                        <?php
-                            // First second of the month
-                            $currentMonthTimestamp = mktime(0, 0, 0, $month, 1, date("Y", $timestamp));
-                            $beginMonth = getdate($currentMonthTimestamp);
-
-                            // Day of the week
-                            $beginWeekDay = $beginMonth["wday"] - 1;
-
-                            // Number of days
-                            $monthDays = date('t', $currentMonthTimestamp);
-
-                            // Get the number of days to fill a perfect square
-                            $squareDays = $monthDays + 1 + ((7 - ($monthDays + $beginWeekDay + 1) % 7) % 7);
-
-                            $weekAbbreviations = array('D', 'S', 'T', 'Q', 'Q', 'S', 'S');
-
-                            // Print the current month
-                            ?><div class="monthLabel"><?php echo date('n/Y', $currentMonthTimestamp) ?></div><?php
-
-                            // Print the week days
-                            ?><div class="weekLabel"><?php
-                            for ($i = 0; $i < count($weekAbbreviations); $i++) {
-                                ?><span class="dayLabel"><?php echo $weekAbbreviations[$i] ?></span><?php
-                            }
-                            ?></div><?php
-
-                            // Print the days inside a calendar
-                            for ($i = -$beginWeekDay; $i < $squareDays; $i++) {
-                                $currentWeekDay = ($beginWeekDay + $i) % 7;
-
-                                if ($currentWeekDay == 0) {
-                                    $currentWeekTimestamp = $currentMonthTimestamp + ($i - 1) * 3600 * 24;
-                                    ?>
-                                    <div class="week <?php if ($weekTimestamp == $currentWeekTimestamp) echo 'weekSelected' ?>" data-timestamp="<?php echo $currentWeekTimestamp ?>">
-                                    <?php
-                                }
-
-                                if ($i > 0 && $i <= $monthDays) {
-                                    ?><span class="day day-<?php echo $currentWeekDay ?>"><?php echo $i ?></span><?php
-                                } else {
-                                    ?><span class="day dayInvisible day-<?php echo $currentWeekDay ?>">0</span><?php
-                                }
-
-                                if ($currentWeekDay == 6) {
-                                    ?>
-                                    </div>
-                                    <?php
-                                }
-                            }
-                        ?>
+            while ($data = mysql_fetch_assoc($result)) {
+                ?>
+                <li value="<?php echo $data['id'] ?>" class="scheduleItem <?php if ($invisible) { ?>scheduleItemInvisible<?php } ?>">
+                    <div class="left">
+                        <p class="dateBegin"><span><?php echo date("j/m G:i", $data['dateBegin']) ?></span></p>
+                        <p class="dateEnd"><span><?php echo date("j/m G:i", $data['dateEnd']) ?></span></p>
                     </div>
-                    
-                    <?php
-                }
-            ?>
-            <div class="specialTransition bottom" id="downArrow">
-                <img src="images/64-Bended-Arrow-Down.png" alt="Next page">
-            </div>
-        </div>
-        
-        <?php
-    }
-
-    function printContent($timestamp, $calendarID) {
-
-        if ($calendarID == 0) {
-            printCalendarHelp();
+                    <div class="right">
+                        <div class="upper">
+                            <p class="name"><?php echo $data['name'] ?></p>
+                        </div>
+                        <div class="bottom">
+                            <p class="description"><?php echo $data['description'] ?></p>
+                        </div>
+                    </div>
+                </li>
+                <?php
+            }
 
         } else {
-            if ($timestamp == 0) {
-                $now = time();
-                $timestamp = $now - 86400 * date("w", $now) - ($now % 86400);
-            }
-
-            $result = getPeriodForTimestampQuery($calendarID, $timestamp);
-
-            if (mysql_num_rows($result) > 0) {
-                printTable($timestamp, $calendarID, $result);
-            } else {
-                printStartMenu($timestamp);
-            }
+            ?>
+            <li>
+                <p class="emptyCapital">Nenhum calendário :(</p>
+            </li>
+            <?php
         }
+
+        ?></ul><?php
     }
 
     function printCalendarHelp(){

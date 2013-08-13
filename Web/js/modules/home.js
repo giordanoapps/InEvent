@@ -44,7 +44,7 @@ $(document).ready(function() {
 		if(!$(this).is(":animated")) {
 
 			var height = 0;
-			var parentHeight = $(this).height() * $(this).children().length;
+			var parentHeight = $(this).height() * $(this).children("article").length;
 			var childHeight = $(this).first().height();
 			var top = parseFloat($(this).css("top")) || 0;
 
@@ -71,7 +71,7 @@ $(document).ready(function() {
 				// Animate the transition
 				$(this).animate({
 					"top": nextPosition
-				}, 500, "linear", function() {
+				}, 400, "linear", function() {
 
 					// Mark the current visible section
 					$section.siblings(".sectionVisible").removeClass("sectionVisible").end().addClass("sectionVisible");
@@ -89,14 +89,35 @@ $(document).ready(function() {
 
 	});
 
+	/**
+	 * Change the cover based on the keyboard (arrows and page's)
+	 * @return {null}
+	 */
 	$("#homeContent").live("keyup", function(event) {
 		
 		var code = (event.keyCode ? event.keyCode : event.which);
-		// Enter keycode
+		
+		// Let's go up
 		if (code == 33 || code == 38) {
 			$(this).trigger("loadCover", [100]);
+
+		// Let's go down
 		} else if (code == 34 || code == 40) {
 			$(this).trigger("loadCover", [-100]);
+		}
+
+	 });
+
+	/**
+	 * Change the cover for mobile devices
+	 * @return {null}
+	 */
+	$("#homeContent .upperDeck, #homeContent .deck").live("click", function(event) {
+
+		if ($(this).hasClass("upperDeck")) {
+			$(this).closest("#homeContent").trigger("loadCover", [100]);
+		} else {
+			$(this).closest("#homeContent").trigger("loadCover", [-100]);
 		}
 
 	 });

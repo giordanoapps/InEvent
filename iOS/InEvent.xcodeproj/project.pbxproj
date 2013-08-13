@@ -65,6 +65,8 @@
 		EB3939D81666D25500580A4E /* RestaurantViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB3939D71666D25500580A4E /* RestaurantViewController.m */; };
 		EB3939DB1666D3AF00580A4E /* cellBg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB3939D91666D3AF00580A4E /* cellBg@2x.png */; };
 		EB3939DC1666D3AF00580A4E /* cellBgSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB3939DA1666D3AF00580A4E /* cellBgSelected@2x.png */; };
+		EB3BD91217B8C47A008D066D /* ReaderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB3BD91017B8C47A008D066D /* ReaderViewController.m */; };
+		EB3BD91317B8C47A008D066D /* ReaderViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB3BD91117B8C47A008D066D /* ReaderViewController.xib */; };
 		EB3F1A0716F6767C005052E7 /* ToolItemViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EB3F1A0616F6767C005052E7 /* ToolItemViewCell.m */; };
 		EB3F1A0916F67699005052E7 /* ToolItemViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB3F1A0816F67699005052E7 /* ToolItemViewCell.xib */; };
 		EB3F1A0D16F90F4F005052E7 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB3F1A0C16F90F4F005052E7 /* AudioToolbox.framework */; };
@@ -329,6 +331,9 @@
 		EB3939D71666D25500580A4E /* RestaurantViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RestaurantViewController.m; path = PedidoNaRede/RestaurantViewController.m; sourceTree = "<group>"; };
 		EB3939D91666D3AF00580A4E /* cellBg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cellBg@2x.png"; sourceTree = "<group>"; };
 		EB3939DA1666D3AF00580A4E /* cellBgSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cellBgSelected@2x.png"; sourceTree = "<group>"; };
+		EB3BD90F17B8C47A008D066D /* ReaderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReaderViewController.h; sourceTree = "<group>"; };
+		EB3BD91017B8C47A008D066D /* ReaderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReaderViewController.m; sourceTree = "<group>"; };
+		EB3BD91117B8C47A008D066D /* ReaderViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReaderViewController.xib; sourceTree = "<group>"; };
 		EB3F1A0516F6767C005052E7 /* ToolItemViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ToolItemViewCell.h; sourceTree = "<group>"; };
 		EB3F1A0616F6767C005052E7 /* ToolItemViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ToolItemViewCell.m; sourceTree = "<group>"; };
 		EB3F1A0816F67699005052E7 /* ToolItemViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ToolItemViewCell.xib; sourceTree = "<group>"; };
@@ -773,6 +778,17 @@
 			path = PaperFold;
 			sourceTree = "<group>";
 		};
+		EB3BD91417B8C47F008D066D /* Reader */ = {
+			isa = PBXGroup;
+			children = (
+				EB3BD90F17B8C47A008D066D /* ReaderViewController.h */,
+				EB3BD91017B8C47A008D066D /* ReaderViewController.m */,
+				EB3BD91117B8C47A008D066D /* ReaderViewController.xib */,
+			);
+			name = Reader;
+			path = PedidoNaRede;
+			sourceTree = "<group>";
+		};
 		EB3F1A0B16F7B831005052E7 /* Initial */ = {
 			isa = PBXGroup;
 			children = (
@@ -962,6 +978,7 @@
 				EBFCCF4A16987F3700A5AE73 /* Map */,
 				EBFCCF571698B47D00A5AE73 /* Order */,
 				EBFCCF591698B49600A5AE73 /* Restaurant */,
+				EB3BD91417B8C47F008D066D /* Reader */,
 				EB1FEB8C17172A16009834FC /* Log */,
 				EBAAFD1D161FCF020007637B /* Products */,
 				01A9A353CC7D4F35B9275C85 /* Pods.xcconfig */,
@@ -1442,6 +1459,7 @@
 				EBD055AC17AF919C008355E8 /* 16-Footprints.png in Resources */,
 				EBD055AD17AF919C008355E8 /* 16-Footprints@2x.png in Resources */,
 				EB60420B17B8B6A300D95012 /* 64-Flip-Clock.png in Resources */,
+				EB3BD91317B8C47A008D066D /* ReaderViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1574,6 +1592,7 @@
 				EB78EF6C17559B0C0016B527 /* UIImage+ResizeAndCrop.m in Sources */,
 				EBD055A717AF8CF3008355E8 /* AboutViewController.m in Sources */,
 				EBA89EB217AFEAFA00D9CD6B /* PushController.m in Sources */,
+				EB3BD91217B8C47A008D066D /* ReaderViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

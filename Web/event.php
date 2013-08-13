@@ -12,7 +12,7 @@
 		<div id="eventContent" class="pageContent fullPageContent" data-ajax="ajaxPresence">
 			
 			<div class="placerContent">
-				<?php printMonths(0, getMemberCalendarID($core->memberID)); ?>
+				<?php printTimeline(1, 1); ?>
 			</div>
 			
 			<div class="boardContent">
@@ -37,7 +37,7 @@
 				<div class="optionContent"></div>
 				
 				<div class="realContent">
-					<?php printContent(0, getMemberCalendarID($core->memberID)); ?>
+					<?php printActivities(1); ?>
 				</div>
 				
 			</div>

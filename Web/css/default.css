@@ -24,7 +24,6 @@ body {
 	width: 100%;
 	position: relative;
 	min-height: 100%;
-	min-width: 960px;
 	padding: 0;
 }
 
@@ -238,7 +237,6 @@ form {
 }
 
 .bar .leftBar {
-	width: 55%;
 	float: left;
 	text-align: left;
 }
@@ -1065,10 +1063,18 @@ form {
 	color: #A8A8A8;
 }
 
+#homeContent .upperDeck {
+	background-color: transparent;
+	height: 200px;
+	position: fixed;
+	top: 0;
+	z-index: 20;
+	width: 100%;
+}
+
 #homeContent .section {
 	height: 100%;
 	width: 100%;
-	min-width: 960px;
 	background-position: center center;
 	background-repeat: no-repeat;
 	background-size: cover;
@@ -1313,6 +1319,87 @@ form {
 	width: 339px;
 	height: 212px;
 }
+
+/* @end */
+
+/* Event */
+
+#eventContent .boardContent {
+	padding-top: 44px;
+}
+
+#eventContent .scheduleItem {
+	background-color: #EEE;
+	padding: 0;
+	border-bottom: 1px solid white;
+	box-shadow: inset 0 -1px #C2C1C1;
+	-moz-box-shadow: inset 0 -1px #C2C1C1;
+	-webkit-box-shadow: inset 0 -1px #C2C1C1;
+	position: relative;
+	height: 100px;
+}
+
+#eventContent .scheduleItem p {
+	margin: 0;
+}
+
+#eventContent .scheduleItem img {
+	width: 16px;
+	vertical-align: top;
+	margin: 0 2px;
+}
+
+#eventContent .scheduleItem span {
+	font-weight: bold;
+}
+
+#eventContent .scheduleItem .left {
+	width: 30%;
+	float: left;
+	height: 100%;
+}
+
+#eventContent .scheduleItem .left p {
+	display: table;
+	height: 50%;
+}
+
+#eventContent .scheduleItem .left p span {
+	display: table-cell;
+	vertical-align: middle;
+	text-align: center;
+}
+
+#eventContent .scheduleItem .left .dateBegin {
+	background-color: whiteSmoke;
+	color: #222;
+}
+
+#eventContent .scheduleItem .left .dateEnd {
+	background-color: #222;
+	color: whiteSmoke;
+}
+
+#eventContent .scheduleItem .right {
+	overflow: hidden;
+	height: 100%;
+}
+
+#eventContent .scheduleItem .right .upper {
+	height: 30%;
+}
+
+#eventContent .scheduleItem .right p {
+	display: table;
+	height: 50%;
+}
+
+#eventContent .scheduleItem .right p span {
+	display: table-cell;
+	vertical-align: middle;
+	text-align: center;
+}
+
 
 /* @end */
 

@@ -7,10 +7,12 @@
 	<div id="content">
 	
 		<div id="homeContent" class="pageContent" tabindex="0">
+
+			<div class="upperDeck"></div>
 		
 			<article class="section" style="	background-image: url(images/grande_auditorio__1_0.jpg);">
 				
-				<div class="deck">
+				<div class="deck" onclick="">
 					<div class="leftBox">
 						<img src="images/64-Marker.png" alt="Map">
 						<p class="title bigTitle">InEvent</p>
@@ -25,7 +27,7 @@
 
 			<article class="section" style="	background-image: url(images/Northeast_Snow-0961b.jpg);">
 				
-				<div class="deck">
+				<div class="deck" onclick="">
 					<div class="leftBox">
 						<img src="images/64-Footprints.png" alt="Map">
 						<p class="title">Linha do Tempo personalizada</p>
@@ -40,7 +42,7 @@
 
 			<article class="section" style="	background-image: url(images/map.png);">
 				
-				<div class="deck">
+				<div class="deck" onclick="">
 					<div class="leftBox">
 						<img src="images/64-Map.png" alt="Map">
 						<p class="title">Mapas integrados</p>
@@ -55,7 +57,7 @@
 
 			<article class="section" style="	background-image: url(images/9750a42683.jpg);">
 				
-				<div class="deck">
+				<div class="deck" onclick="">
 					<div class="leftBox">
 						<img src="images/64-Flip-Clock.png" alt="Clock">
 						<p class="title">Horário flexível</p>

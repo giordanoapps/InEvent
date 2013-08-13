@@ -4,12 +4,28 @@
 		"selected_items":
 		[
 			[
-				"mar",
-				"margin-top"
+				"font",
+				"font-size"
+			],
+			[
+				"min",
+				"min-width"
+			],
+			[
+				"child",
+				"childHeight"
 			],
 			[
 				"pad",
-				"padding"
+				"padding-top"
+			],
+			[
+				"rg",
+				"rgba()"
+			],
+			[
+				"mar",
+				"margin-top"
 			],
 			[
 				"penal",
@@ -122,10 +138,6 @@
 			[
 				"create",
 				"createCookie"
-			],
-			[
-				"font",
-				"font-size"
 			],
 			[
 				"ent",
@@ -348,50 +360,26 @@
 	"buffers":
 	[
 		{
-			"file": "Web/home.php",
+			"file": "Web/developer/documentation/event.php",
 			"settings":
 			{
-				"buffer_size": 15140,
+				"buffer_size": 4036,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "Web/includes/html/bar.php",
+			"file": "Web/developer/documentation/activity.php",
 			"settings":
 			{
-				"buffer_size": 4610,
+				"buffer_size": 4278,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "Web/includes/html/header.php",
+			"file": "Web/developer/documentation/notification.php",
 			"settings":
 			{
-				"buffer_size": 2888,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "Web/register.php",
-			"settings":
-			{
-				"buffer_size": 2277,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "Web/terms.php",
-			"settings":
-			{
-				"buffer_size": 10128,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "Web/data.php",
-			"settings":
-			{
-				"buffer_size": 6243,
+				"buffer_size": 2959,
 				"line_ending": "Unix"
 			}
 		},
@@ -399,23 +387,23 @@
 			"file": "Web/developer/documentation/howTo.php",
 			"settings":
 			{
-				"buffer_size": 2562,
+				"buffer_size": 2560,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "Web/developer/documentation/presence.php",
+			"file": "Web/includes/header.php",
 			"settings":
 			{
-				"buffer_size": 2454,
-				"line_ending": "Unix"
+				"buffer_size": 937,
+				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "Web/developer/index.php",
+			"file": "Web/includes/function/generic.php",
 			"settings":
 			{
-				"buffer_size": 4804,
+				"buffer_size": 6366,
 				"line_ending": "Unix"
 			}
 		},
@@ -423,8 +411,40 @@
 			"file": "Web/includes/connection.php",
 			"settings":
 			{
-				"buffer_size": 695,
+				"buffer_size": 845,
 				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "Web/includes/constant.php",
+			"settings":
+			{
+				"buffer_size": 665,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "Web/js/modules/home.js",
+			"settings":
+			{
+				"buffer_size": 3329,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Web/home.php",
+			"settings":
+			{
+				"buffer_size": 2722,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Web/includes/html/header.php",
+			"settings":
+			{
+				"buffer_size": 2978,
+				"line_ending": "Unix"
 			}
 		},
 		{
@@ -439,7 +459,15 @@
 			"file": "Web/css/default.css",
 			"settings":
 			{
-				"buffer_size": 79214,
+				"buffer_size": 32917,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Web/css/mobile.css",
+			"settings":
+			{
+				"buffer_size": 469,
 				"line_ending": "Unix"
 			}
 		}
@@ -588,6 +616,42 @@
 	},
 	"file_history":
 	[
+		"/Users/pedro/Sites/InEvent/Web/developer/index.php",
+		"/Users/pedro/Sites/InEvent/Web/includes/wrap.php",
+		"/Users/pedro/Sites/InEvent/Web/event.php",
+		"/Users/pedro/Sites/InEvent/Web/includes/check/login.php",
+		"/Users/pedro/Sites/InEvent/Web/js/modules/data.js",
+		"/Users/pedro/Sites/InEvent/Web/data.php",
+		"/Users/pedro/Sites/InEvent/Web/js/modules/window.js",
+		"/Users/pedro/Sites/InEvent/Web/js/modules/ajax.js",
+		"/Users/pedro/Sites/InEvent/Web/includes/html/bar.php",
+		"/Users/pedro/Sites/InEvent/Web/includes/html/header.php",
+		"/Users/pedro/Sites/InEvent/Web/developer/documentation/person.php",
+		"/Users/pedro/Sites/InEvent/Web/developer/api/modules/person.php",
+		"/Users/pedro/Sites/InEvent/Web/js/modules/validator.js",
+		"/Users/pedro/Sites/InEvent/Web/register.php",
+		"/Users/pedro/Sites/InEvent/Web/js/modules/register.js",
+		"/Users/pedro/Sites/InEvent/Web/location.php",
+		"/Users/pedro/Sites/InEvent/Web/developer/api/modules/register.php",
+		"/Users/pedro/Sites/InEvent/Web/developer/api/index.php",
+		"/Users/pedro/Sites/InEvent/Web/js/modules/home.js",
+		"/Users/pedro/Sites/InEvent/Web/includes/queries.php",
+		"/Users/pedro/Sites/InEvent/Web/home.php",
+		"/Users/pedro/Sites/InEvent/Web/includes/connection.php",
+		"/Users/pedro/Sites/InEvent/Web/js/analytics.js",
+		"/Users/pedro/Sites/InEvent/Web/includes/header.php",
+		"/Users/pedro/Sites/InEvent/Web/includes/social.php",
+		"/Users/pedro/Sites/InEvent/Web/js/modules/bar.js",
+		"/Users/pedro/Sites/InEvent/Web/js/default.php",
+		"/Users/pedro/Sites/InEvent/Web/ajax.php",
+		"/Users/pedro/Sites/InEvent/Web/js/modules/index.js",
+		"/Users/pedro/Sites/InEvent/Web/terms.php",
+		"/Users/pedro/Sites/InEvent/Web/developer/documentation/presence.php",
+		"/Users/pedro/Sites/InEvent/Web/developer/documentation/howTo.php",
+		"/Users/pedro/Sites/InEvent/Web/css/default.min.css",
+		"/Users/pedro/Sites/InEvent/Web/css/default.css",
+		"/Users/pedro/Sites/InEvent/Web/css/login.css",
+		"/Users/pedro/Sites/InEvent/README.md",
 		"/Users/pedro/Sites/Presenca-dev/Web/includes/function/utils.php",
 		"/Users/pedro/Sites/Presenca-dev/Web/includes/function/generic.php",
 		"/Users/pedro/Sites/Presenca-dev/Web/includes/social.php",
@@ -679,43 +743,7 @@
 		"/Users/pedro/Sites/Presenca-dev/Web/terms.php",
 		"/Users/pedro/Sites/Presenca-dev/Web/includes/html/wrapperExternal.php",
 		"/Users/pedro/Sites/Presenca-dev/Web/includes/html/barExternal.php",
-		"/Users/pedro/Sites/Presenca-dev/Web/proposalEESC.php",
-		"/Users/pedro/Sites/Presenca-dev/Web/oldHome.php",
-		"/Users/pedro/Sites/Presenca-dev/Web/developer/api/error_log",
-		"/Users/pedro/Sites/Presenca-dev/Web/includes/connection_sample.php",
-		"/Users/pedro/Sites/Presenca-dev/Web/includes/core.php",
-		"/Users/pedro/Sites/Presenca-dev/Web/includes/loginCheck.php",
-		"/Users/pedro/Sites/Presenca-dev/Web/ata.php",
-		"/Users/pedro/Sites/Presenca-dev/Web/presenca.php",
-		"/Users/pedro/Sites/Presenca-dev/Web/includes/utils.php",
-		"/Users/pedro/Sites/Presenca-dev/Web/includes/notification.php",
-		"/Users/pedro/Sites/Presenca-dev/Web/includes/format.php",
-		"/Users/pedro/Sites/Presenca-dev/Web/includes/generic.php",
-		"/Users/pedro/Sites/Presenca-dev/Web/includes/wrap/collection.php",
-		"/Users/pedro/Sites/Presenca-dev/Web/includes/wrap/project.php",
-		"/Users/pedro/Sites/Presenca-dev/Web/includes/wrap/group.php",
-		"/Users/pedro/Sites/Presenca-dev/Web/includes/wrap/client.php",
-		"/Users/pedro/Sites/Presenca-dev/Web/developer/documentation/client.php",
-		"/Users/pedro/Sites/Presenca-dev/Web/includes/wrap/carte.php",
-		"/Users/pedro/Sites/Presenca-dev/Web/includes/security.php",
-		"/Users/pedro/Sites/Presenca-dev/Web/login.php",
-		"/Users/pedro/Sites/Presenca-dev/Web/developer/documentation/project.php",
-		"/Users/pedro/Sites/Presenca-dev/Web/developer/documentation/home.php",
-		"/Users/pedro/Sites/Presenca-dev/Web/developer/documentation/group.php",
-		"/Users/pedro/Sites/Presenca/.gitignore",
-		"/Users/pedro/Sites/Presenca/Web/js/modules/presenca.js",
-		"/Users/pedro/Sites/Presenca/Web/includes/header.php",
-		"/Users/pedro/Sites/Presenca/Web/js/modules/np.js",
-		"/Users/pedro/Sites/Presenca/Web/js/modules/userSettings.js",
-		"/Users/pedro/Sites/Presenca/Web/js/modules/index.js",
-		"/Users/pedro/Sites/Presenca/Web/js/modules/members.js",
-		"/Users/pedro/Sites/Presenca/Web/js/modules/projects.js",
-		"/Users/pedro/Sites/Presenca/Web/js/modules/search.js",
-		"/Users/pedro/Sites/Presenca/Web/js/modules/notification.js",
-		"/Users/pedro/Sites/Presenca/Web/js/modules/bar.js",
-		"/Users/pedro/Sites/Presenca/Web/js/modules/validator.js",
-		"/Users/pedro/Sites/Presenca/Web/js/default.js",
-		"/Users/pedro/Sites/Presenca/Web/projects.php"
+		"/Users/pedro/Sites/Presenca-dev/Web/proposalEESC.php"
 	],
 	"find":
 	{
@@ -723,7 +751,7 @@
 	},
 	"find_in_files":
 	{
-		"height": 95.0,
+		"height": 0.0,
 		"where_history":
 		[
 			"/Users/pedro/Sites/InEvent/Web/",
@@ -738,6 +766,84 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"class=\"deck\"",
+			"960px",
+			"%;\n",
+			"	width: 960px;",
+			"width: 960px;",
+			"960px",
+			"	min-width: 960px;",
+			"conexao",
+			"`",
+			"telephone",
+			"cpf",
+			"name",
+			",",
+			"</",
+			"<b>",
+			"membro",
+			"null",
+			"who",
+			"filter",
+			"o <i>personID<",
+			"null",
+			"a mesa",
+			"mesa",
+			"member",
+			" Se o <i>eventID",
+			"o <i>eventID",
+			"table",
+			"tableID",
+			"'",
+			"event",
+			"presence",
+			"client",
+			"class",
+			"events",
+			"51",
+			"background-color: rgba(51, 51, 51, 0.8);",
+			"background-color: #333;",
+			"0",
+			"padding",
+			"y",
+			"presença",
+			"presence",
+			"compa",
+			"loginSessions",
+			"true",
+			"	",
+			"company",
+			"bossPa",
+			"boss",
+			"telephone",
+			"titleCon",
+			"bossEmail",
+			"bossName",
+			"cpf",
+			"$(this).first().height()",
+			"$(this).first().height();",
+			"(\"#homeContent\"",
+			"height",
+			"../",
+			"sectionVisible",
+			"visible",
+			"$(this).height()",
+			"section",
+			"20",
+			"'",
+			".on",
+			"on",
+			"alert",
+			"live",
+			"scroll",
+			"InEvent",
+			"março",
+			"PRESENÇA",
+			"https://www.presenca.me",
+			".indexContent",
+			"indexContent",
+			".carteContent",
+			"carte",
 			"Presença",
 			" (",
 			"Presença",
@@ -787,85 +893,7 @@
 			"resultUser",
 			"userID",
 			"user",
-			"tableUser",
-			"$this->",
-			"userID",
-			"$core->",
-			"name",
-			"inherit",
-			"auto",
-			"<br />",
-			"dateID",
-			"explanation",
-			"'",
-			"name",
-			"date",
-			"dateBegin",
-			"resultDate",
-			"user",
-			"shiftMem",
-			"$k",
-			"presenceID",
-			"'",
-			"justificationText",
-			"$core->tableExplanationsDefault",
-			"reviewTool",
-			"'ajaxPresence.php'",
-			"penaltyHint",
-			"div",
-			"'",
-			"dateID",
-			"id",
-			"$core->tableExplanationsUsers",
-			"'",
-			"dateID",
-			"'",
-			"Button",
-			"presenceID",
-			"seconds",
-			"name",
-			"8",
-			"http_response_code",
-			"current",
-			"timestamp",
-			"name",
-			"seconds",
-			"member",
-			"trim(htmlentities(utf8_decode",
-			"delay",
-			"seconds",
-			"especificado",
-			"user",
-			"`user`!='-'",
-			"user",
-			"enterpriseID",
-			"EnterpriseID",
-			"enterpriseID",
-			"EnterpriseID",
-			"enterpriseID",
-			"tableUser",
-			"$core->",
-			"username",
-			"member",
-			"contentText",
-			"name",
-			"mysql_query",
-			"resultado",
-			"trim(htmlentities(utf8_decode",
-			"User",
-			"user",
-			"User",
-			"memberShift",
-			"plantaoToken",
-			"silver",
-			"white",
-			"OR",
-			"AND",
-			"dateBegin",
-			"' DAY)",
-			"DATE_ADD(",
-			"confirm",
-			"plantaoToken"
+			"tableUser"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -873,6 +901,7 @@
 		"regex": false,
 		"replace_history":
 		[
+			"#indexContent",
 			"InEvent",
 			"vector",
 			"64-Pencil",
@@ -915,29 +944,30 @@
 	"groups":
 	[
 		{
-			"selected": 10,
+			"selected": 11,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "Web/home.php",
+					"file": "Web/developer/documentation/event.php",
 					"settings":
 					{
-						"buffer_size": 15140,
+						"buffer_size": 4036,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								948,
-								948
+								460,
+								460
 							]
 						],
 						"settings":
 						{
 							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"translate_tabs_to_spaces": false
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -947,37 +977,38 @@
 				},
 				{
 					"buffer": 1,
-					"file": "Web/includes/html/bar.php",
+					"file": "Web/developer/documentation/activity.php",
 					"settings":
 					{
-						"buffer_size": 4610,
+						"buffer_size": 4278,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								4224,
+								4224
 							]
 						],
 						"settings":
 						{
 							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"translate_tabs_to_spaces": false
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 279.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 2,
-					"file": "Web/includes/html/header.php",
+					"file": "Web/developer/documentation/notification.php",
 					"settings":
 					{
-						"buffer_size": 2888,
+						"buffer_size": 2959,
 						"regions":
 						{
 						},
@@ -991,7 +1022,8 @@
 						"settings":
 						{
 							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"translate_tabs_to_spaces": false
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -1001,24 +1033,25 @@
 				},
 				{
 					"buffer": 3,
-					"file": "Web/register.php",
+					"file": "Web/developer/documentation/howTo.php",
 					"settings":
 					{
-						"buffer_size": 2277,
+						"buffer_size": 2560,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								938,
+								938
 							]
 						],
 						"settings":
 						{
 							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"translate_tabs_to_spaces": false
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -1028,155 +1061,18 @@
 				},
 				{
 					"buffer": 4,
-					"file": "Web/terms.php",
+					"file": "Web/includes/header.php",
 					"settings":
 					{
-						"buffer_size": 10128,
+						"buffer_size": 937,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								283,
-								283
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "Web/data.php",
-					"settings":
-					{
-						"buffer_size": 6243,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "Web/developer/documentation/howTo.php",
-					"settings":
-					{
-						"buffer_size": 2562,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 7,
-					"file": "Web/developer/documentation/presence.php",
-					"settings":
-					{
-						"buffer_size": 2454,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 8,
-					"file": "Web/developer/index.php",
-					"settings":
-					{
-						"buffer_size": 4804,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 9,
-					"file": "Web/includes/connection.php",
-					"settings":
-					{
-						"buffer_size": 695,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								439,
-								439
+								471,
+								471
 							]
 						],
 						"settings":
@@ -1190,7 +1086,170 @@
 					"type": "text"
 				},
 				{
+					"buffer": 5,
+					"file": "Web/includes/function/generic.php",
+					"settings":
+					{
+						"buffer_size": 6366,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								236,
+								236
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "Web/includes/connection.php",
+					"settings":
+					{
+						"buffer_size": 845,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								404,
+								404
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "Web/includes/constant.php",
+					"settings":
+					{
+						"buffer_size": 665,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								90,
+								90
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "Web/js/modules/home.js",
+					"settings":
+					{
+						"buffer_size": 3329,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1200,
+								1200
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 518.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "Web/home.php",
+					"settings":
+					{
+						"buffer_size": 2722,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1487,
+								1487
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 510.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
 					"buffer": 10,
+					"file": "Web/includes/html/header.php",
+					"settings":
+					{
+						"buffer_size": 2978,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								632,
+								632
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 11,
 					"file": "README.md",
 					"settings":
 					{
@@ -1201,8 +1260,8 @@
 						"selection":
 						[
 							[
-								1083,
-								1083
+								767,
+								767
 							]
 						],
 						"settings":
@@ -1210,7 +1269,7 @@
 							"syntax": "Packages/Markdown/Markdown.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 15.0,
+						"translation.y": 52.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -1218,23 +1277,50 @@
 			]
 		},
 		{
-			"selected": 0,
+			"selected": 1,
 			"sheets":
 			[
 				{
-					"buffer": 11,
+					"buffer": 12,
 					"file": "Web/css/default.css",
 					"settings":
 					{
-						"buffer_size": 79214,
+						"buffer_size": 32917,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								18266,
+								18266
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/CSS/CSS.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 15946.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 13,
+					"file": "Web/css/mobile.css",
+					"settings":
+					{
+						"buffer_size": 469,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								136,
+								138
 							]
 						],
 						"settings":
@@ -1304,48 +1390,180 @@
 				"README.md"
 			],
 			[
-				"conn",
-				"Web/includes/connection.php"
-			],
-			[
-				"home",
+				"hom",
 				"Web/home.php"
-			],
-			[
-				"defa",
-				"Web/css/default.css"
-			],
-			[
-				"utils",
-				"Web/includes/function/utils.php"
-			],
-			[
-				"gener",
-				"Web/includes/function/generic.php"
-			],
-			[
-				"hea",
-				"Web/includes/header.php"
-			],
-			[
-				"soc",
-				"Web/includes/social.php"
-			],
-			[
-				"wind",
-				"Web/js/modules/window.js"
 			],
 			[
 				"header",
 				"Web/includes/html/header.php"
 			],
 			[
+				"mobi",
+				"Web/css/mobile.css"
+			],
+			[
+				"home",
+				"Web/js/modules/home.js"
+			],
+			[
+				"cons",
+				"Web/includes/constant.php"
+			],
+			[
+				"conn",
+				"Web/includes/connection.php"
+			],
+			[
+				"gener",
+				"Web/includes/function/generic.php"
+			],
+			[
+				"he",
+				"Web/includes/html/header.php"
+			],
+			[
+				"loca",
+				"Web/location.php"
+			],
+			[
 				"regis",
 				"Web/register.php"
 			],
 			[
+				"re",
+				"Web/developer/api/modules/register.php"
+			],
+			[
+				"regi",
+				"Web/developer/api/modules/register.php"
+			],
+			[
+				"person",
+				"Web/developer/api/modules/person.php"
+			],
+			[
+				"per",
+				"Web/developer/documentation/person.php"
+			],
+			[
+				"pers",
+				"Web/developer/api/modules/person.php"
+			],
+			[
+				"howt",
+				"Web/developer/documentation/howTo.php"
+			],
+			[
+				"noti",
+				"Web/developer/documentation/notification.php"
+			],
+			[
+				"even",
+				"Web/developer/documentation/event.php"
+			],
+			[
+				"ac",
+				"Web/developer/documentation/activity.php"
+			],
+			[
+				"inde",
+				"Web/developer/index.php"
+			],
+			[
+				"index",
+				"Web/developer/api/index.php"
+			],
+			[
+				"event",
+				"Web/developer/documentation/event.php"
+			],
+			[
+				"hme",
+				"Web/home.php"
+			],
+			[
+				"bar",
+				"Web/includes/html/bar.php"
+			],
+			[
+				"ana",
+				"Web/js/analytics.js"
+			],
+			[
+				"hea",
+				"Web/includes/html/header.php"
+			],
+			[
+				"head",
+				"Web/includes/html/header.php"
+			],
+			[
+				"h",
+				"Web/includes/header.php"
+			],
+			[
+				"quer",
+				"Web/includes/queries.php"
+			],
+			[
+				"wra",
+				"Web/includes/wrap.php"
+			],
+			[
+				"eve",
+				"Web/event.php"
+			],
+			[
+				"che/l",
+				"Web/includes/check/login.php"
+			],
+			[
+				"soc",
+				"Web/includes/social.php"
+			],
+			[
+				"valida",
+				"Web/js/modules/validator.js"
+			],
+			[
+				"data",
+				"Web/js/modules/data.js"
+			],
+			[
+				"da",
+				"Web/data.php"
+			],
+			[
+				"win",
+				"Web/js/modules/window.js"
+			],
+			[
+				"wind",
+				"Web/js/modules/window.js"
+			],
+			[
+				"ajax.j",
+				"Web/js/modules/ajax.js"
+			],
+			[
 				"ajax",
-				"Web/ajaxPresence.php"
+				"Web/ajax.php"
+			],
+			[
+				"defa",
+				"Web/js/default.php"
+			],
+			[
+				"terms",
+				"Web/terms.php"
+			],
+			[
+				"heade",
+				"Web/includes/html/header.php"
+			],
+			[
+				"utils",
+				"Web/includes/function/utils.php"
 			],
 			[
 				"member",
@@ -1364,10 +1582,6 @@
 				"Web/js/modules/ajax.js"
 			],
 			[
-				"data",
-				"Web/data.php"
-			],
-			[
 				"presence",
 				"Web/js/modules/presence.js"
 			],
@@ -1382,10 +1596,6 @@
 			[
 				"ajaxr",
 				"Web/ajaxRegister.php"
-			],
-			[
-				"ana",
-				"Web/js/analytics.js"
 			],
 			[
 				"ajaxp",
@@ -1406,10 +1616,6 @@
 			[
 				"presen",
 				"Web/includes/wrap/presence.php"
-			],
-			[
-				"noti",
-				"Web/developer/documentation/notification.php"
 			],
 			[
 				"notif",
@@ -1496,20 +1702,8 @@
 				"Web/developer/documentation/howTo.php"
 			],
 			[
-				"index",
-				"Web/developer/api/index.php"
-			],
-			[
 				"check/lo",
 				"Web/includes/check/login.php"
-			],
-			[
-				"heade",
-				"Web/includes/header.php"
-			],
-			[
-				"head",
-				"Web/includes/header.php"
 			],
 			[
 				"uti",
@@ -1526,10 +1720,6 @@
 			[
 				"fun",
 				"Web/js/modules/functions.js"
-			],
-			[
-				"quer",
-				"Web/includes/queries.php"
 			],
 			[
 				"fie",
@@ -1558,10 +1748,6 @@
 			[
 				"group",
 				"Web/developer/api/modules/group.php"
-			],
-			[
-				"cons",
-				"Web/developer/api/modules/consultant.php"
 			],
 			[
 				"client.php",
@@ -1596,10 +1782,6 @@
 				"Web/includes/wrap.php"
 			],
 			[
-				"bar",
-				"Web/includes/html/bar.php"
-			],
-			[
 				"cell",
 				"Web/includes/wrap/cell.php"
 			],
@@ -1620,24 +1802,12 @@
 				"Web/includes/check/login.php"
 			],
 			[
-				"inde",
-				"Web/developer/index.php"
-			],
-			[
-				"wra",
-				"Web/includes/html/wrapperExternal.php"
-			],
-			[
 				"propo",
 				"Web/proposalEESC.php"
 			],
 			[
 				"secu",
 				"Web/includes/function/security.php"
-			],
-			[
-				"he",
-				"Web/includes/header.php"
 			],
 			[
 				"ind",
@@ -1654,10 +1824,6 @@
 			[
 				"aj",
 				"Web/ajaxPresenca.php"
-			],
-			[
-				"hom",
-				"Web/home.php"
 			],
 			[
 				"queri",
@@ -1730,86 +1896,6 @@
 			[
 				"colle",
 				"Web/js/modules/collection.js"
-			],
-			[
-				"sele",
-				"Web/js/modules/select.js"
-			],
-			[
-				"user",
-				"Web/js/modules/userSettings.js"
-			],
-			[
-				"np.",
-				"Web/js/modules/np.js"
-			],
-			[
-				"valida",
-				"Web/js/modules/validator.js"
-			],
-			[
-				"default",
-				"Web/js/default.js"
-			],
-			[
-				"giti",
-				".gitignore"
-			],
-			[
-				"def",
-				"Web/css/default.css"
-			],
-			[
-				"wa",
-				"includes/wrapper.php"
-			],
-			[
-				"bare",
-				"includes/barExternal.php"
-			],
-			[
-				"pre",
-				"presenca.php"
-			],
-			[
-				"term",
-				"terms.php"
-			],
-			[
-				"file",
-				"fileuploader.php"
-			],
-			[
-				"lo",
-				"login.php"
-			],
-			[
-				"res",
-				"resize-class.php"
-			],
-			[
-				"g",
-				"groups.php"
-			],
-			[
-				"gr",
-				"groups.php"
-			],
-			[
-				"anal",
-				"js/analytics.min.js"
-			],
-			[
-				"appde",
-				"36eba1e1e343279857ea7f69a597324e/NegocioPresente/NegocioPresente/AppDelegate.m"
-			],
-			[
-				"uiscr",
-				"36eba1e1e343279857ea7f69a597324e/NegocioPresente/NegocioPresente/UIScrollViewInfinitePagingController~ipad.xib"
-			],
-			[
-				"appdele",
-				"36eba1e1e343279857ea7f69a597324e/NegocioPresente/NegocioPresente/AppDelegate.m"
 			]
 		],
 		"width": 0.0
@@ -1825,7 +1911,7 @@
 	"show_minimap": false,
 	"show_open_files": true,
 	"show_tabs": true,
-	"side_bar_visible": true,
+	"side_bar_visible": false,
 	"side_bar_width": 194.0,
 	"status_bar_visible": true
 }
