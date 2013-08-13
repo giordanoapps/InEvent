@@ -8,6 +8,7 @@
                 `activityMember`.`id`,
                 `activity`.`name`,
                 `activity`.`description`,
+                DAYOFYEAR(`activity`.`dateBegin`) AS `day`,
                 UNIX_TIMESTAMP(`activity`.`dateBegin`) AS `dateBegin`,
                 UNIX_TIMESTAMP(`activity`.`dateEnd`) AS `dateEnd`
             FROM
@@ -20,7 +21,8 @@
                 AND `event`.`id` = $eventID
                 AND `activityMember`.`memberID` = $memberID
             ORDER BY
-                `activity`.`dateBegin` ASC
+                `activity`.`dateBegin` ASC,
+                `activity`.`dateEnd` ASC
         ");
 
         return $result;
@@ -31,8 +33,10 @@
         $result = resourceForQuery(
         // echo (
             "SELECT
+                `activity`.`id`,
                 `activity`.`name`,
                 `activity`.`description`,
+                DAYOFYEAR(`activity`.`dateBegin`) AS `day`,
                 UNIX_TIMESTAMP(`activity`.`dateBegin`) AS `dateBegin`,
                 UNIX_TIMESTAMP(`activity`.`dateEnd`) AS `dateEnd`
             FROM
@@ -42,7 +46,8 @@
             WHERE 1
                 AND `event`.`id` = $eventID
             ORDER BY
-                `activity`.`dateBegin` ASC
+                `activity`.`dateBegin` ASC,
+                `activity`.`dateEnd` ASC
         ");
 
         return $result;

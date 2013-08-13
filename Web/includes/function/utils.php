@@ -93,39 +93,44 @@
 		}
 	}
 
-    function getMemberIDForPresenceID($presenceID) {
-        $result = resourceForQuery(
-            "SELECT
-                `shiftMember`.`memberID`
-            FROM
-                `shiftMember`
-            WHERE
-                `shiftMember`.`id` = $presenceID
-        ");
+	function getDayNameForDate($date) {
 
-        if (mysql_num_rows($result) > 0) {
-            return mysql_result($result, 0, "memberID");
-        }
-    }
+		$day = date('D', $date);
 
-    function getMemberCalendarID($memberID) {
-    	$result = resourceForQuery(
-            "SELECT
-                `member`.`calendarID`
-            FROM
-                `member`
-            INNER JOIN
-            	`shiftCalendar` ON `member`.`calendarID` = `shiftCalendar`.`id`
-            WHERE
-                `member`.`id` = $memberID
-        ");
+		$week = array(
+			'Sun' => 'Domingo',
+			'Mon' => 'Segunda-Feira',
+			'Tue' => 'Terça-Feira',
+			'Wed' => 'Quarta-Feira',
+			'Thu' => 'Quinta-Feira',
+			'Fri' => 'Sexta-Feira',
+			'Sat' => 'Sábado'
+	    );
 
-        if (mysql_num_rows($result) > 0) {
-            return mysql_result($result, 0, "calendarID");
-        } else {
-        	return 0;
-        }
-    }
+	    return $week["$day"];
+	}
+ 
+ 	function getMonthNameForDate($date) {
+
+ 		$month = date('M', $date);
+
+		$year = array(
+			'Jan' => 'Janeiro',
+			'Feb' => 'Fevereiro',
+			'Mar' => 'Março',
+			'Apr' => 'Abril',
+			'May' => 'Maio',
+			'Jun' => 'Junho',
+			'Jul' => 'Julho',
+			'Aug' => 'Agosto',
+			'Nov' => 'Novembro',
+			'Sep' => 'Setembro',
+			'Oct' => 'Outubro',
+			'Dec' => 'Dezembro'
+		);
+
+		return $year["$month"];
+	}
 
 	/**
 	 * Get the hash from the database
@@ -170,32 +175,34 @@
 		}
 	}
 
-    function resizeAllImages() {
+	function encodeEntities() {
 
-    	// Include the master class
-    	include_once(__DIR__ . "/../../resize-class.php");
+		$result = resourceForQuery(
+			"SELECT
+				`activity`.`id`,
+				`activity`.`name`,
+				`activity`.`description`
+			FROM
+				`activity`
+		");
 
-    	// Scan all files
-    	$dir = (__DIR__ . "/../../uploads");
-		$files = scandir($dir);
+		for ($i = 0; $i < mysql_num_rows($result); $i++) {
 
-		// Loop and resize
-		foreach ($files as $file) {
+			$id = mysql_result($result, $i, "id");
+			$name = htmlentities(mysql_result($result, $i, "name"), ENT_COMPAT | ENT_HTML401, "ISO-8859-1");
+			$description = htmlentities(mysql_result($result, $i, "description"), ENT_COMPAT | ENT_HTML401, "ISO-8859-1");
 
-			// Full path
-			$path = $dir . "/" . $file;
+			$insert = resourceForQuery(
+				"UPDATE
+					`activity`
+				SET
+					`activity`.`name` = '$name',
+					`activity`.`description` = '$description'
+				WHERE 1
+					AND `activity`.`id` = $id
+			");
+		}
 
-	        if (getimagesize($path) != FALSE) {
-	            // No we are going to resize the image
-	            // *** 1) Initialise / load image
-	            $resizeObj = new resize($path);
-	            // *** 2) Resize image (options: exact, portrait, landscape, auto, crop)
-	            $resizeObj -> resizeImage(256, 256, "crop");
-	            // *** 3) Save image
-	            $resizeObj -> saveImage($path, 100);
-	        }
-	    }
-    }
-
+	}
 
 ?>

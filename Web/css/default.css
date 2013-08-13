@@ -222,7 +222,7 @@ form {
 }
 
 .bar li {
-	padding: 13px 20px;
+	padding: 11px 20px;
 	margin: 0;
 	display: inline-block;
 	cursor: pointer;
@@ -353,7 +353,7 @@ form {
 
 .bar .notificationsInfo, .bar .userSettingsInfo {
 	width: 190px;
-	padding: 12.5px 0px;
+	padding: 11.5px 0px;
 	text-align: center;	
 }
 
@@ -368,7 +368,7 @@ form {
 	-webkit-box-shadow: 1px 1px 5px #000000;
 	box-shadow: 1px 1px 5px #000000;
 	border-radius: 0 0 4px 4px;
-	background-color: rgba(34, 51, 51, 0.8);
+	background-color: rgba(51, 51, 51, 1);
 }
 
 .bar .rightBar .notifications, .bar .rightBar .userSettingsMenu {
@@ -419,6 +419,7 @@ form {
 
 .bar .firstItem {
 	position: relative;
+	display: none;
 }
 
 .bar .firstAnchor, .bar .secondAnchor {
@@ -744,10 +745,10 @@ form {
 }
 
 .pageContent .placerContent {
-	width: 15%;
+	width: 20%;
 	float: left;
 	height: 100%;
-	border-right: 1px solid #A2A2A2;
+	border-right: 1px solid #0A0A0A;
 	-webkit-box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.22);
 	box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.22);
 }
@@ -945,6 +946,7 @@ form {
 	position: fixed;
 	box-sizing: border-box;
 	z-index: 24;
+	display: none;
 }
 
 .menuContent.notFixed {
@@ -1325,16 +1327,40 @@ form {
 /* Event */
 
 #eventContent .boardContent {
-	padding-top: 44px;
+	/*padding-top: 44px;*/
+}
+
+#eventContent .scheduleDay {
+	text-align: left;
+	background-color: rgba(0, 0, 0, 0.8);
+	color: #DBDBDB;
+}
+
+#eventContent .scheduleDay span {
+	padding: 10px 0;
+	display: inline-block;
+}
+
+#eventContent .scheduleDay span:first-child {
+	width: 20%;
+	text-align: center;
+	border-right: 1px solid #0A0A0A;
+	box-shadow: inset -1px 0px #333;
+	-moz-box-shadow: inset -1px 0px #333;
+	-webkit-box-shadow: inset -1px 0px #333;
+}
+
+#eventContent .scheduleDay span:last-child {
+	padding: 10px;
 }
 
 #eventContent .scheduleItem {
 	background-color: #EEE;
 	padding: 0;
-	border-bottom: 1px solid white;
-	box-shadow: inset 0 -1px #C2C1C1;
-	-moz-box-shadow: inset 0 -1px #C2C1C1;
-	-webkit-box-shadow: inset 0 -1px #C2C1C1;
+	border-bottom: 1px solid #0A0A0A;
+	box-shadow: 0 1px #333;
+	-moz-box-shadow: 0 1px #333;
+	-webkit-box-shadow: 0 1px #333;
 	position: relative;
 	height: 100px;
 }
@@ -1354,17 +1380,34 @@ form {
 }
 
 #eventContent .scheduleItem .left {
-	width: 30%;
+	width: 20%;
 	float: left;
 	height: 100%;
 }
 
-#eventContent .scheduleItem .left p {
+#eventContent .scheduleItem .left div,
+#eventContent .scheduleItem .right div {
 	display: table;
+	width: 100%;
+	height: 100%;
+}
+
+#eventContent .scheduleItem .left .upper,
+#eventContent .scheduleItem .left .bottom {
 	height: 50%;
 }
 
-#eventContent .scheduleItem .left p span {
+#eventContent .scheduleItem .right .upper {
+	height: 40%;
+}
+
+#eventContent .scheduleItem .right .bottom {
+	height: 60%;
+}
+
+#eventContent .scheduleItem .left p,
+#eventContent .scheduleItem .right p,
+#eventContent .scheduleItem .singleButton {
 	display: table-cell;
 	vertical-align: middle;
 	text-align: center;
@@ -1376,8 +1419,8 @@ form {
 }
 
 #eventContent .scheduleItem .left .dateEnd {
-	background-color: #222;
-	color: whiteSmoke;
+	background-color: rgba(0, 0, 0, 0.8);
+	color: #DBDBDB;
 }
 
 #eventContent .scheduleItem .right {
@@ -1385,21 +1428,145 @@ form {
 	height: 100%;
 }
 
-#eventContent .scheduleItem .right .upper {
-	height: 30%;
+#eventContent .scheduleItem .right .name {
+	font-size: 100%;
+	font-weight: bold;
 }
 
-#eventContent .scheduleItem .right p {
+#eventContent .scheduleItem .right .description {
+	font-size: 85%;
+	color: #6D6D6D;
+}
+
+#eventContent .scheduleItem .singleButton.toolExpel {
+	background: #EC532E;
+	border: solid 1px #B44124;
+}
+
+#eventContent .pickerDay {
+	text-align: left;
+	background-color: rgba(0, 0, 0, 0.8);
+	color: #DBDBDB;
+}
+
+#eventContent .pickerDay span {
+	padding: 10px 0;
+	display: inline-block;
+}
+
+#eventContent .pickerDay span:first-child {
+	text-align: center;
+	width: 7.5%;
+	border-right: 1px solid #0A0A0A;
+	box-shadow: inset -1px 0px #333;
+	-moz-box-shadow: inset -1px 0px #333;
+	-webkit-box-shadow: inset -1px 0px #333;
+}
+
+#eventContent .pickerDay span:last-child {
+	padding: 10px;
+}
+
+#eventContent .pickerItem {
+	background-color: #EEE;
+	padding: 0;
+	border-bottom: 1px solid #0A0A0A;
+	box-shadow: 0 1px #333;
+	-moz-box-shadow: 0 1px #333;
+	-webkit-box-shadow: 0 1px #333;
+	position: relative;
+	height: 50px;
+}
+
+#eventContent .pickerItem p {
+	margin: 0;
+}
+
+#eventContent .pickerItem img {
+	width: 16px;
+	vertical-align: top;
+	margin: 0 2px;
+}
+
+#eventContent .pickerItem span {
+	font-weight: bold;
+}
+
+#eventContent .pickerItem .left {
+	width: 15%;
+	float: left;
+	height: 100%;
+}
+
+#eventContent .pickerItem .left div,
+#eventContent .pickerItem .right div {
 	display: table;
-	height: 50%;
+	width: 100%;
+	height: 100%;
 }
 
-#eventContent .scheduleItem .right p span {
+#eventContent .pickerItem .left .upper,
+#eventContent .pickerItem .left .bottom {
+	width: 50%;
+	float: left;
+}
+
+#eventContent .pickerItem .right .upper,
+#eventContent .pickerItem .right .middle {
+	width: 40%;
+	float: left;
+}
+
+#eventContent .pickerItem .right .bottom {
+	width: 20%;
+	float: left;
+}
+
+#eventContent .pickerItem .left p,
+#eventContent .pickerItem .right p {
 	display: table-cell;
 	vertical-align: middle;
 	text-align: center;
 }
 
+#eventContent .pickerItem .left .dateBegin {
+	background-color: whiteSmoke;
+	color: #222;
+}
+
+#eventContent .pickerItem .left .dateEnd {
+	background-color: rgba(0, 0, 0, 0.8);
+	color: #DBDBDB;
+}
+
+#eventContent .pickerItem .right {
+	overflow: hidden;
+	height: 100%;
+}
+
+#eventContent .pickerItem .right .name {
+	font-size: 100%;
+	font-weight: bold;
+}
+
+#eventContent .pickerItem .right .description {
+	font-size: 85%;
+	color: #6D6D6D;
+}
+
+#eventContent .pickerItem .singleButton.toolEnroll {
+	background: #34348F;
+	border: solid 1px #1F1F63;
+}
+
+#eventContent .singleButton {
+	padding: 4px 7px;
+	color: #FFF;
+	background: #34348F;
+	border: solid 1px #1F1F63;
+	font-size: 90%;
+	margin: 6px 2px;
+}
 
 /* @end */
 

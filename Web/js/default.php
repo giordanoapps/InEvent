@@ -21,6 +21,7 @@
 		"home.js",
 		"bar.js",
 		"data.js",
+		"event.js",
 		"location.js",
 		"register.js",
 	);

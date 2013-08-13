@@ -16,7 +16,7 @@ $(document).ready(function() {
 
 		// We send the data to the server
 		$.post('developer/api/?' + $.param({
-			method: "person.enroll",
+			method: "person.register",
 			format: "html"
 		}), {
 			name: data.name,

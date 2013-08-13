@@ -33,6 +33,50 @@
 
     <div class="documentationFunctionBox">
         <p class="documentFunctionName">
+            <span>activity.requestEnrollment(<b>tokenID</b>, <b>activityID</b>, <b>personID</b> = null)</span>
+            <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=activity.requestEnrollment&tokenID=$tokenID&activityID=1&personID=null">
+        </p>
+
+        <p class="documentFunctionDescription">Solicita a entrada da pessoa <i>personID</i> no atividade <i>activityID</i>. Se a pessoa <i>personID</i> não for especificada ou o <i>tokenID</i> fornecido não tiver permissão para enviar para a pessoa <i>personID</i>, será utilizada a pessoa associada ao <i>tokenID</i>.</p>
+
+        <div class="documentationFunctionParametersBox">
+            <p><b>tokenID</b><sub>GET</sub> : id de autenticação </p>
+            <p><b>activityID</b><sub>GET</sub> : id do atividade </p>
+            <p><b>personID</b><sub>GET</sub> : id da pessoa </p>
+        </div>
+    </div>
+
+    <div class="documentationFunctionBox">
+        <p class="documentFunctionName">
+            <span>activity.dismissEnrollment(<b>tokenID</b>, <b>activityID</b>, <b>personID</b> = null)</span>
+            <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=activity.dismissEnrollment&tokenID=$tokenID&activityID=1&personID=null">
+        </p>
+
+        <p class="documentFunctionDescription">Solicita a remoção da pessoa <i>personID</i> no atividade <i>activityID</i>. Se a pessoa <i>personID</i> não for especificada ou o <i>tokenID</i> fornecido não tiver permissão para enviar para a pessoa <i>personID</i>, será utilizada a pessoa associada ao <i>tokenID</i>.</p>
+
+        <div class="documentationFunctionParametersBox">
+            <p><b>tokenID</b><sub>GET</sub> : id de autenticação </p>
+            <p><b>activityID</b><sub>GET</sub> : id do atividade </p>
+            <p><b>personID</b><sub>GET</sub> : id da pessoa </p>
+        </div>
+    </div>
+    
+    <div class="documentationFunctionBox">
+        <p class="documentFunctionName">
+            <span>activity.approveEnrollment(<b>tokenID</b>, <b>requestID</b>)</span>
+            <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=activity.approveEnrollment&tokenID=$tokenID&requestID=1">
+        </p>
+
+        <p class="documentFunctionDescription">Aprova a solicitação <i>requestID</i> para entrada da pessoa.</p>
+
+        <div class="documentationFunctionParametersBox">
+            <p><b>tokenID</b><sub>GET</sub> : id de autenticação </p>
+            <p><b>requestID</b><sub>GET</sub> : id da requisição de entrada </p>
+        </div>
+    </div>
+
+    <div class="documentationFunctionBox">
+        <p class="documentFunctionName">
             <span>activity.requestCheckIn(<b>tokenID</b>, <b>activityID</b>, <b>personID</b> = null)</span>
             <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=activity.requestCheckIn&tokenID=$tokenID&activityID=1&personID=null">
         </p>

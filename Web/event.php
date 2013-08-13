@@ -12,7 +12,7 @@
 		<div id="eventContent" class="pageContent fullPageContent" data-ajax="ajaxPresence">
 			
 			<div class="placerContent">
-				<?php printTimeline(1, 1); ?>
+				<?php printTimeline(1, $core->memberID); ?>
 			</div>
 			
 			<div class="boardContent">
@@ -37,7 +37,7 @@
 				<div class="optionContent"></div>
 				
 				<div class="realContent">
-					<?php printActivities(1); ?>
+					<?php printActivities(1, $core->memberID); ?>
 				</div>
 				
 			</div>

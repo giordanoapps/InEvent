@@ -103,7 +103,7 @@
 				
 	} else
 
-	if ($method === "enroll") {
+	if ($method === "register") {
 
 		if (isset($_POST["name"]) && isset($_POST["password"]) && isset($_POST["email"])) {
 
