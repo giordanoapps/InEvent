@@ -122,6 +122,7 @@
 			$university = getEmptyAttribute($_POST["university"]);
 			$course = getEmptyAttribute($_POST["course"]);
 			$telephone = getEmptyAttribute($_POST["telephone"]);
+			$usp = getEmptyAttribute($_POST["usp"]);
 
 			$result = resourceForQuery(
 				"SELECT
@@ -139,9 +140,9 @@
 				$insert = resourceForQuery(
 					"INSERT INTO
 						`member`
-						(`name`, `password`, `cpf`, `rg`, `telephone`, `email`, `university`, `course`)
+						(`name`, `password`, `cpf`, `rg`, `usp`, `telephone`, `email`, `university`, `course`)
 					VALUES 
-						('$name', '" . Bcrypt::hash($password) . "', '$cpf', '$rg', '$telephone', '$email', '$university', '$course')
+						('$name', '" . Bcrypt::hash($password) . "', '$cpf', '$rg', '$usp', '$telephone', '$email', '$university', '$course')
 				");
 
 				$memberID = mysql_insert_id();

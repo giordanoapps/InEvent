@@ -13,16 +13,6 @@
 			
 			<div class="boardContent">
 				<div class="boardContentInnerWrapper">
-
-<!--					<div class="pageContentBox">
-						<div class="facebookBox">
-							<img src="images/facebookButton.png" name="" id="" />
-							<!-- <fb:login-button show-faces="true" width="200" max-rows="1"></fb:login-button> --*>
-						</div>
-						<div class="standardBox">
-							
-						</div>
-					</div>-->
 					
 					<div class="pageContentBox">
 						<form method="post" action="#" class="dataForm">
@@ -157,6 +147,22 @@
 									placeholder="Senha"
 								/>
 							</p>
+
+							<p class	="miniIntro">Caso seja aluno da USP, </p>
+
+							<p class="halfWidth">
+								<input
+									type="usp"
+									name="usp"
+									id="usp"
+									class="usp"
+									value=""
+									placeholder="Número USP"
+								/>
+							</p>
+
+							<p>Caso seja aluno da USP e também curse Engenharia Aeronáutica, preencha o formulário complementar disponível em <a href="https://docs.google.com/forms/d/16EwOvoq24_b8P4LG9Pz7bgr5gVL9y9m3SoTekTxXYYw/viewform" target="_blank">https://docs.google.com/forms/d/16EwOvoq24_b8P4LG9Pz7bgr5gVL9y9m3SoTekTxXYYw/viewform</a>.</p>
+							
 							
 							<div class="checkBoxWrapper">
 								<p>

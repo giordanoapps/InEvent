@@ -1399,6 +1399,11 @@ form {
 	width: 261px;
 }
 
+#dataContent .dataForm .miniIntro {
+	vertical-align: bottom;
+	margin-right: 0;
+}
+
 #dataContent .dataForm .checkBoxWrapper {
 	text-align: center;
 	margin: 15px 20px;

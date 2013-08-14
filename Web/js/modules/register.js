@@ -26,7 +26,8 @@ $(document).ready(function() {
 			rg: data.rg,
 			telephone: data.telephone,
 			university: data.university,
-			course: data.course
+			course: data.course,
+			usp: data.usp
 		},
 		function(data, textStatus, jqXHR) {
 
