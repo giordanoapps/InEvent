@@ -8,7 +8,6 @@
 
 #import "LogItemViewCell.h"
 #import "ColorThemeController.h"
-#import "BenchView.h"
 
 @implementation LogItemViewCell
 
@@ -40,11 +39,5 @@
 }
 
 #pragma mark - Setters
-
-- (void)setTable:(BenchView *)table {
-    [_table removeFromSuperview];
-    _table = table;
-    [self addSubview:table];
-}
 
 @end

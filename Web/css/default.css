@@ -1129,7 +1129,7 @@ form {
 #eventContent .scheduleItem .right .hint::before {
 	top: 1px;
 	right: 1px;
-	border-width: 0px 20px 20px 0px;
+	border-width: 0px 25px 25px 0px;
 }
 
 #eventContent .scheduleItem .right .hintApproved::before {

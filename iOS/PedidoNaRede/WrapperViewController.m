@@ -10,10 +10,8 @@
 #import "WrapperViewController.h"
 #import "AppDelegate.h"
 #import "MapViewController.h"
-#import "CheckViewController.h"
 #import "CoolBarButtonItem.h"
-#import "TableToken.h"
-#import "CompanyToken.h"
+#import "EventToken.h"
 #import "HumanToken.h"
 #import "UINavigationBar+Height.h"
 
@@ -207,8 +205,6 @@
         // We check which permission we should remove
         if ([[HumanToken sharedInstance] isMemberAuthenticated]) {
             [[HumanToken sharedInstance] removeMember];
-        } else {
-            [[TableToken sharedInstance] removeInvalidMemberFromTable];
         }
         
         // Update the state of the restaurant controller
@@ -230,7 +226,7 @@
     
     if (buttonIndex == 1) {
         if (alertView.errorCode == 401) {
-            [[TableToken sharedInstance] removeInvalidMemberFromTable];
+            [[HumanToken sharedInstance] removeMember];
         } else if (_apiController != nil) {
             [_apiController start];
         }

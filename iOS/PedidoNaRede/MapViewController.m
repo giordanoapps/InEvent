@@ -8,14 +8,12 @@
 
 #import "MapViewController.h"
 #import <QuartzCore/QuartzCore.h>
-#import "BenchMapViewController.h"
 #import "AppDelegate.h"
 #import "NSString+HTML.h"
 #import "MKPointExpandedAnnotation.h"
 #import "InformationViewController.h"
 #import "ODRefreshControl.h"
-#import "TableToken.h"
-#import "CompanyToken.h"
+#import "EventToken.h"
 #import "GAI.h"
 #import <Parse/Parse.h>
 
@@ -105,7 +103,7 @@
 #pragma mark - Notification Methods
 
 - (void)loadData {
-    [[[APIController alloc] initWithDelegate:self forcing:YES] companyGetCompanies];
+//    [[[APIController alloc] initWithDelegate:self forcing:YES] eventGetEvents];
 }
 
 #pragma mark - Location
@@ -163,25 +161,24 @@
 - (void)didSelectCompanyAtRow:(NSInteger)row {
     
     // We set some essential data
-    CompanyToken *company = [CompanyToken sharedInstance];
+    EventToken *company = [EventToken sharedInstance];
     NSDictionary *dictionary = [self.companies objectAtIndex:row];
     
     // Properties
-    NSInteger companyID = [[dictionary objectForKey:@"id"] integerValue];
-    NSString *tradeName = [[dictionary objectForKey:@"tradeName"] stringByDecodingHTMLEntities];
+    NSInteger eventID = [[dictionary objectForKey:@"id"] integerValue];
+    NSString *name = [[dictionary objectForKey:@"tradeName"] stringByDecodingHTMLEntities];
     NSInteger carteID = [[dictionary objectForKey:@"mainCarte"] integerValue];
     
-    [company setCompanyID:companyID];
-    [company setTradeName:tradeName];
-    [company setEnterpriseStatesWithWaiter:[[dictionary objectForKey:@"waiterAvailable"] boolValue] order:[[dictionary objectForKey:@"orderAvailable"] boolValue] reservation:NO chat:[[dictionary objectForKey:@"chatAvailable"] boolValue]];
+    [company setEventID:eventID];
+    [company setName:name];
     
     // Notify our tracker about the new event
     id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-    [tracker sendEventWithCategory:@"company" withAction:@"getCompany" withLabel:@"iOS" withValue:[NSNumber numberWithInteger:companyID]];
+    [tracker sendEventWithCategory:@"event" withAction:@"getEvent" withLabel:@"iOS" withValue:[NSNumber numberWithInteger:eventID]];
     
     // Notify our tracker about the new event
     PFInstallation *currentInstallation = [PFInstallation currentInstallation];
-    [currentInstallation addUniqueObject:[NSString stringWithFormat:@"carte/%d", carteID] forKey:@"channels"];
+    [currentInstallation addUniqueObject:[NSString stringWithFormat:@"event/%d", carteID] forKey:@"channels"];
     [currentInstallation saveEventually];
 
     // Notify about the new company to our views
@@ -250,7 +247,7 @@
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     // Load
-    [[[APIController alloc] initWithDelegate:self] companyGetCompanies];
+//    [[[APIController alloc] initWithDelegate:self] companyGetEvents];
     
     // Show the table
     [UIView animateWithDuration:0.5 animations:^{
@@ -265,10 +262,10 @@
     
     // Load all the data if the search is empty
     if ([textField.text isEqualToString:@""]) {
-        [[[APIController alloc] initWithDelegate:self] companyGetCompanies];
+//        [[[APIController alloc] initWithDelegate:self] companyGetEvents];
     } else {
         // Load information from the server
-        [[[APIController alloc] initWithDelegate:self forcing:YES] companyGetCompaniesForQuery:textField.text];
+//        [[[APIController alloc] initWithDelegate:self forcing:YES] companyGetEventsForQuery:textField.text];
     }
 }
 
@@ -279,7 +276,7 @@
 }
 
 - (BOOL)textFieldShouldClear:(UITextField *)textField {
-    [[[APIController alloc] initWithDelegate:self] companyGetCompanies];
+//        [[[APIController alloc] initWithDelegate:self] companyGetEvents];
     
     return YES;
 }

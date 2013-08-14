@@ -52,12 +52,9 @@
                 </div>
             </div>
             <div class="right">
-                <div class="upper">
+                <div class="upper" title="<?php if ($data['approved'] == 1) { ?>Aprovado<?php } else { ?>Lista de espera<?php } ?>">
                     <p class="name"><?php echo $data['name'] ?></p>
-                    <p
-                        class="hint <?php if ($data['approved'] == 1) { ?>hintApproved<?php } else { ?>hintDenied<?php } ?>"
-                        title="<?php if ($data['approved'] == 1) { ?>Aprovado<?php } else { ?>Lista de espera<?php } ?>">
-                    </p>
+                    <p class="hint <?php if ($data['approved'] == 1) { ?>hintApproved<?php } else { ?>hintDenied<?php } ?>"></p>
                 </div>
                 <div class="bottom">
                     <p class="description"><?php echo $data['description'] ?></p>

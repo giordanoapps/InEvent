@@ -20,7 +20,7 @@
             INNER JOIN
                 `event` ON `event`.`id` = `activity`.`eventID`
             LEFT JOIN
-                `activityMember` ON `activity`.`id` = `activityMember`.`activityID`
+                `activityMember` ON `activity`.`id` = `activityMember`.`activityID` AND `activityMember`.`memberID` = $memberID
             LEFT JOIN
                 `activityGroup` ON `activity`.`groupID` = `activityGroup`.`id`
             WHERE 1
@@ -55,7 +55,7 @@
             FROM
                 `activity`
             LEFT JOIN
-                `activityMember` ON `activity`.`id` = `activityMember`.`activityID`
+                `activityMember` ON `activity`.`id` = `activityMember`.`activityID` AND `activityMember`.`memberID` = $memberID
             LEFT JOIN
                 `activityGroup` ON `activity`.`groupID` = `activityGroup`.`id`
             WHERE 1
@@ -88,6 +88,35 @@
                 `event` ON `event`.`id` =  `activity`.`eventID`
             WHERE 1
                 AND `event`.`id` = $eventID
+            ORDER BY
+                `activity`.`dateBegin` ASC,
+                `activity`.`dateEnd` ASC
+        ");
+
+        return $result;
+    }
+
+    function getTimelineForMemberQuery($eventID, $memberID) {
+
+        $result = resourceForQuery(
+        // echo (
+            "SELECT
+                `activity`.`id`,
+                `activity`.`name`,
+                `activity`.`description`,
+                `activity`.`highlight`,
+                `activity`.`dateBegin`,
+                `activity`.`dateEnd`,
+                IF(`activityMember`.`memberID` = $memberID, `activityMember`.`approved`, 0) AS `approved`
+            FROM
+                `activity`
+            LEFT JOIN
+                `activityMember` ON `activity`.`id` = `activityMember`.`activityID`
+            WHERE 1
+                AND `activity`.`eventID` = $eventID
+                AND `activityMember`.`memberID` = $memberID
+            GROUP BY
+                `activity`.`id`
             ORDER BY
                 `activity`.`dateBegin` ASC,
                 `activity`.`dateEnd` ASC

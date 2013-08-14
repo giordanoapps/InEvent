@@ -7,7 +7,7 @@
 //
 
 #import "HumanToken.h"
-#import "CompanyToken.h"
+#import "EventToken.h"
 
 @implementation HumanToken
 
@@ -33,8 +33,8 @@
     [self storeEssentialData];
 }
 
-- (void)setCompanies:(NSArray *)companies {
-    _companies = companies;
+- (void)setEvents:(NSArray *)events {
+    _events = events;
     
     [self storeEssentialData];
 }
@@ -47,12 +47,6 @@
 
 - (void)setName:(NSString *)name {
     _name = name;
-    
-    [self storeEssentialData];
-}
-
-- (void)setPhoto:(NSString *)photo {
-    _photo = photo;
     
     [self storeEssentialData];
 }
@@ -72,10 +66,9 @@
     NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
     
     [dictionary setValue:_tokenID forKey:@"tokenID"];
-    [dictionary setValue:_companies forKey:@"companies"];
+    [dictionary setValue:_events forKey:@"events"];
     [dictionary setValue:[NSNumber numberWithInteger:_memberID] forKey:@"memberID"];
     [dictionary setValue:_name forKey:@"name"];
-    [dictionary setValue:_photo forKey:@"photo"];
     
     // Save it
     [dictionary writeToFile:[self essentialDataPath] atomically:YES];
@@ -86,10 +79,9 @@
     
     if (dictionary != nil) {
         _tokenID = [dictionary valueForKey:@"tokenID"];
-        _companies = [dictionary valueForKey:@"companies"];
+        _events = [dictionary valueForKey:@"events"];
         _memberID = [[dictionary objectForKey:@"memberID"] integerValue];
         _name = [dictionary valueForKey:@"name"];
-        _photo = [dictionary valueForKey:@"photo"];
     } else {
         [self resetData];
     }
@@ -97,10 +89,9 @@
 
 - (void)resetData {
     _tokenID = nil;
-    _companies = nil;
+    _events = nil;
     _memberID = 0;
     _name = nil;
-    _photo = nil;
 }
 
 - (void)dealloc {
@@ -117,28 +108,15 @@
     }
 }
 
-- (BOOL)isMemberWorking {
-    CompanyToken *company = [CompanyToken sharedInstance];
-    
-    if ([company isCompanySelected]) {
-        return [self worksAtCompany:company.companyID];
-    } else {
-        return NO;
-    }
-}
-
-- (BOOL)worksAtCompany:(NSInteger)companyID {
-    if (_companies != nil) {
-        for (int i = 0; i < [_companies count]; i++) {
-            if ([[[_companies objectAtIndex:i] objectForKey:@"id"] integerValue] == companyID) {
-                return YES;
-            }
-        }
-    }
-
-    // Deny if not found
-    return NO;
-}
+//- (BOOL)isMemberWorking {
+//    EventToken *company = [EventToken sharedInstance];
+//    
+//    if ([company isCompanySelected]) {
+//        return [self worksAtCompany:company.companyID];
+//    } else {
+//        return NO;
+//    }
+//}
 
 - (void)removeMember {
     // Remove all the data

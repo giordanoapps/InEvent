@@ -41,7 +41,7 @@
 
         <div class="documentationFunctionParametersBox">
             <p><b>tokenID</b><sub>GET</sub> : id de autenticação </p>
-            <p><b>activityID</b><sub>GET</sub> : id do atividade </p>
+            <p><b>activityID</b><sub>GET</sub> : id da atividade </p>
             <p><b>personID</b><sub>GET</sub> : id da pessoa </p>
         </div>
     </div>
@@ -52,11 +52,11 @@
             <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=activity.dismissEnrollment&tokenID=$tokenID&activityID=1&personID=null">
         </p>
 
-        <p class="documentFunctionDescription">Solicita a remoção da pessoa <i>personID</i> no atividade <i>activityID</i>. Se a pessoa <i>personID</i> não for especificada ou o <i>tokenID</i> fornecido não tiver permissão para enviar para a pessoa <i>personID</i>, será utilizada a pessoa associada ao <i>tokenID</i>.</p>
+        <p class="documentFunctionDescription">Solicita a remoção da pessoa <i>personID</i> da atividade <i>activityID</i>. Se a pessoa <i>personID</i> não for especificada ou o <i>tokenID</i> fornecido não tiver permissão para enviar para a pessoa <i>personID</i>, será utilizada a pessoa associada ao <i>tokenID</i>.</p>
 
         <div class="documentationFunctionParametersBox">
             <p><b>tokenID</b><sub>GET</sub> : id de autenticação </p>
-            <p><b>activityID</b><sub>GET</sub> : id do atividade </p>
+            <p><b>activityID</b><sub>GET</sub> : id da atividade </p>
             <p><b>personID</b><sub>GET</sub> : id da pessoa </p>
         </div>
     </div>

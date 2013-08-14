@@ -9,11 +9,11 @@
 #import "AppDelegate.h"
 #import "UIImage+Color.h"
 #import "AboutViewController.h"
-#import "ReservationViewController.h"
-#import "RestaurantViewController.h"
+#import "ScheduleViewController.h"
 #import "ColorThemeController.h"
 #import "PushController.h"
 #import "HumanViewController.h"
+#import "ReaderViewController.h"
 #import "LauchImageViewController.h"
 #import "GAI.h"
 #import <FacebookSDK/FacebookSDK.h>
@@ -22,7 +22,7 @@
 @interface AppDelegate ()
 
 @property (strong, nonatomic) UINavigationController *humanViewController;
-@property (strong, nonatomic) RestaurantViewController *restaurantViewController;
+@property (strong, nonatomic) UINavigationController *scheduleViewController;
 @property (strong, nonatomic) UINavigationController *aboutViewController;
 
 @end
@@ -65,34 +65,39 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackTranslucent];
 
-    // Each controller
-    // LOGIN
-    _humanViewController = [[UINavigationController alloc] initWithRootViewController:[[HumanViewController alloc] initWithNibName:@"HumanViewController" bundle:nil]];
-    
-    // RESTAURANT
-    _restaurantViewController = [[RestaurantViewController alloc] initWithTabBarHeight:(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? 70 : 50];
-    [_restaurantViewController setMinimumHeightToDisplayTitle:40.0];
-    
-    // ABOUT
-    _aboutViewController = [[UINavigationController alloc] initWithRootViewController:[[AboutViewController alloc] initWithNibName:@"AboutViewController" bundle:nil]];
-    
-    // Global Controller
-    _menuController = [[MenuViewController alloc] initWithMenuWidth:180.0 numberOfFolds:3];
-    [_menuController setDelegate:self];
-    [_menuController setViewControllers:[NSMutableArray arrayWithObjects:_humanViewController, _restaurantViewController, _aboutViewController, nil]];
-    
-    // Set the default theme color
+//    // Each controller
+//    // LOGIN
+//    _humanViewController = [[UINavigationController alloc] initWithRootViewController:[[HumanViewController alloc] initWithNibName:@"HumanViewController" bundle:nil]];
+//    
+//    // SCHEDULE
+//    _scheduleViewController = [[UINavigationController alloc] initWithRootViewController:[[ScheduleViewController alloc] initWithNibName:@"ScheduleViewController" bundle:nil]];
+//    
+//    // ABOUT
+//    _aboutViewController = [[UINavigationController alloc] initWithRootViewController:[[AboutViewController alloc] initWithNibName:@"AboutViewController" bundle:nil]];
+//    
+//    // Global Controller
+//    _menuController = [[MenuViewController alloc] initWithMenuWidth:180.0 numberOfFolds:3];
+//    [_menuController setDelegate:self];
+//    [_menuController setViewControllers:[NSMutableArray arrayWithObjects:_humanViewController, _scheduleViewController, _aboutViewController, nil]];
+//    
+//    // Set the default theme color
     [[ColorThemeController sharedInstance] setTheme:ColorThemePetoskeyStone];
-    
-    // Create components
-    [self createCustomAppearance];
-    [self createGoogleAnalyticsTracker];
-    [self createParseTrackerWithApplication:application withOptions:launchOptions];
-
-    
-    // Set the default controller
-    self.window.rootViewController = self.menuController;
+//
+//    // Create components
+//    [self createCustomAppearance];
+//    [self createGoogleAnalyticsTracker];
+//    [self createParseTrackerWithApplication:application withOptions:launchOptions];
+//
+//    
+//    // Set the default controller
+//    self.window.rootViewController = self.menuController;
 //    self.window.rootViewController = [[LauchImageViewController alloc] initWithNibName:@"LauchImageViewController" bundle:nil];
+    
+    ReaderViewController *b = [[ReaderViewController alloc] initWithNibName:@"ReaderViewController" bundle:nil];
+    [b setMoveKeyboardRatio:0.0];
+    UINavigationController *a = [[UINavigationController alloc] initWithRootViewController:b];
+    self.window.rootViewController = a;
+
 
     // Display it
     [self.window makeKeyAndVisible];
@@ -184,12 +189,12 @@
 #ifdef DEBUG
     [GAI sharedInstance].debug = NO;
 #endif
-    [[GAI sharedInstance] trackerWithTrackingId:@"UA-33888939-3"];
+    [[GAI sharedInstance] trackerWithTrackingId:@"UA-33888939-6"];
 }
 
 - (void)createParseTrackerWithApplication:(UIApplication *)application withOptions:(NSDictionary *)launchOptions {
     // Create the Parse tracker
-    [Parse setApplicationId:@"7ivHXgEjQsWGz9fiZ9PcvMsCXgq2KdK6a3oyUbuV" clientKey:@"H9DsNzeOxWwtnG22Yhh7AiQTVsAHQz9LOVlR64a8"];
+    [Parse setApplicationId:@"GVhc1mnm0Zi2b7RxOZ8jFNbqhYQIE59sYxfKSlyE" clientKey:@"vaCGSz1JXSVkDNTX9oE8bwu15faHHVi3B3ChLgRL"];
     
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
     

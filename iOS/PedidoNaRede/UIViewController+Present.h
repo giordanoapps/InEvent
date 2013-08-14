@@ -7,17 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "BenchViewControllerDelegate.h"
 
 @interface UIViewController (Present)
 
-- (BOOL)verifyEnterprise;
+- (BOOL)verifyEvent;
 - (BOOL)verifyPerson;
-- (BOOL)verifyTable;
-- (BOOL)verifyTableForType:(TableViewData)type;
-- (void)verifyCheck;
-- (void)verifyFeedback;
-- (void)verifyWaiter;
-- (void)animateAlongPathWithImageView:(UIImageView *)fixedImageView withRootTouch:(UITouch *)rootTouch withInternalPosition:(CGPoint)internalPosition;
 
 @end

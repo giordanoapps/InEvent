@@ -47,288 +47,107 @@
     return self;
 }
 
-#pragma mark - Cartes
-- (void)carteGetLastChangeDateAtCarte:(NSInteger)carteID {
-    
-    NSDictionary *attributes = @{@"GET" : @{@"carteID" : [NSString stringWithFormat:@"%d", carteID]}};
-    
-    [self JSONObjectWithNamespace:@"carte" method:@"getCarteLastChangeDate" attributes:attributes];
-}
+#pragma mark - Activity
 
-- (void)carteGetCompleteMainCarteAtCompany:(NSInteger)companyID {
-    
-    NSDictionary *attributes = @{@"GET" : @{@"companyID" : [NSString stringWithFormat:@"%d", companyID]}};
-    
-    [self JSONObjectWithNamespace:@"carte" method:@"getCompleteMainCarte" attributes:attributes];
-}
-
-- (void)carteGetMainCarteAtCompany:(NSInteger)companyID {
-    
-    NSDictionary *attributes = @{@"GET" : @{@"companyID" : [NSString stringWithFormat:@"%d", companyID]}};
-    
-    [self JSONObjectWithNamespace:@"carte" method:@"getMainCarte" attributes:attributes];
-}
-
-- (void)carteGetCategoriesAtCarte:(NSInteger)carteID {
- 
-    NSDictionary *attributes = @{@"GET" : @{@"carteID" : [NSString stringWithFormat:@"%d", carteID]}};
-    
-    [self JSONObjectWithNamespace:@"carte" method:@"getCategories" attributes:attributes];
-}
-
-- (void)carteGetItemsAtCategory:(NSInteger)categoryID {
-    
-    NSDictionary *attributes = @{@"GET" : @{@"categoryID" : [NSString stringWithFormat:@"%d", categoryID]}};
-    
-    [self JSONObjectWithNamespace:@"carte" method:@"getItems" attributes:attributes];
-}
-
-- (void)carteGetSingleItem:(NSInteger)itemID {
-    
-    NSDictionary *attributes = @{@"GET" : @{@"itemID" : [NSString stringWithFormat:@"%d", itemID]}};
-    
-    [self JSONObjectWithNamespace:@"carte" method:@"getSingleItem" attributes:attributes];
-}
-
-#pragma mark - Chat
-- (void)chatIsAvailableAtCompany:(NSInteger)companyID {
-    
-    NSDictionary *attributes = @{@"GET" : @{@"companyID" : [NSString stringWithFormat:@"%d", companyID]}};
-    
-    [self JSONObjectWithNamespace:@"chat" method:@"isAvailable" attributes:attributes];
-}
-
-- (void)chatSetCanChat:(NSInteger)canChat withToken:(NSString *)tokenID {
+- (void)activityRequestEnrollmentAtActivity:(NSInteger)activityID withTokenID:(NSString *)tokenID {
 
     if (tokenID != nil) {
-        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID}, @"POST" : @{@"canChat" : [NSString stringWithFormat:@"%d", canChat]}};
+        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID, @"activityID" : [NSString stringWithFormat:@"%d", activityID]}};
         
-        [self JSONObjectWithNamespace:@"chat" method:@"setCanChat" attributes:attributes];
+        [self JSONObjectWithNamespace:@"activity" method:@"requestEnrollment" attributes:attributes];
     }
 }
 
-- (void)chatGetPeopleAvailableToChatAtTable:(NSInteger)tableID {
-
-    NSDictionary *attributes = @{@"GET" : @{@"tableID" : [NSString stringWithFormat:@"%d", tableID]}};
-    
-    [self JSONObjectWithNamespace:@"chat" method:@"getPeopleAvailableToChat" attributes:attributes];
-}
-
-- (void)chatCreateGroupWithPerson:(NSInteger)personID withToken:(NSString *)tokenID {
-    
-    if (tokenID != nil) {
-        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID}, @"POST" : @{@"personID" : [NSString stringWithFormat:@"%d", personID]}};
-        
-        [self JSONObjectWithNamespace:@"chat" method:@"createGroup" attributes:attributes];
-    }
-}
-
-- (void)chatAddPeople:(NSInteger)personID toGroup:(NSInteger)groupID withToken:(NSString *)tokenID {
-    
-    if (tokenID != nil) {
-        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID}, @"POST" : @{@"personID" : [NSString stringWithFormat:@"%d", personID], @"groupID" : [NSString stringWithFormat:@"%d", groupID]}};
-        
-        [self JSONObjectWithNamespace:@"chat" method:@"addPeopleToGroup" attributes:attributes];
-    }
-}
-
-- (void)chatGetPeopleAtGroup:(NSInteger)groupID withToken:(NSString *)tokenID {
-    
-    if (tokenID != nil) {
-        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID, @"groupID" : [NSString stringWithFormat:@"%d", groupID]}};
-        
-        [self JSONObjectWithNamespace:@"chat" method:@"getPeopleAtGroup" attributes:attributes];
-    }
-}
-
-- (void)chatSendMessage:(NSString *)message toGroup:(NSInteger)groupID withToken:(NSString *)tokenID {
-    
-    if (message != nil && tokenID != nil) {
-        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID}, @"POST" : @{@"message" : message, @"groupID" : [NSString stringWithFormat:@"%d", groupID]}};
-        
-        [self JSONObjectWithNamespace:@"chat" method:@"sendMessage" attributes:attributes];
-    }
-}
-
-- (void)chatGetUndeliveredMessagesWithToken:(NSString *)tokenID {
-    
-    if (tokenID != nil) {
-        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID}};
-        
-        [self JSONObjectWithNamespace:@"chat" method:@"getUndeliveredMessages" attributes:attributes];
-    }
-}
-
-- (void)chatGetMessagesSinceMessage:(NSInteger)messageID withToken:(NSString *)tokenID {
-    
-    if (tokenID != nil) {
-        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID, @"messageID" : [NSString stringWithFormat:@"%d", messageID]}};
-        
-        [self JSONObjectWithNamespace:@"chat" method:@"getMessagesSinceMessage" attributes:attributes];
-    }
-}
-
-#pragma mark - Companies
-- (void)companyGetCompaniesCount {
-    [self JSONObjectWithNamespace:@"company" method:@"getCompaniesCount" attributes:nil];
-}
-
-- (void)companyGetCompanies {
-    [self JSONObjectWithNamespace:@"company" method:@"getCompanies" attributes:nil];
-}
-
-- (void)companyGetSingleCompany:(NSInteger)companyID {
-    
-    NSDictionary *attributes = @{@"GET" : @{@"companyID" : [NSString stringWithFormat:@"%d", companyID]}};
-    
-    [self JSONObjectWithNamespace:@"company" method:@"getSingleCompany" attributes:attributes];
-}
-
-- (void)companyGetCompaniesForQuery:(NSString *)searchQuery {
-    
-    if (searchQuery != nil) {
-        NSDictionary *attributes = @{@"GET" : @{@"searchQuery" : searchQuery}};
-        
-        [self JSONObjectWithNamespace:@"company" method:@"getCompaniesForQuery" attributes:attributes];
-    }
-}
-
-#pragma mark - Delivery
-- (void)deliveryIsAvailableAtCompany:(NSInteger)companyID {
-
-    NSDictionary *attributes = @{@"GET" : @{@"companyID" : [NSString stringWithFormat:@"%d", companyID]}};
-    
-    [self JSONObjectWithNamespace:@"delivery" method:@"isAvailable" attributes:attributes];
-}
-
-- (void)deliverySendOrderWithItems:(NSMutableSet *)items withToken:(NSString *)tokenID {
-    
-    if (tokenID != nil && items != nil) {
-        
-        NSData *dataItems = [NSJSONSerialization dataWithJSONObject:[items allObjects] options:0 error:nil];
-        NSString *stringItems = [[NSString alloc] initWithData:dataItems encoding:NSUTF8StringEncoding];
-        
-        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID}, @"POST" : @{@"items": stringItems}};
-        
-        [self JSONObjectWithNamespace:@"delivery" method:@"sendOrderWithOptions" attributes:attributes];
-    }
-}
-
-- (void)deliveryCancelOrder:(NSInteger)deliveryID withToken:(NSString *)tokenID {
-    
-    if (tokenID != nil) {
-        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID, @"deliveryID" : [NSString stringWithFormat:@"%d", deliveryID]}};
-        
-        [self JSONObjectWithNamespace:@"delivery" method:@"cancelOrder" attributes:attributes];
-    }
-}
-
-- (void)deliveryGetOrdersWithToken:(NSString *)tokenID {
+- (void)activityRequestEnrollmentForPerson:(NSInteger)personID atActivity:(NSInteger)activityID withTokenID:(NSString *)tokenID {
 
     if (tokenID != nil) {
-        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID}};
+        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID, @"activityID" : [NSString stringWithFormat:@"%d", activityID], @"personID" : [NSString stringWithFormat:@"%d", personID]}};
         
-        [self JSONObjectWithNamespace:@"delivery" method:@"getOrders" attributes:attributes];
+        [self JSONObjectWithNamespace:@"activity" method:@"requestEnrollment" attributes:attributes];
     }
 }
 
-- (void)deliveryGetOrderStates {
-    [self JSONObjectWithNamespace:@"delivery" method:@"getOrderStates" attributes:nil];
-}
+- (void)activityDismissEnrollmentAtActivity:(NSInteger)activityID withTokenID:(NSString *)tokenID {
 
-#pragma mark - Table
-- (void)tableRequestCheckInAtTable:(NSInteger)tableID withToken:(NSString *)tokenID {
-    
     if (tokenID != nil) {
-        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID}, @"POST" : @{@"tableID" : [NSString stringWithFormat:@"%d", tableID]}};
+        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID, @"activityID" : [NSString stringWithFormat:@"%d", activityID]}};
         
-        [self JSONObjectWithNamespace:@"table" method:@"requestCheckIn" attributes:attributes];
+        [self JSONObjectWithNamespace:@"activity" method:@"dismissEnrollment" attributes:attributes];
     }
 }
 
-- (void)tableRequestCheckInForPerson:(NSInteger)personID atTable:(NSInteger)tableID withToken:(NSString *)tokenID {
-    
+- (void)activityDismissEnrollmentForPerson:(NSInteger)personID atActivity:(NSInteger)activityID withTokenID:(NSString *)tokenID {
+
     if (tokenID != nil) {
-        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID}, @"POST" : @{@"tableID" : [NSString stringWithFormat:@"%d", tableID], @"personID" : [NSString stringWithFormat:@"%d", personID]}};
+        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID, @"activityID" : [NSString stringWithFormat:@"%d", activityID], @"personID" : [NSString stringWithFormat:@"%d", personID]}};
         
-        [self JSONObjectWithNamespace:@"table" method:@"requestCheckIn" attributes:attributes];
+        [self JSONObjectWithNamespace:@"activity" method:@"dismissEnrollment" attributes:attributes];
     }
 }
 
-//- (void)tableRequestCheckInForAnonymousAtTable:(NSInteger)tableID withName:(NSString *)name {
-//    
-//    if (name != nil) {
-//        NSDictionary *attributes = @{@"GET" : @{@"tableID" : [NSString stringWithFormat:@"%d", tableID]}, @"POST" : @{@"name" : name}};
-//        
-//        [self JSONObjectWithNamespace:@"table" method:@"requestCheckInForAnonymous" attributes:attributes];
-//    }
-//}
+- (void)activityGetPeopleAtActivity:(NSInteger)activityID withTokenID:(NSString *)tokenID {
 
-- (void)tableApproveCheckIn:(NSInteger)requestID withToken:(NSString *)tokenID {
-    
     if (tokenID != nil) {
-        NSDictionary *attributes = @{@"GET" : @{@"requestID" : [NSString stringWithFormat:@"%d", requestID], @"tokenID" : tokenID}};
+        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID, @"activityID" : [NSString stringWithFormat:@"%d", activityID], @"selection" : @"all"}};
         
-        [self JSONObjectWithNamespace:@"table" method:@"approveCheckIn" attributes:attributes];
+        [self JSONObjectWithNamespace:@"activity" method:@"getPeople" attributes:attributes];
     }
 }
 
-- (void)tableCheckOutWithToken:(NSString *)tokenID {
-    
+- (void)activityGetQuestionsAtActivity:(NSInteger)activityID withTokenID:(NSString *)tokenID {
+
     if (tokenID != nil) {
-        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID}};
+        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID, @"activityID" : [NSString stringWithFormat:@"%d", activityID], @"selection" : @"all"}};
         
-        [self JSONObjectWithNamespace:@"table" method:@"checkOut" attributes:attributes];
+        [self JSONObjectWithNamespace:@"activity" method:@"getPeople" attributes:attributes];
     }
 }
 
-- (void)tableGetPeopleRequestsWithToken:(NSString *)tokenID {
-    
+- (void)activitySendQuestion:(NSString *)question toActivity:(NSInteger)activityID withTokenID:(NSString *)tokenID {
+
+    if (tokenID != nil && question != nil) {
+        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID, @"activityID" : [NSString stringWithFormat:@"%d", activityID]}, @"POST" : @{@"question" : question}};
+        
+        [self JSONObjectWithNamespace:@"activity" method:@"sendQuestion" attributes:attributes];
+    }
+}
+
+- (void)activityUpvoteQuestion:(NSInteger)questionID withTokenID:(NSString *)tokenID {
+
     if (tokenID != nil) {
-        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID}};
+        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID, @"questionID" : [NSString stringWithFormat:@"%d", questionID]}};
         
-        [self JSONObjectWithNamespace:@"table" method:@"getPeopleRequests" attributes:attributes];
+        [self JSONObjectWithNamespace:@"activity" method:@"upvoteQuestion" attributes:attributes];
     }
 }
 
-- (void)tableCallWaiterWithToken:(NSString *)tokenID {
-    
+#pragma mark - Event
+
+- (void)eventGetPeopleAtEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID {
+
     if (tokenID != nil) {
-        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID}};
+        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID, @"eventID" : [NSString stringWithFormat:@"%d", eventID], @"selection" : @"all"}};
         
-        [self JSONObjectWithNamespace:@"table" method:@"callWaiter" attributes:attributes];
-    }
+        [self JSONObjectWithNamespace:@"event" method:@"getPeople" attributes:attributes];
+    }   
 }
 
-- (void)tableIsTableOccupied:(NSInteger)tableID {
+- (void)eventGetActivitiesAtEvent:(NSInteger)eventID {
+
+    NSDictionary *attributes = @{@"GET" : @{@"eventID" : [NSString stringWithFormat:@"%d", eventID]}};
     
-    NSDictionary *attributes = @{@"GET" : @{@"tableID" : [NSString stringWithFormat:@"%d", tableID]}};
-    
-    [self JSONObjectWithNamespace:@"table" method:@"isOccupied" attributes:attributes];
+    [self JSONObjectWithNamespace:@"event" method:@"getActivities" attributes:attributes];
 }
 
-- (void)tableGetTableMapAtCompany:(NSInteger)companyID {
-    
-    NSDictionary *attributes = @{@"GET" : @{@"companyID" : [NSString stringWithFormat:@"%d", companyID]}};
-    
-    [self JSONObjectWithNamespace:@"table" method:@"getMap" attributes:attributes];
-}
+- (void)eventGetScheduleAtEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID {
 
-- (void)tableGetSingleTable:(NSInteger)tableID {
-    
-    NSDictionary *attributes = @{@"GET" : @{@"tableID" : [NSString stringWithFormat:@"%d", tableID]}};
-    
-    [self JSONObjectWithNamespace:@"table" method:@"getSingle" attributes:attributes];
-}
-
-- (void)tableCleanTable:(NSInteger)tableID withToken:(NSString *)tokenID {
-    
     if (tokenID != nil) {
-        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID, @"tableID" : [NSString stringWithFormat:@"%d", tableID]}};
+        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID, @"eventID" : [NSString stringWithFormat:@"%d", eventID]}};
         
-        [self JSONObjectWithNamespace:@"table" method:@"clean" attributes:attributes];
+        [self JSONObjectWithNamespace:@"event" method:@"getSchedule" attributes:attributes];
     }
 }
+
 
 #pragma mark - Notifications
 
@@ -396,107 +215,40 @@
     }
 }
 
-#pragma mark - Order
-- (void)orderSendOrderForItem:(NSInteger)itemID withAmount:(NSInteger)amount withOptions:(NSMutableSet *)options withToken:(NSString *)tokenID {
-    
-    if (tokenID != nil && options != nil) {
-        
-        NSData *dataOptions = [NSJSONSerialization dataWithJSONObject:[options allObjects] options:0 error:nil];
-        NSString *stringOptions = [[NSString alloc] initWithData:dataOptions encoding:NSUTF8StringEncoding];
-        
-        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID}, @"POST" : @{@"itemID" : [NSString stringWithFormat:@"%d", itemID], @"amount" : [NSString stringWithFormat:@"%d", amount], @"options": stringOptions}};
-        
-        [self JSONObjectWithNamespace:@"order" method:@"sendOrderWithOptions" attributes:attributes];
-    }
-}
-    
-- (void)orderSendOrderForPerson:(NSInteger)personID withItem:(NSInteger)itemID withAmount:(NSInteger)amount withOptions:(NSMutableSet *)options withToken:(NSString *)tokenID {
-    
-    if (tokenID != nil && options != nil) {
-        
-        NSData *dataOptions = [NSJSONSerialization dataWithJSONObject:[options allObjects] options:0 error:nil];
-        NSString *stringOptions = [[NSString alloc] initWithData:dataOptions encoding:NSUTF8StringEncoding];
-        
-        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID}, @"POST" : @{@"personID" : [NSString stringWithFormat:@"%d", personID], @"itemID" : [NSString stringWithFormat:@"%d", itemID], @"amount" : [NSString stringWithFormat:@"%d", amount], @"options": stringOptions}};
-        
-        [self JSONObjectWithNamespace:@"order" method:@"sendOrderWithOptions" attributes:attributes];
-    }
-}
-
-- (void)orderCancelOrder:(NSInteger)orderID withToken:(NSString *)tokenID {
-    
-    if (tokenID != nil) {
-        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID, @"orderID" : [NSString stringWithFormat:@"%d", orderID]}};
-        
-        [self JSONObjectWithNamespace:@"order" method:@"cancelOrder" attributes:attributes];
-    }
-}
-
-- (void)orderGetOrdersForPerson:(NSInteger)personID withToken:(NSString *)tokenID {
-    
-    if (tokenID != nil) {
-        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID, @"personID" : [NSString stringWithFormat:@"%d", personID]}};
-        
-        [self JSONObjectWithNamespace:@"order" method:@"getOrdersForPerson" attributes:attributes];
-    }
-}
-
-- (void)orderGetOrdersForTable:(NSInteger)tableID withToken:(NSString *)tokenID {
-    
-    if (tokenID != nil) {
-        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID, @"tableID" : [NSString stringWithFormat:@"%d", tableID]}};
-        
-        [self JSONObjectWithNamespace:@"order" method:@"getOrdersForTable" attributes:attributes];
-    }
-}
-
-- (void)orderGetOrderStates {
-    [self JSONObjectWithNamespace:@"order" method:@"getOrderStates" attributes:nil];
-}
-
-- (void)orderChangeOrder:(NSInteger)orderID toState:(NSInteger)stateID withToken:(NSString *)tokenID {
-    
-    if (tokenID != nil) {
-        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID, @"orderID" : [NSString stringWithFormat:@"%d", orderID], @"stateID" : [NSString stringWithFormat:@"%d", stateID]}};
-        
-        [self JSONObjectWithNamespace:@"order" method:@"changeOrderState" attributes:attributes];
-    }
-}
-
 #pragma mark - Person
-- (void)personSignIn:(NSString *)member withPassword:(NSString *)password {
+- (void)personSignIn:(NSString *)name withPassword:(NSString *)password {
     
-    if (member != nil && password != nil) {
-        NSDictionary *attributes = @{@"GET" : @{@"member" : member, @"password" : password}};
+    if (name != nil && password != nil) {
+        NSDictionary *attributes = @{@"GET" : @{@"name" : name, @"password" : password}};
         
         [self JSONObjectWithNamespace:@"person" method:@"signIn" attributes:attributes];
     }
 }
 
-- (void)personSignInWithFacebookToken:(NSString *)fbToken {
+- (void)personSignInWithFacebookToken:(NSString *)facebookToken {
     
-    if (fbToken != nil) {
-        NSDictionary *attributes = @{@"GET" : @{@"facebookToken" : fbToken}};
+    if (facebookToken != nil) {
+        NSDictionary *attributes = @{@"GET" : @{@"facebookToken" : facebookToken}};
         
         [self JSONObjectWithNamespace:@"person" method:@"signInWithFacebook" attributes:attributes];
     }
 }
 
-- (void)personCreateMember:(NSString *)member withPassword:(NSString *)password withEmail:(NSString *)email {
+- (void)personRegister:(NSString *)name withPassword:(NSString *)password withEmail:(NSString *)email {
 
-    if (member != nil && password != nil && email != nil) {
-        NSDictionary *attributes = @{@"GET" : @{@"member" : member, @"password" : password, @"email" : email}};
+    if (name != nil && password != nil && email != nil) {
+        NSDictionary *attributes = @{@"GET" : @{@"name" : name, @"password" : password, @"email" : email}};
         
-        [self JSONObjectWithNamespace:@"person" method:@"createMember" attributes:attributes];
+        [self JSONObjectWithNamespace:@"person" method:@"register" attributes:attributes];
     }
 }
 
-- (void)personGetCompaniesWithToken:(NSString *)tokenID {
+- (void)personGetEventsWithToken:(NSString *)tokenID {
     
     if (tokenID != nil) {
         NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID}};
         
-        [self JSONObjectWithNamespace:@"person" method:@"getCompanies" attributes:attributes];
+        [self JSONObjectWithNamespace:@"person" method:@"getEvents" attributes:attributes];
     }
 }
 

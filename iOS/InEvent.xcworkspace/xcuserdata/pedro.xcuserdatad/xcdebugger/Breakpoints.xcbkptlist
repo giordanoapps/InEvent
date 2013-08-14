@@ -151,11 +151,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PedidoNaRede/MenuViewController.m"
-         timestampString = "397381916.008023"
+         timestampString = "398200166.444363"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "182"
-         endingLineNumber = "182"
+         startingLineNumber = "178"
+         endingLineNumber = "178"
          landmarkName = "-tableView:cellForRowAtIndexPath:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -216,25 +216,12 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PedidoNaRede/WrapperViewController.m"
-         timestampString = "397203510.490973"
+         timestampString = "398200166.444363"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "59"
-         endingLineNumber = "59"
+         startingLineNumber = "57"
+         endingLineNumber = "57"
          landmarkName = "-viewWillAppear:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "PedidoNaRede/UIViewController+Present.m"
-         timestampString = "396411605.277731"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "258"
-         endingLineNumber = "258"
-         landmarkName = "-animationDidStop:finished:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -437,11 +424,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PedidoNaRede/WrapperViewController.m"
-         timestampString = "397203510.490973"
+         timestampString = "398200166.444363"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "265"
-         endingLineNumber = "265"
+         startingLineNumber = "261"
+         endingLineNumber = "261"
          landmarkName = "-splitViewController:willHideViewController:withBarButtonItem:forPopoverController:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -450,11 +437,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PedidoNaRede/WrapperViewController.m"
-         timestampString = "397203510.490973"
+         timestampString = "398200166.444363"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "270"
-         endingLineNumber = "270"
+         startingLineNumber = "266"
+         endingLineNumber = "266"
          landmarkName = "-splitViewController:willShowViewController:invalidatingBarButtonItem:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -515,11 +502,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PedidoNaRede/MenuViewController.m"
-         timestampString = "397381916.008023"
+         timestampString = "398200166.444363"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "134"
-         endingLineNumber = "134"
+         startingLineNumber = "130"
+         endingLineNumber = "130"
          landmarkName = "@implementation MenuViewController"
          landmarkType = "3">
       </FileBreakpoint>
@@ -541,44 +528,44 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PedidoNaRede/MenuViewController.m"
-         timestampString = "397407300.574531"
+         timestampString = "398200166.444363"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "299"
-         endingLineNumber = "299">
+         startingLineNumber = "239"
+         endingLineNumber = "239">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PedidoNaRede/MenuViewController.m"
-         timestampString = "397407300.574531"
+         timestampString = "398200166.444363"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "295"
-         endingLineNumber = "295">
+         startingLineNumber = "235"
+         endingLineNumber = "235">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PedidoNaRede/MenuViewController.m"
-         timestampString = "397407300.574531"
+         timestampString = "398200166.444363"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "298"
-         endingLineNumber = "298">
+         startingLineNumber = "238"
+         endingLineNumber = "238">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PedidoNaRede/WrapperViewController.m"
-         timestampString = "397203510.490973"
+         timestampString = "398200166.444363"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "230"
-         endingLineNumber = "230"
+         startingLineNumber = "226"
+         endingLineNumber = "226"
          landmarkName = "-alertView:clickedButtonAtIndex:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -587,11 +574,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PedidoNaRede/MenuViewController.m"
-         timestampString = "397381916.008023"
+         timestampString = "398200166.444363"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "125"
-         endingLineNumber = "125"
+         startingLineNumber = "121"
+         endingLineNumber = "121"
          landmarkName = "-tableView:numberOfRowsInSection:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -600,11 +587,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PedidoNaRede/MenuViewController.m"
-         timestampString = "397381916.008023"
+         timestampString = "398200166.444363"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "177"
-         endingLineNumber = "177"
+         startingLineNumber = "173"
+         endingLineNumber = "173"
          landmarkName = "-tableView:cellForRowAtIndexPath:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -665,11 +652,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PedidoNaRede/MapViewController.m"
-         timestampString = "395687232.025999"
+         timestampString = "398200166.444363"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "151"
-         endingLineNumber = "151"
+         startingLineNumber = "149"
+         endingLineNumber = "149"
          landmarkName = "-mapView:didSelectAnnotationView:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -730,11 +717,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PedidoNaRede/AppDelegate.m"
-         timestampString = "397381916.008023"
+         timestampString = "398200861.109359"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "185"
-         endingLineNumber = "185"
+         startingLineNumber = "190"
+         endingLineNumber = "190"
          landmarkName = "-createGoogleAnalyticsTracker"
          landmarkType = "5">
       </FileBreakpoint>
@@ -743,13 +730,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PedidoNaRede/APIController.m"
-         timestampString = "397116955.032736"
+         timestampString = "398200166.444363"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "529"
-         endingLineNumber = "529"
-         landmarkName = "-start"
-         landmarkType = "5">
+         startingLineNumber = "527"
+         endingLineNumber = "527">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -860,25 +845,23 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PedidoNaRede/APIController.m"
-         timestampString = "397116955.032736"
+         timestampString = "398200166.444363"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "471"
-         endingLineNumber = "471"
-         landmarkName = "-personSignIn:withPassword:"
-         landmarkType = "5">
+         startingLineNumber = "469"
+         endingLineNumber = "469">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PedidoNaRede/APIController.m"
-         timestampString = "396418114.140039"
+         timestampString = "398200166.444363"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "241"
-         endingLineNumber = "241"
-         landmarkName = "-tableRequestCheckInAtTable:withToken:"
+         startingLineNumber = "239"
+         endingLineNumber = "239"
+         landmarkName = "-personRegister:withPassword:withEmail:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -990,13 +973,26 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PedidoNaRede/MenuViewController.m"
-         timestampString = "397384168.486398"
+         timestampString = "398200166.444363"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "210"
-         endingLineNumber = "210"
+         startingLineNumber = "197"
+         endingLineNumber = "197"
          landmarkName = "-tableView:cellForRowAtIndexPath:"
          landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "PedidoNaRede/ScheduleViewCell.h"
+         timestampString = "398199173.731216"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "21"
+         endingLineNumber = "21"
+         landmarkName = "@interface ScheduleViewCell"
+         landmarkType = "2">
       </FileBreakpoint>
    </FileBreakpoints>
    <SymbolicBreakpoints>

@@ -61,16 +61,29 @@
 
     <div class="documentationFunctionBox">
         <p class="documentFunctionName">
-            <span>event.getActivities(<b>tokenID</b>, <b>eventID</b>)</span>
-            <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=event.getActivities&tokenID=$tokenID&eventID=1">
+            <span>event.getActivities(<b>eventID</b>)</span>
+            <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=event.getActivities&eventID=1">
         </p>
 
         <p class="documentFunctionDescription">Retorna todas as atividades do evento <i>eventID</i>.</p>
+
+        <div class="documentationFunctionParametersBox">
+            <p><b>eventID</b><sub>GET</sub> : id do evento </p>
+        </div>
+    </div>
+    
+    <div class="documentationFunctionBox">
+        <p class="documentFunctionName">
+            <span>event.getSchedule(<b>tokenID</b>, <b>eventID</b>)</span>
+            <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=event.getSchedule&tokenID=$tokenID&eventID=1">
+        </p>
+
+        <p class="documentFunctionDescription">Retorna todas o cronograma da pessoa com <i>tokenID</i> no evento <i>eventID</i>.</p>
 
         <div class="documentationFunctionParametersBox">
             <p><b>tokenID</b><sub>GET</sub> : id de autenticação </p>
             <p><b>eventID</b><sub>GET</sub> : id do evento </p>
         </div>
     </div>
-    
+
 </div>

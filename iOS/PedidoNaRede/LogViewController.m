@@ -9,7 +9,6 @@
 #import "LogViewController.h"
 #import "LogItemViewCell.h"
 #import "ColorThemeController.h"
-#import "BenchView.h"
 
 @interface LogViewController ()
 

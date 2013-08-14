@@ -15,6 +15,7 @@
 			<string>IBUIImageView</string>
 			<string>IBUILabel</string>
 			<string>IBUITableViewCell</string>
+			<string>IBUITextView</string>
 			<string>IBUIView</string>
 		</array>
 		<array key="IBDocument.PluginDependencies">
@@ -166,6 +167,7 @@
 								<string key="NSFrame">{{0, 84}, {320, 1}}</string>
 								<reference key="NSSuperview" ref="607382730"/>
 								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView" ref="999283739"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<object class="NSColor" key="IBUIBackgroundColor">
 									<int key="NSColorSpace">3</int>
@@ -173,8 +175,38 @@
 								</object>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 							</object>
+							<object class="IBUITextView" id="999283739">
+								<reference key="NSNextResponder" ref="607382730"/>
+								<int key="NSvFlags">292</int>
+								<string key="NSFrame">{{24, 93}, {276, 56}}</string>
+								<reference key="NSSuperview" ref="607382730"/>
+								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView"/>
+								<string key="NSReuseIdentifierKey">_NS:9</string>
+								<object class="NSColor" key="IBUIBackgroundColor">
+									<int key="NSColorSpace">1</int>
+									<bytes key="NSRGB">MSAxIDEAA</bytes>
+								</object>
+								<bool key="IBUIClipsSubviews">YES</bool>
+								<bool key="IBUIMultipleTouchEnabled">YES</bool>
+								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+								<string key="IBUIText">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+								<object class="IBUITextInputTraits" key="IBUITextInputTraits">
+									<int key="IBUIAutocapitalizationType">2</int>
+									<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+								</object>
+								<object class="IBUIFontDescription" key="IBUIFontDescription">
+									<int key="type">1</int>
+									<double key="pointSize">14</double>
+								</object>
+								<object class="NSFont" key="IBUIFont">
+									<string key="NSName">Helvetica</string>
+									<double key="NSSize">14</double>
+									<int key="NSfFlags">16</int>
+								</object>
+							</object>
 						</array>
-						<string key="NSFrameSize">{320, 277}</string>
+						<string key="NSFrameSize">{320, 169}</string>
 						<reference key="NSSuperview" ref="982853101"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="961466094"/>
@@ -187,7 +219,7 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 					</object>
 				</array>
-				<string key="NSFrameSize">{320, 278}</string>
+				<string key="NSFrameSize">{320, 170}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="607382730"/>
@@ -199,26 +231,50 @@
 				</object>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 				<reference key="IBUIContentView" ref="607382730"/>
-				<real value="278" key="IBUIRowHeight"/>
+				<real value="170" key="IBUIRowHeight"/>
 			</object>
 		</array>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
 			<array class="NSMutableArray" key="connectionRecords">
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">orderPlate</string>
+						<string key="label">line</string>
 						<reference key="source" ref="982853101"/>
-						<reference key="destination" ref="961466094"/>
+						<reference key="destination" ref="167190373"/>
 					</object>
-					<int key="connectionID">85</int>
+					<int key="connectionID">104</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">orderTitle</string>
+						<string key="label">hour</string>
+						<reference key="source" ref="982853101"/>
+						<reference key="destination" ref="172430344"/>
+					</object>
+					<int key="connectionID">105</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">minute</string>
+						<reference key="source" ref="982853101"/>
+						<reference key="destination" ref="705703141"/>
+					</object>
+					<int key="connectionID">106</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">title</string>
 						<reference key="source" ref="982853101"/>
 						<reference key="destination" ref="746924472"/>
 					</object>
-					<int key="connectionID">97</int>
+					<int key="connectionID">107</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">description</string>
+						<reference key="source" ref="982853101"/>
+						<reference key="destination" ref="999283739"/>
+					</object>
+					<int key="connectionID">108</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -249,6 +305,7 @@
 							<reference ref="172430344"/>
 							<reference ref="167190373"/>
 							<reference ref="746924472"/>
+							<reference ref="999283739"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -278,6 +335,11 @@
 						<reference key="object" ref="167190373"/>
 						<reference key="parent" ref="982853101"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">103</int>
+						<reference key="object" ref="999283739"/>
+						<reference key="parent" ref="982853101"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -286,7 +348,8 @@
 				<string key="-2.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="100.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="101.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<string key="4.CustomClassName">OrderItemViewCell</string>
+				<string key="103.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="4.CustomClassName">ScheduleViewCell</string>
 				<string key="4.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="8.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="93.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -296,50 +359,45 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">102</int>
+			<int key="maxID">108</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
 				<object class="IBPartialClassDescription">
-					<string key="className">OrderItemViewCell</string>
+					<string key="className">ScheduleViewCell</string>
 					<string key="superclassName">UITableViewCell</string>
 					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="orderAmount">UILabel</string>
-						<string key="orderAmountLabel">UILabel</string>
-						<string key="orderPlate">UIImageView</string>
-						<string key="orderStatusHint">UILabel</string>
-						<string key="orderStatusView">UIControl</string>
-						<string key="orderTitle">UILabel</string>
+						<string key="description">UITextView</string>
+						<string key="hour">UILabel</string>
+						<string key="line">UIView</string>
+						<string key="minute">UILabel</string>
+						<string key="title">UILabel</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="orderAmount">
-							<string key="name">orderAmount</string>
+						<object class="IBToOneOutletInfo" key="description">
+							<string key="name">description</string>
+							<string key="candidateClassName">UITextView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="hour">
+							<string key="name">hour</string>
 							<string key="candidateClassName">UILabel</string>
 						</object>
-						<object class="IBToOneOutletInfo" key="orderAmountLabel">
-							<string key="name">orderAmountLabel</string>
+						<object class="IBToOneOutletInfo" key="line">
+							<string key="name">line</string>
+							<string key="candidateClassName">UIView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="minute">
+							<string key="name">minute</string>
 							<string key="candidateClassName">UILabel</string>
 						</object>
-						<object class="IBToOneOutletInfo" key="orderPlate">
-							<string key="name">orderPlate</string>
-							<string key="candidateClassName">UIImageView</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="orderStatusHint">
-							<string key="name">orderStatusHint</string>
-							<string key="candidateClassName">UILabel</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="orderStatusView">
-							<string key="name">orderStatusView</string>
-							<string key="candidateClassName">UIControl</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="orderTitle">
-							<string key="name">orderTitle</string>
+						<object class="IBToOneOutletInfo" key="title">
+							<string key="name">title</string>
 							<string key="candidateClassName">UILabel</string>
 						</object>
 					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/OrderItemViewCell.h</string>
+						<string key="minorKey">./Classes/ScheduleViewCell.h</string>
 					</object>
 				</object>
 			</array>

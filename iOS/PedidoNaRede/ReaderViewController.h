@@ -7,7 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WrapperViewController.h"
+#import "APIController.h"
 
-@interface ReaderViewController : UIViewController
+@interface ReaderViewController : WrapperViewController <UITableViewDelegate, UITableViewDataSource, APIControllerDelegate>
+
+@property (strong, nonatomic) NSDictionary *activityData;
+
+@property (strong, nonatomic) IBOutlet UITextField *numberInput;
+@property (strong, nonatomic) IBOutlet UITableView *tableView;
 
 @end

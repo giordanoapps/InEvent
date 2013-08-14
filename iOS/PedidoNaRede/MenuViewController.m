@@ -10,7 +10,7 @@
 #import "UIViewController+Present.h"
 #import "HumanViewController.h"
 #import "HumanToken.h"
-#import "CompanyToken.h"
+#import "EventToken.h"
 #import "NSString+HTML.h"
 #import "GAI.h"
 #import <Parse/Parse.h>
@@ -45,7 +45,7 @@
     [self.menuTableView setBackgroundView:tableBgView];
     [self.menuTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     
-    _headers = @[NSLocalizedString(@"Your Account", nil), NSLocalizedString(@"General", nil), NSLocalizedString(@"Restaurant", nil), NSLocalizedString(@"About", nil)];
+    _headers = @[NSLocalizedString(@"Your Account", nil), NSLocalizedString(@"General", nil), NSLocalizedString(@"About", nil)];
     
     // Selected the restaurant controller
     [self setSelectedIndex:1];
@@ -119,10 +119,6 @@
             break;
             
         case 2:
-            return ([[HumanToken sharedInstance] isMemberWorking]) ? [[[HumanToken sharedInstance] companies] count] : 1;
-            break;
-            
-        case 3:
             return 1;
             break;
             
@@ -194,39 +190,15 @@
         [cell.textLabel setText:viewController.title];
         [cell.imageView setImage:viewController.tabBarItem.image];
     } else if (indexPath.section == 2) {
-        if ([[HumanToken sharedInstance] isMemberWorking]) {
-            NSArray *companies = [[HumanToken sharedInstance] companies];
-            NSString *tradeName = [[[companies objectAtIndex:indexPath.row] objectForKey:@"tradeName"]stringByDecodingHTMLEntities];
-            [cell.textLabel setText:tradeName];
-        } else {
-            [cell.textLabel setText:[[CompanyToken sharedInstance] tradeName]];
-        }
-        [cell.imageView setImage:[UIImage imageNamed:@"16-Safari"]];
-    } else if (indexPath.section == 3) {
         UIViewController *viewController = [self.viewControllers objectAtIndex:2];
         [cell.textLabel setText:viewController.title];
         [cell.imageView setImage:viewController.tabBarItem.image];
     }
 
     if ((indexPath.section <= 1 && self.selectedIndex == indexPath.row + indexPath.section) ||
-        (indexPath.section == 3 && self.selectedIndex == 2)) {
+        (indexPath.section == 2 && self.selectedIndex == 2)) {
         UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"16-Check"]];
         [cell setAccessoryView:imageView];
-    } else if (indexPath.section == 2) {
-        if ([[HumanToken sharedInstance] isMemberWorking]) {
-            NSArray *companies = [[HumanToken sharedInstance] companies];
-            if ([[[companies objectAtIndex:indexPath.row] objectForKey:@"id"] integerValue] == [[CompanyToken sharedInstance] companyID]) {
-                UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"16-Flag-2"]];
-                [cell setAccessoryView:imageView];
-            } else {
-                [cell setAccessoryView:nil];
-            }
-        } else if (indexPath.row == 0) {
-            UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"16-Flag-2"]];
-            [cell setAccessoryView:imageView];
-        } else {
-            [cell setAccessoryView:nil];
-        }
     } else {
         [cell setAccessoryView:nil];
     }
@@ -252,38 +224,6 @@
         // Reload all sections
         [tableView reloadData];
 
-    } else {
-        // We set some essential data
-        CompanyToken *company = [CompanyToken sharedInstance];
-        NSDictionary *dictionary = [[[HumanToken sharedInstance] companies] objectAtIndex:indexPath.row];
-        
-        // Properties
-        NSInteger companyID = [[dictionary objectForKey:@"id"] integerValue];
-        NSString *tradeName = [[dictionary objectForKey:@"tradeName"] stringByDecodingHTMLEntities];
-        
-        [company setCompanyID:companyID];
-        [company setTradeName:tradeName];
-        [company setEnterpriseStatesWithWaiter:[[dictionary objectForKey:@"waiterAvailable"] boolValue] order:[[dictionary objectForKey:@"orderAvailable"] boolValue] reservation:NO chat:[[dictionary objectForKey:@"chatAvailable"] boolValue]];
-        
-        // Notify our tracker about the new event
-        id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-        [tracker sendEventWithCategory:@"company" withAction:@"getCompany" withLabel:@"iOS" withValue:[NSNumber numberWithInteger:companyID]];
-        
-        // Notify our tracker about the new event
-        PFInstallation *currentInstallation = [PFInstallation currentInstallation];
-        [currentInstallation addUniqueObject:[NSString stringWithFormat:@"company/%d", companyID] forKey:@"channels"];
-        [currentInstallation saveEventually];
-        
-        // Notify about the new company to our views
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"updateCarte" object:self userInfo:nil];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"updateMap" object:self userInfo:nil];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"verify" object:nil userInfo:@{@"type": @"menu"}];
-        
-        NSIndexPath *transformed = [NSIndexPath indexPathForRow:1 inSection:0];
-        [super tableView:tableView didSelectRowAtIndexPath:transformed];
-        
-        // Reload the last section
-        [tableView reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(indexPath.section, 1)] withRowAnimation:UITableViewRowAnimationAutomatic];
     }
 }
 

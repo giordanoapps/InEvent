@@ -131,8 +131,6 @@
 
 	if ($method === "getActivities") {
 
-		$tokenID = getToken();
-
 		if (isset($_GET["eventID"])) {
 
 			// Get some properties
@@ -144,8 +142,8 @@
 					`activity`.`groupID`,
 					`activity`.`name`,
 					`activity`.`description`,
-					`activity`.`dateBegin`,
-					`activity`.`dateEnd`,
+					UNIX_TIMESTAMP(`activity`.`dateBegin`) AS `dateBegin`,
+	                UNIX_TIMESTAMP(`activity`.`dateEnd`) AS `dateEnd`,
 					`activity`.`capacity`,
 					`activity`.`general`,
 					`activity`.`highlight`
@@ -155,6 +153,24 @@
 					`activity`.`eventID` = $eventID
 			");
 
+			echo printInformation("eventMember", $result, true, 'json');
+
+		} else {
+			http_status_code(400);
+		}
+		
+	} else
+
+	if ($method === "getSchedule") {
+
+		$tokenID = getToken();
+
+		if (isset($_GET["eventID"])) {
+
+			// Get some properties
+			$eventID = getAttribute($_GET['eventID']);
+
+			$result = getTimelineForMemberQuery($eventID, $core->memberID);
 			echo printInformation("eventMember", $result, true, 'json');
 
 		} else {

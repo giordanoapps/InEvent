@@ -14,7 +14,7 @@
 #import "APIController.h"
 #import "HumanToken.h"
 #import "NSString+HTML.h"
-#import "CompanyToken.h"
+#import "EventToken.h"
 
 @interface HumanLoginViewController ()
 
@@ -237,7 +237,7 @@
             
             // Notify the singleton that we have authenticated the user
             [[HumanToken sharedInstance] setTokenID:tokenID];
-            [[HumanToken sharedInstance] setCompanies:companies];
+//            [[HumanToken sharedInstance] setCompanies:companies];
             [[HumanToken sharedInstance] setName:[[dictionary objectForKey:@"name"] stringByDecodingHTMLEntities]];
         
             // Update the current state of the restaurant controller
@@ -254,7 +254,7 @@
         
         NSArray *companies = [[dictionary objectForKey:@"data"] objectForKey:@"companies"];
         
-        [[HumanToken sharedInstance] setCompanies:companies];
+//        [[HumanToken sharedInstance] setCompanies:companies];
     }
 }
 

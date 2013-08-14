@@ -1,0 +1,105 @@
+//
+//  CompanyToken.m
+//  Garça
+//
+//  Created by Pedro Góes on 06/04/13.
+//  Copyright (c) 2013 Pedro Góes. All rights reserved.
+//
+
+#import "EventToken.h"
+
+@implementation EventToken
+
+#pragma mark - Singleton
+
++ (EventToken *)sharedInstance
+{
+    static EventToken *sharedInstance = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedInstance = [[EventToken alloc] init];
+        // Load the data that is already stored
+        [sharedInstance loadEssentialData];
+    });
+    return sharedInstance;
+}
+
+#pragma mark - Setters
+
+- (void)setEventID:(NSInteger)eventID {
+    _eventID = eventID;
+    
+    [self storeEssentialData];
+}
+
+- (void)setName:(NSString *)name {
+    _name = name;
+    
+    [self storeEssentialData];
+}
+
+#pragma mark - User Methods
+
+- (BOOL)isEventSelected {
+    if (_eventID != 0) {
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
+- (void)removeEnterprise {
+    // Remove all the data
+    [self resetData];
+    
+    // Save the data
+    [self storeEssentialData];
+    
+    // Notify about the enterprise removal
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"selectFirstController" object:nil];
+    
+    // And delete it from the filesystem
+    [[NSFileManager defaultManager] removeItemAtPath:[self essentialDataPath] error:nil];
+}
+
+#pragma mark - Data
+
+- (NSString *)essentialDataPath {
+    NSString *path = [[NSHomeDirectory() stringByAppendingPathComponent: @"Documents"] stringByAppendingPathComponent:@"essentialCompanyData.bin"];
+    
+    return path;
+}
+
+- (void)storeEssentialData {
+    
+    NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
+    
+    // Set the values on the dictionary
+    [dictionary setValue:[NSNumber numberWithInteger:_eventID] forKey:@"eventID"];
+    [dictionary setValue:_name forKey:@"name"];
+    
+    // Save it
+    [dictionary writeToFile:[self essentialDataPath] atomically:YES];
+}
+
+- (void)loadEssentialData {
+    NSDictionary *dictionary = [NSDictionary dictionaryWithContentsOfFile:[self essentialDataPath]];
+    
+    if (dictionary != nil) {
+        _eventID = [[dictionary objectForKey:@"eventID"] integerValue];
+        _name = [dictionary objectForKey:@"name"];
+    } else {
+        [self resetData];
+    }
+}
+
+- (void)resetData {
+    _eventID = 0;
+    _name = nil;
+}
+
+- (void)dealloc {
+    [self storeEssentialData];
+}
+
+@end

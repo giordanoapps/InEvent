@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "RestaurantWrapperViewController.h"
+#import "WrapperViewController.h"
 #import "APIController.h"
 
-@interface OrderViewController : RestaurantWrapperViewController <UITableViewDelegate, UITableViewDataSource, APIControllerDelegate>
+@interface ScheduleViewController : WrapperViewController <UITableViewDelegate, UITableViewDataSource, APIControllerDelegate>
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 

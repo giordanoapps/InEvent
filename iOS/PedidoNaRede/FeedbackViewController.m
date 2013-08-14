@@ -10,9 +10,8 @@
 #import "FeedbackViewController.h"
 #import "ColorThemeController.h"
 #import "UIPlaceHolderTextView.h"
-#import "TableToken.h"
 #import "HumanToken.h"
-#import "CompanyToken.h"
+#import "EventToken.h"
 
 @interface FeedbackViewController ()
 
@@ -117,12 +116,11 @@
     }
     
     // Send the information to the server
-    NSString *tokenID = [[HumanToken sharedInstance] tokenID];
-    [[[APIController alloc] initWithDelegate:self forcing:YES] opinionSendOpinionWithRating:_rating withMessage:_textView.text withToken:tokenID];
+//    NSString *tokenID = [[HumanToken sharedInstance] tokenID];
+//    [[[APIController alloc] initWithDelegate:self forcing:YES] opinionSendOpinionWithRating:_rating withMessage:_textView.text withToken:tokenID];
     
     // Remove the tokenID and enterprise
-    [[CompanyToken sharedInstance] removeEnterprise];
-    [[TableToken sharedInstance] removeMemberFromTable];
+    [[EventToken sharedInstance] removeEvent];
     
     [self dismissViewControllerAnimated:YES completion:^{
         [[NSNotificationCenter defaultCenter] postNotificationName:@"verify" object:nil userInfo:@{@"type": @"enterprise"}];
