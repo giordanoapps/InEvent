@@ -23,27 +23,7 @@
                     <?php
                 }
 
-                ?>
-                <li value="<?php echo $data['id'] ?>" class="scheduleItem">
-                    <div class="left">
-                        <div class="upper">
-                            <p class="dateBegin"><?php echo date("G:i", $data['dateBegin']) ?></p>
-                        </div>
-                        <div class="bottom">
-                            <p class="dateEnd"><?php echo date("G:i", $data['dateEnd']) ?></p>
-                        </div>
-                    </div>
-                    <div class="right">
-                        <div class="upper">
-                            <p class="name"><?php echo $data['name'] ?></p>
-                        </div>
-                        <div class="bottom">
-                            <p class="description"><?php echo $data['description'] ?></p>
-                            <input type="button" value="Não mais :(" class="singleButton toolExpel">
-                        </div>
-                    </div>
-                </li>
-                <?php
+                printTimelineItem($data);
             }
 
         } else {
@@ -57,9 +37,46 @@
         ?></ul><?php
     }
 
-   function printActivities($eventID, $memberID) {
+    function printTimelineItem($data) {
+        ?>
+        <li
+            value="<?php echo $data['id'] ?>"
+            class="scheduleItem <?php if ($data['memberID'] == 0) { ?>scheduleItemInvisible<?php } ?>"
+            data-group="<?php echo $data['groupID'] ?>">
+            <div class="left">
+                <div class="upper">
+                    <p class="dateBegin"><?php echo date("G:i", $data['dateBegin']) ?></p>
+                </div>
+                <div class="bottom">
+                    <p class="dateEnd"><?php echo date("G:i", $data['dateEnd']) ?></p>
+                </div>
+            </div>
+            <div class="right">
+                <div class="upper">
+                    <p class="name"><?php echo $data['name'] ?></p>
+                    <p
+                        class="hint <?php if ($data['approved'] == 1) { ?>hintApproved<?php } else { ?>hintDenied<?php } ?>"
+                        title="<?php if ($data['approved'] == 1) { ?>Aprovado<?php } else { ?>Lista de espera<?php } ?>">
+                    </p>
+                </div>
+                <div class="bottom">
+                    <p class="description"><?php echo $data['description'] ?></p>
+                    <div class="dock">
+                        <ul>
+                            <li class="orderPrint tool">
+                                <img src="images/32-Cross.png" alt="Remover" title="Remover" class="toolExpel">
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </li>
+        <?php
+    }
 
-        $result = getActivitiesForEventQuery($eventID);
+    function printActivities($eventID, $memberID) {
+
+        $result = getActivitiesForMemberQuery($eventID, $memberID);
 
         ?><ul><?php
 
@@ -81,7 +98,10 @@
                 }
 
                 ?>
-                <li value="<?php echo $data['id'] ?>" class="pickerItem">
+                <li
+                    value="<?php echo $data['id'] ?>"
+                    class="pickerItem <?php if ($data['highlight'] == 1) { ?>pickerItemHighlight<?php } ?>"
+                    data-group="<?php echo $data['groupID'] ?>">
                     <div class="left">
                         <div class="upper">
                             <p class="dateBegin"><?php echo date("G:i", $data['dateBegin']) ?></p>
@@ -98,7 +118,10 @@
                             <p class="description"><?php echo $data['description'] ?></p>
                         </div>
                         <div class="bottom">
-                            <input type="button" value="Quero essa!" class="singleButton toolEnroll">
+                            <input
+                                type="button"
+                                value="Inscrever!"
+                                class="singleButton toolEnroll <?php if ($data['memberID'] != 0) { ?>singleButtonInvisible<?php } ?>">
                         </div>
                     </div>
                 </li>

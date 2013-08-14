@@ -18,7 +18,13 @@ $(document).ready(function() {
 	 */
 	$("#eventContent .toolEnroll").live("click", function() {
 
-		$(this).hide(300);
+		var $elem = $(this);
+		var $pickerItem = $elem.closest(".pickerItem");
+		var activityID = $pickerItem.val();
+		var groupID = parseInt($pickerItem.attr("data-group"), 10);
+
+		// Hide the current button
+		$elem.hide(200);
 
 		// We request the information on the server
 		$.post('developer/api/?' + $.param({
@@ -28,12 +34,19 @@ $(document).ready(function() {
 		}), {},
 		function(data, textStatus, jqXHR) {
 
-			if (data.status == 200) {
+			if (jqXHR.status == 200) {
+				var $scheduleItem = $(data).addClass("scheduleItemInvisible");
 
+				// Find and replace the new element
+				$(".scheduleItem[value = \"" + activityID + "\"]").replaceWith($scheduleItem);
+				$scheduleItem.slideDown(300);
+
+				// Hide all activities that belong to the same group
+				// if (groupID != 0) $(".pickerItem[data-group = \"" + groupID + "\"]").find(".toolEnroll").hide(200);
 			}
 
 		}, 'html').fail(function(data, textStatus, jqXHR) {
-			$(this).fadeIn(300);
+			$elem.fadeIn(300);
 		});
 
 	});
@@ -44,41 +57,30 @@ $(document).ready(function() {
 	 */
 	$("#eventContent .toolExpel").live("click", function() {
 
+		var $elem = $(this);
+		var activityID = $elem.closest(".scheduleItem").val();
+
+		// Hide the current button
+		$elem.hide(300);
+
 		// We request the information on the server
 		$.post('developer/api/?' + $.param({
 			method: "activity.dismissEnrollment",
 			activityID: activityID,
 			format: "html"
-		}), {
-			name: data.name,
-			password: data.password,
-			email: data.email,
-			cpf: data.cpf,
-			rg: data.rg,
-			telephone: data.telephone,
-			university: data.university,
-			course: data.course
-		},
+		}), {},
 		function(data, textStatus, jqXHR) {
 
-			if (data.status == 200) {
-				// Show the sucess message
-				$content.find(".registrationComplete").fadeIn(0).delay(5000).fadeOut(300);
+			if (jqXHR.status == 200) {
+				// Hide the current item
+				$elem.closest(".scheduleItem").slideUp(300);
 
-				// Remove the registration data
-				localStorage.removeItem("registrationData");
-				data = {};
+				// Enable the button on the agenda
+				$(".pickerItem[value = \"" + activityID + "\"]").find(".toolEnroll").slideDown(200);
 			}
 
 		}, 'html').fail(function(data, textStatus, jqXHR) {
-
-			// Case the company or member is already registered
-			if (data.status == 409) {
-				$content.find(".registrationConflict").fadeIn(0).delay(5000).fadeOut(300);
-			} else {
-				$content.find(".registrationFailed").fadeIn(0);
-				$content.find(".box").fadeOut(0);
-			}
+			$elem.fadeIn(300);
 		});
 
 	});

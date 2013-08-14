@@ -22,14 +22,15 @@
      	return (in_array($macAddress, $core->allowedMAC));
     }
 
-    function companyHasMember($companyID, $memberID) {
+    function eventHasMember($eventID, $memberID) {
+
 		$result = resourceForQuery(
 			"SELECT
-				`member`.`name`
+				`eventMember`.`id`
 			FROM
-				`member`
+				`eventMember`
 			WHERE 1
-				AND `member`.`companyID` = $companyID
+				AND `eventMember`.`eventID` = $eventID
 				AND `member`.`id` = $memberID
 		");
 
@@ -37,26 +38,6 @@
 			return true;
 		} else {
 			return false;
-		}
-	}
-
-	/**
-	 * Return the username for the given unique id
-	 * @param  integer $id unique id
-	 * @return string     username
-	 */
-	function memberForID($memberID) {
-		$result = resourceForQuery(
-			"SELECT
-				`member`.`name`
-			FROM
-				`member`
-			WHERE
-				`member`.`id` = $memberID
-		");
-
-		if (mysql_num_rows($result) > 0) {
-			return mysql_result($result, 0, "name");
 		}
 	}
 

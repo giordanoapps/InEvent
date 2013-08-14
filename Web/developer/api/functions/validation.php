@@ -45,10 +45,6 @@
 				");
 
 				if ($update) {
-
-					// Validate the company
-					validateCompany($companyID);
-
 					// If everything went by smoothly, we can return the tokenID
 					return $hash;
 				} else {

@@ -118,5 +118,48 @@
             <p><b>selection</b><sub>GET</sub> : quem irá ao evento, podendo ser filtradas em aprovadas <i>approved</i>, negadas <i>denied</i>, não avaliadas <i>unseen</i> e todas <i>all</i></p>
         </div>
     </div>
+
+    <div class="documentationFunctionBox">
+        <p class="documentFunctionName">
+            <span>activity.getQuestions(<b>tokenID</b>, <b>activityID</b>)</span>
+            <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=activity.getQuestions&tokenID=$tokenID&activityID=1">
+        </p>
+
+        <p class="documentFunctionDescription">Retorna todas as perguntas enviadas para a atividade <i>activityID</i>.</p>
+
+        <div class="documentationFunctionParametersBox">
+            <p><b>tokenID</b><sub>GET</sub> : id de autenticação </p>
+            <p><b>activityID</b><sub>GET</sub> : id da atividade </p>
+        </div>
+    </div>
+
+    <div class="documentationFunctionBox">
+        <p class="documentFunctionName">
+            <span>activity.sendQuestion(<b>tokenID</b>, <b>activityID</b>, <b>question</b>)</span>
+            <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=activity.sendQuestion&tokenID=$tokenID&activityID=1" data-post="question=Pergunta">
+        </p>
+
+        <p class="documentFunctionDescription">Envia uma pergunta <i>question</i> para a atividade <i>activityID</i>.</p>
+
+        <div class="documentationFunctionParametersBox">
+            <p><b>tokenID</b><sub>GET</sub> : id de autenticação </p>
+            <p><b>activityID</b><sub>GET</sub> : id da atividade </p>
+            <p><b>question</b><sub>POST</sub> : texto da pergunta </p>
+        </div>
+    </div>
+
+    <div class="documentationFunctionBox">
+        <p class="documentFunctionName">
+            <span>activity.upvoteQuestion(<b>tokenID</b>, <b>questionID</b>)</span>
+            <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=activity.upvoteQuestion&tokenID=$tokenID&questionID=1">
+        </p>
+
+        <p class="documentFunctionDescription">Dá um voto positivo para a pergunta <i>questionID</i>.</p>
+
+        <div class="documentationFunctionParametersBox">
+            <p><b>tokenID</b><sub>GET</sub> : id de autenticação </p>
+            <p><b>questionID</b><sub>GET</sub> : id da pergunta </p>
+        </div>
+    </div>
     
 </div>

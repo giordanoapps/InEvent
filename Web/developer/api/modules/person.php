@@ -135,16 +135,44 @@
 
 			if (mysql_num_rows($result) == 0) {
 
-				// Insert the name 
+				// Insert member details
 				$insert = resourceForQuery(
 					"INSERT INTO
 						`member`
 						(`name`, `password`, `cpf`, `rg`, `telephone`, `email`, `university`, `course`)
 					VALUES 
-						('$name', '$password', '$cpf', '$rg', '$telephone', '$email', '$university', '$course')
+						('$name', '" . Bcrypt::hash($password) . "', '$cpf', '$rg', '$telephone', '$email', '$university', '$course')
 				");
 
 				$memberID = mysql_insert_id();
+
+
+				///// TEMPORARY, SHALL BE REMOVED //////
+				$insert = resourceForQuery(
+					"INSERT INTO
+						`eventMember`
+						(`eventID`, `memberID`, `approved`)
+					VALUES
+						(1, $memberID, 1)
+				");
+				////////////////////////////////////////
+
+
+				// Insert all the activities that are general
+				$insert = resourceForQuery(
+					"INSERT INTO
+						`activityMember`
+						(`activityID`, `memberID`, `approved`, `present`)
+					SELECT
+						`activity`.`id`,
+						$memberID,
+						1,
+						0
+					FROM
+						`activity`
+					WHERE
+						`activity`.`general` = 1
+				");
 
 				if ($memberID != 0) {
 					// Return the desired data

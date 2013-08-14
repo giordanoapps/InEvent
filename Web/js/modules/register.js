@@ -9,7 +9,7 @@ $(document).ready(function() {
 	$("#registerContent").live("hashDidLoad", function() {
 		
 		// Hold the current content
-		$content = $(this);
+		var $content = $(this);
 
 		// Get the saved information
 		var data = JSON.parse(localStorage.getItem("registrationData")) || {};
@@ -30,19 +30,18 @@ $(document).ready(function() {
 		},
 		function(data, textStatus, jqXHR) {
 
-			if (data.status == 200) {
+			if (jqXHR.status == 200) {
 				// Show the sucess message
 				$content.find(".registrationComplete").fadeIn(0).delay(5000).fadeOut(300);
 
 				// Remove the registration data
 				localStorage.removeItem("registrationData");
-				data = {};
 			}
 
 		}, 'html').fail(function(data, textStatus, jqXHR) {
 
 			// Case the company or member is already registered
-			if (data.status == 409) {
+			if (jqXHR.status == 409) {
 				$content.find(".registrationConflict").fadeIn(0).delay(5000).fadeOut(300);
 			} else {
 				$content.find(".registrationFailed").fadeIn(0);

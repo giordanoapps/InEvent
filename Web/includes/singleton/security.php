@@ -5,7 +5,7 @@ class Security {
     // Global
     public $remote = false;
     public $attempts = 0;
-    public $key = "7e530ebc5e06ea3f693d4df12b06f5d0";
+    public $key = "tokenID";
 
     // Store a class instance
     static private $instance;

@@ -16,7 +16,7 @@
 	<![endif]-->
 
 	<meta name='language' content='pt-br'>
-	<meta name='description' content='Eventos em seu aplicativo, para gerenciar e criar timelines personalizadas.'>
+	<meta name='description' content='Eventos em seu aplicativo, para gerenciar e criar timelines personalizadas. Envie alterações para os apps por push e faça perguntas direto pela atividade!'>
 	<meta name='keywords' content='empresa junior, ej, brasil, controle, evento, eventos, universidade'>
 	<meta name='robots' content='all'>
 	<meta property="og:image" content="http://inevent.us/images/logo@512.png" />
@@ -25,10 +25,7 @@
 	<meta name="viewport" content="width=device-width, maximum-scale=1.0" />
 
 	<link rel="stylesheet" href="css/jquery-ui-1.8.21.custom.min.css" type="text/css" />
-	<link rel="stylesheet" href="css/chosen.min.css" type="text/css" />
-
-	<?php if ($globalDev == 1 || true) { ?>
-	
+	<link rel="stylesheet" href="css/chosen.min.css" type="text/css" />	
 	<link rel="stylesheet" href="css/default.css" type="text/css" media="all" />
 	<link rel="stylesheet" href="css/mobile.css" type="text/css" media="handheld, (max-device-width:480px)" />
 	
@@ -44,19 +41,6 @@
 	<script src="js/analytics.js" type="text/javascript"></script>
 	
 	<script src="js/default.php" type="text/javascript"></script>
-	
-	<?php } else { ?>
-	
-	<link rel="stylesheet" href="css/default.min.css" type="text/css" />
-	
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-	<script>!window.jQuery && document.write(unescape('%3Cscript src="js/jquery-1.8.3.min.js"%3E%3C/script%3E'))</script>
-	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
-	<script>!window.jQuery.ui && document.write(unescape('%3Cscript src="js/jquery-ui-1.8.21.custom.min.js"%3E%3C/script%3E'))</script>
-	
-	<script src="js/default.min.js" type="text/javascript"></script>
-	
-	<?php } ?>
 
 	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false&region=BR"></script>
 	

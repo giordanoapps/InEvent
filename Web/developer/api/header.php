@@ -1,5 +1,9 @@
 <?php
 
+	// Wrappers
+	include_once("functions/person.php");
+	include_once("functions/validation.php");
+
 	/**
 	 * Process the method that the user controller is using (empty by default)
 	 */
