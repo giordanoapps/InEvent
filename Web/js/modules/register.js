@@ -38,7 +38,7 @@ $(document).ready(function() {
 				localStorage.removeItem("registrationData");
 			}
 
-		}, 'html').fail(function(data, textStatus, jqXHR) {
+		}, 'html').fail(function(jqXHR, textStatus, errorThrown) {
 
 			// Case the company or member is already registered
 			if (jqXHR.status == 409) {

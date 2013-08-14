@@ -199,17 +199,14 @@
 			"SELECT
 				`member`.`id`,
 				`member`.`name`,
-				`memberDetail`.`password`,
+				`member`.`password`,
 				COUNT(`memberSessions`.`id`) - SUM(`memberSessions`.`browser`) AS `sessionAmount`
 			FROM
 				`member`
-			INNER JOIN
-				`memberDetail` ON `memberDetail`.`id` = `member`.`id`
 			LEFT JOIN
 				`memberSessions` ON `memberSessions`.`memberID` = `member`.`id`
 			WHERE 1
 				AND BINARY `member`.`name` = '$name'
-				AND `member`.`anonymous` = 0
 			GROUP BY
 				`memberSessions`.`memberID`
 		");
@@ -275,12 +272,12 @@
 							`loginAttempts`.`remote` = INET_ATON('$security->remote')
 					");
 
-					$companies = getMemberCompanies($core->memberID);
+					$events = getMemberEvents($core->memberID);
 
 					// Return some information
 					$data["name"] = $core->name;
 					$data["memberID"] = $core->memberID;
-					$data["companies"] = $companies["data"];
+					$data["events"] = $events["data"];
 					$data["tokenID"] = $sessionKey;
 					
 					return $data;

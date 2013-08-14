@@ -37,42 +37,33 @@
 	}
 
 	/**
-	 * Get all the companies inside as an array
+	 * Get all the events inside as an array
 	 * @param  int  	$memberID 	id of the member
 	 * @return array           		companies
 	 */
-	function getMemberCompanies($memberID) {
+	function getMemberEvents($memberID) {
 
 		$result = resourceForQuery(
 			"SELECT
-				`company`.`id`,
-				`company`.`tradeName`,
-				`company`.`description`,
-				`company`.`image`,
-				`company`.`imageTop`,
-				`company`.`latitude`,
-				`company`.`longitude`,
-				`company`.`address`,
-				`company`.`city`,
-				`company`.`state`,
-				`company`.`zipCode`,
-				`company`.`telephone`,
-				`company`.`email`,
-				`company`.`workingTimes`,
-				`company`.`waiterAvailable`,
-				`company`.`orderAvailable`,
-				`company`.`deliveryAvailable`,
-				`company`.`reservationAvailable`,
-				`company`.`chatAvailable`
+				`event`.`id`,
+				`event`.`name`,
+				`event`.`description`,
+				`event`.`latitude`,
+				`event`.`longitude`,
+				`event`.`address`,
+				`event`.`city`,
+				`event`.`state`,
+				`event`.`zipCode`,
+				`eventMember`.`approved`
 			FROM
-				`memberCompany`
+				`event`
 			INNER JOIN
-				`company` ON `company`.`id` = `memberCompany`.`companyID`
+				`eventMember` ON `event`.`id` = `eventMember`.`eventID`
 			WHERE
-				`memberCompany`.`memberID` = $memberID
+				`eventMember`.`memberID` = $memberID
 		");
 
-		return printInformation("memberCompany", $result, true, 'object');
+		return printInformation("eventMember", $result, true, 'object');
 	}
 
 ?>

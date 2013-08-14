@@ -45,7 +45,7 @@ $(document).ready(function() {
 				// if (groupID != 0) $(".pickerItem[data-group = \"" + groupID + "\"]").find(".toolEnroll").hide(200);
 			}
 
-		}, 'html').fail(function(data, textStatus, jqXHR) {
+		}, 'html').fail(function(jqXHR, textStatus, errorThrown) {
 			$elem.fadeIn(300);
 		});
 
@@ -79,7 +79,7 @@ $(document).ready(function() {
 				$(".pickerItem[value = \"" + activityID + "\"]").find(".toolEnroll").slideDown(200);
 			}
 
-		}, 'html').fail(function(data, textStatus, jqXHR) {
+		}, 'html').fail(function(jqXHR, textStatus, errorThrown) {
 			$elem.fadeIn(300);
 		});
 

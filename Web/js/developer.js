@@ -154,7 +154,7 @@ $(document).ready(function() {
 				SyntaxHighlighter.highlight();
 
 				// Set the token returned by the server
-				if (getAttributes["method"] == "member.signIn") {
+				if (getAttributes["method"] == "person.signIn") {
 					// Append to the document
 					$demoDocumentation.find(".token").val(data["tokenID"]);
 

@@ -3,14 +3,14 @@
 
 	if ($method === "signIn") {
 
-		if (isset($_GET["member"]) && isset($_GET["password"])) {
+		if (isset($_GET["name"]) && isset($_GET["password"])) {
 
 			// Get some properties
-			$member = getAttribute($_GET['member']);
+			$name = getAttribute($_GET['name']);
 			$password = getAttribute($_GET['password']);
 
 			// Return the desired data
-			$data = processLogIn($member, $password);
+			$data = processLogIn($name, $password);
 			echo json_encode($data);
 		} else {
 			http_status_code(400);
@@ -61,7 +61,7 @@
 
 						$memberID = mysql_result($result, 0, "id");
 
-						$companies = getMemberCompanies($memberID);
+						$companies = getMemberEvents($memberID);
 
 						// Return some information
 						$data["name"] = mysql_result($result, 0, "name");
@@ -194,7 +194,7 @@
 
 		$tokenID = getToken();
 
-		echo getMemberCompanies($core->memberID);
+		echo json_encode(getMemberEvents($core->memberID));
 
 	} else
 

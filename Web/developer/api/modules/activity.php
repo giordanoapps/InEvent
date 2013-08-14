@@ -164,6 +164,193 @@
 		
 	} else
 
+	if ($method === "getPeople") {
+
+		$tokenID = getToken();
+
+		if (isset($_GET["activityID"]) && isset($_GET["selection"])) {
+
+			// Get some properties
+			$activityID = getAttribute($_GET['activityID']);
+			$selection = getAttribute($_GET['selection']);
+
+			switch ($selection) {
+				case 'approved':
+					$complement = "AND `activityMember`.`approved` = 1";
+					break;
+
+				case 'denied':
+					$complement = "AND `activityMember`.`approved` = 0";
+					break;
+
+				case 'unseen':
+					$complement = "AND `activityMember`.`id` = 0"; // Don't need to implement it yet
+					break;
+
+				case 'all':
+					$complement = "";
+					break;
+
+				default:
+					http_status_code(405);
+					break;
+			}
+
+			$result = resourceForQuery(
+				"SELECT
+					`member`.`id`,
+					`member`.`name`
+				FROM
+					`activityMember`
+				INNER JOIN
+					`member` ON `member`.`id` = `activityMember`.`memberID`
+				WHERE 1
+					AND `activityMember`.`activityID` = $activityID
+					$complement
+			");
+
+			echo printInformation("activityMember", $result, true, 'json');
+
+		} else {
+			http_status_code(400);
+		}
+		
+	} else
+
+	if ($method === "getQuestions") {
+
+		$tokenID = getToken();
+
+		if (isset($_GET["activityID"])) {
+
+			// Get some properties
+			$activityID = getAttribute($_GET['activityID']);
+
+			$result = resourceForQuery(
+			// echo (
+				"SELECT
+					`activityQuestion`.`id`,
+					`member`.`name` AS `memberName`,
+					`activityQuestion`.`memberID`,
+					`activityQuestion`.`text`,
+					COUNT(`activityQuestion`.`id`) AS `votes`
+				FROM
+					`activityQuestion`
+				INNER JOIN
+					`member` ON `member`.`id` = `activityQuestion`.`memberID`
+				LEFT JOIN
+					`activityQuestionMember` ON `activityQuestion`.`id` = `activityQuestionMember`.`questionID`
+				WHERE 1
+					AND `activityQuestion`.`activityID` = $activityID
+				GROUP BY
+					`activityQuestion`.`id` ASC
+			");
+
+			echo printInformation("activityQuestion", $result, true, 'json');
+
+		} else {
+			http_status_code(400);
+		}
+		
+	} else
+
+	if ($method === "sendQuestion") {
+
+		$tokenID = getToken();
+
+		if (isset($_GET["activityID"]) && isset($_POST["question"])) {
+
+			// Get some properties
+			$activityID = getAttribute($_GET['activityID']);
+			$question = getAttribute($_POST['question']);
+
+			$insert = resourceForQuery(
+			// echo (
+				"INSERT INTO
+					`activityQuestion`
+					(`activityID`, `memberID`, `text`)
+				SELECT
+					`activityMember`.`activityID`,
+					`activityMember`.`memberID`,
+					'$question'
+				FROM
+					`activityMember`
+				LEFT JOIN
+					`activityQuestion` ON `activityMember`.`activityID` = `activityQuestion`.`activityID`
+				WHERE 1
+					AND `activityMember`.`activityID` = $activityID
+					AND `activityMember`.`memberID` = $core->memberID
+					AND `activityMember`.`approved` = 1
+					AND (ISNULL(`activityQuestion`.`text`) OR BINARY `activityQuestion`.`text` != '$question')
+			");
+
+			$questionID = mysql_insert_id();
+
+			if ($insert) {
+				$data["questionID"] = $questionID;
+				echo json_encode($data);
+			} else {
+				http_status_code(500);
+			}
+
+		} else {
+			http_status_code(400);
+		}
+		
+	} else
+
+	if ($method === "upvoteQuestion") {
+
+		$tokenID = getToken();
+
+		if (isset($_GET["questionID"])) {
+
+			// Get some properties
+			$questionID = getAttribute($_GET['questionID']);
+
+			$insert = resourceForQuery(
+			// echo (
+				"INSERT INTO
+					`activityQuestionMember`
+					(`questionID`, `memberID`)
+				SELECT
+					`activityQuestion`.`id`,
+					`activityMember`.`memberID`
+				FROM
+					`activityMember`
+				INNER JOIN
+					`activityQuestion` ON `activityMember`.`activityID` = `activityQuestion`.`activityID`
+				LEFT JOIN
+					`activityQuestionMember` ON `activityQuestion`.`id` = `activityQuestionMember`.`questionID`
+				WHERE 1
+					AND `activityMember`.`activityID` = (
+						SELECT
+							`activityMember`.`activityID`
+						FROM
+							`activityMember`
+						INNER JOIN
+							`activityQuestion` ON `activityMember`.`activityID` = `activityQuestion`.`activityID`
+						WHERE 1
+							AND `activityMember`.`memberID` = $core->memberID
+							AND `activityMember`.`approved` = 1
+							AND `activityQuestion`.`id` = $questionID
+					)
+					AND `activityMember`.`memberID` = $core->memberID
+					AND (ISNULL(`activityQuestionMember`.`id`) OR `activityQuestionMember`.`memberID` != $core->memberID)
+			");
+
+			if ($insert) {
+				$data["questionID"] = $questionID;
+				echo json_encode($data);
+			} else {
+				http_status_code(500);
+			}
+
+		} else {
+			http_status_code(400);
+		}
+		
+	} else
 // ------------------------------------------------------------------------------------------- //
 			
 	{ http_status_code(501); }
