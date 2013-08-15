@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 10" Screen Size -->
+<resources>
+
+    <!-- Login Margins -->
+    <dimen name="login_marginVertical">64dp</dimen>
+    <dimen name="login_marginHorizontal">128dp</dimen>
+
+</resources>

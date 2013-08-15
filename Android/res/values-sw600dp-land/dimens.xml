@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 7" Screens & Landscape -->
+<resources>
+
+    <!-- Login Margins -->
+    <dimen name="login_marginHorizontal">128dp</dimen>
+    <dimen name="login_marginVertical">32dp</dimen>
+
+</resources>

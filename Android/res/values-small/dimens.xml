@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Small Screens -->
+<resources>
+
+    <!-- Login Margins -->
+    <dimen name="login_marginVertical">4dp</dimen>
+
+</resources>

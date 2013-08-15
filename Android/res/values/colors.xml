@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Some colors definitions -->
+    <color name="light_black">#333333</color>
+    <color name="dark_gray">#606060</color>
+    <color name="light_gray">#e5e5e5</color>
+
+    <!-- Person -->
+    <color name="person_profilelight_gray">@color/light_gray</color>
+
+    <!-- Dividers -->
+    <color name="divider_white">#50ffffff</color>
+    <color name="divider_gray">#50606060</color>
+
+</resources>

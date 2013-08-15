@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_horizontal"
+    android:layout_marginBottom="@dimen/login_marginVertical"
+    android:layout_marginLeft="@dimen/login_marginHorizontal"
+    android:layout_marginRight="@dimen/login_marginHorizontal"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context=".app.LoginActivity" >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="1" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/login_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-thin"
+                android:paddingBottom="4dp"
+                android:paddingLeft="4dp"
+                android:paddingRight="4dp"
+                android:paddingTop="@dimen/login_marginVertical"
+                android:text="@string/title_login"
+                android:textSize="44sp" />
+
+            <View
+                style="@style/Divider.Horizontal"
+                android:layout_height="2dp"
+                android:layout_marginBottom="6dp"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp" />
+
+            <EditText
+                android:id="@+id/login_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_login_username"
+                android:inputType="textPersonName" >
+
+                <requestFocus />
+            </EditText>
+
+            <EditText
+                android:id="@+id/login_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_login_password"
+                android:inputType="textPassword" />
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/login_confirmButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/action_login"
+        android:layout_gravity="right" />
+
+</LinearLayout>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- App Stuff -->
+    <string name="app_name">InEvent</string>
+    <string name="app_version">1.0</string>
+
+    <!-- Button Actions -->
+    <string name="action_preferences">Preferences</string>
+    <string name="action_myAccount">My Account</string>
+    <string name="action_login">Login</string>
+    <string name="action_signIn">Sign In</string>
+    <string name="action_signOut">Sign Out</string>
+
+    <!-- Titles -->
+    <string name="title_general">General</string>
+    <string name="title_preferences">Preferences</string>
+    <string name="title_splashScreen">Splash Screen</string>
+    <string name="title_appVersion">Version</string>
+    <string name="title_mobileNetwork">Mobile Network</string>
+    <string name="title_login">Login</string>
+    <string name="title_signIn">Sign In</string>
+
+    <!-- Hint Messages -->
+    <string name="hint_person_myName">Me</string>
+    <string name="hint_login_username">Name</string>
+    <string name="hint_login_password">Password</string>
+
+    <!-- Messages -->
+    <string name="message_loginIn">Loging In…</string>
+    <string name="message_loading">Loading…</string>
+
+    <!-- Preferences -->
+    <string name="preference_useMobileNetwork">Use Mobile Network</string>
+
+    <!-- Preferences Summaries -->
+    <string name="preference_summary_splashScreen_enabled">Shows a Splash Screen on application launch</string>
+    <string name="preference_summary_splashScreen_unabled">Go straigh to the content, without a Splash Screen</string>
+
+    <!-- Descriptions -->
+    <string name="description_preference_useMobileNetwork">Allow use of the mobile network to download data</string>
+
+    <!-- Error Messages -->
+    <string name="error_connection">Connection Error</string>
+    <string name="error_connection_timeout">Connection Timeout</string>
+    <string name="error_internal">Some internal error occurred! Try again in a few moments</string>
+    <string name="error_login_badCredentials">Wrong name and/or password</string>
+
+</resources>

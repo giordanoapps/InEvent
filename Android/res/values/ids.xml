@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <item name="mainContent" type="id"/>
+
+    <!-- Person -->
+    <item name="person_profilePicture" type="id"/>
+    <item name="person_name" type="id"/>
+</resources>

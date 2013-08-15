@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory android:title="@string/title_general" >
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="com.estudiotrilha.inevent.preferences.SPLASH_ENABLED"
+            android:title="@string/title_splashScreen" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/title_mobileNetwork" >
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="com.estudiotrilha.inevent.preferences.USE_MOBILE_CONNECTION"
+            android:summary="@string/description_preference_useMobileNetwork"
+            android:title="@string/preference_useMobileNetwork" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Sobre" >
+        <Preference
+            android:summary="@string/app_version"
+            android:title="@string/title_appVersion" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

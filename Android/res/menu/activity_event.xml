@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:trilha="http://schemas.android.com/apk/res-auto" >
+
+    <item
+        android:id="@+id/menu_signIn"
+        android:orderInCategory="10"
+        android:title="@string/action_signIn"
+        android:visible="false"
+        trilha:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/menu_userAccount"
+        android:orderInCategory="10"
+        android:title="@string/action_myAccount"
+        android:visible="false"
+        trilha:showAsAction="never"/>
+    <item
+        android:id="@+id/menu_preferences"
+        android:orderInCategory="100"
+        android:title="@string/action_preferences"
+        trilha:showAsAction="never"/>
+
+</menu>
