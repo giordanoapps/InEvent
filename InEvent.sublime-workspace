@@ -4,8 +4,12 @@
 		"selected_items":
 		[
 			[
+				"mar",
+				"margin-right"
+			],
+			[
 				"ques",
-				"questionID"
+				"question"
 			],
 			[
 				"mysql_in",
@@ -82,10 +86,6 @@
 			[
 				"rg",
 				"rgba()"
-			],
-			[
-				"mar",
-				"margin-top"
 			],
 			[
 				"penal",
@@ -435,7 +435,15 @@
 			"file": "Web/developer/api/modules/person.php",
 			"settings":
 			{
-				"buffer_size": 5202,
+				"buffer_size": 5261,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Web/includes/queries/event.php",
+			"settings":
+			{
+				"buffer_size": 4663,
 				"line_ending": "Unix"
 			}
 		},
@@ -443,25 +451,7 @@
 			"file": "Web/developer/api/modules/activity.php",
 			"settings":
 			{
-				"buffer_size": 8743,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"contents": "Searching 170 files for \"getMemberCompanies\" (case sensitive)\n\n/Users/pedro/Sites/InEvent/Web/developer/api/functions/validation.php:\n  273  					\");\n  274  \n  275: 					$companies = getMemberCompanies($core->memberID);\n  276  \n  277  					// Return some information\n\n/Users/pedro/Sites/InEvent/Web/developer/api/modules/person.php:\n   62  						$memberID = mysql_result($result, 0, \"id\");\n   63  \n   64: 						$companies = getMemberCompanies($memberID);\n   65  \n   66  						// Return some information\n   ..\n  195  		$tokenID = getToken();\n  196  \n  197: 		echo getMemberCompanies($core->memberID);\n  198  \n  199  	} else\n\n3 matches across 2 files\n",
-			"settings":
-			{
-				"buffer_size": 649,
-				"line_ending": "Unix",
-				"name": "Find Results",
-				"scratch": true
-			}
-		},
-		{
-			"file": "Web/developer/documentation/activity.php",
-			"settings":
-			{
-				"buffer_size": 7438,
+				"buffer_size": 8843,
 				"line_ending": "Unix"
 			}
 		},
@@ -469,7 +459,47 @@
 			"file": "Web/developer/api/modules/event.php",
 			"settings":
 			{
-				"buffer_size": 3624,
+				"buffer_size": 4023,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Web/includes/wrap/event.php",
+			"settings":
+			{
+				"buffer_size": 4808,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Web/developer/documentation/event.php",
+			"settings":
+			{
+				"buffer_size": 4606,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Web/register.php",
+			"settings":
+			{
+				"buffer_size": 2135,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Web/includes/header.php",
+			"settings":
+			{
+				"buffer_size": 1088,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "Web/js/modules/np.js",
+			"settings":
+			{
+				"buffer_size": 12691,
 				"line_ending": "Unix"
 			}
 		},
@@ -477,7 +507,7 @@
 			"file": "Web/css/default.css",
 			"settings":
 			{
-				"buffer_size": 33292,
+				"buffer_size": 33374,
 				"line_ending": "Unix"
 			}
 		},
@@ -634,6 +664,14 @@
 	},
 	"file_history":
 	[
+		"/Users/pedro/Sites/InEvent/Web/js/modules/register.js",
+		"/Users/pedro/Sites/InEvent/Web/includes/connection.php",
+		"/Users/pedro/Sites/InEvent/Web/data.php",
+		"/Users/pedro/Sites/InEvent/Web/js/modules/data.js",
+		"/Users/pedro/Sites/InEvent/iOS/PedidoNaRede/APIController.m",
+		"/Users/pedro/Sites/InEvent/iOS/PedidoNaRede/APIController.h",
+		"/Users/pedro/Sites/InEvent/Web/developer/documentation/activity.php",
+		"/Users/pedro/Sites/InEvent/Web/developer/api/modules/activity.php",
 		"/Users/pedro/Sites/InEvent/Web/developer/api/functions/person.php",
 		"/Users/pedro/Library/Application Support/Sublime Text 2/Packages/User/Preferences.sublime-settings",
 		"/Users/pedro/Sites/InEvent/Web/includes/queries/event.php",
@@ -643,13 +681,9 @@
 		"/Users/pedro/Sites/InEvent/Web/js/developer.js",
 		"/Users/pedro/Sites/InEvent/Web/register.php",
 		"/Users/pedro/Sites/InEvent/Web/includes/wrap/event.php",
-		"/Users/pedro/Sites/InEvent/Web/developer/documentation/activity.php",
-		"/Users/pedro/Sites/InEvent/Web/developer/api/modules/activity.php",
 		"/Users/pedro/Sites/InEvent/Web/js/modules/event.js",
 		"/Users/pedro/Sites/InEvent/Web/includes/html/header.php",
-		"/Users/pedro/Sites/InEvent/Web/js/modules/register.js",
 		"/Users/pedro/Sites/InEvent/Web/js/modules/np.js",
-		"/Users/pedro/Sites/InEvent/Web/js/modules/data.js",
 		"/Users/pedro/Sites/InEvent/Web/js/default.php",
 		"/Users/pedro/Sites/InEvent/Web/js/modules/window.js",
 		"/Users/pedro/Sites/InEvent/Web/developer/api/modules/person.php",
@@ -663,11 +697,9 @@
 		"/Users/pedro/Sites/InEvent/Web/developer/documentation/person.php",
 		"/Users/pedro/Sites/InEvent/Web/includes/header.php",
 		"/Users/pedro/Sites/InEvent/Web/js/jquery-1.8.3.js",
-		"/Users/pedro/Sites/InEvent/Web/data.php",
 		"/Users/pedro/Sites/InEvent/Web/developer/api/index.php",
 		"/Users/pedro/Sites/InEvent/Web/includes/wrap.php",
 		"/Users/pedro/Sites/InEvent/Web/includes/constant.php",
-		"/Users/pedro/Sites/InEvent/Web/includes/connection.php",
 		"/Users/pedro/Sites/InEvent/Web/home.php",
 		"/Users/pedro/Sites/InEvent/README.md",
 		"/Users/pedro/Sites/InEvent/Web/developer/index.php",
@@ -759,9 +791,7 @@
 		"/Users/pedro/Sites/Presenca-dev/Web/js/modules/collection.js",
 		"/Users/pedro/Sites/Presenca-dev/Web/developer/api/modules/home.php",
 		"/Users/pedro/Sites/Presenca-dev/Web/js/modules/groups.js",
-		"/Users/pedro/Sites/Presenca-dev/Web/includes/html/header.php",
-		"/Users/pedro/Sites/Presenca-dev/Web/includes/singleton/date.php",
-		"/Users/pedro/Sites/Presenca-dev/Web/css/chosen.css"
+		"/Users/pedro/Sites/Presenca-dev/Web/includes/html/header.php"
 	],
 	"find":
 	{
@@ -769,7 +799,7 @@
 	},
 	"find_in_files":
 	{
-		"height": 95.0,
+		"height": 0.0,
 		"where_history":
 		[
 			"/Users/pedro/Sites/InEvent/Web/",
@@ -784,6 +814,27 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"Tegucigalpa",
+			"telephone",
+			"course",
+			"password",
+			"activityID",
+			"@\"activity\"",
+			"activity",
+			"activityID",
+			"member",
+			"fbToken",
+			"member",
+			"activityID",
+			"requestEnrollment",
+			"activityID",
+			"tokenID",
+			"AtActivity:(NSInteger)activityID",
+			"id do atividade",
+			"UNIX_TIMESTAMP",
+			"evento",
+			"getActivities",
+			"20px",
 			"activityID",
 			"	",
 			"activityID",
@@ -890,28 +941,7 @@
 			"order",
 			"#mapContent",
 			"name",
-			"activity",
-			"shift",
-			"printMonths",
-			"printC",
-			"`member`.`calendarID`",
-			"class=\"deck\"",
-			"960px",
-			"%;\n",
-			"	width: 960px;",
-			"width: 960px;",
-			"960px",
-			"	min-width: 960px;",
-			"conexao",
-			"`",
-			"telephone",
-			"cpf",
-			"name",
-			",",
-			"</",
-			"<b>",
-			"membro",
-			"null"
+			"activity"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -966,7 +996,7 @@
 	"groups":
 	[
 		{
-			"selected": 3,
+			"selected": 2,
 			"sheets":
 			[
 				{
@@ -1030,15 +1060,15 @@
 					"file": "Web/developer/api/modules/person.php",
 					"settings":
 					{
-						"buffer_size": 5202,
+						"buffer_size": 5261,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								103,
-								103
+								3673,
+								3673
 							]
 						],
 						"settings":
@@ -1047,103 +1077,25 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 1644.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 3,
-					"file": "Web/developer/api/modules/activity.php",
+					"file": "Web/includes/queries/event.php",
 					"settings":
 					{
-						"buffer_size": 8743,
+						"buffer_size": 4663,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								7406,
-								7406
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 4575.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"settings":
-					{
-						"buffer_size": 649,
-						"regions":
-						{
-							"match":
-							{
-								"flags": 112,
-								"regions":
-								[
-									[
-										183,
-										201
-									],
-									[
-										424,
-										442
-									],
-									[
-										563,
-										581
-									]
-								],
-								"scope": ""
-							}
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"detect_indentation": false,
-							"output_tag": 1,
-							"result_base_dir": "",
-							"result_file_regex": "^([A-Za-z\\\\/<].*):$",
-							"result_line_regex": "^ +([0-9]+):",
-							"scroll_past_end": true,
-							"syntax": "Packages/Default/Find Results.hidden-tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "Web/developer/documentation/activity.php",
-					"settings":
-					{
-						"buffer_size": 7438,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								4316,
-								4316
+								1036,
+								925
 							]
 						],
 						"settings":
@@ -1153,25 +1105,25 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 1120.0,
+						"translation.y": 7.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
-					"buffer": 6,
-					"file": "Web/developer/api/modules/event.php",
+					"buffer": 4,
+					"file": "Web/developer/api/modules/activity.php",
 					"settings":
 					{
-						"buffer_size": 3624,
+						"buffer_size": 8843,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3488,
-								1780
+								1387,
+								1387
 							]
 						],
 						"settings":
@@ -1180,7 +1132,170 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1020.0,
+						"translation.y": 613.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "Web/developer/api/modules/event.php",
+					"settings":
+					{
+						"buffer_size": 4023,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1927,
+								1927
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 998.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "Web/includes/wrap/event.php",
+					"settings":
+					{
+						"buffer_size": 4808,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								6,
+								6
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "Web/developer/documentation/event.php",
+					"settings":
+					{
+						"buffer_size": 4606,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3831,
+								3831
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "Web/register.php",
+					"settings":
+					{
+						"buffer_size": 2135,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								380,
+								380
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "Web/includes/header.php",
+					"settings":
+					{
+						"buffer_size": 1088,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								473,
+								473
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "Web/js/modules/np.js",
+					"settings":
+					{
+						"buffer_size": 12691,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								121,
+								121
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -1192,19 +1307,19 @@
 			"sheets":
 			[
 				{
-					"buffer": 7,
+					"buffer": 11,
 					"file": "Web/css/default.css",
 					"settings":
 					{
-						"buffer_size": 33292,
+						"buffer_size": 33374,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								4084,
-								4084
+								22960,
+								22960
 							]
 						],
 						"settings":
@@ -1213,13 +1328,13 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 3770.0,
+						"translation.y": 20313.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
-					"buffer": 8,
+					"buffer": 12,
 					"file": "Web/css/mobile.css",
 					"settings":
 					{
@@ -1297,16 +1412,64 @@
 		"selected_items":
 		[
 			[
-				"event",
-				"Web/developer/api/modules/event.php"
+				"person",
+				"Web/developer/api/modules/person.php"
 			],
 			[
-				"act",
-				"Web/developer/documentation/activity.php"
+				"regis",
+				"Web/js/modules/register.js"
+			],
+			[
+				"np",
+				"Web/js/modules/np.js"
+			],
+			[
+				"conn",
+				"Web/includes/connection.php"
+			],
+			[
+				"header",
+				"Web/includes/header.php"
+			],
+			[
+				"conne",
+				"Web/includes/connection.php"
+			],
+			[
+				"data",
+				"Web/js/modules/data.js"
 			],
 			[
 				"ac",
 				"Web/developer/api/modules/activity.php"
+			],
+			[
+				"activ",
+				"Web/developer/api/modules/activity.php"
+			],
+			[
+				"registe",
+				"Web/register.php"
+			],
+			[
+				"api",
+				"iOS/PedidoNaRede/APIController.m"
+			],
+			[
+				"apicon",
+				"iOS/PedidoNaRede/APIController.h"
+			],
+			[
+				"qu/e",
+				"Web/includes/queries/event.php"
+			],
+			[
+				"event",
+				"Web/developer/documentation/event.php"
+			],
+			[
+				"act",
+				"Web/developer/documentation/activity.php"
 			],
 			[
 				"even",
@@ -1329,28 +1492,8 @@
 				"Web/developer/api/functions/person.php"
 			],
 			[
-				"person",
-				"Web/developer/api/modules/person.php"
-			],
-			[
 				"defa",
 				"Web/js/default.php"
-			],
-			[
-				"data",
-				"Web/js/modules/data.js"
-			],
-			[
-				"np",
-				"Web/js/modules/np.js"
-			],
-			[
-				"regis",
-				"Web/js/modules/register.js"
-			],
-			[
-				"header",
-				"Web/includes/html/header.php"
 			],
 			[
 				"perso",
@@ -1439,10 +1582,6 @@
 			[
 				"cons",
 				"Web/includes/constant.php"
-			],
-			[
-				"conn",
-				"Web/includes/connection.php"
 			],
 			[
 				"he",
@@ -1783,30 +1922,6 @@
 			[
 				"loade",
 				"Web/js/modules/loaders.js"
-			],
-			[
-				"de",
-				"Web/js/default.php"
-			],
-			[
-				"aj",
-				"Web/ajaxPresenca.php"
-			],
-			[
-				"queri",
-				"Web/includes/queries.php"
-			],
-			[
-				"pos",
-				"Web/includes/wrap/post.php"
-			],
-			[
-				"ut",
-				"Web/includes/utils.php"
-			],
-			[
-				"ajaxpr",
-				"Web/ajaxProjects.php"
 			]
 		],
 		"width": 0.0

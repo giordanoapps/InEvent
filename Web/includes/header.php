@@ -29,15 +29,21 @@ include_once("push.php");
 include_once("queries.php");
 include_once("wrap.php");
 
-// Set the default time zone
-mysql_query("SET time_zone = '0:00'");
-date_default_timezone_set('America/Sao_Paulo');
-
-// Disable error reporting
 if ($globalDev == 0) {
+	// Set the default time zone
+	mysql_query("SET time_zone = '0:00'");
+	date_default_timezone_set('America/Chicago');
+
+	// Disable error reporting
 	error_reporting(0);
 	ini_set('display_errors', 'Off');
+
 } else {
+	// Set the default time zone
+	mysql_query("SET time_zone = '0:00'");
+	date_default_timezone_set('America/Sao_Paulo');
+
+	// Disable error reporting
 	error_reporting(E_ALL);
 	ini_set('display_errors', 'On');
 }

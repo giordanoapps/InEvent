@@ -50,11 +50,11 @@ $(document).ready(function() {
 	            },
 	            university: {
 	                required: true, 
-	                minlength: 10
+	                minlength: 3
 	            },
 	            course: {
 	                required: true, 
-	                minlength: 10
+	                minlength: 6
 	            },
 				password: { 
 	                required: true, 

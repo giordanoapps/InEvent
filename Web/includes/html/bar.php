@@ -26,7 +26,7 @@
 					</div>
 				</li>
 			
-				<li onclick="" class="userSettingsInfo">Olá <?php echo truncateName($core->name, 15) ?>! <img class="downArrow" src="images/16-br-down.png" alt="Down arrow" /></li>
+				<li onclick="" class="userSettingsInfo"><?php echo truncateName($core->name, 15) ?> <img class="downArrow" src="images/16-br-down.png" alt="Down arrow" /></li>
 				
 				<li onclick="" class="userSettingsMenu barContainer">
 					<ul>

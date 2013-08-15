@@ -48,7 +48,7 @@
 					FROM
 						`activity`
 					LEFT JOIN
-						`activityMember` ON `activity`.`id` = `activityMember`.`activityID`
+						`activityMember` ON `activity`.`id` = `activityMember`.`activityID` AND `activityMember`.`memberID` = $personID
 		            LEFT JOIN
 		                `activityGroup` ON `activity`.`groupID` = `activityGroup`.`id`
 					WHERE 1
@@ -75,12 +75,12 @@
 					SELECT
 						$activityID,
 						$personID,
-						IF((`activity`.`capacity` = 0 OR `activity`.`capacity` > COUNT(`activityMember`.`id`)) AND $valid, 1, 0),
+						IF((`activity`.`capacity` = 0 OR `activity`.`capacity` > SUM(`activityMember`.`approved`)) AND $valid, 1, 0),
 						0
 					FROM
 						`activity`
 					LEFT JOIN
-						`activityMember` ON `activityMember`.`activityID` = `activity`.`id`
+						`activityMember` ON `activity`.`id` = `activityMember`.`activityID`
 					WHERE 1
 						AND `activity`.`id` = $activityID
 					GROUP BY
