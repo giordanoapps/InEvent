@@ -10,14 +10,14 @@
 
 #ifdef DEBUG
     #if TARGET_IPHONE_SIMULATOR
-        #define URL @"http://localhost:8888/PedidoNaRede-dev/Web/"
+        #define URL @"http://localhost:8888/InEvent/Web/"
         //#define URL @"http://agarca.com.br/"
     #else
         //#define URL @"http://192.168.0.106:8888/PedidoNaRede-dev/Web/"
-        #define URL @"http://pedrogoes.info/PedidoNaRede-dev/Web/"
+        #define URL @"http://pedrogoes.info/InEvent/Web/"
     #endif
 #else
-    #define URL @"http://agarca.com.br/"
+    #define URL @"http://inevent.us/"
 #endif
 
 @class APIController;
@@ -54,7 +54,7 @@
 - (void)activityRequestEnrollmentForPerson:(NSInteger)personID atActivity:(NSInteger)activityID withTokenID:(NSString *)tokenID;
 - (void)activityDismissEnrollmentAtActivity:(NSInteger)activityID withTokenID:(NSString *)tokenID;
 - (void)activityDismissEnrollmentForPerson:(NSInteger)personID atActivity:(NSInteger)activityID withTokenID:(NSString *)tokenID;
-
+- (void)activityConfirmEntranceForPerson:(NSInteger)personID atActivity:(NSInteger)activityID withTokenID:(NSString *)tokenID;
 - (void)activityGetPeopleAtActivity:(NSInteger)activityID withTokenID:(NSString *)tokenID;
 - (void)activityGetQuestionsAtActivity:(NSInteger)activityID withTokenID:(NSString *)tokenID;
 - (void)activitySendQuestion:(NSString *)question toActivity:(NSInteger)activityID withTokenID:(NSString *)tokenID;

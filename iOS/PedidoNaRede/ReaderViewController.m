@@ -14,7 +14,7 @@
 
 @interface ReaderViewController ()
 
-@property (nonatomic, strong) NSArray *people;
+@property (nonatomic, strong) NSMutableArray *people;
 
 @end
 
@@ -24,7 +24,8 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.people = [NSArray array];
+        self.title = NSLocalizedString(@"Reader", nil);
+        self.people = [NSMutableArray array];
     }
     return self;
 }
@@ -74,6 +75,19 @@
     [_numberInput resignFirstResponder];
 }
 
+- (void)confirmEntranceForRow:(NSInteger)row {
+    // Update and change the dictionaries inside people
+    NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithDictionary:[self.people objectAtIndex:row]];
+    [dictionary setObject:[NSString stringWithFormat:@"%d", 1] forKey:@"present"];
+    [self.people replaceObjectAtIndex:row withObject:dictionary];
+    
+    // Send it to the server
+    [[[APIController alloc] initWithDelegate:self forcing:YES] activityConfirmEntranceForPerson:[[dictionary objectForKey:@"id"] integerValue] atActivity:[[_activityData objectForKey:@"id"] integerValue] withTokenID:[[HumanToken sharedInstance] tokenID]];
+    
+    // Reload the given row
+    [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:row inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+}
+
 #pragma mark - Table View Data Source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)aTableView {
@@ -95,15 +109,47 @@
     
     NSDictionary *dictionary = [self.people objectAtIndex:indexPath.row];
     cell.textLabel.text = [[dictionary objectForKey:@"name"] stringByDecodingHTMLEntities];
-
-//    cell.orderStatusView.backgroundColor = [UtilitiesController colorFromHexString:[dictionary objectForKey:@"color"]];
+    
+    if ([[dictionary objectForKey:@"present"] integerValue] == 1) {
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    } else {
+        cell.accessoryType = UITableViewCellAccessoryNone;
+    }
     
     return cell;
 }
 
 - (void)tableView:(UITableView *)aTableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
     
-   
+    if (cell.accessoryType != UITableViewCellAccessoryCheckmark) {
+        [self confirmEntranceForRow:indexPath.row];
+    }
+}
+
+#pragma mark - Text Field Delegate
+
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    
+    for (int i = 0; i < [_people count]; i++) {
+        if ([[[_people objectAtIndex:i] objectForKey:@"id"] isEqualToString:textField.text]) {
+            UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
+            
+            if (cell.accessoryType != UITableViewCellAccessoryCheckmark) {
+                [self confirmEntranceForRow:i];
+            }
+        }
+    }
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    
+    return YES;
+}
+
+- (BOOL)textFieldShouldClear:(UITextField *)textField {
+    return YES;
 }
 
 #pragma mark - APIController Delegate
@@ -111,7 +157,7 @@
 - (void)apiController:(APIController *)apiController didLoadDictionaryFromServer:(NSDictionary *)dictionary {
     
     // Assign the data object to the companies
-    self.people = [dictionary objectForKey:@"data"];
+    self.people = [NSMutableArray arrayWithArray:[dictionary objectForKey:@"data"]];
     
     // Reload all table data
     [self.tableView reloadData];

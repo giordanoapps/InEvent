@@ -54,7 +54,7 @@
     [self performSelector:@selector(reloadMenu)];
  
     // Load the enterprise
-    [self performSelector:@selector(verifyEnterprise) withObject:nil afterDelay:0];
+    [self performSelector:@selector(verifyEvent) withObject:nil afterDelay:0];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -86,7 +86,7 @@
             
         } else if ([type isEqualToString:@"enterprise"]) {
             // Verify if company is already selected
-            [self performSelector:@selector(verifyEnterprise) withObject:nil afterDelay:0];
+            [self performSelector:@selector(verifyEvent) withObject:nil afterDelay:0];
             
         } else if ([type isEqualToString:@"person"]) {
             // Load the feedback controler
@@ -101,7 +101,6 @@
 }
 
 #pragma mark - Table View Delegate
-
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return [_headers count];
@@ -216,7 +215,7 @@
         // Reload the first two sections
         [tableView reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 2)] withRowAnimation:UITableViewRowAnimationAutomatic];
     
-    } else if (indexPath.section == 3) {
+    } else if (indexPath.section == 2) {
         // We must transform the current indexPath into something that the library can read
         NSIndexPath *transformed = [NSIndexPath indexPathForRow:2 inSection:0];
         [super tableView:tableView didSelectRowAtIndexPath:transformed];

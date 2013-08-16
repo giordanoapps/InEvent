@@ -176,4 +176,11 @@
     }
 }
 
++ (NSString *)weekNameFromIndex:(NSInteger)index {
+    
+    NSArray *names = @[NSLocalizedString(@"Sunday", nil), NSLocalizedString(@"Monday", nil), NSLocalizedString(@"Tuesday", nil), NSLocalizedString(@"Wednesday", nil), NSLocalizedString(@"Thursday", nil), NSLocalizedString(@"Friday", nil), NSLocalizedString(@"Saturday", nil)];
+    
+    return [names objectAtIndex:index - 1];
+}
+
 @end

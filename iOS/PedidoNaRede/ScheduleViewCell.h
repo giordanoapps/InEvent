@@ -10,11 +10,14 @@
 
 @interface ScheduleViewCell : UITableViewCell
 
+@property (strong, nonatomic) IBOutlet UIView *wrapper;
 @property (strong, nonatomic) IBOutlet UILabel *hour;
 @property (strong, nonatomic) IBOutlet UILabel *minute;
-@property (strong, nonatomic) IBOutlet UILabel *title;
+@property (strong, nonatomic) IBOutlet UILabel *name;
 @property (strong, nonatomic) IBOutlet UIView *line;
 @property (strong, nonatomic) IBOutlet UITextView *description;
+
+@property (strong, nonatomic) NSString *approved;
 
 - (void)configureCell;
 

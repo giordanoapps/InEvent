@@ -10,7 +10,7 @@
 #import "WrapperViewController.h"
 #import "APIController.h"
 
-@interface ReaderViewController : WrapperViewController <UITableViewDelegate, UITableViewDataSource, APIControllerDelegate>
+@interface ReaderViewController : WrapperViewController <UITableViewDelegate, UITableViewDataSource, APIControllerDelegate, UITextFieldDelegate>
 
 @property (strong, nonatomic) NSDictionary *activityData;
 

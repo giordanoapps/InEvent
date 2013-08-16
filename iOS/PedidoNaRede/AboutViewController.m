@@ -42,20 +42,11 @@
     _leftArrow.transform = CGAffineTransformMakeRotation(0.2f);
     
     // About
-    NSString *html = @"<p style='font-family: TrebuchetMS; font-size: 160%; text-align: center;'>O <b>Garça</b> é um produto do <b>Estúdio Trilha</b>.</p>";
+    NSString *html = @"<p style='font-family: TrebuchetMS; font-size: 160%; text-align: center;'><b>InEvent</b> é um produto do <b>Estúdio Trilha</b>.</p>";
     [_aboutText loadHTMLString:html baseURL:nil];
     
     _aboutText.scrollView.scrollEnabled = NO;
     _aboutText.scrollView.bounces = NO;
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    
-    // Image
-    NSArray *parameters = @[@"egretBlue", @"egretGreen", @"egretOrange", @"egretPurple", @"egretRed"];
-    NSString *image = [parameters objectAtIndex:(arc4random() % [parameters count])];
-    [_productImage setImage:[UIImage imageNamed:image]];
 }
 
 - (void)didReceiveMemoryWarning

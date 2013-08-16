@@ -49,13 +49,13 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<object class="NSCustomResource" key="IBUIImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">logo@144.png</string>
+							<string key="NSResourceName">logo@512.png</string>
 						</object>
 					</object>
 					<object class="IBUIWebView" id="682331925">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{20, 258}, {280, 98}}</string>
+						<string key="NSFrame">{{20, 247}, {280, 98}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="295433394"/>
@@ -238,11 +238,11 @@
 						<int key="objectID">1</int>
 						<reference key="object" ref="191373211"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="682331925"/>
 							<reference ref="659711149"/>
 							<reference ref="1005034876"/>
 							<reference ref="295433394"/>
 							<reference ref="485617632"/>
+							<reference ref="682331925"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -373,7 +373,7 @@
 			<string key="32-Facebook-F.png">{32, 32}</string>
 			<string key="64-Bended-Arrow-Left.png">{64, 64}</string>
 			<string key="logo.png">{512, 512}</string>
-			<string key="logo@144.png">{144, 144}</string>
+			<string key="logo@512.png">{512, 512}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">2083</string>
 	</data>

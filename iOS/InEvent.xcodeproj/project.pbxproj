@@ -36,7 +36,6 @@
 		EB39397616654B4400580A4E /* AlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB39393116654B4400580A4E /* AlertView.m */; };
 		EB39397716654B4400580A4E /* APIController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB39393316654B4400580A4E /* APIController.m */; };
 		EB39397816654B4400580A4E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EB39393516654B4400580A4E /* AppDelegate.m */; };
-		EB39398716654B4400580A4E /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = EB39394B16654B4400580A4E /* iCarousel.m */; };
 		EB39398B16654B4400580A4E /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB39395016654B4400580A4E /* MapViewController.m */; };
 		EB39398D16654B4400580A4E /* MapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB39395216654B4400580A4E /* MapViewController.xib */; };
 		EB39399716654B4400580A4E /* ScheduleViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EB39396016654B4400580A4E /* ScheduleViewCell.m */; };
@@ -191,6 +190,9 @@
 		EBDFF53D17BBF63700BBFC1D /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = EBDFF53C17BBF63700BBFC1D /* logo.png */; };
 		EBDFF54117BC057100BBFC1D /* ScheduleItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBDFF53F17BC057100BBFC1D /* ScheduleItemViewController.m */; };
 		EBDFF54217BC057100BBFC1D /* ScheduleItemViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBDFF54017BC057100BBFC1D /* ScheduleItemViewController.xib */; };
+		EBDFF54617BDBF5100BBFC1D /* logo@512.png in Resources */ = {isa = PBXBuildFile; fileRef = EBDFF54517BDBF5100BBFC1D /* logo@512.png */; };
+		EBDFF54E17BE0C4500BBFC1D /* NSObject+Triangle.m in Sources */ = {isa = PBXBuildFile; fileRef = EBDFF54D17BE0C4500BBFC1D /* NSObject+Triangle.m */; };
+		EBDFF55117BE15A900BBFC1D /* 64-Speech-Bubbles.png in Resources */ = {isa = PBXBuildFile; fileRef = EBDFF55017BE15A900BBFC1D /* 64-Speech-Bubbles.png */; };
 		EBE15D4D169B7D2000E46A15 /* AlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBE15D4C169B7D2000E46A15 /* AlertView.xib */; };
 		EBE8A5011712EA9C00A8A2BD /* UITabBarController+ShowHideBar.m in Sources */ = {isa = PBXBuildFile; fileRef = EBE8A5001712EA9C00A8A2BD /* UITabBarController+ShowHideBar.m */; };
 		EBE8D1D716A87EC3003A196A /* receiptBackground.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EBE8D1D616A87EC3003A196A /* receiptBackground.jpg */; };
@@ -278,8 +280,6 @@
 		EB39393316654B4400580A4E /* APIController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APIController.m; sourceTree = "<group>"; };
 		EB39393416654B4400580A4E /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		EB39393516654B4400580A4E /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		EB39394A16654B4400580A4E /* iCarousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iCarousel.h; sourceTree = "<group>"; };
-		EB39394B16654B4400580A4E /* iCarousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iCarousel.m; sourceTree = "<group>"; };
 		EB39394F16654B4400580A4E /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
 		EB39395016654B4400580A4E /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 		EB39395216654B4400580A4E /* MapViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MapViewController.xib; sourceTree = "<group>"; };
@@ -509,6 +509,10 @@
 		EBDFF53E17BC057100BBFC1D /* ScheduleItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ScheduleItemViewController.h; path = PedidoNaRede/ScheduleItemViewController.h; sourceTree = "<group>"; };
 		EBDFF53F17BC057100BBFC1D /* ScheduleItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ScheduleItemViewController.m; path = PedidoNaRede/ScheduleItemViewController.m; sourceTree = "<group>"; };
 		EBDFF54017BC057100BBFC1D /* ScheduleItemViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ScheduleItemViewController.xib; path = PedidoNaRede/ScheduleItemViewController.xib; sourceTree = "<group>"; };
+		EBDFF54517BDBF5100BBFC1D /* logo@512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo@512.png"; sourceTree = SOURCE_ROOT; };
+		EBDFF54C17BE0C4400BBFC1D /* NSObject+Triangle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSObject+Triangle.h"; path = "PedidoNaRede/NSObject+Triangle.h"; sourceTree = "<group>"; };
+		EBDFF54D17BE0C4500BBFC1D /* NSObject+Triangle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSObject+Triangle.m"; path = "PedidoNaRede/NSObject+Triangle.m"; sourceTree = "<group>"; };
+		EBDFF55017BE15A900BBFC1D /* 64-Speech-Bubbles.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "64-Speech-Bubbles.png"; sourceTree = "<group>"; };
 		EBE15D4C169B7D2000E46A15 /* AlertView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlertView.xib; sourceTree = "<group>"; };
 		EBE8A4FF1712EA9C00A8A2BD /* UITabBarController+ShowHideBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITabBarController+ShowHideBar.h"; sourceTree = "<group>"; };
 		EBE8A5001712EA9C00A8A2BD /* UITabBarController+ShowHideBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITabBarController+ShowHideBar.m"; sourceTree = "<group>"; };
@@ -697,16 +701,6 @@
 			path = PedidoNaRede;
 			sourceTree = "<group>";
 		};
-		EB39394916654B4400580A4E /* iCarousel */ = {
-			isa = PBXGroup;
-			children = (
-				EB39394A16654B4400580A4E /* iCarousel.h */,
-				EB39394B16654B4400580A4E /* iCarousel.m */,
-			);
-			name = iCarousel;
-			path = PedidoNaRede/iCarousel;
-			sourceTree = "<group>";
-		};
 		EB3939A516654B5D00580A4E /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -830,7 +824,6 @@
 			children = (
 				EBA89EB317AFED5E00D9CD6B /* CustomTabBar */,
 				EB53F6441709140500715E2D /* GoogleAnalytics */,
-				EB39394916654B4400580A4E /* iCarousel */,
 				EB5FD425171EE94A00B76552 /* IntelligentSplitViewController */,
 				EB3939A816654BE300580A4E /* NSString+HTML */,
 				EBB1E7AB1717B95100B73DDF /* ODRefreshControl */,
@@ -1057,6 +1050,7 @@
 				EBFD3A4116DB1F6C00AD33C5 /* logo@144.png */,
 				EBFD3A3F16DB1F6300AD33C5 /* logo@57.png */,
 				EBFD3A3B16DAE1F100AD33C5 /* logo@114.png */,
+				EBDFF54517BDBF5100BBFC1D /* logo@512.png */,
 				EB25BAAB170289D7003F142F /* ic_splash1.png */,
 				EB25BAAC170289D7003F142F /* ic_splash2.png */,
 				EBE8D1D616A87EC3003A196A /* receiptBackground.jpg */,
@@ -1118,6 +1112,15 @@
 				EB95437217ACBE7300229EE2 /* 64-Cog.png */,
 			);
 			name = "Bar Buttons Icons";
+			sourceTree = "<group>";
+		};
+		EBDFF54F17BE0C4D00BBFC1D /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				EBDFF54C17BE0C4400BBFC1D /* NSObject+Triangle.h */,
+				EBDFF54D17BE0C4500BBFC1D /* NSObject+Triangle.m */,
+			);
+			name = Categories;
 			sourceTree = "<group>";
 		};
 		EBE8D1D816A88CF4003A196A /* Bar Buttons */ = {
@@ -1195,6 +1198,7 @@
 				EBDFF53817BBF5FD00BBFC1D /* 64-Bended-Arrow-Left.png */,
 				EBDFF53917BBF5FD00BBFC1D /* 64-Bended-Arrow-Up.png */,
 				EB60420A17B8B6A300D95012 /* 64-Flip-Clock.png */,
+				EBDFF55017BE15A900BBFC1D /* 64-Speech-Bubbles.png */,
 				EBB19398168EA54A0060D282 /* 32-Cross.png */,
 				EB4FC576171061AF00CA43EC /* 32-Facebook-F.png */,
 				EBD27B6516D8604200DA6ACE /* 32-Looking-Glass.png */,
@@ -1220,6 +1224,7 @@
 		EBFCCF571698B47D00A5AE73 /* Timeline */ = {
 			isa = PBXGroup;
 			children = (
+				EBDFF54F17BE0C4D00BBFC1D /* Categories */,
 				EB39396216654B4400580A4E /* ScheduleViewController.h */,
 				EB39396316654B4400580A4E /* ScheduleViewController.m */,
 				EB39396416654B4400580A4E /* ScheduleViewController~ipad.xib */,
@@ -1449,6 +1454,8 @@
 				EBDFF53B17BBF5FD00BBFC1D /* 64-Bended-Arrow-Up.png in Resources */,
 				EBDFF53D17BBF63700BBFC1D /* logo.png in Resources */,
 				EBDFF54217BC057100BBFC1D /* ScheduleItemViewController.xib in Resources */,
+				EBDFF54617BDBF5100BBFC1D /* logo@512.png in Resources */,
+				EBDFF55117BE15A900BBFC1D /* 64-Speech-Bubbles.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1515,7 +1522,6 @@
 				EB39397616654B4400580A4E /* AlertView.m in Sources */,
 				EB39397716654B4400580A4E /* APIController.m in Sources */,
 				EB39397816654B4400580A4E /* AppDelegate.m in Sources */,
-				EB39398716654B4400580A4E /* iCarousel.m in Sources */,
 				EB39398B16654B4400580A4E /* MapViewController.m in Sources */,
 				EB39399716654B4400580A4E /* ScheduleViewCell.m in Sources */,
 				EB39399916654B4400580A4E /* ScheduleViewController.m in Sources */,
@@ -1579,6 +1585,7 @@
 				EBA89EB217AFEAFA00D9CD6B /* PushController.m in Sources */,
 				EB3BD91217B8C47A008D066D /* ReaderViewController.m in Sources */,
 				EBDFF54117BC057100BBFC1D /* ScheduleItemViewController.m in Sources */,
+				EBDFF54E17BE0C4500BBFC1D /* NSObject+Triangle.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

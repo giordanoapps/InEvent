@@ -63,15 +63,16 @@
     
     <div class="documentationFunctionBox">
         <p class="documentFunctionName">
-            <span>activity.approveEnrollment(<b>tokenID</b>, <b>requestID</b>)</span>
-            <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=activity.approveEnrollment&tokenID=$tokenID&requestID=1">
+            <span>activity.confirmEntrance(<b>tokenID</b>, <b>activityID</b>, <b>memberID</b>)</span>
+            <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=activity.approveEnrollment&tokenID=$tokenID&activityID=1&memberID=1">
         </p>
 
-        <p class="documentFunctionDescription">Aprova a solicitação <i>requestID</i> para entrada da pessoa.</p>
+        <p class="documentFunctionDescription">Confirma que a pessoa <i>personID</i> está presente na atividade <i>activityID</i>.</p>
 
         <div class="documentationFunctionParametersBox">
             <p><b>tokenID</b><sub>GET</sub> : id de autenticação </p>
-            <p><b>requestID</b><sub>GET</sub> : id da requisição de entrada </p>
+            <p><b>activityID</b><sub>GET</sub> : id da atividade </p>
+            <p><b>personID</b><sub>GET</sub> : id da pessoa </p>
         </div>
     </div>
     

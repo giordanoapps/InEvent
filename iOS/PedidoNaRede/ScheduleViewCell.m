@@ -11,6 +11,7 @@
 #import "ColorThemeController.h"
 #import "HumanToken.h"
 #import "APIController.h"
+#import "NSObject+Triangle.h"
 
 @implementation ScheduleViewCell
 
@@ -28,16 +29,29 @@
     // We can define the background view and its color
     [self setBackgroundView:[[UIView alloc] initWithFrame:CGRectZero]];
     [self.backgroundView setBackgroundColor:[ColorThemeController tableViewCellBackgroundColor]];
+    [self setSelectionStyle:UITableViewCellEditingStyleNone];
     
     // Then we do the same with it's selected
     [self setSelectedBackgroundView:[[UIView alloc] initWithFrame:CGRectZero]];
     [self.selectedBackgroundView setBackgroundColor:[ColorThemeController tableViewCellSelectedBackgroundColor]];
+
+    // Wrapper
+    [_wrapper.layer setBorderColor:[[ColorThemeController tableViewCellInternalBorderColor] CGColor]];
+    [_wrapper.layer setBorderWidth:0.4f];
+    [_wrapper.layer setCornerRadius:4.0f];
+    [_wrapper.layer setMasksToBounds:YES];
     
     // Title
-//    [_orderTitle setTextColor:[ColorThemeController tableViewCellTextColor]];
-//    [_orderTitle setHighlightedTextColor:[ColorThemeController tableViewCellTextHighlightedColor]];
-//    
-//    // Status View
+    [_name setTextColor:[ColorThemeController tableViewCellTextColor]];
+    [_name setHighlightedTextColor:[ColorThemeController tableViewCellTextHighlightedColor]];
+    
+    // Description
+    [_description setBackgroundColor:[ColorThemeController tableViewCellSelectedBackgroundColor]];
+    
+    // Line
+    [_line setBackgroundColor:[ColorThemeController tableViewCellInternalBorderColor]];
+    
+    // Status View
 //    [_orderStatusView setTag:0];
 //    [_orderStatusView.layer setCornerRadius:10.0];
 //    [_orderStatusView.layer setMasksToBounds:NO];
@@ -64,58 +78,35 @@
     // Configure the view for the selected state
 }
 
+#pragma mark - Setter Methods
+
+- (void)setApproved:(NSString *)approved {
+    _approved = approved;
+    
+    [self defineState];
+}
+
 #pragma mark - User Methods
 
-- (void)createBottomIdentation {
+- (void)defineState {
     
-    CGMutablePathRef path = CGPathCreateMutable();
-    CGPathMoveToPoint(path,NULL,0.0,0.0);
-    CGPathAddLineToPoint(path, NULL, 160.0f, 0.0f);
-    CGPathAddLineToPoint(path, NULL, 160.0f, 100.0f);
-    CGPathAddLineToPoint(path, NULL, 110.0f, 150.0f);
-    CGPathAddLineToPoint(path, NULL, 160.0f, 200.0f);
-    CGPathAddLineToPoint(path, NULL, 160.0f, 480.0f);
-    CGPathAddLineToPoint(path, NULL, 0.0f, 480.0f);
-    CGPathAddLineToPoint(path, NULL, 0.0f, 0.0f);
+    // Remove all alpha and border views
+//    if (_wrapper.layer != nil) {
+//        for (CALayer *layer in _wrapper.layer.sublayers) {
+//            [layer removeFromSuperlayer];
+//        }
+//    }
     
-    
-    CAShapeLayer *shapeLayer = [CAShapeLayer layer];
-    [shapeLayer setPath:path];
-    [shapeLayer setFillColor:[[UIColor redColor] CGColor]];
-    [shapeLayer setStrokeColor:[[UIColor blackColor] CGColor]];
-    [shapeLayer setBounds:CGRectMake(0.0f, 0.0f, 160.0f, 480)];
-    [shapeLayer setAnchorPoint:CGPointMake(0.0f, 0.0f)];
-    [shapeLayer setPosition:CGPointMake(0.0f, 0.0f)];
-    [self.layer addSublayer:shapeLayer];
-    
-    CGPathRelease(path);
+    if ([[HumanToken sharedInstance] isMemberAuthenticated]) {
+        if ([_approved integerValue] == 1) {
+            [self createUpperTriangleAtView:_wrapper withState:ScheduleStateApproved];
+        } else {
+            [self createUpperTriangleAtView:_wrapper withState:ScheduleStateDenied];
+        }
+    } else {
+        [self createUpperTriangleAtView:_wrapper withState:ScheduleStateUnknown];
+    }
 }
-
-- (void)createUpperTriangle {
-    
-    CGMutablePathRef path = CGPathCreateMutable();
-    CGPathMoveToPoint(path,NULL,0.0,0.0);
-    CGPathAddLineToPoint(path, NULL, 160.0f, 0.0f);
-    CGPathAddLineToPoint(path, NULL, 160.0f, 100.0f);
-    CGPathAddLineToPoint(path, NULL, 110.0f, 150.0f);
-    CGPathAddLineToPoint(path, NULL, 160.0f, 200.0f);
-    CGPathAddLineToPoint(path, NULL, 160.0f, 480.0f);
-    CGPathAddLineToPoint(path, NULL, 0.0f, 480.0f);
-    CGPathAddLineToPoint(path, NULL, 0.0f, 0.0f);
-    
-    
-    CAShapeLayer *shapeLayer = [CAShapeLayer layer];
-    [shapeLayer setPath:path];
-    [shapeLayer setFillColor:[[UIColor redColor] CGColor]];
-    [shapeLayer setStrokeColor:[[UIColor blackColor] CGColor]];
-    [shapeLayer setBounds:CGRectMake(0.0f, 0.0f, 160.0f, 480)];
-    [shapeLayer setAnchorPoint:CGPointMake(0.0f, 0.0f)];
-    [shapeLayer setPosition:CGPointMake(0.0f, 0.0f)];
-    [self.layer addSublayer:shapeLayer];
-    
-    CGPathRelease(path);
-}
-
 
 
 @end

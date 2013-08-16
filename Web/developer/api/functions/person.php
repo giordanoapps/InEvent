@@ -48,17 +48,24 @@
 				`event`.`id`,
 				`event`.`name`,
 				`event`.`description`,
+				UNIX_TIMESTAMP(`event`.`dateBegin`) AS `dateBegin`,
+				UNIX_TIMESTAMP(`event`.`dateEnd`) AS `dateEnd`,
 				`event`.`latitude`,
 				`event`.`longitude`,
 				`event`.`address`,
 				`event`.`city`,
 				`event`.`state`,
 				`event`.`zipCode`,
+				`eventMember`.`roleID`,
+				`memberRole`.`constant`,
+				`memberRole`.`title`,
 				`eventMember`.`approved`
 			FROM
 				`event`
 			INNER JOIN
 				`eventMember` ON `event`.`id` = `eventMember`.`eventID`
+			INNER JOIN
+				`memberRole` ON `eventMember`.`roleID` = `memberRole`.`id`
 			WHERE
 				`eventMember`.`memberID` = $memberID
 		");
