@@ -36,18 +36,18 @@ public class LoginManager
 
     private Context mContext;
 
-    private Person  mPerson;
-    private File    mPersonFile;
+    private Member  mMember;
+    private File    mMemberFile;
 
 
     private LoginManager(Context c)
     {
         this.mContext = c;
 
-        mPersonFile = new File(mContext.getDir(DIRECTORY, Context.MODE_PRIVATE), FILENAME_MEMBER);
+        mMemberFile = new File(mContext.getDir(DIRECTORY, Context.MODE_PRIVATE), FILENAME_MEMBER);
 
         // Try to recover the member login information
-        mPerson = (Person) readInformationFromFile(mPersonFile);
+        mMember = (Member) readInformationFromFile(mMemberFile);
     }
 
     private Object readInformationFromFile(File file)
@@ -104,12 +104,12 @@ public class LoginManager
     /**
      * @return <b>true</b> if the operation was successful
      */
-    public boolean signIn(Person p)
+    public boolean signIn(Member m)
     {
-        if (saveInformationToFile(mPersonFile, p))
+        if (saveInformationToFile(mMemberFile, m))
         {
             // register the attributes
-            mPerson = p;
+            mMember = m;
 
             // broadcasts that the user has logged in
             mContext.sendBroadcast(new Intent(ACTION_LOGIN_STATE_CHANGED));
@@ -121,8 +121,8 @@ public class LoginManager
     }
     public void signOut()
     {
-        mPersonFile.delete();
-        mPerson = null;
+        mMemberFile.delete();
+        mMember = null;
 
         // broadcasts that the user has logged in
         mContext.sendBroadcast(new Intent(ACTION_LOGIN_STATE_CHANGED));
@@ -132,17 +132,17 @@ public class LoginManager
     // Getters
     public boolean isSignedIn()
     {
-        return mPerson != null;
+        return mMember != null;
     }
 
 
-    public Person getPerson()
+    public Member getMember()
     {
-        return mPerson;
+        return mMember;
     }
     public String getTokenId()
     {
-        if (isSignedIn()) return mPerson.tokenId;
+        if (isSignedIn()) return mMember.tokenId;
         else return null;
     }
 }

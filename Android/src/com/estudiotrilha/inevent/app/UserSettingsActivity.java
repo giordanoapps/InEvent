@@ -28,7 +28,7 @@ public class UserSettingsActivity extends ActionBarActivity
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // fill up the user info
-        ((TextView) findViewById(R.id.person_name)).setText(mLoginManager.getPerson().name);
+        ((TextView) findViewById(R.id.member_name)).setText(mLoginManager.getMember().name);
 //        ((ImageView) view.findViewById(R.id.member_profilePicture)).setImageBitmap(null); TODO get the user photo
     }
 

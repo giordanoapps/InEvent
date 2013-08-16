@@ -44,10 +44,20 @@
         <activity android:name="com.estudiotrilha.inevent.app.UserSettingsActivity" />
 
         <!-- Login -->
-        <activity android:name="com.estudiotrilha.inevent.app.LoginActivity"/>
-        
+        <activity android:name="com.estudiotrilha.inevent.app.LoginActivity" />
+
         <!-- Event Activity -->
         <activity android:name="com.estudiotrilha.inevent.app.EventActivity" />
+
+        <!-- InEvent Content Provider -->
+        <provider
+            android:name="com.estudiotrilha.inevent.provider.InEventProvider"
+            android:authorities="com.estudiotrilha.inevent.provider"
+            android:exported="false"
+            android:label="InEvent Data Provider" />
+
+        <!-- Services -->
+        <service android:name="com.estudiotrilha.inevent.service.SyncService" />
     </application>
 
 </manifest>

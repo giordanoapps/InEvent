@@ -36,12 +36,26 @@ public class EventActivity extends ActionBarActivity
 
         mLoginManager = LoginManager.getInstance(this);
 
+        if (savedInstanceState == null)
+        {
+            // XXX
+            EventListFragment fragment = new EventListFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.mainContent, fragment)
+                    .commit();
+        }
+    }
+    @Override
+    protected void onStart()
+    {
+        super.onStart();
+        refreshLoginState();
         registerReceiver(mReceiver, new IntentFilter(LoginManager.ACTION_LOGIN_STATE_CHANGED));
     }
     @Override
-    protected void onDestroy()
+    protected void onStop()
     {
-        super.onDestroy();
+        super.onStop();
         unregisterReceiver(mReceiver);
     }
 

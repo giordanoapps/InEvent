@@ -1,5 +1,7 @@
 package com.estudiotrilha.inevent.content;
 
+import static com.estudiotrilha.inevent.content.Member.Columns.*;
+
 import java.io.IOException;
 import java.io.Serializable;
 import java.net.HttpURLConnection;
@@ -9,14 +11,19 @@ import java.net.URLEncoder;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.ContentValues;
+import android.net.Uri;
+import android.provider.BaseColumns;
 import android.text.Html;
 import android.util.Log;
 
 import com.estudiotrilha.android.net.ConnectionHelper;
+import com.estudiotrilha.android.utils.JsonUtils;
 import com.estudiotrilha.inevent.InEvent;
+import com.estudiotrilha.inevent.provider.InEventProvider;
 
 
-public class Person implements Serializable
+public class Member implements Serializable
 {
     private static final long serialVersionUID = 5341927475443621774L;
 
@@ -55,9 +62,23 @@ public class Person implements Serializable
         }
     }
 
+    public static interface Columns extends BaseColumns
+    {
+        public static final String NAME        = "name";
+        public static final String TELEPHONE   = "telephone";
+        public static final String EMAIL       = "email";
+    }
 
+    // Database
+    public static final String TABLE_NAME = "person";
+
+    // Content Provider
+    public static final String PATH     = "person";
+    public static final Uri CONTENT_URI = Uri.withAppendedPath(InEventProvider.CONTENT_URI, PATH);
+
+
+    // Json Strings
     public static final String MEMBER_ID = "memberID";
-    public static final String NAME      = "name";
     public static final String TOKEN_ID  = "tokenID";
 
 
@@ -66,21 +87,19 @@ public class Person implements Serializable
     public final String tokenId;
     public final String name;
 
-    public Person(long memberId, String name, String tokenId) // TODO finish this
+    public Member(long memberId, String name, String tokenId)
     {
         this.memberId = memberId;
         this.name = name;
         this.tokenId = tokenId;
     }
-
-
-    public static Person fromJson(JSONObject json) // TODO
+    public static Member fromJson(JSONObject json)
     {
-        Person p = null;
+        Member m = null;
 
         try
         {
-            p = new Person(
+            m = new Member(
                     json.getLong(MEMBER_ID),
                     Html.fromHtml(json.getString(NAME)).toString(),
                     json.getString(TOKEN_ID)
@@ -91,6 +110,26 @@ public class Person implements Serializable
             Log.w(InEvent.NAME, "Couldn't properly retrieve Person from json = "+json, e);
         }
 
-        return p;
+        return m;
+    }
+
+
+    public static ContentValues valuesFromJson(JSONObject json)
+    {
+        ContentValues cv = new ContentValues();
+
+        try
+        {
+            cv.put(_ID, json.getLong(JsonUtils.ID));
+            cv.put(NAME, Html.fromHtml(json.getString(NAME)).toString());
+            cv.put(TELEPHONE, json.getString(TELEPHONE));
+            cv.put(EMAIL, Html.fromHtml(json.getString(EMAIL)).toString());
+        }
+        catch (JSONException e)
+        {
+            Log.w(InEvent.NAME, "Error retrieving information for Event from json = "+json, e);
+        }
+
+        return cv;
     }
 }

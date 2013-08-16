@@ -6,8 +6,13 @@
     <color name="dark_gray">#606060</color>
     <color name="light_gray">#e5e5e5</color>
 
-    <!-- Person -->
-    <color name="person_profilelight_gray">@color/light_gray</color>
+    <color name="holo_green_light">#ff99cc00</color>
+    <color name="holo_green_dark">#ff669900</color>
+    <color name="holo_red_light">#ffff4444</color>
+    <color name="holo_red_dark">#ffcc0000</color>
+
+    <!-- Member -->
+    <color name="member_profilelight_gray">@color/light_gray</color>
 
     <!-- Dividers -->
     <color name="divider_white">#50ffffff</color>

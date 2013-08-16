@@ -12,18 +12,18 @@
     tools:context=".app.user.UserSettingsActivity" >
 
     <QuickContactBadge
-        android:id="@id/person_profilePicture"
+        android:id="@id/member_profilePicture"
         android:layout_width="98dp"
         android:layout_height="98dp"
-        android:background="@color/person_profilelight_gray"
+        android:background="@color/member_profilelight_gray"
         android:src="@drawable/ic_social_person" />
 
     <TextView
-        android:id="@id/person_name"
+        android:id="@id/member_name"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:fontFamily="sans-serif-light"
-        android:hint="@string/hint_person_myName"
+        android:hint="@string/hint_member_myName"
         android:padding="@dimen/default_textPadding"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 

@@ -3,12 +3,20 @@ package com.estudiotrilha.inevent.app;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
+import java.util.ArrayList;
 
 import org.apache.http.HttpStatus;
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.ContentProviderOperation;
+import android.content.ContentValues;
+import android.content.OperationApplicationException;
 import android.os.Bundle;
+import android.os.RemoteException;
 import android.preference.PreferenceManager;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -17,12 +25,15 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.estudiotrilha.android.app.ProgressDialogFragment;
 import com.estudiotrilha.inevent.InEvent;
 import com.estudiotrilha.inevent.R;
 import com.estudiotrilha.inevent.content.ApiRequest;
 import com.estudiotrilha.inevent.content.LoginManager;
-import com.estudiotrilha.inevent.content.Person;
+import com.estudiotrilha.inevent.content.Event;
+import com.estudiotrilha.inevent.content.Member;
+import com.estudiotrilha.inevent.provider.InEventProvider;
+
+import eu.inmite.android.lib.dialogs.ProgressDialogFragment;
 
 
 public class LoginActivity extends ActionBarActivity
@@ -89,9 +100,10 @@ public class LoginActivity extends ActionBarActivity
     private void loginAttempt()
     {
         // Shows a loading progress
-        final ProgressDialogFragment progress = new ProgressDialogFragment();
-        progress.show(getSupportFragmentManager(), null);
-        progress.setMessage(R.string.message_loginIn);
+        final DialogFragment progress = ProgressDialogFragment.createBuilder(this, getSupportFragmentManager())
+                .setMessage(R.string.message_loginIn)
+                .setCancelable(false)
+                .show();
 
         try
         {
@@ -101,7 +113,7 @@ public class LoginActivity extends ActionBarActivity
             final String password   = mPassword.getText().toString();
 
             // Send the API request
-            connection = Person.Api.signIn(memberName, password);
+            connection = Member.Api.signIn(memberName, password);
             ApiRequest.getJsonFromConnection(REQUEST_LOGIN, connection, new ApiRequest.ResponseHandler() {
                 @Override
                 public void handleResponse(int requestCode, JSONObject json, int responseCode)
@@ -127,7 +139,7 @@ public class LoginActivity extends ActionBarActivity
 
                         Toast.makeText(LoginActivity.this, errorConnection, Toast.LENGTH_SHORT).show();
                     }
-                    else if (LoginManager.getInstance(LoginActivity.this).signIn(Person.fromJson(json)))
+                    else if (LoginManager.getInstance(LoginActivity.this).signIn(Member.fromJson(json)))
                     {
                         // close the LoginActivity
                         finish();
@@ -135,6 +147,9 @@ public class LoginActivity extends ActionBarActivity
                         PreferenceManager.getDefaultSharedPreferences(LoginActivity.this).edit()
                                 .putString(STATE_USERNAME, mUsername.getText().toString())
                                 .commit();
+
+                        // Get the events
+                        getEvents(json);
                     }
                     else
                     {
@@ -154,6 +169,58 @@ public class LoginActivity extends ActionBarActivity
 
             Log.e(InEvent.NAME, "Couldn't create a connection for login", e);
         }
+    }
+    private void getEvents(final JSONObject json)
+    {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run()
+            {
+                ArrayList<ContentProviderOperation> operations = new ArrayList<ContentProviderOperation>();
+                
+                try
+                {
+                    // Delete the previous events
+                    operations.add(
+                            ContentProviderOperation
+                                .newDelete(Event.CONTENT_URI)
+                                .build()
+                    );
+
+                    // Get the new ones
+                    JSONArray eventArray = json.getJSONArray("events");
+                    for (int i = 0; i < eventArray.length(); i++)
+                    {
+                        // Parse the json
+                        ContentValues values = Event.valuesFromJson(eventArray.getJSONObject(i));
+
+                        // Add the insert operation
+                        operations.add(
+                                ContentProviderOperation
+                                    .newInsert(Event.CONTENT_URI)
+                                    .withValues(values)
+                                    .build()
+                        );
+                    }
+
+                    getContentResolver().applyBatch(InEventProvider.AUTHORITY, operations);
+                }
+                catch (JSONException e)
+                {
+                    Log.w(InEvent.NAME, "Couldn't properly get the Events from the json = "+json, e);
+                }
+                catch (RemoteException e)
+                {
+                    Log.e(InEvent.NAME, "", e);
+                }
+                catch (OperationApplicationException e)
+                {
+                    Log.e(InEvent.NAME, "Failed while adding Events to the database", e);
+                }
+            }
+        });
+
+        thread.start();
     }
 
 

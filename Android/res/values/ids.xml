@@ -3,7 +3,22 @@
 
     <item name="mainContent" type="id"/>
 
-    <!-- Person -->
-    <item name="person_profilePicture" type="id"/>
-    <item name="person_name" type="id"/>
+    <!-- Member -->
+    <item name="member_profilePicture" type="id"/>
+    <item name="member_name" type="id"/>
+
+    <!-- Event -->
+    <item name="event_name" type="id"/>
+    <item name="event_description" type="id"/>
+    <item name="event_address" type="id"/>
+    <item name="event_city" type="id"/>
+    <item name="event_state" type="id"/>
+
+    <!-- Activity -->
+    <item name="activity_name" type="id"/>
+    <item name="activity_description" type="id"/>
+    <item name="activity_location" type="id"/>
+    <item name="activity_dateBegin" type="id"/>
+    <item name="activity_dateEnd" type="id"/>
+    <item name="activity_approved" type="id"/>
 </resources>

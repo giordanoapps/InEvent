@@ -6,11 +6,14 @@
     <string name="app_version">1.0</string>
 
     <!-- Button Actions -->
+    <string name="action_refresh">Refresh</string>
     <string name="action_preferences">Preferences</string>
     <string name="action_myAccount">My Account</string>
     <string name="action_login">Login</string>
     <string name="action_signIn">Sign In</string>
     <string name="action_signOut">Sign Out</string>
+    <string name="action_diplayOption_schedule">Show Schedule</string>
+    <string name="action_diplayOption_activities">Show All Activities</string>
 
     <!-- Titles -->
     <string name="title_general">General</string>
@@ -22,9 +25,14 @@
     <string name="title_signIn">Sign In</string>
 
     <!-- Hint Messages -->
-    <string name="hint_person_myName">Me</string>
+    <string name="hint_member_myName">Me</string>
     <string name="hint_login_username">Name</string>
     <string name="hint_login_password">Password</string>
+    <string name="hint_event_name">Name</string>
+    <string name="hint_event_description">Description</string>
+    <string name="hint_event_address">Address</string>
+    <string name="hint_event_city">City</string>
+    <string name="hint_event_state">State</string>
 
     <!-- Messages -->
     <string name="message_loginIn">Loging In…</string>
@@ -38,6 +46,7 @@
     <string name="preference_summary_splashScreen_unabled">Go straigh to the content, without a Splash Screen</string>
 
     <!-- Descriptions -->
+    <string name="description_event_info">Extra information about the event</string>
     <string name="description_preference_useMobileNetwork">Allow use of the mobile network to download data</string>
 
     <!-- Error Messages -->

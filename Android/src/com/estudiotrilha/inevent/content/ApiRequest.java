@@ -33,21 +33,29 @@ public class ApiRequest
 
     public static void getJsonFromConnection(int requestCode, HttpURLConnection connection, ResponseHandler handler)
     {
-        getJsonFromConnection(requestCode, connection, handler, null);
+        getJsonFromConnection(requestCode, connection, handler, null, true);
+    }
+    public static void getJsonFromConnection(int requestCode, HttpURLConnection connection, ResponseHandler handler, boolean async)
+    {
+        getJsonFromConnection(requestCode, connection, handler, null, async);
     }
     public static void getJsonFromConnection(int requestCode, HttpURLConnection connection, ResponseHandler handler, String post)
     {
-        new ApiRequest(requestCode, post, connection, handler);
+        getJsonFromConnection(requestCode, connection, handler, null, true);
+    }
+    public static void getJsonFromConnection(int requestCode, HttpURLConnection connection, ResponseHandler handler, String post, boolean async)
+    {
+        new ApiRequest(requestCode, post, connection, handler, async);
     }
 
 
-    private ApiRequest(final int requestCode, final String post, final HttpURLConnection connection, final ResponseHandler handler)
+    private ApiRequest(final int requestCode, final String post, final HttpURLConnection connection, final ResponseHandler handler, final boolean async)
     {
         final Handler userHandler = new Handler();
 
-        Thread thread = new Thread(new Runnable() {
+        Runnable runnable = new Runnable() {
 
-            private int mResponseCode;
+            private int        mResponseCode;
             private JSONObject mJson;
 
             @Override
@@ -88,14 +96,29 @@ public class ApiRequest
                 }
 
                 // callback
-                userHandler.post(new Runnable() {
-                    public void run()
-                    {
-                        if (handler != null) handler.handleResponse(requestCode, mJson, mResponseCode);
-                    }
-                });
+                if (async)
+                {
+                    userHandler.post(new Runnable() {
+                        public void run()
+                        {
+                            if (handler != null) handler.handleResponse(requestCode, mJson, mResponseCode);
+                        }
+                    });
+                }
+                else
+                {
+                    if (handler != null) handler.handleResponse(requestCode, mJson, mResponseCode);
+                }
             }
-        });
-        thread.start();
+        };
+
+        if (async)
+        {
+            new Thread(runnable).start();
+        }
+        else
+        {
+            runnable.run();
+        }
     }
 }
