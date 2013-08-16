@@ -50,24 +50,6 @@
     
     // Line
     [_line setBackgroundColor:[ColorThemeController tableViewCellInternalBorderColor]];
-    
-    // Status View
-//    [_orderStatusView setTag:0];
-//    [_orderStatusView.layer setCornerRadius:10.0];
-//    [_orderStatusView.layer setMasksToBounds:NO];
-//    [_orderStatusView.layer setBorderWidth:1.0];
-//    [_orderStatusView.layer setBorderColor:[[ColorThemeController tableViewCellInternalBorderColor] CGColor]];
-//    [_orderStatusView addTarget:self action:@selector(processTap:event:) forControlEvents:UIControlEventTouchUpInside];
-//    
-//    // Status Hint
-//    [_orderStatusHint setTextColor:[ColorThemeController tableViewCellTextColor]];
-//    
-//    // Quantity Label
-//    [_orderAmountLabel setText:NSLocalizedString(@"Quantity:", nil)];
-//    [_orderAmountLabel setTextColor:[ColorThemeController tableViewCellTextColor]];
-//    
-//    // Quantity
-//    [_orderAmount setTextColor:[ColorThemeController tableViewCellTextColor]];
 }
 
 
@@ -83,29 +65,7 @@
 - (void)setApproved:(NSString *)approved {
     _approved = approved;
     
-    [self defineState];
-}
-
-#pragma mark - User Methods
-
-- (void)defineState {
-    
-    // Remove all alpha and border views
-//    if (_wrapper.layer != nil) {
-//        for (CALayer *layer in _wrapper.layer.sublayers) {
-//            [layer removeFromSuperlayer];
-//        }
-//    }
-    
-    if ([[HumanToken sharedInstance] isMemberAuthenticated]) {
-        if ([_approved integerValue] == 1) {
-            [self createUpperTriangleAtView:_wrapper withState:ScheduleStateApproved];
-        } else {
-            [self createUpperTriangleAtView:_wrapper withState:ScheduleStateDenied];
-        }
-    } else {
-        [self createUpperTriangleAtView:_wrapper withState:ScheduleStateUnknown];
-    }
+    [self defineStateForApproved:[_approved integerValue] withView:_wrapper];
 }
 
 

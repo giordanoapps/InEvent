@@ -2,15 +2,17 @@
 
 class Core {
 
-	// User Settings
+    // Global
     public $auth = false;
+
+    // Member
     public $name = "";
-    public $companyID = 0;
     public $memberID = 0;
-    public $groupID = 0;
-    public $permission = 0;
-    
-    public $authenticatedMAC = false;
+
+    // Company
+    public $eventID = 0;
+    public $workAtEvent = false;
+    public $roleID = ROLE_ATTENDEE;
     
 	// Store a class instance
     static private $instance;

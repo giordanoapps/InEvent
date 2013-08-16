@@ -21,6 +21,4 @@
 
 @property (nonatomic, strong) NSDictionary *companyData;
 
-- (IBAction)pushToolController:(id)sender;
-
 @end

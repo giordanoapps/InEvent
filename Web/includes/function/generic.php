@@ -43,8 +43,8 @@
             // Replace it
             $query = substr_replace($query, $value, $firstChar, ($lastChar + 1) - $firstChar);
 
-            // Advance to the next
-            $currentChar = $lastChar;
+            // Advance to the next, trimming the difference between the constant and the value
+            $currentChar = $lastChar - (strlen($constant) - strlen($value));
         }
 
         return $query;

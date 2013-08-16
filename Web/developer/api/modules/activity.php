@@ -7,7 +7,7 @@
 
 		if (isset($_GET['personID']) && $_GET['personID'] != "null") {
 
-			if ($core->workAtCompany) {
+			if ($core->workAtEvent) {
 				$personID = getAttribute($_GET['personID']);
 
 				// If the personID is 0, we must create an anonymous member named "Pessoa"
@@ -118,7 +118,7 @@
 
 		if (isset($_GET['personID']) && $_GET['personID'] != "null") {
 
-			if ($core->workAtCompany) {
+			if ($core->workAtEvent) {
 				$personID = getAttribute($_GET['personID']);
 
 				// If the personID is 0, we must create an anonymous member named "Pessoa"
@@ -181,6 +181,51 @@
 				http_status_code(500);
 			}
 
+		} else {
+			http_status_code(400);
+		}
+		
+	} else
+
+	if ($method === "confirmEntrance") {
+
+		$activityID = getTokenForActivity();
+
+		if (isset($_GET["personID"])) {
+
+			// Get some properties
+			$personID = getAttribute($_GET['personID']);
+
+			if ($core->workAtEvent) {
+				// Update the presence of the person
+				$update = resourceForQuery(
+					"UPDATE
+						`activityMember`
+					SET
+						`activityMember`.`present` = 1
+					WHERE 1
+						AND `activityMember`.`activityID` = $activityID
+						AND `activityMember`.`memberID` = $personID
+						AND `activityMember`.`approved` = 1
+				");
+
+				if (mysql_affected_rows() > 0) {
+					// Return its data
+					if ($format == "json") {
+						$data["personID"] = $personID;
+						echo json_encode($data);
+					} elseif ($format == "html") {
+						$data["personID"] = $personID;
+						echo json_encode($data);
+					} else {
+						http_status_code(405);	
+					}
+				} else {
+					http_status_code(500);
+				}
+			} else {
+				http_status_code(401);
+			}
 		} else {
 			http_status_code(400);
 		}

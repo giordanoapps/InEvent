@@ -165,7 +165,7 @@
 							</object>
 							<object class="IBUIView" id="497631748">
 								<reference key="NSNextResponder" ref="297153547"/>
-								<int key="NSvFlags">292</int>
+								<int key="NSvFlags">290</int>
 								<array class="NSMutableArray" key="NSSubviews"/>
 								<string key="NSFrame">{{0, 63}, {300, 1}}</string>
 								<reference key="NSSuperview" ref="297153547"/>
@@ -233,7 +233,7 @@
 							</object>
 							<object class="IBUIView" id="1019143200">
 								<reference key="NSNextResponder" ref="297153547"/>
-								<int key="NSvFlags">292</int>
+								<int key="NSvFlags">269</int>
 								<array class="NSMutableArray" key="NSSubviews">
 									<object class="IBUITextField" id="338130068">
 										<reference key="NSNextResponder" ref="1019143200"/>
@@ -269,6 +269,7 @@
 										<string key="NSFrame">{{215, 8}, {81, 30}}</string>
 										<reference key="NSSuperview" ref="1019143200"/>
 										<reference key="NSWindow"/>
+										<reference key="NSNextKeyView"/>
 										<string key="NSReuseIdentifierKey">_NS:9</string>
 										<bool key="IBUIOpaque">NO</bool>
 										<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -521,21 +522,25 @@
 						<int key="objectID">40</int>
 						<reference key="object" ref="497631748"/>
 						<reference key="parent" ref="297153547"/>
+						<string key="objectName">Line</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">41</int>
 						<reference key="object" ref="843977006"/>
 						<reference key="parent" ref="297153547"/>
+						<string key="objectName">Name</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">42</int>
 						<reference key="object" ref="500967449"/>
 						<reference key="parent" ref="297153547"/>
+						<string key="objectName">Minute</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">43</int>
 						<reference key="object" ref="983251764"/>
 						<reference key="parent" ref="297153547"/>
+						<string key="objectName">Hour</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">44</int>

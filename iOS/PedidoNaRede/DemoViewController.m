@@ -37,9 +37,9 @@
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Enter", nil) style:UIBarButtonItemStyleDone target:self action:@selector(showLogin)];
     
     // We need to setup up our content here
-    _images = @[@"egretBlue.png", @"egretGreen.png", @"egretOrange.png", @"egretPurple.png", @"egretRed.png"];
-    _titles = @[NSLocalizedString(@"Welcome!", nil), NSLocalizedString(@"Choose a restaurant", nil), NSLocalizedString(@"Make your order", nil), NSLocalizedString(@"Get it on your table!", nil), NSLocalizedString(@"Ready?", nil)];
-    _descriptions = @[NSLocalizedString(@"Garça brings to you the control over your orders.", nil), NSLocalizedString(@"From the map or the list, choose where you are.", nil), NSLocalizedString(@"Choose from the several items on the menu and we'll ship them directly to the kitchen.", nil), NSLocalizedString(@"When ready, your item is delivered to your table!", nil), NSLocalizedString(@"Ready to choose a restaurant?", nil)];
+    _images = @[@"64-Marker", @"64-Footprints", @"64-Cloud-Download", @"64-Create-_-Write", @"64-Balloons"];
+    _titles = @[NSLocalizedString(@"Welcome!", nil), NSLocalizedString(@"Timeline", nil), NSLocalizedString(@"Notifications", nil), NSLocalizedString(@"Questions!", nil), NSLocalizedString(@"Ready?", nil)];
+    _descriptions = @[NSLocalizedString(@"InEvent brings a whole new experience to your event", nil), NSLocalizedString(@"A timeline based on your previous choices!", nil), NSLocalizedString(@"Get updates instantly!", nil), NSLocalizedString(@"Post comments on every activity you go!", nil), NSLocalizedString(@"Let's go to your first event", nil)];
     
     _pageControl.numberOfPages = [_titles count];
 }
@@ -64,9 +64,9 @@
     for (int i = 0; i < [_titles count]; i++) {
         // Image
         if (UIInterfaceOrientationIsPortrait(self.interfaceOrientation)) {
-            frame = CGRectMake(self.view.frame.size.width * i + 64.0, 20.0, 175.0 /* 192.0 */, 276.0);
+            frame = CGRectMake(self.view.frame.size.width * i + 88.0, 66.0, 144.0, 144.0);
         } else {
-            frame = CGRectMake(self.view.frame.size.width * i + 55.0, 20.0, self.view.frame.size.width * 0.3, 216.0);            
+            frame = CGRectMake(self.view.frame.size.width * i + 55.0, 44.0, 144.0, 144.0);
         }
         
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:frame];

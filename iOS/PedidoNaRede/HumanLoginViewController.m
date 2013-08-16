@@ -218,7 +218,7 @@
             [[HumanToken sharedInstance] setWorkingEvents:events];
             [[HumanToken sharedInstance] setName:[[dictionary objectForKey:@"name"] stringByDecodingHTMLEntities]];
         
-            // Update the current state of the restaurant controller
+            // Update the current state of the schedule controller
             [[NSNotificationCenter defaultCenter] postNotificationName:@"scheduleCurrentState" object:nil userInfo:nil];
             
             // Go back to the other screen
@@ -259,7 +259,7 @@
                  
              } else {
                  // Session is closed
-                 AlertView *alertView = [[AlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"Facebook couldn't log you in! Try again?", nil) delegate:self cancelButtonTitle:nil otherButtonTitle:NSLocalizedString(@"Ok", nil)];
+                 AlertView *alertView = [[AlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"Facebook couldn't log you in! Try again?", nil) delegate:self cancelButtonTitle:nil otherButtonTitle:NSLocalizedString(@"Ok!", nil)];
                  [alertView show];
              }
              

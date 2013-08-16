@@ -7,7 +7,7 @@
 
 	// 	if (isset($_GET['personID']) && $_GET['personID'] != "null") {
 
-	// 		if ($core->workAtCompany) {
+	// 		if ($core->workAtEvent) {
 	// 			$personID = getAttribute($_GET['personID']);
 
 	// 			// If the personID is 0, we must create an anonymous member named "Pessoa"

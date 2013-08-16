@@ -182,7 +182,6 @@
     [currentInstallation saveEventually];
 
     // Notify about the new company to our views
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"updateCarte" object:self userInfo:nil];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"verify" object:nil userInfo:@{@"type": @"menu"}];
     
     // Push the controller with the restaurant information

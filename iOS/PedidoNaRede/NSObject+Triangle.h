@@ -17,5 +17,6 @@ typedef enum {
 @interface NSObject (Triangle)
 
 - (void)createUpperTriangleAtView:(UIView *)view withState:(ScheduleState)state;
+- (void)defineStateForApproved:(NSInteger)approved withView:(UIView *)view;
 
 @end

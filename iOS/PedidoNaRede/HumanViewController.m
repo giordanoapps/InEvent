@@ -128,8 +128,8 @@
         [[HumanToken sharedInstance] removeMember];
     }
     
-    // Update the current state of the restaurant controller
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"restaurantCurrentState" object:nil userInfo:nil];
+    // Update the current state of the schedule controller
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"scheduleCurrentState" object:nil userInfo:nil];
     
     // Load the login form
     [self checkSession];

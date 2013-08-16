@@ -8,6 +8,7 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import "NSObject+Triangle.h"
+#import "HumanToken.h"
 #import "UtilitiesController.h"
 
 @implementation NSObject (Triangle)
@@ -38,6 +39,28 @@
     [view.layer addSublayer:shapeLayer];
     
     CGPathRelease(path);
+}
+
+- (void)defineStateForApproved:(NSInteger)approved withView:(UIView *)view {
+    
+    // Remove all alpha and border views
+    if (view.layer != nil) {
+        for (CALayer *layer in view.layer.sublayers) {
+            if ([layer isKindOfClass:[CAShapeLayer class]]) {
+                [layer removeFromSuperlayer];
+            }
+        }
+    }
+    
+    if ([[HumanToken sharedInstance] isMemberAuthenticated]) {
+        if (approved == 1) {
+            [self createUpperTriangleAtView:view withState:ScheduleStateApproved];
+        } else {
+            [self createUpperTriangleAtView:view withState:ScheduleStateDenied];
+        }
+    } else {
+        [self createUpperTriangleAtView:view withState:ScheduleStateUnknown];
+    }
 }
 
 @end

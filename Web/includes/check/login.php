@@ -94,6 +94,9 @@ if (isset($_POST["name"]) && isset($_POST["password"])) {
 						`loginAttempts`.`remote` = INET_ATON('$security->remote')
 				");
 
+				// Validate the event
+				validateEvent();
+
 				setcookie($security->key, $sessionKey, time() + 60*60*24*30, $path);
 				header("Location: $path");
 				exit;

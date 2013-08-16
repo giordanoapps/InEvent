@@ -45,7 +45,7 @@
     
     if ([[HumanToken sharedInstance] isMemberWorking]) {
         self.rightBarButton = [[CoolBarButtonItem alloc] initCustomButtonWithImage:[UIImage imageNamed:@"64-Cog"] frame:CGRectMake(0, 0, 42.0, 30.0) insets:UIEdgeInsetsMake(5.0, 11.0, 5.0, 11.0) target:self action:@selector(alertActionSheet)];
-        self.rightBarButton.accessibilityLabel = NSLocalizedString(@"Restaurant Actions", nil);
+        self.rightBarButton.accessibilityLabel = NSLocalizedString(@"Actions", nil);
         self.rightBarButton.accessibilityTraits = UIAccessibilityTraitSummaryElement;
         self.navigationItem.rightBarButtonItem = self.rightBarButton;
     }
@@ -72,43 +72,47 @@
     [_line setBackgroundColor:[ColorThemeController tableViewCellInternalBorderColor]];
     [self createBottomIdentation];
     
-    // Refresh Control
-    refreshControl = [[ODRefreshControl alloc] initInScrollView:self.tableView];
-    [refreshControl addTarget:self action:@selector(loadQuestions) forControlEvents:UIControlEventValueChanged];
-    
-    // Question Wrapper
-    [_questionWrapper setBackgroundColor:[ColorThemeController tableViewCellBackgroundColor]];
-    
-    // Create the view for the search field
-    UIView *leftView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 40.0, 30.0)];
-    UIImageView *searchTool = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"64-Speech-Bubbles"]];
-    [searchTool setFrame:CGRectMake(10.0, 3.0, 24.0, 24.0)];
-    [leftView addSubview:searchTool];
+    if ([[HumanToken sharedInstance] isMemberAuthenticated]) {
+        // Refresh Control
+        refreshControl = [[ODRefreshControl alloc] initInScrollView:self.tableView];
+        [refreshControl addTarget:self action:@selector(loadQuestions) forControlEvents:UIControlEventValueChanged];
+        
+        // Question Wrapper
+        [_questionWrapper setBackgroundColor:[ColorThemeController tableViewCellBackgroundColor]];
+        
+        // Create the view for the search field
+        UIView *leftView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 40.0, 30.0)];
+        UIImageView *searchTool = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"64-Speech-Bubbles"]];
+        [searchTool setFrame:CGRectMake(10.0, 3.0, 24.0, 24.0)];
+        [leftView addSubview:searchTool];
 
-    // Text field
-    [_questionInput setPlaceholder:NSLocalizedString(@"What's the question?", nil)];
-    [_questionInput setTextColor:[ColorThemeController tableViewCellTextColor]];
-    [_questionInput setBackgroundColor:[ColorThemeController tableViewCellBackgroundColor]];
-    [_questionInput setLeftView:leftView];
-    [_questionInput setLeftViewMode:UITextFieldViewModeAlways];
-    [_questionInput.layer setCornerRadius:0.0];
-    [_questionInput.layer setMasksToBounds:NO];
-    [_questionInput.layer setBorderWidth:0.0];
-    [_questionInput.layer setBorderColor:[[ColorThemeController tableViewCellInternalBorderColor] CGColor]];
-    
-    // Message Button
-    [_questionButton setTitle:NSLocalizedString(@"Send", @"Send message from chat") forState:UIControlStateNormal];
-    [_questionButton setTitleColor:[ColorThemeController textColor] forState:UIControlStateNormal];
-    [_questionButton setTitleColor:[ColorThemeController textColor] forState:UIControlStateHighlighted];
-    [_questionButton setBackgroundImage:[[UIImage imageNamed:@"greyButton"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)] forState:UIControlStateNormal];
-    [_questionButton setBackgroundImage:[[UIImage imageNamed:@"greyButtonHighlight"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)] forState:UIControlStateHighlighted];
-    [_questionButton addTarget:self action:@selector(sendMessage) forControlEvents:UIControlEventTouchUpInside];
-    // Defining the border radius of the image
-    [_questionButton.layer setMasksToBounds:YES];
-    [_questionButton.layer setCornerRadius:4.0];
-    // Adding a border
-    [_questionButton.layer setBorderWidth:0.6];
-    [_questionButton.layer setBorderColor:[[ColorThemeController tableViewCellInternalBorderColor] CGColor]];
+        // Text field
+        [_questionInput setPlaceholder:NSLocalizedString(@"What's the question?", nil)];
+        [_questionInput setTextColor:[ColorThemeController tableViewCellTextColor]];
+        [_questionInput setBackgroundColor:[ColorThemeController tableViewCellBackgroundColor]];
+        [_questionInput setLeftView:leftView];
+        [_questionInput setLeftViewMode:UITextFieldViewModeAlways];
+        [_questionInput.layer setCornerRadius:0.0];
+        [_questionInput.layer setMasksToBounds:NO];
+        [_questionInput.layer setBorderWidth:0.0];
+        [_questionInput.layer setBorderColor:[[ColorThemeController tableViewCellInternalBorderColor] CGColor]];
+        
+        // Message Button
+        [_questionButton setTitle:NSLocalizedString(@"Send", @"Send message from chat") forState:UIControlStateNormal];
+        [_questionButton setTitleColor:[ColorThemeController textColor] forState:UIControlStateNormal];
+        [_questionButton setTitleColor:[ColorThemeController textColor] forState:UIControlStateHighlighted];
+        [_questionButton setBackgroundImage:[[UIImage imageNamed:@"greyButton"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)] forState:UIControlStateNormal];
+        [_questionButton setBackgroundImage:[[UIImage imageNamed:@"greyButtonHighlight"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)] forState:UIControlStateHighlighted];
+        [_questionButton addTarget:self action:@selector(sendMessage) forControlEvents:UIControlEventTouchUpInside];
+        [_questionButton.layer setMasksToBounds:YES];
+        [_questionButton.layer setCornerRadius:4.0];
+        [_questionButton.layer setBorderWidth:0.6];
+        [_questionButton.layer setBorderColor:[[ColorThemeController tableViewCellInternalBorderColor] CGColor]];
+        
+    } else {
+        [_tableView setHidden:YES];
+        [_questionWrapper setHidden:YES];
+    }
     
     [self loadData];
 }
@@ -117,6 +121,11 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+    // Upper triangle
+    [self defineStateForApproved:[[_activityData objectForKey:@"approved"] integerValue] withView:_wrapper];
 }
 
 #pragma mark - Setter Methods
@@ -140,15 +149,8 @@
     _name.text = [[_activityData objectForKey:@"name"] stringByDecodingHTMLEntities];
     _description.text = [[_activityData objectForKey:@"description"] stringByDecodingHTMLEntities];
     
-    if ([[HumanToken sharedInstance] isMemberAuthenticated]) {
-        if ([[_activityData objectForKey:@"approved"] integerValue] == 1) {
-            [self createUpperTriangleAtView:_wrapper withState:ScheduleStateApproved];
-        } else {
-            [self createUpperTriangleAtView:_wrapper withState:ScheduleStateDenied];
-        }
-    } else {
-        [self createUpperTriangleAtView:_wrapper withState:ScheduleStateUnknown];
-    }
+    // Upper triangle
+    [self defineStateForApproved:[[_activityData objectForKey:@"approved"] integerValue] withView:_wrapper];
 }
 
 - (void)loadQuestions {

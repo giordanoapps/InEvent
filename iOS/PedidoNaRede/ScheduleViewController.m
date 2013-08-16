@@ -108,6 +108,7 @@
     
     UIView *background = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, tableView.frame.size.width, 44.0)];
     [background setBackgroundColor:[ColorThemeController tableViewCellBackgroundColor]];
+    [background setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
     
     NSDictionary *dictionary = [[self.activities objectAtIndex:section] objectAtIndex:0];
     

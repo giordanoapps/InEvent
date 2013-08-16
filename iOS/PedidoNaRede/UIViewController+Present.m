@@ -21,23 +21,40 @@
 
 #pragma mark - Verification
 
+- (BOOL)verifyDemo {
+        
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"hasLaunchedOnce"]) {
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"hasLaunchedOnce"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
+        // This is the first launch ever
+        UINavigationController *viewController = [[UINavigationController alloc] initWithRootViewController:[[DemoViewController alloc] initWithNibName:nil bundle:nil]];
+        
+        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+            viewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+            viewController.modalPresentationStyle = UIModalPresentationCurrentContext;
+        } else {
+            viewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+            viewController.modalPresentationStyle = UIModalPresentationFormSheet;
+        }
+        
+        [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:viewController animated:YES completion:nil];
+        
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
 - (BOOL)verifyEvent {
+    
+    // See if the demo has been presented
+    [self verifyDemo];
     
     if (![[EventToken sharedInstance] isEventSelected]) {
 
-        UINavigationController *viewController;
-        
-        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"hasLaunchedOnce"]) {
-            // App already launched
-            viewController = [[UINavigationController alloc] initWithRootViewController:[[MapViewController alloc] initWithNibName:nil bundle:nil]];
-        } else {
-            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"hasLaunchedOnce"];
-            [[NSUserDefaults standardUserDefaults] synchronize];
-            
-            // This is the first launch ever
-            viewController = [[UINavigationController alloc] initWithRootViewController:[[DemoViewController alloc] initWithNibName:nil bundle:nil]];
-        }
-        
+        UINavigationController *viewController = [[UINavigationController alloc] initWithRootViewController:[[MapViewController alloc] initWithNibName:nil bundle:nil]];
+              
         // iOS 6 bug
         [viewController setWantsFullScreenLayout:YES];
         [viewController setNavigationBarHidden:YES];

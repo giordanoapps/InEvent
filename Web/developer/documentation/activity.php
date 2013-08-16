@@ -63,8 +63,8 @@
     
     <div class="documentationFunctionBox">
         <p class="documentFunctionName">
-            <span>activity.confirmEntrance(<b>tokenID</b>, <b>activityID</b>, <b>memberID</b>)</span>
-            <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=activity.approveEnrollment&tokenID=$tokenID&activityID=1&memberID=1">
+            <span>activity.confirmEntrance(<b>tokenID</b>, <b>activityID</b>, <b>personID</b>)</span>
+            <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=activity.confirmEntrance&tokenID=$tokenID&activityID=1&personID=1">
         </p>
 
         <p class="documentFunctionDescription">Confirma que a pessoa <i>personID</i> está presente na atividade <i>activityID</i>.</p>

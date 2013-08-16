@@ -211,19 +211,15 @@
         // We must transform the current indexPath into something that the library can read
         NSIndexPath *transformed = [NSIndexPath indexPathForRow:indexPath.row + indexPath.section inSection:0];
         [super tableView:tableView didSelectRowAtIndexPath:transformed];
-        
-        // Reload the first two sections
-        [tableView reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 2)] withRowAnimation:UITableViewRowAnimationAutomatic];
     
     } else if (indexPath.section == 2) {
         // We must transform the current indexPath into something that the library can read
         NSIndexPath *transformed = [NSIndexPath indexPathForRow:2 inSection:0];
         [super tableView:tableView didSelectRowAtIndexPath:transformed];
-        
-        // Reload all sections
-        [tableView reloadData];
-
     }
+    
+    // Reload all sections
+    [tableView reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 3)] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 @end

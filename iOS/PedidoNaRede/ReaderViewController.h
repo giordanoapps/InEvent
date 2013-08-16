@@ -10,11 +10,12 @@
 #import "WrapperViewController.h"
 #import "APIController.h"
 
-@interface ReaderViewController : WrapperViewController <UITableViewDelegate, UITableViewDataSource, APIControllerDelegate, UITextFieldDelegate>
+@interface ReaderViewController : WrapperViewController <UITableViewDelegate, UITableViewDataSource, APIControllerDelegate, UITextFieldDelegate, UIGestureRecognizerDelegate>
 
 @property (strong, nonatomic) NSDictionary *activityData;
 
 @property (strong, nonatomic) IBOutlet UITextField *numberInput;
+@property (strong, nonatomic) IBOutlet UIButton *numberButton;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 
 @end

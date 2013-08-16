@@ -62,8 +62,6 @@
 		EB3939DC1666D3AF00580A4E /* cellBgSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB3939DA1666D3AF00580A4E /* cellBgSelected@2x.png */; };
 		EB3BD91217B8C47A008D066D /* ReaderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB3BD91017B8C47A008D066D /* ReaderViewController.m */; };
 		EB3BD91317B8C47A008D066D /* ReaderViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB3BD91117B8C47A008D066D /* ReaderViewController.xib */; };
-		EB3F1A0716F6767C005052E7 /* ToolItemViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EB3F1A0616F6767C005052E7 /* ToolItemViewCell.m */; };
-		EB3F1A0916F67699005052E7 /* ToolItemViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB3F1A0816F67699005052E7 /* ToolItemViewCell.xib */; };
 		EB3F1A0D16F90F4F005052E7 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB3F1A0C16F90F4F005052E7 /* AudioToolbox.framework */; };
 		EB4FC57A171061AF00CA43EC /* 32-Facebook-F.png in Resources */ = {isa = PBXBuildFile; fileRef = EB4FC576171061AF00CA43EC /* 32-Facebook-F.png */; };
 		EB4FC57B171061AF00CA43EC /* facebookButton.png in Resources */ = {isa = PBXBuildFile; fileRef = EB4FC577171061AF00CA43EC /* facebookButton.png */; };
@@ -159,6 +157,12 @@
 		EBBDCB5916223A9E00C32523 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBBDCB5816223A9E00C32523 /* QuartzCore.framework */; };
 		EBBDCB8B1623D3E700C32523 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBBDCB8A1623D3E700C32523 /* MapKit.framework */; };
 		EBBDCB8D1623E51E00C32523 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBBDCB8C1623E51D00C32523 /* CoreLocation.framework */; };
+		EBC59D8117BEC48600E0FC67 /* 64-Marker.png in Resources */ = {isa = PBXBuildFile; fileRef = EBC59D8017BEC48600E0FC67 /* 64-Marker.png */; };
+		EBC59D8317BEC49E00E0FC67 /* 64-Footprints.png in Resources */ = {isa = PBXBuildFile; fileRef = EBC59D8217BEC49E00E0FC67 /* 64-Footprints.png */; };
+		EBC59D8517BEC4DD00E0FC67 /* 64-Map.png in Resources */ = {isa = PBXBuildFile; fileRef = EBC59D8417BEC4DD00E0FC67 /* 64-Map.png */; };
+		EBC59D8717BEC58100E0FC67 /* 64-Balloons.png in Resources */ = {isa = PBXBuildFile; fileRef = EBC59D8617BEC58100E0FC67 /* 64-Balloons.png */; };
+		EBC59D8917BEC59B00E0FC67 /* 64-Create-_-Write.png in Resources */ = {isa = PBXBuildFile; fileRef = EBC59D8817BEC59B00E0FC67 /* 64-Create-_-Write.png */; };
+		EBC59D8D17BEC5C300E0FC67 /* 64-Cloud-Download.png in Resources */ = {isa = PBXBuildFile; fileRef = EBC59D8C17BEC5C300E0FC67 /* 64-Cloud-Download.png */; };
 		EBCF5635175461D10083837B /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBCF5634175461D10083837B /* FacebookSDK.framework */; };
 		EBCF5637175461E50083837B /* FacebookSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = EBCF5636175461E50083837B /* FacebookSDKResources.bundle */; };
 		EBD055A717AF8CF3008355E8 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD055A517AF8CF3008355E8 /* AboutViewController.m */; };
@@ -168,11 +172,9 @@
 		EBD0DB5616AF953B00F78F93 /* UIViewController+Present.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD0DB5516AF953B00F78F93 /* UIViewController+Present.m */; };
 		EBD27B6316D827C300DA6ACE /* ColorThemeController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD27B6216D827C300DA6ACE /* ColorThemeController.m */; };
 		EBD27B6616D8604200DA6ACE /* 32-Looking-Glass.png in Resources */ = {isa = PBXBuildFile; fileRef = EBD27B6516D8604200DA6ACE /* 32-Looking-Glass.png */; };
-		EBD27B6916D878A300DA6ACE /* UIView+Components.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD27B6816D878A300DA6ACE /* UIView+Components.m */; };
 		EBD47D9216B07BA600F7295E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = EBD47D9416B07BA600F7295E /* Localizable.strings */; };
 		EBD5474E16F62E7900A195FF /* InformationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD5474C16F62E7900A195FF /* InformationViewController.m */; };
 		EBD5474F16F62E7900A195FF /* InformationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBD5474D16F62E7900A195FF /* InformationViewController.xib */; };
-		EBD5475216F651BF00A195FF /* ToolViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD5475116F651BF00A195FF /* ToolViewController.m */; };
 		EBD8E4E917AF557A00D0F30C /* 32-Minus.png in Resources */ = {isa = PBXBuildFile; fileRef = EBD8E4E817AF557A00D0F30C /* 32-Minus.png */; };
 		EBDA918117ACB10100969A08 /* 16-Check.png in Resources */ = {isa = PBXBuildFile; fileRef = EBDA917F17ACB10100969A08 /* 16-Check.png */; };
 		EBDA918217ACB10100969A08 /* 16-Check@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBDA918017ACB10100969A08 /* 16-Check@2x.png */; };
@@ -193,6 +195,7 @@
 		EBDFF54617BDBF5100BBFC1D /* logo@512.png in Resources */ = {isa = PBXBuildFile; fileRef = EBDFF54517BDBF5100BBFC1D /* logo@512.png */; };
 		EBDFF54E17BE0C4500BBFC1D /* NSObject+Triangle.m in Sources */ = {isa = PBXBuildFile; fileRef = EBDFF54D17BE0C4500BBFC1D /* NSObject+Triangle.m */; };
 		EBDFF55117BE15A900BBFC1D /* 64-Speech-Bubbles.png in Resources */ = {isa = PBXBuildFile; fileRef = EBDFF55017BE15A900BBFC1D /* 64-Speech-Bubbles.png */; };
+		EBDFF55317BE95B200BBFC1D /* 32-Check.png in Resources */ = {isa = PBXBuildFile; fileRef = EBDFF55217BE95B200BBFC1D /* 32-Check.png */; };
 		EBE15D4D169B7D2000E46A15 /* AlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBE15D4C169B7D2000E46A15 /* AlertView.xib */; };
 		EBE8A5011712EA9C00A8A2BD /* UITabBarController+ShowHideBar.m in Sources */ = {isa = PBXBuildFile; fileRef = EBE8A5001712EA9C00A8A2BD /* UITabBarController+ShowHideBar.m */; };
 		EBE8D1D716A87EC3003A196A /* receiptBackground.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EBE8D1D616A87EC3003A196A /* receiptBackground.jpg */; };
@@ -325,9 +328,6 @@
 		EB3BD90F17B8C47A008D066D /* ReaderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReaderViewController.h; sourceTree = "<group>"; };
 		EB3BD91017B8C47A008D066D /* ReaderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReaderViewController.m; sourceTree = "<group>"; };
 		EB3BD91117B8C47A008D066D /* ReaderViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReaderViewController.xib; sourceTree = "<group>"; };
-		EB3F1A0516F6767C005052E7 /* ToolItemViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ToolItemViewCell.h; sourceTree = "<group>"; };
-		EB3F1A0616F6767C005052E7 /* ToolItemViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ToolItemViewCell.m; sourceTree = "<group>"; };
-		EB3F1A0816F67699005052E7 /* ToolItemViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ToolItemViewCell.xib; sourceTree = "<group>"; };
 		EB3F1A0C16F90F4F005052E7 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		EB4FC576171061AF00CA43EC /* 32-Facebook-F.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Facebook-F.png"; sourceTree = "<group>"; };
 		EB4FC577171061AF00CA43EC /* facebookButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = facebookButton.png; sourceTree = "<group>"; };
@@ -466,6 +466,12 @@
 		EBBDCB5816223A9E00C32523 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		EBBDCB8A1623D3E700C32523 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		EBBDCB8C1623E51D00C32523 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		EBC59D8017BEC48600E0FC67 /* 64-Marker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "64-Marker.png"; sourceTree = "<group>"; };
+		EBC59D8217BEC49E00E0FC67 /* 64-Footprints.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "64-Footprints.png"; sourceTree = "<group>"; };
+		EBC59D8417BEC4DD00E0FC67 /* 64-Map.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "64-Map.png"; sourceTree = "<group>"; };
+		EBC59D8617BEC58100E0FC67 /* 64-Balloons.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "64-Balloons.png"; sourceTree = "<group>"; };
+		EBC59D8817BEC59B00E0FC67 /* 64-Create-_-Write.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "64-Create-_-Write.png"; sourceTree = "<group>"; };
+		EBC59D8C17BEC5C300E0FC67 /* 64-Cloud-Download.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "64-Cloud-Download.png"; sourceTree = "<group>"; };
 		EBCF5634175461D10083837B /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = "../../../Documents/Objective-C/facebook-ios-sdk/build/FacebookSDK.framework"; sourceTree = "<group>"; };
 		EBCF5636175461E50083837B /* FacebookSDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = FacebookSDKResources.bundle; path = "../../../Documents/Objective-C/facebook-ios-sdk/build/FacebookSDK.framework/Versions/A/Resources/FacebookSDKResources.bundle"; sourceTree = "<group>"; };
 		EBD055A417AF8CF3008355E8 /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
@@ -478,16 +484,12 @@
 		EBD27B6116D827C300DA6ACE /* ColorThemeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorThemeController.h; sourceTree = "<group>"; };
 		EBD27B6216D827C300DA6ACE /* ColorThemeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorThemeController.m; sourceTree = "<group>"; };
 		EBD27B6516D8604200DA6ACE /* 32-Looking-Glass.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Looking-Glass.png"; sourceTree = "<group>"; };
-		EBD27B6716D878A300DA6ACE /* UIView+Components.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Components.h"; sourceTree = "<group>"; };
-		EBD27B6816D878A300DA6ACE /* UIView+Components.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Components.m"; sourceTree = "<group>"; };
 		EBD47D9316B07BA600F7295E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		EBD47D9616B07BAD00F7295E /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/Localizable.strings; sourceTree = "<group>"; };
 		EBD47D9716B0854900F7295E /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		EBD5474B16F62E7900A195FF /* InformationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InformationViewController.h; sourceTree = "<group>"; };
 		EBD5474C16F62E7900A195FF /* InformationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InformationViewController.m; sourceTree = "<group>"; };
 		EBD5474D16F62E7900A195FF /* InformationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InformationViewController.xib; sourceTree = "<group>"; };
-		EBD5475016F651BF00A195FF /* ToolViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ToolViewController.h; sourceTree = "<group>"; };
-		EBD5475116F651BF00A195FF /* ToolViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ToolViewController.m; sourceTree = "<group>"; };
 		EBD8E4E817AF557A00D0F30C /* 32-Minus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Minus.png"; sourceTree = "<group>"; };
 		EBDA917F17ACB10100969A08 /* 16-Check.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "16-Check.png"; sourceTree = "<group>"; };
 		EBDA918017ACB10100969A08 /* 16-Check@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "16-Check@2x.png"; sourceTree = "<group>"; };
@@ -513,6 +515,7 @@
 		EBDFF54C17BE0C4400BBFC1D /* NSObject+Triangle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSObject+Triangle.h"; path = "PedidoNaRede/NSObject+Triangle.h"; sourceTree = "<group>"; };
 		EBDFF54D17BE0C4500BBFC1D /* NSObject+Triangle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSObject+Triangle.m"; path = "PedidoNaRede/NSObject+Triangle.m"; sourceTree = "<group>"; };
 		EBDFF55017BE15A900BBFC1D /* 64-Speech-Bubbles.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "64-Speech-Bubbles.png"; sourceTree = "<group>"; };
+		EBDFF55217BE95B200BBFC1D /* 32-Check.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Check.png"; sourceTree = "<group>"; };
 		EBE15D4C169B7D2000E46A15 /* AlertView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlertView.xib; sourceTree = "<group>"; };
 		EBE8A4FF1712EA9C00A8A2BD /* UITabBarController+ShowHideBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITabBarController+ShowHideBar.h"; sourceTree = "<group>"; };
 		EBE8A5001712EA9C00A8A2BD /* UITabBarController+ShowHideBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITabBarController+ShowHideBar.m"; sourceTree = "<group>"; };
@@ -641,8 +644,6 @@
 				EB837CBC171B9B5100FA1EBC /* UINavigationBar+Height.m */,
 				EBE8A4FF1712EA9C00A8A2BD /* UITabBarController+ShowHideBar.h */,
 				EBE8A5001712EA9C00A8A2BD /* UITabBarController+ShowHideBar.m */,
-				EBD27B6716D878A300DA6ACE /* UIView+Components.h */,
-				EBD27B6816D878A300DA6ACE /* UIView+Components.m */,
 				EBD0DB5416AF953B00F78F93 /* UIViewController+Present.h */,
 				EBD0DB5516AF953B00F78F93 /* UIViewController+Present.m */,
 			);
@@ -786,11 +787,6 @@
 				EBD5474B16F62E7900A195FF /* InformationViewController.h */,
 				EBD5474C16F62E7900A195FF /* InformationViewController.m */,
 				EBD5474D16F62E7900A195FF /* InformationViewController.xib */,
-				EBD5475016F651BF00A195FF /* ToolViewController.h */,
-				EBD5475116F651BF00A195FF /* ToolViewController.m */,
-				EB3F1A0516F6767C005052E7 /* ToolItemViewCell.h */,
-				EB3F1A0616F6767C005052E7 /* ToolItemViewCell.m */,
-				EB3F1A0816F67699005052E7 /* ToolItemViewCell.xib */,
 			);
 			name = Initial;
 			path = PedidoNaRede;
@@ -1195,15 +1191,22 @@
 		EBE8D21716A89740003A196A /* Icons */ = {
 			isa = PBXGroup;
 			children = (
-				EBDFF53817BBF5FD00BBFC1D /* 64-Bended-Arrow-Left.png */,
-				EBDFF53917BBF5FD00BBFC1D /* 64-Bended-Arrow-Up.png */,
-				EB60420A17B8B6A300D95012 /* 64-Flip-Clock.png */,
-				EBDFF55017BE15A900BBFC1D /* 64-Speech-Bubbles.png */,
+				EBDFF55217BE95B200BBFC1D /* 32-Check.png */,
 				EBB19398168EA54A0060D282 /* 32-Cross.png */,
 				EB4FC576171061AF00CA43EC /* 32-Facebook-F.png */,
 				EBD27B6516D8604200DA6ACE /* 32-Looking-Glass.png */,
-				EBB19399168EA54A0060D282 /* 32-Plus.png */,
+				EBC59D8617BEC58100E0FC67 /* 64-Balloons.png */,
+				EBC59D8817BEC59B00E0FC67 /* 64-Create-_-Write.png */,
+				EBC59D8C17BEC5C300E0FC67 /* 64-Cloud-Download.png */,
 				EBD8E4E817AF557A00D0F30C /* 32-Minus.png */,
+				EBB19399168EA54A0060D282 /* 32-Plus.png */,
+				EBDFF53817BBF5FD00BBFC1D /* 64-Bended-Arrow-Left.png */,
+				EBDFF53917BBF5FD00BBFC1D /* 64-Bended-Arrow-Up.png */,
+				EB60420A17B8B6A300D95012 /* 64-Flip-Clock.png */,
+				EBC59D8217BEC49E00E0FC67 /* 64-Footprints.png */,
+				EBC59D8417BEC4DD00E0FC67 /* 64-Map.png */,
+				EBC59D8017BEC48600E0FC67 /* 64-Marker.png */,
+				EBDFF55017BE15A900BBFC1D /* 64-Speech-Bubbles.png */,
 			);
 			name = Icons;
 			sourceTree = "<group>";
@@ -1403,7 +1406,6 @@
 				EBFD3A4216DB1F6D00AD33C5 /* logo@144.png in Resources */,
 				EBFD3A4416DB1F7600AD33C5 /* logo@72.png in Resources */,
 				EBD5474F16F62E7900A195FF /* InformationViewController.xib in Resources */,
-				EB3F1A0916F67699005052E7 /* ToolItemViewCell.xib in Resources */,
 				EB25BA9016FE6D21003F142F /* 16-Flag-2.png in Resources */,
 				EB25BA9216FE6EC9003F142F /* 16-User.png in Resources */,
 				EB25BA9F16FE73F2003F142F /* HumanViewController.xib in Resources */,
@@ -1456,6 +1458,13 @@
 				EBDFF54217BC057100BBFC1D /* ScheduleItemViewController.xib in Resources */,
 				EBDFF54617BDBF5100BBFC1D /* logo@512.png in Resources */,
 				EBDFF55117BE15A900BBFC1D /* 64-Speech-Bubbles.png in Resources */,
+				EBDFF55317BE95B200BBFC1D /* 32-Check.png in Resources */,
+				EBC59D8117BEC48600E0FC67 /* 64-Marker.png in Resources */,
+				EBC59D8317BEC49E00E0FC67 /* 64-Footprints.png in Resources */,
+				EBC59D8517BEC4DD00E0FC67 /* 64-Map.png in Resources */,
+				EBC59D8717BEC58100E0FC67 /* 64-Balloons.png in Resources */,
+				EBC59D8917BEC59B00E0FC67 /* 64-Create-_-Write.png in Resources */,
+				EBC59D8D17BEC5C300E0FC67 /* 64-Cloud-Download.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1548,7 +1557,6 @@
 				EB8C7D9216D17AEB00F3C721 /* UIHelpers.m in Sources */,
 				EB8C7D9316D17AEB00F3C721 /* SSCheckBoxView.m in Sources */,
 				EBD27B6316D827C300DA6ACE /* ColorThemeController.m in Sources */,
-				EBD27B6916D878A300DA6ACE /* UIView+Components.m in Sources */,
 				EBFD3A3516DA8CDE00AD33C5 /* UIPlaceHolderTextView.m in Sources */,
 				EBFD3A3916DA96D000AD33C5 /* FeedbackViewController.m in Sources */,
 				EB7FC68216DC4225007C006D /* MKAnnotationView+WebCache.m in Sources */,
@@ -1564,8 +1572,6 @@
 				EBB28D5A16E3D6BC0090AB40 /* NSCache+Assertions.m in Sources */,
 				EBDC99A816E83631009BB6D7 /* CoolBarButtonItem.m in Sources */,
 				EBD5474E16F62E7900A195FF /* InformationViewController.m in Sources */,
-				EBD5475216F651BF00A195FF /* ToolViewController.m in Sources */,
-				EB3F1A0716F6767C005052E7 /* ToolItemViewCell.m in Sources */,
 				EB25BA9E16FE73F2003F142F /* HumanViewController.m in Sources */,
 				EB25BAA416FE84D6003F142F /* HumanLoginViewController.m in Sources */,
 				EB25BAA9170280F1003F142F /* LauchImageViewController.m in Sources */,
@@ -1664,7 +1670,7 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1694,7 +1700,7 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -1713,7 +1719,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 01A9A353CC7D4F35B9275C85 /* Pods.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../Documents/Objective-C/facebook-ios-sdk/build\"",
@@ -1733,6 +1739,7 @@
 				);
 				PRODUCT_NAME = InEvent;
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1741,7 +1748,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 01A9A353CC7D4F35B9275C85 /* Pods.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../Documents/Objective-C/facebook-ios-sdk/build\"",
@@ -1761,6 +1768,7 @@
 				);
 				PRODUCT_NAME = InEvent;
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
