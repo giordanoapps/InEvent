@@ -4,7 +4,7 @@
      * Get and validate the token from the client
      * @return string the desired token, loaded and validated
      */
-	function getToken($companyID = 0) {
+	function getToken($eventID = 0) {
 
 		// Get the singleton
 		$core = Core::singleton();
@@ -45,6 +45,10 @@
 				");
 
 				if ($update) {
+					
+					// Validate the event
+					validateEvent($eventID);
+
 					// If everything went by smoothly, we can return the tokenID
 					return $hash;
 				} else {
@@ -60,118 +64,34 @@
 		}
 	}
 
-    /**
-     * Get tableID and suggest a company to be set
-     * @return tableID  id of table
-     */
-	function getTokenForTable() {
-
-		if (isset ($_GET['tableID'])) {
-			$tableID = getAttribute($_GET['tableID']);
-
-			// Get the companyID for the given table
-			$result = resourceForQuery(
-				"SELECT
-					`tableMap`.`companyID`
-				FROM
-					`table`
-				INNER JOIN
-					`tableMap` ON `tableMap`.`id` = `table`.`mapID`
-				WHERE 1
-					AND `table`.`id` = $tableID
-			");
-
-			if (mysql_num_rows($result) > 0) {
-				// Load the token using the company as reference
-				getToken(mysql_result($result, 0, "companyID"));
-
-				// Return the table
-				return $tableID;
-
-			} else {
-				http_status_code(404);
-			}
-		} else {
-			http_status_code(400);
-		}
-	}
-
 	/**
-     * Get personID and suggest a company to be set
-     * @return personID  id of person
+     * Get activityID and suggest a company to be set
+     * @return activityID  id of person
      */
-	function getTokenForPerson() {
+	function getTokenForActivity() {
 
-		if (isset ($_GET['personID'])) {
-			$personID = getAttribute($_GET['personID']);
+		if (isset ($_GET['activityID'])) {
+			$activityID = getAttribute($_GET['activityID']);
 
 			// Find the company where the the current member is sit (or standing up)
 			$result = resourceForQuery(
 				"SELECT
-					`tableMap`.`companyID`
+					`activity`.`eventID`
 				FROM
-					`tableMember`
-				INNER JOIN
-					`tableUnique` ON `tableUnique`.`id` = `tableMember`.`tableUniqueID`
-				INNER JOIN
-					`table` ON `tableUnique`.`tableID` = `table`.`id`
-				INNER JOIN
-					`tableMap` ON `tableMap`.`id` = `table`.`mapID`
+					`activity`
 				WHERE 1
-					AND `tableMember`.`memberID` = $personID
-					AND `tableMember`.`valid` = 1
-					AND `tableUnique`.`dateBegin` > `tableUnique`.`dateEnd`
+					AND `activity`.`id` = $activityID
 			");
 
 			if (mysql_num_rows($result) > 0) {
 				// Load the token using the company as reference
-				getToken(mysql_result($result, 0, "companyID"));
+				getToken(mysql_result($result, 0, "eventID"));
 
 				// Return the table
-				return $personID;
+				return $activityID;
 
 			} else {
 				http_status_code(303);
-			}
-		} else {
-			http_status_code(400);
-		}
-	}
-
-	/**
-     * Get orderID and suggest a company to be set
-     * @return orderID  id of order
-     */
-	function getTokenForOrder() {
-
-		if (isset($_GET['orderID'])) {
-			$orderID = getAttribute($_GET['orderID']);
-
-			// Obtain the order by making sure that the restaurant employee has powers over it
-			$result = resourceForQuery(
-				"SELECT
-					`tableMap`.`companyID`
-				FROM
-					`order`
-				INNER JOIN
-					`tableUnique` ON `tableUnique`.`id` = `order`.`tableUniqueID`
-				INNER JOIN
-					`table` ON `tableUnique`.`tableID` = `table`.`id`
-				INNER JOIN
-					`tableMap` ON `tableMap`.`id` = `table`.`mapID`
-				WHERE 1
-					AND `order`.`id` = $orderID
-			");
-
-			if (mysql_num_rows($result) > 0) {
-				// Load the token using the company as reference
-				getToken(mysql_result($result, 0, "companyID"));
-
-				// Return the table
-				return $orderID;
-
-			} else {
-				http_status_code(404);
 			}
 		} else {
 			http_status_code(400);

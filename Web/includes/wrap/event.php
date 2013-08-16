@@ -58,6 +58,7 @@
                 </div>
                 <div class="bottom">
                     <p class="description"><?php echo $data['description'] ?></p>
+                    <?php if ($data['capacity'] == 0) { ?>
                     <div class="dock">
                         <ul>
                             <li class="orderPrint tool">
@@ -65,6 +66,7 @@
                             </li>
                         </ul>
                     </div>
+                    <?php } ?>
                 </div>
             </div>
         </li>

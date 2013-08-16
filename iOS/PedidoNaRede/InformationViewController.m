@@ -11,7 +11,6 @@
 #import "ColorThemeController.h"
 #import "NSString+HTML.h"
 #import "UIImage+ResizeAndCrop.h"
-#import "ToolViewController.h"
 #import "UtilitiesController.h"
 #import "UIImageView+WebCache.h"
 
@@ -37,7 +36,7 @@
     
     // Right Button
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(dismiss)];
-    self.navigationItem.rightBarButtonItem.accessibilityLabel = NSLocalizedString(@"Ok", nil);
+    self.navigationItem.rightBarButtonItem.accessibilityLabel = NSLocalizedString(@"Ok!", nil);
     self.navigationItem.rightBarButtonItem.accessibilityTraits = UIAccessibilityTraitButton;
 
     // View
@@ -78,7 +77,7 @@
             }
         }];
         
-        _cover.accessibilityLabel = NSLocalizedString(@"Restaurant Logo", nil);
+        _cover.accessibilityLabel = NSLocalizedString(@"Event Logo", nil);
         _cover.accessibilityTraits = UIAccessibilityTraitImage | UIAccessibilityTraitStaticText;
     }
 
@@ -158,11 +157,6 @@
     
     // Dismiss the controller
     [self dismissModalViewControllerAnimated:YES];
-}
-
-- (IBAction)pushToolController:(id)sender {
-    ToolViewController *tvc = [[ToolViewController alloc] initWithNibName:nil bundle:nil];
-    [self.navigationController pushViewController:tvc animated:YES];
 }
 
 @end

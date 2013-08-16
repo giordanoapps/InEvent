@@ -152,9 +152,9 @@
 				$insert = resourceForQuery(
 					"INSERT INTO
 						`eventMember`
-						(`eventID`, `memberID`, `approved`)
+						(`eventID`, `memberID`, `roleID`, `approved`)
 					VALUES
-						(1, $memberID, 1)
+						(1, $memberID, 1, 1)
 				");
 				////////////////////////////////////////
 

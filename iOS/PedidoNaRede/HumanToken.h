@@ -11,15 +11,15 @@
 @interface HumanToken : NSObject
 
 @property (strong, nonatomic) NSString *tokenID;
-@property (strong, nonatomic) NSArray *events;
+@property (strong, nonatomic) NSArray *workingEvents;
 @property (assign, nonatomic) NSInteger memberID;
 @property (strong, nonatomic) NSString *name;
 
 + (HumanToken *)sharedInstance;
 
 - (BOOL)isMemberAuthenticated;
-//- (BOOL)isMemberWorking;
-//- (BOOL)worksAtCompany:(NSInteger)companyID;
+- (BOOL)isMemberWorking;
+- (BOOL)worksAtEvent:(NSInteger)eventID;
 - (void)removeMember;
 
 @end

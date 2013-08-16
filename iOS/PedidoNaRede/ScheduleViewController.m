@@ -34,24 +34,14 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.title = [self tabTitle];
-        self.accessibilityLabel = [self tabTitle];
+        self.title = NSLocalizedString(@"Schedule", nil);
+        self.tabBarItem.image = [UIImage imageNamed:@"16-Map"];
         self.activities = [NSArray array];
         
         // Add notification observer for new orders
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sendOrder:) name:@"sendOrder" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadData) name:@"scheduleCurrentState" object:nil];
     }
     return self;
-}
-
-#pragma mark - AKTabBarController Category
-
-- (NSString *)tabTitle {
-    return NSLocalizedString(@"Order", nil);
-}
-
-- (NSString *)tabImageName {
-    return @"32-Shopping-Basket";
 }
 
 #pragma mark - View cycle
@@ -61,9 +51,11 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-    _tableView.separatorColor = [ColorThemeController tableViewCellBorderColor];
-    _tableView.rowHeight = 100;
+    // Schedule details
+    [self loadData];
+    
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    _tableView.rowHeight = 74;
     _tableView.backgroundColor = [ColorThemeController tableViewBackgroundColor];
     
     // Refresh Control
@@ -75,6 +67,11 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+    // Reload data to calculate the right frame
+    [self.tableView reloadData];
 }
 
 #pragma mark - Notification
@@ -97,12 +94,46 @@
 
 #pragma mark - Table View Data Source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)aTableView {
-    return 1;
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return [self.activities count];
 }
 
-- (NSInteger)tableView:(UITableView *)aTableView numberOfRowsInSection:(NSInteger)section {
-    return [self.activities count];
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return [[self.activities objectAtIndex:section] count];
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, tableView.frame.size.width, 44.0)];
+    
+    UIView *background = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, tableView.frame.size.width, 44.0)];
+    [background setBackgroundColor:[ColorThemeController tableViewCellBackgroundColor]];
+    [background setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
+    
+    NSDictionary *dictionary = [[self.activities objectAtIndex:section] objectAtIndex:0];
+    
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:[[dictionary objectForKey:@"day"] integerValue]];
+    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDateComponents *components = [gregorian components:(NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit) fromDate:date];
+    
+    UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(21.0, 6.0, tableView.frame.size.width, 32.0)];
+    [title setText:[NSString stringWithFormat:@"%.2d/%.2d - %@", [components day], [components month], [UtilitiesController weekNameFromIndex:[components weekday]]]];
+    [title setTextAlignment:NSTextAlignmentLeft];
+    [title setFont:[UIFont fontWithName:@"Thonburi-Bold" size:22.0]];
+    [title setTextColor:[ColorThemeController textColor]];
+    [title setBackgroundColor:[UIColor clearColor]];
+    
+//    UIView *border = [[UIView alloc] initWithFrame:CGRectMake(0.0, 39.0, tableView.frame.size.width, 1.0)];
+//    [border setBackgroundColor:[ColorThemeController tableViewCellInternalBorderColor]];
+    
+    [headerView addSubview:background];
+    [headerView addSubview:title];
+    
+    return headerView;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 44.0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)aTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -111,31 +142,23 @@
     ScheduleViewCell * cell = (ScheduleViewCell *)[aTableView dequeueReusableCellWithIdentifier: CustomCellIdentifier];
     
     if (cell == nil) {
-        [aTableView registerNib:[UINib nibWithNibName:@"OrderItemViewCell" bundle:nil] forCellReuseIdentifier:CustomCellIdentifier];
+        [aTableView registerNib:[UINib nibWithNibName:@"ScheduleViewCell" bundle:nil] forCellReuseIdentifier:CustomCellIdentifier];
         cell =  (ScheduleViewCell *)[aTableView dequeueReusableCellWithIdentifier: CustomCellIdentifier];
     }
     
     [cell configureCell];
     
-    NSDictionary *dictionary = [self.activities objectAtIndex:indexPath.row];
-
-//    NSDateFormatter *lastChange = [[NSDateFormatter alloc] init];
-//    [lastChange setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-//    NSTimeZone *gmt = [NSTimeZone timeZoneWithAbbreviation:@"GMT"];
-//    NSTimeZone *gmt = [NSTimeZone timeZoneForSecondsFromGMT:-(3*60*60)];
-//    [lastChange setTimeZone:gmt];
-//    NSTimeInterval carteDate = [[lastChange dateFromString:dateText] timeIntervalSince1970];
+    NSDictionary *dictionary = [[self.activities objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
     
     NSDate *date = [NSDate dateWithTimeIntervalSince1970:[[dictionary objectForKey:@"dateBegin"] integerValue]];
     NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     NSDateComponents *components = [gregorian components:(NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:date];
     
-    cell.hour.text = [NSString stringWithFormat:@"%d", [components hour]];
-    cell.minute.text = [NSString stringWithFormat:@"%d", [components minute]];
-    cell.title.text = [[dictionary objectForKey:@"name"] stringByDecodingHTMLEntities];
+    cell.hour.text = [NSString stringWithFormat:@"%.2d", [components hour]];
+    cell.minute.text = [NSString stringWithFormat:@"%.2d", [components minute]];
+    cell.name.text = [[dictionary objectForKey:@"name"] stringByDecodingHTMLEntities];
     cell.description.text = [[dictionary objectForKey:@"description"] stringByDecodingHTMLEntities];
-
-//    cell.orderStatusView.backgroundColor = [UtilitiesController colorFromHexString:[dictionary objectForKey:@"color"]];
+    cell.approved = [dictionary objectForKey:@"approved"];
     
     return cell;
 }
@@ -151,7 +174,11 @@
         sivc = (ScheduleItemViewController *)[[[self.splitViewController.viewControllers lastObject] viewControllers] objectAtIndex:0];
     }
     
-    [sivc setActivityData:[_activities objectAtIndex:indexPath.row]];
+    NSDictionary *dictionary = [[self.activities objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+    
+    [sivc setTitle:[[dictionary objectForKey:@"name"] stringByDecodingHTMLEntities]];
+    [sivc setMoveKeyboardRatio:2.0f];
+    [sivc setActivityData:dictionary];
     
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
         [self.navigationController pushViewController:sivc animated:YES];

@@ -8,11 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PedidoNaRede/AppDelegate.m"
-         timestampString = "397381916.008023"
+         timestampString = "398332377.184182"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "61"
-         endingLineNumber = "61"
+         startingLineNumber = "65"
+         endingLineNumber = "65"
          landmarkName = "@implementation AppDelegate"
          landmarkType = "3">
       </FileBreakpoint>
@@ -21,11 +21,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PedidoNaRede/AppDelegate.m"
-         timestampString = "397381916.008023"
+         timestampString = "398332377.184182"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "62"
-         endingLineNumber = "62"
+         startingLineNumber = "66"
+         endingLineNumber = "66"
          landmarkName = "@implementation AppDelegate"
          landmarkType = "3">
       </FileBreakpoint>
@@ -151,11 +151,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PedidoNaRede/MenuViewController.m"
-         timestampString = "398200166.444363"
+         timestampString = "398323260.440047"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "178"
-         endingLineNumber = "178"
+         startingLineNumber = "177"
+         endingLineNumber = "177"
          landmarkName = "-tableView:cellForRowAtIndexPath:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -502,11 +502,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PedidoNaRede/MenuViewController.m"
-         timestampString = "398200166.444363"
+         timestampString = "398323260.440047"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "130"
-         endingLineNumber = "130"
+         startingLineNumber = "129"
+         endingLineNumber = "129"
          landmarkName = "@implementation MenuViewController"
          landmarkType = "3">
       </FileBreakpoint>
@@ -528,33 +528,33 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PedidoNaRede/MenuViewController.m"
-         timestampString = "398200166.444363"
+         timestampString = "398373290.151163"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "239"
-         endingLineNumber = "239">
+         startingLineNumber = "234"
+         endingLineNumber = "234">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PedidoNaRede/MenuViewController.m"
-         timestampString = "398200166.444363"
+         timestampString = "398373290.151163"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "235"
-         endingLineNumber = "235">
+         startingLineNumber = "230"
+         endingLineNumber = "230">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PedidoNaRede/MenuViewController.m"
-         timestampString = "398200166.444363"
+         timestampString = "398373290.151163"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "238"
-         endingLineNumber = "238">
+         startingLineNumber = "233"
+         endingLineNumber = "233">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -574,11 +574,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PedidoNaRede/MenuViewController.m"
-         timestampString = "398200166.444363"
+         timestampString = "398323260.440047"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "121"
-         endingLineNumber = "121"
+         startingLineNumber = "120"
+         endingLineNumber = "120"
          landmarkName = "-tableView:numberOfRowsInSection:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -587,11 +587,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PedidoNaRede/MenuViewController.m"
-         timestampString = "398200166.444363"
+         timestampString = "398323260.440047"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "173"
-         endingLineNumber = "173"
+         startingLineNumber = "172"
+         endingLineNumber = "172"
          landmarkName = "-tableView:cellForRowAtIndexPath:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -678,11 +678,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PedidoNaRede/InformationViewController.m"
-         timestampString = "391486500.271492"
+         timestampString = "398369981.670603"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "46"
-         endingLineNumber = "46"
+         startingLineNumber = "45"
+         endingLineNumber = "45"
          landmarkName = "-viewDidLoad"
          landmarkType = "5">
       </FileBreakpoint>
@@ -704,11 +704,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PedidoNaRede/AppDelegate.m"
-         timestampString = "397415795.890691"
+         timestampString = "398332377.184182"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "42"
-         endingLineNumber = "42"
+         startingLineNumber = "46"
+         endingLineNumber = "46"
          landmarkName = "-application:didRegisterForRemoteNotificationsWithDeviceToken:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -717,11 +717,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PedidoNaRede/AppDelegate.m"
-         timestampString = "398200861.109359"
+         timestampString = "398332377.184182"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "190"
-         endingLineNumber = "190"
+         startingLineNumber = "187"
+         endingLineNumber = "187"
          landmarkName = "-createGoogleAnalyticsTracker"
          landmarkType = "5">
       </FileBreakpoint>
@@ -730,22 +730,22 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PedidoNaRede/APIController.m"
-         timestampString = "398200166.444363"
+         timestampString = "398329821.991641"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "527"
-         endingLineNumber = "527">
+         startingLineNumber = "536"
+         endingLineNumber = "536">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PedidoNaRede/AppDelegate.m"
-         timestampString = "397415795.890691"
+         timestampString = "398332377.184182"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "50"
-         endingLineNumber = "50"
+         startingLineNumber = "54"
+         endingLineNumber = "54"
          landmarkName = "-application:didReceiveRemoteNotification:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -754,11 +754,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PedidoNaRede/AppDelegate.m"
-         timestampString = "397381916.008023"
+         timestampString = "398332377.184182"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "48"
-         endingLineNumber = "48"
+         startingLineNumber = "52"
+         endingLineNumber = "52"
          landmarkName = "-application:didReceiveRemoteNotification:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -780,11 +780,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PedidoNaRede/HumanLoginViewController.m"
-         timestampString = "397231572.957597"
+         timestampString = "398363578.462395"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "277"
-         endingLineNumber = "277"
+         startingLineNumber = "253"
+         endingLineNumber = "253"
          landmarkName = "-loginFacebook"
          landmarkType = "5">
       </FileBreakpoint>
@@ -793,11 +793,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PedidoNaRede/HumanLoginViewController.m"
-         timestampString = "397231572.957597"
+         timestampString = "398363578.462395"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "294"
-         endingLineNumber = "294"
+         startingLineNumber = "270"
+         endingLineNumber = "270"
          landmarkName = "@implementation HumanLoginViewController"
          landmarkType = "3">
       </FileBreakpoint>
@@ -806,11 +806,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PedidoNaRede/HumanLoginViewController.m"
-         timestampString = "397231572.957597"
+         timestampString = "398363578.462395"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "291"
-         endingLineNumber = "291"
+         startingLineNumber = "267"
+         endingLineNumber = "267"
          landmarkName = "-loginFacebook"
          landmarkType = "5">
       </FileBreakpoint>
@@ -845,22 +845,22 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PedidoNaRede/APIController.m"
-         timestampString = "398200166.444363"
+         timestampString = "398329821.991641"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "469"
-         endingLineNumber = "469">
+         startingLineNumber = "478"
+         endingLineNumber = "478">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PedidoNaRede/APIController.m"
-         timestampString = "398200166.444363"
+         timestampString = "398329821.991641"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "239"
-         endingLineNumber = "239"
+         startingLineNumber = "248"
+         endingLineNumber = "248"
          landmarkName = "-personRegister:withPassword:withEmail:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -934,11 +934,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PedidoNaRede/HumanLoginViewController.m"
-         timestampString = "397231572.957597"
+         timestampString = "398363578.462395"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "280"
-         endingLineNumber = "280"
+         startingLineNumber = "256"
+         endingLineNumber = "256"
          landmarkName = "-loginFacebook"
          landmarkType = "5">
       </FileBreakpoint>
@@ -947,11 +947,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PedidoNaRede/HumanLoginViewController.m"
-         timestampString = "397231572.957597"
+         timestampString = "398363578.462395"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "245"
-         endingLineNumber = "245"
+         startingLineNumber = "222"
+         endingLineNumber = "222"
          landmarkName = "-apiController:didLoadDictionaryFromServer:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -973,11 +973,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PedidoNaRede/MenuViewController.m"
-         timestampString = "398200166.444363"
+         timestampString = "398323260.440047"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "197"
-         endingLineNumber = "197"
+         startingLineNumber = "196"
+         endingLineNumber = "196"
          landmarkName = "-tableView:cellForRowAtIndexPath:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -986,13 +986,104 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PedidoNaRede/ScheduleViewCell.h"
-         timestampString = "398199173.731216"
+         timestampString = "398331857.060177"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "21"
-         endingLineNumber = "21"
+         startingLineNumber = "24"
+         endingLineNumber = "24"
          landmarkName = "@interface ScheduleViewCell"
          landmarkType = "2">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "PedidoNaRede/ReaderViewController.m"
+         timestampString = "398373966.017092"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "85"
+         endingLineNumber = "85"
+         landmarkName = "-loadData"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "PedidoNaRede/ScheduleItemViewController.m"
+         timestampString = "398382107.697612"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "171"
+         endingLineNumber = "171"
+         landmarkName = "-sendMessage"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "PedidoNaRede/ScheduleItemViewController.m"
+         timestampString = "398382107.697612"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "214"
+         endingLineNumber = "214"
+         landmarkName = "-gestureRecognizer:shouldReceiveTouch:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "PedidoNaRede/ScheduleItemViewController.m"
+         timestampString = "398382107.697612"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "176"
+         endingLineNumber = "176"
+         landmarkName = "-sendMessage"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "PedidoNaRede/ReaderViewController.m"
+         timestampString = "398379734.024044"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "184"
+         endingLineNumber = "184"
+         landmarkName = "-tableView:didSelectRowAtIndexPath:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "PedidoNaRede/ReaderViewController.m"
+         timestampString = "398379734.024044"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "135"
+         endingLineNumber = "135"
+         landmarkName = "-gestureRecognizer:shouldReceiveTouch:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "PedidoNaRede/ScheduleItemViewController.m"
+         timestampString = "398379145.088095"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "45"
+         endingLineNumber = "45"
+         landmarkName = "-viewDidLoad"
+         landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>
    <SymbolicBreakpoints>

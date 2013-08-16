@@ -200,15 +200,15 @@
         [self setApiController:apiController];
     } else if (error.code == 401 || error.code == 204) {
         // We have a server error
-        alertView = [[AlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"It appears that some bad guy accidentally removed you from your table!", nil) delegate:self cancelButtonTitle:nil otherButtonTitle:NSLocalizedString(@"Ok!", nil)];
+        alertView = [[AlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"It appears that your credentials expired! Can you log again?", nil) delegate:self cancelButtonTitle:nil otherButtonTitle:NSLocalizedString(@"Ok!", nil)];
         
         // We check which permission we should remove
         if ([[HumanToken sharedInstance] isMemberAuthenticated]) {
             [[HumanToken sharedInstance] removeMember];
         }
         
-        // Update the state of the restaurant controller
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"restaurantCurrentState" object:nil userInfo:nil];
+        // Update the current state of the schedule controller
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"scheduleCurrentState" object:nil userInfo:nil];
         
     } else {
         alertView = [[AlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"Hum, it appears that the connectivity is unstable.. Do you want to try again?", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"No", nil) otherButtonTitle:NSLocalizedString(@"Yes", nil)];

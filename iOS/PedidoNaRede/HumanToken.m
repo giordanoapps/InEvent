@@ -33,8 +33,8 @@
     [self storeEssentialData];
 }
 
-- (void)setEvents:(NSArray *)events {
-    _events = events;
+- (void)setWorkingEvents:(NSArray *)workingEvents {
+    _workingEvents = workingEvents;
     
     [self storeEssentialData];
 }
@@ -66,7 +66,7 @@
     NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
     
     [dictionary setValue:_tokenID forKey:@"tokenID"];
-    [dictionary setValue:_events forKey:@"events"];
+    [dictionary setValue:_workingEvents forKey:@"workingEvents"];
     [dictionary setValue:[NSNumber numberWithInteger:_memberID] forKey:@"memberID"];
     [dictionary setValue:_name forKey:@"name"];
     
@@ -79,7 +79,7 @@
     
     if (dictionary != nil) {
         _tokenID = [dictionary valueForKey:@"tokenID"];
-        _events = [dictionary valueForKey:@"events"];
+        _workingEvents = [dictionary valueForKey:@"workingEvents"];
         _memberID = [[dictionary objectForKey:@"memberID"] integerValue];
         _name = [dictionary valueForKey:@"name"];
     } else {
@@ -89,7 +89,7 @@
 
 - (void)resetData {
     _tokenID = nil;
-    _events = nil;
+    _workingEvents = nil;
     _memberID = 0;
     _name = nil;
 }
@@ -108,15 +108,28 @@
     }
 }
 
-//- (BOOL)isMemberWorking {
-//    EventToken *company = [EventToken sharedInstance];
-//    
-//    if ([company isCompanySelected]) {
-//        return [self worksAtCompany:company.companyID];
-//    } else {
-//        return NO;
-//    }
-//}
+- (BOOL)isMemberWorking {
+    EventToken *event = [EventToken sharedInstance];
+    
+    if ([event isEventSelected]) {
+        return [self worksAtEvent:event.eventID];
+    } else {
+        return NO;
+    }
+}
+
+- (BOOL)worksAtEvent:(NSInteger)eventID {
+    if (_workingEvents != nil) {
+        for (int i = 0; i < [_workingEvents count]; i++) {
+            if ([[[_workingEvents objectAtIndex:i] objectForKey:@"id"] integerValue] == eventID) {
+                return YES;
+            }
+        }
+    }
+    
+    // Deny if not found
+    return NO;
+}
 
 - (void)removeMember {
     // Remove all the data

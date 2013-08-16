@@ -49,21 +49,16 @@
     [self.view setBackgroundColor:[ColorThemeController tableViewCellBackgroundColor]];
     
     // Photo Wrapper
-//    [_photoWrapper.layer setMasksToBounds:NO];
-//    [_photoWrapper.layer setShadowColor:[[ColorThemeController shadowColor] CGColor]];
-//    [_photoWrapper.layer setShadowOffset:CGSizeMake(1.0, 1.0)];
-//    [_photoWrapper.layer setShadowOpacity:0.5];
-//    [_photoWrapper.layer setShadowRadius:8.0];
     [_photoWrapper.layer setCornerRadius:10.0];
     
     // Photo
     [_photo.layer setMasksToBounds:YES];
     [_photo.layer setCornerRadius:10.0];
-    [_photo.layer setBorderWidth:1.0];
+    [_photo.layer setBorderWidth:0.4];
     [_photo.layer setBorderColor:[[ColorThemeController tableViewCellInternalBorderColor] CGColor]];
     
     // Introduction
-    [_introduction setText:NSLocalizedString(@"Welcome to Garça", nil)];
+    [_introduction setText:NSLocalizedString(@"Welcome to InEvent", nil)];
     [_introduction setTextColor:[ColorThemeController tableViewCellTextHighlightedColor]];
     
     // Title
@@ -133,8 +128,8 @@
         [[HumanToken sharedInstance] removeMember];
     }
     
-    // Update the current state of the restaurant controller
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"restaurantCurrentState" object:nil userInfo:nil];
+    // Update the current state of the schedule controller
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"scheduleCurrentState" object:nil userInfo:nil];
     
     // Load the login form
     [self checkSession];

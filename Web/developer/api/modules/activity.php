@@ -7,7 +7,7 @@
 
 		if (isset($_GET['personID']) && $_GET['personID'] != "null") {
 
-			if ($core->workAtCompany) {
+			if ($core->workAtEvent) {
 				$personID = getAttribute($_GET['personID']);
 
 				// If the personID is 0, we must create an anonymous member named "Pessoa"
@@ -118,7 +118,7 @@
 
 		if (isset($_GET['personID']) && $_GET['personID'] != "null") {
 
-			if ($core->workAtCompany) {
+			if ($core->workAtEvent) {
 				$personID = getAttribute($_GET['personID']);
 
 				// If the personID is 0, we must create an anonymous member named "Pessoa"
@@ -135,6 +135,7 @@
 			// Get some properties
 			$activityID = getAttribute($_GET['activityID']);
 				
+			// Remove the current person
 			$delete = resourceForQuery(
 				"DELETE FROM
 					`activityMember`
@@ -143,7 +144,29 @@
 					AND `activityMember`.`memberID`= $core->memberID
 			");
 
-			if ($delete) {
+			// $update = resourceForQuery(
+			// 	"UPDATE
+			// 		`activityMember`
+			// 	LEFT JOIN
+			// 		`activityMember` ON `activity`.`id` = `activityMember`.`activityID`
+			// 	LEFT JOIN
+			// 		`activityGroup` ON `activity`.`groupID` = `activityGroup`.`id`
+			// 	SET
+			// 		`activityMember`.`approved` = 1
+			// 	WHERE 1
+			// 		AND `activityMember`.`approved` = 0
+			// 		AND `activity`.`id` = $activityID
+			// 		AND `activity`.`capacity` != 0
+			// 	GROUP BY
+			// 		`activity`.`id`
+			// 	HAVING
+			// 		COALESCE(`activityGroup`.`limit`, 99999) > COUNT(`activityMember`.`id`)
+			// 	ORDER BY
+			// 		`activityMember`.`id` ASC
+			// 	LIMIT 1
+			// ");
+
+			if ($update) {
 				// Return its data
 				if ($format == "json") {
 					$data["activityID"] = $activityID;
@@ -158,6 +181,51 @@
 				http_status_code(500);
 			}
 
+		} else {
+			http_status_code(400);
+		}
+		
+	} else
+
+	if ($method === "confirmEntrance") {
+
+		$activityID = getTokenForActivity();
+
+		if (isset($_GET["personID"])) {
+
+			// Get some properties
+			$personID = getAttribute($_GET['personID']);
+
+			if ($core->workAtEvent) {
+				// Update the presence of the person
+				$update = resourceForQuery(
+					"UPDATE
+						`activityMember`
+					SET
+						`activityMember`.`present` = 1
+					WHERE 1
+						AND `activityMember`.`activityID` = $activityID
+						AND `activityMember`.`memberID` = $personID
+						AND `activityMember`.`approved` = 1
+				");
+
+				if (mysql_affected_rows() > 0) {
+					// Return its data
+					if ($format == "json") {
+						$data["personID"] = $personID;
+						echo json_encode($data);
+					} elseif ($format == "html") {
+						$data["personID"] = $personID;
+						echo json_encode($data);
+					} else {
+						http_status_code(405);	
+					}
+				} else {
+					http_status_code(500);
+				}
+			} else {
+				http_status_code(401);
+			}
 		} else {
 			http_status_code(400);
 		}
@@ -199,7 +267,9 @@
 			$result = resourceForQuery(
 				"SELECT
 					`member`.`id`,
-					`member`.`name`
+					`member`.`name`,
+					`activityMember`.`approved`,
+					`activityMember`.`present`
 				FROM
 					`activityMember`
 				INNER JOIN
@@ -207,6 +277,8 @@
 				WHERE 1
 					AND `activityMember`.`activityID` = $activityID
 					$complement
+				ORDER BY
+					`member`.`name` ASC
 			");
 
 			echo printInformation("activityMember", $result, true, 'json');

@@ -51,37 +51,20 @@
     // ---------------------
     [_topBox setBackgroundColor:[ColorThemeController backgroundColor]];
     [_topBox addTarget:self action:@selector(hideEmployeeBox) forControlEvents:UIControlEventTouchUpInside];
-//    [_topBox.layer setMasksToBounds:NO];
-//    [_topBox.layer setShadowColor:[[ColorThemeController shadowColor] CGColor]];
-//    [_topBox.layer setShadowOffset:CGSizeMake(1.0, 1.0)];
-//    [_topBox.layer setShadowOpacity:0.5];
-//    [_topBox.layer setShadowRadius:1.0];
     
     [_facebook setBackgroundImage:[UIImage imageNamed:@"facebookButton"] forState:UIControlStateNormal];
     [_facebook setTitle:@"" forState:UIControlStateNormal];
     [_facebook addTarget:self action:@selector(loginFacebook) forControlEvents:UIControlEventTouchUpInside];
     
     [_separator1 setBackgroundColor:[ColorThemeController tableViewCellInternalBorderColor]];
-//    _separator1.layer.shadowOpacity = 1.0;
-//    _separator1.layer.shadowOffset = CGSizeMake(0.0, 1.0);
-//    _separator1.layer.shadowColor = [[ColorThemeController tableViewCellBorderColor] CGColor];
-//    _separator1.layer.shadowRadius = 1.0;
     
     // ---------------------
     // Bottom Wrapper
     // ---------------------
     [_bottomBox setBackgroundColor:[ColorThemeController backgroundColor]];
     [_bottomBox.layer setMasksToBounds:YES];
-//    [_bottomBox.layer setShadowColor:[[ColorThemeController shadowColor] CGColor]];
-//    [_bottomBox.layer setShadowOffset:CGSizeMake(1.0, 0.0)];
-//    [_bottomBox.layer setShadowOpacity:0.5];
-//    [_bottomBox.layer setShadowRadius:1.0];
 
     [_separator2 setBackgroundColor:[ColorThemeController tableViewCellInternalBorderColor]];
-//    _separator2.layer.shadowOpacity = 1.0;
-//    _separator2.layer.shadowOffset = CGSizeMake(0.0, -1.0);
-//    _separator2.layer.shadowColor = [[ColorThemeController tableViewCellBorderColor] CGColor];
-//    _separator2.layer.shadowRadius = 1.0;
     
     // Employee toggle button
     UIImage *buttonImage = [[UIImage imageNamed:@"greyButton.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)];
@@ -98,14 +81,9 @@
     // Employee Field Wrapper
 	_waiterFieldWrapper.backgroundColor = [ColorThemeController tableViewCellBackgroundColor];
     [_waiterFieldWrapper.layer setCornerRadius:8.0];
-//    [_waiterFieldWrapper.layer setShadowColor:[[ColorThemeController shadowColor] CGColor]];
-//    [_waiterFieldWrapper.layer setShadowOffset:CGSizeMake(0.0, 1.0)];
-//    [_waiterFieldWrapper.layer setShadowOpacity:0.5];
-//    [_waiterFieldWrapper.layer setShadowRadius:5.0];
-//    [_waiterFieldWrapper.layer setMasksToBounds:NO];
     [_waiterFieldWrapper.layer setBorderWidth:1.0];
     [_waiterFieldWrapper.layer setBorderColor:[[ColorThemeController tableViewCellBorderColor] CGColor]];
-//
+
 	// Employee username field
     _waiterUsername.backgroundColor = [UIColor clearColor];
     _waiterUsername.borderStyle = UITextBorderStyleNone;
@@ -138,7 +116,7 @@
     [_waiterButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
     [_waiterButton setBackgroundImage:buttonImageHighlight forState:UIControlStateHighlighted];
     [_waiterButton addTarget:self action:@selector(logIn) forControlEvents:UIControlEventTouchUpInside];
-//    [_waiterButton.layer setCornerRadius:8.0];
+    [_waiterButton.layer setCornerRadius:8.0];
 
     
     // ---------------------
@@ -228,7 +206,7 @@
     
     if ([apiController.method isEqualToString:@"signIn"] || [apiController.method isEqualToString:@"signInWithFacebookToken"]) {
         // Get some properties
-        NSArray *companies = [dictionary objectForKey:@"companies"];
+        NSArray *events = [dictionary objectForKey:@"events"];
         NSString *tokenID = [dictionary objectForKey:@"tokenID"];
         
         if (tokenID.length == 60) {
@@ -237,12 +215,11 @@
             
             // Notify the singleton that we have authenticated the user
             [[HumanToken sharedInstance] setTokenID:tokenID];
-//            [[HumanToken sharedInstance] setCompanies:companies];
+            [[HumanToken sharedInstance] setWorkingEvents:events];
             [[HumanToken sharedInstance] setName:[[dictionary objectForKey:@"name"] stringByDecodingHTMLEntities]];
         
-            // Update the current state of the restaurant controller
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"restaurantCurrentState" object:nil userInfo:nil];
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"verify" object:nil userInfo:@{@"type": @"menu"}];
+            // Update the current state of the schedule controller
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"scheduleCurrentState" object:nil userInfo:nil];
             
             // Go back to the other screen
             [self dismissModalViewControllerAnimated:YES];
@@ -250,11 +227,10 @@
             // Set loaded message on button
             [_waiterButton setTitle:NSLocalizedString(@"Try Again :(", nil) forState:UIControlStateNormal];
         }
-    } else if ([apiController.method isEqualToString:@"getCompanies"]) {
+    } else if ([apiController.method isEqualToString:@"getEvents"]) {
         
-        NSArray *companies = [[dictionary objectForKey:@"data"] objectForKey:@"companies"];
-        
-//        [[HumanToken sharedInstance] setCompanies:companies];
+        NSArray *events = [[dictionary objectForKey:@"data"] objectForKey:@"events"];
+        [[HumanToken sharedInstance] setWorkingEvents:events];
     }
 }
 
@@ -283,7 +259,7 @@
                  
              } else {
                  // Session is closed
-                 AlertView *alertView = [[AlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"Facebook couldn't log you in! Try again?", nil) delegate:self cancelButtonTitle:nil otherButtonTitle:NSLocalizedString(@"Ok", nil)];
+                 AlertView *alertView = [[AlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"Facebook couldn't log you in! Try again?", nil) delegate:self cancelButtonTitle:nil otherButtonTitle:NSLocalizedString(@"Ok!", nil)];
                  [alertView show];
              }
              

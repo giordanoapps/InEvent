@@ -85,6 +85,15 @@
     }
 }
 
+- (void)activityConfirmEntranceForPerson:(NSInteger)personID atActivity:(NSInteger)activityID withTokenID:(NSString *)tokenID {
+   
+    if (tokenID != nil) {
+        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID, @"activityID" : [NSString stringWithFormat:@"%d", activityID], @"personID" : [NSString stringWithFormat:@"%d", personID]}};
+        
+        [self JSONObjectWithNamespace:@"activity" method:@"confirmEntrance" attributes:attributes];
+    }
+}
+
 - (void)activityGetPeopleAtActivity:(NSInteger)activityID withTokenID:(NSString *)tokenID {
 
     if (tokenID != nil) {
@@ -99,7 +108,7 @@
     if (tokenID != nil) {
         NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID, @"activityID" : [NSString stringWithFormat:@"%d", activityID], @"selection" : @"all"}};
         
-        [self JSONObjectWithNamespace:@"activity" method:@"getPeople" attributes:attributes];
+        [self JSONObjectWithNamespace:@"activity" method:@"getQuestions" attributes:attributes];
     }
 }
 

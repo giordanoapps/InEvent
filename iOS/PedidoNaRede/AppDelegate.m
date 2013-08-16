@@ -35,6 +35,10 @@
     return [FBSession.activeSession handleOpenURL:url];
 }
 
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
+    return [FBSession.activeSession handleOpenURL:url];
+}
+
 #pragma mark - Parse Methods
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
@@ -65,39 +69,32 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackTranslucent];
 
-//    // Each controller
-//    // LOGIN
-//    _humanViewController = [[UINavigationController alloc] initWithRootViewController:[[HumanViewController alloc] initWithNibName:@"HumanViewController" bundle:nil]];
-//    
-//    // SCHEDULE
-//    _scheduleViewController = [[UINavigationController alloc] initWithRootViewController:[[ScheduleViewController alloc] initWithNibName:@"ScheduleViewController" bundle:nil]];
-//    
-//    // ABOUT
-//    _aboutViewController = [[UINavigationController alloc] initWithRootViewController:[[AboutViewController alloc] initWithNibName:@"AboutViewController" bundle:nil]];
-//    
-//    // Global Controller
-//    _menuController = [[MenuViewController alloc] initWithMenuWidth:180.0 numberOfFolds:3];
-//    [_menuController setDelegate:self];
-//    [_menuController setViewControllers:[NSMutableArray arrayWithObjects:_humanViewController, _scheduleViewController, _aboutViewController, nil]];
-//    
-//    // Set the default theme color
-    [[ColorThemeController sharedInstance] setTheme:ColorThemePetoskeyStone];
-//
-//    // Create components
-//    [self createCustomAppearance];
-//    [self createGoogleAnalyticsTracker];
-//    [self createParseTrackerWithApplication:application withOptions:launchOptions];
-//
-//    
-//    // Set the default controller
-//    self.window.rootViewController = self.menuController;
-//    self.window.rootViewController = [[LauchImageViewController alloc] initWithNibName:@"LauchImageViewController" bundle:nil];
+    // Each controller
+    // LOGIN
+    _humanViewController = [[UINavigationController alloc] initWithRootViewController:[[HumanViewController alloc] initWithNibName:@"HumanViewController" bundle:nil]];
     
-    ReaderViewController *b = [[ReaderViewController alloc] initWithNibName:@"ReaderViewController" bundle:nil];
-    [b setMoveKeyboardRatio:0.0];
-    UINavigationController *a = [[UINavigationController alloc] initWithRootViewController:b];
-    self.window.rootViewController = a;
+    // SCHEDULE
+    _scheduleViewController = [[UINavigationController alloc] initWithRootViewController:[[ScheduleViewController alloc] initWithNibName:@"ScheduleViewController" bundle:nil]];
+    
+    // ABOUT
+    _aboutViewController = [[UINavigationController alloc] initWithRootViewController:[[AboutViewController alloc] initWithNibName:@"AboutViewController" bundle:nil]];
+    
+    // Global Controller
+    _menuController = [[MenuViewController alloc] initWithMenuWidth:180.0 numberOfFolds:3];
+    [_menuController setDelegate:self];
+    [_menuController setViewControllers:[NSMutableArray arrayWithObjects:_humanViewController, _scheduleViewController, _aboutViewController, nil]];
+    
+    // Set the default theme color
+    [[ColorThemeController sharedInstance] setTheme:ColorThemePetoskeyStone];
 
+    // Create components
+    [self createCustomAppearance];
+    [self createGoogleAnalyticsTracker];
+    [self createParseTrackerWithApplication:application withOptions:launchOptions];
+    
+    // Set the default controller
+    self.window.rootViewController = self.menuController;
+//    self.window.rootViewController = [[LauchImageViewController alloc] initWithNibName:@"LauchImageViewController" bundle:nil];
 
     // Display it
     [self.window makeKeyAndVisible];

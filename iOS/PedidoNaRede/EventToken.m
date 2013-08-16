@@ -20,6 +20,10 @@
         sharedInstance = [[EventToken alloc] init];
         // Load the data that is already stored
         [sharedInstance loadEssentialData];
+        
+        /// REMOVE THIS SHIT ////
+        sharedInstance.eventID = 1;
+        /// REMOVE THIS SHIT ////
     });
     return sharedInstance;
 }
@@ -48,7 +52,7 @@
     }
 }
 
-- (void)removeEnterprise {
+- (void)removeEvent {
     // Remove all the data
     [self resetData];
     

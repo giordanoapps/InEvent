@@ -44,23 +44,32 @@
 	function getMemberEvents($memberID) {
 
 		$result = resourceForQuery(
+		// echo (replaceConstantForQuery(
 			"SELECT
 				`event`.`id`,
 				`event`.`name`,
 				`event`.`description`,
+				UNIX_TIMESTAMP(`event`.`dateBegin`) AS `dateBegin`,
+				UNIX_TIMESTAMP(`event`.`dateEnd`) AS `dateEnd`,
 				`event`.`latitude`,
 				`event`.`longitude`,
 				`event`.`address`,
 				`event`.`city`,
 				`event`.`state`,
 				`event`.`zipCode`,
+				`eventMember`.`roleID`,
+				`memberRole`.`constant`,
+				`memberRole`.`title`,
 				`eventMember`.`approved`
 			FROM
 				`event`
 			INNER JOIN
 				`eventMember` ON `event`.`id` = `eventMember`.`eventID`
-			WHERE
-				`eventMember`.`memberID` = $memberID
+			INNER JOIN
+				`memberRole` ON `eventMember`.`roleID` = `memberRole`.`id`
+			WHERE 1
+				AND `eventMember`.`memberID` = $memberID
+				AND (`eventMember`.`roleID` = @(ROLE_STAFF) OR `eventMember`.`roleID` = @(ROLE_COORDINATOR))
 		");
 
 		return printInformation("eventMember", $result, true, 'object');

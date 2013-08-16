@@ -22,5 +22,6 @@
 + (UIImage *)loadImageFromRemoteServer:(NSString *)imageName;
 + (NSMutableAttributedString *)putSomeColorIntoAString:(NSString *)word withDictionary:(NSDictionary *)wordWithColors;
 + (UIColor *)colorFromHexString:(NSString *)hexString;
++ (NSString *)weekNameFromIndex:(NSInteger)index;
 
 @end
