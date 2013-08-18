@@ -75,6 +75,49 @@
             <p><b>personID</b><sub>GET</sub> : id da pessoa </p>
         </div>
     </div>
+
+    <div class="documentationFunctionBox">
+        <p class="documentFunctionName">
+            <span>activity.confirmPayment(<b>tokenID</b>, <b>activityID</b>, <b>personID</b>)</span>
+            <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=activity.confirmPayment&tokenID=$tokenID&activityID=1&personID=1">
+        </p>
+
+        <p class="documentFunctionDescription">Confirma que a pessoa <i>personID</i> realizou o pagamento da atividade <i>activityID</i>.</p>
+
+        <div class="documentationFunctionParametersBox">
+            <p><b>tokenID</b><sub>GET</sub> : id de autenticação </p>
+            <p><b>activityID</b><sub>GET</sub> : id da atividade </p>
+            <p><b>personID</b><sub>GET</sub> : id da pessoa </p>
+        </div>
+    </div>
+
+    <div class="documentationFunctionBox">
+        <p class="documentFunctionName">
+            <span>activity.risePriority(<b>tokenID</b>, <b>activityID</b>)</span>
+            <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=activity.risePriority&tokenID=$tokenID&activityID=1">
+        </p>
+
+        <p class="documentFunctionDescription">Confirma que a pessoa aumentou a prioridade de entrar na atividade <i>activityID</i>.</p>
+
+        <div class="documentationFunctionParametersBox">
+            <p><b>tokenID</b><sub>GET</sub> : id de autenticação </p>
+            <p><b>activityID</b><sub>GET</sub> : id da atividade </p>
+        </div>
+    </div>
+
+    <div class="documentationFunctionBox">
+        <p class="documentFunctionName">
+            <span>activity.decreasePriority(<b>tokenID</b>, <b>activityID</b>)</span>
+            <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=activity.decreasePriority&tokenID=$tokenID&activityID=1">
+        </p>
+
+        <p class="documentFunctionDescription">Confirma que a pessoa reduziu a prioridade de entrar na atividade <i>activityID</i>.</p>
+
+        <div class="documentationFunctionParametersBox">
+            <p><b>tokenID</b><sub>GET</sub> : id de autenticação </p>
+            <p><b>activityID</b><sub>GET</sub> : id da atividade </p>
+        </div>
+    </div>
     
     <div class="documentationFunctionBox">
         <p class="documentFunctionName">

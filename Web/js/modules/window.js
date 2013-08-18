@@ -37,5 +37,20 @@ $(document).ready(function() {
 		if (jqXHR.status != 408) {
 			$(this).fadeToggle(200);
 		}
-	})
+	});
+
+	$(document).bind("ajaxComplete", function(event, jqXHR, settings) {
+
+		// Tips
+		$("[title != '']").qtip({
+		    style: {
+		    	classes: 'qtip-light qtip-rounded qtip-shadow'
+		    },
+		    position: {
+		        my: 'top left',
+		        at: 'center right',
+		        target: "event" // my target
+		    }
+		});
+	});
 });

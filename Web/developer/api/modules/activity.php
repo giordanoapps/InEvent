@@ -44,7 +44,7 @@
 				// Find if the member is over his limit on different groups
 				$result = resourceForQuery(
 					"SELECT
-						IF(COALESCE(`activityGroup`.`limit`, 99999) > COUNT(`activityMember`.`id`), 1, 0) AS `valid`
+						IF(COALESCE(`activityGroup`.`limit`, 99999) > SUM(`activityMember`.`approved`), 1, 0) AS `valid`
 					FROM
 						`activity`
 					LEFT JOIN
@@ -93,8 +93,8 @@
 						$data["activityID"] = $activityID;
 						echo json_encode($data);
 					} elseif ($format == "html") {
-						$result = getActivityForMemberQuery($activityID, $personID);
-						printTimelineItem(mysql_fetch_assoc($result));
+						$result = getActivitiesForMemberAtActivityQuery($activityID, $personID);
+						printScheduleItem(mysql_fetch_assoc($result), "member");
 					} else {
 						http_status_code(405);	
 					}
@@ -134,6 +134,7 @@
 
 			// Get some properties
 			$activityID = getAttribute($_GET['activityID']);
+			$groupID = getGroupForActivity($activityID);
 				
 			// Remove the current person
 			$delete = resourceForQuery(
@@ -141,32 +142,62 @@
 					`activityMember`
 				WHERE 1
 					AND `activityMember`.`activityID` = $activityID
-					AND `activityMember`.`memberID`= $core->memberID
+					AND `activityMember`.`memberID` = $personID
 			");
 
+			// // Get the next person on the line and grant a place on the activity
 			// $update = resourceForQuery(
 			// 	"UPDATE
 			// 		`activityMember`
-			// 	LEFT JOIN
-			// 		`activityMember` ON `activity`.`id` = `activityMember`.`activityID`
-			// 	LEFT JOIN
-			// 		`activityGroup` ON `activity`.`groupID` = `activityGroup`.`id`
 			// 	SET
 			// 		`activityMember`.`approved` = 1
 			// 	WHERE 1
 			// 		AND `activityMember`.`approved` = 0
-			// 		AND `activity`.`id` = $activityID
-			// 		AND `activity`.`capacity` != 0
-			// 	GROUP BY
-			// 		`activity`.`id`
-			// 	HAVING
-			// 		COALESCE(`activityGroup`.`limit`, 99999) > COUNT(`activityMember`.`id`)
+			// 		AND `activityMember`.`priori` = 1
+			// 		AND `activityMember`.`memberID` = $personID
+			// 		AND `activityMember`.`activityID` = $activityID
 			// 	ORDER BY
 			// 		`activityMember`.`id` ASC
 			// 	LIMIT 1
 			// ");
 
-			if ($update) {
+			// // Assert that the granted person doesn't stay approved on other activities of the same group
+			// $result = resourceForQuery(
+			// 	"SELECT
+			// 		`activityMember`.`id` AS `id`,
+			// 		`activityGroup`.`limit`,
+			// 		`activityMember`.`approved`
+			// 	FROM
+			// 		`activity`
+			// 	INNER JOIN
+			// 		`activityMember` ON `activityMember`.`activityID` = `activity`.`id`
+	  //           LEFT JOIN
+	  //               `activityGroup` ON `activity`.`groupID` = `activityGroup`.`id`
+	  //           WHERE 1
+	  //           	AND `activityMember`.`memberID` = $personID
+	  //           	AND `activityGroup`.`id` = $groupID
+			// 	GROUP BY
+			// 		`activityGroup`.`id`
+			// 	HAVING 1
+			// 		AND COALESCE(`activityGroup`.`limit`, 99999) > SUM(`activityMember`.`approved`)
+			// 	ORDER BY
+			// 		`activityMember`.`id` ASC
+			// 	LIMIT 1
+			// ");
+
+			// if (mysql_num_rows($result) > 0) {
+			// 	$requestID = mysql_result($result, 0, "id");
+			// 	$update = resourceForQuery(
+			// 		"UPDATE
+			// 			`activityMember`
+		 //            SET
+		 //            	`activityMember`.`approved` = 0
+			// 		WHERE 1
+			// 			AND `activityMember`.`id` = $requestID
+			// 	");
+			// }
+
+			if ($delete) {
 				// Return its data
 				if ($format == "json") {
 					$data["activityID"] = $activityID;
@@ -187,7 +218,7 @@
 		
 	} else
 
-	if ($method === "confirmEntrance") {
+	if ($method === "confirmEntrance" || $method === "confirmPayment") {
 
 		$activityID = getTokenForActivity();
 
@@ -197,12 +228,20 @@
 			$personID = getAttribute($_GET['personID']);
 
 			if ($core->workAtEvent) {
-				// Update the presence of the person
+
+				// See which field we want to update
+				if ($method === "confirmEntrance") {
+					$attribute = "present";
+				} elseif ($method === "confirmPayment") {
+					$attribute = "paid";
+				}
+
+				// Update based on the attribute
 				$update = resourceForQuery(
 					"UPDATE
 						`activityMember`
 					SET
-						`activityMember`.`present` = 1
+						`activityMember`.`$attribute` = 1
 					WHERE 1
 						AND `activityMember`.`activityID` = $activityID
 						AND `activityMember`.`memberID` = $personID
@@ -225,6 +264,53 @@
 				}
 			} else {
 				http_status_code(401);
+			}
+		} else {
+			http_status_code(400);
+		}
+		
+	} else
+
+	if ($method === "risePriority" || $method === "decreasePriority") {
+
+		$tokenID = getToken();
+
+		if (isset($_GET["activityID"])) {
+
+			// Get some properties
+			$activityID = getAttribute($_GET['activityID']);
+
+			// See which field we want to update
+			if ($method === "risePriority") {
+				$attribute = "1";
+			} elseif ($method === "decreasePriority") {
+				$attribute = "0";
+			}
+
+			// Update based on the attribute
+			$update = resourceForQuery(
+				"UPDATE
+					`activityMember`
+				SET
+					`activityMember`.`priori` = $attribute
+				WHERE 1
+					AND `activityMember`.`activityID` = $activityID
+					AND `activityMember`.`memberID` = $core->memberID
+			");
+
+			if (mysql_affected_rows() > 0) {
+				// Return its data
+				if ($format == "json") {
+					$data["activityID"] = $activityID;
+					echo json_encode($data);
+				} elseif ($format == "html") {
+					$data["activityID"] = $activityID;
+					echo json_encode($data);
+				} else {
+					http_status_code(405);	
+				}
+			} else {
+				http_status_code(500);
 			}
 		} else {
 			http_status_code(400);
@@ -264,24 +350,17 @@
 					break;
 			}
 
-			$result = resourceForQuery(
-				"SELECT
-					`member`.`id`,
-					`member`.`name`,
-					`activityMember`.`approved`,
-					`activityMember`.`present`
-				FROM
-					`activityMember`
-				INNER JOIN
-					`member` ON `member`.`id` = `activityMember`.`memberID`
-				WHERE 1
-					AND `activityMember`.`activityID` = $activityID
-					$complement
-				ORDER BY
-					`member`.`name` ASC
-			");
+			// The query
+			$result = getPeopleAtActivityQuery($activityID, $complement);
 
-			echo printInformation("activityMember", $result, true, 'json');
+			// Return its data
+			if ($format == "json") {
+				echo printInformation("activityMember", $result, true, 'json');
+			} elseif ($format == "html") {
+				printPeopleAtActivity($result);
+			} else {
+				http_status_code(405);	
+			}
 
 		} else {
 			http_status_code(400);

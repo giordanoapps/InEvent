@@ -43,7 +43,37 @@
             <p><b>requestID</b><sub>GET</sub> : id da requisição de entrada </p>
         </div>
     </div>
+
+    <div class="documentationFunctionBox">
+        <p class="documentFunctionName">
+            <span>event.grantPermission(<b>tokenID</b>, <b>eventID</b>, <b>personID</b>)</span>
+            <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=event.grantPermission&tokenID=$tokenID&eventID=1&personID=1">
+        </p>
+
+        <p class="documentFunctionDescription">Concede direitos de organizador para a pessoa <i>personID</i> no evento <i>eventID</i>.</p>
+
+        <div class="documentationFunctionParametersBox">
+            <p><b>tokenID</b><sub>GET</sub> : id de autenticação </p>
+            <p><b>eventID</b><sub>GET</sub> : id do evento </p>
+            <p><b>personID</b><sub>GET</sub> : id da pessoa </p>
+        </div>
+    </div>
     
+    <div class="documentationFunctionBox">
+        <p class="documentFunctionName">
+            <span>event.revokePermission(<b>tokenID</b>, <b>eventID</b>, <b>personID</b>)</span>
+            <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=event.revokePermission&tokenID=$tokenID&eventID=1&personID=1">
+        </p>
+
+        <p class="documentFunctionDescription">Revoga os direitos de organizador para a pessoa <i>personID</i> no evento <i>eventID</i>.</p>
+
+        <div class="documentationFunctionParametersBox">
+            <p><b>tokenID</b><sub>GET</sub> : id de autenticação </p>
+            <p><b>eventID</b><sub>GET</sub> : id do evento </p>
+            <p><b>personID</b><sub>GET</sub> : id da pessoa </p>
+        </div>
+    </div>
+
     <div class="documentationFunctionBox">
         <p class="documentFunctionName">
             <span>event.getPeople(<b>tokenID</b>, <b>eventID</b>, <b>selection</b>)</span>

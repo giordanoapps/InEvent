@@ -2,6 +2,7 @@
 	include_once("includes/check/login.php");
 	
 	if (!$core->auth) logout();
+	if (!$core->workAtEvent) logout();
 ?>
 
 <?php include_once("includes/html/header.php") ?>
@@ -9,15 +10,15 @@
 	<?php include_once("includes/html/bar.php") ?>
 	<div id="content">
 
-		<div id="eventContent" class="pageContent fullPageContent">
+		<div id="peopleContent" class="pageContent fullPageContent">
 			
 			<div class="placerContent">
-				<?php printScheduleForMember(1, $core->memberID); ?>
+				<?php printScheduleForEvent(1); ?>
 			</div>
 			
 			<div class="boardContent">		
 				<div class="realContent">
-					<?php printAgenda(1, $core->memberID); ?>
+					<?php printPeopleAtActivity(getPeopleAtActivityQuery(0)) ?>
 				</div>
 			</div>
 		</div>

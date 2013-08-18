@@ -7,7 +7,9 @@
 			<ul class="leftBar">
 				<a href="home.php"><li>Home</li></a>
 				<a href="event.php"><li>Eventos</li></a>
-				<!-- <a href="members.php"><li>Membros</li></a> -->
+				<?php if ($core->workAtEvent) { ?>
+					<a href="people.php"><li>Pessoas</li></a>
+				<?php } ?>
 			</ul>
 			
 			<ul class="rightBar">

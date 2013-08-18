@@ -7,10 +7,10 @@ $(document).ready(function() {
 	 * @return {null}
 	 */
 	$("#eventContent").live("hashDidLoad", function() {
-
+		$(this).find(".placerContent ul").mCustomScrollbar({ scrollInertia: 150 });
 	});
 
-// -------------------------------------- EVENT -------------------------------------- //
+// -------------------------------------- MENU -------------------------------------- //
 
 	/**
 	 * Add a item to the person schedule
@@ -19,9 +19,9 @@ $(document).ready(function() {
 	$("#eventContent .toolEnroll").live("click", function() {
 
 		var $elem = $(this);
-		var $pickerItem = $elem.closest(".pickerItem");
-		var activityID = $pickerItem.val();
-		var groupID = parseInt($pickerItem.attr("data-group"), 10);
+		var $agendaItem = $elem.closest(".agendaItem");
+		var activityID = $agendaItem.val();
+		var groupID = parseInt($agendaItem.attr("data-group"), 10);
 
 		// Hide the current button
 		$elem.hide(200);
@@ -42,7 +42,7 @@ $(document).ready(function() {
 				$scheduleItem.slideDown(300);
 
 				// Hide all activities that belong to the same group
-				// if (groupID != 0) $(".pickerItem[data-group = \"" + groupID + "\"]").find(".toolEnroll").hide(200);
+				// if (groupID != 0) $(".agendaItem[data-group = \"" + groupID + "\"]").find(".toolEnroll").hide(200);
 			}
 
 		}, 'html').fail(function(jqXHR, textStatus, errorThrown) {
@@ -76,7 +76,7 @@ $(document).ready(function() {
 				$elem.closest(".scheduleItem").slideUp(300);
 
 				// Enable the button on the agenda
-				$(".pickerItem[value = \"" + activityID + "\"]").find(".toolEnroll").slideDown(200);
+				$(".agendaItem[value = \"" + activityID + "\"]").find(".toolEnroll").slideDown(200);
 			}
 
 		}, 'html').fail(function(jqXHR, textStatus, errorThrown) {
@@ -84,5 +84,29 @@ $(document).ready(function() {
 		});
 
 	});
-	
+
+	/**
+	 * Remove a item from the person schedule
+	 * @return {null}
+	 */
+	$("#eventContent .toolPriority").live("click", function() {
+
+		var $elem = $(this);
+		var activityID = $elem.closest(".scheduleItem").val();
+
+		// Hide the current button
+		var method = ($(this).hasClass("toolSelected")) ? "decreasePriority" : "risePriority";
+
+		// We request the information on the server
+		$.post('developer/api/?' + $.param({
+			method: "activity." + method,
+			activityID: activityID,
+			format: "html"
+		}), {},
+		function(data, textStatus, jqXHR) {
+			if (jqXHR.status == 200) $elem.toggleClass("toolSelected");
+		}, 'html');
+
+	});
+
 });

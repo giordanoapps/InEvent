@@ -149,6 +149,9 @@ if (isset($_POST["name"]) && isset($_POST["password"])) {
 
 		$core->memberID = mysql_result($result, 0, "id");
 		$core->name = mysql_result($result, 0, "name");
+		
+		// Validate the event
+		validateEvent();
 
 		// Reset the login count
 		$insert = resourceForQuery(

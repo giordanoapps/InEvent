@@ -35,6 +35,7 @@
 			FROM
 				`eventMember`
 			WHERE 1
+				AND `eventMember`.`roleID` != @(ROLE_ATTENDEE)
 				AND `eventMember`.`memberID` = $core->memberID
 		");
 

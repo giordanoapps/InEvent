@@ -25,8 +25,10 @@
 	<meta name="viewport" content="width=device-width, maximum-scale=1.0" />
 
 	<link rel="stylesheet" href="css/jquery-ui-1.8.21.custom.min.css" type="text/css" />
-	<link rel="stylesheet" href="css/chosen.min.css" type="text/css" />	
+	<link rel="stylesheet" href="css/chosen.min.css" type="text/css" />
+	<link rel="stylesheet" href="css/jquery.qtip.min.css" type="text/css" />
 	<link rel="stylesheet" href="css/default.css" type="text/css" media="all" />
+	<link rel="stylesheet" href="css/printer.css" type="text/css" media="print" />
 	<link rel="stylesheet" href="css/mobile.css" type="text/css" media="handheld, (max-device-width:480px)" />
 	
 	<script src="js/jquery-1.8.3.min.js" type="text/javascript"></script>
@@ -35,8 +37,9 @@
 	<script src="js/jquery.validate.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/jquery.maskedinput-1.3.min.js" type="text/javascript"></script>
 	<script src="js/jquery.mousewheel.min.js" type="text/javascript"></script>
-	<script src="js/jquery.mCustomScrollbar.min.js" type="text/javascript"></script>
+	<script src="js/jquery.mCustomScrollbar.concat.min.js" type="text/javascript"></script>
 	<script src="js/jquery.fileuploader.min.js" type="text/javascript"></script>
+	<script src="js/jquery.qtip.min.js" type="text/javascript"></script>
 	<script src="js/chosen.jquery.min.js" type="text/javascript"></script>
 	<script src="js/analytics.js" type="text/javascript"></script>
 	

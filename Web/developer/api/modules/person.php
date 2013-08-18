@@ -148,7 +148,7 @@
 				$memberID = mysql_insert_id();
 
 
-				///// TEMPORARY, SHALL BE REMOVED //////
+				///// TEMPORARY, REMOVE THIS SHIT //////
 				$insert = resourceForQuery(
 					"INSERT INTO
 						`eventMember`

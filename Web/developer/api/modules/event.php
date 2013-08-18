@@ -70,11 +70,54 @@
 		
 	// } else
 
-	// if ($method === "approveEnrollment") {
+	if ($method === "grantPermission" || $method === "revokePermission") {
 
+		$tokenID = getToken();
 
+		if (isset($_GET["eventID"]) && isset($_GET["personID"])) {
+
+			// Get some properties
+			$eventID = getAttribute($_GET['eventID']);
+			$personID = getAttribute($_GET['personID']);
+
+			if ($core->workAtEvent) {
+
+				// See which field we want to update
+				$attribute = ($method === "grantPermission") ? ROLE_COORDINATOR : ROLE_ATTENDEE;
+
+				// Update based on the attribute
+				$update = resourceForQuery(
+					"UPDATE
+						`eventMember`
+					SET
+						`eventMember`.`roleID` = $attribute
+					WHERE 1
+						AND `eventMember`.`eventID` = $eventID
+						AND `eventMember`.`memberID` = $personID
+				");
+
+				if (mysql_affected_rows() > 0) {
+					// Return its data
+					if ($format == "json") {
+						$data["eventID"] = $eventID;
+						echo json_encode($data);
+					} elseif ($format == "html") {
+						$data["eventID"] = $eventID;
+						echo json_encode($data);
+					} else {
+						http_status_code(405);	
+					}
+				} else {
+					http_status_code(500);
+				}
+			} else {
+				http_status_code(401);
+			}
+		} else {
+			http_status_code(400);
+		}
 		
-	// } else
+	} else
 
 	if ($method === "getPeople") {
 
@@ -108,20 +151,17 @@
 					break;
 			}
 
-			$result = resourceForQuery(
-				"SELECT
-					`member`.`id`,
-					`member`.`name`
-				FROM
-					`eventMember`
-				INNER JOIN
-					`member` ON `member`.`id` = `eventMember`.`memberID`
-				WHERE 1
-					AND `eventMember`.`eventID` = $eventID
-					$complement
-			");
+			// The query
+			$result = getPeopleAtEventQuery($eventID, $complement);
 
-			echo printInformation("eventMember", $result, true, 'json');
+			// Return its data
+			if ($format == "json") {
+				echo printInformation("eventMember", $result, true, 'json');
+			} elseif ($format == "html") {
+				printPeopleAtEvent($result);
+			} else {
+				http_status_code(405);	
+			}
 
 		} else {
 			http_status_code(400);

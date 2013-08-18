@@ -41,6 +41,42 @@
 		}
 	}
 
+    function getEventForActivity($activityID) {
+
+		$result = resourceForQuery(
+			"SELECT
+				`activity`.`eventID`
+			FROM
+				`activity`
+			WHERE 1
+				AND `activity`.`id` = $activityID
+		");
+
+		if (mysql_num_rows($result) > 0) {
+			return mysql_result($result, 0, "eventID");
+		} else {
+			return 0;
+		}
+	}
+
+    function getGroupForActivity($activityID) {
+
+		$result = resourceForQuery(
+			"SELECT
+				`activity`.`eventID`
+			FROM
+				`activity`
+			WHERE 1
+				AND `activity`.`id` = $activityID
+		");
+
+		if (mysql_num_rows($result) > 0) {
+			return mysql_result($result, 0, "eventID");
+		} else {
+			return 0;
+		}
+	}
+
 	/**
 	 * Truncate name of something if it is bigger than maxSize
 	 * @param  [string] $name    	Name to truncate

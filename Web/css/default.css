@@ -642,6 +642,31 @@ form {
 	font-family: inherit;
 }
 
+.pageContent table, tr, td {
+	border-spacing: 0px;
+	border-collapse: collapse;
+}
+
+.pageContent table {
+	text-align: center;
+	margin: 0 auto;
+	width: 100%;
+}
+
+.pageContent tbody tr:nth-child(2n+1) {
+	background-color: #E6E6E6;
+}
+
+.pageContent tbody {
+	border-top: 1px solid #818181;
+	border-bottom: 1px solid #818181;
+}
+
+.pageContent td {
+	padding: 10px;
+	max-width: 400px;
+}
+
 .pageContent .searchEmptyResult {
 	border-bottom: 1px solid #333;
 	width: 70%;
@@ -1004,22 +1029,33 @@ form {
 
 /* Event */
 
+#eventContent {
+	width: 100%;
+	/*position: fixed;*/
+	height: 100%;
+}
+
 #eventContent .boardContent {
 	/*padding-top: 44px;*/
 }
 
-#eventContent .scheduleDay {
+.emptyCapital {
+	font-weight: bold;
+	font-size: 150%;
+}
+
+.scheduleDay {
 	text-align: left;
 	background-color: rgba(15, 15, 15, 0.8);
 	color: #DBDBDB;
 }
 
-#eventContent .scheduleDay span {
+.scheduleDay span {
 	padding: 10px 0;
 	display: inline-block;
 }
 
-#eventContent .scheduleDay span:first-child {
+.scheduleDay span:first-child {
 	width: 20%;
 	text-align: center;
 	border-right: 1px solid #2E2E2E;
@@ -1028,11 +1064,11 @@ form {
 	-webkit-box-shadow: inset -1px 0px #444;
 }
 
-#eventContent .scheduleDay span:last-child {
+.scheduleDay span:last-child {
 	padding: 10px;
 }
 
-#eventContent .scheduleItem {
+.scheduleItem {
 	background-color: #EEE;
 	padding: 0;
 	border-bottom: 1px solid #BDBDBD;
@@ -1043,80 +1079,89 @@ form {
 	height: 100px;
 }
 
-#eventContent .scheduleItemInvisible {
+.scheduleItemSelectable {
+	cursor: pointer;
+}
+
+.scheduleItemSelectable:hover,
+.scheduleItemSelectable.scheduleItemSelected {
+	background-color: #E2E2E2;
+} 
+
+.scheduleItemInvisible {
 	display: none;
 }
 
-#eventContent .scheduleItem p {
+.scheduleItem p {
 	margin: 0;
 	padding: 0% 4%;
 }
 
-#eventContent .scheduleItem img {
+.scheduleItem img {
 	width: 16px;
 	vertical-align: top;
 	margin: 0 2px;
 }
 
-#eventContent .scheduleItem span {
-	font-weight: bold;
-}
-
-#eventContent .scheduleItem .left {
+.scheduleItem .left {
 	width: 20%;
 	float: left;
 	height: 100%;
+	background-color: #FDFDFD;
 }
 
-#eventContent .scheduleItem .left div,
-#eventContent .scheduleItem .right div {
+.scheduleItem:hover .left,
+.scheduleItem.scheduleItemSelected .left {
+	background-color: #FAFAFA;
+}
+
+.scheduleItem .left div,
+.scheduleItem .right div {
 	display: table;
 	width: 100%;
 	height: 100%;
 }
 
-#eventContent .scheduleItem .left .upper,
-#eventContent .scheduleItem .left .bottom {
+.scheduleItem .left .upper,
+.scheduleItem .left .bottom {
 	height: 50%;
 }
 
-#eventContent .scheduleItem .right .upper {
+.scheduleItem .right .upper {
 	height: 40%;
 }
 
-#eventContent .scheduleItem .right .bottom {
+.scheduleItem .right .bottom {
 	height: 60%;
 }
 
-#eventContent .scheduleItem .left p,
-#eventContent .scheduleItem .right p,
-#eventContent .scheduleItem .singleButton {
+.scheduleItem .left p,
+.scheduleItem .right p,
+.scheduleItem .singleButton {
 	display: table-cell;
 	vertical-align: middle;
 	text-align: center;
 }
 
-#eventContent .scheduleItem .left .dateBegin {
-	background-color: #FDFDFD;
+.scheduleItem .left .dateBegin {
 	font-weight: bold;
 }
 
-#eventContent .scheduleItem .left .dateEnd {
-	background-color: #FDFDFD;
+.scheduleItem .left .dateEnd {
 	font-size: 80%;
 }
 
-#eventContent .scheduleItem .right {
+.scheduleItem .right {
 	overflow: hidden;
 	height: 100%;
 }
 
-#eventContent .scheduleItem .right .hint {
+.scheduleItem .right .hint {
 	padding: 0;
 }
 
-#eventContent .scheduleItem .right .hint::before,
-#eventContent .scheduleItem .right .hint::after {
+.scheduleItem .right .hint::before,
+.scheduleItem .right .hint::after {
 	position: absolute;
 	width: 0;
 	height: 0;
@@ -1126,36 +1171,31 @@ form {
 	pointer-events: none;
 }
 
-#eventContent .scheduleItem .right .hint::before {
+.scheduleItem .right .hint::before {
 	top: 1px;
 	right: 1px;
 	border-width: 0px 25px 25px 0px;
 }
 
-#eventContent .scheduleItem .right .hintApproved::before {
+.scheduleItem .right .hintApproved::before {
 	border-right-color: #278D27;	
 }
 
-#eventContent .scheduleItem .right .hintDenied::before {
+.scheduleItem .right .hintDenied::before {
 	border-right-color: #C51F1F;	
 }
 
-#eventContent .scheduleItem .right .name {
+.scheduleItem .right .name {
 	font-size: 100%;
 	font-weight: bold;
 }
 
-#eventContent .scheduleItem .right .description {
+.scheduleItem .right .description {
 	font-size: 85%;
 	color: #6D6D6D;
 }
 
-#eventContent .scheduleItem .singleButton.toolExpel {
-	background: #EC532E;
-	border: solid 1px #B44124;
-}
-
-#eventContent .scheduleItem .right .dock {
+.scheduleItem .right .dock {
 	height: auto;
 	width: auto;
 	text-align: right;
@@ -1173,7 +1213,7 @@ form {
 	box-shadow: inset 0 1px 0 white;
 }
 
-#eventContent .scheduleItem .right .dock li {
+.scheduleItem .right .dock li {
 	display: inline-block;
 	vertical-align: middle;
 	border-right: 1px solid #B1B1B1;
@@ -1181,42 +1221,43 @@ form {
 	padding-top: 1px;
 }
 
-#eventContent .scheduleItem .right .dock li:last-child {
+.scheduleItem .right .dock li:last-child {
 	border: 0;
 }
 
-#eventContent .scheduleItem .right .dock img {
+.scheduleItem .right .dock img {
 	width: 16px;
 	vertical-align: middle;
 }
 
-#eventContent .scheduleItem .right .dock span {
+.scheduleItem .right .dock span {
 	font-size: 100%;
 	vertical-align: middle;
 	margin: 0 2px;
 }
 
-#eventContent .scheduleItem .right .dock .tool {
+.scheduleItem .right .dock .tool {
 	cursor: pointer;
 }
 
-#eventContent .scheduleItem .right .dock .tool:hover {
+.scheduleItem .right .dock .tool:hover,
+.scheduleItem .right .dock .toolSelected {
 	-webkit-box-shadow: inset 1px 0px 6px 1px #ACACAC;
 	box-shadow: inset 1px 0px 6px 1px #ACACAC;
 }
 
-#eventContent .pickerDay {
+.agendaDay {
 	text-align: left;
 	background-color: rgba(15, 15, 15, 0.8);
 	color: #DBDBDB;
 }
 
-#eventContent .pickerDay span {
+.agendaDay span {
 	padding: 10px 0;
 	display: inline-block;
 }
 
-#eventContent .pickerDay span:first-child {
+.agendaDay span:first-child {
 	text-align: center;
 	width: 7.5%;
 	border-right: 1px solid #2E2E2E;
@@ -1225,11 +1266,11 @@ form {
 	-webkit-box-shadow: inset -1px 0px #444;
 }
 
-#eventContent .pickerDay span:last-child {
+.agendaDay span:last-child {
 	padding: 10px;
 }
 
-#eventContent .pickerItem {
+.agendaItem {
 	background-color: #EEE;
 	padding: 0;
 	border-bottom: 1px solid #BDBDBD;
@@ -1240,99 +1281,131 @@ form {
 	height: 50px;
 }
 
-#eventContent .pickerItemHighlight {
+.agendaItemHighlight {
 	background-color: #D1D1D1;
 }
 
-#eventContent .pickerItem p {
+.agendaItem p {
 	margin: 0;
 	padding: 0% 2%;
 }
 
-#eventContent .pickerItem img {
+.agendaItem img {
 	width: 16px;
 	vertical-align: top;
 	margin: 0 2px;
 }
 
-#eventContent .pickerItem span {
+.agendaItem span {
 	font-weight: bold;
 }
 
-#eventContent .pickerItem .left {
+.agendaItem .left {
 	width: 15%;
 	float: left;
 	height: 100%;
 }
 
-#eventContent .pickerItem .left div,
-#eventContent .pickerItem .right div {
+.agendaItem .left div,
+.agendaItem .right div {
 	display: table;
 	width: 100%;
 	height: 100%;
 }
 
-#eventContent .pickerItem .left .upper,
-#eventContent .pickerItem .left .bottom {
+.agendaItem .left .upper,
+.agendaItem .left .bottom {
 	width: 50%;
 	float: left;
 }
 
-#eventContent .pickerItem .right .upper,
-#eventContent .pickerItem .right .middle {
+.agendaItem .right .upper,
+.agendaItem .right .middle {
 	width: 40%;
 	float: left;
 }
 
-#eventContent .pickerItem .right .bottom {
+.agendaItem .right .bottom {
 	width: 20%;
 	float: left;
 }
 
-#eventContent .pickerItem .left p,
-#eventContent .pickerItem .right p {
+.agendaItem .left p,
+.agendaItem .right p {
 	display: table-cell;
 	vertical-align: middle;
 	text-align: center;
 }
 
-#eventContent .pickerItem .left .dateBegin {
+.agendaItem .left .dateBegin {
 	background-color: #FDFDFD;
 	font-weight: bold;
 }
 
-#eventContent .pickerItem .left .dateEnd {
+.agendaItem .left .dateEnd {
 	background-color: whiteSmoke;
 	font-size: 80%;
 }
 
-#eventContent .pickerItem .right {
+.agendaItem .right {
 	overflow: hidden;
 	height: 100%;
 }
 
-#eventContent .pickerItem .right .name {
+.agendaItem .right .name {
 	font-size: 100%;
 	font-weight: bold;
 }
 
-#eventContent .pickerItem .right .description {
+.agendaItem .right .description {
 	font-size: 85%;
 	color: #6D6D6D;
 }
 
-#eventContent .pickerItem .singleButton.toolEnroll {
-	background: #34348F;
-	border: solid 1px #1F1F63;
-}
-
-#eventContent .singleButton {
+.singleButton.toolEnroll,
+.singleButton.toolBoss,
+.singleButton.toolExpel,
+.singleButton.toolRemove {
 	padding: 4px 7px;
 	color: #FFF;
 	background: #34348F;
 	border: solid 1px #1F1F63;
 	font-size: 90%;
 	margin: 6px 2px;
+}
+
+.singleButton.toolEnroll,
+.singleButton.toolBoss {
+	background: #34348F;
+	border: solid 1px #1F1F63;
+}
+
+.singleButton.toolExpel,
+.singleButton.toolRemove {
+	background: #EC532E;
+	border: solid 1px #B44124;
+}
+
+.pickerItem td {
+	padding: 0;
+	font-size: 80%;
+}
+
+.pickerItem p {
+	margin: 0;
+}
+
+.pickerItem img {
+	cursor: pointer;
+	margin-top: 4px;
+	width: 24px;
+}
+
+.pickerItem input {
+	padding: 4.5px;
+	margin: 4px 0;
+	font-size: 90%;
+	text-align: center;
 }
 
 /* @end */
