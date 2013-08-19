@@ -2,9 +2,15 @@ package com.estudiotrilha.inevent.content;
 
 import static com.estudiotrilha.inevent.content.Activity.Columns.*;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.estudiotrilha.android.net.ConnectionHelper;
 import com.estudiotrilha.android.utils.JsonUtils;
 import com.estudiotrilha.inevent.InEvent;
 import com.estudiotrilha.inevent.provider.InEventProvider;
@@ -20,6 +26,57 @@ public class Activity
     public static final class Api
     {
         public static final String  NAMESPACE = "activity";
+
+        private static final String CONFIRM_ENTRANCE = ApiRequest.BASE_URL + NAMESPACE + ".confirmEntrance&tokenID=%s&activityID=%d&personID=%d";
+        private static final String GET_PEOPLE       = ApiRequest.BASE_URL + NAMESPACE + ".getPeople&tokenID=%s&activityID=%d&selection=%s";
+
+        public static HttpURLConnection confirmEntrance(String tokenID, long activityID, long personID) throws IOException
+        {
+            tokenID = URLEncoder.encode(tokenID, ApiRequest.ENCODING);
+            URL url = new URL(String.format(CONFIRM_ENTRANCE, tokenID, activityID, personID));
+
+            return ConnectionHelper.getURLGetConnection(url);
+        }
+        public static HttpURLConnection getPeople(String tokenID, long activityID, PeopleSelection selection) throws IOException
+        {
+            tokenID = URLEncoder.encode(tokenID, ApiRequest.ENCODING);
+            URL url = new URL(String.format(GET_PEOPLE, tokenID, activityID, selection.toString()));
+
+            return ConnectionHelper.getURLGetConnection(url);
+        }
+
+
+        public static enum PeopleSelection
+        {
+            ALL {
+                @Override
+                public String toString()
+                {
+                    return "all";
+                }
+            },
+            APPROVED {
+                @Override
+                public String toString()
+                {
+                    return "approved";
+                }
+            },
+            DENIED {
+                @Override
+                public String toString()
+                {
+                    return "denied";
+                }
+            },
+            UNSEEN {
+                @Override
+                public String toString()
+                {
+                    return "unseen";
+                }
+            }
+        }
     }
 
     public static interface Columns extends BaseColumns
@@ -45,10 +102,12 @@ public class Activity
     public static final String TABLE_NAME = "activity";
 
     // Content Provider
-    public static final String ACTIVITY_PATH     = "activity";
-    public static final String SCHEDULE_PATH     = "activity/schedule";
-    public static final Uri ACTIVITY_CONTENT_URI = Uri.withAppendedPath(InEventProvider.CONTENT_URI, ACTIVITY_PATH);
-    public static final Uri SCHEDULE_CONTENT_URI = Uri.withAppendedPath(InEventProvider.CONTENT_URI, SCHEDULE_PATH);
+    public static final String ACTIVITY_PATH      = "activity";
+    public static final Uri ACTIVITY_CONTENT_URI  = Uri.withAppendedPath(InEventProvider.CONTENT_URI, ACTIVITY_PATH);
+    public static final String SCHEDULE_PATH      = "activity/schedule";
+    public static final Uri SCHEDULE_CONTENT_URI  = Uri.withAppendedPath(InEventProvider.CONTENT_URI, SCHEDULE_PATH);
+    public static final String ATTENDERS_PATH     = "activity/attenders";
+    public static final Uri ATTENDERS_CONTENT_URI = Uri.withAppendedPath(InEventProvider.CONTENT_URI, ATTENDERS_PATH);
 
 
     public static ContentValues valuesFromJson(JSONObject json, long eventID)
@@ -83,13 +142,19 @@ public class Activity
             public static final String APPROVED    = "approved";
             public static final String PRESENT     = "present";
 
-            public static final String[] PROJECTION_LIST = {
+            public static final String[] PROJECTION_SCHEDULE_LIST = {
                 Activity.TABLE_NAME+"."+Activity.Columns._ID,
                 Activity.TABLE_NAME+"."+Activity.Columns.NAME,
                 Activity.TABLE_NAME+"."+Activity.Columns.LOCATION,
                 Activity.TABLE_NAME+"."+Activity.Columns.DATE_BEGIN,
                 Activity.TABLE_NAME+"."+Activity.Columns.DATE_END,
                 TABLE_NAME+"."+APPROVED
+            };
+
+            public static final String[] PROJECTION_ATTENDANCE_LIST = {
+                com.estudiotrilha.inevent.content.Member.TABLE_NAME+"."+com.estudiotrilha.inevent.content.Member.Columns._ID,
+                com.estudiotrilha.inevent.content.Member.TABLE_NAME+"."+com.estudiotrilha.inevent.content.Member.Columns.NAME,
+                TABLE_NAME+"."+PRESENT
             };
         }
 

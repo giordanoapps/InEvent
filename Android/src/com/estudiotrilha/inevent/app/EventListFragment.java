@@ -117,7 +117,7 @@ public class EventListFragment extends ListFragment implements LoaderCallbacks<C
     private void refresh()
     {
         // Download the event list
-        getActivity().startService(new Intent(getActivity(), SyncService.class).setData(Event.CONTENT_URI));
+        getActivity().startService(new Intent(getActivity(), SyncService.class).setData(Event.EVENT_CONTENT_URI));
     }
 
 
@@ -125,7 +125,7 @@ public class EventListFragment extends ListFragment implements LoaderCallbacks<C
     @Override
     public Loader<Cursor> onCreateLoader(int code, Bundle args)
     {
-        Uri uri = Event.CONTENT_URI;
+        Uri uri = Event.EVENT_CONTENT_URI;
         String[] projection = Event.Columns.PROJECTION_LIST;
         String selection = null;
         String[] selectionArgs = null;

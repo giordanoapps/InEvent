@@ -16,11 +16,13 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.estudiotrilha.android.widget.ExtensibleCursorAdapter;
 import com.estudiotrilha.inevent.R;
 import com.estudiotrilha.inevent.content.Activity;
+import com.estudiotrilha.inevent.content.Event;
 import com.estudiotrilha.inevent.content.LoginManager;
 import com.estudiotrilha.inevent.service.SyncService;
 
@@ -68,6 +70,7 @@ public class EventActivitiesListFragment extends ListFragment implements LoaderC
 
     private DisplayOption mDisplayOption = DisplayOption.SCHEDULE;
     private DateFormat    mTimeFormat;
+    private long          mRoleId;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -97,6 +100,14 @@ public class EventActivitiesListFragment extends ListFragment implements LoaderC
 
         // Get the user preferred date format
         mTimeFormat = android.text.format.DateFormat.getTimeFormat(getActivity());
+        long id = getArguments().getLong(ARGS_EVENT_ID);
+
+        // Check the user role for this event
+
+        // Get the info
+//        Cursor c = getActivity().getContentResolver().query(ContentUris.withAppendedId(Event.EVENT_CONTENT_URI, id), new String[] { Event.Columns.ROLE_ID }, null, null, null);
+//        if (!c.moveToFirst()) throw new IllegalStateException("Can't find the Event where _id="+id);
+//        mRoleId = c.getLong(c.getColumnIndex(Event.Columns.ROLE_ID));
     }
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState)
@@ -111,6 +122,10 @@ public class EventActivitiesListFragment extends ListFragment implements LoaderC
         updateDisplayMode();
 
         setListShown(false);
+
+//        getListView().setClickable(mRoleId == Event.ROLE_COORDINATOR || mRoleId == Event.ROLE_STAFF); // TODO
+        // Add fastscrolling function
+        getListView().setFastScrollEnabled(true);
     }
     @Override
     public void onStart()
@@ -165,6 +180,18 @@ public class EventActivitiesListFragment extends ListFragment implements LoaderC
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id)
+    {
+        // TODO temporary code
+        // XXX
+        getFragmentManager().beginTransaction()
+                .replace(R.id.mainContent, AttendanceFragment.instantiate(id, getArguments().getLong(ARGS_EVENT_ID)))
+                .addToBackStack(null)
+                .commit();
+    }
+
+
     private void updateDisplayMode()
     {
         switch (mDisplayOption)
@@ -189,8 +216,10 @@ public class EventActivitiesListFragment extends ListFragment implements LoaderC
 
         // Download the activities
         getActivity().startService(intent.setData(Activity.ACTIVITY_CONTENT_URI));
-        // and the schedule
+        // the schedule
         getActivity().startService(intent.setData(Activity.SCHEDULE_CONTENT_URI));
+        // and the attenders
+        getActivity().startService(intent.setData(Event.ATTENDERS_CONTENT_URI));
     }
 
 
@@ -218,7 +247,7 @@ public class EventActivitiesListFragment extends ListFragment implements LoaderC
 
         case LOAD_SCHEDULE:
             uri = Activity.SCHEDULE_CONTENT_URI;
-            projection = Activity.Member.Columns.PROJECTION_LIST;
+            projection = Activity.Member.Columns.PROJECTION_SCHEDULE_LIST;
             selection = Activity.Member.TABLE_NAME+"."+Activity.Member.Columns.MEMBER_ID +"= ?";
             selectionArgs = new String[1];
 

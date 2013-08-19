@@ -1,6 +1,9 @@
 package com.estudiotrilha.inevent.content;
 
-import static com.estudiotrilha.inevent.content.Member.Columns.*;
+import static android.provider.BaseColumns._ID;
+import static com.estudiotrilha.inevent.content.Member.Columns.EMAIL;
+import static com.estudiotrilha.inevent.content.Member.Columns.NAME;
+import static com.estudiotrilha.inevent.content.Member.Columns.TELEPHONE;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -18,7 +21,6 @@ import android.text.Html;
 import android.util.Log;
 
 import com.estudiotrilha.android.net.ConnectionHelper;
-import com.estudiotrilha.android.utils.JsonUtils;
 import com.estudiotrilha.inevent.InEvent;
 import com.estudiotrilha.inevent.provider.InEventProvider;
 
@@ -50,7 +52,7 @@ public class Member implements Serializable
             facebookToken = URLEncoder.encode(facebookToken, ApiRequest.ENCODING);
             URL url = new URL(String.format(SIGN_IN_WITH_FACEBOOK, facebookToken));
 
-            return ConnectionHelper.getURLPostConnection(url);
+            return ConnectionHelper.getURLGetConnection(url);
         }
 
         public static HttpURLConnection getEvents(String tokenID) throws IOException
@@ -58,7 +60,7 @@ public class Member implements Serializable
             tokenID = URLEncoder.encode(tokenID, ApiRequest.ENCODING);
             URL url = new URL(String.format(GET_EVENTS, tokenID));
 
-            return ConnectionHelper.getURLPostConnection(url);
+            return ConnectionHelper.getURLGetConnection(url);
         }
     }
 
@@ -120,7 +122,7 @@ public class Member implements Serializable
 
         try
         {
-            cv.put(_ID, json.getLong(JsonUtils.ID));
+            cv.put(_ID, json.getLong(MEMBER_ID));
             cv.put(NAME, Html.fromHtml(json.getString(NAME)).toString());
             cv.put(TELEPHONE, json.getString(TELEPHONE));
             cv.put(EMAIL, Html.fromHtml(json.getString(EMAIL)).toString());

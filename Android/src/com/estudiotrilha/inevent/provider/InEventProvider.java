@@ -39,9 +39,11 @@ public class InEventProvider extends ContentProvider
     // URI CODES //
     public static final int URI_EVENT                = 101;
     public static final int URI_EVENT_SINGLE         = 102;
+    public static final int URI_EVENT_ATTENDERS      = 103;
     public static final int URI_ACTIVITY             = 201;
     public static final int URI_ACTIVITY_SINGLE      = 202;
     public static final int URI_ACTIVITY_SCHEDULE    = 203;
+    public static final int URI_ACTIVITY_ATTENDERS   = 204;
     public static final int URI_MEMBER               = 301;
 
     static
@@ -49,11 +51,13 @@ public class InEventProvider extends ContentProvider
         uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
         // The possible URIs
-        uriMatcher.addURI(AUTHORITY, Event.PATH,                    URI_EVENT);
-        uriMatcher.addURI(AUTHORITY, Event.PATH + "/#",             URI_EVENT_SINGLE);
+        uriMatcher.addURI(AUTHORITY, Event.EVENT_PATH,              URI_EVENT);
+        uriMatcher.addURI(AUTHORITY, Event.EVENT_PATH + "/#",       URI_EVENT_SINGLE);
+        uriMatcher.addURI(AUTHORITY, Event.ATTENDERS_PATH,          URI_EVENT_ATTENDERS);
         uriMatcher.addURI(AUTHORITY, Activity.ACTIVITY_PATH,        URI_ACTIVITY);
         uriMatcher.addURI(AUTHORITY, Activity.ACTIVITY_PATH + "/#", URI_ACTIVITY_SINGLE);
         uriMatcher.addURI(AUTHORITY, Activity.SCHEDULE_PATH,        URI_ACTIVITY_SCHEDULE);
+        uriMatcher.addURI(AUTHORITY, Activity.ATTENDERS_PATH,       URI_ACTIVITY_ATTENDERS);
         uriMatcher.addURI(AUTHORITY, Member.PATH,                   URI_MEMBER);
     }
 
@@ -76,28 +80,34 @@ public class InEventProvider extends ContentProvider
     @Override
     public String getType(Uri uri)
     {
-        final String GARCA = "/vnd.estudiotrilha.inevent.";
+        final String IN_EVENT = "/vnd.estudiotrilha.inevent.";
 
         int matchCode = uriMatcher.match(uri);
         switch (matchCode)
         {
         case URI_EVENT:
-            return ContentResolver.CURSOR_DIR_BASE_TYPE + GARCA + Event.PATH;
+            return ContentResolver.CURSOR_DIR_BASE_TYPE + IN_EVENT + Event.EVENT_PATH;
 
         case URI_EVENT_SINGLE:
-            return ContentResolver.CURSOR_ITEM_BASE_TYPE + GARCA + Event.PATH;
+            return ContentResolver.CURSOR_ITEM_BASE_TYPE + IN_EVENT + Event.EVENT_PATH;
+
+        case URI_EVENT_ATTENDERS:
+            return ContentResolver.CURSOR_DIR_BASE_TYPE + IN_EVENT + Event.ATTENDERS_PATH;
 
         case URI_ACTIVITY:
-            return ContentResolver.CURSOR_DIR_BASE_TYPE + GARCA + Activity.ACTIVITY_PATH;
-
-        case URI_ACTIVITY_SINGLE:
-            return ContentResolver.CURSOR_ITEM_BASE_TYPE + GARCA + Activity.ACTIVITY_PATH;
+            return ContentResolver.CURSOR_DIR_BASE_TYPE + IN_EVENT + Activity.ACTIVITY_PATH;
 
         case URI_ACTIVITY_SCHEDULE:
-            return ContentResolver.CURSOR_DIR_BASE_TYPE + GARCA + Activity.ACTIVITY_PATH;
+            return ContentResolver.CURSOR_DIR_BASE_TYPE + IN_EVENT + Activity.SCHEDULE_PATH;
+
+        case URI_ACTIVITY_ATTENDERS:
+            return ContentResolver.CURSOR_DIR_BASE_TYPE + IN_EVENT + Activity.ATTENDERS_PATH;
+
+        case URI_ACTIVITY_SINGLE:
+            return ContentResolver.CURSOR_ITEM_BASE_TYPE + IN_EVENT + Activity.ACTIVITY_PATH;
 
         case URI_MEMBER:
-            return ContentResolver.CURSOR_DIR_BASE_TYPE + GARCA + Member.PATH;
+            return ContentResolver.CURSOR_DIR_BASE_TYPE + IN_EVENT + Member.PATH;
         }
 
         return null;
@@ -144,6 +154,27 @@ public class InEventProvider extends ContentProvider
                     " ON " + Activity.Member.TABLE_NAME+"."+Activity.Member.Columns.ACTIVITY_ID +"="+ Activity.TABLE_NAME+"."+Activity.Columns._ID +
                     " WHERE " + selection +
                     " ORDER BY " + sortOrder;
+            c = mDatabase.rawQuery(query, selectionArgs);
+            break;
+        }
+
+        case URI_ACTIVITY_ATTENDERS:
+        {
+            String project = "*";
+            if (projection != null)
+            {
+                // remove the brackets
+                project = Arrays.toString(projection);
+                project = project.substring(1,project.length()-1);
+            }
+
+            final String query = "SELECT "+ project +
+                    " FROM " + Activity.Member.TABLE_NAME +
+                    " INNER JOIN " + Member.TABLE_NAME +
+                    " ON " + Activity.Member.TABLE_NAME+"."+Activity.Member.Columns.MEMBER_ID +"="+ Member.TABLE_NAME+"."+Member.Columns._ID +
+                    " WHERE " + selection +
+                    " ORDER BY " + sortOrder;
+
             c = mDatabase.rawQuery(query, selectionArgs);
             break;
         }
@@ -335,11 +366,16 @@ public class InEventProvider extends ContentProvider
             answer = mDatabase.insert(Event.TABLE_NAME, null, values);
             break;
 
+        case URI_EVENT_ATTENDERS:
+            answer = mDatabase.insert(Event.Member.TABLE_NAME, null, values);
+            break;
+
         case URI_ACTIVITY:
             answer = mDatabase.insert(Activity.TABLE_NAME, null, values);
             break;
 
         case URI_ACTIVITY_SCHEDULE:
+        case URI_ACTIVITY_ATTENDERS:
             answer = mDatabase.insert(Activity.Member.TABLE_NAME, null, values);
             break;
 
@@ -436,6 +472,10 @@ public class InEventProvider extends ContentProvider
             result = mDatabase.delete(Event.TABLE_NAME, selection, selectionArgs);
             break;
 
+        case URI_EVENT_ATTENDERS:
+            result = mDatabase.delete(Event.Member.TABLE_NAME, selection, selectionArgs);
+            break;
+
         case URI_ACTIVITY_SINGLE:
         {
             // obtain the id
@@ -450,6 +490,7 @@ public class InEventProvider extends ContentProvider
             break;
 
         case URI_ACTIVITY_SCHEDULE:
+        case URI_ACTIVITY_ATTENDERS:
             result = mDatabase.delete(Activity.Member.TABLE_NAME, selection, selectionArgs);
             break;
 
@@ -558,8 +599,17 @@ public class InEventProvider extends ContentProvider
                     Event.Columns.LONGITUDE + " REAL, " +
                     Event.Columns.ADDRESS + " TEXT, " +
                     Event.Columns.CITY + " TEXT, " +
-                    Event.Columns.STATE + " TEXT, " +
-                    Event.Columns.ROLE_ID + " INTEGER)"
+                    Event.Columns.STATE + " TEXT)"
+            );
+
+            Log.i(InEvent.NAME, "Creating " + Event.Member.TABLE_NAME + " table");
+
+            db.execSQL("CREATE TABLE " + Event.Member.TABLE_NAME + "(" +
+                    Event.Member.Columns._ID + " INTEGER NOT NULL UNIQUE, " +
+                    Event.Member.Columns.EVENT_ID + SQLiteUtils.FOREIGN_KEY + ", " +
+                    Event.Member.Columns.MEMBER_ID + SQLiteUtils.FOREIGN_KEY + ", " +
+                    Event.Member.Columns.APPROVED + SQLiteUtils.BOOLEAN + ", " +
+                    Event.Member.Columns.ROLE_ID + " INTEGER)"
             );
         }
 
@@ -580,7 +630,6 @@ public class InEventProvider extends ContentProvider
             Log.i(InEvent.NAME, "Creating " + Activity.Member.TABLE_NAME + " table");
 
             db.execSQL("CREATE TABLE " + Activity.Member.TABLE_NAME + "(" +
-                    Activity.Member.Columns._ID + SQLiteUtils.PRIMARY_KEY + ", " +
                     Activity.Member.Columns.EVENT_ID + SQLiteUtils.FOREIGN_KEY + ", " +
                     Activity.Member.Columns.ACTIVITY_ID + SQLiteUtils.FOREIGN_KEY + ", " +
                     Activity.Member.Columns.MEMBER_ID + SQLiteUtils.FOREIGN_KEY + ", " +

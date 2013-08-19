@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -36,10 +37,11 @@ public class EventActivity extends ActionBarActivity
 
         mLoginManager = LoginManager.getInstance(this);
 
-        if (savedInstanceState == null)
+        if (savedInstanceState == null
+                && mLoginManager.isSignedIn()) // XXX
         {
             // XXX
-            EventListFragment fragment = new EventListFragment();
+            Fragment fragment = EventActivitiesListFragment.instantiate(1);
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.mainContent, fragment)
                     .commit();

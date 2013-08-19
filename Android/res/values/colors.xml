@@ -6,10 +6,17 @@
     <color name="dark_gray">#606060</color>
     <color name="light_gray">#e5e5e5</color>
 
+    <!-- Holo Colors -->
+    <color name="holo_blue_light">#ff33b5e5</color>
     <color name="holo_green_light">#ff99cc00</color>
-    <color name="holo_green_dark">#ff669900</color>
     <color name="holo_red_light">#ffff4444</color>
+    <color name="holo_blue_dark">#ff0099cc</color>
+    <color name="holo_green_dark">#ff669900</color>
     <color name="holo_red_dark">#ffcc0000</color>
+    <color name="holo_purple">#ffaa66cc</color>
+    <color name="holo_orange_light">#ffffbb33</color>
+    <color name="holo_orange_dark">#ffff8800</color>
+    <color name="holo_blue_bright">#ff00ddff</color>
 
     <!-- Member -->
     <color name="member_profilelight_gray">@color/light_gray</color>

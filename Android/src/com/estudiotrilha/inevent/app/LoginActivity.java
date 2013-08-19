@@ -183,7 +183,7 @@ public class LoginActivity extends ActionBarActivity
                     // Delete the previous events
                     operations.add(
                             ContentProviderOperation
-                                .newDelete(Event.CONTENT_URI)
+                                .newDelete(Event.EVENT_CONTENT_URI)
                                 .build()
                     );
 
@@ -197,7 +197,7 @@ public class LoginActivity extends ActionBarActivity
                         // Add the insert operation
                         operations.add(
                                 ContentProviderOperation
-                                    .newInsert(Event.CONTENT_URI)
+                                    .newInsert(Event.EVENT_CONTENT_URI)
                                     .withValues(values)
                                     .build()
                         );

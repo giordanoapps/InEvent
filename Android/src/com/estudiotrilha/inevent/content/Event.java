@@ -1,5 +1,16 @@
 package com.estudiotrilha.inevent.content;
 
+import static android.provider.BaseColumns._ID;
+import static com.estudiotrilha.inevent.content.Activity.Columns.DATE_BEGIN;
+import static com.estudiotrilha.inevent.content.Activity.Columns.DATE_END;
+import static com.estudiotrilha.inevent.content.Event.Columns.ADDRESS;
+import static com.estudiotrilha.inevent.content.Event.Columns.CITY;
+import static com.estudiotrilha.inevent.content.Event.Columns.DESCRIPTION;
+import static com.estudiotrilha.inevent.content.Event.Columns.LATITUDE;
+import static com.estudiotrilha.inevent.content.Event.Columns.LONGITUDE;
+import static com.estudiotrilha.inevent.content.Event.Columns.NAME;
+import static com.estudiotrilha.inevent.content.Event.Columns.STATE;
+
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -16,12 +27,8 @@ import android.util.Log;
 
 import com.estudiotrilha.android.net.ConnectionHelper;
 import com.estudiotrilha.android.utils.JsonUtils;
-import com.estudiotrilha.inevent.provider.InEventProvider;
 import com.estudiotrilha.inevent.InEvent;
-
-import static com.estudiotrilha.inevent.content.Activity.Columns.DATE_BEGIN;
-import static com.estudiotrilha.inevent.content.Activity.Columns.DATE_END;
-import static com.estudiotrilha.inevent.content.Event.Columns.*;
+import com.estudiotrilha.inevent.provider.InEventProvider;
 
 
 public class Event
@@ -47,7 +54,7 @@ public class Event
         {
             URL url = new URL(String.format(GET_ACTIVITIES, eventID));
 
-            return ConnectionHelper.getURLPostConnection(url);
+            return ConnectionHelper.getURLGetConnection(url);
         }
 
         public static HttpURLConnection getSchedule(String tokenID, long eventID) throws IOException
@@ -55,7 +62,7 @@ public class Event
             tokenID = URLEncoder.encode(tokenID, ApiRequest.ENCODING);
             URL url = new URL(String.format(GET_SCHEDULE, tokenID, eventID));
 
-            return ConnectionHelper.getURLPostConnection(url);
+            return ConnectionHelper.getURLGetConnection(url);
         }
 
         public static enum PeopleSelection
@@ -96,7 +103,6 @@ public class Event
         public static final String ADDRESS     = "address";
         public static final String CITY        = "city";
         public static final String STATE       = "state";
-        public static final String ROLE_ID     = "roleID";
 
 
         public static final String[] PROJECTION_LIST = {
@@ -124,9 +130,16 @@ public class Event
     public static final String TABLE_NAME = "event";
 
     // Content Provider
-    public static final String PATH     = "event";
-    public static final Uri CONTENT_URI = Uri.withAppendedPath(InEventProvider.CONTENT_URI, PATH);
+    public static final String EVENT_PATH            = "event";
+    public static final Uri    EVENT_CONTENT_URI     = Uri.withAppendedPath(InEventProvider.CONTENT_URI, EVENT_PATH);
+    public static final String ATTENDERS_PATH        = "event/attenders";
+    public static final Uri    ATTENDERS_CONTENT_URI = Uri.withAppendedPath(InEventProvider.CONTENT_URI, ATTENDERS_PATH);
 
+
+    // Role IDs
+    public static final short ROLE_ATTENDEE    = 1;
+    public static final short ROLE_STAFF       = 2;
+    public static final short ROLE_COORDINATOR = 4;
 
     public static ContentValues valuesFromJson(JSONObject json)
     {
@@ -144,7 +157,6 @@ public class Event
             cv.put(ADDRESS, Html.fromHtml(json.getString(ADDRESS)).toString());
             cv.put(CITY, Html.fromHtml(json.getString(CITY)).toString());
             cv.put(STATE, Html.fromHtml(json.getString(STATE)).toString());
-            cv.put(ROLE_ID, json.getLong(ROLE_ID));
         }
         catch (JSONException e)
         {
@@ -152,5 +164,42 @@ public class Event
         }
 
         return cv;
+    }
+
+
+    public static class Member
+    {
+        public static interface Columns extends BaseColumns
+        {
+            public static final String EVENT_ID  = "eventID";
+            public static final String MEMBER_ID = "memberID";
+            public static final String APPROVED  = "approved";
+            public static final String ROLE_ID   = "roleID";
+        }
+
+        public static final String REQUEST_ID = "requestID";
+
+        // Database
+        public static final String TABLE_NAME = "eventMember";
+
+        public static ContentValues valuesFromJson(JSONObject json, long eventID)
+        {
+            ContentValues cv = new ContentValues();
+
+            try
+            {
+                cv.put(Columns._ID, json.getLong(REQUEST_ID));
+                cv.put(Columns.EVENT_ID, eventID);
+                cv.put(Columns.MEMBER_ID, json.getLong(Columns.MEMBER_ID));
+                cv.put(Columns.APPROVED, json.getInt(Columns.APPROVED));
+                cv.put(Columns.ROLE_ID, json.getInt(Columns.ROLE_ID));
+            }
+            catch (JSONException e)
+            {
+                Log.w(InEvent.NAME, "Error retrieving information for Event from json = "+json, e);
+            }
+
+            return cv;
+        }
     }
 }

@@ -34,7 +34,8 @@ public class SyncService extends IntentService implements ApiRequest.ResponseHan
 {
     public static final String SERVICE_NAME = InEvent.NAME + "." + SyncService.class.getSimpleName();
 
-    public static final String EXTRA_EVENT_ID = "extra.EVENT_ID";
+    public static final String EXTRA_EVENT_ID    = "extra.EVENT_ID";
+    public static final String EXTRA_ACTIVITY_ID = "extra.ACTIVITY_ID";
 
     public SyncService()
     {
@@ -83,6 +84,27 @@ public class SyncService extends IntentService implements ApiRequest.ResponseHan
             break;
         }
 
+        case InEventProvider.URI_EVENT_ATTENDERS:
+        {
+            SyncBroadcastManager.setSyncState(this, "Syncing Event Attenders");
+
+            try
+            {
+                String tokenID = LoginManager.getInstance(this).getTokenId();
+                long eventID = intent.getLongExtra(EXTRA_EVENT_ID, -1);
+                HttpURLConnection connection = Event.Api.getPeople(tokenID, eventID, Event.Api.PeopleSelection.ALL);
+                ApiRequest.getJsonFromConnection(code, connection, this, false);
+            }
+            catch (IOException e)
+            {
+                Log.e(InEvent.NAME, "Couldn't create connection for event.getPeople(tokenID, eventID, selection)", e);
+            }
+
+            // stop the sync state
+            SyncBroadcastManager.setSyncState(this, false);
+            break;
+        }
+
         case InEventProvider.URI_ACTIVITY:
         {
             SyncBroadcastManager.setSyncState(this, "Syncing Activities");
@@ -123,6 +145,28 @@ public class SyncService extends IntentService implements ApiRequest.ResponseHan
             SyncBroadcastManager.setSyncState(this, false);
             break;
         }
+
+        case InEventProvider.URI_ACTIVITY_ATTENDERS:
+        {
+            SyncBroadcastManager.setSyncState(this, "Syncing Attenders");
+
+            try
+            {
+                String tokenID = LoginManager.getInstance(this).getTokenId();
+                long eventID = intent.getLongExtra(EXTRA_ACTIVITY_ID, -1);
+                HttpURLConnection connection = Activity.Api.getPeople(tokenID, eventID, Activity.Api.PeopleSelection.ALL);
+                ApiRequest.getJsonFromConnection(code, connection, this, false);
+            }
+            catch (IOException e)
+            {
+                Log.e(InEvent.NAME, "Couldn't create connection for event.getPeople(tokenID, activityID, selection)", e);
+            }
+
+            // stop the sync state
+            SyncBroadcastManager.setSyncState(this, false);
+            break;
+        }
+
         default:
             break;
         }
@@ -154,7 +198,7 @@ public class SyncService extends IntentService implements ApiRequest.ResponseHan
                 // Delete the previous events
                 operations.add(
                         ContentProviderOperation
-                            .newDelete(Event.CONTENT_URI)
+                            .newDelete(Event.EVENT_CONTENT_URI)
                             .build()
                 );
 
@@ -168,7 +212,7 @@ public class SyncService extends IntentService implements ApiRequest.ResponseHan
                     // Add the insert operation
                     operations.add(
                             ContentProviderOperation
-                                .newInsert(Event.CONTENT_URI)
+                                .newInsert(Event.EVENT_CONTENT_URI)
                                 .withValues(values)
                                 .build()
                     );
@@ -187,6 +231,67 @@ public class SyncService extends IntentService implements ApiRequest.ResponseHan
             catch (OperationApplicationException e)
             {
                 Log.e(InEvent.NAME, "Failed while adding Events to the database", e);
+            }
+            break;
+        }
+
+        case InEventProvider.URI_EVENT_ATTENDERS:
+        {
+            ArrayList<ContentProviderOperation> operations = new ArrayList<ContentProviderOperation>();
+
+            try
+            {
+                // Get some info
+                long eventID = mIntent.getLongExtra(EXTRA_EVENT_ID, -1);
+
+                // Delete the previous stored activities
+                operations.add(
+                        ContentProviderOperation
+                            .newDelete(Event.ATTENDERS_CONTENT_URI)
+                            .withSelection(Event.Member.TABLE_NAME+"."+Event.Member.Columns.EVENT_ID+"="+eventID, null)
+                            .build()
+                );
+
+                // Get the new ones
+                JSONArray peopleArray = json.getJSONArray(JsonUtils.DATA);
+                for (int i = 0; i < peopleArray.length(); i++)
+                {
+                    // Parse the json
+                    JSONObject jobj = peopleArray.getJSONObject(i);
+                    ContentValues values = Event.Member.valuesFromJson(jobj, eventID);
+
+                    // Add the insert operation
+                    operations.add(
+                            ContentProviderOperation
+                                .newInsert(Event.ATTENDERS_CONTENT_URI)
+                                .withValues(values)
+                                .build()
+                    );
+
+                    // Parse the Member info
+                    values = Member.valuesFromJson(jobj);
+
+                    operations.add(
+                            ContentProviderOperation
+                                .newInsert(Member.CONTENT_URI)
+                                .withValues(values)
+                                .build()
+                    );
+                }
+
+                getContentResolver().applyBatch(InEventProvider.AUTHORITY, operations);
+            }
+            catch (JSONException e)
+            {
+                Log.w(InEvent.NAME, "Couldn't properly get the Event Attenders from the json = "+json, e);
+            }
+            catch (RemoteException e)
+            {
+                Log.e(InEvent.NAME, "", e);
+            }
+            catch (OperationApplicationException e)
+            {
+                Log.e(InEvent.NAME, "Failed while adding Event Attenders to the database", e);
             }
             break;
         }
@@ -280,7 +385,7 @@ public class SyncService extends IntentService implements ApiRequest.ResponseHan
                         boolean approved = jobj.getInt(Activity.Member.Columns.APPROVED) == 1;
 
                         // Gather the values
-                        ContentValues values = Activity.Member.newActivtyMember(eventID, activityID, memberID, approved);
+                        ContentValues values = Activity.Member.newActivtyMember(eventID, activityID, memberID, approved); // TODO
 
                         // Add the insert operation
                         operations.add(
@@ -305,6 +410,65 @@ public class SyncService extends IntentService implements ApiRequest.ResponseHan
             catch (OperationApplicationException e)
             {
                 Log.e(InEvent.NAME, "Failed while adding Activities Schedule to the database", e);
+            }
+            break;
+        }
+
+        case InEventProvider.URI_ACTIVITY_ATTENDERS:
+        {
+            ArrayList<ContentProviderOperation> operations = new ArrayList<ContentProviderOperation>();
+
+            try
+            {
+                // Get some info
+                long activityID = mIntent.getLongExtra(EXTRA_ACTIVITY_ID, -1);
+                long eventID = mIntent.getLongExtra(EXTRA_EVENT_ID, -1);
+
+                // Delete the previous stored activity members
+                operations.add(
+                        ContentProviderOperation
+                            .newDelete(Activity.ATTENDERS_CONTENT_URI)
+                            .withSelection(Activity.Member.TABLE_NAME+"."+Activity.Member.Columns.ACTIVITY_ID+"="+activityID, null)
+                            .build()
+                );
+
+                // Get the new ones
+                JSONArray peopleArray = json.getJSONArray(JsonUtils.DATA);
+                for (int i = 0; i < peopleArray.length(); i++)
+                {
+                    // Parse the json
+                    JSONObject jobj = peopleArray.getJSONObject(i);
+
+                    long memberID = jobj.getLong(Member.MEMBER_ID);
+                    boolean approved = jobj.getInt(Activity.Member.Columns.APPROVED) == 1;
+                    boolean present = jobj.getInt(Activity.Member.Columns.PRESENT) == 1;
+
+                    // Parse the member
+                    ContentValues values = Activity.Member.newActivtyMember(eventID, activityID, memberID, approved, present);
+
+                    // Parse the link member-activity
+                    // Add the insert operation
+                    operations.add(
+                            ContentProviderOperation
+                                .newInsert(Activity.ATTENDERS_CONTENT_URI)
+                                .withValues(values)
+                                .build()
+                    );
+                }
+
+                getContentResolver().applyBatch(InEventProvider.AUTHORITY, operations);
+            }
+            catch (JSONException e)
+            {
+                Log.w(InEvent.NAME, "Couldn't properly get the Activities Attenders from the json = "+json, e);
+            }
+            catch (RemoteException e)
+            {
+                Log.e(InEvent.NAME, "", e);
+            }
+            catch (OperationApplicationException e)
+            {
+                Log.e(InEvent.NAME, "Failed while adding Activities Attenders to the database", e);
             }
             break;
         }
