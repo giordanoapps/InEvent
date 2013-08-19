@@ -1,11 +1,7 @@
 package com.estudiotrilha.inevent.app;
 
 
-import java.io.IOException;
-import java.net.HttpURLConnection;
-
-import org.json.JSONObject;
-
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -18,27 +14,28 @@ import android.support.v4.content.Loader;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.SearchView;
 import android.text.InputType;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.FilterQueryProvider;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.estudiotrilha.android.widget.ExtensibleCursorAdapter;
-import com.estudiotrilha.inevent.InEvent;
 import com.estudiotrilha.inevent.R;
 import com.estudiotrilha.inevent.content.Activity;
-import com.estudiotrilha.inevent.content.ApiRequest;
 import com.estudiotrilha.inevent.content.LoginManager;
 import com.estudiotrilha.inevent.content.Member;
 import com.estudiotrilha.inevent.service.SyncService;
 
 
-public class AttendanceFragment extends ListFragment implements LoaderCallbacks<Cursor>
+public class AttendanceFragment extends ListFragment implements LoaderCallbacks<Cursor>, OnItemLongClickListener
 {
+    private static final int INTERVAL_CLICK = 600; // in milliseconds
+
     // Loader coder
     private static final int LOAD_PEOPLE = 1;
 
@@ -66,6 +63,9 @@ public class AttendanceFragment extends ListFragment implements LoaderCallbacks<
 
     private int mIndexId;
     private int mIndexPresent;
+
+    private long mLastClickedItemId  = -1;
+    private long mLastClickTime;
 
 
     @Override
@@ -100,7 +100,6 @@ public class AttendanceFragment extends ListFragment implements LoaderCallbacks<
             final String[] projection    = Activity.Member.Columns.PROJECTION_ATTENDANCE_LIST;
             final String   selection     = Activity.Member.TABLE_NAME+"."+Activity.Member.Columns.ACTIVITY_ID+" = "+ getArguments().getLong(ARGS_ACTIVITY_ID)+
                     " AND "+Activity.Member.Columns.APPROVED +" = 1"+
-//            		" AND CAST("+Member.TABLE_NAME+"."+Member.Columns._ID+" AS TEXT) LIKE \"?%\"";
                     " AND "+Member.TABLE_NAME+"."+Member.Columns._ID+" LIKE ?";
             final String[] selectionArgs = new String[1];
             final String   sortOrder     = Member.TABLE_NAME+"."+Member.Columns.NAME + " ASC";
@@ -113,6 +112,9 @@ public class AttendanceFragment extends ListFragment implements LoaderCallbacks<
                 return getActivity().getContentResolver().query(uri, projection, selection, selectionArgs, sortOrder);
             }
         });
+
+        // Set the empty text message
+        setEmptyText(getText(R.string.empty_eventActivityAttenders));
     }
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState)
@@ -123,6 +125,9 @@ public class AttendanceFragment extends ListFragment implements LoaderCallbacks<
 
         // Add fastscrolling function
         getListView().setFastScrollEnabled(true);
+
+        // Setup the click listener
+        getListView().setOnItemLongClickListener(this);
     }
     @Override
     public void onStart()
@@ -137,7 +142,7 @@ public class AttendanceFragment extends ListFragment implements LoaderCallbacks<
     {
         inflater.inflate(R.menu.fragment_attendance, menu);
 
-        // Setup the search
+        // Setup the search text entry
         MenuItem searchItem = menu.findItem(R.id.menu_search);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
         searchView.setInputType(InputType.TYPE_CLASS_NUMBER);
@@ -168,30 +173,42 @@ public class AttendanceFragment extends ListFragment implements LoaderCallbacks<
     @Override
     public void onListItemClick(ListView l, View v, int position, long id)
     {
-        super.onListItemClick(l, v, position, id);
-
-        try
+        // If double clicked, the attendee will have its presence confirmed
+        if (mLastClickedItemId == id && System.currentTimeMillis() - mLastClickTime < INTERVAL_CLICK)
         {
-            // Get some info
-            String tokenID = LoginManager.getInstance(getActivity()).getTokenId();
-            long activityID = getArguments().getLong(ARGS_ACTIVITY_ID);
-
-            // Prepare the connection
-            HttpURLConnection connection = Activity.Api.confirmEntrance(tokenID, activityID, id);
-            ApiRequest.getJsonFromConnection(position, connection, new ApiRequest.ResponseHandler() {
-                @Override
-                public void handleResponse(int requestCode, JSONObject json, int responseCode)
-                {
-                    // TODO Auto-generated method stub
-                    System.out.println(json);
-                }
-            });
+            confirmPresence(id);
         }
-        catch (IOException e)
+        else
         {
-            Log.e(InEvent.NAME, "Couldn't create connection for activity.confirmEntrance(tokenID, activityID, personID)", e);
+            mLastClickedItemId = id;
+            mLastClickTime = System.currentTimeMillis();
         }
     }
+    @Override
+    public boolean onItemLongClick(AdapterView<?> adapter, View v, int position, long id)
+    {
+        confirmPresence(id);
+        return false;
+    }
+
+    private void confirmPresence(final long id)
+    {
+        // Mark the member as present
+        setPresence(id, 1);
+
+        // And add this to the queue to be sent to the server
+        LoginManager.getInstance(getActivity()).confirmPresence(getArguments().getLong(ARGS_ACTIVITY_ID), id);
+    }
+
+    private void setPresence(long memberID, int present)
+    {
+        final String selection = Activity.Member.Columns.MEMBER_ID+"="+memberID+
+                " AND "+Activity.Member.Columns.ACTIVITY_ID+"="+getArguments().getLong(ARGS_ACTIVITY_ID);
+        final ContentValues values = new ContentValues();
+        values.put(Activity.Member.Columns.PRESENT, present);
+        getActivity().getContentResolver().update(Activity.ATTENDERS_CONTENT_URI, values, selection, null);
+    }
+
 
 
     private void refresh()
@@ -222,10 +239,17 @@ public class AttendanceFragment extends ListFragment implements LoaderCallbacks<
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data)
     {
+        // Treat the special (empty) cases
+        if (data.getCount() < 3)
+        {
+            // Download new data
+            refresh();
+        }
+
         // Update the indexes
         mIndexId = data.getColumnIndex(Activity.Member.Columns._ID);
         mIndexPresent = data.getColumnIndex(Activity.Member.Columns.PRESENT);
-        // TODO Treat the special (empty) cases
+
         mPeopleAdapter.swapCursor(data);
     }
     @Override

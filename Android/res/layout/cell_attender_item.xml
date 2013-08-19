@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:minHeight="48dp"
+    android:minHeight="40dp"
     android:orientation="horizontal"
     tools:ignore="UseCompoundDrawables" >
 
@@ -27,9 +27,9 @@
 
     <ImageView
         android:id="@+id/member_present"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_gravity="top"
-        android:src="@color/holo_green_dark" />
+        android:src="@drawable/ic_navigation_accept" />
 
 </LinearLayout>

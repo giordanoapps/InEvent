@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.preference.PreferenceManager;
 
 import com.estudiotrilha.inevent.R;
+import com.estudiotrilha.inevent.content.LoginManager;
 
 
 public class SplashActivity extends Activity implements Runnable
@@ -20,7 +21,7 @@ public class SplashActivity extends Activity implements Runnable
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash); // XXX Create the layout
+        setContentView(R.layout.activity_splash);
     }
 
     @Override
@@ -38,10 +39,7 @@ public class SplashActivity extends Activity implements Runnable
 
         if (splashEnabled)
         {
-            // start the animation
-//            AnimationDrawable egret = (AnimationDrawable) ((ImageView) findViewById(R.id.splash_animation)).getDrawable(); XXX
-//            egret.start();
-
+            // TODO Start the animation
             mHandler.postDelayed(this, SPLASH_DURATION);
         }
         else
@@ -69,6 +67,13 @@ public class SplashActivity extends Activity implements Runnable
 
         // Open the next Activity
         startActivity(new Intent(this, EventActivity.class));
+
+        // If the user is not signIn yet
+        if (!LoginManager.getInstance(this).isSignedIn())
+        {
+            // Open the login Screen
+            startActivity(new Intent(this, LoginActivity.class));
+        }
     }
 
 

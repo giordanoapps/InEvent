@@ -37,11 +37,16 @@ public class EventActivity extends ActionBarActivity
 
         mLoginManager = LoginManager.getInstance(this);
 
-        if (savedInstanceState == null
-                && mLoginManager.isSignedIn()) // XXX
+        // If the user is not signed in, this activity is useless,
+        // so it is finished
+        if (!mLoginManager.isSignedIn())
         {
-            // XXX
-            Fragment fragment = EventActivitiesListFragment.instantiate(1);
+            finish();
+        }
+        else if (savedInstanceState == null) // XXX
+        {
+            // Load up the first Fragment
+            Fragment fragment = EventActivitiesListFragment.instantiate(1); // XXX
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.mainContent, fragment)
                     .commit();

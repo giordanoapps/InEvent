@@ -3,22 +3,31 @@ package com.estudiotrilha.inevent.content;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.net.HttpURLConnection;
+import java.util.ArrayList;
+
+import org.apache.http.HttpStatus;
+import org.json.JSONObject;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.util.Log;
+import android.util.Pair;
 
 import com.estudiotrilha.inevent.InEvent;
+import com.estudiotrilha.inevent.service.SyncService;
 
 
 public class LoginManager
 {
     // CONSTANTS
-    private static final String DIRECTORY               = "loginManagerData";
-    private static final String FILENAME_MEMBER         = "memberInfoFile.bin";
+    private static final String DIRECTORY           = "loginManagerData";
+    private static final String FILENAME_MEMBER     = "memberInfoFile.bin";
 
     // BROADCAST INTENTS
     public static final String ACTION_REVOKE_ACCESS       = InEvent.class.getPackage().getName()+".action.REVOKE_ACCESS";
@@ -33,6 +42,10 @@ public class LoginManager
         return sInstance;
     }
 
+    // Attendance things
+    private static final int    INTERVAL_RETRY_SENDING_ATTENDANCE_LIST = 15 * 60 * 1000; // every 15 minutes
+    private static final String FILENAME_ATTENDANCE = "attendanceFile.bin";
+    private AttendanceConfirmationHolder mAttendanceRequests;
 
     private Context mContext;
 
@@ -48,6 +61,9 @@ public class LoginManager
 
         // Try to recover the member login information
         mMember = (Member) readInformationFromFile(mMemberFile);
+
+        // and the attendance
+        mAttendanceRequests = (AttendanceConfirmationHolder) readInformationFromFile(new File(FILENAME_ATTENDANCE));
     }
 
     private Object readInformationFromFile(File file)
@@ -114,6 +130,19 @@ public class LoginManager
             // broadcasts that the user has logged in
             mContext.sendBroadcast(new Intent(ACTION_LOGIN_STATE_CHANGED));
 
+            // Download the content
+
+            // Prepare the intent
+            Intent intent = new Intent(mContext, SyncService.class);
+            intent.putExtra(SyncService.EXTRA_EVENT_ID, 1); // XXX
+
+            // Download the activities
+            mContext.startService(intent.setData(Activity.ACTIVITY_CONTENT_URI));
+            // the schedule
+            mContext.startService(intent.setData(Activity.SCHEDULE_CONTENT_URI));
+            // and the attenders
+            mContext.startService(intent.setData(Event.ATTENDERS_CONTENT_URI));
+
             return true;
         }
 
@@ -144,5 +173,73 @@ public class LoginManager
     {
         if (isSignedIn()) return mMember.tokenId;
         else return null;
+    }
+
+    public void confirmPresence(long activityID, long personID)
+    {
+        // Save the new state to the file
+        saveInformationToFile(new File(FILENAME_ATTENDANCE), mAttendanceRequests);
+
+        // Add the data to the request list
+        mAttendanceRequests.info.add(new Pair<Long, Long>(personID, activityID));
+        // and send it
+        mAttendanceRequests.sendRequests();
+    }
+
+
+    class AttendanceConfirmationHolder implements Serializable
+    {
+        private static final long serialVersionUID = -6795878015775849060L;
+
+        final ArrayList<Pair<Long, Long>> info = new ArrayList<Pair<Long,Long>>();
+
+
+        public void sendRequests()
+        {
+            for (final Pair<Long, Long> element : info)
+            {
+                // Send the request
+                try
+                {
+                    // Get some info
+                    String tokenID = LoginManager.getInstance(mContext).getTokenId();
+                    long activityID = element.second;
+
+                    // Prepare the connection
+                    HttpURLConnection connection = Activity.Api.confirmEntrance(tokenID, activityID, element.first);
+                    ApiRequest.getJsonFromConnection(0, connection, new ApiRequest.ResponseHandler() {
+                        @Override
+                        public void handleResponse(int requestId, JSONObject json, int responseCode)
+                        {
+                            if (responseCode == HttpStatus.SC_OK && json != null)
+                            {
+                                // Remove it from the list!
+                                info.remove(element);
+
+                                // Save the new state to the file
+                                saveInformationToFile(new File(FILENAME_ATTENDANCE), mAttendanceRequests);
+                            }
+                        }
+                    });
+                }
+                catch (IOException e)
+                {
+                    Log.e(InEvent.NAME, "Couldn't create connection for activity.confirmEntrance(tokenID, activityID, personID)", e);
+                }
+            }
+
+            // Check if everything were sent properly
+            if (!info.isEmpty())
+            {
+                // There were errors, try again later
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run()
+                    {
+                        sendRequests();
+                    }
+                }, INTERVAL_RETRY_SENDING_ATTENDANCE_LIST);
+            }
+        }
     }
 }

@@ -132,6 +132,10 @@ public class InEventProvider extends ContentProvider
             c = mDatabase.query(Event.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
             break;
 
+        case URI_EVENT_ATTENDERS:
+            c = mDatabase.query(Event.Member.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
+            break;
+            
         case URI_ACTIVITY:
             c = mDatabase.query(Activity.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
             break;

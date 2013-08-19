@@ -91,10 +91,10 @@ public class Activity
 
         public static final String[] PROJECTION_LIST = {
             TABLE_NAME+"."+_ID,
-            TABLE_NAME+"."+NAME,
-            TABLE_NAME+"."+LOCATION,
             TABLE_NAME+"."+DATE_BEGIN,
-            TABLE_NAME+"."+DATE_END
+            TABLE_NAME+"."+DATE_END,
+            TABLE_NAME+"."+NAME,
+            TABLE_NAME+"."+LOCATION
         };
     }
 
@@ -144,10 +144,11 @@ public class Activity
 
             public static final String[] PROJECTION_SCHEDULE_LIST = {
                 Activity.TABLE_NAME+"."+Activity.Columns._ID,
-                Activity.TABLE_NAME+"."+Activity.Columns.NAME,
-                Activity.TABLE_NAME+"."+Activity.Columns.LOCATION,
                 Activity.TABLE_NAME+"."+Activity.Columns.DATE_BEGIN,
                 Activity.TABLE_NAME+"."+Activity.Columns.DATE_END,
+                Activity.TABLE_NAME+"."+Activity.Columns.NAME,
+                Activity.TABLE_NAME+"."+Activity.Columns.DESCRIPTION,
+                Activity.TABLE_NAME+"."+Activity.Columns.LOCATION,
                 TABLE_NAME+"."+APPROVED
             };
 

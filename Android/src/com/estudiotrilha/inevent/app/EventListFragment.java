@@ -43,6 +43,9 @@ public class EventListFragment extends ListFragment implements LoaderCallbacks<C
         String[] from = new String[] { Event.Columns.NAME, Event.Columns.DESCRIPTION };
         mListAdapter = new ExtensibleCursorAdapter(getActivity(), R.layout.cell_event_list_item, null, from, to, 0);
         mListAdapter.registerExtension(this);
+
+        // Set the empty text message
+        setEmptyText(getText(R.string.empty_eventList));
     }
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState)
