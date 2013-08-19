@@ -63,15 +63,15 @@
 
 		$result = resourceForQuery(
 			"SELECT
-				`activity`.`eventID`
+				`activity`.`groupID`
 			FROM
 				`activity`
-			WHERE 1
-				AND `activity`.`id` = $activityID
+			WHERE
+				`activity`.`id` = $activityID
 		");
 
 		if (mysql_num_rows($result) > 0) {
-			return mysql_result($result, 0, "eventID");
+			return mysql_result($result, 0, "groupID");
 		} else {
 			return 0;
 		}

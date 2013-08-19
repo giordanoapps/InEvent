@@ -86,7 +86,7 @@ $(document).ready(function() {
 					minlength: jQuery.format("Insira pelo menos {0} caracteres")
 				},
 				telephone: {
-					required: "Insira um CPF válido",
+					required: "Insira um telefone válido",
 					minlength: jQuery.format("Insira pelo menos {0} caracteres")
 				},
 				email: { 

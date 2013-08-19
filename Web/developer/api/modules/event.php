@@ -1,6 +1,31 @@
 <?php
 // -------------------------------------- EVENT --------------------------------------- //
 	
+	if ($method === "getEvents") {
+
+		$result = resourceForQuery(
+			"SELECT
+				`event`.`id`,
+				`event`.`name`,
+				`event`.`description`,
+				UNIX_TIMESTAMP(`event`.`dateBegin`) AS `dateBegin`,
+				UNIX_TIMESTAMP(`event`.`dateEnd`) AS `dateEnd`,
+				`event`.`latitude`,
+				`event`.`longitude`,
+				`event`.`address`,
+				`event`.`city`,
+				`event`.`state`,
+				`event`.`zipCode`
+			FROM
+				`event`
+			ORDER BY
+				`event`.`name` ASC
+		");
+
+		echo printInformation("event", $result, true, 'json');
+
+	} else
+
 	// if ($method === "requestEnrollment") {
 
 	// 	$tokenID = getToken();

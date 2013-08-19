@@ -17,6 +17,15 @@
 
     <div class="documentationFunctionBox">
         <p class="documentFunctionName">
+            <span>event.getEvents()</span>
+            <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=event.getEvents">
+        </p>
+
+        <p class="documentFunctionDescription">Retorna todos os eventos cadastrados, com nomes ordenados em ordem alfabética.</p>
+    </div>
+
+    <div class="documentationFunctionBox">
+        <p class="documentFunctionName">
             <span>event.requestEnrollment(<b>tokenID</b>, <b>eventID</b>, <b>personID</b> = null)</span>
             <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=event.requestEnrollment&tokenID=$tokenID&eventID=1&personID=null">
         </p>

@@ -23,6 +23,7 @@
 
 			// Get some properties
 			$activityID = getAttribute($_GET['activityID']);
+			$groupID = getGroupForActivity($activityID);
 
 			// See if the member has been approved on the event that has the desired activity
 			$result = resourceForQuery(
@@ -52,14 +53,7 @@
 		            LEFT JOIN
 		                `activityGroup` ON `activity`.`groupID` = `activityGroup`.`id`
 					WHERE 1
-						AND `activity`.`groupID` = (
-							SELECT
-								`activity`.`groupID`
-							FROM
-								`activity`
-							WHERE
-								`activity`.`id` = $activityID
-						)
+						AND `activity`.`groupID` = $groupID
 					GROUP BY
 						`activity`.`groupID`
 				");
@@ -145,59 +139,142 @@
 					AND `activityMember`.`memberID` = $personID
 			");
 
-			// // Get the next person on the line and grant a place on the activity
-			// $update = resourceForQuery(
-			// 	"UPDATE
-			// 		`activityMember`
-			// 	SET
-			// 		`activityMember`.`approved` = 1
-			// 	WHERE 1
-			// 		AND `activityMember`.`approved` = 0
-			// 		AND `activityMember`.`priori` = 1
-			// 		AND `activityMember`.`memberID` = $personID
-			// 		AND `activityMember`.`activityID` = $activityID
-			// 	ORDER BY
-			// 		`activityMember`.`id` ASC
-			// 	LIMIT 1
-			// ");
-
-			// // Assert that the granted person doesn't stay approved on other activities of the same group
+			// Check if the person is on the limit of activities for the given group
 			// $result = resourceForQuery(
 			// 	"SELECT
-			// 		`activityMember`.`id` AS `id`,
+			// 		`activity`.`id`,
+			// 		`activityMember`.`id`,
+			// 		`activityMember`.`priori`,
+			// 		`activityMember`.`approved`,
 			// 		`activityGroup`.`limit`,
-			// 		`activityMember`.`approved`
 			// 	FROM
 			// 		`activity`
-			// 	INNER JOIN
-			// 		`activityMember` ON `activityMember`.`activityID` = `activity`.`id`
-	  //           LEFT JOIN
-	  //               `activityGroup` ON `activity`.`groupID` = `activityGroup`.`id`
-	  //           WHERE 1
-	  //           	AND `activityMember`.`memberID` = $personID
-	  //           	AND `activityGroup`.`id` = $groupID
+			// 	LEFT JOIN
+			// 		`activityMember` ON `activity`.`id` = `activityMember`.`activityID`
+			// 	LEFT JOIN
+			// 		`activityGroup` ON `activity`.`groupID` = `activityGroup`.`id` AND `activity`.`groupID` = $groupID
+			// 	WHERE 1
+					
 			// 	GROUP BY
-			// 		`activityGroup`.`id`
-			// 	HAVING 1
-			// 		AND COALESCE(`activityGroup`.`limit`, 99999) > SUM(`activityMember`.`approved`)
+			// 		`activity`.`groupID`,
+			// 		`activityMember`.`memberID`
+			// 	HAVING 0
+			// 		OR ((`activityMember`.`priori` = 1 AND `activity`.`id` = $activityID) AND COALESCE(`activityGroup`.`limit`, 99999) <= SUM(`activityMember`.`approved`))
+			// 		OR ((`activityMember`.`priori` = 0 AND `activity`.`id` = $activityID) AND COALESCE(`activityGroup`.`limit`, 99999) > SUM(`activityMember`.`approved`))
 			// 	ORDER BY
 			// 		`activityMember`.`id` ASC
-			// 	LIMIT 1
 			// ");
+			
+			$result = resourceForQuery(
+				"SELECT
+					`activityMember`.`id`,
+					`activityMember`.`priori`,
+					`activityMember`.`memberID`
+				FROM
+					`activityMember`
+				WHERE 1
+					AND `activityMember`.`activityID` = $activityID
+					AND `activityMember`.`approved` = 0
+				ORDER BY
+					`activityMember`.`id` ASC
+			");
 
-			// if (mysql_num_rows($result) > 0) {
-			// 	$requestID = mysql_result($result, 0, "id");
-			// 	$update = resourceForQuery(
-			// 		"UPDATE
-			// 			`activityMember`
-		 //            SET
-		 //            	`activityMember`.`approved` = 0
-			// 		WHERE 1
-			// 			AND `activityMember`.`id` = $requestID
-			// 	");
-			// }
+			for ($i = 0; $i < mysql_num_rows($result); $i++) {
+				
+				$requestID = mysql_result($result, $i, "id");
+				$priori = mysql_result($result, $i, "priori");
+				$memberID = mysql_result($result, $i, "memberID");
 
-			if ($delete) {
+				$resultExtrapolated = resourceForQuery(
+					"SELECT
+						IF(COALESCE(`activityGroup`.`limit`, 99999) <= SUM(`activityMember`.`approved`), 1, 0) AS `extrapolated`
+					FROM
+						`activity`
+					LEFT JOIN
+						`activityMember` ON `activity`.`id` = `activityMember`.`activityID` AND `activityMember`.`memberID` = $memberID
+		            LEFT JOIN
+		                `activityGroup` ON `activity`.`groupID` = `activityGroup`.`id`
+					WHERE 1
+						AND `activity`.`groupID` = $groupID
+					GROUP BY
+						`activity`.`groupID`
+				");
+
+				$extrapolated = (mysql_num_rows($resultExtrapolated) > 0) ? mysql_result($resultExtrapolated, 0, "extrapolated") : 0;
+
+				// If the person extrapolated, we can only overwrite it if the user explicity gave us permition to do so
+				if ($extrapolated == 1 && $priori == 1) {
+					// Get the next person on the line and grant a place on the activity
+					$update = resourceForQuery(
+						"UPDATE
+							`activityMember`
+						SET
+							`activityMember`.`approved` = 1
+						WHERE 1
+							AND `activityMember`.`id` = $requestID
+						ORDER BY
+							`activityMember`.`id` ASC
+						LIMIT 1
+					");
+
+					// If we didn't alter something (a person had his schedule modified), we must remove from other activities
+					if (mysql_affected_rows() > 0) {
+						// Assert that the granted person doesn't stay approved on other activities of the same group
+						$resultOther = resourceForQuery(
+						// echo (
+							"SELECT
+								`activityMember`.`id`
+							FROM
+								`activity`
+							INNER JOIN
+								`activityMember` ON `activityMember`.`activityID` = `activity`.`id`
+				 			LEFT JOIN
+								`activityGroup` ON `activity`.`groupID` = `activityGroup`.`id`
+							WHERE 1
+								AND `activityMember`.`memberID` = $memberID
+								AND `activityMember`.`approved` = 1
+								AND `activityMember`.`id` != $requestID
+								AND `activityGroup`.`id` = $groupID
+							ORDER BY
+								`activityMember`.`id` ASC
+							LIMIT 1
+						");
+
+						if (mysql_num_rows($resultOther) > 0) {
+							$requestID = mysql_result($resultOther, 0, "id");
+							echo "$requestID";
+							$update = resourceForQuery(
+								"UPDATE
+									`activityMember`
+					            SET
+					            	`activityMember`.`approved` = 0
+								WHERE 1
+									AND `activityMember`.`id` = $requestID
+							");
+						}
+					}
+
+					break;
+
+				// Otherwise we just get the next one
+				} elseif ($extrapolated == 0) {
+					$update = resourceForQuery(
+						"UPDATE
+							`activityMember`
+						SET
+							`activityMember`.`approved` = 1
+						WHERE 1
+							AND `activityMember`.`id` = $requestID
+						ORDER BY
+							`activityMember`.`id` ASC
+						LIMIT 1
+					");
+
+					break;
+				}
+			}
+
+			if ($update) {
 				// Return its data
 				if ($format == "json") {
 					$data["activityID"] = $activityID;

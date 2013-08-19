@@ -100,11 +100,11 @@
                 <thead>
                     <tr>
                         <td><i>Staff</i></td>
+                        <td>Inscrição</td>
                         <td>Nome</td>
                         <td>CPF</td>
                         <td>RG</td>
                         <td>Telefone</td>
-                        <td>Email</td>
                         <td>Universidade</td>
                         <td>Curso</td>
                         <td>USP</td>
@@ -122,10 +122,13 @@
                         data-request="<?php echo $data['requestID'] ?>">
                         <td>
                             <?php if ($data['roleID'] != ROLE_ATTENDEE) { ?>
-                            <img src="images/64-Admin-User.png" class="head staff" alt="Head" title="Altere os direitos da pessoa">
+                            <img src="images/64-Admin-User.png" class="head staff" alt="Head" title="Altere as permissões da pessoa, concedendo ou revogando poderes">
                             <?php } else { ?>
-                            <img src="images/64-User.png" class="head" alt="Head" title="Altere os direitos da pessoa">
+                            <img src="images/64-User.png" class="head" alt="Head" title="Altere as permissões da pessoa, concedendo ou revogando poderes">
                             <?php } ?>
+                        </td>
+                        <td>
+                            <p class="memberID"><b><?php echo str_pad($data['memberID'], 4, "0", STR_PAD_LEFT) ?></b></p>
                         </td>
                         <td>
                             <p class="name"><?php echo ucwords(strtolower($data['name'])) ?></p>
@@ -138,9 +141,6 @@
                         </td>
                         <td>
                             <p class="telephone"><?php echo $data['telephone'] ?></p>
-                        </td>
-                        <td>
-                            <p class="email"><?php echo $data['email'] ?></p>
                         </td>
                         <td>
                             <p class="university"><?php echo $data['university'] ?></p>
