@@ -40,7 +40,6 @@ $(document).ready(function() {
 	});
 
 	$(document).bind("ajaxComplete", function(event, jqXHR, settings) {
-
 		// Tips
 		$("[title != '']").qtip({
 		    style: {

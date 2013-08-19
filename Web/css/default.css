@@ -107,15 +107,6 @@ form {
 	position: relative;
 }
 
-.loadingBike {
-	top: 50px;
-	left: 0;
-	right: 0;
-	position: absolute;
-	margin-left: auto;
-	margin-right: auto;
-}
-
 #file-uploader {
 	display: none;
 }
@@ -1944,31 +1935,47 @@ form {
 	text-decoration: none;
 }
 
-.errorBox {
-	color: white;
-	background-color: #9f0707;
+#wrapper .boxes {
+	width: 960px;
+	margin: 0 auto;
+}
+
+#wrapper .loadingBox {
 	position: fixed;
-	top: 40px;
+	top: 60px;
+	right: auto;
+	width: 960px;
+	display: none;
+}
+
+#wrapper .loadingBox img {
+	width: 48px;
+	float: right;
+}
+
+#wrapper .errorBox {
+	color: #DBDBDB;
+	background-color: #572020;
+	position: fixed;
+	top: 80px;
 	right: 10px;
 	border-radius: 10px;
 	padding: 12px;
-	-moz-box-shadow: 1px 1px 5px #000000;
-	-webkit-box-shadow: 1px 1px 5px #000000;
-	box-shadow: 1px 1px 5px #000000;
-	width: 15%;
+	-moz-box-shadow: inset 0px 0px 1px 1px #491818, 1px 1px 5px black;
+	-webkit-box-shadow: inset 0px 0px 1px 1px #491818, 1px 1px 5px black;
+	box-shadow: inset 0px 0px 1px 1px #491818, 1px 1px 5px black;
+	width: 250px;
 	margin: 0;
 	display: none;
-	z-index: 139;
-	font-weight: bold;
+	z-index: 997;
 }
 
-.errorBox a {
-	margin: 0 auto;
-	position: absolute;
-	bottom: 8px;
-	z-index: 139;
+#wrapper .errorBox a {
+	width: 208px;
+	display: block;
+	margin-top: 10px;
+	color: #DBDBDB;
 	padding: 6px 14px;
-	color: #FFF;
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
 	border-radius: 4px;
@@ -1980,23 +1987,22 @@ form {
 	-webkit-transition-duration: 0.2s;
 	-moz-transition-duration: 0.2s;
 	transition-duration: 0.2s;
-	-webkit-user-select:none;
-	-moz-user-select:none;
-	-ms-user-select:none;
-	user-select:none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 	cursor: pointer;
 	text-align: center;
-	margin: 0;
 	background-color: #ba5a43;
 }
 
-.errorBox a:hover {
+#wrapper .errorBox a:hover {
 	border: 1px solid #773f29;
     text-decoration: none;
 	background-color: #944735;
 }
 
-.errorBox a:active {
+#wrapper .errorBox a:active {
     -webkit-box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
     -moz-box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
     box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
@@ -2005,34 +2011,33 @@ form {
 }
 
 
-.notificationBox {
-	color: black;
-	background-color: white;
+#wrapper .notificationBox {
+	color: #333;
+	background-color: whiteSmoke;
 	position: fixed;
 	bottom: 40px;
 	left: 10px;
-	border-radius: 10px;
-	-moz-box-shadow: 1px 1px 5px #000000;
-	-webkit-box-shadow: 1px 1px 5px #000000;
-	box-shadow: 1px 1px 5px #000000;
+	border-radius: 5px;
+	box-shadow: inset 1px 1px 2px #FFF, 1px 1px 4px #3C3C3C;
 	width: 15%;
 	margin: 0;
 	cursor: pointer;
-	border: 1px solid black;
 	text-align: center;
 	display: none;
 	overflow: hidden;
-	z-index: 40;
+	z-index: 400;
 }
 
-.notificationBox li {
-	padding: 20px;
-	border-bottom: 1px solid black;
+#wrapper .notificationBox li {
+	padding: 10px 20px;
+	border-bottom: 1px solid white;
+	-moz-box-shadow: inset 0 -1px #AFAFAF;
+	-webkit-box-shadow: inset 0 -1px #AFAFAF;
+	box-shadow: inset 0 -1px #AFAFAF;
 }
 
-.notificationBox li:hover {
-	background-color: #eeeded;
+#wrapper .notificationBox li:hover {
+	background-color: #EEE;
 }
-
 
 /* @end */

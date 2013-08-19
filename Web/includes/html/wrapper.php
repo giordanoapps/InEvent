@@ -10,16 +10,24 @@
 				<li><a href="mailto:contato@estudiotrilha.com.br">Sugestões? Problemas?</a></li>
 			</ul>
 		</div>
-	</div>
 		
-	<div class="errorBox">
-		Tentando recuperar conexão... Alterações podem não ter sido salvas.<br /><br /><br />
-		<a href="#" onClick="window.location.reload();return false;">Recarregar página</a>
-	</div>
+		<div class="boxes">
+			<div class="loadingBox">
+				<img src="images/128-loading.gif" class="loadingBike" alt="Carregando..." />
+			</div>
+		
+			<div class="errorBox">
+				<span>Tentando recuperar a conexão! Alterações podem não ter sido salvas.</span>
+				<a href="#" onClick="window.location.reload();return false;">Recarregar página</a>
+			</div>
 
-	<div class="notificationBox">
-		<ul></ul>
+			<div class="notificationBox">
+				<ul></ul>
+			</div>
+		</div>
+		
 	</div>
+</div>
 
 <?php } else { ?>
 

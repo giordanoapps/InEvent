@@ -46,9 +46,7 @@ $.fn.ajax = function(method) {
 		    if (hash) {
 		    	var top = $mainContent.css("top");
 		        $mainContent.fadeOut(300, function() {
-		        	$mainContent.after($loadingContent);
 		            $mainContent.empty().load(hash + fileType + " " + contentTag, function() {
-		                $loadingContent.remove();
 		                $mainContent = $mainContent.children().unwrap();
 		                $mainContent.fadeIn(300, function() {
 		                	$mainContent.css("top", top).ajax("hashDidLoad", hash);
