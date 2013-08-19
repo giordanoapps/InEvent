@@ -183,168 +183,6 @@ public class InEventProvider extends ContentProvider
             break;
         }
 
-//        case URI_CARTE_ITEM:
-//        {
-//            String project = "*";
-//            if (projection != null)
-//            {
-//                // remove the brackets
-//                project = Arrays.toString(projection);
-//                project = project.substring(1,project.length()-1);
-//            }
-//
-//            final String query = "SELECT "+ project +
-//                    " FROM " + Carte.Item.TABLE_NAME +
-//                    " LEFT JOIN " + Carte.Item.Images.TABLE_NAME +
-//                    " ON " + Carte.Item.TABLE_NAME+"."+Carte.Item._ID +"="+ Carte.Item.Images.TABLE_NAME+"."+Carte.Item.Images.CARTE_ITEM_ID +
-//                    " WHERE " + selection +
-//                    " GROUP BY " + Carte.Item.TABLE_NAME+"."+Carte.Item._ID +
-//                    " ORDER BY " + sortOrder;
-//
-//            c = mDatabase.rawQuery(query, selectionArgs);
-//            break;
-//        }
-//
-//        case URI_CARTE_ITEM_SINGLE:
-//        {
-//            String project = "*";
-//            if (projection != null)
-//            {
-//                // remove the brackets
-//                project = Arrays.toString(projection);
-//                project = project.substring(1,project.length()-1);
-//            }
-//
-//            // obtain the id
-//            String id = Long.toString(ContentUris.parseId(uri));
-//            // setup the query
-//            final String query = "SELECT "+ project +
-//                    " FROM " + Carte.Item.TABLE_NAME +
-//                    " LEFT JOIN " + Carte.Item.Images.TABLE_NAME +
-//                    " ON " + Carte.Item.TABLE_NAME+"."+Carte.Item._ID +"="+ Carte.Item.Images.TABLE_NAME+"."+Carte.Item.Images.CARTE_ITEM_ID +
-//                    " WHERE " + Carte.Item.TABLE_NAME+"."+Carte.Item._ID +"=?"+
-//                    " ORDER BY " + sortOrder +
-//                    " LIMIT 0, 1";
-//            selectionArgs = new String[] { id };
-//
-//            c = mDatabase.rawQuery(query, selectionArgs);
-//            break;
-//        }
-//
-//        case URI_CARTE_ITEM_OPTIONS:
-//        {
-//            String project = "*";
-//            if (projection != null)
-//            {
-//                // remove the brackets
-//                project = Arrays.toString(projection);
-//                project = project.substring(1,project.length()-1);
-//            }
-//
-//            final String query =
-//                    "SELECT "+ project +
-//                    		", (SELECT count(DISTINCT " + Carte.Item.Options.TABLE_NAME+"." + Carte.Item.Options._ID+")" +
-//                            " FROM " + Carte.Item.Options.TABLE_NAME+
-//                            " WHERE " + Carte.Item.Options.TABLE_NAME+"."+Carte.Item.Options.CARTE_ITEM_ID + "=?) AS " + Carte.Item.Options.SECTION_COUNT +
-//                    " FROM "+ Carte.Item.Options.TABLE_NAME +
-//                    " INNER JOIN " + Carte.Item.OptionItem.TABLE_NAME +
-//                    " ON "+ Carte.Item.Options.TABLE_NAME+"."+Carte.Item.Options._ID +"="+ Carte.Item.OptionItem.TABLE_NAME+"."+Carte.Item.OptionItem.OPTION_ID +
-//                    " WHERE " + Carte.Item.Options.TABLE_NAME+"."+Carte.Item.Options.CARTE_ITEM_ID + "=?" +
-//                    " ORDER BY " + sortOrder;
-//
-//            c = mDatabase.rawQuery(query, selectionArgs);
-//            break;
-//        }
-//
-//        case URI_CARTE_ITEM_IMAGES:
-//        {
-//            // prepare the arguments
-//            projection = new String[] { Carte.Item.Images.IMAGE };
-//            selection = Carte.Item.Images.CARTE_ITEM_ID + "=?";
-//            // query the image links
-//            c = mDatabase.query(Carte.Item.Images.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
-//            break;
-//        }
-//
-//        case URI_ORDER:
-//        {
-//            String project = "*";
-//            if (projection != null)
-//            {
-//                // remove the brackets
-//                project = Arrays.toString(projection);
-//                project = project.substring(1,project.length()-1);
-//            }
-//
-//            final String query = "SELECT " + project +
-//                " FROM " + Order.TABLE_NAME +
-//                " LEFT JOIN " + Carte.Item.TABLE_NAME +
-//                " ON " + Carte.Item.TABLE_NAME+"."+Carte.Item._ID +"="+ Order.TABLE_NAME+"."+Order.ITEM_ID +
-//                " LEFT JOIN " + Carte.Item.Images.TABLE_NAME +
-//                " ON " + Carte.Item.TABLE_NAME+"."+Carte.Item._ID +"="+ Carte.Item.Images.TABLE_NAME+"."+Carte.Item.Images.CARTE_ITEM_ID +
-//                " GROUP BY " + Order.TABLE_NAME+"."+Order._ID +
-//                " ORDER BY " + sortOrder;
-//
-//            c = mDatabase.rawQuery(query, null);
-//            break;
-//        }
-//
-//        case URI_ORDER_OPTION:
-//        {
-//            String project = "*";
-//            if (projection != null)
-//            {
-//                // remove the brackets
-//                project = Arrays.toString(projection);
-//                project = project.substring(1,project.length()-1);
-//            }
-//
-//            final String query = "SELECT " + project +
-//                " FROM " + Order.TABLE_NAME +
-//                " INNER JOIN " + Order.Option.TABLE_NAME +
-//                " ON (("+ Order.TABLE_NAME+"."+Order._ID +"="+ Order.Option.TABLE_NAME+"."+Order.Option.ORDER_ID +
-//                ") or ("+ Order.TABLE_NAME+"."+Order.WEB_ID+ "!= -1 AND "+ Order.TABLE_NAME+"."+Order.WEB_ID +"="+ Order.Option.TABLE_NAME+"."+Order.Option.ORDER_WEB_ID + "))" +
-//                " LEFT JOIN " + Carte.Item.OptionItem.TABLE_NAME +
-//                " ON " + Carte.Item.OptionItem.TABLE_NAME+"."+Carte.Item.OptionItem._ID +"="+ Order.Option.TABLE_NAME+"."+Order.Option.OPTION_ID +
-//                " LEFT JOIN " + Carte.Item.Options.TABLE_NAME +
-//                " ON "+ Carte.Item.Options.TABLE_NAME+"."+Carte.Item.Options._ID +"="+ Carte.Item.OptionItem.TABLE_NAME+"."+Carte.Item.OptionItem.OPTION_ID +
-//                " WHERE (" + Order.TABLE_NAME+"."+Order._ID+"=? OR ("+ Order.TABLE_NAME+"."+Order.WEB_ID+"!=-1 AND "+ Order.TABLE_NAME+"."+Order.WEB_ID+"=?))" +
-//                " GROUP BY " + Carte.Item.OptionItem.TABLE_NAME+"."+Carte.Item.OptionItem._ID +
-//                " ORDER BY " + sortOrder;
-//
-//            c = mDatabase.rawQuery(query, selectionArgs);
-//            break;
-//        }
-//
-//        case URI_CHAT:
-//        {
-//            c = mDatabase.query(Chat.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
-//            break;
-//        }
-//
-//        case URI_CHAT_CONVERSATION:
-//        {
-//            String project = "*";
-//            if (projection != null)
-//            {
-//                // remove the brackets
-//                project = Arrays.toString(projection);
-//                project = project.substring(1,project.length()-1);
-//            }
-//            selection = (selection == null) ? "" : " AND "+selection;
-//
-//            final String query = "SELECT "+ project +
-//                    " FROM "+ Chat.Conversation.TABLE_NAME +
-//                    " LEFT JOIN "+ Chat.TABLE_NAME +
-//                    " ON ("+Chat.SENDER_ID+"="+Chat.Conversation.WITH_TABLE_ID+" OR "+Chat.RECEIVER_ID+"="+Chat.Conversation.WITH_TABLE_ID+")" +
-//                    " WHERE " + Chat.MESSAGE + " IS NOT NULL" + selection +
-//                    " GROUP BY "+ Chat.Conversation.TABLE_NAME+"."+Chat.Conversation.WITH_TABLE_ID +
-//                    " ORDER BY " + sortOrder;
-//
-//            c = mDatabase.rawQuery(query, null);
-//            break;
-//        }
-
         default:
             throw new IllegalArgumentException("Unsupported uri: "+uri);
         }
@@ -438,6 +276,11 @@ public class InEventProvider extends ContentProvider
         case URI_EVENT:
             result = mDatabase.update(Event.TABLE_NAME, values, selection, selectionArgs);
             break;
+
+        case URI_ACTIVITY_ATTENDERS:
+            result = mDatabase.update(Activity.Member.TABLE_NAME, values, selection, selectionArgs);
+            break;
+
 
         default:
             throw new IllegalArgumentException("Unsupported uri: " + uri);

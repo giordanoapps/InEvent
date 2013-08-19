@@ -111,7 +111,7 @@ public class SyncService extends IntentService implements ApiRequest.ResponseHan
 
             try
             {
-                long eventID = intent.getLongExtra(EXTRA_EVENT_ID, -1);
+                long eventID = intent.getLongExtra(EXTRA_EVENT_ID, 1); // XXX
                 HttpURLConnection connection = Event.Api.getActivities(eventID);
                 ApiRequest.getJsonFromConnection(code, connection, this, false);
             }
@@ -244,11 +244,17 @@ public class SyncService extends IntentService implements ApiRequest.ResponseHan
                 // Get some info
                 long eventID = mIntent.getLongExtra(EXTRA_EVENT_ID, -1);
 
-                // Delete the previous stored activities
+                // Delete the previous stored event members
                 operations.add(
                         ContentProviderOperation
                             .newDelete(Event.ATTENDERS_CONTENT_URI)
                             .withSelection(Event.Member.TABLE_NAME+"."+Event.Member.Columns.EVENT_ID+"="+eventID, null)
+                            .build()
+                );
+                // and the members
+                operations.add(
+                        ContentProviderOperation
+                            .newDelete(Member.CONTENT_URI)
                             .build()
                 );
 

@@ -10,13 +10,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.ContentProviderOperation;
 import android.content.ContentValues;
 import android.content.OperationApplicationException;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.preference.PreferenceManager;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -28,12 +29,11 @@ import android.widget.Toast;
 import com.estudiotrilha.inevent.InEvent;
 import com.estudiotrilha.inevent.R;
 import com.estudiotrilha.inevent.content.ApiRequest;
-import com.estudiotrilha.inevent.content.LoginManager;
 import com.estudiotrilha.inevent.content.Event;
+import com.estudiotrilha.inevent.content.LoginManager;
 import com.estudiotrilha.inevent.content.Member;
 import com.estudiotrilha.inevent.provider.InEventProvider;
-
-import eu.inmite.android.lib.dialogs.ProgressDialogFragment;
+import com.google.analytics.tracking.android.EasyTracker;
 
 
 public class LoginActivity extends ActionBarActivity
@@ -81,7 +81,24 @@ public class LoginActivity extends ActionBarActivity
             mUsername.setText(username);
         }
     }
-
+    @Override
+    protected void onStart()
+    {
+        super.onStart();
+        if (!InEvent.DEBUG)
+        {
+            EasyTracker.getInstance().activityStart(this);
+        }
+    }
+    @Override
+    protected void onStop()
+    {
+        super.onStop();
+        if (!InEvent.DEBUG)
+        {
+            EasyTracker.getInstance().activityStop(this);
+        }
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
@@ -100,10 +117,11 @@ public class LoginActivity extends ActionBarActivity
     private void loginAttempt()
     {
         // Shows a loading progress
-        final DialogFragment progress = ProgressDialogFragment.createBuilder(this, getSupportFragmentManager())
-                .setMessage(R.string.message_loginIn)
-                .setCancelable(false)
-                .show();
+//        final DialogFragment progress = ProgressDialogFragment.createBuilder(this, getSupportFragmentManager()) // XXX
+//                .setMessage(R.string.message_loggingIn)
+//                .setCancelable(false)
+//                .show();
+        final Dialog progress = ProgressDialog.show(this, null, getText(R.string.message_loggingIn), true, false);
 
         try
         {
@@ -157,14 +175,14 @@ public class LoginActivity extends ActionBarActivity
                         Toast.makeText(LoginActivity.this, R.string.error_internal, Toast.LENGTH_SHORT).show();
                     }
 
-                    progress.dismiss();
+                    if (progress != null) progress.dismiss(); // XXX
                     setUserInteractionEnabled(true);
                 }
             });
         }
         catch (IOException e)
         {
-            progress.dismiss();
+            if (progress != null) progress.dismiss(); // XXX
             setUserInteractionEnabled(true);
 
             Log.e(InEvent.NAME, "Couldn't create a connection for login", e);

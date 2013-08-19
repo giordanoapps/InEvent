@@ -7,8 +7,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 
+import com.estudiotrilha.inevent.InEvent;
 import com.estudiotrilha.inevent.R;
 import com.estudiotrilha.inevent.content.LoginManager;
+import com.google.analytics.tracking.android.EasyTracker;
 
 
 public class SplashActivity extends Activity implements Runnable
@@ -28,6 +30,11 @@ public class SplashActivity extends Activity implements Runnable
     protected void onStart()
     {
         super.onStart();
+        if (!InEvent.DEBUG)
+        {
+            EasyTracker.getInstance().activityStart(this);
+        }
+
         // set the transition animation
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
@@ -51,6 +58,10 @@ public class SplashActivity extends Activity implements Runnable
     protected void onStop()
     {
         super.onStop();
+        if (!InEvent.DEBUG)
+        {
+            EasyTracker.getInstance().activityStop(this);
+        }
 
         // if stopped by the user, it won't open the other activity
         mHandler.removeCallbacks(this);

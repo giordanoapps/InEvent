@@ -67,6 +67,8 @@ public class AttendanceFragment extends ListFragment implements LoaderCallbacks<
     private long mLastClickedItemId  = -1;
     private long mLastClickTime;
 
+    private SearchView mSearchView;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -112,9 +114,6 @@ public class AttendanceFragment extends ListFragment implements LoaderCallbacks<
                 return getActivity().getContentResolver().query(uri, projection, selection, selectionArgs, sortOrder);
             }
         });
-
-        // Set the empty text message
-        setEmptyText(getText(R.string.empty_eventActivityAttenders));
     }
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState)
@@ -123,6 +122,9 @@ public class AttendanceFragment extends ListFragment implements LoaderCallbacks<
         // Add the adapter to the list
         setListAdapter(mPeopleAdapter);
 
+        // Set the empty text message
+        setEmptyText(getText(R.string.empty_eventActivityAttenders));
+        
         // Add fastscrolling function
         getListView().setFastScrollEnabled(true);
 
@@ -144,15 +146,14 @@ public class AttendanceFragment extends ListFragment implements LoaderCallbacks<
 
         // Setup the search text entry
         MenuItem searchItem = menu.findItem(R.id.menu_search);
-        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
-        searchView.setInputType(InputType.TYPE_CLASS_NUMBER);
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        mSearchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        mSearchView.setInputType(InputType.TYPE_CLASS_NUMBER);
+        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override public boolean onQueryTextSubmit(String query) { return false; }
             @Override
             public boolean onQueryTextChange(String newText)
             {
                 mPeopleAdapter.getFilter().filter(newText);
-                System.out.println("Filtering for "+newText);
                 return false;
             }
         });
@@ -188,11 +189,14 @@ public class AttendanceFragment extends ListFragment implements LoaderCallbacks<
     public boolean onItemLongClick(AdapterView<?> adapter, View v, int position, long id)
     {
         confirmPresence(id);
-        return false;
+        return true;
     }
 
     private void confirmPresence(final long id)
     {
+        // Clear the query
+        mSearchView.setQuery("", false);
+
         // Mark the member as present
         setPresence(id, 1);
 

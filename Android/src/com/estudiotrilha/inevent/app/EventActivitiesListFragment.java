@@ -122,11 +122,9 @@ public class EventActivitiesListFragment extends ListFragment implements LoaderC
 
         if (mRoleId != Event.ROLE_ATTENDEE)
         {
+            // Show all the activities case the user is staff
             mDisplayOption = DisplayOption.ACTIVITIES;
         }
-
-        // Set the empty message
-        setEmptyText(getText(R.string.empty_eventActivities));
     }
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState)
@@ -138,9 +136,12 @@ public class EventActivitiesListFragment extends ListFragment implements LoaderC
             mDisplayOption = DisplayOption.values()[savedInstanceState.getInt(STATE_DISPLAY_OPTION)];
         }
 
+        // Setup the displayed things on screen
         updateDisplayMode();
-
         setListShown(false);
+
+        // Set the empty message
+        setEmptyText(getText(R.string.empty_eventActivities));
 
         // Add fastscrolling function
         getListView().setFastScrollEnabled(true);
@@ -298,7 +299,6 @@ public class EventActivitiesListFragment extends ListFragment implements LoaderC
         if (data.getCount() == 0)
         {
             refresh();
-            return;
         }
 
         mIndexDateBegin = data.getColumnIndex(Activity.Columns.DATE_BEGIN);

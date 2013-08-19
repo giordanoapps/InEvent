@@ -6,8 +6,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.estudiotrilha.inevent.InEvent;
 import com.estudiotrilha.inevent.R;
 import com.estudiotrilha.inevent.content.LoginManager;
+import com.google.analytics.tracking.android.EasyTracker;
 
 
 public class UserSettingsActivity extends ActionBarActivity
@@ -30,6 +32,24 @@ public class UserSettingsActivity extends ActionBarActivity
         // fill up the user info
         ((TextView) findViewById(R.id.member_name)).setText(mLoginManager.getMember().name);
 //        ((ImageView) view.findViewById(R.id.member_profilePicture)).setImageBitmap(null); TODO get the user photo
+    }
+    @Override
+    protected void onStart()
+    {
+        super.onStart();
+        if (!InEvent.DEBUG)
+        {
+            EasyTracker.getInstance().activityStart(this);
+        }
+    }
+    @Override
+    protected void onStop()
+    {
+        super.onStop();
+        if (!InEvent.DEBUG)
+        {
+            EasyTracker.getInstance().activityStop(this);
+        }
     }
 
     @Override

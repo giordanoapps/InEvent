@@ -134,7 +134,7 @@ public class LoginManager
 
             // Prepare the intent
             Intent intent = new Intent(mContext, SyncService.class);
-            intent.putExtra(SyncService.EXTRA_EVENT_ID, 1); // XXX
+            intent.putExtra(SyncService.EXTRA_EVENT_ID, 1L); // XXX
 
             // Download the activities
             mContext.startService(intent.setData(Activity.ACTIVITY_CONTENT_URI));
@@ -181,6 +181,7 @@ public class LoginManager
         saveInformationToFile(new File(FILENAME_ATTENDANCE), mAttendanceRequests);
 
         // Add the data to the request list
+        if (mAttendanceRequests == null) mAttendanceRequests = new AttendanceConfirmationHolder();
         mAttendanceRequests.info.add(new Pair<Long, Long>(personID, activityID));
         // and send it
         mAttendanceRequests.sendRequests();
@@ -215,9 +216,6 @@ public class LoginManager
                             {
                                 // Remove it from the list!
                                 info.remove(element);
-
-                                // Save the new state to the file
-                                saveInformationToFile(new File(FILENAME_ATTENDANCE), mAttendanceRequests);
                             }
                         }
                     });
@@ -240,6 +238,9 @@ public class LoginManager
                     }
                 }, INTERVAL_RETRY_SENDING_ATTENDANCE_LIST);
             }
+
+            // Save the new state to the file
+            saveInformationToFile(new File(FILENAME_ATTENDANCE), mAttendanceRequests);
         }
     }
 }

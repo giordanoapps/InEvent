@@ -36,7 +36,7 @@
     <string name="hint_event_state">Estado</string>
 
     <!-- Messages -->
-    <string name="message_loginIn">Entrando…</string>
+    <string name="message_loggingIn">Entrando…</string>
     <string name="message_loading">Carregando…</string>
 
     <!-- Empty Messages -->

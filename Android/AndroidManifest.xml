@@ -58,15 +58,6 @@
 
         <!-- Services -->
         <service android:name="com.estudiotrilha.inevent.service.SyncService" />
-
-        <activity
-            android:name="com.estudiotrilha.inevent.app.AttendanceActivity"
-            android:label="@string/title_activity_attendance"
-            android:parentActivityName="com.estudiotrilha.inevent.app.EventActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.estudiotrilha.inevent.app.EventActivity" />
-        </activity>
     </application>
 
 </manifest>

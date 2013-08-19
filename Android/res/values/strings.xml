@@ -37,7 +37,7 @@
     <string name="hint_event_state">State</string>
 
     <!-- Messages -->
-    <string name="message_loginIn">Loging In…</string>
+    <string name="message_loggingIn">Loging In…</string>
     <string name="message_loading">Loading…</string>
 
     <!-- Empty Messages -->

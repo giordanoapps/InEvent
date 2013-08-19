@@ -1,7 +1,9 @@
 package com.estudiotrilha.inevent.app;
 
+import com.estudiotrilha.inevent.InEvent;
 import com.estudiotrilha.inevent.R;
 import com.estudiotrilha.inevent.content.LoginManager;
+import com.google.analytics.tracking.android.EasyTracker;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -9,6 +11,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -51,18 +54,48 @@ public class EventActivity extends ActionBarActivity
                     .add(R.id.mainContent, fragment)
                     .commit();
         }
+
+        getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
+            @Override
+            public void onBackStackChanged()
+            {
+                boolean hasHome = getSupportFragmentManager().getBackStackEntryCount() > 0;
+                getSupportActionBar().setHomeButtonEnabled(hasHome);
+                getSupportActionBar().setDisplayHomeAsUpEnabled(hasHome);
+            }
+        });
     }
     @Override
     protected void onStart()
     {
         super.onStart();
+        if (!InEvent.DEBUG)
+        {
+            EasyTracker.getInstance().activityStart(this);
+        }
+
         refreshLoginState();
         registerReceiver(mReceiver, new IntentFilter(LoginManager.ACTION_LOGIN_STATE_CHANGED));
+    }
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        if (!mLoginManager.isSignedIn())
+        {
+            while(getSupportFragmentManager().popBackStackImmediate());
+            finish();
+        }
     }
     @Override
     protected void onStop()
     {
         super.onStop();
+        if (!InEvent.DEBUG)
+        {
+            EasyTracker.getInstance().activityStop(this);
+        }
+
         unregisterReceiver(mReceiver);
     }
 
@@ -83,6 +116,11 @@ public class EventActivity extends ActionBarActivity
     {
         switch (item.getItemId())
         {
+        case android.R.id.home:
+            // Go home! Clear the back stack
+            while(getSupportFragmentManager().popBackStackImmediate());
+            return true;
+
         case R.id.menu_preferences:
             // Open the PreferencesActivity
             startActivity(new Intent(this, PreferencesActivity.class));
