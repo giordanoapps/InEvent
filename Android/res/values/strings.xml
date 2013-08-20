@@ -4,7 +4,7 @@
 
     <!-- App Stuff -->
     <string name="app_name">InEvent</string>
-    <string name="app_version">1.0</string>
+    <string name="app_version">1.0.1</string>
 
     <!-- Button Actions -->
     <string name="action_refresh">Refresh</string>
@@ -28,7 +28,7 @@
 
     <!-- Hint Messages -->
     <string name="hint_member_myName">Me</string>
-    <string name="hint_login_username">Name</string>
+    <string name="hint_login_email">E-mail</string>
     <string name="hint_login_password">Password</string>
     <string name="hint_event_name">Name</string>
     <string name="hint_event_description">Description</string>
@@ -57,9 +57,10 @@
     <string name="description_preference_useMobileNetwork">Allow use of the mobile network to download data</string>
 
     <!-- Error Messages -->
-    <string name="error_connection">Connection Error</string>
-    <string name="error_connection_timeout">Connection Timeout</string>
+    <string name="error_connection">Connection error</string>
+    <string name="error_connection_timeout">Connection timeout</string>
     <string name="error_internal">Some internal error occurred! Try again in a few moments</string>
     <string name="error_login_badCredentials">Wrong name and/or password</string>
+    <string name="error_invalidEmail">Invalid e-mail address</string>
 
 </resources>

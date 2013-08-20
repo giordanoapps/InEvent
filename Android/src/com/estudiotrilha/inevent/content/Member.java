@@ -33,16 +33,16 @@ public class Member implements Serializable
     public static class Api
     {
         public static final String  NAMESPACE             = "person";
-        private static final String SIGN_IN               = ApiRequest.BASE_URL + NAMESPACE + ".signIn&name=%s&password=%s";
+        private static final String SIGN_IN               = ApiRequest.BASE_URL + NAMESPACE + ".signIn&email=%s&password=%s";
         private static final String SIGN_IN_WITH_FACEBOOK = ApiRequest.BASE_URL + NAMESPACE + ".signInWithFacebook&facebookToken=%s";
         private static final String GET_EVENTS            = ApiRequest.BASE_URL + NAMESPACE + ".getEvents&tokenID=%s";
 
 
-        public static HttpURLConnection signIn(String member, String password) throws IOException
+        public static HttpURLConnection signIn(String email, String password) throws IOException
         {
-            member = URLEncoder.encode(member, ApiRequest.ENCODING);
+            email = URLEncoder.encode(email, ApiRequest.ENCODING);
             password = URLEncoder.encode(password, ApiRequest.ENCODING);
-            URL url = new URL(String.format(SIGN_IN, member, password));
+            URL url = new URL(String.format(SIGN_IN, email, password));
 
             return ConnectionHelper.getURLGetConnection(url);
         }

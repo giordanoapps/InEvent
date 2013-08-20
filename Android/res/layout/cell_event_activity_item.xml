@@ -2,70 +2,83 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center_vertical" >
+    android:orientation="vertical" >
 
-    <LinearLayout
-        android:layout_width="72dp"
-        android:layout_height="match_parent"
-        android:background="#1888"
-        android:orientation="vertical"
-        android:gravity="center_vertical"
-        android:padding="@dimen/default_textPadding" >
-
-        <TextView
-            android:id="@id/activity_dateBegin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:textColor="#a000"
-            android:textSize="12sp" />
-
-        <TextView
-            android:id="@id/activity_dateEnd"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:textColor="#2000"
-            android:textSize="12sp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="0dp"
+    <ViewStub
+        android:id="@+id/activity_section"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:padding="@dimen/default_textPadding" >
+        android:layout="@layout/header_event_activity_section" />
 
-        <TextView
-            android:id="@id/activity_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:hint="@string/hint_event_name"
-            android:lines="1"
-            android:maxLines="2"
-            android:textColor="@android:color/black"
-            android:textIsSelectable="false"
-            android:textSize="22sp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
 
-        <TextView
-            android:id="@id/activity_location"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="72dp"
+            android:layout_height="match_parent"
+            android:background="#1888"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:padding="@dimen/default_textPadding" >
+
+            <TextView
+                android:id="@id/activity_dateBegin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="#a000"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@id/activity_dateEnd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="#2000"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:textColor="@color/dark_gray"
-            android:textSize="14sp" />
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:padding="@dimen/default_textPadding" >
+
+            <TextView
+                android:id="@id/activity_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:hint="@string/hint_event_name"
+                android:lines="1"
+                android:maxLines="2"
+                android:textColor="@android:color/black"
+                android:textIsSelectable="false"
+                android:textSize="22sp" />
+
+            <TextView
+                android:id="@id/activity_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@color/dark_gray"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/activity_approved"
+            android:layout_width="6dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="2dp"
+            android:layout_marginTop="2dp" />
     </LinearLayout>
-
-    <View
-        android:id="@+id/activity_approved"
-        android:layout_width="6dp"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="2dp"
-        android:layout_marginTop="2dp" />
 
 </LinearLayout>

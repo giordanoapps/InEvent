@@ -27,7 +27,7 @@
 
     <!-- Hint Messages -->
     <string name="hint_member_myName">Eu</string>
-    <string name="hint_login_username">Nome</string>
+    <string name="hint_login_email">E-mail</string>
     <string name="hint_login_password">Senha</string>
     <string name="hint_event_name">Nome</string>
     <string name="hint_event_description">Descrição</string>
@@ -56,9 +56,10 @@
     <string name="description_preference_useMobileNetwork">Permitir o uso da rede de dados móvel para baixar conteúdo</string>
 
     <!-- Error Messages -->
-    <string name="error_connection">Erro de Conexão</string>
-    <string name="error_connection_timeout">A Conexão Expirou</string>
+    <string name="error_connection">Erro de conexão</string>
+    <string name="error_connection_timeout">A conexão expirou</string>
     <string name="error_internal">Ocorreu algum erro intero! Tente novamente dentro de alguns instantes</string>
     <string name="error_login_badCredentials">Nome e/ou senha inválido(s)</string>
+    <string name="error_invalidEmail">E-mail inválido</string>
 
 </resources>

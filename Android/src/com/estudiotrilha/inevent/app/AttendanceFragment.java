@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.BaseColumns;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.CursorLoader;
@@ -20,8 +21,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.FilterQueryProvider;
+import android.widget.Filter;
 import android.widget.ListView;
+import android.widget.SectionIndexer;
 import android.widget.TextView;
 
 import com.estudiotrilha.android.widget.ExtensibleCursorAdapter;
@@ -59,12 +61,13 @@ public class AttendanceFragment extends ListFragment implements LoaderCallbacks<
     }
 
 
-    private ExtensibleCursorAdapter mPeopleAdapter;
+    private PeopleAdapter mPeopleAdapter;
+    private Filter        mPeopleFilter;
 
     private int mIndexId;
     private int mIndexPresent;
 
-    private long mLastClickedItemId  = -1;
+    private long mLastClickedItemId = -1;
     private long mLastClickTime;
 
     private SearchView mSearchView;
@@ -77,10 +80,7 @@ public class AttendanceFragment extends ListFragment implements LoaderCallbacks<
         setHasOptionsMenu(true);
 
         // Setup the adapter
-        final int layout = R.layout.cell_attender_item;
-        final String[] from = new String[] { Member.Columns.NAME };
-        final int[] to = new int[] { R.id.member_name };
-        mPeopleAdapter = new ExtensibleCursorAdapter(getActivity(), layout, null, from, to, 0);
+        mPeopleAdapter = new PeopleAdapter(getActivity());
         mPeopleAdapter.registerExtension(new ExtensibleCursorAdapter.AdapterExtension() {
             @Override public void doBeforeBinding(View v, Context context, Cursor c) {}
             @Override
@@ -94,9 +94,8 @@ public class AttendanceFragment extends ListFragment implements LoaderCallbacks<
                 present.setVisibility(c.getInt(mIndexPresent) == 1 ? View.VISIBLE : View.GONE);
             }
         });
-
-        // Setup the results filter
-        mPeopleAdapter.setFilterQueryProvider(new FilterQueryProvider() {
+        
+        mPeopleFilter = new Filter() {
             // The query basic info
             final Uri      uri           = Activity.ATTENDERS_CONTENT_URI;
             final String[] projection    = Activity.Member.Columns.PROJECTION_ATTENDANCE_LIST;
@@ -108,12 +107,33 @@ public class AttendanceFragment extends ListFragment implements LoaderCallbacks<
 
 
             @Override
-            public Cursor runQuery(CharSequence constraint)
+            protected void publishResults(CharSequence constraint, FilterResults results)
             {
-                selectionArgs[0] = constraint.toString() + "%";
-                return getActivity().getContentResolver().query(uri, projection, selection, selectionArgs, sortOrder);
+                Cursor c = (Cursor) results.values;
+
+                ListView list = getListView();
+                if (c.moveToFirst() && list != null)
+                {
+                    long id = c.getLong(c.getColumnIndex(BaseColumns._ID));
+                    int position = mPeopleAdapter.getPositionForId(id);
+
+                    list.setSelection(position);
+                }
             }
-        });
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint)
+            {
+                selectionArgs[0] = constraint.toString();
+                Cursor cursor = getActivity().getContentResolver().query(uri, projection, selection, selectionArgs, sortOrder);
+
+                FilterResults results = new FilterResults();
+
+                results.count = cursor.getCount();
+                results.values = cursor;
+
+                return results;
+            }
+        };
     }
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState)
@@ -153,7 +173,7 @@ public class AttendanceFragment extends ListFragment implements LoaderCallbacks<
             @Override
             public boolean onQueryTextChange(String newText)
             {
-                mPeopleAdapter.getFilter().filter(newText);
+                mPeopleFilter.filter(newText);
                 return false;
             }
         });
@@ -194,23 +214,25 @@ public class AttendanceFragment extends ListFragment implements LoaderCallbacks<
 
     private void confirmPresence(final long id)
     {
-        // Clear the query
-        mSearchView.setQuery("", false);
-
         // Mark the member as present
         setPresence(id, 1);
 
         // And add this to the queue to be sent to the server
-        LoginManager.getInstance(getActivity()).confirmPresence(getArguments().getLong(ARGS_ACTIVITY_ID), id);
+        LoginManager.getInstance(getActivity())
+                .confirmPresence(getArguments().getLong(ARGS_ACTIVITY_ID), id);
     }
 
     private void setPresence(long memberID, int present)
     {
+        // Update the values
         final String selection = Activity.Member.Columns.MEMBER_ID+"="+memberID+
                 " AND "+Activity.Member.Columns.ACTIVITY_ID+"="+getArguments().getLong(ARGS_ACTIVITY_ID);
         final ContentValues values = new ContentValues();
         values.put(Activity.Member.Columns.PRESENT, present);
         getActivity().getContentResolver().update(Activity.ATTENDERS_CONTENT_URI, values, selection, null);
+
+        // Reload content
+        getLoaderManager().restartLoader(LOAD_PEOPLE, null, this);
     }
 
 
@@ -260,5 +282,52 @@ public class AttendanceFragment extends ListFragment implements LoaderCallbacks<
     public void onLoaderReset(Loader<Cursor> loader)
     {
         mPeopleAdapter.swapCursor(null);
+    }
+
+
+    // TODO
+    class PeopleAdapter extends ExtensibleCursorAdapter implements SectionIndexer
+    {
+        public PeopleAdapter(Context context)
+        {
+            super(context, R.layout.cell_attender_item, null, new String[] { Member.Columns.NAME }, new int[] { R.id.member_name }, 0);
+        }
+
+
+        @Override
+        public int getPositionForSection(int section)
+        {
+            // TODO Auto-generated method stub
+            return 0;
+        }
+
+        @Override
+        public int getSectionForPosition(int position)
+        {
+            // TODO Auto-generated method stub
+            return 0;
+        }
+
+        @Override
+        public Object[] getSections()
+        {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        public int getPositionForId(long id)
+        {
+            Cursor c = getCursor();
+            c.moveToPosition(-1);
+            while (c.moveToNext())
+            {
+                if (c.getLong(mIndexId) == id)
+                {
+                    break;
+                }
+            }
+
+            return c.getPosition();
+        }
     }
 }

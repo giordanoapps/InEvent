@@ -26,6 +26,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.estudiotrilha.android.utils.FormUtils;
 import com.estudiotrilha.inevent.InEvent;
 import com.estudiotrilha.inevent.R;
 import com.estudiotrilha.inevent.content.ApiRequest;
@@ -45,7 +46,7 @@ public class LoginActivity extends ActionBarActivity
     private static final int REQUEST_LOGIN = 1;
 
 
-    private EditText mUsername;
+    private EditText mEmail;
     private EditText mPassword;
 
 
@@ -65,20 +66,27 @@ public class LoginActivity extends ActionBarActivity
             @Override
             public void onClick(View v)
             {
-                setUserInteractionEnabled(false);
-                loginAttempt();
+                if (FormUtils.isEmailValid(mEmail.getText().toString()))
+                {
+                    setUserInteractionEnabled(false);
+                    loginAttempt();
+                }
+                else
+                {
+                    mEmail.setError(getText(R.string.error_invalidEmail));
+                }
             }
         });
 
 
-        mUsername = (EditText) findViewById(R.id.login_username);
+        mEmail = (EditText) findViewById(R.id.login_email);
         mPassword = (EditText) findViewById(R.id.login_password);
 
         if (savedInstanceState == null)
         {
             // recover last logged in username
             String username = PreferenceManager.getDefaultSharedPreferences(this).getString(STATE_USERNAME, "");
-            mUsername.setText(username);
+            mEmail.setText(username);
         }
     }
     @Override
@@ -127,7 +135,7 @@ public class LoginActivity extends ActionBarActivity
         {
             HttpURLConnection connection;
 
-            final String memberName = mUsername.getText().toString();
+            final String memberName = mEmail.getText().toString();
             final String password   = mPassword.getText().toString();
 
             // Send the API request
@@ -163,7 +171,7 @@ public class LoginActivity extends ActionBarActivity
                         finish();
                         // save the username
                         PreferenceManager.getDefaultSharedPreferences(LoginActivity.this).edit()
-                                .putString(STATE_USERNAME, mUsername.getText().toString())
+                                .putString(STATE_USERNAME, mEmail.getText().toString())
                                 .commit();
 
                         // Get the events
@@ -245,7 +253,7 @@ public class LoginActivity extends ActionBarActivity
     private void setUserInteractionEnabled(boolean enabled)
     {
         // the text fields
-        mUsername.setEnabled(enabled);
+        mEmail.setEnabled(enabled);
         mPassword.setEnabled(enabled);
 
         // the buttons

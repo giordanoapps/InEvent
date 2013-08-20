@@ -1,26 +1,33 @@
 package com.estudiotrilha.inevent.app;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
+import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.util.SparseIntArray;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewStub;
 import android.widget.ListView;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
 
+import com.estudiotrilha.android.utils.DateUtils;
 import com.estudiotrilha.android.widget.ExtensibleCursorAdapter;
 import com.estudiotrilha.inevent.R;
 import com.estudiotrilha.inevent.content.Activity;
@@ -29,7 +36,7 @@ import com.estudiotrilha.inevent.content.LoginManager;
 import com.estudiotrilha.inevent.service.SyncService;
 
 
-public class EventActivitiesListFragment extends ListFragment implements LoaderCallbacks<Cursor>, ExtensibleCursorAdapter.AdapterExtension
+public class EventActivitiesListFragment extends ListFragment implements LoaderCallbacks<Cursor>
 {
     // Loader codes
     private static final int LOAD_ACTIVITY = 1;
@@ -83,13 +90,8 @@ public class EventActivitiesListFragment extends ListFragment implements LoaderC
         setHasOptionsMenu(true);
 
         // Setup the adapters
-        String[] from = new String[] { Activity.Columns.NAME, Activity.Columns.LOCATION };
-        int[] to = new int[] { R.id.activity_name, R.id.activity_location };
-        int layout = R.layout.cell_event_activity_item;
-        mActivitiesAdapter = new EventActivitiesListAdapter(getActivity(), layout, from, to);
-        mActivitiesAdapter.registerExtension(this);
-        mScheduleAdapter = new EventActivitiesListAdapter(getActivity(), layout, from, to);
-        mScheduleAdapter.registerExtension(this);
+        mActivitiesAdapter = new EventActivitiesListAdapter(getActivity());
+        mScheduleAdapter = new EventActivitiesListAdapter(getActivity());
         mScheduleAdapter.registerExtension(new ExtensibleCursorAdapter.AdapterExtension() {
             @Override public void doBeforeBinding(View v, Context context, Cursor c) {}
             @Override
@@ -336,45 +338,149 @@ public class EventActivitiesListFragment extends ListFragment implements LoaderC
     }
 
 
-    @Override public void doBeforeBinding(View v, Context context, Cursor c) {}
-    @Override
-    public void doAfterBinding(View v, Context context, Cursor c)
+    class EventActivitiesListAdapter extends ExtensibleCursorAdapter implements SectionIndexer, ExtensibleCursorAdapter.AdapterExtension
     {
-        // Parse the dates
-        Date dateBegin = new Date(c.getLong(mIndexDateBegin)*1000L);
-        Date dateEnd = new Date(c.getLong(mIndexDateEnd)*1000L);
+        private static final int LIST_TITLE = 0;
+        private static final int LIST_ITEM  = 1;
 
-        // Setup the views
-        ((TextView) v.findViewById(R.id.activity_dateBegin)).setText(mTimeFormat.format(dateBegin));
-        ((TextView) v.findViewById(R.id.activity_dateEnd)).setText(mTimeFormat.format(dateEnd));
-    }
-
-
-    // TODO Section this
-    class EventActivitiesListAdapter extends ExtensibleCursorAdapter implements SectionIndexer
-    {
-        public EventActivitiesListAdapter(Context context, int layout, String[] from, int[] to)
+        private class EventSectionHolder
         {
-            super(context, layout, null, from, to, 0);
+            final Calendar date;
+            final int      startingPosition;
+
+            public EventSectionHolder(Calendar date, int startingPosition)
+            {
+                this.date = date;
+                this.startingPosition = startingPosition;
+            }
+
+            @TargetApi(Build.VERSION_CODES.GINGERBREAD)
+            @Override
+            public String toString()
+            {
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD)
+//                {
+//                    return date.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.SHORT, Locale.getDefault());
+//                }
+//                else
+//                {
+                    return Integer.toString(date.get(Calendar.DAY_OF_MONTH));
+//                }
+            }
+        }
+
+        private ArrayList<EventSectionHolder> mSections;
+        private SparseIntArray                mSectionMap; 
+
+        public EventActivitiesListAdapter(Context context)
+        {
+            super(context, R.layout.cell_event_activity_item, null,
+                    new String[] { Activity.Columns.NAME, Activity.Columns.LOCATION },
+                    new int[] { R.id.activity_name, R.id.activity_location },
+                    0);
+            registerExtension(this);
+
+            mSections = new ArrayList<EventSectionHolder>();
+            mSectionMap = new SparseIntArray();
+        }
+
+        @Override
+        public Cursor swapCursor(Cursor c)
+        {
+            mSections.clear();
+            mSectionMap.clear();
+
+            if (c != null)
+            {
+                // Build the sections
+
+                int currentDay = -1;
+
+                c.moveToPosition(-1);
+                while (c.moveToNext())
+                {
+                    Calendar date = DateUtils.calendarFromTimestampInGMT(c.getLong(mIndexDateBegin));
+
+                    int thisDay = date.get(Calendar.DAY_OF_MONTH);
+                    if (thisDay != currentDay)
+                    {
+                        // Setup the new section info
+                        mSections.add(new EventSectionHolder(date, c.getPosition()));
+                        currentDay = thisDay;
+                    }
+
+                    // Map the data position to the section
+                    mSectionMap.put(c.getPosition(), mSections.size()-1);
+                }
+            }
+
+            return super.swapCursor(c);
+        }
+
+        @Override
+        public int getViewTypeCount()
+        {
+            // There are the ones with the titles
+            return 2;
+        }
+        @Override
+        public int getItemViewType(int position)
+        {
+            if (position == mSections.get(mSectionMap.get(position)).startingPosition)
+            {
+                return LIST_TITLE;
+            }
+            else
+            {
+                return LIST_ITEM;
+            }
         }
 
         @Override
         public int getPositionForSection(int section)
         {
-            // TODO Auto-generated method stub
-            return 0;
+            return mSections.get(section).startingPosition;
         }
         @Override
         public int getSectionForPosition(int position)
         {
-            // TODO Auto-generated method stub
-            return 0;
+            return mSectionMap.get(position);
         }
         @Override
         public Object[] getSections()
         {
-            // TODO Auto-generated method stub
-            return null;
+            return mSections.toArray();
+        }
+
+        @Override
+        public void doBeforeBinding(View v, Context context, Cursor c)
+        {
+            int position = c.getPosition();
+            if (getItemViewType(position) == LIST_TITLE)
+            {
+                // Inflate the header
+                ViewStub viewStub = (ViewStub) v.findViewById(R.id.activity_section);
+                if (viewStub != null) v = viewStub.inflate();
+
+                // Prepare the title
+                EventSectionHolder section = mSections.get(mSectionMap.get(position));
+                String title = android.text.format.DateFormat.getLongDateFormat(context).format(section.date.getTime());
+                // and set it
+                ((TextView) v.findViewById(R.id.activity_sectionHeader)).setText(title);
+            }
+        }
+        @Override
+        public void doAfterBinding(View v, Context context, Cursor c)
+        {
+            // Setup the starting and ending time
+
+            // Parse the dates
+            Date dateBegin = DateUtils.calendarFromTimestampInGMT(c.getLong(mIndexDateBegin)).getTime();
+            Date dateEnd = DateUtils.calendarFromTimestampInGMT(c.getLong(mIndexDateEnd)).getTime();
+
+            // Setup the views
+            ((TextView) v.findViewById(R.id.activity_dateBegin)).setText(mTimeFormat.format(dateBegin));
+            ((TextView) v.findViewById(R.id.activity_dateEnd)).setText(mTimeFormat.format(dateEnd));
         }
     }
 }

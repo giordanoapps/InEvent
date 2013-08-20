@@ -9,7 +9,7 @@
 
     <TextView
         android:id="@+id/member_id"
-        android:layout_width="48dp"
+        android:layout_width="52dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:padding="@dimen/default_textPadding" />
@@ -22,6 +22,7 @@
         android:layout_weight="1"
         android:ellipsize="end"
         android:maxLines="1"
+        android:lines="1"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:padding="@dimen/default_textPadding" />
 

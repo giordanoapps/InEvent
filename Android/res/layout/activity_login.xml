@@ -43,11 +43,11 @@
                 android:layout_marginRight="0dp" />
 
             <EditText
-                android:id="@+id/login_username"
+                android:id="@+id/login_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/hint_login_username"
-                android:inputType="textPersonName" >
+                android:hint="@string/hint_login_email"
+                android:inputType="textEmailAddress" >
 
                 <requestFocus />
             </EditText>
