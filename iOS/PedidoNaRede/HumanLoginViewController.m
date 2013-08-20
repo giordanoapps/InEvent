@@ -220,9 +220,14 @@
         
             // Update the current state of the schedule controller
             [[NSNotificationCenter defaultCenter] postNotificationName:@"scheduleCurrentState" object:nil userInfo:nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"verify" object:nil userInfo:@{@"type": @"menu"}];
             
             // Go back to the other screen
-            [self dismissModalViewControllerAnimated:YES];
+            [self dismissViewControllerAnimated:YES completion:^{
+                [_waiterButton setTitle:NSLocalizedString(@"Log In", nil) forState:UIControlStateNormal];
+                [_waiterUsername setText:@""];
+                [_waiterPassword setText:@""];
+            }];
         } else {
             // Set loaded message on button
             [_waiterButton setTitle:NSLocalizedString(@"Try Again :(", nil) forState:UIControlStateNormal];

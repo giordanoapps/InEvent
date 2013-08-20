@@ -131,6 +131,7 @@
 										<int key="NSvFlags">291</int>
 										<string key="NSFrame">{{107, 4}, {175, 56}}</string>
 										<reference key="NSSuperview" ref="925407651"/>
+										<reference key="NSNextKeyView"/>
 										<string key="NSReuseIdentifierKey">_NS:9</string>
 										<reference key="IBUIBackgroundColor" ref="751477987"/>
 										<bool key="IBUIClipsSubviews">YES</bool>
@@ -197,7 +198,7 @@
 				</object>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 				<reference key="IBUIContentView" ref="607382730"/>
-				<real value="11" key="IBUIRowHeight"/>
+				<integer value="74" key="IBUIRowHeight"/>
 			</object>
 		</array>
 		<object class="IBObjectContainer" key="IBDocument.Objects">

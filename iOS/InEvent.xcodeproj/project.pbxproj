@@ -166,7 +166,7 @@
 		EBCF5635175461D10083837B /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBCF5634175461D10083837B /* FacebookSDK.framework */; };
 		EBCF5637175461E50083837B /* FacebookSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = EBCF5636175461E50083837B /* FacebookSDKResources.bundle */; };
 		EBD055A717AF8CF3008355E8 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD055A517AF8CF3008355E8 /* AboutViewController.m */; };
-		EBD055A817AF8CF3008355E8 /* AboutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBD055A617AF8CF3008355E8 /* AboutViewController.xib */; };
+		EBD055A817AF8CF3008355E8 /* AboutViewController~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBD055A617AF8CF3008355E8 /* AboutViewController~iphone.xib */; };
 		EBD055AC17AF919C008355E8 /* 16-Footprints.png in Resources */ = {isa = PBXBuildFile; fileRef = EBD055AA17AF919C008355E8 /* 16-Footprints.png */; };
 		EBD055AD17AF919C008355E8 /* 16-Footprints@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBD055AB17AF919C008355E8 /* 16-Footprints@2x.png */; };
 		EBD0DB5616AF953B00F78F93 /* UIViewController+Present.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD0DB5516AF953B00F78F93 /* UIViewController+Present.m */; };
@@ -234,6 +234,7 @@
 		EBEA9FD41795879300C6FEEC /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBEA9FD31795879300C6FEEC /* MobileCoreServices.framework */; };
 		EBEA9FD6179587A800C6FEEC /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBEA9FD5179587A800C6FEEC /* Security.framework */; };
 		EBEA9FD8179587B100C6FEEC /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBEA9FD7179587B100C6FEEC /* StoreKit.framework */; };
+		EBEACD7517C2F65200C65F3F /* AboutViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBEACD7417C2F65200C65F3F /* AboutViewController~ipad.xib */; };
 		EBFD3A3516DA8CDE00AD33C5 /* UIPlaceHolderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBFD3A3416DA8CDE00AD33C5 /* UIPlaceHolderTextView.m */; };
 		EBFD3A3916DA96D000AD33C5 /* FeedbackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBFD3A3716DA96D000AD33C5 /* FeedbackViewController.m */; };
 		EBFD3A3A16DA96D000AD33C5 /* FeedbackViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBFD3A3816DA96D000AD33C5 /* FeedbackViewController.xib */; };
@@ -476,7 +477,7 @@
 		EBCF5636175461E50083837B /* FacebookSDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = FacebookSDKResources.bundle; path = "../../../Documents/Objective-C/facebook-ios-sdk/build/FacebookSDK.framework/Versions/A/Resources/FacebookSDKResources.bundle"; sourceTree = "<group>"; };
 		EBD055A417AF8CF3008355E8 /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
 		EBD055A517AF8CF3008355E8 /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
-		EBD055A617AF8CF3008355E8 /* AboutViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutViewController.xib; sourceTree = "<group>"; };
+		EBD055A617AF8CF3008355E8 /* AboutViewController~iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "AboutViewController~iphone.xib"; sourceTree = "<group>"; };
 		EBD055AA17AF919C008355E8 /* 16-Footprints.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "16-Footprints.png"; sourceTree = "<group>"; };
 		EBD055AB17AF919C008355E8 /* 16-Footprints@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "16-Footprints@2x.png"; sourceTree = "<group>"; };
 		EBD0DB5416AF953B00F78F93 /* UIViewController+Present.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Present.h"; sourceTree = "<group>"; };
@@ -555,6 +556,7 @@
 		EBEA9FD31795879300C6FEEC /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		EBEA9FD5179587A800C6FEEC /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		EBEA9FD7179587B100C6FEEC /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		EBEACD7417C2F65200C65F3F /* AboutViewController~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "AboutViewController~ipad.xib"; sourceTree = "<group>"; };
 		EBFD3A3316DA8CDE00AD33C5 /* UIPlaceHolderTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPlaceHolderTextView.h; sourceTree = "<group>"; };
 		EBFD3A3416DA8CDE00AD33C5 /* UIPlaceHolderTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIPlaceHolderTextView.m; sourceTree = "<group>"; };
 		EBFD3A3616DA96D000AD33C5 /* FeedbackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedbackViewController.h; sourceTree = "<group>"; };
@@ -957,8 +959,8 @@
 				EB53F6451709141300715E2D /* Libraries */,
 				EB39392B16654B4400580A4E /* General */,
 				EBD055A917AF8D0A008355E8 /* Additional */,
-				EB25BAA016FE73F7003F142F /* Human */,
 				EB3F1A0B16F7B831005052E7 /* Initial */,
+				EB25BAA016FE73F7003F142F /* Human */,
 				EBFCCF4A16987F3700A5AE73 /* Map */,
 				EBFCCF571698B47D00A5AE73 /* Timeline */,
 				EB3BD91417B8C47F008D066D /* Reader */,
@@ -1081,7 +1083,8 @@
 			children = (
 				EBD055A417AF8CF3008355E8 /* AboutViewController.h */,
 				EBD055A517AF8CF3008355E8 /* AboutViewController.m */,
-				EBD055A617AF8CF3008355E8 /* AboutViewController.xib */,
+				EBD055A617AF8CF3008355E8 /* AboutViewController~iphone.xib */,
+				EBEACD7417C2F65200C65F3F /* AboutViewController~ipad.xib */,
 				EB9AB76F16A0921A005D4CAA /* DemoViewController.h */,
 				EB9AB77016A0921A005D4CAA /* DemoViewController.m */,
 				EB9AB77116A0921A005D4CAA /* DemoViewController.xib */,
@@ -1447,7 +1450,7 @@
 				EB95437617ACCB2000229EE2 /* 16-Map.png in Resources */,
 				EB95437717ACCB2000229EE2 /* 16-Map@2x.png in Resources */,
 				EBD8E4E917AF557A00D0F30C /* 32-Minus.png in Resources */,
-				EBD055A817AF8CF3008355E8 /* AboutViewController.xib in Resources */,
+				EBD055A817AF8CF3008355E8 /* AboutViewController~iphone.xib in Resources */,
 				EBD055AC17AF919C008355E8 /* 16-Footprints.png in Resources */,
 				EBD055AD17AF919C008355E8 /* 16-Footprints@2x.png in Resources */,
 				EB60420B17B8B6A300D95012 /* 64-Flip-Clock.png in Resources */,
@@ -1465,6 +1468,7 @@
 				EBC59D8717BEC58100E0FC67 /* 64-Balloons.png in Resources */,
 				EBC59D8917BEC59B00E0FC67 /* 64-Create-_-Write.png in Resources */,
 				EBC59D8D17BEC5C300E0FC67 /* 64-Cloud-Download.png in Resources */,
+				EBEACD7517C2F65200C65F3F /* AboutViewController~ipad.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1739,7 +1743,7 @@
 				);
 				PRODUCT_NAME = InEvent;
 				PROVISIONING_PROFILE = "";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1768,7 +1772,7 @@
 				);
 				PRODUCT_NAME = InEvent;
 				PROVISIONING_PROFILE = "99FD9AB7-8895-4585-91A8-0F8908E82D62";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

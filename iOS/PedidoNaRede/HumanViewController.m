@@ -41,7 +41,7 @@
     // Do any additional setup after loading the view from its nib.
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]
-                                              initWithTitle:@"Logout"
+                                              initWithTitle:NSLocalizedString(@"Logout", nil)
                                               style:UIBarButtonItemStyleBordered
                                               target:self
                                               action:@selector(logoutButtonWasPressed:)];
@@ -70,8 +70,7 @@
 
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-   
-//    [self performSelector:@selector(checkSession) withObject:nil afterDelay:4.0];
+
     [self checkSession];
 }
 

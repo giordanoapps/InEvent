@@ -184,12 +184,8 @@
         
         UIViewController *viewController = [self.viewControllers objectAtIndex:indexPath.row];
         [cell.imageView setImage:viewController.tabBarItem.image];
-    } else if (indexPath.section == 1) {
-        UIViewController *viewController = [self.viewControllers objectAtIndex:(indexPath.row + 1)];
-        [cell.textLabel setText:viewController.title];
-        [cell.imageView setImage:viewController.tabBarItem.image];
-    } else if (indexPath.section == 2) {
-        UIViewController *viewController = [self.viewControllers objectAtIndex:2];
+    } else {
+        UIViewController *viewController = [self.viewControllers objectAtIndex:indexPath.section];
         [cell.textLabel setText:viewController.title];
         [cell.imageView setImage:viewController.tabBarItem.image];
     }
@@ -207,14 +203,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    if (indexPath.section <= 1) {
+    if (indexPath.section <= 2) {
         // We must transform the current indexPath into something that the library can read
         NSIndexPath *transformed = [NSIndexPath indexPathForRow:indexPath.row + indexPath.section inSection:0];
-        [super tableView:tableView didSelectRowAtIndexPath:transformed];
-    
-    } else if (indexPath.section == 2) {
-        // We must transform the current indexPath into something that the library can read
-        NSIndexPath *transformed = [NSIndexPath indexPathForRow:2 inSection:0];
         [super tableView:tableView didSelectRowAtIndexPath:transformed];
     }
     

@@ -10,7 +10,7 @@
 
 #import "WrapperViewController.h"
 
-@interface ScheduleItemViewController : WrapperViewController <UITableViewDelegate, UITableViewDataSource, APIControllerDelegate, UIGestureRecognizerDelegate>
+@interface ScheduleItemViewController : WrapperViewController <UITableViewDelegate, UITableViewDataSource, APIControllerDelegate, UIGestureRecognizerDelegate, UISplitViewControllerDelegate>
 
 @property (strong, nonatomic) IBOutlet UIView *wrapper;
 @property (strong, nonatomic) IBOutlet UILabel *hour;

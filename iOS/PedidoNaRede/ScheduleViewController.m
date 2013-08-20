@@ -39,7 +39,7 @@
         self.activities = [NSArray array];
         
         // Add notification observer for new orders
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadData) name:@"scheduleCurrentState" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadData) name:@"scheduleCurrentState" object:nil];
     }
     return self;
 }
@@ -55,12 +55,11 @@
     [self loadData];
     
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    _tableView.rowHeight = 74;
     _tableView.backgroundColor = [ColorThemeController tableViewBackgroundColor];
     
     // Refresh Control
     refreshControl = [[ODRefreshControl alloc] initInScrollView:self.tableView];
-    [refreshControl addTarget:self action:@selector(loadData) forControlEvents:UIControlEventValueChanged];
+    [refreshControl addTarget:self action:@selector(reloadData) forControlEvents:UIControlEventValueChanged];
 }
 
 - (void)didReceiveMemoryWarning
@@ -77,17 +76,21 @@
 #pragma mark - Notification
 
 - (void)loadData {
+    [self forceDataReload:NO];
+}
+
+- (void)reloadData {
+    [self forceDataReload:YES];
+}
+
+- (void)forceDataReload:(BOOL)forcing {
     
     if ([[HumanToken sharedInstance] isMemberAuthenticated]) {
         NSString *tokenID = [[HumanToken sharedInstance] tokenID];
-        [[[APIController alloc] initWithDelegate:self forcing:YES] eventGetScheduleAtEvent:[[EventToken sharedInstance] eventID] withTokenID:tokenID];
+        [[[APIController alloc] initWithDelegate:self forcing:forcing] eventGetScheduleAtEvent:[[EventToken sharedInstance] eventID] withTokenID:tokenID];
     } else {
-        [[[APIController alloc] initWithDelegate:self forcing:YES] eventGetActivitiesAtEvent:[[EventToken sharedInstance] eventID]];
+        [[[APIController alloc] initWithDelegate:self forcing:forcing] eventGetActivitiesAtEvent:[[EventToken sharedInstance] eventID]];
     }
-}
-
-- (void)processNotification:(NSNotification *)notification {
-    [self loadData];
 }
 
 #pragma mark - Public Methods
@@ -136,6 +139,10 @@
     return 44.0;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 74.0;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)aTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     static NSString * CustomCellIdentifier = @"CustomCellIdentifier";
@@ -169,15 +176,16 @@
     
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
         sivc = [[ScheduleItemViewController alloc] initWithNibName:@"ScheduleItemViewController" bundle:nil];
+        [sivc setMoveKeyboardRatio:2.0f];
     } else {
         // Find the sibling navigation controller first child and send the appropriate data
         sivc = (ScheduleItemViewController *)[[[self.splitViewController.viewControllers lastObject] viewControllers] objectAtIndex:0];
+        [sivc setMoveKeyboardRatio:0.5f];
     }
     
     NSDictionary *dictionary = [[self.activities objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
     
     [sivc setTitle:[[dictionary objectForKey:@"name"] stringByDecodingHTMLEntities]];
-    [sivc setMoveKeyboardRatio:2.0f];
     [sivc setActivityData:dictionary];
     
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
@@ -196,6 +204,12 @@
     // Reload all table data
     [self.tableView reloadData];
     
+    [refreshControl endRefreshing];
+}
+
+- (void)apiController:(APIController *)apiController didFailWithError:(NSError *)error {
+    [super apiController:apiController didFailWithError:error];
+
     [refreshControl endRefreshing];
 }
 

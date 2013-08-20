@@ -44,8 +44,9 @@
 
 				// Find if the member is over his limit on different groups
 				$result = resourceForQuery(
+				// echo (
 					"SELECT
-						IF(COALESCE(`activityGroup`.`limit`, 99999) > SUM(`activityMember`.`approved`), 1, 0) AS `valid`
+						IF(COALESCE(`activityGroup`.`limit`, 99999) > COALESCE(SUM(`activityMember`.`approved`), 0), 1, 0) AS `valid`
 					FROM
 						`activity`
 					LEFT JOIN
@@ -58,7 +59,7 @@
 						`activity`.`groupID`
 				");
 
-				$valid = (mysql_num_rows($result) > 0) ? mysql_result($result, 0, "valid") : 0;
+				$valid = (mysql_num_rows($result) > 0) ? mysql_result($result, 0, "valid") : 1;
 				
 				// Insert a new row seing if there are vacancies
 				$insert = resourceForQuery(
@@ -325,7 +326,7 @@
 						AND `activityMember`.`approved` = 1
 				");
 
-				if (mysql_affected_rows() > 0) {
+				if ($update) {
 					// Return its data
 					if ($format == "json") {
 						$data["personID"] = $personID;
@@ -375,7 +376,7 @@
 					AND `activityMember`.`memberID` = $core->memberID
 			");
 
-			if (mysql_affected_rows() > 0) {
+			if ($update) {
 				// Return its data
 				if ($format == "json") {
 					$data["activityID"] = $activityID;
@@ -427,13 +428,12 @@
 					break;
 			}
 
-			// The query
-			$result = getPeopleAtActivityQuery($activityID, $complement);
-
 			// Return its data
 			if ($format == "json") {
+				$result = getPeopleAtActivityQuery($activityID, $complement, "`member`.`name`");
 				echo printInformation("activityMember", $result, true, 'json');
 			} elseif ($format == "html") {
+				$result = getPeopleAtActivityQuery($activityID, $complement, "`activityMember`.`id`");
 				printPeopleAtActivity($result);
 			} else {
 				http_status_code(405);	

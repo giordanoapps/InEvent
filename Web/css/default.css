@@ -1207,6 +1207,7 @@ form {
 .scheduleItem .right .dock li {
 	display: inline-block;
 	vertical-align: middle;
+	float: left;
 	border-right: 1px solid #B1B1B1;
 	padding: 3px;
 	padding-top: 1px;

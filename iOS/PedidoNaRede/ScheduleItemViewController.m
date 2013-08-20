@@ -35,6 +35,9 @@
     if (self) {
         // Custom initialization
         self.questionData = [NSMutableArray array];
+        
+        // Add notification observer for new orders
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cleanData) name:@"scheduleCurrentState" object:nil];
     }
     return self;
 }
@@ -42,13 +45,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    if ([[HumanToken sharedInstance] isMemberWorking]) {
-        self.rightBarButton = [[CoolBarButtonItem alloc] initCustomButtonWithImage:[UIImage imageNamed:@"64-Cog"] frame:CGRectMake(0, 0, 42.0, 30.0) insets:UIEdgeInsetsMake(5.0, 11.0, 5.0, 11.0) target:self action:@selector(alertActionSheet)];
-        self.rightBarButton.accessibilityLabel = NSLocalizedString(@"Actions", nil);
-        self.rightBarButton.accessibilityTraits = UIAccessibilityTraitSummaryElement;
-        self.navigationItem.rightBarButtonItem = self.rightBarButton;
-    }
     
     // View
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTap)];
@@ -71,49 +67,48 @@
     // Line
     [_line setBackgroundColor:[ColorThemeController tableViewCellInternalBorderColor]];
     [self createBottomIdentation];
-    
-    if ([[HumanToken sharedInstance] isMemberAuthenticated]) {
-        // Refresh Control
-        refreshControl = [[ODRefreshControl alloc] initInScrollView:self.tableView];
-        [refreshControl addTarget:self action:@selector(loadQuestions) forControlEvents:UIControlEventValueChanged];
-        
-        // Question Wrapper
-        [_questionWrapper setBackgroundColor:[ColorThemeController tableViewCellBackgroundColor]];
-        
-        // Create the view for the search field
-        UIView *leftView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 40.0, 30.0)];
-        UIImageView *searchTool = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"64-Speech-Bubbles"]];
-        [searchTool setFrame:CGRectMake(10.0, 3.0, 24.0, 24.0)];
-        [leftView addSubview:searchTool];
 
-        // Text field
-        [_questionInput setPlaceholder:NSLocalizedString(@"What's the question?", nil)];
-        [_questionInput setTextColor:[ColorThemeController tableViewCellTextColor]];
-        [_questionInput setBackgroundColor:[ColorThemeController tableViewCellBackgroundColor]];
-        [_questionInput setLeftView:leftView];
-        [_questionInput setLeftViewMode:UITextFieldViewModeAlways];
-        [_questionInput.layer setCornerRadius:0.0];
-        [_questionInput.layer setMasksToBounds:NO];
-        [_questionInput.layer setBorderWidth:0.0];
-        [_questionInput.layer setBorderColor:[[ColorThemeController tableViewCellInternalBorderColor] CGColor]];
-        
-        // Message Button
-        [_questionButton setTitle:NSLocalizedString(@"Send", @"Send message from chat") forState:UIControlStateNormal];
-        [_questionButton setTitleColor:[ColorThemeController textColor] forState:UIControlStateNormal];
-        [_questionButton setTitleColor:[ColorThemeController textColor] forState:UIControlStateHighlighted];
-        [_questionButton setBackgroundImage:[[UIImage imageNamed:@"greyButton"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)] forState:UIControlStateNormal];
-        [_questionButton setBackgroundImage:[[UIImage imageNamed:@"greyButtonHighlight"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)] forState:UIControlStateHighlighted];
-        [_questionButton addTarget:self action:@selector(sendMessage) forControlEvents:UIControlEventTouchUpInside];
-        [_questionButton.layer setMasksToBounds:YES];
-        [_questionButton.layer setCornerRadius:4.0];
-        [_questionButton.layer setBorderWidth:0.6];
-        [_questionButton.layer setBorderColor:[[ColorThemeController tableViewCellInternalBorderColor] CGColor]];
-        
-    } else {
-        [_tableView setHidden:YES];
-        [_questionWrapper setHidden:YES];
-    }
+    // Refresh Control
+    refreshControl = [[ODRefreshControl alloc] initInScrollView:self.tableView];
+    [refreshControl addTarget:self action:@selector(loadQuestions) forControlEvents:UIControlEventValueChanged];
     
+    // Question Wrapper
+    [_questionWrapper setBackgroundColor:[ColorThemeController tableViewCellBackgroundColor]];
+    
+    // Create the view for the search field
+    UIView *leftView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 40.0, 30.0)];
+    UIImageView *searchTool = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"64-Speech-Bubbles"]];
+    [searchTool setFrame:CGRectMake(10.0, 3.0, 24.0, 24.0)];
+    [leftView addSubview:searchTool];
+
+    // Text field
+    [_questionInput setPlaceholder:NSLocalizedString(@"What's the question?", nil)];
+    [_questionInput setTextColor:[ColorThemeController tableViewCellTextColor]];
+    [_questionInput setBackgroundColor:[ColorThemeController tableViewCellBackgroundColor]];
+    [_questionInput setLeftView:leftView];
+    [_questionInput setLeftViewMode:UITextFieldViewModeAlways];
+    [_questionInput.layer setCornerRadius:0.0];
+    [_questionInput.layer setMasksToBounds:NO];
+    [_questionInput.layer setBorderWidth:0.0];
+    [_questionInput.layer setBorderColor:[[ColorThemeController tableViewCellInternalBorderColor] CGColor]];
+    
+    // Message Button
+    [_questionButton setTitle:NSLocalizedString(@"Send", @"Send message from chat") forState:UIControlStateNormal];
+    [_questionButton setTitleColor:[ColorThemeController textColor] forState:UIControlStateNormal];
+    [_questionButton setTitleColor:[ColorThemeController textColor] forState:UIControlStateHighlighted];
+    [_questionButton setBackgroundImage:[[UIImage imageNamed:@"greyButton"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)] forState:UIControlStateNormal];
+    [_questionButton setBackgroundImage:[[UIImage imageNamed:@"greyButtonHighlight"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)] forState:UIControlStateHighlighted];
+    [_questionButton addTarget:self action:@selector(sendMessage) forControlEvents:UIControlEventTouchUpInside];
+    [_questionButton.layer setMasksToBounds:YES];
+    [_questionButton.layer setCornerRadius:4.0];
+    [_questionButton.layer setBorderWidth:0.6];
+    [_questionButton.layer setBorderColor:[[ColorThemeController tableViewCellInternalBorderColor] CGColor]];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    [self cleanData];
     [self loadData];
 }
 
@@ -140,17 +135,42 @@
 #pragma mark - Private Methods
 
 - (void)loadData {
-    NSDate *date = [NSDate dateWithTimeIntervalSince1970:[[_activityData objectForKey:@"dateBegin"] integerValue]];
-    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    NSDateComponents *components = [gregorian components:(NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:date];
     
-    _hour.text = [NSString stringWithFormat:@"%.2d", [components hour]];
-    _minute.text = [NSString stringWithFormat:@"%.2d", [components minute]];
-    _name.text = [[_activityData objectForKey:@"name"] stringByDecodingHTMLEntities];
-    _description.text = [[_activityData objectForKey:@"description"] stringByDecodingHTMLEntities];
-    
-    // Upper triangle
-    [self defineStateForApproved:[[_activityData objectForKey:@"approved"] integerValue] withView:_wrapper];
+    if (_activityData) {
+        if ([[HumanToken sharedInstance] isMemberWorking]) {
+            self.rightBarButton = [[CoolBarButtonItem alloc] initCustomButtonWithImage:[UIImage imageNamed:@"64-Cog"] frame:CGRectMake(0, 0, 42.0, 30.0) insets:UIEdgeInsetsMake(5.0, 11.0, 5.0, 11.0) target:self action:@selector(alertActionSheet)];
+            self.rightBarButton.accessibilityLabel = NSLocalizedString(@"Actions", nil);
+            self.rightBarButton.accessibilityTraits = UIAccessibilityTraitSummaryElement;
+            self.navigationItem.rightBarButtonItem = self.rightBarButton;
+        }
+        
+        NSDate *date = [NSDate dateWithTimeIntervalSince1970:[[_activityData objectForKey:@"dateBegin"] integerValue]];
+        NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+        NSDateComponents *components = [gregorian components:(NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:date];
+        
+        [self defineStateForApproved:[[_activityData objectForKey:@"approved"] integerValue] withView:_wrapper];
+        
+        _hour.text = [NSString stringWithFormat:@"%.2d", [components hour]];
+        _minute.text = [NSString stringWithFormat:@"%.2d", [components minute]];
+        _name.text = [[_activityData objectForKey:@"name"] stringByDecodingHTMLEntities];
+        _description.text = [[_activityData objectForKey:@"description"] stringByDecodingHTMLEntities];
+        
+        if ([[HumanToken sharedInstance] isMemberAuthenticated]) {
+            _tableView.hidden = NO;
+            _questionWrapper.hidden = NO;
+        }
+    }
+}
+
+- (void)cleanData {
+    self.navigationItem.rightBarButtonItem = nil;
+    [self defineStateForApproved:ScheduleStateUnknown withView:_wrapper];
+    _hour.text = @"00";
+    _minute.text = @"00";
+    _name.text = NSLocalizedString(@"Activity", nil);
+    _description.text = @"";
+    _tableView.hidden = YES;
+    _questionWrapper.hidden = YES;
 }
 
 - (void)loadQuestions {
@@ -182,8 +202,6 @@
 //        [_questionData addObject:_questionInput.text];
 //        [_tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:([_questionData count] - 1) inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
 //        [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:([_questionData count] - 1) inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-        
-        
         
         [_questionInput setText:@""];
     }
@@ -238,22 +256,20 @@
     
     if ([title isEqualToString:NSLocalizedString(@"See people", nil)]) {
         // Load our reader
-        ReaderViewController *rvc;
-        
-        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-            rvc = [[ReaderViewController alloc] initWithNibName:@"ReaderViewController" bundle:nil];
-        } else {
-            // Find the sibling navigation controller first child and send the appropriate data
-            rvc = (ReaderViewController *)[[[self.splitViewController.viewControllers lastObject] viewControllers] objectAtIndex:0];
-        }
+        ReaderViewController *rvc = [[ReaderViewController alloc] initWithNibName:@"ReaderViewController" bundle:nil];
         
         [rvc setMoveKeyboardRatio:0.0];
-//        [rvc setTitle:[[_activityData objectForKey:@"name"] stringByDecodingHTMLEntities]];
         [rvc setActivityData:_activityData];
         
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
             [self.navigationController pushViewController:rvc animated:YES];
+        } else {
+            rvc.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+            rvc.modalPresentationStyle = UIModalPresentationFormSheet;
+            
+            [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:rvc animated:YES completion:nil];
         }
+
     }
     
 }
@@ -298,6 +314,12 @@
     
     // Reload all table data
     [self.tableView reloadData];
+    
+    [refreshControl endRefreshing];
+}
+
+- (void)apiController:(APIController *)apiController didFailWithError:(NSError *)error {
+    [super apiController:apiController didFailWithError:error];
     
     [refreshControl endRefreshing];
 }

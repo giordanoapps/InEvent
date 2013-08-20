@@ -11,11 +11,12 @@
 
 @interface AboutViewController : WrapperViewController
 
-@property (strong, nonatomic) IBOutlet UIImageView *productImage;
+@property (strong, nonatomic) IBOutlet UIButton *productImage;
+@property (strong, nonatomic) IBOutlet UIButton *companyImage;
 @property (strong, nonatomic) IBOutlet UIImageView *leftArrow;
 @property (strong, nonatomic) IBOutlet UIWebView *aboutText;
-@property (strong, nonatomic) IBOutlet UIButton *facebookButton;
 
-- (IBAction)openLink:(id)sender;
+- (IBAction)openProductPage:(id)sender;
+- (IBAction)openCompanyPage:(id)sender;
 
 @end

@@ -10,20 +10,22 @@
 #import "UIImage+Color.h"
 #import "AboutViewController.h"
 #import "ScheduleViewController.h"
+#import "ScheduleItemViewController.h"
 #import "ColorThemeController.h"
 #import "PushController.h"
 #import "HumanViewController.h"
 #import "ReaderViewController.h"
 #import "LauchImageViewController.h"
 #import "GAI.h"
+#import "IntelligentSplitViewController.h"
 #import <FacebookSDK/FacebookSDK.h>
 #import <Parse/Parse.h>
 
 @interface AppDelegate ()
 
-@property (strong, nonatomic) UINavigationController *humanViewController;
-@property (strong, nonatomic) UINavigationController *scheduleViewController;
-@property (strong, nonatomic) UINavigationController *aboutViewController;
+@property (strong, nonatomic) UIViewController *humanViewController;
+@property (strong, nonatomic) UIViewController *scheduleViewController;
+@property (strong, nonatomic) UIViewController *aboutViewController;
 
 @end
 
@@ -67,14 +69,25 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackTranslucent];
 
     // Each controller
     // LOGIN
     _humanViewController = [[UINavigationController alloc] initWithRootViewController:[[HumanViewController alloc] initWithNibName:@"HumanViewController" bundle:nil]];
     
     // SCHEDULE
-    _scheduleViewController = [[UINavigationController alloc] initWithRootViewController:[[ScheduleViewController alloc] initWithNibName:@"ScheduleViewController" bundle:nil]];
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        _scheduleViewController = [[UINavigationController alloc] initWithRootViewController:[[ScheduleViewController alloc] initWithNibName:@"ScheduleViewController" bundle:nil]];
+    } else {
+        _scheduleViewController = [[IntelligentSplitViewController alloc] init];
+        ScheduleViewController *svc = [[ScheduleViewController alloc] initWithNibName:@"ScheduleViewController" bundle:nil];
+        UINavigationController *nsvc = [[UINavigationController alloc] initWithRootViewController:svc];
+        ScheduleItemViewController *sivc = [[ScheduleItemViewController alloc] initWithNibName:@"ScheduleItemViewController" bundle:nil];
+        UINavigationController *nsivc = [[UINavigationController alloc] initWithRootViewController:sivc];
+        ((UISplitViewController *)_scheduleViewController).title = svc.title;
+        ((UISplitViewController *)_scheduleViewController).tabBarItem.image = svc.tabBarItem.image;
+        ((UISplitViewController *)_scheduleViewController).delegate = sivc;
+        ((UISplitViewController *)_scheduleViewController).viewControllers = @[nsvc, nsivc];
+    }
     
     // ABOUT
     _aboutViewController = [[UINavigationController alloc] initWithRootViewController:[[AboutViewController alloc] initWithNibName:@"AboutViewController" bundle:nil]];

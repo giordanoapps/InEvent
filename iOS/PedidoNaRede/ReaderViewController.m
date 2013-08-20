@@ -11,14 +11,17 @@
 #import "ColorThemeController.h"
 #import "NSString+HTML.h"
 #import "HumanToken.h"
+#import "UtilitiesController.h"
 #import "ODRefreshControl.h"
 
 @interface ReaderViewController () {
     ODRefreshControl *refreshControl;
+    NSIndexPath *hightlightedIndexPath;
+    NSIndexPath *panIndexPath;
+    CGPoint panStartLocation;
 }
 
 @property (nonatomic, strong) NSMutableArray *people;
-@property (nonatomic, strong) NSIndexPath *hightlightedIndexPath;
 
 @end
 
@@ -30,7 +33,6 @@
     if (self) {
         self.title = NSLocalizedString(@"Reader", nil);
         self.people = [NSMutableArray array];
-        self.hightlightedIndexPath = nil;
     }
     return self;
 }
@@ -71,6 +73,24 @@
     // Refresh Control
     refreshControl = [[ODRefreshControl alloc] initInScrollView:self.tableView];
     [refreshControl addTarget:self action:@selector(loadData) forControlEvents:UIControlEventValueChanged];
+    
+    // Table View
+    [self.tableView setAllowsSelection:NO];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    // Window
+    UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapBehind:)];
+    [recognizer setNumberOfTapsRequired:1];
+    [recognizer setCancelsTouchesInView:NO]; // So the user can still interact with controls in the modal view
+    [self.view.window addGestureRecognizer:recognizer];
+    
+    // Table View
+    UIPanGestureRecognizer *panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didPan:)];
+    [panGesture setDelegate:self];
+    [self.tableView addGestureRecognizer:panGesture];
 }
 
 - (void)didReceiveMemoryWarning
@@ -92,6 +112,122 @@
 
 #pragma mark - Private Methods
 
+- (void)handleTapBehind:(UITapGestureRecognizer *)sender {
+    
+    if (sender.state == UIGestureRecognizerStateEnded) {
+        CGPoint location = [sender locationInView:nil]; //Passing nil gives us coordinates in the window
+        
+        // Then we convert the tap's location into the local view's coordinate system, and test to see if it's in or outside.
+        // If outside, dismiss the view.
+        if (![self.view pointInside:[self.view convertPoint:location fromView:self.view.window] withEvent:nil]) {
+            // Remove the recognizer first so it's view.window is valid.
+            [self.view.window removeGestureRecognizer:sender];
+            [self dismissModalViewControllerAnimated:YES];
+        }
+    }
+}
+
+- (void)didPan:(UIPanGestureRecognizer *)gestureRecognizer {
+
+    CGPoint swipeLocation = [gestureRecognizer locationInView:self.tableView];
+    NSIndexPath *swipedIndexPath = [self.tableView indexPathForRowAtPoint:swipeLocation];
+    UITableViewCell *swipedCell = [self.tableView cellForRowAtIndexPath:swipedIndexPath];
+    
+    if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
+        
+        CGPoint velocity = [gestureRecognizer velocityInView:self.view];
+        
+        if (abs(velocity.x) > abs(velocity.y)) {
+            panIndexPath = swipedIndexPath;
+            panStartLocation = [gestureRecognizer locationInView:self.view];
+        } else {
+            panIndexPath = nil;
+        }
+        
+        [swipedCell setBackgroundView:[[UIView alloc] initWithFrame:CGRectZero]];
+        
+        UILabel *title = [[UILabel alloc] initWithFrame:CGRectZero];
+        [title setFont:[UIFont fontWithName:@"Thonburi-Bold" size:22.0]];
+        [title setTextColor:[ColorThemeController textColor]];
+        [title setBackgroundColor:[UIColor clearColor]];
+        [title setTag:1];
+        [swipedCell.backgroundView addSubview:title];
+        
+    } else if (gestureRecognizer.state == UIGestureRecognizerStateChanged) {
+        
+        // If we have different paths, we must cancel the operations
+        if (panIndexPath != nil && [panIndexPath compare:swipedIndexPath] != NSOrderedSame) {
+            [self resetCell:[self.tableView cellForRowAtIndexPath:panIndexPath]];
+            
+        } else if (panIndexPath != nil) {
+            CGPoint actualLocation = [gestureRecognizer locationInView:self.view];
+            
+            CGRect frame = swipedCell.contentView.frame;
+            frame.origin.x = actualLocation.x - panStartLocation.x;
+            swipedCell.contentView.frame = frame;
+            
+            
+            UISwipeGestureRecognizerDirection direction = (actualLocation.x > panStartLocation.x) ? UISwipeGestureRecognizerDirectionRight : UISwipeGestureRecognizerDirectionLeft;
+            
+            if (direction == UISwipeGestureRecognizerDirectionRight) {
+                // Green on background color
+                [swipedCell.backgroundView setBackgroundColor:[UtilitiesController colorFromHexString:@"#F0F01E"]];
+                
+                for (UIView *view in [swipedCell.backgroundView subviews]) {
+                    if ([view isKindOfClass:[UILabel class]]) {
+                        [(UILabel *)view setFrame:CGRectMake(21.0, 6.0, self.tableView.frame.size.width, 32.0)];
+                        [(UILabel *)view setText:NSLocalizedString(@"Present", nil)];
+                        [(UILabel *)view setTextAlignment:NSTextAlignmentLeft];
+                    }
+                }
+                
+            } else if (direction == UISwipeGestureRecognizerDirectionLeft) {
+                // Yellow on background color
+                [swipedCell.backgroundView setBackgroundColor:[UtilitiesController colorFromHexString:@"#278D27"]];
+
+                for (UIView *view in [swipedCell.backgroundView subviews]) {
+                    if ([view isKindOfClass:[UILabel class]]) {
+                        [(UILabel *)view setFrame:CGRectMake(-21.0, 6.0, self.tableView.frame.size.width, 32.0)];
+                        [(UILabel *)view setText:NSLocalizedString(@"Paid", nil)];
+                        [(UILabel *)view setTextAlignment:NSTextAlignmentRight];
+                    }
+                }
+            }
+            
+            // Swipe went over the limit, so we can validate
+            if (fabsf(actualLocation.x - panStartLocation.x) >= self.tableView.frame.size.width * 0.4f) {
+                if (direction == UISwipeGestureRecognizerDirectionRight) {
+                    [self confirmEntranceForIndexPath:swipedIndexPath highligthing:NO];
+                } else if (direction == UISwipeGestureRecognizerDirectionLeft) {
+                    [self confirmPaymentForIndexPath:swipedIndexPath];
+                }
+                
+                [self resetCell:swipedCell];
+            }
+        }
+    
+    } else if (gestureRecognizer.state == UIGestureRecognizerStateEnded) {
+        [self resetCell:swipedCell];
+        
+    } else {
+        [self resetCell:swipedCell];
+    }
+}
+
+- (void)resetCell:(UITableViewCell *)cell {
+    CGRect frame = cell.contentView.frame;
+    frame.origin.x = 0.0;
+    
+    // Reset as soon as possible to cancel posterior gestures
+    panIndexPath = nil;
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        cell.contentView.frame = frame;
+    } completion:^(BOOL finished){
+        cell.backgroundView = nil;
+    }];
+}
+
 - (void)didTap {
     // Remove the keyboard
     [_numberInput resignFirstResponder];
@@ -99,10 +235,28 @@
 
 - (void)didTouch {
     // Get the current number and confirm it
-    [self confirmEntranceForIndexPath:self.hightlightedIndexPath];
+    [self confirmEntranceForIndexPath:hightlightedIndexPath highligthing:YES];
 }
 
-- (void)confirmEntranceForIndexPath:(NSIndexPath *)indexPath {
+- (void)confirmEntranceForIndexPath:(NSIndexPath *)indexPath highligthing:(BOOL)highlight {
+    NSInteger memberID = [self confirmAttribute:[NSString stringWithFormat:@"%d", 1] forKey:@"present" atIndexPath:indexPath highligthing:highlight];
+    
+    if (memberID != 0) {
+        // Send it to the server
+        [[[APIController alloc] initWithDelegate:self forcing:YES] activityConfirmEntranceForPerson:memberID atActivity:[[_activityData objectForKey:@"id"] integerValue] withTokenID:[[HumanToken sharedInstance] tokenID]];
+    }
+}
+
+- (void)confirmPaymentForIndexPath:(NSIndexPath *)indexPath {
+    NSInteger memberID = [self confirmAttribute:[NSString stringWithFormat:@"%d", 1] forKey:@"paid" atIndexPath:indexPath highligthing:NO];
+    
+    if (memberID != 0) {
+        // Send it to the server
+        [[[APIController alloc] initWithDelegate:self forcing:YES] activityConfirmPaymentForPerson:memberID atActivity:[[_activityData objectForKey:@"id"] integerValue] withTokenID:[[HumanToken sharedInstance] tokenID]];
+    }
+}
+
+- (NSInteger)confirmAttribute:(NSString *)attribute forKey:(NSString *)key atIndexPath:(NSIndexPath *)indexPath highligthing:(BOOL)highlight {
     
     if (indexPath != nil) {
         UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
@@ -110,33 +264,44 @@
         if (cell.accessoryType != UITableViewCellAccessoryCheckmark) {
             // Update and change the dictionaries inside people
             NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithDictionary:[self.people objectAtIndex:indexPath.row]];
-            [dictionary setObject:[NSString stringWithFormat:@"%d", 1] forKey:@"present"];
+            [dictionary setObject:attribute forKey:key];
             [self.people replaceObjectAtIndex:indexPath.row withObject:dictionary];
-            
-            // Send it to the server
-            [[[APIController alloc] initWithDelegate:self forcing:YES] activityConfirmEntranceForPerson:[[dictionary objectForKey:@"id"] integerValue] atActivity:[[_activityData objectForKey:@"id"] integerValue] withTokenID:[[HumanToken sharedInstance] tokenID]];
             
             // Remove the current hightlighted cell
             [cell setSelected:NO animated:YES];
-            self.hightlightedIndexPath = nil;
+            hightlightedIndexPath = nil;
             
             // Reload the given row
             [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
             
-            // Scroll to it
-            [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+            if (highlight) {
+                // Scroll to it
+                [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+            }
+            
+            return [[dictionary objectForKey:@"memberID"] integerValue];
         }
     }
+    
+    return 0;
 }
 
 #pragma mark - Gesture Recognizer Methods
 
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
     
-    if (touch.view == gestureRecognizer.view) {
-        return YES;
+    if ([gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]) {
+        UIView *cell = [(UIPanGestureRecognizer *)gestureRecognizer view];
+        CGPoint translation = [(UIPanGestureRecognizer *)gestureRecognizer translationInView:[cell superview]];
+
+        // Check for horizontal gesture
+        if (fabsf(translation.x) > fabsf(translation.y)) {
+            return YES;
+        } else {
+            return NO;
+        }
     } else {
-        return NO;
+        return YES;
     }
 }
 
@@ -162,6 +327,7 @@
     NSDictionary *dictionary = [self.people objectAtIndex:indexPath.row];
     cell.textLabel.text = [[dictionary objectForKey:@"name"] stringByDecodingHTMLEntities];
     cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+    cell.backgroundView = nil;
     
     if ([[dictionary objectForKey:@"present"] integerValue] == 1) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
@@ -173,15 +339,11 @@
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (self.hightlightedIndexPath != nil && self.hightlightedIndexPath.row == indexPath.row) {
+    if (hightlightedIndexPath != nil && [hightlightedIndexPath compare:indexPath] == NSOrderedSame) {
         cell.selected = YES;
     } else {
         cell.selected = NO;
     }
-}
-
-- (void)tableView:(UITableView *)aTableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self confirmEntranceForIndexPath:indexPath];
 }
 
 #pragma mark - Text Field Delegate
@@ -190,9 +352,9 @@
     NSInteger number = [textField.text integerValue];
     
     for (int i = 0; i < [_people count]; i++) {
-        if ([[[_people objectAtIndex:i] objectForKey:@"id"] integerValue] == number) {
+        if ([[[_people objectAtIndex:i] objectForKey:@"memberID"] integerValue] == number) {
             NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
-            self.hightlightedIndexPath = indexPath;
+            hightlightedIndexPath = indexPath;
             
             // Highlight it
             [[self.tableView cellForRowAtIndexPath:indexPath] setSelected:YES animated:YES];
@@ -203,16 +365,16 @@
     }
 }
 
-- (void)textFieldDidEndEditing:(UITextField *)textField {
-    
-    NSInteger number = [textField.text integerValue];
-    
-    for (int i = 0; i < [_people count]; i++) {
-        if ([[[_people objectAtIndex:i] objectForKey:@"id"] integerValue] == number) {
-            [self confirmEntranceForIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
-        }
-    }
-}
+//- (void)textFieldDidEndEditing:(UITextField *)textField {
+//    
+//    NSInteger number = [textField.text integerValue];
+//    
+//    for (int i = 0; i < [_people count]; i++) {
+//        if ([[[_people objectAtIndex:i] objectForKey:@"id"] integerValue] == number) {
+//            [self confirmEntranceForIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
+//        }
+//    }
+//}
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
@@ -237,6 +399,12 @@
         
         [refreshControl endRefreshing];
     }
+}
+
+- (void)apiController:(APIController *)apiController didFailWithError:(NSError *)error {
+    [super apiController:apiController didFailWithError:error];
+    
+    [refreshControl endRefreshing];
 }
 
 @end
