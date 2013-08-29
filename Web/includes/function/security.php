@@ -53,6 +53,13 @@
 			$core->workAtEvent = false;
 			$core->roleID = ROLE_ATTENDEE;
 		}
+
+		// Domain current path
+		$filename = basename($_SERVER['PHP_SELF']);
+		$path = str_replace($filename, '', $_SERVER['PHP_SELF']);
+
+		// Create company cookie if not present
+		if (!isset($_COOKIE["eventID"])) setcookie("eventID", $core->eventID, time() + 60*60*24*30, $path);
 	}
 
 ?>

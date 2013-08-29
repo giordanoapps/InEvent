@@ -36,9 +36,10 @@
                 `member`.`rg`, 
                 `member`.`usp`, 
                 `member`.`telephone`, 
+                `member`.`city`, 
                 `member`.`email`, 
                 `member`.`university`, 
-                `member`.`course`, 
+                `member`.`course`,
                 `eventMember`.`id` AS `requestID`,
                 `eventMember`.`approved`,
                 `eventMember`.`roleID`

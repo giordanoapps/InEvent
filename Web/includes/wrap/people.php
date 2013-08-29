@@ -102,12 +102,9 @@
                         <td><i>Staff</i></td>
                         <td>Inscrição</td>
                         <td>Nome</td>
-                        <td>CPF</td>
-                        <td>RG</td>
-                        <td>Telefone</td>
+                        <td>Email</td>
+                        <td>Cidade</td>
                         <td>Universidade</td>
-                        <td>Curso</td>
-                        <td>USP</td>
                     </tr>
                 </thead>
                 <tbody>
@@ -134,22 +131,13 @@
                             <p class="name"><?php echo ucwords(strtolower($data['name'])) ?></p>
                         </td>
                         <td>
-                            <p class="cpf"><?php echo $data['cpf'] ?></p>
+                            <p class="email"><?php echo $data['email'] ?></p>
                         </td>
                         <td>
-                            <p class="rg"><?php echo $data['rg'] ?></p>
-                        </td>
-                        <td>
-                            <p class="telephone"><?php echo $data['telephone'] ?></p>
+                            <p class="city"><?php echo $data['city'] ?></p>
                         </td>
                         <td>
                             <p class="university"><?php echo $data['university'] ?></p>
-                        </td>
-                        <td>
-                            <p class="course"><?php echo $data['course'] ?></p>
-                        </td>
-                        <td>
-                            <p class="usp"><?php echo $data['usp'] ?></p>
                         </td>
                         <!-- <td>
                             <input

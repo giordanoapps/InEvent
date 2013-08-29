@@ -33,7 +33,7 @@ $(document).ready(function() {
 	        rules: {
 	            name: {
 					required: true,
-					minlength: 10
+					minlength: 6
 				},
 				cpf: "cpf",
 				rg: {
@@ -49,8 +49,7 @@ $(document).ready(function() {
 	                email: true
 	            },
 	            university: {
-	                required: true, 
-	                minlength: 3
+	                required: false
 	            },
 	            course: {
 	                required: true, 
@@ -141,6 +140,21 @@ $(document).ready(function() {
 	});
 
 	/**
+	 * Change the iframe when the user is typing some info
+	 * @return {null} 
+	 */
+	$("#dataContent .dataForm input").live("focusout", function() {
+
+		var $content = $(this).closest(".pageContentBox");
+
+		// Define the form url
+		var url = $content.find(".docsFrame").attr("data-src");
+		url = url.replace(/myName/i, $content.find(".name").val());
+		url = url.replace(/myEmail/i, $content.find(".email").val());
+		$content.find(".docsFrame").attr("src", url);
+	});
+
+	/**
 	 * Trigger the form validator
 	 * @return {null}
 	 */
@@ -148,7 +162,9 @@ $(document).ready(function() {
 
 		var $parent = $(this).parents("#dataContent");
 
-		if ($parent.find(".dataForm").valid()) {
+		console.log($(".docsFrame").contents());
+
+		if ($parent.find(".dataForm").valid() && $(".docsFrame").contents().find("input[type='text']").length == 0) {
 
 			var temp = $parent.find(".dataForm").serializeArray();
 

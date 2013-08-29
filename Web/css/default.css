@@ -1478,6 +1478,11 @@ form {
 
 /* @group Data */
 
+#dataContent .inputHeadline {
+	font-size: 150%;
+	text-shadow: 0 1px 1px #0b0b0b;
+}
+
 #dataContent .dataForm {
 	text-align: left;
 	padding: 10px 0;
@@ -1493,13 +1498,6 @@ form {
 	margin: 2px 0 2px 15px;
 	color: #C40000;
 	display: block;
-}
-
-#dataContent .dataForm .inputHeadline {
-	display: block;
-	font-size: 120%;
-	font-weight: bold;
-	margin: 10px 20px;
 }
 
 #dataContent .dataForm .inputHeader {

@@ -21,10 +21,6 @@
 						</div>
 					
 						<div class="registrationComplete">
-							<p class="inputHeadline">Finalize seu cadastro enviando o formulário abaixo:</p>
-
-							<iframe src="https://docs.google.com/forms/d/1D8MmZ8va92XF6AqqsNRvzI-Rdv7xsg-3PQeHIsit90o/viewform?embedded=true&entry.1562333277=myName&entry.268295612&entry.1839222973=myEmail" width="760" height="500" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
-
 							<p><img src="images/32-Check.png" alt="Check" />Seu cadastro foi concluído com sucesso!</p>
 						</div>
 						

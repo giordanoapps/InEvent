@@ -66,9 +66,6 @@ $.fn.ajax = function(method) {
 			// Resize the bar size
 			$(".menuContent").trigger("resizeBar");
 
-			// if (readCookie("eventID") == null) createCookie("eventID", $(".bar .locationBox .locationItem").first().val(), 10);
-			if (readCookie("eventID") == null) createCookie("eventID", 1);
-
 			// Load the specific initalizer of each page
 			$("#" + newHash + "Content").trigger("hashDidLoad");
 		}

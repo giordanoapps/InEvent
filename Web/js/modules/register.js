@@ -25,6 +25,7 @@ $(document).ready(function() {
 			cpf: details.cpf,
 			rg: details.rg,
 			telephone: details.telephone,
+			city: details.city,
 			university: details.university,
 			course: details.course,
 			usp: details.usp
@@ -32,17 +33,27 @@ $(document).ready(function() {
 		function(data, textStatus, jqXHR) {
 
 			if (jqXHR.status == 200) {
-				// Show the sucess message
-				$content.find(".registrationComplete").fadeIn(0); //.delay(5000).fadeOut(300);
+
+				try {
+					var jsonReturn = JSON.parse(data);
+				} catch (Exception) {
+					console.log("Couldn't parse JSON");
+					return 0;
+				}
+
+				// Create our cookie
+				createCookie("tokenID", jsonReturn.tokenID, 30);
+
+				// Show the sucess screen
+				$content.find(".registrationComplete").fadeIn(0).delay(4000).fadeOut(300, function() {
+					// Move to the event page
+					window.location.hash = "event";
+					// Reload our page
+					window.location.reload();
+				});
 
 				// Remove the registration data
 				localStorage.removeItem("registrationData");
-
-				// Define the form url
-				var url = $content.find("iframe").attr("src");
-				url = url.replace(/myName/i, details.name);
-				url = url.replace(/myEmail/i, details.email);
-				$content.find("iframe").attr("src", url);
 			}
 
 		}, 'html').fail(function(jqXHR, textStatus, errorThrown) {

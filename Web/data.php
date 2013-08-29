@@ -54,44 +54,6 @@
 								/>
 							</p>
 
-<!-- 							<p class="halfWidth">
-								<span class="inputTitle">CPF:</span>
-								<input
-									type="text"
-									name="cpf"
-									id="cpf"
-									class="cpf"
-									<?php if ($core->auth) { ?> readonly="readonly" <?php } ?>
-									value="<?php if ($core->auth) { echo $data["cpf"]; } ?>"
-									placeholder="CPF"
-								/>
-							</p>
-							<p class="halfWidth">
-								<span class="inputTitle">RG:</span>
-								<input
-									type="text"
-									name="rg"
-									id="rg"
-									class="rg"
-									<?php if ($core->auth) { ?> readonly="readonly" <?php } ?>
-									value="<?php if ($core->auth) { echo $data["rg"]; } ?>"
-									placeholder="RG"
-								/>
-							</p>
-							
-							<p class="halfWidth">
-								<span class="inputTitle">Telefone:</span>
-								<input
-									type="text"
-									name="telephone"
-									id="telephone"
-									class="telephone"
-									<?php if ($core->auth) { ?> readonly="readonly" <?php } ?>
-									value="<?php if ($core->auth) { echo $data["telephone"]; } ?>"
-									placeholder="Telefone"
-								/>
-							</p> -->
-
 							<p class="fullWidth">
 								<span class="inputTitle">Email:</span>
 								<input
@@ -105,7 +67,20 @@
 								/>
 							</p>
 
-<!-- 							<p class="halfWidth">
+							<p class="halfWidth">
+								<span class="inputTitle">Cidade:</span>
+								<input
+									type="text"
+									name="city"
+									id="city"
+									class="city"
+									<?php if ($core->auth) { ?> readonly="readonly" <?php } ?>
+									value="<?php if ($core->auth) { echo $data["city"]; } ?>"
+									placeholder="Cidade"
+								/>
+							</p>
+
+							<p class="halfWidth">
 								<span class="inputTitle">Universidade:</span>
 								<input
 									type="text"
@@ -113,20 +88,9 @@
 									id="university"
 									class="university"
 									value=""
-									placeholder="Universidade"
+									placeholder="Caso seja universitário, informe onde estuda"
 								/>
 							</p>
-							<p class="halfWidth">
-								<span class="inputTitle">Curso:</span>
-								<input
-									type="text"
-									name="course"
-									id="course"
-									class="course"
-									value=""
-									placeholder="Curso"
-								/>
-							</p> -->
 							
 							<p class="halfWidth">
 								<span class="inputTitle">Senha:</span>
@@ -164,7 +128,7 @@
 										Li e estou de acordo com os <a href="terms.php" target="_blank">Termos de Uso do InEvent</a>.
 									</span>
 								</p>
-								<p>
+								<!-- <p>
 									<input
 										type="checkbox"
 										name="newsletter"
@@ -176,10 +140,20 @@
 									<span class="newsletterTitle">
 										Desejo receber informações sobre novidades no InEvent (1 email por mês).
 									</span>
-								</p>
+								</p> -->
 							</div>
 						</form>
-						
+
+						<!-- <div class="docsForm">
+							<p class="inputHeadline">Finalize seu cadastro enviando o formulário abaixo:</p>
+
+							<iframe
+								class="docsFrame"
+								src="https://docs.google.com/forms/d/1D8MmZ8va92XF6AqqsNRvzI-Rdv7xsg-3PQeHIsit90o/viewform?embedded=true&entry.1562333277=myName&entry.268295612&entry.1839222973=myEmail" 
+								data-src="https://docs.google.com/forms/d/1D8MmZ8va92XF6AqqsNRvzI-Rdv7xsg-3PQeHIsit90o/viewform?embedded=true&entry.1562333277=myName&entry.268295612&entry.1839222973=myEmail" 
+								width="760" height="500" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
+						</div> -->
+					
 					</div>
 					
 					<?php if (!$core->auth) { ?>

@@ -141,6 +141,7 @@
 			// Optional
 			$cpf = (isset($_POST["cpf"])) ? getEmptyAttribute($_POST["cpf"]) : "";
 			$rg = (isset($_POST["rg"])) ? getEmptyAttribute($_POST["rg"]) : "";
+			$city = (isset($_POST["city"])) ? getEmptyAttribute($_POST["city"]) : "";
 			$university = (isset($_POST["university"])) ? getEmptyAttribute($_POST["university"]) : "";
 			$course = (isset($_POST["course"])) ? getEmptyAttribute($_POST["course"]) : "";
 			$telephone = (isset($_POST["telephone"])) ? getEmptyAttribute($_POST["telephone"]) : "";
@@ -151,10 +152,8 @@
 					`member`.`name`
 				FROM
 					`member`
-				INNER JOIN
-					`memberDetail` ON `memberDetail`.`id` = `member`.`id`
-				WHERE
-					`memberDetail`.`email` = '$email'
+				WHERE 0
+					OR BINARY `member`.`email` = '$email'
 			");
 
 			if (mysql_num_rows($result) == 0) {
@@ -163,9 +162,9 @@
 				$insert = resourceForQuery(
 					"INSERT INTO
 						`member`
-						(`name`, `password`, `cpf`, `rg`, `usp`, `telephone`, `email`, `university`, `course`)
+						(`name`, `password`, `cpf`, `rg`, `usp`, `telephone`, `city`, `email`, `university`, `course`)
 					VALUES 
-						('$name', '" . Bcrypt::hash($password) . "', '$cpf', '$rg', '$usp', '$telephone', '$email', '$university', '$course')
+						('$name', '" . Bcrypt::hash($password) . "', '$cpf', '$rg', '$usp', '$telephone', '$city', '$email', '$university', '$course')
 				");
 
 				$memberID = mysql_insert_id();
@@ -200,7 +199,7 @@
 
 				if ($memberID != 0) {
 					// Return the desired data
-					$data = array("memberID", $memberID);
+					$data = processLogIn($email, $password);
 					echo json_encode($data);
 				} else {
 					http_status_code(500);
