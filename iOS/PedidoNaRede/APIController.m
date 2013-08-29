@@ -94,6 +94,15 @@
     }
 }
 
+- (void)activityRevokeEntranceForPerson:(NSInteger)personID atActivity:(NSInteger)activityID withTokenID:(NSString *)tokenID {
+    
+    if (tokenID != nil) {
+        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID, @"activityID" : [NSString stringWithFormat:@"%d", activityID], @"personID" : [NSString stringWithFormat:@"%d", personID]}};
+        
+        [self JSONObjectWithNamespace:@"activity" method:@"revokeEntrance" attributes:attributes];
+    }
+}
+
 - (void)activityConfirmPaymentForPerson:(NSInteger)personID atActivity:(NSInteger)activityID withTokenID:(NSString *)tokenID {
     
     if (tokenID != nil) {
@@ -234,10 +243,10 @@
 }
 
 #pragma mark - Person
-- (void)personSignIn:(NSString *)name withPassword:(NSString *)password {
+- (void)personSignIn:(NSString *)email withPassword:(NSString *)password {
     
-    if (name != nil && password != nil) {
-        NSDictionary *attributes = @{@"GET" : @{@"name" : name, @"password" : password}};
+    if (email != nil && password != nil) {
+        NSDictionary *attributes = @{@"GET" : @{@"email" : email, @"password" : password}};
         
         [self JSONObjectWithNamespace:@"person" method:@"signIn" attributes:attributes];
     }

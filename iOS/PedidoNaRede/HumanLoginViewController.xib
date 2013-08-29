@@ -162,7 +162,7 @@
 												<int key="IBUIContentVerticalAlignment">0</int>
 												<string key="IBUIText"/>
 												<int key="IBUIBorderStyle">3</int>
-												<string key="IBUIPlaceholder">Nome</string>
+												<string key="IBUIPlaceholder">Email</string>
 												<object class="NSColor" key="IBUITextColor">
 													<int key="NSColorSpace">3</int>
 													<bytes key="NSWhite">MAA</bytes>
@@ -174,7 +174,7 @@
 												<float key="IBUIMinimumFontSize">17</float>
 												<object class="IBUITextInputTraits" key="IBUITextInputTraits">
 													<int key="IBUIAutocorrectionType">1</int>
-													<int key="IBUIKeyboardType">1</int>
+													<int key="IBUIKeyboardType">7</int>
 													<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 												</object>
 												<object class="IBUIFontDescription" key="IBUIFontDescription" id="726057470">
@@ -239,6 +239,7 @@
 										<string key="NSFrame">{{51, 237}, {218, 44}}</string>
 										<reference key="NSSuperview" ref="662871975"/>
 										<reference key="NSWindow"/>
+										<reference key="NSNextKeyView"/>
 										<string key="NSReuseIdentifierKey">_NS:9</string>
 										<bool key="IBUIOpaque">NO</bool>
 										<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>

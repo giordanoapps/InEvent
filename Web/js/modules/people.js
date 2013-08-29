@@ -32,7 +32,7 @@ $(document).ready(function() {
 		$.post('developer/api/?' + $.param({
 			method: namespace + ".getPeople",
 			activityID: identifier,
-			eventID: identifier,
+			eventID: 2,
 			selection: "all",
 			format: "html"
 		}), {},
@@ -66,7 +66,7 @@ $(document).ready(function() {
 		// We request the information on the server
 		$.post('developer/api/?' + $.param({
 			method: "event." + method,
-			eventID: 1,
+			eventID: 2,
 			personID: personID,
 			format: "html"
 		}), {},

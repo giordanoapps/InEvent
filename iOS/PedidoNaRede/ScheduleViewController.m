@@ -126,9 +126,6 @@
     [title setTextColor:[ColorThemeController textColor]];
     [title setBackgroundColor:[UIColor clearColor]];
     
-//    UIView *border = [[UIView alloc] initWithFrame:CGRectMake(0.0, 39.0, tableView.frame.size.width, 1.0)];
-//    [border setBackgroundColor:[ColorThemeController tableViewCellInternalBorderColor]];
-    
     [headerView addSubview:background];
     [headerView addSubview:title];
     

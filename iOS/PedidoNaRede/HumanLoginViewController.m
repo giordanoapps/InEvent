@@ -91,8 +91,7 @@
     _waiterUsername.frame = CGRectMake(0.0, 0.0, 218.0, 50.0);
     _waiterUsername.leftView = waiterUsernamePaddingView;
     _waiterUsername.leftViewMode = UITextFieldViewModeAlways;
-    _waiterUsername.keyboardType = UIKeyboardTypeASCIICapable;
-	_waiterUsername.placeholder = NSLocalizedString(@"Name", nil);
+	_waiterUsername.placeholder = NSLocalizedString(@"Email", nil);
 	_waiterUsername.textColor = [UIColor colorWithWhite:0.000 alpha:1.000];
     // Bottom Border
     CALayer *bottomBorder = [CALayer layer];
@@ -107,7 +106,6 @@
     _waiterPassword.frame = CGRectMake(0.0, 50.0, 218.0, 50.0);
     _waiterPassword.leftView = waiterPasswordPaddingView;
     _waiterPassword.leftViewMode = UITextFieldViewModeAlways;
-    _waiterPassword.keyboardType = UIKeyboardTypeASCIICapable;
 	_waiterPassword.placeholder = NSLocalizedString(@"Password", nil);
 	_waiterPassword.textColor = [ColorThemeController textColor];
     

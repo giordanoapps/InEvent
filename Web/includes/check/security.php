@@ -42,7 +42,7 @@
 
 	// If the number of attempts is not exorbitant, we can proceeed with our login call
 	if ($security->attempts >= 2) {
-		$_POST["login_error"] = "Esta conta foi bloqueada.";
+		$_POST["login_error"] = "Conta Bloqueada";
 		$insert = resourceForQuery(
 			"UPDATE
 				`loginAttempts`

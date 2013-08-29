@@ -13,8 +13,9 @@
         #define URL @"http://localhost:8888/InEvent/Web/"
         //#define URL @"http://agarca.com.br/"
     #else
-        #define URL @"http://192.168.0.106:8888/InEvent/Web/"
+        //#define URL @"http://192.168.0.106:8888/InEvent/Web/"
         //#define URL @"http://pedrogoes.info/InEvent/Web/"
+        #define URL @"http://inevent.us/"
     #endif
 #else
     #define URL @"http://inevent.us/"
@@ -55,6 +56,7 @@
 - (void)activityDismissEnrollmentAtActivity:(NSInteger)activityID withTokenID:(NSString *)tokenID;
 - (void)activityDismissEnrollmentForPerson:(NSInteger)personID atActivity:(NSInteger)activityID withTokenID:(NSString *)tokenID;
 - (void)activityConfirmEntranceForPerson:(NSInteger)personID atActivity:(NSInteger)activityID withTokenID:(NSString *)tokenID;
+- (void)activityRevokeEntranceForPerson:(NSInteger)personID atActivity:(NSInteger)activityID withTokenID:(NSString *)tokenID;
 - (void)activityConfirmPaymentForPerson:(NSInteger)personID atActivity:(NSInteger)activityID withTokenID:(NSString *)tokenID;
 - (void)activityGetPeopleAtActivity:(NSInteger)activityID withTokenID:(NSString *)tokenID;
 - (void)activityGetQuestionsAtActivity:(NSInteger)activityID withTokenID:(NSString *)tokenID;
@@ -75,7 +77,7 @@
 - (void)notificationGetSingleNotification:(NSInteger)notificationID withTokenID:(NSString *)tokenID;
 
 #pragma mark - Person
-- (void)personSignIn:(NSString *)name withPassword:(NSString *)password;
+- (void)personSignIn:(NSString *)email withPassword:(NSString *)password;
 - (void)personSignInWithFacebookToken:(NSString *)facebookToken;
 - (void)personRegister:(NSString *)name withPassword:(NSString *)password withEmail:(NSString *)email;
 - (void)personGetEventsWithToken:(NSString *)tokenID;

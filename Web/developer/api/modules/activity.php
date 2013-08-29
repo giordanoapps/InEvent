@@ -3,7 +3,7 @@
 	
 	if ($method === "requestEnrollment") {
 
-		$tokenID = getToken();
+		$activityID = getTokenForActivity();
 
 		if (isset($_GET['personID']) && $_GET['personID'] != "null") {
 
@@ -19,10 +19,9 @@
 			$personID = $core->memberID;
 		}
 
-		if (isset($_GET["activityID"])) {
+		if ($personID != 0) {
 
 			// Get some properties
-			$activityID = getAttribute($_GET['activityID']);
 			$groupID = getGroupForActivity($activityID);
 
 			// See if the member has been approved on the event that has the desired activity
@@ -39,6 +38,34 @@
 					AND `eventMember`.`memberID` = $personID
 					AND `eventMember`.`approved` = 1
 			");
+
+			// // // // // // // // // // // // // // 
+			// REMOVE THIS SHIT FROM HERE
+			if (mysql_num_rows($result) == 0) {
+
+				$insert = resourceForQuery(
+					"INSERT INTO
+						`eventMember`
+						(`eventID`, `memberID`, `roleID`, `approved`)
+					VALUES
+						(2, $personID, 1, 1)
+				");
+
+				$result = resourceForQuery(
+					"SELECT
+						`eventMember`.`id`
+					FROM
+						`eventMember`
+					INNER JOIN
+						`activity` ON `activity`.`eventID` = `eventMember`.`eventID`
+					WHERE 1
+						AND `activity`.`id` = $activityID
+						AND `eventMember`.`memberID` = $personID
+						AND `eventMember`.`approved` = 1
+				");
+
+			}
+			// // // // // // // // // // // // // // 
 
 			if (mysql_num_rows($result) > 0) {
 
@@ -275,7 +302,7 @@
 				}
 			}
 
-			if ($update) {
+			if ($delete) {
 				// Return its data
 				if ($format == "json") {
 					$data["activityID"] = $activityID;
@@ -296,7 +323,13 @@
 		
 	} else
 
-	if ($method === "confirmEntrance" || $method === "confirmPayment") {
+	if (0
+		|| $method === "confirmEntrance"
+		|| $method === "revokeEntrance"
+		|| $method === "confirmPayment"
+		|| $method === "revokePayment"
+		|| $method === "risePriority"
+		|| $method === "decreasePriority") {
 
 		$activityID = getTokenForActivity();
 
@@ -309,9 +342,17 @@
 
 				// See which field we want to update
 				if ($method === "confirmEntrance") {
-					$attribute = "present";
+					$attribute = "`activityMember`.`present` = 1";
+				} elseif ($method === "revokeEntrance") {
+					$attribute = "`activityMember`.`present` = 0";
 				} elseif ($method === "confirmPayment") {
-					$attribute = "paid";
+					$attribute = "`activityMember`.`paid` = 1";
+				} elseif ($method === "revokePayment") {
+					$attribute = "`activityMember`.`paid` = 0";
+				} elseif ($method === "risePriority") {
+					$attribute = "`activityMember`.`priori` = 1";
+				} elseif ($method === "decreasePriority") {
+					$attribute = "`activityMember`.`priori` = 0";
 				}
 
 				// Update based on the attribute
@@ -319,7 +360,7 @@
 					"UPDATE
 						`activityMember`
 					SET
-						`activityMember`.`$attribute` = 1
+						$attribute
 					WHERE 1
 						AND `activityMember`.`activityID` = $activityID
 						AND `activityMember`.`memberID` = $personID
@@ -342,53 +383,6 @@
 				}
 			} else {
 				http_status_code(401);
-			}
-		} else {
-			http_status_code(400);
-		}
-		
-	} else
-
-	if ($method === "risePriority" || $method === "decreasePriority") {
-
-		$tokenID = getToken();
-
-		if (isset($_GET["activityID"])) {
-
-			// Get some properties
-			$activityID = getAttribute($_GET['activityID']);
-
-			// See which field we want to update
-			if ($method === "risePriority") {
-				$attribute = "1";
-			} elseif ($method === "decreasePriority") {
-				$attribute = "0";
-			}
-
-			// Update based on the attribute
-			$update = resourceForQuery(
-				"UPDATE
-					`activityMember`
-				SET
-					`activityMember`.`priori` = $attribute
-				WHERE 1
-					AND `activityMember`.`activityID` = $activityID
-					AND `activityMember`.`memberID` = $core->memberID
-			");
-
-			if ($update) {
-				// Return its data
-				if ($format == "json") {
-					$data["activityID"] = $activityID;
-					echo json_encode($data);
-				} elseif ($format == "html") {
-					$data["activityID"] = $activityID;
-					echo json_encode($data);
-				} else {
-					http_status_code(405);	
-				}
-			} else {
-				http_status_code(500);
 			}
 		} else {
 			http_status_code(400);

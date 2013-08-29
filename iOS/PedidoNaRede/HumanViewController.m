@@ -64,6 +64,7 @@
     // Title
     [_name.titleLabel setNumberOfLines:0];
     [_name setTitle:@"" forState:UIControlStateNormal];
+    [_name.titleLabel setTextAlignment:NSTextAlignmentCenter];
     [_name setTitleColor:[ColorThemeController tableViewCellTextColor] forState: UIControlStateNormal];
     [_name setTitleColor:[ColorThemeController tableViewCellTextColor] forState:UIControlStateHighlighted];
 }

@@ -24,7 +24,7 @@ $(document).ready(function() {
 	 * Tool to change the state of a checkbox
 	 * @return {null}
 	 */
-	$(".checkbox:not(.active)").live("click", function(event, isPropagating) {
+	$(".checkbox").live("click", function(event, isPropagating) {
 
 		if ($(this).attr("readonly") == "readonly") return;
 		// Toggle the state of the propagation save

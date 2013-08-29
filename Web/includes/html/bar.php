@@ -121,9 +121,9 @@
 			
 			<ul class="rightBar">
 
-				<a href="data.php"><li class="first">Registrar!</li></a>
+				<a href="data.php"><li class="first">Registrar</li></a>
 				
-				<li onclick="" class="userLoginLeading first">Entrar!</li>
+				<li onclick="" class="userLoginLeading first">Entrar</li>
 				<li onclick="" class="userLoginBox secondary">
 					<div class="facebookBox">
 						<img src="images/facebookButton.png" name="" id="" />
@@ -134,9 +134,17 @@
 					
 					<div class="memberBox">
 						<form method="post" action="home.php">
-							<input type="text" placeholder="Nome"  name="name"/>
+							<input type="text" placeholder="Email" name="email"/>
 							<input type="password" placeholder="Senha" name="password"/>
-							<input type="submit" class="singleButton" value="Entrar!" />
+							<input type="submit" class="singleButton" value="Entrar" />
+							<?php if (isset($_POST["login_error"])) { ?>
+							<p class="errorMessage"><?php echo $_POST["login_error"] ?></p>
+							<?php if (isset($_POST["login_count"])) { ?>
+								<p class="errorHint">Esta foi sua tentativa número <?php echo $_POST["login_count"] ?> de no máximo 3. Após isso sua conta será bloqueada e uma nova senha será enviada para seu email.</p>
+							<?php } else { ?>
+								<p class="errorHint">Sua conta foi bloqueada por 10 minutos e uma nova senha foi enviada para seu email.</p>
+							<?php } ?>
+						<?php } ?>
 						</form>
 					</div>
 				</li>

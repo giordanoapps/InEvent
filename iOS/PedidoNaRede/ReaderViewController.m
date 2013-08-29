@@ -197,9 +197,9 @@
             // Swipe went over the limit, so we can validate
             if (fabsf(actualLocation.x - panStartLocation.x) >= self.tableView.frame.size.width * 0.4f) {
                 if (direction == UISwipeGestureRecognizerDirectionRight) {
-                    [self confirmEntranceForIndexPath:swipedIndexPath highligthing:NO];
+                    [self toggleEntranceForIndexPath:swipedIndexPath highligthing:NO];
                 } else if (direction == UISwipeGestureRecognizerDirectionLeft) {
-                    [self confirmPaymentForIndexPath:swipedIndexPath];
+                    [self togglePaymentForIndexPath:swipedIndexPath];
                 }
                 
                 [self resetCell:swipedCell];
@@ -234,20 +234,39 @@
 }
 
 - (void)didTouch {
-    // Get the current number and confirm it
-    [self confirmEntranceForIndexPath:hightlightedIndexPath highligthing:YES];
+    [self triggerConfirmation];
 }
 
-- (void)confirmEntranceForIndexPath:(NSIndexPath *)indexPath highligthing:(BOOL)highlight {
-    NSInteger memberID = [self confirmAttribute:[NSString stringWithFormat:@"%d", 1] forKey:@"present" atIndexPath:indexPath highligthing:highlight];
+- (void)triggerConfirmation {
+    // Get the current number and confirm it
+    [self toggleEntranceForIndexPath:hightlightedIndexPath highligthing:YES];
     
-    if (memberID != 0) {
-        // Send it to the server
-        [[[APIController alloc] initWithDelegate:self forcing:YES] activityConfirmEntranceForPerson:memberID atActivity:[[_activityData objectForKey:@"id"] integerValue] withTokenID:[[HumanToken sharedInstance] tokenID]];
+    // Erase the current number
+    [_numberInput setText:@"000"];
+}
+
+- (void)toggleEntranceForIndexPath:(NSIndexPath *)indexPath highligthing:(BOOL)highlight {
+    
+    if ([[[self.people objectAtIndex:indexPath.row] objectForKey:@"present"] integerValue] == 0) {
+        
+        NSInteger memberID = [self confirmAttribute:[NSString stringWithFormat:@"%d", 1] forKey:@"present" atIndexPath:indexPath highligthing:highlight];
+        
+        if (memberID != 0) {
+            // Send it to the server
+            [[[APIController alloc] initWithDelegate:self forcing:YES] activityConfirmEntranceForPerson:memberID atActivity:[[_activityData objectForKey:@"id"] integerValue] withTokenID:[[HumanToken sharedInstance] tokenID]];
+        }
+    } else {
+        
+        NSInteger memberID = [self confirmAttribute:[NSString stringWithFormat:@"%d", 0] forKey:@"present" atIndexPath:indexPath highligthing:highlight];
+        
+        if (memberID != 0) {
+            // Send it to the server
+            [[[APIController alloc] initWithDelegate:self forcing:YES] activityRevokeEntranceForPerson:memberID atActivity:[[_activityData objectForKey:@"id"] integerValue] withTokenID:[[HumanToken sharedInstance] tokenID]];
+        }
     }
 }
 
-- (void)confirmPaymentForIndexPath:(NSIndexPath *)indexPath {
+- (void)togglePaymentForIndexPath:(NSIndexPath *)indexPath {
     NSInteger memberID = [self confirmAttribute:[NSString stringWithFormat:@"%d", 1] forKey:@"paid" atIndexPath:indexPath highligthing:NO];
     
     if (memberID != 0) {
@@ -259,28 +278,27 @@
 - (NSInteger)confirmAttribute:(NSString *)attribute forKey:(NSString *)key atIndexPath:(NSIndexPath *)indexPath highligthing:(BOOL)highlight {
     
     if (indexPath != nil) {
+        // Get the current cell
         UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
         
-        if (cell.accessoryType != UITableViewCellAccessoryCheckmark) {
-            // Update and change the dictionaries inside people
-            NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithDictionary:[self.people objectAtIndex:indexPath.row]];
-            [dictionary setObject:attribute forKey:key];
-            [self.people replaceObjectAtIndex:indexPath.row withObject:dictionary];
-            
-            // Remove the current hightlighted cell
-            [cell setSelected:NO animated:YES];
-            hightlightedIndexPath = nil;
-            
-            // Reload the given row
-            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-            
-            if (highlight) {
-                // Scroll to it
-                [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
-            }
-            
-            return [[dictionary objectForKey:@"memberID"] integerValue];
+        // Update and change the dictionaries inside people
+        NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithDictionary:[self.people objectAtIndex:indexPath.row]];
+        [dictionary setObject:attribute forKey:key];
+        [self.people replaceObjectAtIndex:indexPath.row withObject:dictionary];
+        
+        // Remove the current hightlighted cell
+        [cell setSelected:NO animated:YES];
+        hightlightedIndexPath = nil;
+        
+        // Reload the given row
+        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        
+        if (highlight) {
+            // Scroll to it
+            [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
         }
+        
+        return [[dictionary objectForKey:@"memberID"] integerValue];
     }
     
     return 0;
@@ -365,19 +383,11 @@
     }
 }
 
-//- (void)textFieldDidEndEditing:(UITextField *)textField {
-//    
-//    NSInteger number = [textField.text integerValue];
-//    
-//    for (int i = 0; i < [_people count]; i++) {
-//        if ([[[_people objectAtIndex:i] objectForKey:@"id"] integerValue] == number) {
-//            [self confirmEntranceForIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
-//        }
-//    }
-//}
-
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
+    
+    // Save the current number
+    [self triggerConfirmation];
     
     return YES;
 }

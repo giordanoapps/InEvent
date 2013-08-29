@@ -12,6 +12,8 @@ $(document).ready(function() {
 		// Focus on the element so the key event may work
 		$(this).focus();
 
+		$(this).find(".middlePort").delay(800).animate({left: "30%"}, 300);
+
 		// Select the first section
 		$(this).find(".section:first-child").addClass("sectionVisible");
 	
@@ -118,6 +120,27 @@ $(document).ready(function() {
 			$(this).closest("#homeContent").trigger("loadCover", [100]);
 		} else {
 			$(this).closest("#homeContent").trigger("loadCover", [-100]);
+		}
+
+	 });
+
+	/**
+	 * Toggle the app deck
+	 * @return {null}
+	 */
+	$("#homeContent .middlePort .trigger").live("click", function(event) {
+
+		var $close = $(this).find(".close");
+		var $open = $(this).find(".open");
+
+		if ($close.is(":visible")) {
+			$open.fadeIn(300);
+			$close.fadeOut(300);
+			$(this).closest(".middlePort").animate({left: "-40%"}, 300);
+		} else {
+			$open.fadeOut(300);
+			$close.fadeIn(300);
+			$(this).fadeIn(300).closest(".middlePort").animate({left: "30%"}, 300);
 		}
 
 	 });

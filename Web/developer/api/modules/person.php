@@ -3,14 +3,34 @@
 
 	if ($method === "signIn") {
 
-		if (isset($_GET["name"]) && isset($_GET["password"])) {
+		if (isset($_GET["password"])) {
+
+			$email = "";
 
 			// Get some properties
-			$name = getAttribute($_GET['name']);
+			if (isset($_GET["email"])) {
+				$email = getAttribute($_GET['email']);
+			} elseif (isset($_GET["member"])) {
+				$member = getAttribute($_GET['member']);
+
+				$result = resourceForQuery(
+					"SELECT
+						`member`.`email`
+					FROM
+						`member`
+					WHERE 1
+						AND BINARY `member`.`name` = '$member'
+				");
+
+				if (mysql_num_rows($result) > 0) {	
+					$email = mysql_result($result, 0, "email");
+				}
+
+			}
 			$password = getAttribute($_GET['password']);
 
 			// Return the desired data
-			$data = processLogIn($name, $password);
+			$data = processLogIn($email, $password);
 			echo json_encode($data);
 		} else {
 			http_status_code(400);
@@ -42,12 +62,12 @@
 						"SELECT
 							`member`.`id`,
 							`member`.`name`,
-							`memberSessions`.`sessionKey`
+							COALESCE(`memberSessions`.`sessionKey`, '') AS `sessionKey`
 						FROM
 							`member`
 						INNER JOIN
 							`memberDetail` ON `memberDetail`.`id` = `member`.`id`
-						INNER JOIN
+						LEFT JOIN
 							`memberSessions` ON `memberSessions`.`memberID` = `member`.`id`
 						WHERE 0
 							OR BINARY `member`.`name` = '$name'
@@ -59,15 +79,17 @@
 					// Member already has a profile with us
 					if (mysql_num_rows($result) > 0) {
 
+						$name = mysql_result($result, 0, "name");
 						$memberID = mysql_result($result, 0, "id");
+						$tokenID = mysql_result($result, 0, "sessionKey");
 
-						$companies = getMemberEvents($memberID);
+						$events = getMemberEvents($memberID);
 
 						// Return some information
-						$data["name"] = mysql_result($result, 0, "name");
+						$data["name"] = $name;
 						$data["memberID"] = $memberID;
-						$data["companies"] = $companies["data"];
-						$data["tokenID"] = mysql_result($result, 0, "sessionKey");
+						$data["events"] = $events["data"];
+						$data["tokenID"] = $tokenID;
 
 						echo json_encode($data);
 
@@ -80,7 +102,7 @@
 
 						if ($memberID != 0) {
 							// Return the desired data
-							$data = processLogIn($name, $password);
+							$data = processLogIn($email, $password);
 							echo json_encode($data);
 						} else {
 							http_status_code(500);
@@ -117,21 +139,22 @@
 			$email = getAttribute($_POST["email"]);
 
 			// Optional
-			$cpf = getEmptyAttribute($_POST["cpf"]);
-			$rg = getEmptyAttribute($_POST["rg"]);
-			$university = getEmptyAttribute($_POST["university"]);
-			$course = getEmptyAttribute($_POST["course"]);
-			$telephone = getEmptyAttribute($_POST["telephone"]);
-			$usp = getEmptyAttribute($_POST["usp"]);
+			$cpf = (isset($_POST["cpf"])) ? getEmptyAttribute($_POST["cpf"]) : "";
+			$rg = (isset($_POST["rg"])) ? getEmptyAttribute($_POST["rg"]) : "";
+			$university = (isset($_POST["university"])) ? getEmptyAttribute($_POST["university"]) : "";
+			$course = (isset($_POST["course"])) ? getEmptyAttribute($_POST["course"]) : "";
+			$telephone = (isset($_POST["telephone"])) ? getEmptyAttribute($_POST["telephone"]) : "";
+			$usp = (isset($_POST["usp"])) ? getEmptyAttribute($_POST["usp"]) : "";
 
 			$result = resourceForQuery(
 				"SELECT
 					`member`.`name`
 				FROM
 					`member`
-				WHERE 0
-					OR `member`.`name` = '$name'
-					OR `member`.`email` = '$email'
+				INNER JOIN
+					`memberDetail` ON `memberDetail`.`id` = `member`.`id`
+				WHERE
+					`memberDetail`.`email` = '$email'
 			");
 
 			if (mysql_num_rows($result) == 0) {
@@ -154,7 +177,7 @@
 						`eventMember`
 						(`eventID`, `memberID`, `roleID`, `approved`)
 					VALUES
-						(1, $memberID, 1, 1)
+						(2, $memberID, 1, 1)
 				");
 				////////////////////////////////////////
 

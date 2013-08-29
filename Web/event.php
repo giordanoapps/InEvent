@@ -12,12 +12,12 @@
 		<div id="eventContent" class="pageContent fullPageContent">
 			
 			<div class="placerContent">
-				<?php printScheduleForMember(1, $core->memberID); ?>
+				<?php printScheduleForMember(2, $core->memberID); ?>
 			</div>
 			
 			<div class="boardContent">		
 				<div class="realContent">
-					<?php printAgenda(1, $core->memberID); ?>
+					<?php printAgenda(2, $core->memberID); ?>
 				</div>
 			</div>
 		</div>

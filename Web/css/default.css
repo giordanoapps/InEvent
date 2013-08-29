@@ -328,6 +328,7 @@ form {
 	left: 34.2%;
 	top: 35%;
 	width: 30px;
+	height: auto;
 	margin: 0 auto;
 	border-radius: 40px;
 	padding: 3px;
@@ -344,6 +345,20 @@ form {
 .bar .secondary .memberBox .singleButton {
 	padding: 1px 15px;
 	height: 48px;
+}
+
+.bar .memberBox .errorMessage {
+	margin: 10px 0 0 0;
+	float: left;
+	width: 40%;
+	color: #CA0505;
+}
+
+.bar .memberBox .errorHint {
+	margin: 10px 0 0 0;
+	color: #333;
+	font-size: 50%;
+	overflow: hidden;
 }
 
 .bar .notificationsInfo, .bar .userSettingsInfo {
@@ -766,6 +781,66 @@ form {
 	top: 0;
 	z-index: 20;
 	width: 100%;
+}
+
+#homeContent .middlePort {
+	background-color: rgba(0, 0, 0, 0.8);
+	position: fixed;
+	top: 20%;
+	left: -100%;
+	width: 36%;
+	z-index: 20;
+	padding: 2% 4%;
+	border-radius: 30px;
+}
+
+#homeContent .middlePort .trigger {
+	position: absolute;
+	top: 0;
+	right: 0;
+	height: 100%;
+	cursor: pointer;
+}
+
+#homeContent .middlePort .trigger .close {
+	width: 32px;
+	height: 32px;
+	position: absolute;
+	top: 10px;
+	right: 15px;
+	opacity: 0.6;
+}
+
+#homeContent .middlePort .trigger .open {
+	display: none;
+	width: 48px;
+	height: 48px;
+	position: absolute;
+	top: 40%;
+	right: 5px;
+}
+
+#homeContent .middlePort .description {
+	margin-top: 0;
+}
+
+#homeContent .middlePort ul {
+	width: 100%;
+	padding: 15px 0;
+}
+
+#homeContent .middlePort li {
+	display: block;
+	width: 49%;
+	text-align: center;
+	float: left;
+}
+
+#homeContent .middlePort img {
+	height: 60px;
+	vertical-align: middle;
+	display: inline-block;
+	margin-top: 5px;
 }
 
 #homeContent .section {

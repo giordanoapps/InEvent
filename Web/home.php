@@ -9,6 +9,29 @@
 		<div id="homeContent" class="pageContent" tabindex="0">
 
 			<div class="upperDeck"></div>
+
+			<div class="middlePort">
+				<div class="trigger">
+					<img src="images/32-Cross-Light.png" class="close" alt="Close the app deck">
+					<img src="images/64-iPhone-4.png" class="open" alt="Show the app deck">
+				</div>
+				<div class="header">
+					<p class="title">Aplicativo nativo</p>
+					<p class="description">Baixe nosso aplicativo, disponível para iOS e Android.</p>
+				</div>
+				<ul>
+					<li>
+						<a target="_blank" href="https://itunes.apple.com/us/app/inevent/id687142023?ls=1&mt=8">
+							<img src="images/appstore-black.png" alt="Download from App Store">
+						</a>
+					</li>
+					<li>
+						<a target="_blank" href="https://play.google.com/store/apps/details?id=com.estudiotrilha.inevent">
+							<img src="images/googleplay-grey.png" alt="Download from Google Play">
+						</a>
+					</li>
+				</ul>
+			</div>
 		
 			<article class="section" style="	background-image: url(images/grande_auditorio__1_0.jpg);">
 				

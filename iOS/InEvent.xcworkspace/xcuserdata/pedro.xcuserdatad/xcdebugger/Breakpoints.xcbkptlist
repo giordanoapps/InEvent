@@ -730,11 +730,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PedidoNaRede/APIController.m"
-         timestampString = "398668666.536689"
+         timestampString = "398723820.033347"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "545"
-         endingLineNumber = "545">
+         startingLineNumber = "554"
+         endingLineNumber = "554">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -780,11 +780,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PedidoNaRede/HumanLoginViewController.m"
-         timestampString = "398662793.904109"
+         timestampString = "398719790.753277"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "258"
-         endingLineNumber = "258"
+         startingLineNumber = "256"
+         endingLineNumber = "256"
          landmarkName = "-loginFacebook"
          landmarkType = "5">
       </FileBreakpoint>
@@ -793,11 +793,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PedidoNaRede/HumanLoginViewController.m"
-         timestampString = "398662793.904109"
+         timestampString = "398719790.753277"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "275"
-         endingLineNumber = "275"
+         startingLineNumber = "273"
+         endingLineNumber = "273"
          landmarkName = "@implementation HumanLoginViewController"
          landmarkType = "3">
       </FileBreakpoint>
@@ -806,11 +806,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PedidoNaRede/HumanLoginViewController.m"
-         timestampString = "398662793.904109"
+         timestampString = "398719790.753277"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "272"
-         endingLineNumber = "272"
+         startingLineNumber = "270"
+         endingLineNumber = "270"
          landmarkName = "-loginFacebook"
          landmarkType = "5">
       </FileBreakpoint>
@@ -845,22 +845,22 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PedidoNaRede/APIController.m"
-         timestampString = "398668666.536689"
+         timestampString = "398723820.033347"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "487"
-         endingLineNumber = "487">
+         startingLineNumber = "496"
+         endingLineNumber = "496">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PedidoNaRede/APIController.m"
-         timestampString = "398668666.536689"
+         timestampString = "398723820.033347"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "257"
-         endingLineNumber = "257"
+         startingLineNumber = "266"
+         endingLineNumber = "266"
          landmarkName = "-personRegister:withPassword:withEmail:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -934,11 +934,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PedidoNaRede/HumanLoginViewController.m"
-         timestampString = "398662793.904109"
+         timestampString = "398719790.753277"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "261"
-         endingLineNumber = "261"
+         startingLineNumber = "259"
+         endingLineNumber = "259"
          landmarkName = "-loginFacebook"
          landmarkType = "5">
       </FileBreakpoint>
@@ -947,11 +947,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PedidoNaRede/HumanLoginViewController.m"
-         timestampString = "398662793.904109"
+         timestampString = "398719790.753277"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "222"
-         endingLineNumber = "222"
+         startingLineNumber = "220"
+         endingLineNumber = "220"
          landmarkName = "-apiController:didLoadDictionaryFromServer:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -1012,7 +1012,7 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PedidoNaRede/ScheduleItemViewController.m"
-         timestampString = "398673992.473263"
+         timestampString = "398723820.033347"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "191"
@@ -1025,7 +1025,7 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PedidoNaRede/ScheduleItemViewController.m"
-         timestampString = "398673992.473263"
+         timestampString = "398723820.033347"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "232"
@@ -1038,7 +1038,7 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PedidoNaRede/ScheduleItemViewController.m"
-         timestampString = "398673992.473263"
+         timestampString = "398723820.033347"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "196"
@@ -1077,11 +1077,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PedidoNaRede/APIController.m"
-         timestampString = "398668666.536689"
+         timestampString = "398723820.033347"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "398"
-         endingLineNumber = "398"
+         startingLineNumber = "407"
+         endingLineNumber = "407"
          landmarkName = "-end:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -1142,12 +1142,38 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PedidoNaRede/ReaderViewController.m"
-         timestampString = "398674697.797811"
+         timestampString = "398724294.3717"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "353"
-         endingLineNumber = "353"
+         startingLineNumber = "371"
+         endingLineNumber = "371"
          landmarkName = "-textFieldDidChange:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "PedidoNaRede/ReaderViewController.m"
+         timestampString = "398724206.866443"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "248"
+         endingLineNumber = "248"
+         landmarkName = "-toggleEntranceForIndexPath:highligthing:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "PedidoNaRede/ReaderViewController.m"
+         timestampString = "398724208.399801"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "249"
+         endingLineNumber = "249"
+         landmarkName = "-toggleEntranceForIndexPath:highligthing:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

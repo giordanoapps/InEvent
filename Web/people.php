@@ -13,7 +13,7 @@
 		<div id="peopleContent" class="pageContent fullPageContent">
 			
 			<div class="placerContent">
-				<?php printScheduleForEvent(1); ?>
+				<?php printScheduleForEvent(2); ?>
 			</div>
 			
 			<div class="boardContent">		

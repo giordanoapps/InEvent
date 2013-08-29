@@ -100,11 +100,11 @@
 
 	/**
 	 * Process the log in using the $_GET and $_POST
-	 * @param  [string] $name     name of the person
+	 * @param  [string] $email     email of the person
 	 * @param  [string] $password password of the person
 	 * @return object  json encoded object
 	 */
-	function processLogIn($name, $password) {
+	function processLogIn($email, $password) {
 
 		// Get the singleton
 		$core = Core::singleton();
@@ -126,7 +126,7 @@
 			LEFT JOIN
 				`memberSessions` ON `memberSessions`.`memberID` = `member`.`id`
 			WHERE 1
-				AND BINARY `member`.`name` = '$name'
+				AND BINARY `member`.`email` = '$email'
 			GROUP BY
 				`memberSessions`.`memberID`
 		");

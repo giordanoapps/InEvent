@@ -105,8 +105,8 @@
     [_questionButton.layer setBorderColor:[[ColorThemeController tableViewCellInternalBorderColor] CGColor]];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     
     [self cleanData];
     [self loadData];

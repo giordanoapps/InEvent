@@ -52,7 +52,7 @@
 								/>
 							</p>
 
-							<p class="halfWidth">
+<!-- 							<p class="halfWidth">
 								<span class="inputTitle">CPF:</span>
 								<input
 									type="text"
@@ -88,8 +88,9 @@
 									value="<?php if ($core->auth) { echo $data["telephone"]; } ?>"
 									placeholder="Telefone"
 								/>
-							</p>
-							<p class="halfWidth">
+							</p> -->
+
+							<p class="fullWidth">
 								<span class="inputTitle">Email:</span>
 								<input
 									type="text"
@@ -102,7 +103,7 @@
 								/>
 							</p>
 
-							<p class="halfWidth">
+<!-- 							<p class="halfWidth">
 								<span class="inputTitle">Universidade:</span>
 								<input
 									type="text"
@@ -123,7 +124,7 @@
 									value=""
 									placeholder="Curso"
 								/>
-							</p>
+							</p> -->
 							
 							<p class="halfWidth">
 								<span class="inputTitle">Senha:</span>
@@ -148,20 +149,7 @@
 								/>
 							</p>
 
-							<p class	="miniIntro">Caso seja aluno da USP, </p>
-
-							<p class="halfWidth">
-								<input
-									type="usp"
-									name="usp"
-									id="usp"
-									class="usp"
-									value=""
-									placeholder="Número USP"
-								/>
-							</p>
-
-							<p>Caso seja aluno da USP e também curse Engenharia Aeronáutica, preencha o formulário complementar disponível em <a href="https://docs.google.com/forms/d/16EwOvoq24_b8P4LG9Pz7bgr5gVL9y9m3SoTekTxXYYw/viewform" target="_blank">https://docs.google.com/forms/d/16EwOvoq24_b8P4LG9Pz7bgr5gVL9y9m3SoTekTxXYYw/viewform</a>.</p>
+							<p>Preencha o formulário complementar disponível em <a href="https://docs.google.com/forms/d/1D8MmZ8va92XF6AqqsNRvzI-Rdv7xsg-3PQeHIsit90o/viewform" target="_blank">https://docs.google.com/forms/d/1D8MmZ8va92XF6AqqsNRvzI-Rdv7xsg-3PQeHIsit90o/viewform</a>.</p>
 							
 							
 							<div class="checkBoxWrapper">

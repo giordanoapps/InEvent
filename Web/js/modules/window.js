@@ -35,10 +35,14 @@ $(document).ready(function() {
 	 */
 	$(".errorBox").bind("ajaxError", function(event, jqXHR, settings) {
 		if (jqXHR.status != 408) {
-			$(this).fadeToggle(200);
+			$(this).fadeToggle(200).delay(6000).fadeToggle(2000);
 		}
 	});
 
+	/**
+	 * Update the tips for every content load
+	 * @return {null}       
+	 */
 	$(document).bind("ajaxComplete", function(event, jqXHR, settings) {
 		// Tips
 		$("[title != '']").qtip({
