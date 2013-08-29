@@ -37,7 +37,9 @@
 								$data = mysql_fetch_assoc($result);
 							?>
 							
-							<p class="inputHeader">Pessoa</p>
+							<p class="inputHeadline">Informe seus dados para o InEvent, a plataforma oficial da Semana SusIE!</p>
+
+							<!-- <p class="inputHeader">Pessoa</p> -->
 							
 							<p class="fullWidth">
 								<span class="inputTitle">Nome Completo:</span>
@@ -148,9 +150,6 @@
 									placeholder="Senha"
 								/>
 							</p>
-
-							<p>Preencha o formulário complementar disponível em <a href="https://docs.google.com/forms/d/1D8MmZ8va92XF6AqqsNRvzI-Rdv7xsg-3PQeHIsit90o/viewform" target="_blank">https://docs.google.com/forms/d/1D8MmZ8va92XF6AqqsNRvzI-Rdv7xsg-3PQeHIsit90o/viewform</a>.</p>
-							
 							
 							<div class="checkBoxWrapper">
 								<p>
@@ -175,7 +174,7 @@
 										checked="true"
 									/>
 									<span class="newsletterTitle">
-										Desejo receber informações sobre novidades na plataforma (1 email por mês).
+										Desejo receber informações sobre novidades no InEvent (1 email por mês).
 									</span>
 								</p>
 							</div>
@@ -185,7 +184,7 @@
 					
 					<?php if (!$core->auth) { ?>
 					<ul class="navigator">
-						<a href="register.php" data-lock	="yes"><li>Registro <span class="navigatorHint navigatorHintRight">Próxima</span></li></a>
+						<a href="register.php" data-lock	="yes"><li><span class="navigatorHint navigatorHintRight">Próxima</span></li></a>
 					</ul>
 					<?php } ?>
 					

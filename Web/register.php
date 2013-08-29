@@ -15,19 +15,23 @@
 				<div class="boardContentInnerWrapper">
 					
 					<div class="pageContentBox">
-					
+
 						<div class="registrationConflict">
 							<p><img src="images/64-Alert-2.png" alt="Alert" />Aparentemente elas já estavam cadastradas em nosso banco de dados.</p>
 						</div>
 					
 						<div class="registrationComplete">
+							<p class="inputHeadline">Finalize seu cadastro enviando o formulário abaixo:</p>
+
+							<iframe src="https://docs.google.com/forms/d/1D8MmZ8va92XF6AqqsNRvzI-Rdv7xsg-3PQeHIsit90o/viewform?embedded=true&entry.1562333277=myName&entry.268295612&entry.1839222973=myEmail" width="760" height="500" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
+
 							<p><img src="images/32-Check.png" alt="Check" />Seu cadastro foi concluído com sucesso!</p>
 						</div>
 						
 						<div class="registrationFailed">
 							<p><img src="images/32-Cross.png" alt="Cross" />Hum, seus dados ainda não foram salvos. Revise-os e tente novamente.</p>
 							<ul class="navigator">
-								<a href="data.php"><li>Dados <span class="navigatorHint navigatorHintRight">Anterior</span></li></a>
+								<a href="data.php"><li><span class="navigatorHint navigatorHintRight">Anterior</span></li></a>
 							</ul>
 						</div>
 						

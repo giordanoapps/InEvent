@@ -12,7 +12,7 @@ $(document).ready(function() {
 		// Focus on the element so the key event may work
 		$(this).focus();
 
-		$(this).find(".middlePort").delay(800).animate({left: "30%"}, 300);
+		$(this).find(".middlePort").delay(1000).animate({left: "30%"}, 300);
 
 		// Select the first section
 		$(this).find(".section:first-child").addClass("sectionVisible");

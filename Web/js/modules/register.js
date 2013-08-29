@@ -12,31 +12,37 @@ $(document).ready(function() {
 		var $content = $(this);
 
 		// Get the saved information
-		var data = JSON.parse(localStorage.getItem("registrationData")) || {};
+		var details = JSON.parse(localStorage.getItem("registrationData")) || {};
 
-		// We send the data to the server
+		// We send the details to the server
 		$.post('developer/api/?' + $.param({
 			method: "person.register",
 			format: "html"
 		}), {
-			name: data.name,
-			password: data.password,
-			email: data.email,
-			cpf: data.cpf,
-			rg: data.rg,
-			telephone: data.telephone,
-			university: data.university,
-			course: data.course,
-			usp: data.usp
+			name: details.name,
+			password: details.password,
+			email: details.email,
+			cpf: details.cpf,
+			rg: details.rg,
+			telephone: details.telephone,
+			university: details.university,
+			course: details.course,
+			usp: details.usp
 		},
 		function(data, textStatus, jqXHR) {
 
 			if (jqXHR.status == 200) {
 				// Show the sucess message
-				$content.find(".registrationComplete").fadeIn(0).delay(5000).fadeOut(300);
+				$content.find(".registrationComplete").fadeIn(0); //.delay(5000).fadeOut(300);
 
 				// Remove the registration data
 				localStorage.removeItem("registrationData");
+
+				// Define the form url
+				var url = $content.find("iframe").attr("src");
+				url = url.replace(/myName/i, details.name);
+				url = url.replace(/myEmail/i, details.email);
+				$content.find("iframe").attr("src", url);
 			}
 
 		}, 'html').fail(function(jqXHR, textStatus, errorThrown) {

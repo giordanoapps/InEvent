@@ -44,8 +44,8 @@
 
             while ($data = mysql_fetch_assoc($result)) {
 
-                if ($day != $data['day']) {
-                    $day = $data['day'];
+                if ($day != date("z", $data['dateBegin'])) {
+                    $day = date("z", $data['dateBegin']);
 
                     ?>
                         <li value="" class="scheduleDay">
@@ -141,8 +141,8 @@
 
             while ($data = mysql_fetch_assoc($result)) {
 
-                if ($day != $data['day']) {
-                    $day = $data['day'];
+                if ($day != date("z", $data['dateBegin'])) {
+                    $day = date("z", $data['dateBegin']);
 
                     ?>
                         <li value="" class="agendaDay">
