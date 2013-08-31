@@ -10,8 +10,9 @@
 		$core = Core::singleton();
 
 		// We make sure the user has provided it, otherwise we can already deny the request
-		if (isset($_REQUEST['tokenID'])) {
-			$hash = isset($_GET["tokenID"]) ? getAttribute($_GET["tokenID"]) : getAttribute($_REQUEST["tokenID"]);
+		if (isset($_GET['tokenID']) || isset($_COOKIE['tokenID'])) {
+
+			$hash = isset($_GET["tokenID"]) ? getAttribute($_GET["tokenID"]) : getAttribute($_COOKIE["tokenID"]);
 			$remote = $_SERVER['REMOTE_ADDR'];
 
 			$result = resourceForQuery(

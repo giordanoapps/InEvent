@@ -20,9 +20,9 @@
 		// Get the singleton
 		$core = Core::singleton();
 
-		if ($eventID == 0 && isset($_REQUEST["eventID"]) && ctype_digit($_REQUEST["eventID"])) {
+		if ($eventID == 0 && (isset($_GET["eventID"]) || isset($_COOKIE["eventID"]))) {
 			// See if the user provided a company
-			$eventID = isset($_GET["eventID"]) ? getAttribute($_GET["eventID"]) : getAttribute($_REQUEST["eventID"]);
+			$eventID = isset($_GET["eventID"]) ? getAttribute($_GET["eventID"]) : getAttribute($_COOKIE["eventID"]);
 		}
 		
 		// Assign the variable to the property
