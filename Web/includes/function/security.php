@@ -49,7 +49,6 @@
 			$core->workAtEvent = true;
 			$core->roleID = mysql_result($result, 0, "roleID");
 		} else {
-			$core->eventID = 0;
 			$core->workAtEvent = false;
 			$core->roleID = ROLE_ATTENDEE;
 		}

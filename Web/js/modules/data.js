@@ -90,6 +90,7 @@ $(document).ready(function() {
 				},
 				email: { 
 	                required: "Insira um email válido", 
+	                email: "Insira um email válido", 
 	                minlength: jQuery.format("Insira pelo menos {0} caracteres")
 	            },
 	            university: { 
@@ -143,16 +144,16 @@ $(document).ready(function() {
 	 * Change the iframe when the user is typing some info
 	 * @return {null} 
 	 */
-	$("#dataContent .dataForm input").live("focusout", function() {
+	// $("#dataContent .dataForm input").live("focusout", function() {
 
-		var $content = $(this).closest(".pageContentBox");
+	// 	var $content = $(this).closest(".pageContentBox");
 
-		// Define the form url
-		var url = $content.find(".docsFrame").attr("data-src");
-		url = url.replace(/myName/i, $content.find(".name").val());
-		url = url.replace(/myEmail/i, $content.find(".email").val());
-		$content.find(".docsFrame").attr("src", url);
-	});
+	// 	// Define the form url
+	// 	var url = $content.find(".docsFrame").attr("data-src");
+	// 	url = url.replace(/myName/i, $content.find(".name").val());
+	// 	url = url.replace(/myEmail/i, $content.find(".email").val());
+	// 	$content.find(".docsFrame").attr("src", url);
+	// });
 
 	/**
 	 * Trigger the form validator

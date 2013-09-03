@@ -26,74 +26,145 @@
 
 	} else
 
-	// if ($method === "requestEnrollment") {
+	if ($method === "requestEnrollment") {
 
-	// 	$tokenID = getToken();
+		$eventID = getTokenForEvent();
 
-	// 	if (isset($_GET['personID']) && $_GET['personID'] != "null") {
+		if (isset($_GET['personID']) && $_GET['personID'] != "null") {
 
-	// 		if ($core->workAtEvent) {
-	// 			$personID = getAttribute($_GET['personID']);
+			if ($core->workAtEvent) {
+				$personID = getAttribute($_GET['personID']);
+			} else {
+				http_status_code(401, "Person doesn't work at event");
+			}
+		} else {
+			$personID = $core->memberID;
+		}
 
-	// 			// If the personID is 0, we must create an anonymous member named "Pessoa"
-	// 			if ($personID == 0) $personID = createMember("Pessoa", "", "", "", "", 1);
-	// 		} else {
-	// 			http_status_code(401);
-	// 		}
-	// 	} else {
-	// 		$personID = $core->memberID;
-	// 	}
+		if ($personID != 0) {
 
-	// 	if (isset($_GET["activityID"])) {
+			$result = resourceForQuery(
+				"SELECT
+					`eventMember`.`id`
+				FROM
+					`eventMember`
+				WHERE 1
+					AND `eventMember`.`eventID` = $eventID
+				GROUP BY
+					`eventMember`.`memberID`
+				HAVING 1
+					AND SUM(IF(`eventMember`.`memberID` = $personID, 1, 0)) = 0
+				LIMIT 1
+			");
 
-	// 		// Get some properties
-	// 		$activityID = getAttribute($_GET['activityID']);
+			if (mysql_num_rows($result) > 0) {
+				// Insert the person on the event
+				$insert = resourceForQuery(
+				// echo (
+					"INSERT INTO
+						`eventMember`
+						(`eventID`, `memberID`, `roleID`, `approved`)
+					VALUES
+						($eventID, $personID, @(ROLE_ATTENDEE), 1)
+				");
 
-	// 		$result = resourceForQuery(
-	// 			"SELECT
-	// 				`eventMember`.`id`
-	// 			FROM
-	// 				`eventMember`
-	// 			INNER JOIN
-	// 				`activity` ON `activity`.`eventID` = `eventMember`.`eventID`
-	// 			WHERE 1
-	// 				AND `activity`.`id` = $activityID
-	// 				AND `member`.`id` = $personID
-	// 		");
+				// Insert all the activities that are general
+				$insert = resourceForQuery(
+					"INSERT INTO
+						`activityMember`
+						(`activityID`, `memberID`, `approved`, `present`)
+					SELECT
+						`activity`.`id`,
+						$personID,
+						1,
+						0
+					FROM
+						`activity`
+					WHERE
+						`activity`.`general` = 1
+				");
 
-	// 		if (mysql_num_rows($result) > 0) {
-				
-	// 			$insert = resourceForQuery(
-	// 				"INSERT INTO
-	// 					`activityMember`
-	// 					(`activityID`, `memberID`, `approved`, `present`)
-	// 				VALUES
-	// 					($activityID, $personID, 1, 0)
-	// 			");
+				if ($insert) {
+					// Return its data
+					if ($format == "json") {
+						$data["eventID"] = $eventID;
+						echo json_encode($data);
+					} elseif ($format == "html") {
 
-	// 			if ($update) {
-	// 				// Return its data
-	// 				if ($format == "json") {
-	// 					$data["activityID"] = $activityID;
-	// 					echo json_encode($data);
-	// 				} elseif ($format == "html") {
-
-	// 				} else {
-	// 					http_status_code(405);	
-	// 				}
-	// 			} else {
-	// 				http_status_code(500);
-	// 			}
-
-	// 		} else {
-	// 			http_status_code(406);
-	// 		}
-
-	// 	} else {
-	// 		http_status_code(400);
-	// 	}
+					} else {
+						http_status_code(405);	
+					}
+				} else {
+					http_status_code(500);
+				}
+			} else {
+				http_status_code(303, "The personID is already enrolled on this event");
+			}
+		} else {
+			http_status_code(400, "The asserted personID is null");
+		}
 		
-	// } else
+	} else
+
+	if ($method === "dismissEnrollment") {
+
+		$eventID = getTokenForEvent();
+
+		if (isset($_GET['personID']) && $_GET['personID'] != "null") {
+
+			if ($core->workAtEvent) {
+				$personID = getAttribute($_GET['personID']);
+			} else {
+				http_status_code(401, "Person doesn't work at event");
+			}
+
+		} else {
+			$personID = $core->memberID;
+		}
+
+		if ($personID != 0) {
+
+			// Remove from event
+			$delete = resourceForQuery(
+				"DELETE FROM
+					`eventMember`
+				WHERE 1
+					AND `eventMember`.`eventID` = $eventID
+					AND `eventMember`.`memberID` = $personID
+			");
+
+			// Remove from activities
+			$delete = resourceForQuery(
+				"DELETE
+					`activityMember`.*
+				FROM
+					`activityMember`
+				INNER JOIN
+					`activity` ON `activity`.`id` = `activityMember`.`activityID`
+				WHERE 1
+					AND `activity`.`eventID` = $eventID
+					AND `activityMember`.`memberID` = $personID
+			");
+			
+			if ($delete) {
+				// Return its data
+				if ($format == "json") {
+					$data["activityID"] = $activityID;
+					echo json_encode($data);
+				} elseif ($format == "html") {
+
+				} else {
+					http_status_code(405);	
+				}
+			} else {
+				http_status_code(500);
+			}
+
+		} else {
+			http_status_code(400);
+		}
+		
+	} else
 
 	if ($method === "grantPermission" || $method === "revokePermission") {
 

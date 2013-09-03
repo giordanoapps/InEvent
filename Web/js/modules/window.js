@@ -3,6 +3,40 @@ $(document).ready(function() {
 // -------------------------------------- WINDOW -------------------------------------- //
 
 	/**
+	 * Callback for windows and popovers dismissal
+	 * @return {null}       
+	 */
+	$("body").live("click", function () {
+
+		// Only trigger the change if there is an activePopover
+		if ($(this).data("activePopover")) {
+
+			if (typeof $(this).data("activePopover") === 'function') {
+				var f = $(this).data("activePopover");
+				f.call($(".activePopover"));
+			}
+			$(".activePopover").removeClass("activePopover").slideUp(100);
+
+			// Remove the boolean
+			$(this).data("activePopover", false);
+		}
+
+		// Only trigger the change if there is an activeField
+		if ($(this).data("activeField") == true) {
+			// Trigger any instantSave component and then remove the field
+			var $components = $(".activeField").removeClass("activeField").filter(".instantSave").pn("instantSave").end();
+
+			// Remove the components
+			$components.filter("input, textarea").field("removeField");
+			$components.filter("select").attr("disabled", true).trigger("liszt:updated");
+
+			// Remove the boolean
+			$(this).data("activeField", false);
+		}
+
+	});
+
+	/**
 	 * Callback for toggling the state of the loadingBox
 	 * @return {null}       
 	 */
@@ -51,7 +85,7 @@ $(document).ready(function() {
 		    },
 		    position: {
 		        my: 'top left',
-		        at: 'center right',
+		        at: 'center center',
 		        target: "event" // my target
 		    }
 		});

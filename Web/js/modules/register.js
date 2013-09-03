@@ -47,7 +47,7 @@ $(document).ready(function() {
 				// Show the sucess screen
 				$content.find(".registrationComplete").fadeIn(0).delay(4000).fadeOut(300, function() {
 					// Move to the event page
-					window.location.hash = "event";
+					window.location.hash = "marketplace";
 					// Reload our page
 					window.location.reload();
 				});

@@ -39,34 +39,6 @@
 					AND `eventMember`.`approved` = 1
 			");
 
-			// // // // // // // // // // // // // // 
-			// REMOVE THIS SHIT FROM HERE
-			if (mysql_num_rows($result) == 0) {
-
-				$insert = resourceForQuery(
-					"INSERT INTO
-						`eventMember`
-						(`eventID`, `memberID`, `roleID`, `approved`)
-					VALUES
-						(2, $personID, 1, 1)
-				");
-
-				$result = resourceForQuery(
-					"SELECT
-						`eventMember`.`id`
-					FROM
-						`eventMember`
-					INNER JOIN
-						`activity` ON `activity`.`eventID` = `eventMember`.`eventID`
-					WHERE 1
-						AND `activity`.`id` = $activityID
-						AND `eventMember`.`memberID` = $personID
-						AND `eventMember`.`approved` = 1
-				");
-
-			}
-			// // // // // // // // // // // // // // 
-
 			if (mysql_num_rows($result) > 0) {
 
 				// Find if the member is over his limit on different groups

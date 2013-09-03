@@ -69,6 +69,26 @@
      * Get activityID and suggest a company to be set
      * @return activityID  id of person
      */
+	function getTokenForEvent() {
+
+		if (isset ($_GET['eventID'])) {
+			$eventID = getAttribute($_GET['eventID']);
+
+			// Load the token
+			getToken($eventID);
+
+			// Return the table
+			return $eventID;
+
+		} else {
+			http_status_code(400, "Couldn't find the eventID");
+		}
+	}
+
+	/**
+     * Get activityID and suggest a company to be set
+     * @return activityID  id of person
+     */
 	function getTokenForActivity() {
 
 		if (isset ($_GET['activityID'])) {
@@ -92,10 +112,10 @@
 				return $activityID;
 
 			} else {
-				http_status_code(303);
+				http_status_code(303, "Couldn't find the activityID");
 			}
 		} else {
-			http_status_code(400);
+			http_status_code(400, "Couldn't find the activityID");
 		}
 	}
 

@@ -9,15 +9,10 @@
 	<?php include_once("includes/html/bar.php") ?>
 	<div id="content">
 
-		<div id="eventContent" class="pageContent fullPageContent">
-			
-			<div class="placerContent">
-				<?php printScheduleForMember($core->eventID, $core->memberID); ?>
-			</div>
-
-			<div class="boardContent">
+		<div id="marketplaceContent" class="pageContent fullPageContent">			
+			<div class="boardContent">		
 				<div class="realContent">
-					<?php printAgenda($core->eventID, $core->memberID); ?>
+					<?php printEvents($core->memberID); ?>
 				</div>
 			</div>
 		</div>

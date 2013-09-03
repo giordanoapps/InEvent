@@ -23,6 +23,7 @@
 		"data.js",
 		"event.js",
 		"location.js",
+		"marketplace.js",
 		"people.js",
 		"register.js",
 	);

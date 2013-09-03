@@ -20,29 +20,46 @@ $(document).ready(function() {
 
 		var $elem = $(this);
 		var $agendaItem = $elem.closest(".agendaItem");
-		var activityID = $agendaItem.val();
-		var groupID = parseInt($agendaItem.attr("data-group"), 10);
+
+		if ($agendaItem.length > 0) {
+			var namespace = "activity";
+			var eventID = undefined;
+			var activityID = $agendaItem.val();
+			var groupID = parseInt($agendaItem.attr("data-group"), 10);
+		} else {
+			var namespace = "event";
+			var eventID = readCookie("eventID");
+			var activityID = undefined;
+		}
 
 		// Hide the current button
 		$elem.hide(200);
 
 		// We request the information on the server
 		$.post('developer/api/?' + $.param({
-			method: "activity.requestEnrollment",
+			method: namespace + ".requestEnrollment",
 			activityID: activityID,
+			eventID: eventID,
 			format: "html"
 		}), {},
 		function(data, textStatus, jqXHR) {
 
 			if (jqXHR.status == 200) {
-				var $scheduleItem = $(data).addClass("scheduleItemInvisible");
 
-				// Find and replace the new element
-				$(".scheduleItem[value = \"" + activityID + "\"]").replaceWith($scheduleItem);
-				$scheduleItem.slideDown(300);
+				if ($agendaItem.length > 0) {
+					var $scheduleItem = $(data).addClass("scheduleItemInvisible");
 
-				// Hide all activities that belong to the same group
-				// if (groupID != 0) $(".agendaItem[data-group = \"" + groupID + "\"]").find(".toolEnroll").hide(200);
+					// Find and replace the new element
+					$(".scheduleItem[value = \"" + activityID + "\"]").replaceWith($scheduleItem);
+					$scheduleItem.slideDown(300);
+
+					// Hide all activities that belong to the same group
+					// if (groupID != 0) $(".agendaItem[data-group = \"" + groupID + "\"]").find(".toolEnroll").hide(200);
+
+				} else {
+					// Reload page
+					window.location.reload();
+				}
 			}
 
 		}, 'html').fail(function(jqXHR, textStatus, errorThrown) {

@@ -1,14 +1,10 @@
 <?php
 
-    function printScheduleForMember($eventID, $memberID) {
-        printSchedule(getActivitiesForMemberAtEventQuery($eventID, $memberID), "member");
-    }
+    function printEventsForMember($memberID) {
 
-    function printScheduleForEvent($eventID) {
-        printSchedule(getActivitiesForEventQuery($eventID), "event");
-    }
+        $result = getEventsForMemberQuery($memberID, true);
 
-    function printSchedule($result, $target) {
+        $target = 0;
 
         ?><ul><?php
 
@@ -61,7 +57,7 @@
         } else {
             ?>
             <li>
-                <p class="emptyCapital">Nenhuma atividade :(</p>
+                <p class="emptyCapital">Nenhum evento :(</p>
             </li>
             <?php
         }
@@ -69,7 +65,7 @@
         ?></ul><?php
     }
 
-    function printScheduleItem($data, $target) {
+    function printEventItem($data, $target) {
         ?>
         <li
             value="<?php echo $data['id'] ?>"
@@ -129,79 +125,40 @@
         <?php
     }
 
-    function printAgenda($eventID, $memberID) {
+    function printEvents($memberID) {
 
-        // See if the person is enrolled on the current event
-        $result = resourceForQuery(
-            "SELECT
-                `eventMember`.`id`
-            FROM
-                `eventMember`
-            WHERE 1
-                AND `eventMember`.`eventID` = $eventID
-                AND `eventMember`.`memberID` = $memberID
-        ");
-
-        $enrolled = (mysql_num_rows($result) > 0) ? true : false;
-
-        $result = getActivitiesForMemberAtEventQuery($eventID, $memberID);
+        $result = getEventsForMemberQuery($memberID, false);
 
         ?><ul><?php
 
         if (mysql_num_rows($result) > 0) {
 
-            // If the member is not enrolled, we show a option enabling him to do so
-            if (!$enrolled) {
-                ?>
-                    <li>
-                        <p class="message">Ainda não está registrado nesse evento! Clique no botão caso queira se inscrever.</p>
-                         <input type="button" value="Inscrever" title="Se inscreva para escolher as atividades dentro do evento" class="singleButton toolEnroll">
-                    </li>
-                <?php
-            }
-
             $day = 0;
 
             while ($data = mysql_fetch_assoc($result)) {
-
-                if ($day != date("z", $data['dateBegin'])) {
-                    $day = date("z", $data['dateBegin']);
-
-                    ?>
-                        <li value="" class="agendaDay">
-                            <span><?php echo date("j/m", $data['dateBegin']) ?></span>
-                            <span><?php echo getDayNameForDate($data['dateBegin']) ?></span>
-                        </li>
-                    <?php
-                }
-
                 ?>
-                <li
-                    value="<?php echo $data['id'] ?>"
-                    class="agendaItem <?php if ($data['highlight'] == 1) { ?>agendaItemHighlight<?php } ?>"
-                    data-group="<?php echo $data['groupID'] ?>">
-                    <div class="left">
-                        <div class="upper">
-                            <p class="dateBegin"><?php echo date("G:i", $data['dateBegin']) ?></p>
-                        </div>
-                        <div class="bottom">
-                            <p class="dateEnd"><?php echo date("G:i", $data['dateEnd']) ?></p>
-                        </div>
+                <li class="eventItem" value="<?php echo $data['id'] ?>">
+                    <div class="upper">
+                        <p class="title"><?php echo $data['name'] ?></p>
                     </div>
-                    <div class="right">
-                        <div class="upper">
-                            <p class="name"><?php echo $data['name'] ?></p>
-                        </div>
-                        <div class="middle">
-                            <p class="description"><?php echo $data['description'] ?></p>
-                        </div>
-                        <div class="bottom">
-                            <input
-                                type="button"
-                                value="Inscrever!"
-                                title="Ao entrar nessa atividade, saberá imediatamente se foi aprovado ou está na lista de espera"
-                                class="singleButton toolEnroll <?php if (!$enrolled || $data['memberID'] != 0) { ?>singleButtonInvisible<?php } ?>">
-                        </div>
+                    <div class="middle">
+                        <p class="description"><?php echo $data['description'] ?></p>
+                        <p class="dateBegin">
+                            <span class="dayMonth"><?php echo date("j/n", $data['dateBegin']) ?></span>
+                            <span class="hourMinute"><?php echo date("G:i", $data['dateBegin']) ?></span>
+                        </p>
+                        <p class="dateEnd">
+                            <span class="dayMonth"><?php echo date("j/n", $data['dateEnd']) ?></span>
+                            <span class="hourMinute"><?php echo date("G:i", $data['dateEnd']) ?></span>
+                        </p>
+                    </div>
+                    <div class="bottom">
+                        <?php if ($data['memberID'] == 0) { ?>
+                            <input type="button" value="Inscrever" title="Se inscreva para escolher as atividades dentro do evento" class="singleButton toolEnroll">
+                        <?php } else { ?>
+                            <input type="button" value="Ir para evento" title="Veja suas atividades dentro do evento" class="singleButton toolEnrolled">
+                            <input type="button" value="Sair do evento" title="Será automaticamente removido do evento e todas suas atividades serão excluídas" class="singleButton toolExpel">
+                        <?php } ?>
                     </div>
                 </li>
                 <?php
@@ -210,7 +167,7 @@
         } else {
             ?>
             <li>
-                <p class="emptyCapital">Nenhuma atividade :(</p>
+                <p class="emptyCapital">Nenhum evento :(</p>
             </li>
             <?php
         }

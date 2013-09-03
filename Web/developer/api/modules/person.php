@@ -169,34 +169,6 @@
 
 				$memberID = mysql_insert_id();
 
-
-				///// TEMPORARY, REMOVE THIS SHIT //////
-				$insert = resourceForQuery(
-					"INSERT INTO
-						`eventMember`
-						(`eventID`, `memberID`, `roleID`, `approved`)
-					VALUES
-						(2, $memberID, 1, 1)
-				");
-				////////////////////////////////////////
-
-
-				// Insert all the activities that are general
-				$insert = resourceForQuery(
-					"INSERT INTO
-						`activityMember`
-						(`activityID`, `memberID`, `approved`, `present`)
-					SELECT
-						`activity`.`id`,
-						$memberID,
-						1,
-						0
-					FROM
-						`activity`
-					WHERE
-						`activity`.`general` = 1
-				");
-
 				if ($memberID != 0) {
 					// Return the desired data
 					$data = processLogIn($email, $password);
