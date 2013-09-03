@@ -174,13 +174,63 @@
 					$data = processLogIn($email, $password);
 					echo json_encode($data);
 				} else {
-					http_status_code(500);
+					http_status_code(500, "Couldn't create memberID");
 				}
 			} else {
-				http_status_code(409);
+				http_status_code(303, "Email already exists");
 			}
 		} else {
-			http_status_code(400);
+			http_status_code(400, "Some parameters are missing");
+		}
+
+	} else
+
+	if ($method === "sendRecovery") {
+
+		if (isset($_GET["email"])) {
+
+			// Get some properties
+			$email = getAttribute($_GET["email"]);
+
+			// Create a new random password
+			$password = md5((string)rand());
+			$hash = Bcrypt::hash($password);
+
+			$update = resourceForQuery(
+				"UPDATE
+					`member`
+				SET
+					`member`.`password` = '$hash'
+				WHERE 1
+					AND BINARY `member`.`email` = '$email'
+			");
+
+			// Send an email if everything went alright
+			if (mysql_affected_rows() > 0) {
+
+				// Import Swift parser
+				require_once(__DIR__ . '/../../../classes/Swift/lib/swift_required.php');
+
+				// Create the Transport
+				$transport = new Swift_AWSTransport(
+					'AKIAJJ7U5KNZFVK2AN5Q',
+					'HJ01wFuJTx8Zow32hQpUEv6ibypkmFBt07siuYJ7'
+				);
+
+				// Create the Mailer using your created Transport
+				$mailer = Swift_Mailer::newInstance($transport);
+
+				// Create the message
+				$message = Swift_Message::newInstance()
+					->setSubject("InEvent - Sua nova senha")
+					->setFrom(array('contato@estudiotrilha.com.br'))
+					->setTo(array('pedro.pecanha.goes@gmail.com'))
+					->setBody("<p>Sua nova senha: $password</p>", 'text/html');
+
+				$mailer->send($message);
+			} else {
+				http_status_code(500, "Not a single email was found");
+			}
 		}
 
 	} else

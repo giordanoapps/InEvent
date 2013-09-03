@@ -717,11 +717,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PedidoNaRede/AppDelegate.m"
-         timestampString = "398667072.883695"
+         timestampString = "399924267.61905"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "200"
-         endingLineNumber = "200"
+         startingLineNumber = "201"
+         endingLineNumber = "201"
          landmarkName = "-createGoogleAnalyticsTracker"
          landmarkType = "5">
       </FileBreakpoint>
@@ -730,11 +730,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PedidoNaRede/APIController.m"
-         timestampString = "398723820.033347"
+         timestampString = "399926265.754796"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "554"
-         endingLineNumber = "554">
+         startingLineNumber = "639"
+         endingLineNumber = "639">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -845,22 +845,22 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PedidoNaRede/APIController.m"
-         timestampString = "398723820.033347"
+         timestampString = "399926265.754796"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "496"
-         endingLineNumber = "496">
+         startingLineNumber = "581"
+         endingLineNumber = "581">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PedidoNaRede/APIController.m"
-         timestampString = "398723820.033347"
+         timestampString = "399926265.754796"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "266"
-         endingLineNumber = "266"
+         startingLineNumber = "351"
+         endingLineNumber = "351"
          landmarkName = "-personRegister:withPassword:withEmail:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -1077,11 +1077,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PedidoNaRede/APIController.m"
-         timestampString = "398723820.033347"
+         timestampString = "399926265.754796"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "407"
-         endingLineNumber = "407"
+         startingLineNumber = "492"
+         endingLineNumber = "492"
          landmarkName = "-end:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -1174,6 +1174,32 @@
          startingLineNumber = "249"
          endingLineNumber = "249"
          landmarkName = "-toggleEntranceForIndexPath:highligthing:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "PedidoNaRede/UIViewController+Present.m"
+         timestampString = "399922480.854717"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "54"
+         endingLineNumber = "54"
+         landmarkName = "-verifyEvent"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "PedidoNaRede/EventToken.m"
+         timestampString = "399922522.300936"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "44"
+         endingLineNumber = "44"
+         landmarkName = "-isEventSelected"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

@@ -150,6 +150,91 @@
 
 #pragma mark - Event
 
+- (void)eventGetEvents {
+    [self JSONObjectWithNamespace:@"event" method:@"getEvents" attributes:@{}];
+}
+
+- (void)eventGetEventsWithTokenID:(NSString *)tokenID {
+    
+    if (tokenID != nil) {
+        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID}};
+        
+        [self JSONObjectWithNamespace:@"event" method:@"getEvents" attributes:attributes];
+    }
+}
+
+- (void)eventRequestEnrollmentAtEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID {
+
+    if (tokenID != nil) {
+        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID, @"eventID" : [NSString stringWithFormat:@"%d", eventID]}};
+        
+        [self JSONObjectWithNamespace:@"event" method:@"requestEnrollment" attributes:attributes];
+    }
+}
+
+- (void)eventRequestEnrollmentForPerson:(NSInteger)personID atEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID {
+
+    if (tokenID != nil) {
+        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID, @"eventID" : [NSString stringWithFormat:@"%d", eventID], @"personID" : [NSString stringWithFormat:@"%d", personID]}};
+        
+        [self JSONObjectWithNamespace:@"event" method:@"requestEnrollment" attributes:attributes];
+    }
+}
+
+- (void)eventDismissEnrollmentAtEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID {
+ 
+    if (tokenID != nil) {
+        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID, @"eventID" : [NSString stringWithFormat:@"%d", eventID]}};
+        
+        [self JSONObjectWithNamespace:@"event" method:@"dismissEnrollment" attributes:attributes];
+    }
+}
+
+- (void)eventDismissEnrollmentForPerson:(NSInteger)personID atEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID {
+  
+    if (tokenID != nil) {
+        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID, @"eventID" : [NSString stringWithFormat:@"%d", eventID], @"personID" : [NSString stringWithFormat:@"%d", personID]}};
+        
+        [self JSONObjectWithNamespace:@"event" method:@"dismissEnrollment" attributes:attributes];
+    }
+}
+
+- (void)eventApproveEnrollmentAtEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID {
+    
+    if (tokenID != nil) {
+        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID, @"eventID" : [NSString stringWithFormat:@"%d", eventID]}};
+        
+        [self JSONObjectWithNamespace:@"event" method:@"approveEnrollment" attributes:attributes];
+    }
+}
+
+- (void)eventApproveEnrollmentForPerson:(NSInteger)personID atEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID {
+    
+    if (tokenID != nil) {
+        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID, @"eventID" : [NSString stringWithFormat:@"%d", eventID], @"personID" : [NSString stringWithFormat:@"%d", personID]}};
+        
+        [self JSONObjectWithNamespace:@"event" method:@"approveEnrollment" attributes:attributes];
+    }
+}
+
+- (void)eventGrantPermissionForPerson:(NSInteger)personID atEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID {
+    
+    if (tokenID != nil) {
+        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID, @"eventID" : [NSString stringWithFormat:@"%d", eventID], @"personID" : [NSString stringWithFormat:@"%d", personID]}};
+        
+        [self JSONObjectWithNamespace:@"event" method:@"grantPermission" attributes:attributes];
+    }
+}
+
+- (void)eventRevokePermissionForPerson:(NSInteger)personID atEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID {
+    
+    if (tokenID != nil) {
+        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID, @"eventID" : [NSString stringWithFormat:@"%d", eventID], @"personID" : [NSString stringWithFormat:@"%d", personID]}};
+        
+        [self JSONObjectWithNamespace:@"event" method:@"revokePermission" attributes:attributes];
+    }
+}
+
 - (void)eventGetPeopleAtEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID {
 
     if (tokenID != nil) {

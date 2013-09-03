@@ -260,13 +260,15 @@ textarea, input {
 	padding: 0;
 }
 
-.bar .rightBar li {
+.bar.top .rightBar > li,
+.bar.top .rightBar > a > li {
 	padding: 0;
 	line-height: 44px;
 	font-size: 90%;
 }
 
-.loginBar .rightBar li {
+.loginBar.top .rightBar > li,
+.loginBar.top .rightBar > a > li{
 	font-size: 100%;	
 }
 
@@ -354,6 +356,7 @@ textarea, input {
 .bar .secondary .middleLine {
 	font-size: 80%;
 	font-weight: bold;
+	line-height: normal;
 	position: absolute;
 	left: 34.2%;
 	top: 35%;
@@ -388,7 +391,9 @@ textarea, input {
 	margin: 10px 0 0 0;
 	color: #333;
 	font-size: 50%;
+	line-height: 12px;
 	overflow: hidden;
+	padding-top: 5px;
 }
 
 .bar .rightBar .anchorInnerHock {
@@ -884,7 +889,7 @@ textarea, input {
 	height: 48px;
 	position: relative;
 	top: 40%;
-	right: 30%;
+	right: 5px;
 }
 
 #homeContent .middlePort .description {
@@ -1721,6 +1726,126 @@ textarea, input {
 
 #dataContent .dataForm .checkBoxWrapper span {
 	margin: 0 0 0 10px;
+}
+
+/* @end */
+
+/* @group Sobre Nós */
+
+#aboutContent .boardContent {
+	font-size: 110%;
+	text-align: left;
+	padding: 15px 0;
+}
+
+#aboutContent p {
+	margin: 20px 0;
+}
+
+#aboutContent input[type="text"] {
+	padding: 10px 40px;
+	margin: 4px auto;
+	font-size: 90%;
+	width: 100%;
+	text-align: left;
+}
+
+#aboutContent input[type="button"] {
+	padding: 10px 40px;
+	margin: 10px auto;
+	display: block;
+	text-align: center;
+}
+
+#aboutContent .byItself {
+	font-size: 110%;
+	margin-left: 40px;
+	margin-right: 40px;
+}
+
+#aboutContent .byItself.rightAlign {
+	text-align: right;
+}
+
+#aboutContent .curiosityBox {
+	width: 50%;
+	background-color: #F1F1F1;
+	border: 1px solid #A2A2A2;
+	box-shadow: inset 1px 1px 1px #F7F7F7, 1px 1px 5px #D6D6D6;
+	padding: 12px;
+	margin: 7px 30px;
+}
+
+#aboutContent .curiosityBox.leftBox {
+	float: left;
+	border-radius: 0 10px 10px 0;
+	margin-left: 0;
+	border-left: 0;
+}
+
+#aboutContent .curiosityBox.rightBox {
+	float: right;
+	border-radius: 10px 0 0 10px;
+	margin-right: 0;
+	border-right: 0;
+}
+
+#aboutContent .curiosityBox img {
+	display: inline-block;
+	width: 15%;
+	vertical-align: top;
+	margin-top: 13px;
+	margin-right: 3%;
+}
+
+#aboutContent .curiosityBox .text {
+	display: inline-block;
+	width: 80%;
+}
+
+#aboutContent .title {
+	font-size: 120%;
+	font-weight: bold;
+}
+
+#aboutContent .description {
+	font-size: 85%;
+	color: #6D6D6D;
+}
+
+/* @end */
+
+/* @group Sobre Nós */
+
+#forgotContent .boardContent {
+	font-size: 110%;
+	text-align: left;
+	padding: 15px 0;
+}
+
+#forgotContent p {
+	margin: 20px 0;
+}
+
+#forgotContent input[type="text"] {
+	padding: 10px 40px;
+	margin: 4px auto;
+	font-size: 90%;
+	width: 100%;
+	text-align: left;
+}
+
+#forgotContent input[type="button"] {
+	padding: 10px 40px;
+	margin: 10px auto;
+	display: block;
+	text-align: center;
+}
+
+#forgotContent .byItself {
+	font-size: 110%;
+	margin-left: 40px;
+	margin-right: 40px;
 }
 
 /* @end */

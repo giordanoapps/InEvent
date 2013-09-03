@@ -64,6 +64,16 @@
 - (void)activityUpvoteQuestion:(NSInteger)questionID withTokenID:(NSString *)tokenID;
 
 #pragma mark - Event
+- (void)eventGetEvents;
+- (void)eventGetEventsWithTokenID:(NSString *)tokenID;
+- (void)eventRequestEnrollmentAtEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID;
+- (void)eventRequestEnrollmentForPerson:(NSInteger)personID atEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID;
+- (void)eventDismissEnrollmentAtEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID;
+- (void)eventDismissEnrollmentForPerson:(NSInteger)personID atEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID;
+- (void)eventApproveEnrollmentAtEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID;
+- (void)eventApproveEnrollmentForPerson:(NSInteger)personID atEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID;
+- (void)eventGrantPermissionForPerson:(NSInteger)personID atEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID;
+- (void)eventRevokePermissionForPerson:(NSInteger)personID atEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID;
 - (void)eventGetPeopleAtEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID;
 - (void)eventGetActivitiesAtEvent:(NSInteger)eventID;
 - (void)eventGetScheduleAtEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID;

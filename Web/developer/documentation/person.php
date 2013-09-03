@@ -51,6 +51,19 @@
 			<p><b>course</b><sub>POST</sub> : curso da pessoa </p>
 		</div>
 	</div>
+
+	<div class="documentationFunctionBox">
+		<p class="documentFunctionName">
+			<span>person.sendRecovery(<b>email</b>)</span>
+			<img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=person.sendRecovery&email=">
+		</p>
+
+		<p class="documentFunctionDescription">Envia um email com a nova senha da pessoa associada ao email <i>email</i>.</p>
+
+		<div class="documentationFunctionParametersBox">
+			<p><b>email</b><sub>GET</sub> : email da pessoa </p>
+		</div>
+	</div>
 	
 	<div class="documentationFunctionBox">
 		<p class="documentFunctionName">

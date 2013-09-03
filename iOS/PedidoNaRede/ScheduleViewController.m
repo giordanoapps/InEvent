@@ -19,6 +19,7 @@
 #import "HumanToken.h"
 #import "EventToken.h"
 #import "GAI.h"
+#import "CoolBarButtonItem.h"
 
 @interface ScheduleViewController () {
     ODRefreshControl *refreshControl;
@@ -60,6 +61,12 @@
     // Refresh Control
     refreshControl = [[ODRefreshControl alloc] initInScrollView:self.tableView];
     [refreshControl addTarget:self action:@selector(reloadData) forControlEvents:UIControlEventValueChanged];
+    
+    // Right Button
+    self.rightBarButton = [[CoolBarButtonItem alloc] initCustomButtonWithImage:[UIImage imageNamed:@"64-Cog"] frame:CGRectMake(0, 0, 42.0, 30.0) insets:UIEdgeInsetsMake(5.0, 11.0, 5.0, 11.0) target:self action:@selector(alertActionSheet)];
+    self.rightBarButton.accessibilityLabel = NSLocalizedString(@"Event Actions", nil);
+    self.rightBarButton.accessibilityTraits = UIAccessibilityTraitSummaryElement;
+    self.navigationItem.rightBarButtonItem = self.rightBarButton;
 }
 
 - (void)didReceiveMemoryWarning
@@ -93,7 +100,30 @@
     }
 }
 
-#pragma mark - Public Methods
+#pragma mark - ActionSheet Methods
+
+- (void)alertActionSheet {
+    
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Actions", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"Exit restaurant", nil), nil];
+    
+    [actionSheet showFromBarButtonItem:self.rightBarButton animated:YES];
+}
+
+#pragma mark - ActionSheet Delegate
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    
+    NSString *title = [actionSheet buttonTitleAtIndex:buttonIndex];
+    
+    if ([title isEqualToString:NSLocalizedString(@"Exit restaurant", nil)]) {
+        // Remove the tokenID and enterprise
+        [[EventToken sharedInstance] removeEvent];
+        
+        // Check for it again
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"verify" object:nil userInfo:@{@"type": @"enterprise"}];
+        
+    }
+}
 
 #pragma mark - Table View Data Source
 
@@ -115,7 +145,7 @@
     
     NSDictionary *dictionary = [[self.activities objectAtIndex:section] objectAtIndex:0];
     
-    NSDate *date = [NSDate dateWithTimeIntervalSince1970:[[dictionary objectForKey:@"day"] integerValue]];
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:[[dictionary objectForKey:@"dateBegin"] integerValue]];
     NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     NSDateComponents *components = [gregorian components:(NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit) fromDate:date];
     

@@ -71,6 +71,10 @@
 		EB53F63A1709136A00715E2D /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB53F6391709136A00715E2D /* CoreData.framework */; };
 		EB53F643170913BC00715E2D /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB53F642170913BC00715E2D /* SystemConfiguration.framework */; };
 		EB53F6471709147B00715E2D /* libGoogleAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EB53F63C170913A200715E2D /* libGoogleAnalytics.a */; };
+		EB59020217D5D7D20032143C /* MarketplaceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB59020017D5D7D20032143C /* MarketplaceViewController.m */; };
+		EB59020317D5D7D20032143C /* MarketplaceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB59020117D5D7D20032143C /* MarketplaceViewController.xib */; };
+		EB59020817D5D83A0032143C /* MarketplaceViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EB59020617D5D8390032143C /* MarketplaceViewCell.m */; };
+		EB59020917D5D83A0032143C /* MarketplaceViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB59020717D5D83A0032143C /* MarketplaceViewCell.xib */; };
 		EB5FD40B171ED1EB00B76552 /* CustomPopoverBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB5FD40A171ED1EB00B76552 /* CustomPopoverBackgroundView.m */; };
 		EB60420B17B8B6A300D95012 /* 64-Flip-Clock.png in Resources */ = {isa = PBXBuildFile; fileRef = EB60420A17B8B6A300D95012 /* 64-Flip-Clock.png */; };
 		EB6749FC1749A5F200748549 /* IntelligentSplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB6749FB1749A5F200748549 /* IntelligentSplitViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -164,7 +168,6 @@
 		EBC59D8917BEC59B00E0FC67 /* 64-Create-_-Write.png in Resources */ = {isa = PBXBuildFile; fileRef = EBC59D8817BEC59B00E0FC67 /* 64-Create-_-Write.png */; };
 		EBC59D8D17BEC5C300E0FC67 /* 64-Cloud-Download.png in Resources */ = {isa = PBXBuildFile; fileRef = EBC59D8C17BEC5C300E0FC67 /* 64-Cloud-Download.png */; };
 		EBCF5635175461D10083837B /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBCF5634175461D10083837B /* FacebookSDK.framework */; };
-		EBCF5637175461E50083837B /* FacebookSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = EBCF5636175461E50083837B /* FacebookSDKResources.bundle */; };
 		EBD055A717AF8CF3008355E8 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD055A517AF8CF3008355E8 /* AboutViewController.m */; };
 		EBD055A817AF8CF3008355E8 /* AboutViewController~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBD055A617AF8CF3008355E8 /* AboutViewController~iphone.xib */; };
 		EBD055AC17AF919C008355E8 /* 16-Footprints.png in Resources */ = {isa = PBXBuildFile; fileRef = EBD055AA17AF919C008355E8 /* 16-Footprints.png */; };
@@ -342,6 +345,12 @@
 		EB53F63B170913A200715E2D /* libGoogleAnalytics_debug.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleAnalytics_debug.a; sourceTree = "<group>"; };
 		EB53F63C170913A200715E2D /* libGoogleAnalytics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleAnalytics.a; sourceTree = "<group>"; };
 		EB53F642170913BC00715E2D /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		EB5901FF17D5D7D20032143C /* MarketplaceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MarketplaceViewController.h; path = PedidoNaRede/MarketplaceViewController.h; sourceTree = "<group>"; };
+		EB59020017D5D7D20032143C /* MarketplaceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MarketplaceViewController.m; path = PedidoNaRede/MarketplaceViewController.m; sourceTree = "<group>"; };
+		EB59020117D5D7D20032143C /* MarketplaceViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MarketplaceViewController.xib; path = PedidoNaRede/MarketplaceViewController.xib; sourceTree = "<group>"; };
+		EB59020517D5D8390032143C /* MarketplaceViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MarketplaceViewCell.h; path = PedidoNaRede/MarketplaceViewCell.h; sourceTree = "<group>"; };
+		EB59020617D5D8390032143C /* MarketplaceViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MarketplaceViewCell.m; path = PedidoNaRede/MarketplaceViewCell.m; sourceTree = "<group>"; };
+		EB59020717D5D83A0032143C /* MarketplaceViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MarketplaceViewCell.xib; path = PedidoNaRede/MarketplaceViewCell.xib; sourceTree = "<group>"; };
 		EB5FD409171ED1EB00B76552 /* CustomPopoverBackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomPopoverBackgroundView.h; sourceTree = "<group>"; };
 		EB5FD40A171ED1EB00B76552 /* CustomPopoverBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomPopoverBackgroundView.m; sourceTree = "<group>"; };
 		EB60420A17B8B6A300D95012 /* 64-Flip-Clock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "64-Flip-Clock.png"; sourceTree = "<group>"; };
@@ -474,7 +483,6 @@
 		EBC59D8817BEC59B00E0FC67 /* 64-Create-_-Write.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "64-Create-_-Write.png"; sourceTree = "<group>"; };
 		EBC59D8C17BEC5C300E0FC67 /* 64-Cloud-Download.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "64-Cloud-Download.png"; sourceTree = "<group>"; };
 		EBCF5634175461D10083837B /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = "../../../Documents/Objective-C/facebook-ios-sdk/build/FacebookSDK.framework"; sourceTree = "<group>"; };
-		EBCF5636175461E50083837B /* FacebookSDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = FacebookSDKResources.bundle; path = "../../../Documents/Objective-C/facebook-ios-sdk/build/FacebookSDK.framework/Versions/A/Resources/FacebookSDKResources.bundle"; sourceTree = "<group>"; };
 		EBD055A417AF8CF3008355E8 /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
 		EBD055A517AF8CF3008355E8 /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
 		EBD055A617AF8CF3008355E8 /* AboutViewController~iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "AboutViewController~iphone.xib"; sourceTree = "<group>"; };
@@ -833,6 +841,19 @@
 			name = Libraries;
 			sourceTree = "<group>";
 		};
+		EB59020417D5D7D60032143C /* Marketplace */ = {
+			isa = PBXGroup;
+			children = (
+				EB5901FF17D5D7D20032143C /* MarketplaceViewController.h */,
+				EB59020017D5D7D20032143C /* MarketplaceViewController.m */,
+				EB59020117D5D7D20032143C /* MarketplaceViewController.xib */,
+				EB59020517D5D8390032143C /* MarketplaceViewCell.h */,
+				EB59020617D5D8390032143C /* MarketplaceViewCell.m */,
+				EB59020717D5D83A0032143C /* MarketplaceViewCell.xib */,
+			);
+			name = Marketplace;
+			sourceTree = "<group>";
+		};
 		EB5FD425171EE94A00B76552 /* IntelligentSplitViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -962,6 +983,7 @@
 				EB3F1A0B16F7B831005052E7 /* Initial */,
 				EB25BAA016FE73F7003F142F /* Human */,
 				EBFCCF4A16987F3700A5AE73 /* Map */,
+				EB59020417D5D7D60032143C /* Marketplace */,
 				EBFCCF571698B47D00A5AE73 /* Timeline */,
 				EB3BD91417B8C47F008D066D /* Reader */,
 				EB1FEB8C17172A16009834FC /* Log */,
@@ -991,7 +1013,6 @@
 				EB7FC68C16DC4616007C006D /* CoreImage.framework */,
 				EBBDCB8C1623E51D00C32523 /* CoreLocation.framework */,
 				EBCF5634175461D10083837B /* FacebookSDK.framework */,
-				EBCF5636175461E50083837B /* FacebookSDKResources.bundle */,
 				EBAAFD22161FCF020007637B /* Foundation.framework */,
 				EB7FC68E16DC4623007C006D /* ImageIO.framework */,
 				EB53F63C170913A200715E2D /* libGoogleAnalytics.a */,
@@ -1433,7 +1454,6 @@
 				EB837CB8171AE44300FA1EBC /* 16-Flag-2@2x.png in Resources */,
 				EB837CBA171AE45400FA1EBC /* 16-User@2x.png in Resources */,
 				EBA1862D172B910100336733 /* stripes.png in Resources */,
-				EBCF5637175461E50083837B /* FacebookSDKResources.bundle in Resources */,
 				EBDA918117ACB10100969A08 /* 16-Check.png in Resources */,
 				EBDA918217ACB10100969A08 /* 16-Check@2x.png in Resources */,
 				EBDA918517ACB40A00969A08 /* 16-Safari.png in Resources */,
@@ -1469,6 +1489,8 @@
 				EBC59D8917BEC59B00E0FC67 /* 64-Create-_-Write.png in Resources */,
 				EBC59D8D17BEC5C300E0FC67 /* 64-Cloud-Download.png in Resources */,
 				EBEACD7517C2F65200C65F3F /* AboutViewController~ipad.xib in Resources */,
+				EB59020317D5D7D20032143C /* MarketplaceViewController.xib in Resources */,
+				EB59020917D5D83A0032143C /* MarketplaceViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1596,6 +1618,8 @@
 				EB3BD91217B8C47A008D066D /* ReaderViewController.m in Sources */,
 				EBDFF54117BC057100BBFC1D /* ScheduleItemViewController.m in Sources */,
 				EBDFF54E17BE0C4500BBFC1D /* NSObject+Triangle.m in Sources */,
+				EB59020217D5D7D20032143C /* MarketplaceViewController.m in Sources */,
+				EB59020817D5D83A0032143C /* MarketplaceViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -9,6 +9,7 @@
 #import "UIViewController+Present.h"
 #import "AppDelegate.h"
 #import "MapViewController.h"
+#import "MarketplaceViewController.h"
 #import "DemoViewController.h"
 #import "FeedbackViewController.h"
 #import "HumanLoginViewController.h"
@@ -53,7 +54,7 @@
     
     if (![[EventToken sharedInstance] isEventSelected]) {
 
-        UINavigationController *viewController = [[UINavigationController alloc] initWithRootViewController:[[MapViewController alloc] initWithNibName:nil bundle:nil]];
+        UINavigationController *viewController = [[UINavigationController alloc] initWithRootViewController:[[MarketplaceViewController alloc] initWithNibName:nil bundle:nil]];
               
         // iOS 6 bug
         [viewController setWantsFullScreenLayout:YES];

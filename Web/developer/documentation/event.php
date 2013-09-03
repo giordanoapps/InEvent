@@ -17,11 +17,15 @@
 
     <div class="documentationFunctionBox">
         <p class="documentFunctionName">
-            <span>event.getEvents()</span>
-            <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=event.getEvents">
+            <span>event.getEvents(<b>tokenID</b> = null)</span>
+            <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=event.getEvents&tokenID=$tokenID">
         </p>
 
-        <p class="documentFunctionDescription">Retorna todos os eventos cadastrados, com nomes ordenados em ordem alfabética.</p>
+        <p class="documentFunctionDescription">Retorna todos os eventos cadastrados, com nomes ordenados em ordem alfabética. Caso seja fornecido um <i>tokenID</i>, será informado se a pessoa associada ao <i>tokenID</i> está inscrita.</p>
+
+        <div class="documentationFunctionParametersBox">
+            <p><b>tokenID</b><sub>GET</sub> : id de autenticação </p>
+        </div>
     </div>
 
     <div class="documentationFunctionBox">
@@ -56,15 +60,16 @@
     
     <div class="documentationFunctionBox">
         <p class="documentFunctionName">
-            <span>event.approveEnrollment(<b>tokenID</b>, <b>requestID</b>)</span>
-            <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=event.approveEnrollment&tokenID=$tokenID&requestID=1">
+            <span>event.approveEnrollment(<b>tokenID</b>, <b>eventID</b>, <b>personID</b> = null)</span>
+            <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=event.approveEnrollment&tokenID=$tokenID&eventID=1&personID=null">
         </p>
 
-        <p class="documentFunctionDescription">Aprova a solicitação <i>requestID</i> para entrada da pessoa.</p>
+        <p class="documentFunctionDescription">Aprova a entrada da pessoa <i>personID</i> no evento <i>eventID</i>. Se a pessoa <i>personID</i> não for especificada ou o <i>tokenID</i> fornecido não tiver permissão para enviar para a pessoa <i>personID</i>, será utilizada a pessoa associada ao <i>tokenID</i>.</p>
 
         <div class="documentationFunctionParametersBox">
             <p><b>tokenID</b><sub>GET</sub> : id de autenticação </p>
-            <p><b>requestID</b><sub>GET</sub> : id da requisição de entrada </p>
+            <p><b>eventID</b><sub>GET</sub> : id do evento </p>
+            <p><b>personID</b><sub>GET</sub> : id da pessoa </p>
         </div>
     </div>
 

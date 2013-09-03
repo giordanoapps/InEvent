@@ -4,6 +4,38 @@
 		"selected_items":
 		[
 			[
+				"ac",
+				"activity"
+			],
+			[
+				"age",
+				"agendaItem"
+			],
+			[
+				"mem",
+				"memberID"
+			],
+			[
+				"min",
+				"min-height"
+			],
+			[
+				"ROLE_",
+				"ROLE_ATTENDEE"
+			],
+			[
+				"ec",
+				"exclusive"
+			],
+			[
+				"font",
+				"font-weight"
+			],
+			[
+				"border",
+				"border-top"
+			],
+			[
 				"fade",
 				"fadeIn"
 			],
@@ -20,10 +52,6 @@
 				"activity"
 			],
 			[
-				"ac",
-				"activityID"
-			],
-			[
 				"max",
 				"max-height"
 			],
@@ -34,10 +62,6 @@
 			[
 				"mar",
 				"margin-top"
-			],
-			[
-				"font",
-				"font-size"
 			],
 			[
 				"sched",
@@ -54,14 +78,6 @@
 			[
 				"mysql_in",
 				"mysql_insert_id"
-			],
-			[
-				"mem",
-				"member"
-			],
-			[
-				"border",
-				"border-left"
 			],
 			[
 				"group",
@@ -90,10 +106,6 @@
 			[
 				"te",
 				"text-align"
-			],
-			[
-				"min",
-				"min-width"
 			],
 			[
 				"child",
@@ -436,98 +448,50 @@
 	"buffers":
 	[
 		{
-			"file": "Web/developer/documentation/activity.php",
+			"file": "Web/marketplace.php",
 			"settings":
 			{
-				"buffer_size": 10532,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "Web/home.php",
-			"settings":
-			{
-				"buffer_size": 3560,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "Web/js/modules/home.js",
-			"settings":
-			{
-				"buffer_size": 3889,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "Web/developer/api/modules/person.php",
-			"settings":
-			{
-				"buffer_size": 5983,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "Web/register.php",
-			"settings":
-			{
-				"buffer_size": 2318,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "Web/js/modules/register.js",
-			"settings":
-			{
-				"buffer_size": 1773,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "Web/includes/html/wrapper.php",
-			"settings":
-			{
-				"buffer_size": 1081,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "Web/includes/check/login.php",
-			"settings":
-			{
-				"buffer_size": 4277,
+				"buffer_size": 499,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "Web/js/modules/ajax.js",
+			"file": "Web/js/modules/marketplace.js",
 			"settings":
 			{
-				"buffer_size": 3440,
+				"buffer_size": 2628,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "Web/includes/wrap/people.php",
+			"file": "Web/js/modules/people.js",
 			"settings":
 			{
-				"buffer_size": 6751,
+				"buffer_size": 4865,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "Web/includes/connection.php",
+			"file": "Web/includes/html/bar.php",
 			"settings":
 			{
-				"buffer_size": 828,
-				"line_ending": "Windows"
+				"buffer_size": 4187,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Web/js/modules/window.js",
+			"settings":
+			{
+				"buffer_size": 2563,
+				"line_ending": "Unix"
 			}
 		},
 		{
 			"file": "Web/css/default.css",
 			"settings":
 			{
-				"buffer_size": 35002,
+				"buffer_size": 36724,
 				"line_ending": "Unix"
 			}
 		}
@@ -676,65 +640,71 @@
 	},
 	"file_history":
 	[
+		"/Users/pedro/Sites/InEvent/Web/js/modules/data.js",
+		"/Users/pedro/Sites/InEvent/Web/includes/html/header.php",
+		"/Users/pedro/Sites/InEvent/Web/js/modules/register.js",
+		"/Users/pedro/Sites/InEvent/Web/js/modules/event.js",
+		"/Users/pedro/Sites/InEvent/Web/includes/wrap/marketplace.php",
+		"/Users/pedro/Sites/InEvent/Web/home.php",
+		"/Users/pedro/Sites/InEvent/Web/js/modules/home.js",
+		"/Users/pedro/Sites/InEvent/Web/js/modules/marketplace.js",
+		"/Users/pedro/Sites/InEvent/Web/developer/api/modules/event.php",
+		"/Users/pedro/Sites/InEvent/Web/developer/api/functions/validation.php",
+		"/Users/pedro/Sites/InEvent/Web/developer/api/modules/person.php",
+		"/Users/pedro/Sites/InEvent/Web/includes/html/bar.php",
+		"/Users/pedro/Sites/InEvent/Web/includes/wrap/event.php",
+		"/Users/pedro/Sites/InEvent/Web/includes/queries/activity.php",
+		"/Users/pedro/Sites/InEvent/Web/developer/api/modules/activity.php",
+		"/Users/pedro/Sites/InEvent/Web/includes/queries/event.php",
+		"/Users/pedro/Sites/InEvent/Web/includes/function/generic.php",
+		"/Users/pedro/Sites/InEvent/Web/developer/documentation/event.php",
+		"/Users/pedro/Sites/InEvent/Web/developer/documentation/activity.php",
+		"/Users/pedro/Sites/InEvent/Web/js/modules/bar.js",
+		"/Users/pedro/Sites/InEvent/Web/js/modules/window.js",
+		"/Users/pedro/Sites/InEvent/Web/js/default.php",
+		"/Users/pedro/Sites/InEvent/Web/includes/queries.php",
+		"/Users/pedro/Sites/InEvent/Web/includes/wrap.php",
+		"/Users/pedro/Sites/InEvent/Web/event.php",
+		"/Users/pedro/Sites/InEvent/Web/includes/function/security.php",
+		"/Users/pedro/Sites/InEvent/Web/js/modules/ajax.js",
+		"/Users/pedro/Sites/InEvent/Web/register.php",
+		"/Users/pedro/Sites/InEvent/Web/includes/html/wrapper.php",
+		"/Users/pedro/Sites/InEvent/Web/includes/check/login.php",
+		"/Users/pedro/Sites/InEvent/Web/includes/wrap/people.php",
+		"/Users/pedro/Sites/InEvent/Web/includes/check/security.php",
+		"/Users/pedro/Sites/InEvent/Web/includes/singleton/security.php",
+		"/Users/pedro/Sites/InEvent/Web/includes/connection.php",
 		"/Users/pedro/Sites/InEvent/iOS/PedidoNaRede/es.lproj/Localizable.strings",
 		"/Users/pedro/Sites/InEvent/iOS/PedidoNaRede/pt.lproj/Localizable.strings",
 		"/Users/pedro/Sites/InEvent/Web/js/modules/functions.js",
 		"/Users/pedro/Sites/InEvent/Web/includes/queries/people.php",
-		"/Users/pedro/Sites/InEvent/Web/js/modules/window.js",
 		"/Users/pedro/Sites/InEvent/Web/data.php",
-		"/Users/pedro/Sites/InEvent/Web/includes/wrap/event.php",
-		"/Users/pedro/Sites/InEvent/Web/js/modules/data.js",
 		"/Users/pedro/Sites/InEvent/Web/js/modules/notification.js",
 		"/Users/pedro/Sites/InEvent/Web/.htaccess",
-		"/Users/pedro/Sites/InEvent/Web/js/modules/register.js",
-		"/Users/pedro/Sites/InEvent/Web/includes/queries/activity.php",
-		"/Users/pedro/Sites/InEvent/Web/includes/wrap/people.php",
-		"/Users/pedro/Sites/InEvent/Web/includes/html/bar.php",
-		"/Users/pedro/Sites/InEvent/Web/includes/check/login.php",
-		"/Users/pedro/Sites/InEvent/Web/includes/function/security.php",
-		"/Users/pedro/Sites/InEvent/Web/js/modules/ajax.js",
-		"/Users/pedro/Sites/InEvent/Web/includes/check/security.php",
-		"/Users/pedro/Sites/InEvent/Web/developer/api/functions/validation.php",
-		"/Users/pedro/Sites/InEvent/Web/developer/api/modules/activity.php",
-		"/Users/pedro/Sites/InEvent/Web/developer/api/modules/person.php",
 		"/Users/pedro/Sites/InEvent/Web/developer/api/index.php",
 		"/Users/pedro/Sites/InEvent/Web/developer/api/modules/register.php",
-		"/Users/pedro/Sites/InEvent/Web/register.php",
-		"/Users/pedro/Sites/InEvent/Web/includes/html/header.php",
 		"/Users/pedro/Sites/InEvent/Web/js/modules/people.js",
-		"/Users/pedro/Sites/InEvent/Web/event.php",
 		"/Users/pedro/Sites/InEvent/Web/people.php",
-		"/Users/pedro/Sites/InEvent/Web/developer/api/modules/event.php",
 		"/Users/pedro/Sites/InEvent/Web/developer/documentation/person.php",
 		"/Users/pedro/Sites/InEvent/Web/developer/api/functions/person.php",
 		"/Users/pedro/Sites/InEvent/.htaccess",
 		"/Users/pedro/Sites/InEvent/iOS/PedidoNaRede/AboutViewController.m",
 		"/Users/pedro/Sites/InEvent/Web/includes/header.php",
 		"/Users/pedro/Sites/InEvent/iOS/PedidoNaRede/AboutViewController.h",
-		"/Users/pedro/Sites/InEvent/Web/js/modules/event.js",
 		"/Users/pedro/Sites/InEvent/Web/js/modules/infoContainer.js",
-		"/Users/pedro/Sites/InEvent/Web/includes/connection.php",
 		"/Users/pedro/Sites/InEvent/iOS/PedidoNaRede/Localizable.strings",
 		"/Users/pedro/Sites/InEvent/iOS/PedidoNaRede/en.lproj/Localizable.strings",
-		"/Users/pedro/Sites/InEvent/Web/includes/html/wrapper.php",
 		"/Users/pedro/Sites/InEvent/Web/developer/api/functions/event.php",
-		"/Users/pedro/Sites/InEvent/Web/developer/documentation/event.php",
 		"/Users/pedro/Sites/InEvent/Web/js/modules/field.js",
 		"/Users/pedro/Sites/InEvent/Web/includes/function/utils.php",
-		"/Users/pedro/Sites/InEvent/Web/includes/wrap.php",
 		"/Users/pedro/Sites/InEvent/Web/css/printer.css",
 		"/Users/pedro/Sites/InEvent/Web/developer/documentation/notification.php",
-		"/Users/pedro/Sites/InEvent/Web/includes/queries.php",
 		"/Users/pedro/Sites/InEvent/Web/includes/wrap/activity.php",
 		"/Users/pedro/Sites/InEvent/Web/js/modules/np.js",
-		"/Users/pedro/Sites/InEvent/Web/js/default.php",
-		"/Users/pedro/Sites/InEvent/Web/developer/documentation/activity.php",
 		"/Users/pedro/Sites/InEvent/Web/activity.php",
 		"/Users/pedro/Sites/InEvent/Web/css/mobile.css",
 		"/Users/pedro/Sites/InEvent/Web/includes/social.php",
-		"/Users/pedro/Sites/InEvent/Web/includes/queries/event.php",
 		"/Users/pedro/Sites/InEvent/Web/includes/singleton/core.php",
-		"/Users/pedro/Sites/InEvent/Web/includes/function/generic.php",
 		"/Users/pedro/Sites/InEvent/Web/developer/documentation/howTo.php",
 		"/Users/pedro/Sites/InEvent/Web/developer/api/header.php",
 		"/Users/pedro/Sites/InEvent/iOS/PedidoNaRede/AppDelegate.m",
@@ -743,16 +713,12 @@
 		"/Users/pedro/Sites/InEvent/iOS/PedidoNaRede/APIController.h",
 		"/Users/pedro/Library/Application Support/Sublime Text 2/Packages/User/Preferences.sublime-settings",
 		"/Users/pedro/Sites/InEvent/Web/js/developer.js",
-		"/Users/pedro/Sites/InEvent/Web/includes/singleton/security.php",
-		"/Users/pedro/Sites/InEvent/Web/js/modules/home.js",
 		"/Users/pedro/Sites/InEvent/Web/js/jquery-1.8.3.js",
 		"/Users/pedro/Sites/InEvent/Web/includes/constant.php",
-		"/Users/pedro/Sites/InEvent/Web/home.php",
 		"/Users/pedro/Sites/InEvent/README.md",
 		"/Users/pedro/Sites/InEvent/Web/developer/index.php",
 		"/Users/pedro/Sites/InEvent/Web/js/modules/validator.js",
 		"/Users/pedro/Sites/InEvent/Web/location.php",
-		"/Users/pedro/Sites/InEvent/Web/js/modules/bar.js",
 		"/Users/pedro/Sites/InEvent/Web/ajax.php",
 		"/Users/pedro/Sites/InEvent/Web/js/modules/index.js",
 		"/Users/pedro/Sites/InEvent/Web/terms.php",
@@ -801,9 +767,7 @@
 		"/Users/pedro/Sites/Presenca-dev/Web/consultants.php",
 		"/Users/pedro/Sites/Presenca-dev/Web/events.php",
 		"/Users/pedro/Sites/Presenca-dev/Web/groups.php",
-		"/Users/pedro/Sites/Presenca-dev/Web/includes/function/format.php",
-		"/Users/pedro/Sites/Presenca-dev/Web/developer/documentation/notification.php",
-		"/Users/pedro/Sites/Presenca-dev/Web/developer/api/modules/notification.php"
+		"/Users/pedro/Sites/Presenca-dev/Web/includes/function/format.php"
 	],
 	"find":
 	{
@@ -826,6 +790,59 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"required",
+			"bottom",
+			"undefined",
+			"activityID",
+			"getActivitiesForMemberAtEventQuery",
+			"loginB",
+			"height: 44",
+			"eventMember",
+			"BDBDBD",
+			"min-",
+			"eventID",
+			"activityID",
+			"getTokenForEvent",
+			"scheduleItem",
+			"activityID",
+			"eventID",
+			"	",
+			"update",
+			"activityID",
+			"request",
+			"activityID",
+			"agendaItem",
+			"activityID",
+			"marketplaceContent",
+			"#eventContent",
+			"location",
+			"activityMember",
+			"dateBegin",
+			"upper",
+			"Data",
+			"agendaI",
+			"agendaItem",
+			"scheduleItem",
+			"target",
+			"activity",
+			"    ",
+			"   ",
+			"  ",
+			"activityM",
+			"ctivity",
+			"eventID\"",
+			"2",
+			"eventID",
+			"barBottom",
+			"secon",
+			"onclick=\"\" ",
+			"memberCompany",
+			"tradeName",
+			"company",
+			"tradeName",
+			"company",
+			"companyID",
+			"REQUEST",
 			"ab81873_inevent",
 			"email",
 			"Email",
@@ -900,60 +917,7 @@
 			"row",
 			"groupID",
 			"replaceable",
-			"$elem.closest(\".pickerItem\")",
-			" $elem.closest(\".pickerItem\")",
-			"urrent",
-			"Hide",
-			"$(this)",
-			"titleButton",
-			"name",
-			"Nome",
-			"Pago",
-			"singleB",
-			"$target == \"event\"",
-			"dateBegin",
-			"activityID",
-			"personID",
-			"image",
-			"$image",
-			" $image",
-			"image",
-			"activityID",
-			"staff",
-			"activityMember",
-			"activityID",
-			"risePriority",
-			"grantPermission",
-			"name",
-			"ucwords(strtolower(",
-			"name",
-			"`member`.`",
-			" ",
-			"Universidade",
-			"Telefone",
-			"memberID",
-			"approved",
-			"Nome",
-			"name",
-			"Confirmar",
-			"tool",
-			"paid",
-			"activityID",
-			"activityMember",
-			"activity",
-			"row",
-			"$eventID",
-			"eventID",
-			"eventMember",
-			"selector",
-			"complement",
-			"activityID",
-			"row_number",
-			":",
-			"capacity",
-			"dateBegin",
-			"dayOfYear",
-			"printScheduleItem"
+			"$elem.closest(\".pickerItem\")"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -1018,30 +982,29 @@
 	"groups":
 	[
 		{
-			"selected": 10,
+			"selected": 4,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "Web/developer/documentation/activity.php",
+					"file": "Web/marketplace.php",
 					"settings":
 					{
-						"buffer_size": 10532,
+						"buffer_size": 499,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3007,
-								3007
+								133,
+								133
 							]
 						],
 						"settings":
 						{
 							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -1051,23 +1014,23 @@
 				},
 				{
 					"buffer": 1,
-					"file": "Web/home.php",
+					"file": "Web/js/modules/marketplace.js",
 					"settings":
 					{
-						"buffer_size": 3560,
+						"buffer_size": 2628,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								237,
-								237
+								260,
+								260
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
@@ -1078,18 +1041,18 @@
 				},
 				{
 					"buffer": 2,
-					"file": "Web/js/modules/home.js",
+					"file": "Web/js/modules/people.js",
 					"settings":
 					{
-						"buffer_size": 3889,
+						"buffer_size": 4865,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1921,
-								1921
+								3925,
+								3791
 							]
 						],
 						"settings":
@@ -1098,25 +1061,25 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 981.0,
+						"translation.y": 1961.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 3,
-					"file": "Web/developer/api/modules/person.php",
+					"file": "Web/includes/html/bar.php",
 					"settings":
 					{
-						"buffer_size": 5983,
+						"buffer_size": 4187,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1831,
-								1831
+								1588,
+								1588
 							]
 						],
 						"settings":
@@ -1125,52 +1088,25 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 910.0,
+						"translation.y": 621.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 4,
-					"file": "Web/register.php",
+					"file": "Web/js/modules/window.js",
 					"settings":
 					{
-						"buffer_size": 2318,
+						"buffer_size": 2563,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								762,
-								762
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 180.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "Web/js/modules/register.js",
-					"settings":
-					{
-						"buffer_size": 1773,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1231,
-								1231
+								1635,
+								1635
 							]
 						],
 						"settings":
@@ -1179,143 +1115,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 236.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "Web/includes/html/wrapper.php",
-					"settings":
-					{
-						"buffer_size": 1081,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								99,
-								99
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 7,
-					"file": "Web/includes/check/login.php",
-					"settings":
-					{
-						"buffer_size": 4277,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2533,
-								2465
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 1020.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 8,
-					"file": "Web/js/modules/ajax.js",
-					"settings":
-					{
-						"buffer_size": 3440,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1022,
-								992
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 203.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 9,
-					"file": "Web/includes/wrap/people.php",
-					"settings":
-					{
-						"buffer_size": 6751,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2941,
-								2941
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 10,
-					"file": "Web/includes/connection.php",
-					"settings":
-					{
-						"buffer_size": 828,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								494,
-								494
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 600.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -1327,19 +1127,19 @@
 			"sheets":
 			[
 				{
-					"buffer": 11,
+					"buffer": 5,
 					"file": "Web/css/default.css",
 					"settings":
 					{
-						"buffer_size": 35002,
+						"buffer_size": 36724,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								25834,
-								25834
+								24151,
+								24151
 							]
 						],
 						"settings":
@@ -1348,7 +1148,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 24486.0,
+						"translation.y": 23424.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -1384,7 +1184,7 @@
 		"cols":
 		[
 			0.0,
-			0.662228092619,
+			0.713031195766,
 			1.0
 		],
 		"rows":
@@ -1404,6 +1204,122 @@
 		"height": 0.0,
 		"selected_items":
 		[
+			[
+				"wind",
+				"Web/js/modules/window.js"
+			],
+			[
+				"ba",
+				"Web/includes/html/bar.php"
+			],
+			[
+				"header",
+				"Web/includes/html/header.php"
+			],
+			[
+				"data",
+				"Web/js/modules/data.js"
+			],
+			[
+				"bar",
+				"Web/includes/html/bar.php"
+			],
+			[
+				"regis",
+				"Web/js/modules/register.js"
+			],
+			[
+				"peo",
+				"Web/js/modules/people.js"
+			],
+			[
+				"event.js",
+				"Web/js/modules/event.js"
+			],
+			[
+				"mark",
+				"Web/js/modules/marketplace.js"
+			],
+			[
+				"que/ac",
+				"Web/includes/queries/activity.php"
+			],
+			[
+				"event",
+				"Web/includes/wrap/event.php"
+			],
+			[
+				"person",
+				"Web/developer/api/modules/person.php"
+			],
+			[
+				"eve",
+				"Web/includes/queries/event.php"
+			],
+			[
+				"valid",
+				"Web/developer/api/functions/validation.php"
+			],
+			[
+				"ge",
+				"Web/includes/function/generic.php"
+			],
+			[
+				"mo/event",
+				"Web/developer/api/modules/event.php"
+			],
+			[
+				"activi",
+				"Web/developer/api/modules/activity.php"
+			],
+			[
+				"marke",
+				"Web/js/modules/marketplace.js"
+			],
+			[
+				"defa",
+				"Web/js/default.php"
+			],
+			[
+				"que",
+				"Web/includes/queries.php"
+			],
+			[
+				"que/eve",
+				"Web/includes/queries/event.php"
+			],
+			[
+				"que/a",
+				"Web/includes/queries/activity.php"
+			],
+			[
+				"wrap/mar",
+				"Web/includes/wrap/marketplace.php"
+			],
+			[
+				"wrap",
+				"Web/includes/wrap.php"
+			],
+			[
+				"mar",
+				"Web/marketplace.php"
+			],
+			[
+				"secu",
+				"Web/includes/function/security.php"
+			],
+			[
+				"validatio",
+				"Web/developer/api/functions/validation.php"
+			],
+			[
+				"ajax",
+				"Web/js/modules/ajax.js"
+			],
+			[
+				"sec",
+				"Web/includes/function/security.php"
+			],
 			[
 				"conn",
 				"Web/includes/connection.php"
@@ -1445,32 +1361,12 @@
 				"Web/js/modules/functions.js"
 			],
 			[
-				"wrap",
-				"Web/includes/html/wrapper.php"
-			],
-			[
 				"htac",
 				"Web/.htaccess"
 			],
 			[
-				"data",
-				"Web/js/modules/data.js"
-			],
-			[
-				"wind",
-				"Web/js/modules/window.js"
-			],
-			[
 				"reg",
 				"Web/register.php"
-			],
-			[
-				"regis",
-				"Web/js/modules/register.js"
-			],
-			[
-				"person",
-				"Web/developer/api/modules/person.php"
 			],
 			[
 				"qu/acti",
@@ -1481,24 +1377,12 @@
 				"Web/includes/queries/people.php"
 			],
 			[
-				"ajax",
-				"Web/js/modules/ajax.js"
-			],
-			[
 				"securi",
 				"Web/includes/function/security.php"
 			],
 			[
-				"sec",
-				"Web/includes/check/security.php"
-			],
-			[
 				"valida",
 				"Web/developer/api/functions/validation.php"
-			],
-			[
-				"bar",
-				"Web/includes/html/bar.php"
 			],
 			[
 				"wrap/ac",
@@ -1529,24 +1413,12 @@
 				"Web/js/modules/register.js"
 			],
 			[
-				"peo",
-				"Web/js/modules/people.js"
-			],
-			[
-				"mo/event",
-				"Web/developer/api/modules/event.php"
-			],
-			[
 				"q/ac",
 				"Web/includes/queries/activity.php"
 			],
 			[
 				"func/per",
 				"Web/developer/api/functions/person.php"
-			],
-			[
-				"event",
-				"Web/event.php"
 			],
 			[
 				"hta",
@@ -1567,10 +1439,6 @@
 			[
 				"windo",
 				"Web/js/modules/window.js"
-			],
-			[
-				"header",
-				"Web/includes/html/header.php"
 			],
 			[
 				"mod/ac",
@@ -1665,20 +1533,12 @@
 				"Web/developer/documentation/event.php"
 			],
 			[
-				"que",
-				"Web/includes/queries.php"
-			],
-			[
 				"utils",
 				"Web/includes/function/utils.php"
 			],
 			[
 				"quer/",
 				"Web/includes/queries/activity.php"
-			],
-			[
-				"defa",
-				"Web/js/default.php"
 			],
 			[
 				"infoco",
@@ -1695,10 +1555,6 @@
 			[
 				"event.",
 				"Web/js/modules/event.js"
-			],
-			[
-				"activi",
-				"Web/developer/documentation/activity.php"
 			],
 			[
 				"np.js",
@@ -1746,10 +1602,6 @@
 			],
 			[
 				"quer/e",
-				"Web/includes/queries/event.php"
-			],
-			[
-				"que/eve",
 				"Web/includes/queries/event.php"
 			],
 			[
@@ -1837,16 +1689,8 @@
 				"Web/js/default.php"
 			],
 			[
-				"event.js",
-				"Web/js/modules/event.js"
-			],
-			[
 				"ger",
 				"Web/includes/function/generic.php"
-			],
-			[
-				"eve",
-				"Web/event.php"
 			],
 			[
 				"jqu",
@@ -1871,50 +1715,6 @@
 			[
 				"mobi",
 				"Web/css/mobile.css"
-			],
-			[
-				"cons",
-				"Web/includes/constant.php"
-			],
-			[
-				"he",
-				"Web/includes/html/header.php"
-			],
-			[
-				"re",
-				"Web/developer/api/modules/register.php"
-			],
-			[
-				"regi",
-				"Web/developer/api/modules/register.php"
-			],
-			[
-				"per",
-				"Web/developer/documentation/person.php"
-			],
-			[
-				"pers",
-				"Web/developer/api/modules/person.php"
-			],
-			[
-				"howt",
-				"Web/developer/documentation/howTo.php"
-			],
-			[
-				"noti",
-				"Web/developer/documentation/notification.php"
-			],
-			[
-				"hme",
-				"Web/home.php"
-			],
-			[
-				"head",
-				"Web/includes/html/header.php"
-			],
-			[
-				"h",
-				"Web/includes/header.php"
 			]
 		],
 		"width": 0.0

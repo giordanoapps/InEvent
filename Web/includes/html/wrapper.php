@@ -7,7 +7,8 @@
 			</ul>
 			
 			<ul class="rightBar">
-				<li><a href="mailto:contato@estudiotrilha.com.br">Sugestões? Problemas?</a></li>
+				<li><a target="_blank" href="https://www.facebook.com/pages/In-Event/150798025113523">Curta nossa página no Facebook!</a></li>
+				<!-- <li><a href="mailto:contato@estudiotrilha.com.br">Sugestões? Problemas?</a></li> -->
 			</ul>
 		</div>
 		
@@ -33,8 +34,13 @@
 
 	<div id="wrapper">
 		<div class="bar bottom">
-			<ul>
+			<ul class="leftBar">
 				<li>&reg;<a target="_blank" href="http://estudiotrilha.com.br">Estúdio Trilha 2013</a> &nbsp;&nbsp;&nbsp; Todos os direitos reservados</li>
+			</ul>
+			
+			<ul class="rightBar">
+				<li><a target="_blank" href="https://www.facebook.com/pages/In-Event/150798025113523">Curta nossa página no Facebook!</a></li>
+				<!-- <li><a href="mailto:contato@estudiotrilha.com.br">Sugestões? Problemas?</a></li> -->
 			</ul>
 		</div>
 	</div>

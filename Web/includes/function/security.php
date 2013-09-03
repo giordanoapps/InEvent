@@ -35,7 +35,6 @@
 			FROM
 				`eventMember`
 			WHERE 1
-				AND `eventMember`.`roleID` != @(ROLE_ATTENDEE)
 				AND `eventMember`.`memberID` = $core->memberID
 		");
 
@@ -46,9 +45,11 @@
 
 		if (mysql_num_rows($result) > 0) {
 			$core->eventID = mysql_result($result, 0, "eventID");
-			$core->workAtEvent = true;
+			$core->workAtEvent = (mysql_result($result, 0, "roleID") != ROLE_ATTENDEE) ? true : false;
 			$core->roleID = mysql_result($result, 0, "roleID");
 		} else {
+			// Since permission is needed to be inside an event, we must reset the $core->eventID
+			$core->eventID = 0;
 			$core->workAtEvent = false;
 			$core->roleID = ROLE_ATTENDEE;
 		}

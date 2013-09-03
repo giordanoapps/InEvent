@@ -72,7 +72,7 @@ $(document).ready(function() {
 	 * Change the current selected company
 	 * @return {null}
 	 */
-	$(".bar .locationBox .locationItem").live("click", function (event) {
+	$(".bar .locationBox li:not(.header)").live("click", function (event) {
 
 		// Create the cookie
 		createCookie("eventID", $(this).val(), 10);
