@@ -3,24 +3,12 @@
 	
 	if ($method === "getEvents") {
 
-		$result = resourceForQuery(
-			"SELECT
-				`event`.`id`,
-				`event`.`name`,
-				`event`.`description`,
-				UNIX_TIMESTAMP(`event`.`dateBegin`) AS `dateBegin`,
-				UNIX_TIMESTAMP(`event`.`dateEnd`) AS `dateEnd`,
-				`event`.`latitude`,
-				`event`.`longitude`,
-				`event`.`address`,
-				`event`.`city`,
-				`event`.`state`,
-				`event`.`zipCode`
-			FROM
-				`event`
-			ORDER BY
-				`event`.`name` ASC
-		");
+		if (isset($_GET['tokenID'])) {
+			$tokenID = getToken();
+			$result = getEventsForMemberQuery($core->memberID, false);
+		} else {
+			$result = getEventsForMemberQuery(0, false);
+		}
 
 		echo printInformation("event", $result, true, 'json');
 
@@ -41,7 +29,7 @@
 			$personID = $core->memberID;
 		}
 
-		if ($personID != 0) {
+		if ($personID != 0 && eventExists($eventID)) {
 
 			$result = resourceForQuery(
 				"SELECT
@@ -50,14 +38,10 @@
 					`eventMember`
 				WHERE 1
 					AND `eventMember`.`eventID` = $eventID
-				GROUP BY
-					`eventMember`.`memberID`
-				HAVING 1
-					AND SUM(IF(`eventMember`.`memberID` = $personID, 1, 0)) = 0
-				LIMIT 1
+					AND `eventMember`.`memberID` = $personID
 			");
 
-			if (mysql_num_rows($result) > 0) {
+			if (mysql_num_rows($result) == 0) {
 				// Insert the person on the event
 				$insert = resourceForQuery(
 				// echo (
@@ -101,7 +85,7 @@
 				http_status_code(303, "The personID is already enrolled on this event");
 			}
 		} else {
-			http_status_code(400, "The asserted personID is null");
+			http_status_code(400, "The asserted personID is null or the eventID doesn't exist");
 		}
 		
 	} else

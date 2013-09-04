@@ -57,7 +57,7 @@
     
     // We check if the back button is already set, so we have to preserve it
     // The navigationBar items is an array that counts how many controllers we already have on the stack
-    if ([self.navigationController.viewControllers count] == 1 && self.presentingViewController == nil && ![[[self.splitViewController viewControllers] objectAtIndex:0] isEqual:self.navigationController]) {
+    if ([self.navigationController.viewControllers count] == 1 && self.presentingViewController == nil && ![[[self.splitViewController viewControllers] objectAtIndex:1] isEqual:self.navigationController]) {
         
         // Left Button
         _leftBarButton = [[CoolBarButtonItem alloc] initCustomButtonWithImage:[UIImage imageNamed:@"20-Hamburguer-White"] frame:CGRectMake(0, 0, 42.0, 30.0) insets:UIEdgeInsetsMake(7.0, 10.0, 7.0, 10.0) target:self action:@selector(showSlidingMenu)];
@@ -198,6 +198,7 @@
         alertView = [[AlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"Oh oh.. It appears that our server is having some trouble. Do you want to try again?", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"No", nil) otherButtonTitle:NSLocalizedString(@"Yes", nil)];
         
         [self setApiController:apiController];
+        
     } else if (error.code == 401 || error.code == 204) {
         // We have a server error
         alertView = [[AlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"It appears that your credentials expired! Can you log again?", nil) delegate:self cancelButtonTitle:nil otherButtonTitle:NSLocalizedString(@"Ok!", nil)];
@@ -209,6 +210,8 @@
         
         // Update the current state of the schedule controller
         [[NSNotificationCenter defaultCenter] postNotificationName:@"scheduleCurrentState" object:nil userInfo:nil];
+        
+        [self setApiController:nil];
         
     } else {
         alertView = [[AlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"Hum, it appears that the connectivity is unstable.. Do you want to try again?", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"No", nil) otherButtonTitle:NSLocalizedString(@"Yes", nil)];

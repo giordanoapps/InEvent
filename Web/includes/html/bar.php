@@ -114,13 +114,14 @@
 							<input type="password" placeholder="Senha" name="password"/>
 							<input type="submit" class="singleButton" value="Entrar" />
 							<?php if (isset($_POST["login_error"])) { ?>
-							<p class="errorMessage"><?php echo $_POST["login_error"] ?></p>
-							<?php if (isset($_POST["login_count"])) { ?>
-								<p class="errorHint">Esta foi sua tentativa número <?php echo $_POST["login_count"] ?> de no máximo 3. Após isso sua conta será bloqueada e uma nova senha será enviada para seu email.</p>
-							<?php } else { ?>
-								<p class="errorHint">Sua conta foi bloqueada por 10 minutos e uma nova senha foi enviada para seu email.</p>
+								<p class="errorMessage"><?php echo $_POST["login_error"] ?></p>
+								<?php if (isset($_POST["login_count"])) { ?>
+									<p class="errorHint">Esta foi sua tentativa número <?php echo $_POST["login_count"] ?> de no máximo 3. Após isso sua conta será bloqueada e uma nova senha será enviada para seu email.</p>
+								<?php } else { ?>
+									<p class="errorHint">Sua conta foi bloqueada por 10 minutos e uma nova senha foi enviada para seu email.</p>
+								<?php } ?>
 							<?php } ?>
-						<?php } ?>
+							<a class	="forgot" href="forgot.php">Esqueci a senha</a>
 						</form>
 					</div>
 				</li>

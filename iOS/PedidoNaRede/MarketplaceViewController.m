@@ -7,9 +7,7 @@
 //
 
 #import "MarketplaceViewController.h"
-#import "ScheduleViewController.h"
-#import "ScheduleViewCell.h"
-#import "ScheduleItemViewController.h"
+#import "MarketplaceViewCell.h"
 #import "AppDelegate.h"
 #import "UtilitiesController.h"
 #import "UIViewController+Present.h"
@@ -20,6 +18,7 @@
 #import "HumanToken.h"
 #import "EventToken.h"
 #import "GAI.h"
+#import <Parse/Parse.h>
 
 @interface MarketplaceViewController () {
     ODRefreshControl *refreshControl;
@@ -38,9 +37,6 @@
         self.title = NSLocalizedString(@"Marketplace", nil);
         self.tabBarItem.image = [UIImage imageNamed:@"16-Map"];
         self.events = [NSArray array];
-        
-        // Add notification observer for new orders
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadData) name:@"scheduleCurrentState" object:nil];
     }
     return self;
 }
@@ -50,6 +46,24 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    // Schedule details
+    [self loadData];
+    
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    _tableView.backgroundColor = [ColorThemeController tableViewBackgroundColor];
+    
+    // Refresh Control
+    refreshControl = [[ODRefreshControl alloc] initInScrollView:self.tableView];
+    [refreshControl addTarget:self action:@selector(reloadData) forControlEvents:UIControlEventValueChanged];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+        [self loadData];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -78,113 +92,121 @@
     }
 }
 
+#pragma mark - Private Methods
+
+- (IBAction)tapEnroll:(UITapGestureRecognizer *)gestureRecognizer {
+    
+    CGPoint swipeLocation = [gestureRecognizer locationInView:self.tableView];
+    NSIndexPath *swipedIndexPath = [self.tableView indexPathForRowAtPoint:swipeLocation];
+    
+    NSString *tokenID = [[HumanToken sharedInstance] tokenID];
+    [[[APIController alloc] initWithDelegate:self forcing:YES] eventRequestEnrollmentAtEvent:[[[self.events objectAtIndex:swipedIndexPath.row] objectForKey:@"id"] integerValue] withTokenID:tokenID];
+}
+
 #pragma mark - Table View Data Source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [self.events count];
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [[self.events objectAtIndex:section] count];
-}
-
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, tableView.frame.size.width, 44.0)];
-    
-    UIView *background = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, tableView.frame.size.width, 44.0)];
-    [background setBackgroundColor:[ColorThemeController tableViewCellBackgroundColor]];
-    [background setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
-    
-    NSDictionary *dictionary = [[self.events objectAtIndex:section] objectAtIndex:0];
-    
-    NSDate *date = [NSDate dateWithTimeIntervalSince1970:[[dictionary objectForKey:@"dateBegin"] integerValue]];
-    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    NSDateComponents *components = [gregorian components:(NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit) fromDate:date];
-    
-    UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(21.0, 6.0, tableView.frame.size.width, 32.0)];
-    [title setText:[NSString stringWithFormat:@"%.2d/%.2d - %@", [components day], [components month], [UtilitiesController weekNameFromIndex:[components weekday]]]];
-    [title setTextAlignment:NSTextAlignmentLeft];
-    [title setFont:[UIFont fontWithName:@"Thonburi-Bold" size:22.0]];
-    [title setTextColor:[ColorThemeController textColor]];
-    [title setBackgroundColor:[UIColor clearColor]];
-    
-    [headerView addSubview:background];
-    [headerView addSubview:title];
-    
-    return headerView;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 44.0;
-}
-
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 74.0;
+    return 110.0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)aTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    static NSString * CustomCellIdentifier = @"CustomCellIdentifier";
-    ScheduleViewCell * cell = (ScheduleViewCell *)[aTableView dequeueReusableCellWithIdentifier: CustomCellIdentifier];
+    static NSString *CustomCellIdentifier = @"CustomCellIdentifier";
+    MarketplaceViewCell *cell = (MarketplaceViewCell *)[aTableView dequeueReusableCellWithIdentifier: CustomCellIdentifier];
     
     if (cell == nil) {
-        [aTableView registerNib:[UINib nibWithNibName:@"ScheduleViewCell" bundle:nil] forCellReuseIdentifier:CustomCellIdentifier];
-        cell =  (ScheduleViewCell *)[aTableView dequeueReusableCellWithIdentifier: CustomCellIdentifier];
+        [aTableView registerNib:[UINib nibWithNibName:@"MarketplaceViewCell" bundle:nil] forCellReuseIdentifier:CustomCellIdentifier];
+        cell = (MarketplaceViewCell *)[aTableView dequeueReusableCellWithIdentifier:CustomCellIdentifier];
     }
     
     [cell configureCell];
     
-    NSDictionary *dictionary = [[self.events objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+    NSDictionary *dictionary = [self.events objectAtIndex:indexPath.row];
+    
+    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     
     NSDate *date = [NSDate dateWithTimeIntervalSince1970:[[dictionary objectForKey:@"dateBegin"] integerValue]];
-    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    NSDateComponents *components = [gregorian components:(NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:date];
+    NSDateComponents *components = [gregorian components:(NSMonthCalendarUnit | NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:date];
+    cell.dateBegin.text = [NSString stringWithFormat:@"%.2d/%.2d", [components day], [components month]];
+    cell.timeBegin.text = [NSString stringWithFormat:@"%.2d:%.2d", [components hour], [components minute]];
     
-    cell.hour.text = [NSString stringWithFormat:@"%.2d", [components hour]];
-    cell.minute.text = [NSString stringWithFormat:@"%.2d", [components minute]];
+    date = [NSDate dateWithTimeIntervalSince1970:[[dictionary objectForKey:@"dateEnd"] integerValue]];
+    components = [gregorian components:(NSMonthCalendarUnit | NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:date];
+    cell.dateEnd.text = [NSString stringWithFormat:@"%.2d/%.2d", [components day], [components month]];
+    cell.timeEnd.text = [NSString stringWithFormat:@"%.2d:%.2d", [components hour], [components minute]];
+    
     cell.name.text = [[dictionary objectForKey:@"name"] stringByDecodingHTMLEntities];
-    cell.description.text = [[dictionary objectForKey:@"description"] stringByDecodingHTMLEntities];
-    cell.approved = [dictionary objectForKey:@"approved"];
+    cell.approved = [[dictionary objectForKey:@"approved"] integerValue];
+    
+    UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapEnroll:)];
+    [tapRecognizer setNumberOfTouchesRequired:1];
+    [tapRecognizer setDelegate:self];
+    [cell.status addGestureRecognizer:tapRecognizer];
     
     return cell;
 }
 
 - (void)tableView:(UITableView *)aTableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    ScheduleItemViewController *sivc;
+    // We set some essential data
+    NSDictionary *dictionary = [self.events objectAtIndex:indexPath.row];
     
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        sivc = [[ScheduleItemViewController alloc] initWithNibName:@"ScheduleItemViewController" bundle:nil];
-        [sivc setMoveKeyboardRatio:2.0f];
-    } else {
-        // Find the sibling navigation controller first child and send the appropriate data
-        sivc = (ScheduleItemViewController *)[[[self.splitViewController.viewControllers lastObject] viewControllers] objectAtIndex:0];
-        [sivc setMoveKeyboardRatio:0.5f];
-    }
+    // Allow login if the member is approved or just wants to see
+//    if ([[dictionary objectForKey:@"approved"] integerValue] == 1 || ![[HumanToken sharedInstance] isMemberAuthenticated]) {
     
-    NSDictionary *dictionary = [[self.events objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+    // Properties
+    NSInteger eventID = [[dictionary objectForKey:@"id"] integerValue];
     
-    [sivc setTitle:[[dictionary objectForKey:@"name"] stringByDecodingHTMLEntities]];
-    [sivc setActivityData:dictionary];
+    [[EventToken sharedInstance] setEventID:eventID];
+    [[EventToken sharedInstance] setName:[[dictionary objectForKey:@"name"] stringByDecodingHTMLEntities]];
+    [[HumanToken sharedInstance] setApproved:[[dictionary objectForKey:@"approved"] integerValue]];
     
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        [self.navigationController pushViewController:sivc animated:YES];
-        [aTableView deselectRowAtIndexPath:indexPath animated:YES];
-    }
+    // Notify our tracker about the new event
+    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker sendEventWithCategory:@"event" withAction:@"getEvents" withLabel:@"iOS" withValue:[NSNumber numberWithInteger:eventID]];
+    
+    // Notify our tracker about the new event
+    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+    [currentInstallation addUniqueObject:[NSString stringWithFormat:@"event_%d", eventID] forKey:@"channels"];
+    [currentInstallation saveEventually];
+    
+    // Update the current state of the schedule controller
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"scheduleCurrentState" object:nil userInfo:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"verify" object:nil userInfo:@{@"type": @"menu"}];
+    
+    // Push the controller with the schedule information
+//    InformationViewController *ivc = [[InformationViewController alloc] initWithNibName:@"InformationViewController" bundle:nil];
+//    [ivc setCompanyData:dictionary];
+//    [self.navigationController pushViewController:ivc animated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+
+//    AlertView *alertView = [[AlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"Please enroll on the event before proceeding.", nil) delegate:self cancelButtonTitle:nil otherButtonTitle:NSLocalizedString(@"Ok!", nil)];
+//    [alertView show];
+    
 }
 
 #pragma mark - APIController Delegate
 
 - (void)apiController:(APIController *)apiController didLoadDictionaryFromServer:(NSDictionary *)dictionary {
     
-    // Assign the data object to the companies
-    self.events = [dictionary objectForKey:@"data"];
-    
-    // Reload all table data
-    [self.tableView reloadData];
-    
-    [refreshControl endRefreshing];
+    if ([apiController.method isEqualToString:@"getEvents"]) {
+        // Assign the data object to the companies
+        self.events = [dictionary objectForKey:@"data"];
+        
+        // Reload all table data
+        [self.tableView reloadData];
+        
+        [refreshControl endRefreshing];
+        
+    } else if ([apiController.method isEqualToString:@"requestEnrollment"]) {
+        // Force reload
+        [self forceDataReload:YES];
+    }
 }
 
 - (void)apiController:(APIController *)apiController didFailWithError:(NSError *)error {

@@ -43,14 +43,13 @@
                                               action:@selector(cancelButtonWasPressed)];
     
     [self.view setBackgroundColor:[ColorThemeController tableViewCellBackgroundColor]];
-    [(UIControl *)self.view addTarget:self action:@selector(hideEmployeeBox) forControlEvents:UIControlEventTouchUpInside];
     
     
     // ---------------------
     // Top Wrapper
     // ---------------------
     [_topBox setBackgroundColor:[ColorThemeController backgroundColor]];
-    [_topBox addTarget:self action:@selector(hideEmployeeBox) forControlEvents:UIControlEventTouchUpInside];
+    [_topBox addTarget:self action:@selector(hideFieldBox) forControlEvents:UIControlEventTouchUpInside];
     
     [_facebook setBackgroundImage:[UIImage imageNamed:@"facebookButton"] forState:UIControlStateNormal];
     [_facebook setTitle:@"" forState:UIControlStateNormal];
@@ -62,65 +61,94 @@
     // Bottom Wrapper
     // ---------------------
     [_bottomBox setBackgroundColor:[ColorThemeController backgroundColor]];
+    [_bottomBox addTarget:self action:@selector(hideFieldBox) forControlEvents:UIControlEventTouchUpInside];
     [_bottomBox.layer setMasksToBounds:YES];
-
+    
+    [_bottomInternalBox addTarget:self action:@selector(hideFieldBox) forControlEvents:UIControlEventTouchUpInside];
+    
     [_separator2 setBackgroundColor:[ColorThemeController tableViewCellInternalBorderColor]];
     
-    // Employee toggle button
-    UIImage *buttonImage = [[UIImage imageNamed:@"greyButton.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)];
-    UIImage *buttonImageHighlight = [[UIImage imageNamed:@"greyButtonHighlight.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)];
-    [_waiter setBackgroundImage:buttonImage forState:UIControlStateNormal];
-    [_waiter setBackgroundImage:buttonImageHighlight forState:UIControlStateHighlighted];
-    [_waiter setTitle:NSLocalizedString(@"Person", nil) forState:UIControlStateNormal];
-    [_waiter addTarget:self action:@selector(toggleEmployeeBox) forControlEvents:UIControlEventTouchUpInside];
+    // Login toggle button
+    UIImage *buttonImage, *buttonImageHighlight;
+    
+    buttonImage = [[UIImage imageNamed:@"greyButton.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)];
+    buttonImageHighlight = [[UIImage imageNamed:@"greyButtonHighlight.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)];
+    [_loginButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
+    [_loginButton setBackgroundImage:buttonImageHighlight forState:UIControlStateHighlighted];
+    [_loginButton setTitle:NSLocalizedString(@"Enter", nil) forState:UIControlStateNormal];
+    [_loginButton addTarget:self action:@selector(toggleFieldBox:) forControlEvents:UIControlEventTouchUpInside];
+    
+    // Register toggle button
+    buttonImage = [[UIImage imageNamed:@"greyButton.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)];
+    buttonImageHighlight = [[UIImage imageNamed:@"greyButtonHighlight.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)];
+    [_registerButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
+    [_registerButton setBackgroundImage:buttonImageHighlight forState:UIControlStateHighlighted];
+    [_registerButton setTitle:NSLocalizedString(@"Register", nil) forState:UIControlStateNormal];
+    [_registerButton addTarget:self action:@selector(toggleFieldBox:) forControlEvents:UIControlEventTouchUpInside];
     
     // Padding views
-    UIView *waiterUsernamePaddingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 10, 20)];
+    UIView *waiterEmailPaddingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 10, 20)];
+    UIView *waiterNamePaddingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 10, 20)];
     UIView *waiterPasswordPaddingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 10, 20)];
     
-    // Employee Field Wrapper
-	_waiterFieldWrapper.backgroundColor = [ColorThemeController tableViewCellBackgroundColor];
-    [_waiterFieldWrapper.layer setCornerRadius:8.0];
-    [_waiterFieldWrapper.layer setBorderWidth:1.0];
-    [_waiterFieldWrapper.layer setBorderColor:[[ColorThemeController tableViewCellBorderColor] CGColor]];
-
-	// Employee username field
-    _waiterUsername.backgroundColor = [UIColor clearColor];
-    _waiterUsername.borderStyle = UITextBorderStyleNone;
-    _waiterUsername.delegate = self;
-    _waiterUsername.frame = CGRectMake(0.0, 0.0, 218.0, 50.0);
-    _waiterUsername.leftView = waiterUsernamePaddingView;
-    _waiterUsername.leftViewMode = UITextFieldViewModeAlways;
-	_waiterUsername.placeholder = NSLocalizedString(@"Email", nil);
-	_waiterUsername.textColor = [UIColor colorWithWhite:0.000 alpha:1.000];
+    // Field Wrapper
+	_personFieldWrapper.backgroundColor = [ColorThemeController tableViewCellBackgroundColor];
+    [_personFieldWrapper.layer setCornerRadius:8.0];
+    [_personFieldWrapper.layer setBorderWidth:1.0];
+    [_personFieldWrapper.layer setBorderColor:[[ColorThemeController tableViewCellBorderColor] CGColor]];
+    
+    // Person email field
+    _personEmail.backgroundColor = [UIColor clearColor];
+    _personEmail.borderStyle = UITextBorderStyleNone;
+    _personEmail.delegate = self;
+    _personEmail.frame = CGRectMake(0.0, 0.0, _personEmail.frame.size.width, 50.0);
+    _personEmail.leftView = waiterEmailPaddingView;
+    _personEmail.leftViewMode = UITextFieldViewModeAlways;
+	_personEmail.placeholder = NSLocalizedString(@"Email", nil);
+	_personEmail.textColor = [ColorThemeController textColor];
     // Bottom Border
     CALayer *bottomBorder = [CALayer layer];
-    bottomBorder.frame = CGRectMake(0.0f, _waiterUsername.frame.size.height - 1.0f, _waiterUsername.frame.size.width, 1.0f);
+    bottomBorder.frame = CGRectMake(0.0f, _personEmail.frame.size.height - 1.0f, _personEmail.frame.size.width, 1.0f);
     bottomBorder.backgroundColor = [[ColorThemeController tableViewCellBorderColor] CGColor];
-    [_waiterUsername.layer addSublayer:bottomBorder];
+    [_personEmail.layer addSublayer:bottomBorder];
     
-	// Employee password field
-    _waiterPassword.backgroundColor = [UIColor clearColor];
-    _waiterPassword.borderStyle = UITextBorderStyleNone;
-    _waiterPassword.delegate = self;
-    _waiterPassword.frame = CGRectMake(0.0, 50.0, 218.0, 50.0);
-    _waiterPassword.leftView = waiterPasswordPaddingView;
-    _waiterPassword.leftViewMode = UITextFieldViewModeAlways;
-	_waiterPassword.placeholder = NSLocalizedString(@"Password", nil);
-	_waiterPassword.textColor = [ColorThemeController textColor];
+	// Person name field
+    _personName.backgroundColor = [UIColor clearColor];
+    _personName.borderStyle = UITextBorderStyleNone;
+    _personName.delegate = self;
+    _personName.frame = CGRectMake(0.0, 50.0, _personName.frame.size.width, 50.0);
+    _personName.leftView = waiterNamePaddingView;
+    _personName.leftViewMode = UITextFieldViewModeAlways;
+	_personName.placeholder = NSLocalizedString(@"Name", nil);
+	_personName.textColor = [ColorThemeController textColor];
+    // Bottom Border
+    bottomBorder = [CALayer layer];
+    bottomBorder.frame = CGRectMake(0.0f, _personName.frame.size.height - 1.0f, _personName.frame.size.width, 1.0f);
+    bottomBorder.backgroundColor = [[ColorThemeController tableViewCellBorderColor] CGColor];
+    [_personName.layer addSublayer:bottomBorder];
     
-	// Employee login button
-	[_waiterButton setTitle:NSLocalizedString(@"Log In", nil) forState:UIControlStateNormal];
-    [_waiterButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
-    [_waiterButton setBackgroundImage:buttonImageHighlight forState:UIControlStateHighlighted];
-    [_waiterButton addTarget:self action:@selector(logIn) forControlEvents:UIControlEventTouchUpInside];
-    [_waiterButton.layer setCornerRadius:8.0];
-
+	// Person password field
+    _personPassword.backgroundColor = [UIColor clearColor];
+    _personPassword.borderStyle = UITextBorderStyleNone;
+    _personPassword.delegate = self;
+    _personPassword.frame = CGRectMake(0.0, 100.0, _personPassword.frame.size.width, 50.0);
+    _personPassword.leftView = waiterPasswordPaddingView;
+    _personPassword.leftViewMode = UITextFieldViewModeAlways;
+	_personPassword.placeholder = NSLocalizedString(@"Password", nil);
+	_personPassword.textColor = [ColorThemeController textColor];
+    
+	// Field action button
+	[_personAction setTitle:NSLocalizedString(@"Enter", nil) forState:UIControlStateNormal];
+    [_personAction setBackgroundImage:buttonImage forState:UIControlStateNormal];
+    [_personAction setBackgroundImage:buttonImageHighlight forState:UIControlStateHighlighted];
+    [_personAction addTarget:self action:@selector(chooseAction) forControlEvents:UIControlEventTouchUpInside];
+    [_personAction.layer setCornerRadius:8.0];
+    
     
     // ---------------------
-    // Reset the employee box state
+    // Reset the field box
     // ---------------------
-    [self toggleEmployeeBoxWithDuration:0.0 andHideIt:YES];
+    [self toggleFieldBoxWithDuration:0.0 andHideIt:YES];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -128,7 +156,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - User Methods
+#pragma mark - Private Methods
 
 - (void)cancelButtonWasPressed {
     PaperFoldMenuController *menuController = [(AppDelegate *)[[UIApplication sharedApplication] delegate] menuController];
@@ -139,15 +167,45 @@
     }];
 }
 
-- (void)hideEmployeeBox {
-    [self toggleEmployeeBoxWithDuration:0.5 andHideIt:YES];
+#pragma mark - Email Methods
+
+- (void)hideNameField {
+    [_personName setHidden:YES];
+    [_personPassword setFrame:CGRectMake(_personPassword.frame.origin.x, 50.0, _personPassword.frame.size.width, 50.0)];
+    [_personFieldWrapper setFrame:CGRectMake(_personFieldWrapper.frame.origin.x, 100.0, _personFieldWrapper.frame.size.width, 100.0)];
+    [_personAction setFrame:CGRectMake(_personAction.frame.origin.x, 220.0, _personAction.frame.size.width, _personAction.frame.size.height)];
 }
 
-- (void)toggleEmployeeBox {
-    [self toggleEmployeeBoxWithDuration:0.5 andHideIt:NO];
+- (void)showNameField {
+    [_personName setHidden:NO];
+    [_personPassword setFrame:CGRectMake(_personPassword.frame.origin.x, 100.0, _personPassword.frame.size.width, 50.0)];
+    [_personFieldWrapper setFrame:CGRectMake(_personFieldWrapper.frame.origin.x, 100.0, _personFieldWrapper.frame.size.width, 150.0)];
+    [_personAction setFrame:CGRectMake(_personAction.frame.origin.x, 270.0, _personAction.frame.size.width, _personAction.frame.size.height)];
 }
 
-- (void)toggleEmployeeBoxWithDuration:(CGFloat)duration andHideIt:(BOOL)hide {
+#pragma mark - Box Methods
+
+- (void)hideFieldBox {
+    [self toggleFieldBoxWithDuration:0.5 andHideIt:YES];
+    
+    // Resign the keyboard on all the fields
+    [_personEmail resignFirstResponder];
+    [_personName resignFirstResponder];
+    [_personPassword resignFirstResponder];
+}
+
+- (void)toggleFieldBox:(id)sender {
+    
+    if ((UIButton *)sender == _registerButton) {
+        [self showNameField];
+    } else if ((UIButton *)sender == _loginButton) {
+        [self hideNameField];
+    }
+    
+    [self toggleFieldBoxWithDuration:0.5 andHideIt:NO];
+}
+
+- (void)toggleFieldBoxWithDuration:(CGFloat)duration andHideIt:(BOOL)hide {
     
     CGRect frameBox, frameInternal;
     
@@ -175,15 +233,49 @@
     }];
 }
 
-#pragma - Login Methods
+#pragma - Action Methods
 
-- (void)logIn {
+- (void)chooseAction {
     
-    // Set loading message on button
-    [_waiterButton setTitle:NSLocalizedString(@"Logging ...", nil) forState:UIControlStateNormal];
+    if ([_personName isHidden]) {
+        [self signIn];
+    } else {
+        [self enroll];
+    }
     
-    // Notify our servers about the login attempt
-    [[[APIController alloc] initWithDelegate:self forcing:YES] personSignIn:_waiterUsername.text withPassword:_waiterPassword.text];
+    [self toggleFieldBoxWithDuration:0.5 andHideIt:NO];
+}
+
+- (void)signIn {
+    
+    if ([_personEmail.text length] > 0 && [_personPassword.text length] > 0) {
+        // Set loading message on button
+        [_personAction setTitle:NSLocalizedString(@"Logging ...", nil) forState:UIControlStateNormal];
+        
+        // Notify our servers about the login attempt
+        [[[APIController alloc] initWithDelegate:self forcing:YES] personSignIn:_personEmail.text withPassword:_personPassword.text];
+        
+    } else {
+        // Give some data man!
+        AlertView *alertView = [[AlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"Please give me some details about you.", nil) delegate:self cancelButtonTitle:nil otherButtonTitle:NSLocalizedString(@"Ok", nil)];
+        [alertView show];
+    }
+}
+
+- (void)enroll {
+    
+    if ([_personEmail.text length] > 0 && [_personName.text length] > 0 && [_personPassword.text length] > 0) {
+        // Set loading message on button
+        [_personAction setTitle:NSLocalizedString(@"Enrolling ...", nil) forState:UIControlStateNormal];
+        
+        // Notify our servers about the login attempt
+        [[[APIController alloc] initWithDelegate:self forcing:YES] personEnroll:_personName.text withPassword:_personPassword.text withEmail:_personEmail.text];
+        
+    } else {
+        // Give some data man!
+        AlertView *alertView = [[AlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"If you wanna be part of this event, please give some basic details.", nil) delegate:self cancelButtonTitle:nil otherButtonTitle:NSLocalizedString(@"Ok", nil)];
+        [alertView show];
+    }
 }
 
 #pragma mark - APIController DataSource
@@ -192,9 +284,9 @@
     // Implement a method that allows every failing requisition to be reloaded
     
     if (error.code == 401) {
-        [_waiterButton setTitle:NSLocalizedString(@"Try Again :(", nil) forState:UIControlStateNormal];
+        [_personAction setTitle:NSLocalizedString(@"Try Again :(", nil) forState:UIControlStateNormal];
     } else if (error.code == 403) {
-        [_waiterButton setTitle:NSLocalizedString(@"Wait 10 min to try again!", nil) forState:UIControlStateNormal];
+        [_personAction setTitle:NSLocalizedString(@"Wait 10 min to try again!", nil) forState:UIControlStateNormal];
     } else {
         [super apiController:apiController didFailWithError:error];
     }
@@ -202,37 +294,45 @@
 
 - (void)apiController:(APIController *)apiController didLoadDictionaryFromServer:(NSDictionary *)dictionary {
     
-    if ([apiController.method isEqualToString:@"signIn"] || [apiController.method isEqualToString:@"signInWithFacebookToken"]) {
+    if ([apiController.method isEqualToString:@"signIn"] ||
+        [apiController.method isEqualToString:@"enroll"] ||
+        [apiController.method isEqualToString:@"signInWithFacebook"]) {
         // Get some properties
         NSArray *events = [dictionary objectForKey:@"events"];
         NSString *tokenID = [dictionary objectForKey:@"tokenID"];
         
         if (tokenID.length == 60) {
             // Set loaded message on button
-            [_waiterButton setTitle:NSLocalizedString(@"Logged!", nil) forState:UIControlStateNormal];
+            [_personAction setTitle:NSLocalizedString(@"Logged!", nil) forState:UIControlStateNormal];
+
+            // Remove the current event so the information can be reloaded
+            [[EventToken sharedInstance] removeEvent];
             
             // Notify the singleton that we have authenticated the user
             [[HumanToken sharedInstance] setTokenID:tokenID];
             [[HumanToken sharedInstance] setWorkingEvents:events];
+            [[HumanToken sharedInstance] setMemberID:[[dictionary objectForKey:@"memberID"] integerValue]];
             [[HumanToken sharedInstance] setName:[[dictionary objectForKey:@"name"] stringByDecodingHTMLEntities]];
-        
+            
             // Update the current state of the schedule controller
             [[NSNotificationCenter defaultCenter] postNotificationName:@"scheduleCurrentState" object:nil userInfo:nil];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"verify" object:nil userInfo:@{@"type": @"menu"}];
             
             // Go back to the other screen
             [self dismissViewControllerAnimated:YES completion:^{
-                [_waiterButton setTitle:NSLocalizedString(@"Log In", nil) forState:UIControlStateNormal];
-                [_waiterUsername setText:@""];
-                [_waiterPassword setText:@""];
+                [_personAction setTitle:NSLocalizedString(@"Enter", nil) forState:UIControlStateNormal];
+                [_personEmail setText:@""];
+                [_personName setText:@""];
+                [_personPassword setText:@""];
             }];
         } else {
             // Set loaded message on button
-            [_waiterButton setTitle:NSLocalizedString(@"Try Again :(", nil) forState:UIControlStateNormal];
+            [_personAction setTitle:NSLocalizedString(@"Try Again :(", nil) forState:UIControlStateNormal];
         }
     } else if ([apiController.method isEqualToString:@"getEvents"]) {
         
         NSArray *events = [[dictionary objectForKey:@"data"] objectForKey:@"events"];
+        
         [[HumanToken sharedInstance] setWorkingEvents:events];
     }
 }
@@ -260,9 +360,9 @@
                  // Notify our servers about the access token
                  [[[APIController alloc] initWithDelegate:self forcing:YES] personSignInWithFacebookToken:FBSession.activeSession.accessTokenData.accessToken];
                  
-             } else {
+             } else if (session.state == FBSessionStateClosedLoginFailed) {
                  // Session is closed
-                 AlertView *alertView = [[AlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"Facebook couldn't log you in! Try again?", nil) delegate:self cancelButtonTitle:nil otherButtonTitle:NSLocalizedString(@"Ok!", nil)];
+                 AlertView *alertView = [[AlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"Facebook couldn't log you in! Try again?", nil) delegate:self cancelButtonTitle:nil otherButtonTitle:NSLocalizedString(@"Ok", nil)];
                  [alertView show];
              }
              

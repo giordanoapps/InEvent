@@ -13,11 +13,13 @@
 @property (strong, nonatomic) NSString *tokenID;
 @property (strong, nonatomic) NSArray *workingEvents;
 @property (assign, nonatomic) NSInteger memberID;
+@property (assign, nonatomic) NSInteger approved;
 @property (strong, nonatomic) NSString *name;
 
 + (HumanToken *)sharedInstance;
 
 - (BOOL)isMemberAuthenticated;
+- (BOOL)isMemberApproved;
 - (BOOL)isMemberWorking;
 - (BOOL)worksAtEvent:(NSInteger)eventID;
 - (void)removeMember;

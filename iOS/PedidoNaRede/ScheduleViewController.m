@@ -40,7 +40,7 @@
         self.activities = [NSArray array];
         
         // Add notification observer for new orders
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadData) name:@"scheduleCurrentState" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadData) name:@"scheduleCurrentState" object:nil];
     }
     return self;
 }
@@ -92,7 +92,7 @@
 
 - (void)forceDataReload:(BOOL)forcing {
     
-    if ([[HumanToken sharedInstance] isMemberAuthenticated]) {
+    if ([[HumanToken sharedInstance] isMemberAuthenticated] && [[HumanToken sharedInstance] isMemberApproved]) {
         NSString *tokenID = [[HumanToken sharedInstance] tokenID];
         [[[APIController alloc] initWithDelegate:self forcing:forcing] eventGetScheduleAtEvent:[[EventToken sharedInstance] eventID] withTokenID:tokenID];
     } else {
@@ -104,7 +104,7 @@
 
 - (void)alertActionSheet {
     
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Actions", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"Exit restaurant", nil), nil];
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Actions", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"Exit event", nil), nil];
     
     [actionSheet showFromBarButtonItem:self.rightBarButton animated:YES];
 }
@@ -115,7 +115,7 @@
     
     NSString *title = [actionSheet buttonTitleAtIndex:buttonIndex];
     
-    if ([title isEqualToString:NSLocalizedString(@"Exit restaurant", nil)]) {
+    if ([title isEqualToString:NSLocalizedString(@"Exit event", nil)]) {
         // Remove the tokenID and enterprise
         [[EventToken sharedInstance] removeEvent];
         
@@ -192,7 +192,7 @@
     cell.minute.text = [NSString stringWithFormat:@"%.2d", [components minute]];
     cell.name.text = [[dictionary objectForKey:@"name"] stringByDecodingHTMLEntities];
     cell.description.text = [[dictionary objectForKey:@"description"] stringByDecodingHTMLEntities];
-    cell.approved = [dictionary objectForKey:@"approved"];
+    cell.approved = [[dictionary objectForKey:@"approved"] integerValue];
     
     return cell;
 }

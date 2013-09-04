@@ -19,6 +19,8 @@
 
 				<input type="button" class="singleButton sendRecovery" value="Enviar nova senha">
 
+				<p class="byItself alert">Email alterado com sucesso!</p>
+
 			</div>
 
 		</div>

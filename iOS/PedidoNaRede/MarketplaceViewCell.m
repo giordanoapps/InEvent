@@ -12,6 +12,7 @@
 #import "HumanToken.h"
 #import "APIController.h"
 #import "NSObject+Triangle.h"
+#import "UIView+Components.h"
 
 @implementation MarketplaceViewCell
 
@@ -42,11 +43,17 @@
     [_wrapper.layer setMasksToBounds:YES];
     
     // Title
-    [_name setTextColor:[ColorThemeController tableViewCellTextColor]];
-    [_name setHighlightedTextColor:[ColorThemeController tableViewCellTextHighlightedColor]];
+    [_name setTextColor:[ColorThemeController textColor]];
+    [_dateBegin setTextColor:[ColorThemeController tableViewCellTextHighlightedColor]];
+    [_timeBegin setTextColor:[ColorThemeController tableViewCellTextHighlightedColor]];
+    [_dateEnd setTextColor:[ColorThemeController tableViewCellTextHighlightedColor]];
+    [_timeEnd setTextColor:[ColorThemeController tableViewCellTextHighlightedColor]];
     
     // Line
     [_line setBackgroundColor:[ColorThemeController tableViewCellInternalBorderColor]];
+    
+    // Button
+    [self setUpButtonComponent:_status];
 }
 
 
@@ -59,11 +66,21 @@
 
 #pragma mark - Setter Methods
 
-- (void)setApproved:(NSString *)approved {
+- (void)setApproved:(NSInteger)approved {
     _approved = approved;
     
-    [self defineStateForApproved:[_approved integerValue] withView:_wrapper];
+    // Triangle
+    [self defineStateForApproved:_approved withView:_wrapper];
+    
+    // Button
+    if ([[HumanToken sharedInstance] isMemberAuthenticated] && _approved == 0) {
+        [_status setHidden:NO];
+        [_status setBackgroundImage:[[UIImage imageNamed:@"whiteButton"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)] forState:UIControlStateNormal];
+        [_status setBackgroundImage:[[UIImage imageNamed:@"whiteButtonHighlight"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)] forState:UIControlStateHighlighted];
+        [_status setTitle:NSLocalizedString(@"Enroll", nil) forState:UIControlStateNormal];
+    } else {
+        [_status setHidden:YES];
+    }
 }
-
 
 @end

@@ -22,6 +22,24 @@
      	return (in_array($macAddress, $core->allowedMAC));
     }
 
+    function eventExists($eventID) {
+
+		$result = resourceForQuery(
+			"SELECT
+				`event`.`id`
+			FROM
+				`event`
+			WHERE 1
+				AND `event`.`id` = $eventID
+		");
+
+		if (mysql_num_rows($result) > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
     function eventHasMember($eventID, $memberID) {
 
 		$result = resourceForQuery(

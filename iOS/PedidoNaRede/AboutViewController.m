@@ -37,7 +37,7 @@
     [self.view setBackgroundColor:[ColorThemeController tableViewBackgroundColor]];
     
     // Arrows
-    _leftArrow.transform = CGAffineTransformMakeRotation(0.2f);
+//    _leftArrow.transform = CGAffineTransformMakeRotation(0.2f);
     
     // About
     NSString *html = @"<p style='font-family: TrebuchetMS; font-size: 160%; text-align: center;'><b>InEvent</b> é um produto do <b>Estúdio Trilha</b>.</p>";

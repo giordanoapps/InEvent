@@ -62,10 +62,10 @@
 
 #pragma mark - Setter Methods
 
-- (void)setApproved:(NSString *)approved {
+- (void)setApproved:(NSInteger)approved {
     _approved = approved;
     
-    [self defineStateForApproved:[_approved integerValue] withView:_wrapper];
+    [self defineStateForApproved:_approved withView:_wrapper];
 }
 
 

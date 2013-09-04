@@ -34,8 +34,8 @@
 	
 	<div class="documentationFunctionBox">
 		<p class="documentFunctionName">
-			<span>person.register(<b>name</b>, <b>password</b>, <b>email</b>, <b>cpf</b> = null, <b>rg</b> = null, <b>telephone</b> = null, <b>university</b> = null, <b>course</b> = null)</span>
-			<img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=person.register" data-post="member=&password=&email=&cpf=00000000000&rg=0000000&telephone=&university=&course=">
+			<span>person.enroll(<b>name</b>, <b>password</b>, <b>email</b>, <b>cpf</b> = null, <b>rg</b> = null, <b>telephone</b> = null, <b>university</b> = null, <b>course</b> = null)</span>
+			<img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=person.enroll" data-post="member=&password=&email=&cpf=00000000000&rg=0000000&telephone=&university=&course=">
 		</p>
 
 		<p class="documentFunctionDescription">Cria uma conta para a pessoa com nome <i>name</i>, senha <i>password</i>, email <i>email</i>, CPF <i>cpf</i>, RG <i>rg</i>, telefone <i>telephone</i>, universidade <i>university</i> e curso <i>course</i>, retornando o <b>tokenID</b> (60 caracteres) caso a operação tenha sido bem sucedida.</p>

@@ -45,6 +45,12 @@
     [self storeEssentialData];
 }
 
+- (void)setApproved:(NSInteger)approved {
+    _approved = approved;
+    
+    [self storeEssentialData];
+}
+
 - (void)setName:(NSString *)name {
     _name = name;
     
@@ -68,6 +74,7 @@
     [dictionary setValue:_tokenID forKey:@"tokenID"];
     [dictionary setValue:_workingEvents forKey:@"workingEvents"];
     [dictionary setValue:[NSNumber numberWithInteger:_memberID] forKey:@"memberID"];
+    [dictionary setValue:[NSNumber numberWithInteger:_approved] forKey:@"approved"];
     [dictionary setValue:_name forKey:@"name"];
     
     // Save it
@@ -81,6 +88,7 @@
         _tokenID = [dictionary valueForKey:@"tokenID"];
         _workingEvents = [dictionary valueForKey:@"workingEvents"];
         _memberID = [[dictionary objectForKey:@"memberID"] integerValue];
+        _approved = [[dictionary objectForKey:@"approved"] integerValue];
         _name = [dictionary valueForKey:@"name"];
     } else {
         [self resetData];
@@ -91,6 +99,7 @@
     _tokenID = nil;
     _workingEvents = nil;
     _memberID = 0;
+    _approved = 0;
     _name = nil;
 }
 
@@ -102,6 +111,15 @@
 
 - (BOOL)isMemberAuthenticated {
     if (_tokenID != nil) {
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
+- (BOOL)isMemberApproved {
+    
+    if (_approved != 0) {
         return YES;
     } else {
         return NO;

@@ -89,7 +89,7 @@
 #pragma mark - Person
 - (void)personSignIn:(NSString *)email withPassword:(NSString *)password;
 - (void)personSignInWithFacebookToken:(NSString *)facebookToken;
-- (void)personRegister:(NSString *)name withPassword:(NSString *)password withEmail:(NSString *)email;
+- (void)personEnroll:(NSString *)name withPassword:(NSString *)password withEmail:(NSString *)email;
 - (void)personGetEventsWithToken:(NSString *)tokenID;
 
 #pragma mark - Setup

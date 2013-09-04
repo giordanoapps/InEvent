@@ -47,7 +47,7 @@
     
     _headers = @[NSLocalizedString(@"Your Account", nil), NSLocalizedString(@"General", nil), NSLocalizedString(@"About", nil)];
     
-    // Selected the restaurant controller
+    // Selected the localization controller
     [self setSelectedIndex:1];
     
     // Update the menu

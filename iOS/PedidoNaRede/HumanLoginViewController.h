@@ -12,18 +12,19 @@
 @interface HumanLoginViewController : WrapperViewController
 
 @property (nonatomic, strong) IBOutlet UIControl *topBox;
-@property (nonatomic, strong) IBOutlet UIView *bottomBox;
-@property (nonatomic, strong) IBOutlet UIView *bottomInternalBox;
+@property (nonatomic, strong) IBOutlet UIControl *bottomBox;
+@property (nonatomic, strong) IBOutlet UIControl *bottomInternalBox;
 @property (nonatomic, strong) IBOutlet UIView *separator1;
 @property (nonatomic, strong) IBOutlet UIView *separator2;
 
 @property (nonatomic, strong) IBOutlet UIButton *facebook;
-@property (nonatomic, strong) IBOutlet UIButton *general;
-@property (nonatomic, strong) IBOutlet UIButton *waiter;
 
-@property (nonatomic, strong) IBOutlet UIView *waiterFieldWrapper;
-@property (nonatomic, strong) IBOutlet UITextField *waiterUsername;
-@property (nonatomic, strong) IBOutlet UITextField *waiterPassword;
-@property (nonatomic, strong) IBOutlet UIButton *waiterButton;
+@property (nonatomic, strong) IBOutlet UIView *personFieldWrapper;
+@property (nonatomic, strong) IBOutlet UIButton *loginButton;
+@property (nonatomic, strong) IBOutlet UIButton *registerButton;
+@property (nonatomic, strong) IBOutlet UITextField *personName;
+@property (nonatomic, strong) IBOutlet UITextField *personPassword;
+@property (nonatomic, strong) IBOutlet UITextField *personEmail;
+@property (nonatomic, strong) IBOutlet UIButton *personAction;
 
 @end

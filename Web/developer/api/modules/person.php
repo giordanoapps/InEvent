@@ -125,7 +125,7 @@
 				
 	} else
 
-	if ($method === "register") {
+	if ($method === "enroll") {
 
 		if (isset($_POST["name"]) && isset($_POST["password"]) && isset($_POST["email"])) {
 
@@ -220,12 +220,18 @@
 				// Create the Mailer using your created Transport
 				$mailer = Swift_Mailer::newInstance($transport);
 
+				// Load our template
+				$template = file_get_contents(__DIR__ . "/email.html");
+
+				// Replace some ocurrences
+				$template = str_replace('{{password}}', $password, $template);
+
 				// Create the message
 				$message = Swift_Message::newInstance()
 					->setSubject("InEvent - Sua nova senha")
-					->setFrom(array('contato@estudiotrilha.com.br'))
-					->setTo(array('pedro.pecanha.goes@gmail.com'))
-					->setBody("<p>Sua nova senha: $password</p>", 'text/html');
+					->setFrom(array("contato@estudiotrilha.com.br"))
+					->setTo(array($email))
+					->setBody($template, "text/html");
 
 				$mailer->send($message);
 			} else {

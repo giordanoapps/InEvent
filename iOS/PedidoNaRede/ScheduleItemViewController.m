@@ -103,13 +103,30 @@
     [_questionButton.layer setCornerRadius:4.0];
     [_questionButton.layer setBorderWidth:0.6];
     [_questionButton.layer setBorderColor:[[ColorThemeController tableViewCellInternalBorderColor] CGColor]];
+    
+    // Right Button
+    self.rightBarButton = [[CoolBarButtonItem alloc] initCustomButtonWithImage:[UIImage imageNamed:@"64-Cog"] frame:CGRectMake(0, 0, 42.0, 30.0) insets:UIEdgeInsetsMake(5.0, 11.0, 5.0, 11.0) target:self action:@selector(alertActionSheet)];
+    self.rightBarButton.accessibilityLabel = NSLocalizedString(@"Event Actions", nil);
+    self.rightBarButton.accessibilityTraits = UIAccessibilityTraitSummaryElement;
+    self.navigationItem.rightBarButtonItem = self.rightBarButton;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [self cleanData];
-    [self loadData];
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        [self cleanData];
+        [self loadData];
+    }
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+        [self cleanData];
+        [self loadData];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -176,7 +193,7 @@
 - (void)loadQuestions {
     NSString *tokenID = [[HumanToken sharedInstance] tokenID];
     NSInteger activityID = [[_activityData objectForKey:@"id"] integerValue];
-    [[[APIController alloc] initWithDelegate:self forcing:YES] activityGetQuestionsAtActivity:activityID withTokenID:tokenID];
+    [[[APIController alloc] initWithDelegate:self forcing:NO] activityGetQuestionsAtActivity:activityID withTokenID:tokenID];
 }
 
 - (void)didTap {
@@ -184,10 +201,8 @@
     [_questionInput resignFirstResponder];
 }
 
-#pragma - User Methods
-
 - (void)sendMessage {
-
+    
     // Check if input is not empty
     if (![[_questionInput.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] isEqualToString:@""]) {
         
@@ -199,9 +214,9 @@
         [self loadQuestions];
         
         // Add the object to the stack and reload it
-//        [_questionData addObject:_questionInput.text];
-//        [_tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:([_questionData count] - 1) inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
-//        [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:([_questionData count] - 1) inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+        //        [_questionData addObject:_questionInput.text];
+        //        [_tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:([_questionData count] - 1) inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+        //        [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:([_questionData count] - 1) inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
         
         [_questionInput setText:@""];
     }
@@ -243,7 +258,7 @@
     
     UIActionSheet *actionSheet;
     
-    actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Actions", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"See people", nil), nil];
+    actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Actions", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"See people", nil), NSLocalizedString(@"Exit event", nil), nil];
     
     [actionSheet showFromBarButtonItem:self.rightBarButton animated:YES];
 }
@@ -270,6 +285,13 @@
             [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:rvc animated:YES completion:nil];
         }
 
+    } else if ([title isEqualToString:NSLocalizedString(@"Exit event", nil)]) {
+        // Remove the tokenID and enterprise
+        [[EventToken sharedInstance] removeEvent];
+        
+        // Check for it again
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"verify" object:nil userInfo:@{@"type": @"enterprise"}];
+        
     }
     
 }

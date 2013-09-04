@@ -10,7 +10,7 @@
 #import "WrapperViewController.h"
 #import "APIController.h"
 
-@interface MarketplaceViewController : WrapperViewController <UITableViewDelegate, UITableViewDataSource, APIControllerDelegate>
+@interface MarketplaceViewController : WrapperViewController <UITableViewDelegate, UITableViewDataSource, APIControllerDelegate, UIGestureRecognizerDelegate>
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 

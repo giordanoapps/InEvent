@@ -346,12 +346,12 @@
     }
 }
 
-- (void)personRegister:(NSString *)name withPassword:(NSString *)password withEmail:(NSString *)email {
+- (void)personEnroll:(NSString *)name withPassword:(NSString *)password withEmail:(NSString *)email {
 
     if (name != nil && password != nil && email != nil) {
         NSDictionary *attributes = @{@"GET" : @{@"name" : name, @"password" : password, @"email" : email}};
         
-        [self JSONObjectWithNamespace:@"person" method:@"register" attributes:attributes];
+        [self JSONObjectWithNamespace:@"person" method:@"enroll" attributes:attributes];
     }
 }
 
@@ -376,11 +376,25 @@
     [self start];
 }
 
+- (NSString *)generatePath {
+    
+    NSString *description = [[[_attributes description] stringByReplacingOccurrencesOfString:@"\n" withString:@""] stringByReplacingOccurrencesOfString:@" " withString:@""];
+    
+    NSString *filename = [NSString stringWithFormat:@"%@_%@_%@.json", _namespace, _method, description];
+    
+    NSCharacterSet *illegalFileNameCharacters = [NSCharacterSet characterSetWithCharactersInString:@"/\\?%*|\"<>"];
+    NSString *cleanFilename = [[filename componentsSeparatedByCharactersInSet:illegalFileNameCharacters] componentsJoinedByString:@""];
+    
+    NSString *path = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:cleanFilename];
+    
+    return path;
+}
+
 #pragma mark - Connection Support
 
 - (void)start {
     
-    NSString *path = [[NSHomeDirectory() stringByAppendingPathComponent:  @"Documents"] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_%@.json", _namespace, _method]];
+    NSString *path = [self generatePath];
     
     NSFileManager *fileManager = [NSFileManager defaultManager];
     
@@ -499,9 +513,7 @@
     } else {
         
         // Let's also save our JSON object inside a file
-        NSString *path = [[NSHomeDirectory() stringByAppendingPathComponent: @"Documents"]
-                          stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_%@.json", _namespace, _method]];
-        [JSON writeToFile:path atomically:YES];
+        [JSON writeToFile:[self generatePath] atomically:YES];
         
         // Return our parsed object
         if ([self.delegate respondsToSelector:@selector(apiController:didLoadDictionaryFromServer:)]) {

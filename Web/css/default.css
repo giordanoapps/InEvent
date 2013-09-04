@@ -315,7 +315,7 @@ textarea, input {
 
 .bar .secondary > div {
 	margin: 0;
-	padding: 3%;
+	padding: 2%;
 	font-size: 140%;
 }
 
@@ -358,7 +358,7 @@ textarea, input {
 	font-weight: bold;
 	line-height: normal;
 	position: absolute;
-	left: 34.2%;
+	left: 32.2%;
 	top: 35%;
 	width: 30px;
 	height: auto;
@@ -394,6 +394,14 @@ textarea, input {
 	line-height: 12px;
 	overflow: hidden;
 	padding-top: 5px;
+}
+
+.bar .memberBox .forgot {
+	color: #333;
+	display: block;
+	font-size: 80%;
+	margin-right: 5%;
+	text-align: right;
 }
 
 .bar .rightBar .anchorInnerHock {
@@ -929,6 +937,7 @@ textarea, input {
 	position: absolute;
 	bottom: 44px;
 	width: 100%;
+	z-index: 21;
 	display: none;
 }
 
@@ -1846,6 +1855,12 @@ textarea, input {
 	font-size: 110%;
 	margin-left: 40px;
 	margin-right: 40px;
+}
+
+#forgotContent .alert {
+	display: none;
+	color: #B61F1F;
+	font-weight: bold;
 }
 
 /* @end */

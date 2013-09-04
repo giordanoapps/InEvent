@@ -33,6 +33,7 @@
 		EB25BABC17028D0A003F142F /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB25BABB17028D0A003F142F /* Default-568h@2x.png */; };
 		EB28747916A71EF600A06781 /* StepperView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB28747816A71EF500A06781 /* StepperView.m */; };
 		EB28747B16A71F1700A06781 /* StepperView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB28747A16A71F1700A06781 /* StepperView.xib */; };
+		EB30CAF117D6D09E00584FB8 /* UIView+Components.m in Sources */ = {isa = PBXBuildFile; fileRef = EB30CAF017D6D09E00584FB8 /* UIView+Components.m */; };
 		EB39397616654B4400580A4E /* AlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB39393116654B4400580A4E /* AlertView.m */; };
 		EB39397716654B4400580A4E /* APIController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB39393316654B4400580A4E /* APIController.m */; };
 		EB39397816654B4400580A4E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EB39393516654B4400580A4E /* AppDelegate.m */; };
@@ -281,6 +282,8 @@
 		EB28747716A71EF500A06781 /* StepperView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StepperView.h; sourceTree = "<group>"; };
 		EB28747816A71EF500A06781 /* StepperView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StepperView.m; sourceTree = "<group>"; };
 		EB28747A16A71F1700A06781 /* StepperView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StepperView.xib; sourceTree = "<group>"; };
+		EB30CAEF17D6D09E00584FB8 /* UIView+Components.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Components.h"; sourceTree = "<group>"; };
+		EB30CAF017D6D09E00584FB8 /* UIView+Components.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Components.m"; sourceTree = "<group>"; };
 		EB39393016654B4400580A4E /* AlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlertView.h; sourceTree = "<group>"; };
 		EB39393116654B4400580A4E /* AlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlertView.m; sourceTree = "<group>"; };
 		EB39393216654B4400580A4E /* APIController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APIController.h; sourceTree = "<group>"; };
@@ -654,6 +657,8 @@
 				EB837CBC171B9B5100FA1EBC /* UINavigationBar+Height.m */,
 				EBE8A4FF1712EA9C00A8A2BD /* UITabBarController+ShowHideBar.h */,
 				EBE8A5001712EA9C00A8A2BD /* UITabBarController+ShowHideBar.m */,
+				EB30CAEF17D6D09E00584FB8 /* UIView+Components.h */,
+				EB30CAF017D6D09E00584FB8 /* UIView+Components.m */,
 				EBD0DB5416AF953B00F78F93 /* UIViewController+Present.h */,
 				EBD0DB5516AF953B00F78F93 /* UIViewController+Present.m */,
 			);
@@ -1620,6 +1625,7 @@
 				EBDFF54E17BE0C4500BBFC1D /* NSObject+Triangle.m in Sources */,
 				EB59020217D5D7D20032143C /* MarketplaceViewController.m in Sources */,
 				EB59020817D5D83A0032143C /* MarketplaceViewCell.m in Sources */,
+				EB30CAF117D6D09E00584FB8 /* UIView+Components.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1698,7 +1704,7 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1728,7 +1734,7 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -1747,7 +1753,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 01A9A353CC7D4F35B9275C85 /* Pods.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../Documents/Objective-C/facebook-ios-sdk/build\"",
@@ -1776,7 +1782,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 01A9A353CC7D4F35B9275C85 /* Pods.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../Documents/Objective-C/facebook-ios-sdk/build\"",

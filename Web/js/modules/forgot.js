@@ -24,7 +24,7 @@ $(document).ready(function() {
 
 			if (jqXHR.status == 200) {
 				// Remove the class and trigger a click on the new one
-
+				$elem.siblings(".alert").show(200);
 			}
 
 		}, 'html').fail(function(jqXHR, textStatus, errorThrown) {

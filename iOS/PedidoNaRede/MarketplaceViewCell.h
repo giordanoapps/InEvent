@@ -16,9 +16,10 @@
 @property (strong, nonatomic) IBOutlet UILabel *timeBegin;
 @property (strong, nonatomic) IBOutlet UILabel *dateEnd;
 @property (strong, nonatomic) IBOutlet UILabel *timeEnd;
+@property (strong, nonatomic) IBOutlet UIButton *status;
 @property (strong, nonatomic) IBOutlet UIView *line;
 
-@property (strong, nonatomic) NSString *approved;
+@property (assign, nonatomic) NSInteger approved;
 
 - (void)configureCell;
 
