@@ -18,6 +18,7 @@
                 `event`.`city`,
                 `event`.`state`,
                 `event`.`zipCode`,
+                `eventMember`.`roleID`,
                 IF(`eventMember`.`memberID` = $memberID, $memberID, 0) AS `memberID`,
                 IF(`eventMember`.`memberID` = $memberID, `eventMember`.`approved`, 0) AS `approved`
             FROM

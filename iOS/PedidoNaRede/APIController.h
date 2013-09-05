@@ -90,7 +90,7 @@
 - (void)personSignIn:(NSString *)email withPassword:(NSString *)password;
 - (void)personSignInWithFacebookToken:(NSString *)facebookToken;
 - (void)personEnroll:(NSString *)name withPassword:(NSString *)password withEmail:(NSString *)email;
-- (void)personGetEventsWithToken:(NSString *)tokenID;
+- (void)personGetWorkingEventsWithToken:(NSString *)tokenID;
 
 #pragma mark - Setup
 - (void)JSONObjectWithNamespace:(NSString *)namespace method:(NSString *)method attributes:(NSDictionary *)attributes;

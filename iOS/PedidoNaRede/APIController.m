@@ -355,12 +355,12 @@
     }
 }
 
-- (void)personGetEventsWithToken:(NSString *)tokenID {
+- (void)personGetWorkingEventsWithToken:(NSString *)tokenID {
     
     if (tokenID != nil) {
         NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID}};
         
-        [self JSONObjectWithNamespace:@"person" method:@"getEvents" attributes:attributes];
+        [self JSONObjectWithNamespace:@"person" method:@"getWorkingEvents" attributes:attributes];
     }
 }
 

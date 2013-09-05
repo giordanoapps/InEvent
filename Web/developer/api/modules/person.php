@@ -241,7 +241,7 @@
 
 	} else
 
-	if ($method === "getEvents") {
+	if ($method === "getWorkingEvents") {
 
 		$tokenID = getToken();
 

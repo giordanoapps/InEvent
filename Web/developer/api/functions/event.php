@@ -13,8 +13,8 @@
 			
 			$activityData = $data["data"][$i];
 
-            if ($dayTimestamp != $activityData['day']) {
-                $dayTimestamp = $activityData['day'];
+            if ($dayTimestamp != date("z", $data['dateBegin'])) {
+                $dayTimestamp = date("z", $data['dateBegin']);
 
                 $days++;
 

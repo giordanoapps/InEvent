@@ -263,7 +263,7 @@
 					`activity`.`name`,
 					`activity`.`description`,
 					`activity`.`location`,
-					UNIX_TIMESTAMP(MAKEDATE(YEAR(`activity`.`dateBegin`), DAYOFYEAR(`activity`.`dateBegin`))) AS `day`,
+					-- UNIX_TIMESTAMP(MAKEDATE(YEAR(`activity`.`dateBegin`), DAYOFYEAR(`activity`.`dateBegin`))) AS `day`,
 					UNIX_TIMESTAMP(`activity`.`dateBegin`) AS `dateBegin`,
 	                UNIX_TIMESTAMP(`activity`.`dateEnd`) AS `dateEnd`,
 					`activity`.`capacity`,
@@ -303,7 +303,6 @@
 	                `activity`.`description`,
 	                `activity`.`location`,
 	                `activity`.`highlight`,
-	                UNIX_TIMESTAMP(MAKEDATE(YEAR(`activity`.`dateBegin`), DAYOFYEAR(`activity`.`dateBegin`))) AS `day`,
 	                UNIX_TIMESTAMP(`activity`.`dateBegin`) AS `dateBegin`,
 	                UNIX_TIMESTAMP(`activity`.`dateEnd`) AS `dateEnd`,
 	                IF(`activityMember`.`memberID` = $core->memberID, `activityMember`.`approved`, 0) AS `approved`

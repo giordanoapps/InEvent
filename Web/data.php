@@ -37,9 +37,9 @@
 								$data = mysql_fetch_assoc($result);
 							?>
 							
-							<p class="inputHeadline">Informe seus dados para o InEvent, a plataforma oficial da Semana SusIE!</p>
+							<!-- <p class="inputHeadline">Informe seus dados para o InEvent, a plataforma oficial da Semana SusIE!</p> -->
 
-							<!-- <p class="inputHeader">Pessoa</p> -->
+							<p class="inputHeader">Pessoa</p>
 							
 							<p class="fullWidth">
 								<span class="inputTitle">Nome Completo:</span>

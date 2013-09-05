@@ -67,11 +67,11 @@
 	
 	<div class="documentationFunctionBox">
 		<p class="documentFunctionName">
-			<span>person.getEvents(<b>tokenID</b>)</span>
-			<img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=person.getEvents&tokenID=$tokenID">
+			<span>person.getWorkingEvents(<b>tokenID</b>)</span>
+			<img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=person.getWorkingEvents&tokenID=$tokenID">
 		</p>
 
-		<p class="documentFunctionDescription">Retorna todas os eventos em que a pessoa com o <i>tokenID</i> está inscrita.</p>
+		<p class="documentFunctionDescription">Retorna todas os eventos em que a pessoa com o <i>tokenID</i> está trabalhando.</p>
 
 		<div class="documentationFunctionParametersBox">
 			<p><b>tokenID</b><sub>GET</sub> : id de autenticação </p>
