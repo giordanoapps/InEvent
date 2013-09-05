@@ -23,7 +23,9 @@ import android.util.Log;
 import com.estudiotrilha.android.utils.SQLiteUtils;
 import com.estudiotrilha.inevent.InEvent;
 import com.estudiotrilha.inevent.content.Activity;
+import com.estudiotrilha.inevent.content.ActivityMember;
 import com.estudiotrilha.inevent.content.Event;
+import com.estudiotrilha.inevent.content.EventMember;
 import com.estudiotrilha.inevent.content.Member;
 
 
@@ -114,7 +116,7 @@ public class InEventProvider extends ContentProvider
     }
 
     @Override
-    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) // TODO
+    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder)
     {
         Cursor c = null;
 
@@ -129,11 +131,29 @@ public class InEventProvider extends ContentProvider
             selectionArgs = new String[] { id };
         }
         case URI_EVENT:
-            c = mDatabase.query(Event.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
+        {
+            String project = "*";
+            if (projection != null)
+            {
+                // remove the brackets
+                project = Arrays.toString(projection);
+                project = project.substring(1,project.length()-1);
+            }
+
+            final String query = "SELECT "+ project +
+                    " FROM " + Event.TABLE_NAME +
+                    " LEFT JOIN " + EventMember.TABLE_NAME +
+                    " ON " + Event.Columns._ID_FULL +"="+ EventMember.Columns.EVENT_ID_FULL +
+                    " WHERE " + selection +
+                    " GROUP BY " + Event.Columns._ID_FULL +
+                    " ORDER BY " + sortOrder;
+
+            c = mDatabase.rawQuery(query, selectionArgs);
             break;
+        }
 
         case URI_EVENT_ATTENDERS:
-            c = mDatabase.query(Event.Member.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
+            c = mDatabase.query(EventMember.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
             break;
             
         case URI_ACTIVITY:
@@ -153,9 +173,9 @@ public class InEventProvider extends ContentProvider
             final String query = "SELECT "+ project +
                     " FROM " + Event.TABLE_NAME +
                     " INNER JOIN " + Activity.TABLE_NAME +
-                    " ON " + Event.TABLE_NAME+"."+Event.Columns._ID +"="+ Activity.TABLE_NAME+"."+Activity.Columns.EVENT_ID +
-                    " INNER JOIN " + Activity.Member.TABLE_NAME +
-                    " ON " + Activity.Member.TABLE_NAME+"."+Activity.Member.Columns.ACTIVITY_ID +"="+ Activity.TABLE_NAME+"."+Activity.Columns._ID +
+                    " ON " + Event.Columns._ID_FULL +"="+ Activity.Columns.EVENT_ID_FULL +
+                    " INNER JOIN " + ActivityMember.TABLE_NAME +
+                    " ON " + ActivityMember.Columns.ACTIVITY_ID_FULL +"="+ Activity.Columns._ID_FULL +
                     " WHERE " + selection +
                     " ORDER BY " + sortOrder;
             c = mDatabase.rawQuery(query, selectionArgs);
@@ -173,9 +193,9 @@ public class InEventProvider extends ContentProvider
             }
 
             final String query = "SELECT "+ project +
-                    " FROM " + Activity.Member.TABLE_NAME +
+                    " FROM " + ActivityMember.TABLE_NAME +
                     " INNER JOIN " + Member.TABLE_NAME +
-                    " ON " + Activity.Member.TABLE_NAME+"."+Activity.Member.Columns.MEMBER_ID +"="+ Member.TABLE_NAME+"."+Member.Columns._ID +
+                    " ON " + ActivityMember.Columns.MEMBER_ID_FULL +"="+ Member.Columns._ID_FULL +
                     " WHERE " + selection +
                     " ORDER BY " + sortOrder;
 
@@ -209,7 +229,7 @@ public class InEventProvider extends ContentProvider
             break;
 
         case URI_EVENT_ATTENDERS:
-            answer = mDatabase.insert(Event.Member.TABLE_NAME, null, values);
+            answer = mDatabase.insert(EventMember.TABLE_NAME, null, values);
             break;
 
         case URI_ACTIVITY:
@@ -218,7 +238,7 @@ public class InEventProvider extends ContentProvider
 
         case URI_ACTIVITY_SCHEDULE:
         case URI_ACTIVITY_ATTENDERS:
-            answer = mDatabase.insert(Activity.Member.TABLE_NAME, null, values);
+            answer = mDatabase.insert(ActivityMember.TABLE_NAME, null, values);
             break;
 
         case URI_MEMBER:
@@ -278,7 +298,7 @@ public class InEventProvider extends ContentProvider
             break;
 
         case URI_ACTIVITY_ATTENDERS:
-            result = mDatabase.update(Activity.Member.TABLE_NAME, values, selection, selectionArgs);
+            result = mDatabase.update(ActivityMember.TABLE_NAME, values, selection, selectionArgs);
             break;
 
 
@@ -320,7 +340,7 @@ public class InEventProvider extends ContentProvider
             break;
 
         case URI_EVENT_ATTENDERS:
-            result = mDatabase.delete(Event.Member.TABLE_NAME, selection, selectionArgs);
+            result = mDatabase.delete(EventMember.TABLE_NAME, selection, selectionArgs);
             break;
 
         case URI_ACTIVITY_SINGLE:
@@ -338,7 +358,7 @@ public class InEventProvider extends ContentProvider
 
         case URI_ACTIVITY_SCHEDULE:
         case URI_ACTIVITY_ATTENDERS:
-            result = mDatabase.delete(Activity.Member.TABLE_NAME, selection, selectionArgs);
+            result = mDatabase.delete(ActivityMember.TABLE_NAME, selection, selectionArgs);
             break;
 
         case URI_MEMBER:
@@ -426,9 +446,23 @@ public class InEventProvider extends ContentProvider
             switch (oldVersion)
             {
             case 1:
-                // do the updates for the version 2
-                // XXX
+                // Updates for the version 2
+                db.execSQL("ALTER TABLE "+Member.TABLE_NAME+
+                        " ADD "+Member.Columns.IMAGE+" TEXT");
+
+                db.execSQL("DROP TABLE IF EXISTS "+EventMember.TABLE_NAME);
+                db.execSQL("CREATE TABLE " + EventMember.TABLE_NAME + "(" +
+                        EventMember.Columns.EVENT_ID + SQLiteUtils.FOREIGN_KEY + ", " +
+                        EventMember.Columns.MEMBER_ID + SQLiteUtils.FOREIGN_KEY + ", " +
+                        EventMember.Columns.APPROVED + SQLiteUtils.BOOLEAN + ", " +
+                        EventMember.Columns.ROLE_ID + " INTEGER)"
+                );
+
                 Log.i(InEvent.NAME, "Updated database to version 2");
+
+            case 2:
+                // do the updates for the version 3
+                Log.i(InEvent.NAME, "Updated database to version 3");
             }
         }
 
@@ -449,14 +483,13 @@ public class InEventProvider extends ContentProvider
                     Event.Columns.STATE + " TEXT)"
             );
 
-            Log.i(InEvent.NAME, "Creating " + Event.Member.TABLE_NAME + " table");
+            Log.i(InEvent.NAME, "Creating " + EventMember.TABLE_NAME + " table");
 
-            db.execSQL("CREATE TABLE " + Event.Member.TABLE_NAME + "(" +
-                    Event.Member.Columns._ID + " INTEGER NOT NULL UNIQUE, " +
-                    Event.Member.Columns.EVENT_ID + SQLiteUtils.FOREIGN_KEY + ", " +
-                    Event.Member.Columns.MEMBER_ID + SQLiteUtils.FOREIGN_KEY + ", " +
-                    Event.Member.Columns.APPROVED + SQLiteUtils.BOOLEAN + ", " +
-                    Event.Member.Columns.ROLE_ID + " INTEGER)"
+            db.execSQL("CREATE TABLE " + EventMember.TABLE_NAME + "(" +
+                    EventMember.Columns.EVENT_ID + SQLiteUtils.FOREIGN_KEY + ", " +
+                    EventMember.Columns.MEMBER_ID + SQLiteUtils.FOREIGN_KEY + ", " +
+                    EventMember.Columns.APPROVED + SQLiteUtils.BOOLEAN + ", " +
+                    EventMember.Columns.ROLE_ID + " INTEGER)"
             );
         }
 
@@ -474,14 +507,14 @@ public class InEventProvider extends ContentProvider
                     Activity.Columns.DATE_END + " INTEGER)"
             );
 
-            Log.i(InEvent.NAME, "Creating " + Activity.Member.TABLE_NAME + " table");
+            Log.i(InEvent.NAME, "Creating " + ActivityMember.TABLE_NAME + " table");
 
-            db.execSQL("CREATE TABLE " + Activity.Member.TABLE_NAME + "(" +
-                    Activity.Member.Columns.EVENT_ID + SQLiteUtils.FOREIGN_KEY + ", " +
-                    Activity.Member.Columns.ACTIVITY_ID + SQLiteUtils.FOREIGN_KEY + ", " +
-                    Activity.Member.Columns.MEMBER_ID + SQLiteUtils.FOREIGN_KEY + ", " +
-                    Activity.Member.Columns.APPROVED + SQLiteUtils.BOOLEAN + ", " +
-                    Activity.Member.Columns.PRESENT + SQLiteUtils.BOOLEAN + ")"
+            db.execSQL("CREATE TABLE " + ActivityMember.TABLE_NAME + "(" +
+                    ActivityMember.Columns.EVENT_ID + SQLiteUtils.FOREIGN_KEY + ", " +
+                    ActivityMember.Columns.ACTIVITY_ID + SQLiteUtils.FOREIGN_KEY + ", " +
+                    ActivityMember.Columns.MEMBER_ID + SQLiteUtils.FOREIGN_KEY + ", " +
+                    ActivityMember.Columns.APPROVED + SQLiteUtils.BOOLEAN + ", " +
+                    ActivityMember.Columns.PRESENT + SQLiteUtils.BOOLEAN + ")"
             );
         }
 
@@ -493,7 +526,8 @@ public class InEventProvider extends ContentProvider
                     Member.Columns._ID + " INTEGER NOT NULL UNIQUE, " +
                     Member.Columns.NAME + " TEXT NOT NULL, " +
                     Member.Columns.EMAIL + " TEXT, " +
-                    Member.Columns.TELEPHONE + " TEXT)"
+                    Member.Columns.TELEPHONE + " TEXT" +
+                    Member.Columns.IMAGE + " TEXT)"
             );
         }
     }

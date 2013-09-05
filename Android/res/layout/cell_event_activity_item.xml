@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical" >
 
+    <!-- TODO remove the POG -->
     <ViewStub
         android:id="@+id/activity_section"
         android:layout_width="wrap_content"

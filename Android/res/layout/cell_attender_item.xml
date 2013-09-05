@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:minHeight="40dp"
+    android:minHeight="48dp"
     android:orientation="horizontal"
     tools:ignore="UseCompoundDrawables" >
 
@@ -22,15 +22,16 @@
         android:layout_weight="1"
         android:ellipsize="end"
         android:maxLines="1"
-        android:lines="1"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:padding="@dimen/default_textPadding" />
+        android:padding="@dimen/default_textPadding"
+        android:scrollHorizontally="true"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <ImageView
         android:id="@+id/member_present"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_gravity="top"
+        android:contentDescription="@string/description_attender_present"
         android:src="@drawable/ic_navigation_accept" />
 
 </LinearLayout>

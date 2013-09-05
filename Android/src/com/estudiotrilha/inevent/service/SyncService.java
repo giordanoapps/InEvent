@@ -12,6 +12,7 @@ import org.json.JSONObject;
 import android.app.IntentService;
 import android.content.ContentProviderOperation;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.content.OperationApplicationException;
 import android.net.Uri;
@@ -20,10 +21,13 @@ import android.util.Log;
 
 import com.estudiotrilha.android.utils.JsonUtils;
 import com.estudiotrilha.inevent.InEvent;
+import com.estudiotrilha.inevent.R;
 import com.estudiotrilha.inevent.Utils;
 import com.estudiotrilha.inevent.content.Activity;
+import com.estudiotrilha.inevent.content.ActivityMember;
 import com.estudiotrilha.inevent.content.ApiRequest;
 import com.estudiotrilha.inevent.content.Event;
+import com.estudiotrilha.inevent.content.EventMember;
 import com.estudiotrilha.inevent.content.LoginManager;
 import com.estudiotrilha.inevent.content.Member;
 import com.estudiotrilha.inevent.content.SyncBroadcastManager;
@@ -34,17 +38,53 @@ public class SyncService extends IntentService implements ApiRequest.ResponseHan
 {
     public static final String SERVICE_NAME = InEvent.NAME + "." + SyncService.class.getSimpleName();
 
-    public static final String EXTRA_EVENT_ID    = "extra.EVENT_ID";
-    public static final String EXTRA_ACTIVITY_ID = "extra.ACTIVITY_ID";
+    private static final String EXTRA_EVENT_ID    = "extra.EVENT_ID";
+    private static final String EXTRA_ACTIVITY_ID = "extra.ACTIVITY_ID";
 
-    public SyncService()
+    public static void syncEvents(Context c)
     {
-        super(SERVICE_NAME);
+        Intent service = new Intent(c, SyncService.class);
+        service.setData(Event.EVENT_CONTENT_URI);
+        c.startService(service);
+    }
+    public static void syncEventAttenders(Context c, long eventId)
+    {
+        Intent service = new Intent(c, SyncService.class);
+        service.setData(Event.ATTENDERS_CONTENT_URI);
+        service.putExtra(EXTRA_EVENT_ID, eventId);
+        c.startService(service);
+    }
+    public static void syncEventActivities(Context c, long eventId)
+    {
+        Intent service = new Intent(c, SyncService.class);
+        service.setData(Activity.ACTIVITY_CONTENT_URI);
+        service.putExtra(EXTRA_EVENT_ID, eventId);
+        c.startService(service);
+    }
+    public static void syncEventSchedule(Context c, long eventId)
+    {
+        Intent service = new Intent(c, SyncService.class);
+        service.setData(Activity.SCHEDULE_CONTENT_URI);
+        service.putExtra(EXTRA_EVENT_ID, eventId);
+        c.startService(service);
+    }
+    public static void syncEventActivityAttenders(Context c, long eventId, long activityId)
+    {
+        Intent service = new Intent(c, SyncService.class);
+        service.setData(Activity.ATTENDERS_CONTENT_URI);
+        service.putExtra(EXTRA_EVENT_ID, eventId);
+        service.putExtra(EXTRA_ACTIVITY_ID, activityId);
+        c.startService(service);
     }
 
 
     private Intent mIntent;
 
+
+    public SyncService()
+    {
+        super(SERVICE_NAME);
+    }
     @Override
     protected void onHandleIntent(Intent intent)
     {
@@ -53,7 +93,7 @@ public class SyncService extends IntentService implements ApiRequest.ResponseHan
         if (!Utils.checkConnectivity(this))
         {
             // send a broadcast telling that there is no connection
-//            sendBroadcast(new Intent(InEvent.ACTION_TOAST_NOTIFICATION).putExtra(InEvent.EXTRA_TOAST_MESSAGE, R.string.message_noConnection)); XXX
+            sendBroadcast(new Intent(InEvent.ACTION_TOAST_NOTIFICATION).putExtra(InEvent.EXTRA_TOAST_MESSAGE, R.string.error_connection_internetless));
             return;
         }
 
@@ -71,7 +111,7 @@ public class SyncService extends IntentService implements ApiRequest.ResponseHan
             try
             {
                 String tokenID = LoginManager.getInstance(this).getTokenId();
-                HttpURLConnection connection = Member.Api.getEvents(tokenID);
+                HttpURLConnection connection = Event.Api.getEvents(tokenID);
                 ApiRequest.getJsonFromConnection(code, connection, this, false);
             }
             catch (IOException e)
@@ -111,7 +151,7 @@ public class SyncService extends IntentService implements ApiRequest.ResponseHan
 
             try
             {
-                long eventID = intent.getLongExtra(EXTRA_EVENT_ID, 1); // XXX
+                long eventID = intent.getLongExtra(EXTRA_EVENT_ID, -1);
                 HttpURLConnection connection = Event.Api.getActivities(eventID);
                 ApiRequest.getJsonFromConnection(code, connection, this, false);
             }
@@ -181,8 +221,10 @@ public class SyncService extends IntentService implements ApiRequest.ResponseHan
         if (responseCode != HttpStatus.SC_OK || json == null)
         {
             // Error!
+            int message = Utils.getBadResponseMessage(requestCode, responseCode);
 
-            // TODO treat the errors
+            // Send the message to the user
+            sendBroadcast(new Intent(InEvent.ACTION_TOAST_NOTIFICATION).putExtra(InEvent.EXTRA_TOAST_MESSAGE, message));
 
             return;
         }
@@ -202,12 +244,25 @@ public class SyncService extends IntentService implements ApiRequest.ResponseHan
                             .build()
                 );
 
+                LoginManager loginManager = LoginManager.getInstance(getBaseContext());
+                boolean signedIn = loginManager.isSignedIn();
+                String where = signedIn ? EventMember.Columns.MEMBER_ID_FULL+"="+loginManager.getMember().memberId : null;
+
+                // and eventMembers
+                operations.add(
+                        ContentProviderOperation
+                            .newDelete(Event.ATTENDERS_CONTENT_URI)
+                            .withSelection(where, null)
+                            .build()
+                );
+
                 // Get the new ones
                 JSONArray eventArray = json.getJSONArray(JsonUtils.DATA);
                 for (int i = 0; i < eventArray.length(); i++)
                 {
                     // Parse the json
-                    ContentValues values = Event.valuesFromJson(eventArray.getJSONObject(i));
+                    JSONObject jobj = eventArray.getJSONObject(i);
+                    ContentValues values = Event.valuesFromJson(jobj);
 
                     // Add the insert operation
                     operations.add(
@@ -216,6 +271,17 @@ public class SyncService extends IntentService implements ApiRequest.ResponseHan
                                 .withValues(values)
                                 .build()
                     );
+
+                    if (signedIn && jobj.getInt(EventMember.Columns.APPROVED) == 1)
+                    {
+                        values = EventMember.valuesFromJson(jobj, jobj.getLong(JsonUtils.ID));
+                        operations.add(
+                                ContentProviderOperation
+                                    .newInsert(Event.ATTENDERS_CONTENT_URI)
+                                    .withValues(values)
+                                    .build()
+                        );
+                    }
                 }
 
                 getContentResolver().applyBatch(InEventProvider.AUTHORITY, operations);
@@ -248,7 +314,7 @@ public class SyncService extends IntentService implements ApiRequest.ResponseHan
                 operations.add(
                         ContentProviderOperation
                             .newDelete(Event.ATTENDERS_CONTENT_URI)
-                            .withSelection(Event.Member.TABLE_NAME+"."+Event.Member.Columns.EVENT_ID+"="+eventID, null)
+                            .withSelection(EventMember.Columns.EVENT_ID_FULL+"="+eventID, null)
                             .build()
                 );
                 // and the members
@@ -264,7 +330,7 @@ public class SyncService extends IntentService implements ApiRequest.ResponseHan
                 {
                     // Parse the json
                     JSONObject jobj = peopleArray.getJSONObject(i);
-                    ContentValues values = Event.Member.valuesFromJson(jobj, eventID);
+                    ContentValues values = EventMember.valuesFromJson(jobj, eventID);
 
                     // Add the insert operation
                     operations.add(
@@ -371,8 +437,8 @@ public class SyncService extends IntentService implements ApiRequest.ResponseHan
                         ContentProviderOperation
                             .newDelete(Activity.SCHEDULE_CONTENT_URI)
                             .withSelection(
-                                    Activity.Member.TABLE_NAME+"."+Activity.Member.Columns.EVENT_ID  +"="+ eventID + " AND " +
-                                    Activity.Member.TABLE_NAME+"."+Activity.Member.Columns.MEMBER_ID +"="+ memberID 
+                                    ActivityMember.Columns.EVENT_ID_FULL  +"="+ eventID + " AND " +
+                                    ActivityMember.Columns.MEMBER_ID_FULL +"="+ memberID 
                                     , null)
                             .build()
                 );
@@ -388,10 +454,10 @@ public class SyncService extends IntentService implements ApiRequest.ResponseHan
                         JSONObject jobj = activityArray.getJSONObject(j);
 
                         long activityID = jobj.getLong(JsonUtils.ID);
-                        boolean approved = jobj.getInt(Activity.Member.Columns.APPROVED) == 1;
+                        boolean approved = jobj.getInt(ActivityMember.Columns.APPROVED) == 1;
 
                         // Gather the values
-                        ContentValues values = Activity.Member.newActivtyMember(eventID, activityID, memberID, approved); // TODO
+                        ContentValues values = ActivityMember.newActivtyMember(eventID, activityID, memberID, approved);
 
                         // Add the insert operation
                         operations.add(
@@ -434,7 +500,7 @@ public class SyncService extends IntentService implements ApiRequest.ResponseHan
                 operations.add(
                         ContentProviderOperation
                             .newDelete(Activity.ATTENDERS_CONTENT_URI)
-                            .withSelection(Activity.Member.TABLE_NAME+"."+Activity.Member.Columns.ACTIVITY_ID+"="+activityID, null)
+                            .withSelection(ActivityMember.Columns.ACTIVITY_ID_FULL+"="+activityID, null)
                             .build()
                 );
 
@@ -446,11 +512,11 @@ public class SyncService extends IntentService implements ApiRequest.ResponseHan
                     JSONObject jobj = peopleArray.getJSONObject(i);
 
                     long memberID = jobj.getLong(Member.MEMBER_ID);
-                    boolean approved = jobj.getInt(Activity.Member.Columns.APPROVED) == 1;
-                    boolean present = jobj.getInt(Activity.Member.Columns.PRESENT) == 1;
+                    boolean approved = jobj.getInt(ActivityMember.Columns.APPROVED) == 1;
+                    boolean present = jobj.getInt(ActivityMember.Columns.PRESENT) == 1;
 
                     // Parse the member
-                    ContentValues values = Activity.Member.newActivtyMember(eventID, activityID, memberID, approved, present);
+                    ContentValues values = ActivityMember.newActivtyMember(eventID, activityID, memberID, approved, present);
 
                     // Parse the link member-activity
                     // Add the insert operation

@@ -19,6 +19,10 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
 
+        <!-- Facebook -->
+        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_appId"/>
+        <activity android:name="com.facebook.LoginActivity" />
+
         <!-- Splash Screen -->
         <activity
             android:name="com.estudiotrilha.inevent.app.SplashActivity"
@@ -45,6 +49,9 @@
 
         <!-- Login -->
         <activity android:name="com.estudiotrilha.inevent.app.LoginActivity" />
+
+        <!-- Event Marketplace Activity -->
+        <activity android:name="com.estudiotrilha.inevent.app.EventMarketPlaceActivity" />
 
         <!-- Event Activity -->
         <activity android:name="com.estudiotrilha.inevent.app.EventActivity" />

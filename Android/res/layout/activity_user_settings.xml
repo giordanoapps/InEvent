@@ -15,7 +15,7 @@
         android:id="@id/member_profilePicture"
         android:layout_width="98dp"
         android:layout_height="98dp"
-        android:background="@color/member_profilelight_gray"
+        android:background="@color/member_profile"
         android:src="@drawable/ic_social_person" />
 
     <TextView

@@ -1,9 +1,10 @@
 package com.estudiotrilha.inevent.app;
 
 
+import java.util.Locale;
+
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,10 +16,12 @@ import android.support.v4.content.Loader;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.SearchView;
 import android.text.InputType;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Filter;
@@ -29,6 +32,7 @@ import android.widget.TextView;
 import com.estudiotrilha.android.widget.ExtensibleCursorAdapter;
 import com.estudiotrilha.inevent.R;
 import com.estudiotrilha.inevent.content.Activity;
+import com.estudiotrilha.inevent.content.ActivityMember;
 import com.estudiotrilha.inevent.content.LoginManager;
 import com.estudiotrilha.inevent.content.Member;
 import com.estudiotrilha.inevent.service.SyncService;
@@ -65,6 +69,7 @@ public class AttendanceFragment extends ListFragment implements LoaderCallbacks<
     private Filter        mPeopleFilter;
 
     private int mIndexId;
+    private int mIndexName;
     private int mIndexPresent;
 
     private long mLastClickedItemId = -1;
@@ -98,10 +103,10 @@ public class AttendanceFragment extends ListFragment implements LoaderCallbacks<
         mPeopleFilter = new Filter() {
             // The query basic info
             final Uri      uri           = Activity.ATTENDERS_CONTENT_URI;
-            final String[] projection    = Activity.Member.Columns.PROJECTION_ATTENDANCE_LIST;
-            final String   selection     = Activity.Member.TABLE_NAME+"."+Activity.Member.Columns.ACTIVITY_ID+" = "+ getArguments().getLong(ARGS_ACTIVITY_ID)+
-                    " AND "+Activity.Member.Columns.APPROVED +" = 1"+
-                    " AND "+Member.TABLE_NAME+"."+Member.Columns._ID+" LIKE ?";
+            final String[] projection    = ActivityMember.Columns.PROJECTION_ATTENDANCE_LIST;
+            final String   selection     = ActivityMember.Columns.ACTIVITY_ID_FULL+" = "+ getArguments().getLong(ARGS_ACTIVITY_ID)+
+                    " AND "+ActivityMember.Columns.APPROVED_FULL +" = 1"+
+                    " AND "+Member.Columns._ID_FULL+" LIKE ?";
             final String[] selectionArgs = new String[1];
             final String   sortOrder     = Member.TABLE_NAME+"."+Member.Columns.NAME + " ASC";
 
@@ -134,6 +139,11 @@ public class AttendanceFragment extends ListFragment implements LoaderCallbacks<
                 return results;
             }
         };
+    }
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
+        return super.onCreateView(inflater, container, savedInstanceState);
     }
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState)
@@ -225,10 +235,10 @@ public class AttendanceFragment extends ListFragment implements LoaderCallbacks<
     private void setPresence(long memberID, int present)
     {
         // Update the values
-        final String selection = Activity.Member.Columns.MEMBER_ID+"="+memberID+
-                " AND "+Activity.Member.Columns.ACTIVITY_ID+"="+getArguments().getLong(ARGS_ACTIVITY_ID);
+        final String selection = ActivityMember.Columns.MEMBER_ID_FULL+"="+memberID+
+                " AND "+ActivityMember.Columns.ACTIVITY_ID_FULL+"="+getArguments().getLong(ARGS_ACTIVITY_ID);
         final ContentValues values = new ContentValues();
-        values.put(Activity.Member.Columns.PRESENT, present);
+        values.put(ActivityMember.Columns.PRESENT, present);
         getActivity().getContentResolver().update(Activity.ATTENDERS_CONTENT_URI, values, selection, null);
 
         // Reload content
@@ -239,13 +249,8 @@ public class AttendanceFragment extends ListFragment implements LoaderCallbacks<
 
     private void refresh()
     {
-        // Prepare the intent
-        Intent intent = new Intent(getActivity(), SyncService.class);
-        intent.putExtra(SyncService.EXTRA_ACTIVITY_ID, getArguments().getLong(ARGS_ACTIVITY_ID));
-        intent.putExtra(SyncService.EXTRA_EVENT_ID, getArguments().getLong(ARGS_EVENT_ID));
-
         // Download the attenders
-        getActivity().startService(intent.setData(Activity.ATTENDERS_CONTENT_URI));
+        SyncService.syncEventActivityAttenders(getActivity(), getArguments().getLong(ARGS_EVENT_ID), getArguments().getLong(ARGS_ACTIVITY_ID));
     }
 
 
@@ -254,11 +259,11 @@ public class AttendanceFragment extends ListFragment implements LoaderCallbacks<
     public Loader<Cursor> onCreateLoader(int code, Bundle args)
     {
         Uri uri = Activity.ATTENDERS_CONTENT_URI;
-        String[] projection = Activity.Member.Columns.PROJECTION_ATTENDANCE_LIST;
-        String selection = Activity.Member.TABLE_NAME+"."+Activity.Member.Columns.ACTIVITY_ID+" = "+getArguments().getLong(ARGS_ACTIVITY_ID) +
-                " AND "+ Activity.Member.Columns.APPROVED +" = 1";
+        String[] projection = ActivityMember.Columns.PROJECTION_ATTENDANCE_LIST;
+        String selection = ActivityMember.Columns.ACTIVITY_ID_FULL+" = "+getArguments().getLong(ARGS_ACTIVITY_ID) +
+                " AND "+ ActivityMember.Columns.APPROVED_FULL +" = 1";
         String[] selectionArgs = null;
-        String sortOrder = Member.TABLE_NAME+"."+Member.Columns.NAME + " ASC";
+        String sortOrder = Member.TABLE_NAME+"."+Member.Columns.NAME + " COLLATE NOCASE ASC";
 
         return new CursorLoader(getActivity(), uri, projection, selection, selectionArgs, sortOrder);
     }
@@ -273,8 +278,9 @@ public class AttendanceFragment extends ListFragment implements LoaderCallbacks<
         }
 
         // Update the indexes
-        mIndexId = data.getColumnIndex(Activity.Member.Columns._ID);
-        mIndexPresent = data.getColumnIndex(Activity.Member.Columns.PRESENT);
+        mIndexId = data.getColumnIndex(ActivityMember.Columns._ID);
+        mIndexName = data.getColumnIndex(Member.Columns.NAME);
+        mIndexPresent = data.getColumnIndex(ActivityMember.Columns.PRESENT);
 
         mPeopleAdapter.swapCursor(data);
     }
@@ -285,34 +291,75 @@ public class AttendanceFragment extends ListFragment implements LoaderCallbacks<
     }
 
 
-    // TODO
     class PeopleAdapter extends ExtensibleCursorAdapter implements SectionIndexer
     {
+        private int[]       mSectionPosition = new int[26];
+        private Character[] mSections        = new Character[26];
+
         public PeopleAdapter(Context context)
         {
             super(context, R.layout.cell_attender_item, null, new String[] { Member.Columns.NAME }, new int[] { R.id.member_name }, 0);
+
+            for (int i = 0; i < mSections.length; i++)
+            {
+                mSections[i] = (char) ('A' + i);
+                mSectionPosition[i] = 0;
+            }
         }
 
+        @Override
+        public Cursor swapCursor(Cursor c)
+        {
+            if (c != null)
+            {
+                // Build up the sections
+                int position = 0;
+
+                c.moveToPosition(-1);
+                while(c.moveToNext())
+                {
+                    char firstLetter = c.getString(mIndexName).toUpperCase(Locale.getDefault()).charAt(0);
+
+                    if (firstLetter < mSections[position])
+                    {
+                        continue;
+                    }
+
+                    mSectionPosition[position] = c.getPosition();
+                    position++;
+                }
+
+                // Fill up the reaming section positions
+                while (position < mSectionPosition.length)
+                {
+                    mSectionPosition[position] = c.getPosition();
+                    position++; 
+                }
+            }
+
+            return super.swapCursor(c);
+        }
 
         @Override
         public int getPositionForSection(int section)
         {
-            // TODO Auto-generated method stub
-            return 0;
+            return mSectionPosition[section];
         }
 
         @Override
         public int getSectionForPosition(int position)
         {
-            // TODO Auto-generated method stub
-            return 0;
+            Cursor c = getCursor();
+            c.moveToPosition(position);
+            char firstLetter = c.getString(mIndexName).toUpperCase(Locale.getDefault()).charAt(0);
+
+            return firstLetter - 'A';
         }
 
         @Override
         public Object[] getSections()
         {
-            // TODO Auto-generated method stub
-            return null;
+            return mSections;
         }
 
         public int getPositionForId(long id)

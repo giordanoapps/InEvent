@@ -9,7 +9,7 @@ import android.preference.PreferenceManager;
 
 import com.estudiotrilha.inevent.InEvent;
 import com.estudiotrilha.inevent.R;
-import com.estudiotrilha.inevent.content.LoginManager;
+import com.estudiotrilha.inevent.content.ApiRequest;
 import com.google.analytics.tracking.android.EasyTracker;
 
 
@@ -24,6 +24,11 @@ public class SplashActivity extends Activity implements Runnable
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+
+        if (savedInstanceState == null)
+        {
+            ApiRequest.init(getApplicationContext());
+        }
     }
 
     @Override
@@ -76,15 +81,8 @@ public class SplashActivity extends Activity implements Runnable
         // set the transition animation
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
-        // Open the next Activity
-        startActivity(new Intent(this, EventActivity.class));
-
-        // If the user is not signIn yet
-        if (!LoginManager.getInstance(this).isSignedIn())
-        {
-            // Open the login Screen
-            startActivity(new Intent(this, LoginActivity.class));
-        }
+        // Open the Event Marketplace
+        startActivity(new Intent(this, EventMarketPlaceActivity.class));
     }
 
 

@@ -5,6 +5,8 @@
     <!-- App Stuff -->
     <string name="app_name">InEvent</string>
     <string name="app_version">1.0.1</string>
+    <!-- Keys -->
+    <string name="facebook_appId">1376709179224018</string>
 
     <!-- Button Actions -->
     <string name="action_refresh">Refresh</string>
@@ -17,14 +19,23 @@
     <string name="action_diplayOption_schedule">Show Schedule</string>
     <string name="action_diplayOption_activities">Show All Activities</string>
 
+    <!-- Sliding Menu Buttons -->
+    <string name="slidingMenu_events">Events</string>
+    <string name="slidingMenu_login">Login</string>
+    <string name="slidingMenu_help">Help</string>
+    <string name="slidingMenu_about">About</string>
+
     <!-- Titles -->
     <string name="title_general">General</string>
+    <string name="title_about">About</string>
     <string name="title_preferences">Preferences</string>
     <string name="title_splashScreen">Splash Screen</string>
     <string name="title_appVersion">Version</string>
     <string name="title_mobileNetwork">Mobile Network</string>
+    <string name="title_yourAccount">Your Account</string>
     <string name="title_login">Login</string>
     <string name="title_signIn">Sign In</string>
+    <string name="title_extraInfo">Info</string>
 
     <!-- Hint Messages -->
     <string name="hint_member_myName">Me</string>
@@ -37,8 +48,13 @@
     <string name="hint_event_state">State</string>
 
     <!-- Messages -->
-    <string name="message_loggingIn">Loging In…</string>
-    <string name="message_loading">Loading…</string>
+    <string name="message_about_estudioTrilha">Estúdio Trilha</string>
+    <string name="message_about_inEvent"><b>InEvent</b>, powered by</string>
+    <string name="message_loginNecessary">Login first</string>
+
+    <!-- Loading Messages -->
+    <string name="loading_general">Loading…</string>
+    <string name="loading_loggingIn">Loging In…</string>
 
     <!-- Empty Messages -->
     <string name="empty_eventList">Check your connection, then click Menu > Refresh</string>
@@ -54,12 +70,18 @@
 
     <!-- Descriptions -->
     <string name="description_event_info">Extra information about the event</string>
+    <string name="description_attender_present">Attender present</string>
+    <string name="description_attender_absent">Attender absent</string>
+    <string name="description_slidingMenu_open">Open sliding menu</string>
+    <string name="description_slidingMenu_close">Close sliding menu</string>
     <string name="description_preference_useMobileNetwork">Allow use of the mobile network to download data</string>
 
     <!-- Error Messages -->
     <string name="error_connection">Connection error</string>
+    <string name="error_connection_internetless">No connection</string>
     <string name="error_connection_timeout">Connection timeout</string>
     <string name="error_internal">Some internal error occurred! Try again in a few moments</string>
+    <string name="error_unauthorized">Unauthorized</string>
     <string name="error_login_badCredentials">Wrong name and/or password</string>
     <string name="error_invalidEmail">Invalid e-mail address</string>
 

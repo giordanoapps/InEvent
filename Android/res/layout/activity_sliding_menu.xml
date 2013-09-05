@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/drawerLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <ViewStub
+            android:id="@+id/contentStub"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inflatedId="@id/mainContent" />
+
+        <FrameLayout
+            android:id="@+id/main_toastMessage"
+            android:layout_width="@dimen/toast_layout_width"
+            android:layout_height="@dimen/toast_layout_height"
+            android:layout_gravity="bottom|right"
+            android:layout_marginBottom="@dimen/toast_layout_marginBottom" />
+    </FrameLayout>
+
+    <ScrollView
+        android:id="@+id/slidingMenu"
+        android:layout_width="260dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="@color/slidingMenu_background" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <!-- User Things -->
+
+            <TextView
+                style="@style/SlidingMenuItem.Section"
+                android:text="@string/title_yourAccount" />
+
+            <View
+                style="@style/Divider.Horizontal"
+                android:layout_height="2dp" />
+
+            <Button
+                android:id="@+id/slidingMenu_user"
+                style="@style/SlidingMenuItem"
+                android:onClick="user"
+                android:text="@string/slidingMenu_login" />
+
+            <!-- General Things -->
+
+            <TextView
+                style="@style/SlidingMenuItem.Section"
+                android:text="@string/title_general" />
+
+            <View
+                style="@style/Divider.Horizontal"
+                android:layout_height="2dp" />
+
+            <Button
+                android:id="@+id/slidingMenu_events"
+                style="@style/SlidingMenuItem"
+                android:onClick="events"
+                android:text="@string/slidingMenu_events" />
+
+            <!-- About Estúdio Trilha -->
+
+            <TextView
+                style="@style/SlidingMenuItem.Section"
+                android:text="@string/title_extraInfo" />
+
+            <View
+                style="@style/Divider.Horizontal"
+                android:layout_height="2dp" />
+
+            <Button
+                android:id="@+id/slidingMenu_help"
+                style="@style/SlidingMenuItem"
+                android:onClick="help"
+                android:text="@string/slidingMenu_help" />
+
+            <Button
+                android:id="@+id/slidingMenu_about"
+                style="@style/SlidingMenuItem"
+                android:onClick="about"
+                android:text="@string/slidingMenu_about" />
+        </LinearLayout>
+    </ScrollView>
+
+</android.support.v4.widget.DrawerLayout>

@@ -16,7 +16,7 @@
             android:title="@string/preference_useMobileNetwork" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="Sobre" >
+    <PreferenceCategory android:title="@string/title_about" >
         <Preference
             android:summary="@string/app_version"
             android:title="@string/title_appVersion" />

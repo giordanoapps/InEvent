@@ -1,65 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center_vertical" >
-
-    <!-- TODO this view should become the event time -->
-
-    <View
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_margin="8dp" />
+    android:paddingBottom="@dimen/eventCard_layout_marginVertical"
+    android:paddingLeft="@dimen/eventCard_layout_marginHorizontal"
+    android:paddingRight="@dimen/eventCard_layout_marginHorizontal"
+    android:paddingTop="@dimen/eventCard_layout_marginVertical" >
 
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:padding="8dp" >
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/card"
+        android:duplicateParentState="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        tools:ignore="UselessParent" >
 
-        <TextView
-            android:id="@id/event_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:hint="@string/hint_event_name"
-            android:lines="1"
-            android:maxLines="2"
-            android:textColor="@android:color/black"
-            android:textIsSelectable="false"
-            android:textSize="22sp" />
+        <LinearLayout
+            android:layout_width="72dp"
+            android:layout_height="match_parent"
+            android:background="#1888"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:padding="@dimen/default_textPadding" >
 
-        <TextView
-            android:id="@id/event_description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:textColor="@color/dark_gray"
-            android:textSize="14sp" />
+            <TextView
+                android:id="@id/event_dateBegin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="#c000"
+                android:textSize="14sp" />
 
-        <TextView
-            android:id="@id/event_city"
-            android:layout_width="match_parent"
+            <TextView
+                android:id="@id/event_dateEnd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="#4000"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:hint="@string/hint_event_city"
-            android:maxLines="1"
-            android:textColor="@color/dark_gray"
-            android:textSize="12sp"
-            android:textStyle="italic" />
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:padding="8dp" >
+
+            <TextView
+                android:id="@id/event_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:hint="@string/hint_event_name"
+                android:lines="1"
+                android:maxLines="2"
+                android:scrollHorizontally="true"
+                android:textColor="@android:color/black"
+                android:textIsSelectable="false"
+                android:textSize="22sp" />
+
+            <TextView
+                android:id="@id/event_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:scrollHorizontally="true"
+                android:textColor="@color/dark_gray"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@id/event_city"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:hint="@string/hint_event_city"
+                android:maxLines="1"
+                android:scrollHorizontally="true"
+                android:textColor="@color/dark_gray"
+                android:textSize="12sp"
+                android:textStyle="italic" />
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:layout_margin="4dp" >
+
+            <ImageView
+                android:id="@+id/event_info"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="top"
+                android:clickable="true"
+                android:contentDescription="@string/description_event_info"
+                android:duplicateParentState="false"
+                android:src="@drawable/ic_action_about" />
+
+            <ImageView
+                android:id="@+id/event_approved"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="bottom"
+                android:src="@drawable/ic_navigation_accept"
+                android:visibility="invisible" />
+        </FrameLayout>
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/event_info"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_gravity="top|right"
-        android:layout_margin="4dp"
-        android:clickable="true"
-        android:contentDescription="@string/description_event_info"
-        android:duplicateParentState="false"
-        android:src="@drawable/ic_action_about" />
-
-</LinearLayout>
+</FrameLayout>

@@ -1,36 +1,33 @@
 package com.estudiotrilha.inevent.app;
 
-import com.estudiotrilha.inevent.InEvent;
-import com.estudiotrilha.inevent.R;
-import com.estudiotrilha.inevent.content.LoginManager;
-import com.google.analytics.tracking.android.EasyTracker;
-
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.estudiotrilha.inevent.R;
+import com.estudiotrilha.inevent.content.LoginManager;
 
-public class EventActivity extends ActionBarActivity
+
+public class EventActivity extends SlidingMenuBaseActivity
 {
-    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
-        public void onReceive(Context context, Intent intent)
-        {
-            String action = intent.getAction();
-            if (LoginManager.ACTION_LOGIN_STATE_CHANGED.equals(action))
-            {
-                refreshLoginState();
-            }
-        }
-    };
+    // Extras
+    private static final String EXTRA_EVENT_ID = "extra.EVENT_ID";
+
+
+    public static Intent openEvent(Context c, long eventId)
+    {
+        Intent intent = new Intent(c, EventActivity.class);
+        intent.putExtra(EXTRA_EVENT_ID, eventId);
+
+        return intent;
+    }
+
 
     private LoginManager mLoginManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -40,75 +37,20 @@ public class EventActivity extends ActionBarActivity
 
         mLoginManager = LoginManager.getInstance(this);
 
-        // If the user is not signed in, this activity is useless,
-        // so it is finished
-        if (!mLoginManager.isSignedIn())
+        if (savedInstanceState == null)
         {
-            finish();
-        }
-        else if (savedInstanceState == null) // XXX
-        {
-            // Load up the first Fragment
-            Fragment fragment = EventActivitiesListFragment.instantiate(1); // XXX
+            // Event activities Fragment
+            Fragment fragment = EventActivitiesListFragment.instantiate(getIntent().getLongExtra(EXTRA_EVENT_ID, -1));
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.mainContent, fragment)
                     .commit();
         }
-
-        getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
-            @Override
-            public void onBackStackChanged()
-            {
-                boolean hasHome = getSupportFragmentManager().getBackStackEntryCount() > 0;
-                getSupportActionBar().setHomeButtonEnabled(hasHome);
-                getSupportActionBar().setDisplayHomeAsUpEnabled(hasHome);
-            }
-        });
-    }
-    @Override
-    protected void onStart()
-    {
-        super.onStart();
-        if (!InEvent.DEBUG)
-        {
-            EasyTracker.getInstance().activityStart(this);
-        }
-
-        refreshLoginState();
-        registerReceiver(mReceiver, new IntentFilter(LoginManager.ACTION_LOGIN_STATE_CHANGED));
-    }
-    @Override
-    protected void onResume()
-    {
-        super.onResume();
-        if (!mLoginManager.isSignedIn())
-        {
-            while(getSupportFragmentManager().popBackStackImmediate());
-            finish();
-        }
-    }
-    @Override
-    protected void onStop()
-    {
-        super.onStop();
-        if (!InEvent.DEBUG)
-        {
-            EasyTracker.getInstance().activityStop(this);
-        }
-
-        unregisterReceiver(mReceiver);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
         getMenuInflater().inflate(R.menu.activity_event, menu);
-
-        // Display the correct options in the menu
-        boolean isSignedIn = mLoginManager.isSignedIn();
-        menu.findItem(R.id.menu_signIn).setVisible(!isSignedIn);
-        menu.findItem(R.id.menu_userAccount).setVisible(isSignedIn);
-
         return true;
     }
     @Override
@@ -118,22 +60,16 @@ public class EventActivity extends ActionBarActivity
         {
         case android.R.id.home:
             // Go home! Clear the back stack
-            while(getSupportFragmentManager().popBackStackImmediate());
-            return true;
+            if (getSupportFragmentManager().getBackStackEntryCount() != 0)
+            {
+                while(getSupportFragmentManager().popBackStackImmediate());
+                return true;
+            }
+            break;
 
         case R.id.menu_preferences:
             // Open the PreferencesActivity
             startActivity(new Intent(this, PreferencesActivity.class));
-            return true;
-
-        case R.id.menu_signIn:
-            // Open the LoginActivity
-            startActivity(new Intent(this, LoginActivity.class));
-            return true;
-
-        case R.id.menu_userAccount:
-            // Open the UserSettingsActivity
-            startActivity(new Intent(this, UserSettingsActivity.class));
             return true;
         }
 
@@ -141,9 +77,14 @@ public class EventActivity extends ActionBarActivity
     }
 
 
-    private void refreshLoginState()
+    protected void refreshLoginState()
     {
         // Reload the option menu
         supportInvalidateOptionsMenu();
+        if (!mLoginManager.isSignedIn())
+        {
+            // Open the Event Marketplace
+            events(null);
+        }
     }
 }

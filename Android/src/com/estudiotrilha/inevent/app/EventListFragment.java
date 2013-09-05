@@ -1,11 +1,19 @@
 package com.estudiotrilha.inevent.app;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
+
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.CursorLoader;
@@ -18,9 +26,12 @@ import android.view.View.OnClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.estudiotrilha.android.utils.DateUtils;
 import com.estudiotrilha.android.widget.ExtensibleCursorAdapter;
 import com.estudiotrilha.inevent.R;
 import com.estudiotrilha.inevent.content.Event;
+import com.estudiotrilha.inevent.content.EventMember;
+import com.estudiotrilha.inevent.content.LoginManager;
 import com.estudiotrilha.inevent.service.SyncService;
 
 
@@ -31,6 +42,7 @@ public class EventListFragment extends ListFragment implements LoaderCallbacks<C
 
 
     private ExtensibleCursorAdapter mListAdapter;
+    private DateFormat              mTimeFormat;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -44,11 +56,29 @@ public class EventListFragment extends ListFragment implements LoaderCallbacks<C
         mListAdapter = new ExtensibleCursorAdapter(getActivity(), R.layout.cell_event_list_item, null, from, to, 0);
         mListAdapter.registerExtension(this);
 
+        // Setup the time formatter
+        char[] dateOrder = android.text.format.DateFormat.getDateFormatOrder(getActivity());
+        String format;
+        if (dateOrder[0] == 'd' || (dateOrder[0] != 'M' && dateOrder[1] == 'd'))
+        {
+            // Day, month
+            format = "d, MMM";
+        }
+        else
+        {
+            // Month, day
+            format = "MMM, d";
+        }
+        mTimeFormat = new SimpleDateFormat(format, Locale.getDefault());
     }
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState)
     {
         super.onViewCreated(view, savedInstanceState);
+
+        // Setup the list
+        getListView().setDivider(null);
+        getListView().setSelector(new ColorDrawable(Color.TRANSPARENT));
 
         // Setup the list adapter
         setListAdapter(mListAdapter);
@@ -86,12 +116,12 @@ public class EventListFragment extends ListFragment implements LoaderCallbacks<C
     @Override
     public void onListItemClick(ListView l, View v, int position, long id)
     {
-        // Open the event and show its activities
-        Fragment fragment = EventActivitiesListFragment.instantiate(id);
-        getFragmentManager().beginTransaction()
-                .replace(R.id.mainContent, fragment)
-                .addToBackStack(null)
-                .commit();
+        // Open the event
+        Intent event = EventActivity.openEvent(getActivity(), id);
+        getActivity().startActivity(event);
+
+        // Close this Activity
+        getActivity().finish();
     }
     private OnClickListener mInfoClickListener = new OnClickListener() {
         @Override
@@ -121,7 +151,7 @@ public class EventListFragment extends ListFragment implements LoaderCallbacks<C
     private void refresh()
     {
         // Download the event list
-        getActivity().startService(new Intent(getActivity(), SyncService.class).setData(Event.EVENT_CONTENT_URI));
+        SyncService.syncEvents(getActivity());
     }
 
 
@@ -129,18 +159,20 @@ public class EventListFragment extends ListFragment implements LoaderCallbacks<C
     @Override
     public Loader<Cursor> onCreateLoader(int code, Bundle args)
     {
+        LoginManager loginManager = LoginManager.getInstance(getActivity());
+
         Uri uri = Event.EVENT_CONTENT_URI;
         String[] projection = Event.Columns.PROJECTION_LIST;
-        String selection = null;
+        String selection = loginManager.isSignedIn() ? EventMember.Columns.MEMBER_ID_FULL+"="+loginManager.getMember().memberId : "1";
         String[] selectionArgs = null;
-        String sortOrder = null;
+        String sortOrder = Event.Columns.DATE_BEGIN_FULL+" DESC";
 
         return new CursorLoader(getActivity(), uri, projection, selection, selectionArgs, sortOrder);
     }
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data)
     {
-        // TODO Treat alternative cases (empty, no connection, etc)
+        // TODO Treat alternative cases (no connection, etc)
         mListAdapter.swapCursor(data);
 
         setListShown(true);
@@ -189,5 +221,32 @@ public class EventListFragment extends ListFragment implements LoaderCallbacks<C
         View infoView = v.findViewById(R.id.event_info);
         infoView.setTag(c.getPosition());
         infoView.setOnClickListener(mInfoClickListener);
+
+
+        // Setup the starting and ending time
+
+        // Parse the dates
+        Calendar calendarBegin = DateUtils.calendarFromTimestampInGMT(c.getLong(c.getColumnIndex(Event.Columns.DATE_BEGIN)));
+        Calendar calendarEnd = DateUtils.calendarFromTimestampInGMT(c.getLong(c.getColumnIndex(Event.Columns.DATE_END)));
+        Date dateBegin = calendarBegin.getTime();
+        Date dateEnd = calendarEnd.getTime();
+
+        // Setup the views
+        ((TextView) v.findViewById(R.id.event_dateBegin)).setText(mTimeFormat.format(dateBegin));
+        TextView endDateView = (TextView) v.findViewById(R.id.event_dateEnd);
+        endDateView.setText(mTimeFormat.format(dateEnd));
+
+        // Adjust the time zone
+        calendarBegin.setTimeZone(TimeZone.getDefault());
+        calendarEnd.setTimeZone(TimeZone.getDefault());
+
+        // Don't display the end day if it's a one day event
+        boolean sameDay = calendarBegin.get(Calendar.DAY_OF_YEAR) == calendarEnd.get(Calendar.DAY_OF_YEAR)
+                && calendarBegin.get(Calendar.YEAR) == calendarEnd.get(Calendar.YEAR);
+        endDateView.setVisibility(sameDay ? View.INVISIBLE : View.VISIBLE);
+
+
+        // Setup whether the user is approved or not
+        v.findViewById(R.id.event_approved).setVisibility(c.getInt(c.getColumnIndex(EventMember.Columns.APPROVED)) == 1 ? View.VISIBLE : View.INVISIBLE);
     }
 }

@@ -1,7 +1,7 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
 
     <style name="Divider">
-        <item name="android:background">@color/divider_gray</item>
+        <item name="android:background">@drawable/abc_list_divider_holo_light</item>
     </style>
 
     <style name="Divider.Vertical">
@@ -16,6 +16,28 @@
         <item name="android:layout_height">1dp</item>
         <item name="android:layout_marginLeft">8dp</item>
         <item name="android:layout_marginRight">8dp</item>
+    </style>
+
+    <style name="SlidingMenuItem">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">56dp</item>
+        <item name="android:gravity">left|center_vertical</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:fontFamily" tools:targetApi="16">sans-serif-light</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:scrollHorizontally">true</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:background">@drawable/abc_item_background_holo_light</item>
+    </style>
+
+    <style name="SlidingMenuItem.Section">
+        <item name="android:layout_height">32dp</item>
+        <item name="android:paddingTop">6dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps" tools:targetApi="14">true</item>
     </style>
 
 </resources>

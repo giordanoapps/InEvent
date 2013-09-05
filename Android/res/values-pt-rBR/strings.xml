@@ -16,14 +16,23 @@
     <string name="action_diplayOption_schedule">Minhas atividades</string>
     <string name="action_diplayOption_activities">Todas as atividades</string>
 
+    <!-- Sliding Menu Buttons -->
+    <string name="slidingMenu_events">Eventos</string>
+    <string name="slidingMenu_login">Fazer Login</string>
+    <string name="slidingMenu_help">Ajuda</string>
+    <string name="slidingMenu_about">Sobre</string>
+
     <!-- Titles -->
     <string name="title_general">Geral</string>
+    <string name="title_about">Sobre</string>
     <string name="title_preferences">Preferências</string>
     <string name="title_splashScreen">Splash Screen</string>
     <string name="title_appVersion">Versão</string>
     <string name="title_mobileNetwork">Rede Móvel</string>
+    <string name="title_yourAccount">Sua Conta</string>
     <string name="title_login">Fazer Login</string>
     <string name="title_signIn">Entrar</string>
+    <string name="title_extraInfo">Informações</string>
 
     <!-- Hint Messages -->
     <string name="hint_member_myName">Eu</string>
@@ -36,8 +45,13 @@
     <string name="hint_event_state">Estado</string>
 
     <!-- Messages -->
-    <string name="message_loggingIn">Entrando…</string>
-    <string name="message_loading">Carregando…</string>
+    <string name="message_about_estudioTrilha">Estúdio Trilha</string>
+    <string name="message_about_inEvent"><b>InEvent</b>, um produto do</string>
+    <string name="message_loginNecessary">Faça o login primeiro</string>
+
+    <!-- Loading Messages -->
+    <string name="loading_general">Carregando…</string>
+    <string name="loading_loggingIn">Entrando…</string>
 
     <!-- Empty Messages -->
     <string name="empty_eventList">Verifique sua conexão, então clique em Menu > Atualizar</string>
@@ -53,12 +67,18 @@
 
     <!-- Descriptions -->
     <string name="description_event_info">Mais informações sobre o evento</string>
+    <string name="description_attender_present">Participante presente</string>
+    <string name="description_attender_absent">Participante ausente</string>
+    <string name="description_slidingMenu_open">Abrir menu lateral</string>
+    <string name="description_slidingMenu_close">Fechar menu lateral</string>
     <string name="description_preference_useMobileNetwork">Permitir o uso da rede de dados móvel para baixar conteúdo</string>
 
     <!-- Error Messages -->
     <string name="error_connection">Erro de conexão</string>
+    <string name="error_connection_internetless">Sem conexão</string>
     <string name="error_connection_timeout">A conexão expirou</string>
     <string name="error_internal">Ocorreu algum erro intero! Tente novamente dentro de alguns instantes</string>
+    <string name="error_unauthorized">Sem autorização</string>
     <string name="error_login_badCredentials">Nome e/ou senha inválido(s)</string>
     <string name="error_invalidEmail">E-mail inválido</string>
 

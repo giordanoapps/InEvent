@@ -13,4 +13,13 @@
     <dimen name="login_marginVertical">32dp</dimen>
     <dimen name="login_marginHorizontal">32dp</dimen>
 
+    <!-- Event Marketplace cards -->
+   	<dimen name="eventCard_layout_marginVertical">8dp</dimen>
+   	<dimen name="eventCard_layout_marginHorizontal">16dp</dimen>
+
+    <!-- Custom Toast Message Configs -->
+   	<dimen name="toast_layout_width">180dp</dimen>
+   	<dimen name="toast_layout_height">60dp</dimen>
+   	<dimen name="toast_layout_marginBottom">20dp</dimen>
+
 </resources>

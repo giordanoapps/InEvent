@@ -30,7 +30,6 @@ public class LoginManager
     private static final String FILENAME_MEMBER     = "memberInfoFile.bin";
 
     // BROADCAST INTENTS
-    public static final String ACTION_REVOKE_ACCESS       = InEvent.class.getPackage().getName()+".action.REVOKE_ACCESS";
     public static final String ACTION_LOGIN_STATE_CHANGED = InEvent.class.getPackage().getName()+".action.CHECK_STATE_CHANGED";
 
 
@@ -130,18 +129,8 @@ public class LoginManager
             // broadcasts that the user has logged in
             mContext.sendBroadcast(new Intent(ACTION_LOGIN_STATE_CHANGED));
 
-            // Download the content
-
-            // Prepare the intent
-            Intent intent = new Intent(mContext, SyncService.class);
-            intent.putExtra(SyncService.EXTRA_EVENT_ID, 1L); // XXX
-
-            // Download the activities
-            mContext.startService(intent.setData(Activity.ACTIVITY_CONTENT_URI));
-            // the schedule
-            mContext.startService(intent.setData(Activity.SCHEDULE_CONTENT_URI));
-            // and the attenders
-            mContext.startService(intent.setData(Event.ATTENDERS_CONTENT_URI));
+            // Download this member events
+            SyncService.syncEvents(mContext);
 
             return true;
         }

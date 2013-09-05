@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.Locale;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,11 +31,28 @@ public class Member implements Serializable
     private static final long serialVersionUID = 5341927475443621774L;
 
 
+    // API
     public static class Api
     {
+        public static final class Post
+        {
+            private static final String ENROLL = "name=%s&password=%s&email=%s&cpf=%s&telephone";
+
+            /**
+             * @param cpf - The person CPF. This can be null
+             * @param telephone - Some telephone. This can be null
+             * @return the prepared post String to send along with the {@link HttpURLConnection} from {@link Person#enroll()}
+             */
+            public static String enroll(String name, String password, String email, String cpf, String telephone)
+            {
+                return String.format(Locale.ENGLISH, ENROLL, name, password, email, cpf, telephone);
+            }
+        }
+
         public static final String  NAMESPACE             = "person";
         private static final String SIGN_IN               = ApiRequest.BASE_URL + NAMESPACE + ".signIn&email=%s&password=%s";
         private static final String SIGN_IN_WITH_FACEBOOK = ApiRequest.BASE_URL + NAMESPACE + ".signInWithFacebook&facebookToken=%s";
+        private static final String ENROLL                = ApiRequest.BASE_URL + NAMESPACE + ".enroll";
         private static final String GET_EVENTS            = ApiRequest.BASE_URL + NAMESPACE + ".getEvents&tokenID=%s";
 
 
@@ -55,6 +73,13 @@ public class Member implements Serializable
             return ConnectionHelper.getURLGetConnection(url);
         }
 
+        public static HttpURLConnection enroll() throws IOException
+        {
+            URL url = new URL(ENROLL);
+
+            return ConnectionHelper.getURLPostConnection(url);
+        }
+
         public static HttpURLConnection getEvents(String tokenID) throws IOException
         {
             tokenID = URLEncoder.encode(tokenID, ApiRequest.ENCODING);
@@ -64,15 +89,21 @@ public class Member implements Serializable
         }
     }
 
+    // Database
+    public static final String TABLE_NAME = "person";
     public static interface Columns extends BaseColumns
     {
         public static final String NAME        = "name";
         public static final String TELEPHONE   = "telephone";
         public static final String EMAIL       = "email";
+        public static final String IMAGE       = "image";
+        // Full names
+        public static final String _ID_FULL       = TABLE_NAME+"."+_ID;
+        public static final String NAME_FULL      = TABLE_NAME+"."+NAME;
+        public static final String TELEPHONE_FULL = TABLE_NAME+"."+TELEPHONE;
+        public static final String EMAIL_FULL     = TABLE_NAME+"."+EMAIL;
+        public static final String IMAGE_FULL     = TABLE_NAME+"."+IMAGE;
     }
-
-    // Database
-    public static final String TABLE_NAME = "person";
 
     // Content Provider
     public static final String PATH     = "person";

@@ -1,11 +1,20 @@
 package com.estudiotrilha.inevent;
 
+import org.apache.http.HttpStatus;
+
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.preference.PreferenceManager;
 
+import com.estudiotrilha.android.net.ConnectionHelper;
 import com.estudiotrilha.inevent.app.PreferencesActivity;
+import com.estudiotrilha.inevent.content.ApiRequest;
+import com.nostra13.universalimageloader.cache.memory.impl.LRULimitedMemoryCache;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 
 
 public class Utils
@@ -34,4 +43,62 @@ public class Utils
 
         return false;
     }
+
+    public static void initImageLoader(Context c)
+    {
+        // TODO
+        if (!ImageLoader.getInstance().isInited())
+        {
+            // Create default options which will be used for every displayImage(...) call
+            DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
+                .cacheInMemory(true)
+                .cacheOnDisc(true)
+                .resetViewBeforeLoading(true)
+//                .showImageOnLoading(R.drawable.ic_loading_image)
+//                .showImageOnFail(R.drawable.default_carte_item_tilt)
+//                .showImageForEmptyUri(R.drawable.default_carte_item_tilt)
+                .build();
+            ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(c.getApplicationContext())
+                .tasksProcessingOrder(QueueProcessingType.LIFO)
+                .defaultDisplayImageOptions(defaultOptions)
+                .memoryCache(new LRULimitedMemoryCache(2 * 1024 * 1024 /* 2 MiB */))
+                .build();
+            ImageLoader.getInstance().init(config);
+        }
+    }
+
+
+    public static int getBadResponseMessage(int requestCode, int responseCode)
+    {
+        int message = R.string.error_connection;
+
+        // TODO treat other the responses
+        switch (responseCode)
+        {
+        case ConnectionHelper.INTERNET_DISCONNECTED:
+            message = R.string.error_connection_internetless;
+            break;
+
+        case HttpStatus.SC_UNAUTHORIZED:
+            switch (requestCode)
+            {
+            case ApiRequest.RequestCodes.Member.SIGN_IN:
+                // Bad credentials
+                message = R.string.error_login_badCredentials;
+                break;
+
+            default:
+                message = R.string.error_unauthorized;
+                break;
+            }
+            break;
+
+        case HttpStatus.SC_REQUEST_TIMEOUT:
+            // Time out
+            message = R.string.error_connection_timeout;
+            break;
+        }
+
+        return message;
+    }    
 }

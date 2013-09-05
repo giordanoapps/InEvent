@@ -1,19 +1,20 @@
 package com.estudiotrilha.inevent.content;
 
-import static com.estudiotrilha.inevent.content.Activity.Columns.*;
+import static android.provider.BaseColumns._ID;
+import static com.estudiotrilha.inevent.content.Activity.Columns.DATE_BEGIN;
+import static com.estudiotrilha.inevent.content.Activity.Columns.DATE_END;
+import static com.estudiotrilha.inevent.content.Activity.Columns.DESCRIPTION;
+import static com.estudiotrilha.inevent.content.Activity.Columns.EVENT_ID;
+import static com.estudiotrilha.inevent.content.Activity.Columns.NAME;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.Locale;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import com.estudiotrilha.android.net.ConnectionHelper;
-import com.estudiotrilha.android.utils.JsonUtils;
-import com.estudiotrilha.inevent.InEvent;
-import com.estudiotrilha.inevent.provider.InEventProvider;
 
 import android.content.ContentValues;
 import android.net.Uri;
@@ -21,14 +22,57 @@ import android.provider.BaseColumns;
 import android.text.Html;
 import android.util.Log;
 
+import com.estudiotrilha.android.net.ConnectionHelper;
+import com.estudiotrilha.android.utils.JsonUtils;
+import com.estudiotrilha.inevent.InEvent;
+import com.estudiotrilha.inevent.provider.InEventProvider;
+
+
 public class Activity
 {
     public static final class Api
     {
         public static final String  NAMESPACE = "activity";
 
-        private static final String CONFIRM_ENTRANCE = ApiRequest.BASE_URL + NAMESPACE + ".confirmEntrance&tokenID=%s&activityID=%d&personID=%d";
-        private static final String GET_PEOPLE       = ApiRequest.BASE_URL + NAMESPACE + ".getPeople&tokenID=%s&activityID=%d&selection=%s";
+        private static final String REQUEST_ENROLLMENT = ApiRequest.BASE_URL + NAMESPACE + ".requestEnrollment&tokenID=%s&activityID=%d";
+        private static final String DISMISS_ENROLLMENT = ApiRequest.BASE_URL + NAMESPACE + ".dismissEnrollment&tokenID=%s&activityID=%d";
+        private static final String CONFIRM_ENTRANCE   = ApiRequest.BASE_URL + NAMESPACE + ".confirmEntrance&tokenID=%s&activityID=%d&personID=%d";
+        private static final String REVOKE_ENTRANCE    = ApiRequest.BASE_URL + NAMESPACE + ".revokeEntrance&tokenID=%s&activityID=%d&personID=%d";
+        private static final String GET_PEOPLE         = ApiRequest.BASE_URL + NAMESPACE + ".getPeople&tokenID=%s&activityID=%d&selection=%s";
+
+        public static HttpURLConnection requestEnrollment(String tokenID, long activityID) throws IOException
+        {
+            return requestEnrollment(tokenID, activityID, -1);
+        }
+        public static HttpURLConnection requestEnrollment(String tokenID, long activityID, long personID) throws IOException
+        {
+            tokenID = URLEncoder.encode(tokenID, ApiRequest.ENCODING);
+            String formatString = String.format(Locale.ENGLISH, REQUEST_ENROLLMENT, tokenID, activityID);
+            if (personID != -1)
+            {
+                formatString += "&personID="+personID;
+            }
+            URL url = new URL(formatString);
+
+            return ConnectionHelper.getURLGetConnection(url);
+        }
+
+        public static HttpURLConnection dismissEnrollment(String tokenID, long activityID) throws IOException
+        {
+            return requestEnrollment(tokenID, activityID, -1);
+        }
+        public static HttpURLConnection dismissEnrollment(String tokenID, long activityID, long personID) throws IOException
+        {
+            tokenID = URLEncoder.encode(tokenID, ApiRequest.ENCODING);
+            String formatString = String.format(Locale.ENGLISH, DISMISS_ENROLLMENT, tokenID, activityID);
+            if (personID != -1)
+            {
+                formatString += "&personID="+personID;
+            }
+            URL url = new URL(formatString);
+
+            return ConnectionHelper.getURLGetConnection(url);
+        }
 
         public static HttpURLConnection confirmEntrance(String tokenID, long activityID, long personID) throws IOException
         {
@@ -37,6 +81,15 @@ public class Activity
 
             return ConnectionHelper.getURLGetConnection(url);
         }
+
+        public static HttpURLConnection revokeEntrance(String tokenID, long activityID, long personID) throws IOException
+        {
+            tokenID = URLEncoder.encode(tokenID, ApiRequest.ENCODING);
+            URL url = new URL(String.format(REVOKE_ENTRANCE, tokenID, activityID, personID));
+
+            return ConnectionHelper.getURLGetConnection(url);
+        }
+
         public static HttpURLConnection getPeople(String tokenID, long activityID, PeopleSelection selection) throws IOException
         {
             tokenID = URLEncoder.encode(tokenID, ApiRequest.ENCODING);
@@ -87,14 +140,22 @@ public class Activity
         public static final String LOCATION    = "location";
         public static final String DATE_BEGIN  = "dateBegin";
         public static final String DATE_END    = "dateEnd";
+        // Full names
+        public static final String _ID_FULL         = TABLE_NAME+"."+_ID;
+        public static final String EVENT_ID_FULL    = TABLE_NAME+"."+EVENT_ID;
+        public static final String NAME_FULL        = TABLE_NAME+"."+NAME;
+        public static final String DESCRIPTION_FULL = TABLE_NAME+"."+DESCRIPTION;
+        public static final String LOCATION_FULL    = TABLE_NAME+"."+LOCATION;
+        public static final String DATE_BEGIN_FULL  = TABLE_NAME+"."+DATE_BEGIN;
+        public static final String DATE_END_FULL    = TABLE_NAME+"."+DATE_END;
 
-
+        // Projections
         public static final String[] PROJECTION_LIST = {
-            TABLE_NAME+"."+_ID,
-            TABLE_NAME+"."+DATE_BEGIN,
-            TABLE_NAME+"."+DATE_END,
-            TABLE_NAME+"."+NAME,
-            TABLE_NAME+"."+LOCATION
+            Activity.Columns._ID_FULL,
+            Activity.Columns.DATE_BEGIN_FULL,
+            Activity.Columns.DATE_END_FULL,
+            Activity.Columns.NAME_FULL,
+            Activity.Columns.LOCATION_FULL
         };
     }
 
@@ -129,54 +190,5 @@ public class Activity
         }
 
         return cv;
-    }
-
-
-    public static class Member
-    {
-        public static interface Columns extends BaseColumns
-        {
-            public static final String EVENT_ID    = "eventID";
-            public static final String ACTIVITY_ID = "activityID";
-            public static final String MEMBER_ID   = "memberID";
-            public static final String APPROVED    = "approved";
-            public static final String PRESENT     = "present";
-
-            public static final String[] PROJECTION_SCHEDULE_LIST = {
-                Activity.TABLE_NAME+"."+Activity.Columns._ID,
-                Activity.TABLE_NAME+"."+Activity.Columns.DATE_BEGIN,
-                Activity.TABLE_NAME+"."+Activity.Columns.DATE_END,
-                Activity.TABLE_NAME+"."+Activity.Columns.NAME,
-                Activity.TABLE_NAME+"."+Activity.Columns.DESCRIPTION,
-                Activity.TABLE_NAME+"."+Activity.Columns.LOCATION,
-                TABLE_NAME+"."+APPROVED
-            };
-
-            public static final String[] PROJECTION_ATTENDANCE_LIST = {
-                com.estudiotrilha.inevent.content.Member.TABLE_NAME+"."+com.estudiotrilha.inevent.content.Member.Columns._ID,
-                com.estudiotrilha.inevent.content.Member.TABLE_NAME+"."+com.estudiotrilha.inevent.content.Member.Columns.NAME,
-                TABLE_NAME+"."+PRESENT
-            };
-        }
-
-        // Database
-        public static final String TABLE_NAME = "activityMember";
-
-        public static ContentValues newActivtyMember(long eventID, long activityID, long memberID, boolean approved, boolean present)
-        {
-            ContentValues cv = new ContentValues();
-
-            cv.put(Columns.EVENT_ID, eventID);
-            cv.put(Columns.ACTIVITY_ID, activityID);
-            cv.put(Columns.MEMBER_ID, memberID);
-            cv.put(Columns.APPROVED, approved ? 1 : 0);
-            cv.put(Columns.PRESENT, present ? 1 : 0);
-
-            return cv;
-        }
-        public static ContentValues newActivtyMember(long eventID, long activityID, long memberID, boolean approved)
-        {
-            return newActivtyMember(eventID, activityID, memberID, approved, false);
-        }
     }
 }

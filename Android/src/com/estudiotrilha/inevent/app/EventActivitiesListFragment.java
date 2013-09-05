@@ -8,7 +8,6 @@ import java.util.Date;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
@@ -31,7 +30,9 @@ import com.estudiotrilha.android.utils.DateUtils;
 import com.estudiotrilha.android.widget.ExtensibleCursorAdapter;
 import com.estudiotrilha.inevent.R;
 import com.estudiotrilha.inevent.content.Activity;
+import com.estudiotrilha.inevent.content.ActivityMember;
 import com.estudiotrilha.inevent.content.Event;
+import com.estudiotrilha.inevent.content.EventMember;
 import com.estudiotrilha.inevent.content.LoginManager;
 import com.estudiotrilha.inevent.service.SyncService;
 
@@ -111,11 +112,11 @@ public class EventActivitiesListFragment extends ListFragment implements LoaderC
         // Check the user role for this event
 
         // Get the info
-        String selection = Event.Member.Columns.EVENT_ID+"="+id+" AND "+Event.Member.Columns.MEMBER_ID+"="+LoginManager.getInstance(getActivity()).getMember().memberId;
-        Cursor c = getActivity().getContentResolver().query(Event.ATTENDERS_CONTENT_URI, new String[] { Event.Member.Columns.ROLE_ID }, selection, null, null);
+        String selection = EventMember.Columns.EVENT_ID_FULL+"="+id+" AND "+EventMember.Columns.MEMBER_ID_FULL+"="+LoginManager.getInstance(getActivity()).getMember().memberId;
+        Cursor c = getActivity().getContentResolver().query(Event.ATTENDERS_CONTENT_URI, new String[] { EventMember.Columns.ROLE_ID }, selection, null, null);
         if (c.moveToFirst())
         {
-            mRoleId = c.getLong(c.getColumnIndex(Event.Member.Columns.ROLE_ID));
+            mRoleId = c.getLong(c.getColumnIndex(EventMember.Columns.ROLE_ID));
         }
         else
         {
@@ -247,16 +248,15 @@ public class EventActivitiesListFragment extends ListFragment implements LoaderC
 
     private void refresh()
     {
-        // Prepare the intent
-        Intent intent = new Intent(getActivity(), SyncService.class);
-        intent.putExtra(SyncService.EXTRA_EVENT_ID, getArguments().getLong(ARGS_EVENT_ID));
+        // Get the event ID
+        long eventId = getArguments().getLong(ARGS_EVENT_ID);
 
-        // Download the activities
-        getActivity().startService(intent.setData(Activity.ACTIVITY_CONTENT_URI));
-        // the schedule
-        getActivity().startService(intent.setData(Activity.SCHEDULE_CONTENT_URI));
+        // Download the schedule
+        SyncService.syncEventSchedule(getActivity(), eventId);
+        // the the activities info
+        SyncService.syncEventActivities(getActivity(), eventId);
         // and the attenders
-        getActivity().startService(intent.setData(Event.ATTENDERS_CONTENT_URI));
+        SyncService.syncEventAttenders(getActivity(), eventId);
     }
 
 
@@ -284,8 +284,8 @@ public class EventActivitiesListFragment extends ListFragment implements LoaderC
 
         case LOAD_SCHEDULE:
             uri = Activity.SCHEDULE_CONTENT_URI;
-            projection = Activity.Member.Columns.PROJECTION_SCHEDULE_LIST;
-            selection = Activity.Member.TABLE_NAME+"."+Activity.Member.Columns.MEMBER_ID +"= ?";
+            projection = ActivityMember.Columns.PROJECTION_SCHEDULE_LIST;
+            selection = ActivityMember.Columns.MEMBER_ID_FULL +"= ?";
             selectionArgs = new String[1];
 
             // Get the user id
@@ -315,7 +315,7 @@ public class EventActivitiesListFragment extends ListFragment implements LoaderC
         case LOAD_SCHEDULE:
             mIndexName = data.getColumnIndex(Activity.Columns.NAME);
             mIndexDescription = data.getColumnIndex(Activity.Columns.DESCRIPTION);
-            mIndexApproved = data.getColumnIndex(Activity.Member.Columns.APPROVED);
+            mIndexApproved = data.getColumnIndex(ActivityMember.Columns.APPROVED);
             mScheduleAdapter.swapCursor(data);
             break;
         }
@@ -338,6 +338,7 @@ public class EventActivitiesListFragment extends ListFragment implements LoaderC
     }
 
 
+    // TODO redo this class properly
     class EventActivitiesListAdapter extends ExtensibleCursorAdapter implements SectionIndexer, ExtensibleCursorAdapter.AdapterExtension
     {
         private static final int LIST_TITLE = 0;
@@ -358,14 +359,7 @@ public class EventActivitiesListFragment extends ListFragment implements LoaderC
             @Override
             public String toString()
             {
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD)
-//                {
-//                    return date.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.SHORT, Locale.getDefault());
-//                }
-//                else
-//                {
-                    return Integer.toString(date.get(Calendar.DAY_OF_MONTH));
-//                }
+                return Integer.toString(date.get(Calendar.DAY_OF_MONTH));
             }
         }
 

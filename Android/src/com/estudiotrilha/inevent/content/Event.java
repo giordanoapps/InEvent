@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.Locale;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,10 +38,65 @@ public class Event
     {
         public static final String  NAMESPACE      = "event";
 
-        private static final String GET_PEOPLE     = ApiRequest.BASE_URL + NAMESPACE + ".getPeople&tokenID=%s&eventID=%d&selection=%s";
-        private static final String GET_ACTIVITIES = ApiRequest.BASE_URL + NAMESPACE + ".getActivities&eventID=%s";
-        private static final String GET_SCHEDULE   = ApiRequest.BASE_URL + NAMESPACE + ".getSchedule&tokenID=%s&eventID=%d";
+        private static final String GET_EVENTS         = ApiRequest.BASE_URL + NAMESPACE + ".getEvents";
+        private static final String REQUEST_ENROLLMENT = ApiRequest.BASE_URL + NAMESPACE + ".requestEnrollment&tokenID=%s&activityID=%d";
+        private static final String DISMISS_ENROLLMENT = ApiRequest.BASE_URL + NAMESPACE + ".dismissEnrollment&tokenID=%s&activityID=%d";
+        private static final String GET_PEOPLE         = ApiRequest.BASE_URL + NAMESPACE + ".getPeople&tokenID=%s&eventID=%d&selection=%s";
+        private static final String GET_ACTIVITIES     = ApiRequest.BASE_URL + NAMESPACE + ".getActivities&eventID=%s";
+        private static final String GET_SCHEDULE       = ApiRequest.BASE_URL + NAMESPACE + ".getSchedule&tokenID=%s&eventID=%d";
 
+
+        public static HttpURLConnection getEvents() throws IOException
+        {
+            return getEvents(null);
+        }
+        public static HttpURLConnection getEvents(String tokenID) throws IOException
+        {
+            String string = GET_EVENTS;
+
+            if (tokenID != null)
+            {
+                tokenID = URLEncoder.encode(tokenID, ApiRequest.ENCODING);
+                string += "&tokenID="+tokenID;
+            }
+            URL url = new URL(string);
+
+            return ConnectionHelper.getURLGetConnection(url);
+        }
+
+        public static HttpURLConnection requestEnrollment(String tokenID, long activityID) throws IOException
+        {
+            return requestEnrollment(tokenID, activityID, -1);
+        }
+        public static HttpURLConnection requestEnrollment(String tokenID, long activityID, long personID) throws IOException
+        {
+            tokenID = URLEncoder.encode(tokenID, ApiRequest.ENCODING);
+            String formatString = String.format(Locale.ENGLISH, REQUEST_ENROLLMENT, tokenID, activityID);
+            if (personID != -1)
+            {
+                formatString += "&personID="+personID;
+            }
+            URL url = new URL(formatString);
+
+            return ConnectionHelper.getURLGetConnection(url);
+        }
+
+        public static HttpURLConnection dismissEnrollment(String tokenID, long activityID) throws IOException
+        {
+            return requestEnrollment(tokenID, activityID, -1);
+        }
+        public static HttpURLConnection dismissEnrollment(String tokenID, long activityID, long personID) throws IOException
+        {
+            tokenID = URLEncoder.encode(tokenID, ApiRequest.ENCODING);
+            String formatString = String.format(Locale.ENGLISH, DISMISS_ENROLLMENT, tokenID, activityID);
+            if (personID != -1)
+            {
+                formatString += "&personID="+personID;
+            }
+            URL url = new URL(formatString);
+
+            return ConnectionHelper.getURLGetConnection(url);
+        }
 
         public static HttpURLConnection getPeople(String tokenID, long eventID, PeopleSelection selection) throws IOException
         {
@@ -103,26 +159,38 @@ public class Event
         public static final String ADDRESS     = "address";
         public static final String CITY        = "city";
         public static final String STATE       = "state";
+        // Full names
+        public static final String _ID_FULL         = TABLE_NAME+"."+_ID;
+        public static final String NAME_FULL        = TABLE_NAME+"."+NAME;
+        public static final String DESCRIPTION_FULL = TABLE_NAME+"."+DESCRIPTION;
+        public static final String DATE_BEGIN_FULL  = TABLE_NAME+"."+DATE_BEGIN;
+        public static final String DATE_END_FULL    = TABLE_NAME+"."+DATE_END;
+        public static final String LATITUDE_FULL    = TABLE_NAME+"."+LATITUDE;
+        public static final String LONGITUDE_FULL   = TABLE_NAME+"."+LONGITUDE;
+        public static final String ADDRESS_FULL     = TABLE_NAME+"."+ADDRESS;
+        public static final String CITY_FULL        = TABLE_NAME+"."+CITY;
+        public static final String STATE_FULL       = TABLE_NAME+"."+STATE;
 
 
         public static final String[] PROJECTION_LIST = {
-            TABLE_NAME+"."+_ID,
-            TABLE_NAME+"."+NAME,
-            TABLE_NAME+"."+DESCRIPTION,
-            TABLE_NAME+"."+DATE_BEGIN,
-            TABLE_NAME+"."+DATE_END,
-            TABLE_NAME+"."+CITY,
-            TABLE_NAME+"."+STATE
+            Event.Columns._ID_FULL,
+            Event.Columns.NAME_FULL,
+            Event.Columns.DESCRIPTION_FULL,
+            Event.Columns.DATE_BEGIN_FULL,
+            Event.Columns.DATE_END_FULL,
+            Event.Columns.CITY_FULL,
+            Event.Columns.STATE_FULL,
+            EventMember.Columns.APPROVED_FULL
         };
 
         public static final String[] PROJECTION_DETAIL = {
-            TABLE_NAME+"."+NAME,
-            TABLE_NAME+"."+DESCRIPTION,
-            TABLE_NAME+"."+DATE_BEGIN,
-            TABLE_NAME+"."+DATE_END,
-            TABLE_NAME+"."+LATITUDE,
-            TABLE_NAME+"."+LONGITUDE,
-            TABLE_NAME+"."+ADDRESS
+            Event.Columns.NAME_FULL,
+            Event.Columns.DESCRIPTION_FULL,
+            Event.Columns.DATE_BEGIN_FULL,
+            Event.Columns.DATE_END_FULL,
+            Event.Columns.LATITUDE_FULL,
+            Event.Columns.LONGITUDE_FULL,
+            Event.Columns.ADDRESS_FULL
         };
     }
 
@@ -140,6 +208,7 @@ public class Event
     public static final short ROLE_ATTENDEE    = 1;
     public static final short ROLE_STAFF       = 2;
     public static final short ROLE_COORDINATOR = 4;
+
 
     public static ContentValues valuesFromJson(JSONObject json)
     {
@@ -164,42 +233,5 @@ public class Event
         }
 
         return cv;
-    }
-
-
-    public static class Member
-    {
-        public static interface Columns extends BaseColumns
-        {
-            public static final String EVENT_ID  = "eventID";
-            public static final String MEMBER_ID = "memberID";
-            public static final String APPROVED  = "approved";
-            public static final String ROLE_ID   = "roleID";
-        }
-
-        public static final String REQUEST_ID = "requestID";
-
-        // Database
-        public static final String TABLE_NAME = "eventMember";
-
-        public static ContentValues valuesFromJson(JSONObject json, long eventID)
-        {
-            ContentValues cv = new ContentValues();
-
-            try
-            {
-                cv.put(Columns._ID, json.getLong(REQUEST_ID));
-                cv.put(Columns.EVENT_ID, eventID);
-                cv.put(Columns.MEMBER_ID, json.getLong(Columns.MEMBER_ID));
-                cv.put(Columns.APPROVED, json.getInt(Columns.APPROVED));
-                cv.put(Columns.ROLE_ID, json.getInt(Columns.ROLE_ID));
-            }
-            catch (JSONException e)
-            {
-                Log.w(InEvent.NAME, "Error retrieving information for Event from json = "+json, e);
-            }
-
-            return cv;
-        }
     }
 }

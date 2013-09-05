@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- General Content -->
     <item name="mainContent" type="id"/>
+    <item name="viewAnimator" type="id"/>
 
     <!-- Member -->
     <item name="member_profilePicture" type="id"/>
@@ -13,6 +15,8 @@
     <item name="event_address" type="id"/>
     <item name="event_city" type="id"/>
     <item name="event_state" type="id"/>
+    <item name="event_dateBegin" type="id"/>
+    <item name="event_dateEnd" type="id"/>
 
     <!-- Activity -->
     <item name="activity_name" type="id"/>

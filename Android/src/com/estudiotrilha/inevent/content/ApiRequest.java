@@ -1,21 +1,17 @@
 package com.estudiotrilha.inevent.content;
 
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.HttpURLConnection;
 
 import org.apache.http.protocol.HTTP;
 import org.json.JSONObject;
 
-import android.os.Handler;
-import android.util.Log;
+import com.estudiotrilha.android.net.ConnectionHelper;
+import com.estudiotrilha.inevent.Utils;
 
-import com.estudiotrilha.android.utils.ConnectionUtils;
-import com.estudiotrilha.android.utils.JsonUtils;
-import com.estudiotrilha.inevent.InEvent;
+import android.content.Context;
 
 
-public class ApiRequest
+public class ApiRequest extends com.estudiotrilha.android.content.ApiRequest
 {
     public static final String BASE_URL =
 //            InEvent.DEBUG ?
@@ -24,101 +20,39 @@ public class ApiRequest
 
     public static final String ENCODING = HTTP.UTF_8;
 
-
-
-    public interface ResponseHandler
+    public ApiRequest(final int requestCode, final String post, final HttpURLConnection connection, final ResponseHandler handler, final boolean async)
     {
-        public void handleResponse(int requestCode, JSONObject json, int responseCode);
+        super(requestCode, post, connection, handler, async);
     }
 
-    public static void getJsonFromConnection(int requestCode, HttpURLConnection connection, ResponseHandler handler)
+    public static void init(final Context c)
     {
-        getJsonFromConnection(requestCode, connection, handler, null, true);
-    }
-    public static void getJsonFromConnection(int requestCode, HttpURLConnection connection, ResponseHandler handler, boolean async)
-    {
-        getJsonFromConnection(requestCode, connection, handler, null, async);
-    }
-    public static void getJsonFromConnection(int requestCode, HttpURLConnection connection, ResponseHandler handler, String post)
-    {
-        getJsonFromConnection(requestCode, connection, handler, null, true);
-    }
-    public static void getJsonFromConnection(int requestCode, HttpURLConnection connection, ResponseHandler handler, String post, boolean async)
-    {
-        new ApiRequest(requestCode, post, connection, handler, async);
-    }
-
-
-    private ApiRequest(final int requestCode, final String post, final HttpURLConnection connection, final ResponseHandler handler, final boolean async)
-    {
-        final Handler userHandler = new Handler();
-
-        Runnable runnable = new Runnable() {
-
-            private int        mResponseCode;
-            private JSONObject mJson;
-
+        setEncoding(ENCODING);
+        setOnRequestListener(new com.estudiotrilha.android.content.ApiRequest.OnRequestListener() {
             @Override
-            public void run()
+            public boolean OnPreExceute(int requestCode, String post, HttpURLConnection connection, ResponseHandler handler, boolean async)
             {
-                mJson = null;
-                mResponseCode = -1;
-
-                try
+                boolean hasConnection = Utils.checkConnectivity(c);
+                if (!hasConnection)
                 {
-                    if (post != null)
-                    {
-                        // send the post
-                        OutputStream outputStream = connection.getOutputStream();
-                        byte[] buffer = post.getBytes(ENCODING);
-                        outputStream.write(buffer);
-                        outputStream.flush();
-                        outputStream.close();
-                    }
-
-                    // creates the connection
-                    connection.connect();
-                    mResponseCode = connection.getResponseCode();
-
-                    // get the data input stream
-                    InputStream in = connection.getInputStream();
-                    // parse to json
-                    mJson = JsonUtils.inputStreamToJSON(in, ENCODING);
-                }
-                catch (Exception e)
-                {
-                    mResponseCode = ConnectionUtils.checkConnectionException(e, mResponseCode);
-                    Log.w(InEvent.NAME, "Couldn't properly process " + connection + " response = "+mResponseCode, e);
-                }
-                finally
-                {
-                    if (connection != null) connection.disconnect();
+                    handler.handleResponse(requestCode, null, ConnectionHelper.INTERNET_DISCONNECTED);
                 }
 
-                // callback
-                if (async)
-                {
-                    userHandler.post(new Runnable() {
-                        public void run()
-                        {
-                            if (handler != null) handler.handleResponse(requestCode, mJson, mResponseCode);
-                        }
-                    });
-                }
-                else
-                {
-                    if (handler != null) handler.handleResponse(requestCode, mJson, mResponseCode);
-                }
+                return hasConnection;
             }
-        };
 
-        if (async)
+            @Override public void OnPostExceute(int requestCode, int responseCode, ResponseHandler handler, JSONObject json) {}            
+        });
+    }
+
+
+    public interface RequestCodes
+    {
+        public interface Member
         {
-            new Thread(runnable).start();
-        }
-        else
-        {
-            runnable.run();
+            public static final int SIGN_IN               = 0;
+            public static final int SIGN_IN_WITH_FACEBOOK = 1;
+            public static final int GET_EVENTS            = 2;
         }
     }
 }
