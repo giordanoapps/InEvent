@@ -182,6 +182,7 @@ public class InEventProvider extends ContentProvider
                     " INNER JOIN " + ActivityMember.TABLE_NAME +
                     " ON " + ActivityMember.Columns.ACTIVITY_ID_FULL +"="+ Activity.Columns._ID_FULL +
                     " WHERE " + selection +
+                    " GROUPD BY " + Activity.Columns._ID_FULL +
                     " ORDER BY " + sortOrder;
 
             c = mDatabase.rawQuery(query, selectionArgs);

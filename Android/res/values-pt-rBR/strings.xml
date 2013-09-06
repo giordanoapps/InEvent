@@ -54,7 +54,7 @@
 
     <!-- Empty Messages -->
     <string name="empty_eventList">Verifique sua conexão, então clique em Menu > Atualizar</string>
-    <string name="empty_eventActivities">Verifique sua conexão, então clique em Menu > Atualizar</string>
+    <string name="empty_eventActivities">Nenhuma atividade cadastrada</string>
     <string name="empty_eventActivityAttenders">Verifique a sua conexão, então clique em Menu > Atualizar</string>
 
     <!-- Preferences -->
