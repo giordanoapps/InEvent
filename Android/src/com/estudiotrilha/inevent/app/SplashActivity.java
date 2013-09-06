@@ -82,7 +82,7 @@ public class SplashActivity extends Activity implements Runnable
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
         // Open the Event Marketplace
-        startActivity(new Intent(this, EventMarketPlaceActivity.class));
+        startActivity(new Intent(this, EventMarketplaceActivity.class));
     }
 
 

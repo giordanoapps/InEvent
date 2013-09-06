@@ -145,11 +145,12 @@ public class InEventProvider extends ContentProvider
             LoginManager loginManager = LoginManager.getInstance(getContext());
             final String query = "SELECT "+ project +
                     " FROM " + Event.TABLE_NAME +
-                        (loginManager.isSignedIn() ? 
-                                " LEFT JOIN " + EventMember.TABLE_NAME +
+                    " LEFT JOIN " + EventMember.TABLE_NAME +
+                    (loginManager.isSignedIn() ?
                                 " ON " + Event.Columns._ID_FULL +"="+ EventMember.Columns.EVENT_ID_FULL+
                                 " AND "+EventMember.Columns.MEMBER_ID_FULL+"="+loginManager.getMember().memberId : "") +
                     " WHERE " + selection +
+                    " GROUP BY " + Event.Columns._ID_FULL +
                     " ORDER BY " + sortOrder;
 
             c = mDatabase.rawQuery(query, selectionArgs);
@@ -182,7 +183,7 @@ public class InEventProvider extends ContentProvider
                     " INNER JOIN " + ActivityMember.TABLE_NAME +
                     " ON " + ActivityMember.Columns.ACTIVITY_ID_FULL +"="+ Activity.Columns._ID_FULL +
                     " WHERE " + selection +
-                    " GROUPD BY " + Activity.Columns._ID_FULL +
+                    " GROUP BY " + Activity.Columns._ID_FULL +
                     " ORDER BY " + sortOrder;
 
             c = mDatabase.rawQuery(query, selectionArgs);

@@ -32,6 +32,7 @@ import com.estudiotrilha.inevent.R;
 import com.estudiotrilha.inevent.Utils;
 import com.estudiotrilha.inevent.content.Event;
 import com.estudiotrilha.inevent.content.EventMember;
+import com.estudiotrilha.inevent.content.LoginManager;
 import com.estudiotrilha.inevent.service.SyncService;
 
 
@@ -135,9 +136,6 @@ public class EventListFragment extends ListFragment implements LoaderCallbacks<C
         // Open the event
         Intent event = EventActivity.openEvent(getActivity(), id);
         getActivity().startActivity(event);
-
-        // Close this Activity
-        getActivity().finish();
     }
     private OnClickListener mInfoClickListener = new OnClickListener() {
         @Override
@@ -273,7 +271,10 @@ public class EventListFragment extends ListFragment implements LoaderCallbacks<C
         endDateView.setVisibility(sameDay ? View.INVISIBLE : View.VISIBLE);
 
 
-        // Setup whether the user is approved or not
-        v.findViewById(R.id.event_approved).setVisibility(c.getInt(c.getColumnIndex(EventMember.Columns.APPROVED)) == 1 ? View.VISIBLE : View.INVISIBLE);
+        if (LoginManager.getInstance(context).isSignedIn())
+        {
+            // Setup whether the user is approved or not
+            v.findViewById(R.id.event_approved).setVisibility(c.getInt(c.getColumnIndex(EventMember.Columns.APPROVED)) == 1 ? View.VISIBLE : View.INVISIBLE);
+        }
     }
 }

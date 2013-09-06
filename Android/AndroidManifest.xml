@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.estudiotrilha.inevent"
-    android:versionCode="4"
-    android:versionName="1.1.1" >
+    android:versionCode="5"
+    android:versionName="1.1.2" >
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -59,7 +59,7 @@
             android:launchMode="singleTop" />
 
         <!-- Event Marketplace Activity -->
-        <activity android:name="com.estudiotrilha.inevent.app.EventMarketPlaceActivity" />
+        <activity android:name="com.estudiotrilha.inevent.app.EventMarketplaceActivity" />
 
         <!-- Event Activity -->
         <activity android:name="com.estudiotrilha.inevent.app.EventActivity" />

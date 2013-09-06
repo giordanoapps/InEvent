@@ -2,7 +2,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
 
     <!-- App Stuff -->
-    <string name="app_version">1.1.1</string>
+    <string name="app_version">1.1.2</string>
     <!-- Keys -->
     <string name="facebook_appId">1376709179224018</string>
 

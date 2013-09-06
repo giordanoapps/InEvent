@@ -138,7 +138,6 @@ public abstract class SlidingMenuBaseActivity extends ActionBarActivity
         }
 
         setupLoginInfo();
-        refreshLoginState();
     }
     @Override
     protected void onResume()
@@ -281,7 +280,7 @@ public abstract class SlidingMenuBaseActivity extends ActionBarActivity
         overridePendingTransition(0, 0);
 
         // Opens the Event Marketplace
-        startActivity(new Intent(this, EventMarketPlaceActivity.class));
+        startActivity(new Intent(this, EventMarketplaceActivity.class));
     }
     public void about(View v)
     {
