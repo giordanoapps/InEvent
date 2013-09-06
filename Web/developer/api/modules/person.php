@@ -65,13 +65,11 @@
 							COALESCE(`memberSessions`.`sessionKey`, '') AS `sessionKey`
 						FROM
 							`member`
-						INNER JOIN
-							`memberDetail` ON `memberDetail`.`id` = `member`.`id`
 						LEFT JOIN
 							`memberSessions` ON `memberSessions`.`memberID` = `member`.`id`
 						WHERE 0
 							OR BINARY `member`.`name` = '$name'
-							OR BINARY `memberDetail`.`email` = '$email'
+							OR BINARY `member`.`email` = '$email'
 						ORDER BY
 							`memberSessions`.`id` DESC
 					");
@@ -98,7 +96,7 @@
 						// Create a random password for the newly created member
 						$password = md5((string)rand());
 						// Create the member
-						$memberID = createMember($name, $password, "", "", $email, 0);
+						$memberID = createMember($name, $password, $email);
 
 						if ($memberID != 0) {
 							// Return the desired data
@@ -158,16 +156,7 @@
 
 			if (mysql_num_rows($result) == 0) {
 
-				// Insert member details
-				$insert = resourceForQuery(
-					"INSERT INTO
-						`member`
-						(`name`, `password`, `cpf`, `rg`, `usp`, `telephone`, `city`, `email`, `university`, `course`)
-					VALUES 
-						('$name', '" . Bcrypt::hash($password) . "', '$cpf', '$rg', '$usp', '$telephone', '$city', '$email', '$university', '$course')
-				");
-
-				$memberID = mysql_insert_id();
+				$memberID = createMember($name, $password, $email, $cpf, $rg, $usp, $telephone, $city, $university, $course);
 
 				if ($memberID != 0) {
 					// Return the desired data

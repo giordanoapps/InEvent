@@ -315,7 +315,7 @@ textarea, input {
 
 .bar .secondary > div {
 	margin: 0;
-	padding: 2%;
+	padding: 2% 2% 1% 2%;
 	font-size: 140%;
 }
 
@@ -1436,6 +1436,7 @@ textarea, input {
 
 .agendaItemHighlight {
 	background-color: #D1D1D1;
+	height: 200px;
 }
 
 .agendaItem p {
@@ -1444,8 +1445,8 @@ textarea, input {
 }
 
 .agendaItem img {
-	width: 16px;
-	vertical-align: top;
+	width: 24px;
+	vertical-align: middle;
 	margin: 0 2px;
 }
 
@@ -1454,9 +1455,9 @@ textarea, input {
 }
 
 .agendaItem .left {
-	width: 15%;
-	float: left;
+	width: 12%;
 	height: 100%;
+	position: absolute;
 }
 
 .agendaItem .left div,
@@ -1474,12 +1475,12 @@ textarea, input {
 
 .agendaItem .right .upper,
 .agendaItem .right .middle {
-	width: 40%;
+	width: 38%;
 	float: left;
 }
 
 .agendaItem .right .bottom {
-	width: 20%;
+	width: 24%;
 	float: left;
 }
 
@@ -1501,8 +1502,10 @@ textarea, input {
 }
 
 .agendaItem .right {
-	overflow: hidden;
+	width: 88%;
+	left: 12%;
 	height: 100%;
+	position: absolute;
 }
 
 .agendaItem .right .name {
@@ -1513,6 +1516,18 @@ textarea, input {
 .agendaItem .right .description {
 	font-size: 85%;
 	color: #6D6D6D;
+}
+
+.agendaItem .smallPadding {
+	position: relative;
+	top: 4px;
+}
+
+.agendaItem .suckyVerticalAlign {
+	display: inline-block;
+	vertical-align: middle;
+	height: 100%;
+	padding: 0 5px;
 }
 
 .singleButton.toolEnroll,
@@ -1526,6 +1541,7 @@ textarea, input {
 	border: solid 1px #1F1F63;
 	font-size: 90%;
 	margin: 6px 2px;
+	vertical-align: middle;
 }
 
 .singleButton.toolEnroll,

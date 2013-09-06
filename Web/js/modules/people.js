@@ -23,7 +23,8 @@ $(document).ready(function() {
 		$(this).siblings(".scheduleItemSelected").removeClass("scheduleItemSelected").end().addClass("scheduleItemSelected");
 
 		// Get the new activityID
-		var identifier = $(this).val();
+		var activityID = $(this).val();
+		var eventID = readCookie("eventID");
 
 		// Define the namespace
 		var namespace = $(this).attr("data-type");
@@ -31,8 +32,8 @@ $(document).ready(function() {
 		// We request the information on the server
 		$.post('developer/api/?' + $.param({
 			method: namespace + ".getPeople",
-			activityID: identifier,
-			eventID: 2,
+			activityID: activityID,
+			eventID: eventID,
 			selection: "all",
 			format: "html"
 		}), {},

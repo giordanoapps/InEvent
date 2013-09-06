@@ -17,6 +17,7 @@
                 `activity`.`name`,
                 `activity`.`capacity`,
                 `activity`.`description`,
+                `activity`.`location`,
                 `activity`.`highlight`,
                 DAYOFYEAR(`activity`.`dateBegin`) AS `day`,
                 UNIX_TIMESTAMP(`activity`.`dateBegin`) AS `dateBegin`,

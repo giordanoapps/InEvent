@@ -115,7 +115,7 @@
            NSError *error) {
              if (!error) {
                  [self.name setTitle:[user.name stringByDecodingHTMLEntities] forState:UIControlStateNormal];
-                 [self.photo setProfileID: user.id];
+                 [self.photo setProfileID:[user objectForKey:@"id"]];
              }
          }];
     }

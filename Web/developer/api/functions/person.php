@@ -4,34 +4,34 @@
 	 * Create a new member inside the platform
 	 * @param  string $name      name of the person
 	 * @param  string $password  password of the person
-	 * @param  string $cpf       cpf of the person
-	 * @param  string $telephone telephone of the person
 	 * @param  string $email     email of the person
-	 * @param  string $anonymous anonymous or not?
 	 * @return integer           memberID
 	 */
-	function createMember($name, $password, $cpf, $telephone, $email, $anonymous) {
+	function createMember($name, $password, $email, $cpf = "", $rg = "", $usp = "", $telephone = "", $city = "", $university = "", $course = "") {
+
+		$hash = Bcrypt::hash($password);
 
 		// Insert the name 
 		$insert = resourceForQuery(
 			"INSERT INTO
 				`member`
-				(`name`, `anonymous`)
+				(`name`, `password`, `cpf`, `rg`, `usp`, `telephone`, `city`, `email`, `university`, `course`)
 			VALUES 
-				('$name', $anonymous)
+				(
+					'$name',
+					'$hash',
+					'$cpf',
+					'$rg',
+					'$usp',
+					'$telephone',
+					'$city',
+					'$email',
+					'$university',
+					'$course'
+				)
 		");
 
 		$memberID = mysql_insert_id();
-
-		if ($anonymous == 0) {
-			$insert = resourceForQuery(
-				"INSERT INTO
-					`memberDetail`
-					(`id`, `password`, `cpf`, `telephone`, `email`)
-				VALUES
-					($memberID, '$password', '$cpf', '$telephone', '$email')
-			");
-		}
 
 		return $memberID;
 	}
@@ -44,7 +44,6 @@
 	function getMemberEvents($memberID) {
 
 		$result = resourceForQuery(
-		// echo (replaceConstantForQuery(
 			"SELECT
 				`event`.`id`,
 				`event`.`name`,

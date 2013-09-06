@@ -196,6 +196,14 @@
                             <p class="description"><?php echo $data['description'] ?></p>
                         </div>
                         <div class="bottom">
+                            <a target="_blank" href="https://www.google.com/maps/preview#!q=<?php echo urlencode(html_entity_decode($data['location'], ENT_COMPAT, "UTF-8")) ?>">
+                                <img src="images/32-Google-Maps.png" alt="Local" title="Local de realização da atividade. Para acompanhar no Google Maps, é necessário ter a versão mais nova do produto.">
+                            </a>
+                            <span>
+                                <img src="images/32-Users.png" alt="Local" title="Número de vagas na atividade">
+                                <span class="smallPadding"><?php if ($data['capacity'] != 0) { echo $data['capacity']; } else { ?>&infin;<?php } ?></span>
+                            </span>
+                            <span class="suckyVerticalAlign"></span>
                             <input
                                 type="button"
                                 value="Inscrever!"
