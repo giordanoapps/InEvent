@@ -211,6 +211,7 @@ public class LoginActivity extends ActionBarActivity implements ApiRequest.Respo
             switch (requestCode)
             {
             case ApiRequest.RequestCodes.Member.SIGN_IN:
+            case ApiRequest.RequestCodes.Member.SIGN_IN_WITH_FACEBOOK:
                 // save the username
                 PreferenceManager.getDefaultSharedPreferences(LoginActivity.this).edit()
                         .putString(STATE_USERNAME, mEmail.getText().toString())

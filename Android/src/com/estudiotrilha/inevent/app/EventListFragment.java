@@ -29,9 +29,9 @@ import android.widget.TextView;
 import com.estudiotrilha.android.utils.DateUtils;
 import com.estudiotrilha.android.widget.ExtensibleCursorAdapter;
 import com.estudiotrilha.inevent.R;
+import com.estudiotrilha.inevent.Utils;
 import com.estudiotrilha.inevent.content.Event;
 import com.estudiotrilha.inevent.content.EventMember;
-import com.estudiotrilha.inevent.content.LoginManager;
 import com.estudiotrilha.inevent.service.SyncService;
 
 
@@ -40,15 +40,24 @@ public class EventListFragment extends ListFragment implements LoaderCallbacks<C
     // Loader codes
     private static final int LOAD_EVENT_LIST = 1;
 
+    // Instance State
+    private static final String STATE_DOWNLOAD_ATTEMPT = "state.DOWNLOAD_ATTEMPT";
+
 
     private ExtensibleCursorAdapter mListAdapter;
     private DateFormat              mTimeFormat;
+    private int                     mDownloadAttempt;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+
+        if (savedInstanceState != null)
+        {
+            mDownloadAttempt = savedInstanceState.getInt(STATE_DOWNLOAD_ATTEMPT);
+        }
 
         // Initialize the adapter
         int[] to = new int[] { R.id.event_name, R.id.event_description };
@@ -114,6 +123,13 @@ public class EventListFragment extends ListFragment implements LoaderCallbacks<C
     }
 
     @Override
+    public void onSaveInstanceState(Bundle outState)
+    {
+        super.onSaveInstanceState(outState);
+        outState.putInt(STATE_DOWNLOAD_ATTEMPT, mDownloadAttempt);
+    }
+
+    @Override
     public void onListItemClick(ListView l, View v, int position, long id)
     {
         // Open the event
@@ -159,11 +175,9 @@ public class EventListFragment extends ListFragment implements LoaderCallbacks<C
     @Override
     public Loader<Cursor> onCreateLoader(int code, Bundle args)
     {
-        LoginManager loginManager = LoginManager.getInstance(getActivity());
-
-        Uri uri = Event.EVENT_CONTENT_URI;
+        Uri uri = Event.CONTENT_URI;
         String[] projection = Event.Columns.PROJECTION_LIST;
-        String selection = loginManager.isSignedIn() ? EventMember.Columns.MEMBER_ID_FULL+"="+loginManager.getMember().memberId : "1";
+        String selection = null;
         String[] selectionArgs = null;
         String sortOrder = Event.Columns.DATE_BEGIN_FULL+" DESC";
 
@@ -172,10 +186,23 @@ public class EventListFragment extends ListFragment implements LoaderCallbacks<C
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data)
     {
-        // TODO Treat alternative cases (no connection, etc)
         mListAdapter.swapCursor(data);
-
-        setListShown(true);
+        if (mListAdapter.isEmpty())
+        {
+            if (Utils.checkConnectivity(getActivity()) && mDownloadAttempt < Utils.MAX_DOWNLOAD_ATTEMPTS)
+            {
+                mDownloadAttempt++;
+                refresh();
+            }
+            else
+            {
+                setListShown(true);
+            }
+        }
+        else
+        {
+            setListShown(true);
+        }
     }
     @Override
     public void onLoaderReset(Loader<Cursor> loader)

@@ -147,7 +147,8 @@ public class Event
         }
     }
 
-
+    // Database
+    public static final String TABLE_NAME = "event";
     public static interface Columns extends BaseColumns
     {
         public static final String NAME        = "name";
@@ -172,6 +173,7 @@ public class Event
         public static final String STATE_FULL       = TABLE_NAME+"."+STATE;
 
 
+        // Projections
         public static final String[] PROJECTION_LIST = {
             Event.Columns._ID_FULL,
             Event.Columns.NAME_FULL,
@@ -194,14 +196,10 @@ public class Event
         };
     }
 
-    // Database
-    public static final String TABLE_NAME = "event";
 
     // Content Provider
-    public static final String EVENT_PATH            = "event";
-    public static final Uri    EVENT_CONTENT_URI     = Uri.withAppendedPath(InEventProvider.CONTENT_URI, EVENT_PATH);
-    public static final String ATTENDERS_PATH        = "event/attenders";
-    public static final Uri    ATTENDERS_CONTENT_URI = Uri.withAppendedPath(InEventProvider.CONTENT_URI, ATTENDERS_PATH);
+    public static final String PATH            = "event";
+    public static final Uri    CONTENT_URI     = Uri.withAppendedPath(InEventProvider.CONTENT_URI, PATH);
 
 
     // Role IDs

@@ -78,12 +78,6 @@
                 android:layout_height="2dp" />
 
             <Button
-                android:id="@+id/slidingMenu_help"
-                style="@style/SlidingMenuItem"
-                android:onClick="help"
-                android:text="@string/slidingMenu_help" />
-
-            <Button
                 android:id="@+id/slidingMenu_about"
                 style="@style/SlidingMenuItem"
                 android:onClick="about"

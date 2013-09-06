@@ -79,7 +79,7 @@ public class EventDetailDialogFragment extends DialogFragment implements LoaderC
     @Override
     public Loader<Cursor> onCreateLoader(int code, Bundle args)
     {
-        Uri uri = ContentUris.withAppendedId(Event.EVENT_CONTENT_URI, getArguments().getLong(ARGS_EVENT_ID));
+        Uri uri = ContentUris.withAppendedId(Event.CONTENT_URI, getArguments().getLong(ARGS_EVENT_ID));
         String[] projection = Event.Columns.PROJECTION_DETAIL;
         String selection = null;
         String[] selectionArgs = null;

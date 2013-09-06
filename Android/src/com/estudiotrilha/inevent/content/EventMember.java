@@ -4,13 +4,17 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.ContentValues;
+import android.net.Uri;
 import android.util.Log;
 
 import com.estudiotrilha.inevent.InEvent;
+import com.estudiotrilha.inevent.provider.InEventProvider;
 
 
 public class EventMember
 {
+    // Database
+    public static final String TABLE_NAME = "eventMember";
     public static interface Columns
     {
         public static final String EVENT_ID  = "eventID";
@@ -24,10 +28,10 @@ public class EventMember
         public static final String ROLE_ID_FULL   = TABLE_NAME+"."+ROLE_ID;
     }
 
-    public static final String REQUEST_ID = "requestID";
+    // Content Provider
+    public static final String PATH        = "event/member";
+    public static final Uri    CONTENT_URI = Uri.withAppendedPath(InEventProvider.CONTENT_URI, PATH);
 
-    // Database
-    public static final String TABLE_NAME = "eventMember";
 
     public static ContentValues valuesFromJson(JSONObject json, long eventID)
     {

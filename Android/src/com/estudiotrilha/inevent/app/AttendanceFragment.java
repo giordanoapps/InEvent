@@ -31,7 +31,6 @@ import android.widget.TextView;
 
 import com.estudiotrilha.android.widget.ExtensibleCursorAdapter;
 import com.estudiotrilha.inevent.R;
-import com.estudiotrilha.inevent.content.Activity;
 import com.estudiotrilha.inevent.content.ActivityMember;
 import com.estudiotrilha.inevent.content.LoginManager;
 import com.estudiotrilha.inevent.content.Member;
@@ -102,7 +101,7 @@ public class AttendanceFragment extends ListFragment implements LoaderCallbacks<
         
         mPeopleFilter = new Filter() {
             // The query basic info
-            final Uri      uri           = Activity.ATTENDERS_CONTENT_URI;
+            final Uri      uri           = ActivityMember.CONTENT_URI;
             final String[] projection    = ActivityMember.Columns.PROJECTION_ATTENDANCE_LIST;
             final String   selection     = ActivityMember.Columns.ACTIVITY_ID_FULL+" = "+ getArguments().getLong(ARGS_ACTIVITY_ID)+
                     " AND "+ActivityMember.Columns.APPROVED_FULL +" = 1"+
@@ -224,6 +223,9 @@ public class AttendanceFragment extends ListFragment implements LoaderCallbacks<
 
     private void confirmPresence(final long id)
     {
+        // Clear the selection
+        mSearchView.setQuery("", false);
+
         // Mark the member as present
         setPresence(id, 1);
 
@@ -239,7 +241,7 @@ public class AttendanceFragment extends ListFragment implements LoaderCallbacks<
                 " AND "+ActivityMember.Columns.ACTIVITY_ID_FULL+"="+getArguments().getLong(ARGS_ACTIVITY_ID);
         final ContentValues values = new ContentValues();
         values.put(ActivityMember.Columns.PRESENT, present);
-        getActivity().getContentResolver().update(Activity.ATTENDERS_CONTENT_URI, values, selection, null);
+        getActivity().getContentResolver().update(ActivityMember.CONTENT_URI, values, selection, null);
 
         // Reload content
         getLoaderManager().restartLoader(LOAD_PEOPLE, null, this);
@@ -258,7 +260,7 @@ public class AttendanceFragment extends ListFragment implements LoaderCallbacks<
     @Override
     public Loader<Cursor> onCreateLoader(int code, Bundle args)
     {
-        Uri uri = Activity.ATTENDERS_CONTENT_URI;
+        Uri uri = ActivityMember.CONTENT_URI;
         String[] projection = ActivityMember.Columns.PROJECTION_ATTENDANCE_LIST;
         String selection = ActivityMember.Columns.ACTIVITY_ID_FULL+" = "+getArguments().getLong(ARGS_ACTIVITY_ID) +
                 " AND "+ ActivityMember.Columns.APPROVED_FULL +" = 1";

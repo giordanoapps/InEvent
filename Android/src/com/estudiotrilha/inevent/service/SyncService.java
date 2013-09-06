@@ -44,13 +44,13 @@ public class SyncService extends IntentService implements ApiRequest.ResponseHan
     public static void syncEvents(Context c)
     {
         Intent service = new Intent(c, SyncService.class);
-        service.setData(Event.EVENT_CONTENT_URI);
+        service.setData(Event.CONTENT_URI);
         c.startService(service);
     }
     public static void syncEventAttenders(Context c, long eventId)
     {
         Intent service = new Intent(c, SyncService.class);
-        service.setData(Event.ATTENDERS_CONTENT_URI);
+        service.setData(EventMember.CONTENT_URI);
         service.putExtra(EXTRA_EVENT_ID, eventId);
         c.startService(service);
     }
@@ -71,7 +71,7 @@ public class SyncService extends IntentService implements ApiRequest.ResponseHan
     public static void syncEventActivityAttenders(Context c, long eventId, long activityId)
     {
         Intent service = new Intent(c, SyncService.class);
-        service.setData(Activity.ATTENDERS_CONTENT_URI);
+        service.setData(ActivityMember.CONTENT_URI);
         service.putExtra(EXTRA_EVENT_ID, eventId);
         service.putExtra(EXTRA_ACTIVITY_ID, activityId);
         c.startService(service);
@@ -240,7 +240,7 @@ public class SyncService extends IntentService implements ApiRequest.ResponseHan
                 // Delete the previous events
                 operations.add(
                         ContentProviderOperation
-                            .newDelete(Event.EVENT_CONTENT_URI)
+                            .newDelete(Event.CONTENT_URI)
                             .build()
                 );
 
@@ -251,7 +251,7 @@ public class SyncService extends IntentService implements ApiRequest.ResponseHan
                 // and eventMembers
                 operations.add(
                         ContentProviderOperation
-                            .newDelete(Event.ATTENDERS_CONTENT_URI)
+                            .newDelete(EventMember.CONTENT_URI)
                             .withSelection(where, null)
                             .build()
                 );
@@ -267,7 +267,7 @@ public class SyncService extends IntentService implements ApiRequest.ResponseHan
                     // Add the insert operation
                     operations.add(
                             ContentProviderOperation
-                                .newInsert(Event.EVENT_CONTENT_URI)
+                                .newInsert(Event.CONTENT_URI)
                                 .withValues(values)
                                 .build()
                     );
@@ -277,7 +277,7 @@ public class SyncService extends IntentService implements ApiRequest.ResponseHan
                         values = EventMember.valuesFromJson(jobj, jobj.getLong(JsonUtils.ID));
                         operations.add(
                                 ContentProviderOperation
-                                    .newInsert(Event.ATTENDERS_CONTENT_URI)
+                                    .newInsert(EventMember.CONTENT_URI)
                                     .withValues(values)
                                     .build()
                         );
@@ -313,14 +313,17 @@ public class SyncService extends IntentService implements ApiRequest.ResponseHan
                 // Delete the previous stored event members
                 operations.add(
                         ContentProviderOperation
-                            .newDelete(Event.ATTENDERS_CONTENT_URI)
-                            .withSelection(EventMember.Columns.EVENT_ID_FULL+"="+eventID, null)
+                            .newDelete(Member.CONTENT_URI)
+                            .withSelection(Member.Columns._ID_FULL+" IN (" +
+                            		"SELECT "+EventMember.Columns.MEMBER_ID_FULL+
+                            		" FROM "+EventMember.TABLE_NAME+
+                            		" WHERE "+EventMember.Columns.EVENT_ID_FULL+"="+eventID+")", null)
                             .build()
                 );
-                // and the members
                 operations.add(
                         ContentProviderOperation
-                            .newDelete(Member.CONTENT_URI)
+                            .newDelete(EventMember.CONTENT_URI)
+                            .withSelection(EventMember.Columns.EVENT_ID_FULL+"="+eventID, null)
                             .build()
                 );
 
@@ -335,7 +338,7 @@ public class SyncService extends IntentService implements ApiRequest.ResponseHan
                     // Add the insert operation
                     operations.add(
                             ContentProviderOperation
-                                .newInsert(Event.ATTENDERS_CONTENT_URI)
+                                .newInsert(EventMember.CONTENT_URI)
                                 .withValues(values)
                                 .build()
                     );
@@ -381,7 +384,7 @@ public class SyncService extends IntentService implements ApiRequest.ResponseHan
                 operations.add(
                         ContentProviderOperation
                             .newDelete(Activity.ACTIVITY_CONTENT_URI)
-                            .withSelection(Activity.Columns.EVENT_ID+"="+mIntent.getLongExtra(EXTRA_EVENT_ID, -1), null)
+                            .withSelection(Activity.Columns.EVENT_ID_FULL+"="+eventID, null)
                             .build()
                 );
 
@@ -499,7 +502,7 @@ public class SyncService extends IntentService implements ApiRequest.ResponseHan
                 // Delete the previous stored activity members
                 operations.add(
                         ContentProviderOperation
-                            .newDelete(Activity.ATTENDERS_CONTENT_URI)
+                            .newDelete(ActivityMember.CONTENT_URI)
                             .withSelection(ActivityMember.Columns.ACTIVITY_ID_FULL+"="+activityID, null)
                             .build()
                 );
@@ -522,7 +525,7 @@ public class SyncService extends IntentService implements ApiRequest.ResponseHan
                     // Add the insert operation
                     operations.add(
                             ContentProviderOperation
-                                .newInsert(Activity.ATTENDERS_CONTENT_URI)
+                                .newInsert(ActivityMember.CONTENT_URI)
                                 .withValues(values)
                                 .build()
                     );

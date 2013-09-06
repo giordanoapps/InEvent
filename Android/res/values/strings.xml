@@ -4,9 +4,6 @@
 
     <!-- App Stuff -->
     <string name="app_name">InEvent</string>
-    <string name="app_version">1.0.1</string>
-    <!-- Keys -->
-    <string name="facebook_appId">1376709179224018</string>
 
     <!-- Button Actions -->
     <string name="action_refresh">Refresh</string>
@@ -16,14 +13,13 @@
     <string name="action_login">Login</string>
     <string name="action_signIn">Sign In</string>
     <string name="action_signOut">Sign Out</string>
-    <string name="action_diplayOption_schedule">Show Schedule</string>
-    <string name="action_diplayOption_activities">Show All Activities</string>
+    <string name="action_diplayOption_schedule">Show schedule</string>
+    <string name="action_diplayOption_activities">Show all activities</string>
 
     <!-- Sliding Menu Buttons -->
+    <string name="slidingMenu_about">About</string>
     <string name="slidingMenu_events">Events</string>
     <string name="slidingMenu_login">Login</string>
-    <string name="slidingMenu_help">Help</string>
-    <string name="slidingMenu_about">About</string>
 
     <!-- Titles -->
     <string name="title_general">General</string>

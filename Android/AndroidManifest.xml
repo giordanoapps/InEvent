@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.estudiotrilha.inevent"
-    android:versionCode="2"
-    android:versionName="1.0.1" >
+    android:versionCode="3"
+    android:versionName="1.1" >
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -20,7 +20,10 @@
         android:theme="@style/AppTheme" >
 
         <!-- Facebook -->
-        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_appId"/>
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_appId" />
+
         <activity android:name="com.facebook.LoginActivity" />
 
         <!-- Splash Screen -->
@@ -47,8 +50,13 @@
         </activity>
         <activity android:name="com.estudiotrilha.inevent.app.UserSettingsActivity" />
 
+        <!-- About -->
+        <activity android:name="com.estudiotrilha.inevent.app.AboutActivity" />
+
         <!-- Login -->
-        <activity android:name="com.estudiotrilha.inevent.app.LoginActivity" />
+        <activity
+            android:name="com.estudiotrilha.inevent.app.LoginActivity"
+            android:launchMode="singleTop" />
 
         <!-- Event Marketplace Activity -->
         <activity android:name="com.estudiotrilha.inevent.app.EventMarketPlaceActivity" />

@@ -1,14 +1,16 @@
 package com.estudiotrilha.inevent.app;
 
+import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.estudiotrilha.inevent.R;
-import com.estudiotrilha.inevent.content.LoginManager;
+import com.estudiotrilha.inevent.content.Event;
 
 
 public class EventActivity extends SlidingMenuBaseActivity
@@ -26,25 +28,34 @@ public class EventActivity extends SlidingMenuBaseActivity
     }
 
 
-    private LoginManager mLoginManager;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event);
 
-        mLoginManager = LoginManager.getInstance(this);
+        long eventID = getIntent().getLongExtra(EXTRA_EVENT_ID, -1);
 
         if (savedInstanceState == null)
         {
             // Event activities Fragment
-            Fragment fragment = EventActivitiesListFragment.instantiate(getIntent().getLongExtra(EXTRA_EVENT_ID, -1));
+            Fragment fragment = EventActivitiesListFragment.instantiate(eventID);
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.mainContent, fragment)
                     .commit();
         }
+
+        // Setup the title
+        CharSequence eventName = getSupportActionBar().getTitle();
+        // Query the event name
+        Cursor c = getContentResolver().query(ContentUris.withAppendedId(Event.CONTENT_URI, eventID), new String[] { Event.Columns.NAME_FULL }, null, null, null);
+        if (c.moveToFirst())
+        {
+            eventName = c.getString(0);
+        }
+        c.close();
+        // Add it to the action bar title
+        getSupportActionBar().setTitle(eventName);
     }
 
     @Override
@@ -81,10 +92,5 @@ public class EventActivity extends SlidingMenuBaseActivity
     {
         // Reload the option menu
         supportInvalidateOptionsMenu();
-        if (!mLoginManager.isSignedIn())
-        {
-            // Open the Event Marketplace
-            events(null);
-        }
     }
 }

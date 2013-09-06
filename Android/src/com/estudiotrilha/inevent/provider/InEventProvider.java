@@ -26,12 +26,13 @@ import com.estudiotrilha.inevent.content.Activity;
 import com.estudiotrilha.inevent.content.ActivityMember;
 import com.estudiotrilha.inevent.content.Event;
 import com.estudiotrilha.inevent.content.EventMember;
+import com.estudiotrilha.inevent.content.LoginManager;
 import com.estudiotrilha.inevent.content.Member;
 
 
 public class InEventProvider extends ContentProvider
 {
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     public final static UriMatcher uriMatcher;
 
@@ -53,13 +54,13 @@ public class InEventProvider extends ContentProvider
         uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
         // The possible URIs
-        uriMatcher.addURI(AUTHORITY, Event.EVENT_PATH,              URI_EVENT);
-        uriMatcher.addURI(AUTHORITY, Event.EVENT_PATH + "/#",       URI_EVENT_SINGLE);
-        uriMatcher.addURI(AUTHORITY, Event.ATTENDERS_PATH,          URI_EVENT_ATTENDERS);
+        uriMatcher.addURI(AUTHORITY, Event.PATH,                    URI_EVENT);
+        uriMatcher.addURI(AUTHORITY, Event.PATH + "/#",             URI_EVENT_SINGLE);
+        uriMatcher.addURI(AUTHORITY, EventMember.PATH,              URI_EVENT_ATTENDERS);
         uriMatcher.addURI(AUTHORITY, Activity.ACTIVITY_PATH,        URI_ACTIVITY);
         uriMatcher.addURI(AUTHORITY, Activity.ACTIVITY_PATH + "/#", URI_ACTIVITY_SINGLE);
         uriMatcher.addURI(AUTHORITY, Activity.SCHEDULE_PATH,        URI_ACTIVITY_SCHEDULE);
-        uriMatcher.addURI(AUTHORITY, Activity.ATTENDERS_PATH,       URI_ACTIVITY_ATTENDERS);
+        uriMatcher.addURI(AUTHORITY, ActivityMember.PATH,           URI_ACTIVITY_ATTENDERS);
         uriMatcher.addURI(AUTHORITY, Member.PATH,                   URI_MEMBER);
     }
 
@@ -88,13 +89,13 @@ public class InEventProvider extends ContentProvider
         switch (matchCode)
         {
         case URI_EVENT:
-            return ContentResolver.CURSOR_DIR_BASE_TYPE + IN_EVENT + Event.EVENT_PATH;
+            return ContentResolver.CURSOR_DIR_BASE_TYPE + IN_EVENT + Event.PATH;
 
         case URI_EVENT_SINGLE:
-            return ContentResolver.CURSOR_ITEM_BASE_TYPE + IN_EVENT + Event.EVENT_PATH;
+            return ContentResolver.CURSOR_ITEM_BASE_TYPE + IN_EVENT + Event.PATH;
 
         case URI_EVENT_ATTENDERS:
-            return ContentResolver.CURSOR_DIR_BASE_TYPE + IN_EVENT + Event.ATTENDERS_PATH;
+            return ContentResolver.CURSOR_DIR_BASE_TYPE + IN_EVENT + EventMember.PATH;
 
         case URI_ACTIVITY:
             return ContentResolver.CURSOR_DIR_BASE_TYPE + IN_EVENT + Activity.ACTIVITY_PATH;
@@ -103,7 +104,7 @@ public class InEventProvider extends ContentProvider
             return ContentResolver.CURSOR_DIR_BASE_TYPE + IN_EVENT + Activity.SCHEDULE_PATH;
 
         case URI_ACTIVITY_ATTENDERS:
-            return ContentResolver.CURSOR_DIR_BASE_TYPE + IN_EVENT + Activity.ATTENDERS_PATH;
+            return ContentResolver.CURSOR_DIR_BASE_TYPE + IN_EVENT + ActivityMember.PATH;
 
         case URI_ACTIVITY_SINGLE:
             return ContentResolver.CURSOR_ITEM_BASE_TYPE + IN_EVENT + Activity.ACTIVITY_PATH;
@@ -127,7 +128,7 @@ public class InEventProvider extends ContentProvider
         {
             // obtain the id
             String id = Long.toString(ContentUris.parseId(uri));
-            selection = Event.Columns._ID+"=?";
+            selection = Event.Columns._ID_FULL+"=?";
             selectionArgs = new String[] { id };
         }
         case URI_EVENT:
@@ -139,13 +140,16 @@ public class InEventProvider extends ContentProvider
                 project = Arrays.toString(projection);
                 project = project.substring(1,project.length()-1);
             }
+            if (selection == null) selection = "1";
 
+            LoginManager loginManager = LoginManager.getInstance(getContext());
             final String query = "SELECT "+ project +
                     " FROM " + Event.TABLE_NAME +
-                    " LEFT JOIN " + EventMember.TABLE_NAME +
-                    " ON " + Event.Columns._ID_FULL +"="+ EventMember.Columns.EVENT_ID_FULL +
+                        (loginManager.isSignedIn() ? 
+                                " LEFT JOIN " + EventMember.TABLE_NAME +
+                                " ON " + Event.Columns._ID_FULL +"="+ EventMember.Columns.EVENT_ID_FULL+
+                                " AND "+EventMember.Columns.MEMBER_ID_FULL+"="+loginManager.getMember().memberId : "") +
                     " WHERE " + selection +
-                    " GROUP BY " + Event.Columns._ID_FULL +
                     " ORDER BY " + sortOrder;
 
             c = mDatabase.rawQuery(query, selectionArgs);
@@ -155,7 +159,7 @@ public class InEventProvider extends ContentProvider
         case URI_EVENT_ATTENDERS:
             c = mDatabase.query(EventMember.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
             break;
-            
+
         case URI_ACTIVITY:
             c = mDatabase.query(Activity.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
             break;
@@ -169,6 +173,7 @@ public class InEventProvider extends ContentProvider
                 project = Arrays.toString(projection);
                 project = project.substring(1,project.length()-1);
             }
+            if (selection == null) selection = "1";
 
             final String query = "SELECT "+ project +
                     " FROM " + Event.TABLE_NAME +
@@ -178,6 +183,7 @@ public class InEventProvider extends ContentProvider
                     " ON " + ActivityMember.Columns.ACTIVITY_ID_FULL +"="+ Activity.Columns._ID_FULL +
                     " WHERE " + selection +
                     " ORDER BY " + sortOrder;
+
             c = mDatabase.rawQuery(query, selectionArgs);
             break;
         }
@@ -191,12 +197,14 @@ public class InEventProvider extends ContentProvider
                 project = Arrays.toString(projection);
                 project = project.substring(1,project.length()-1);
             }
+            if (selection == null) selection = "1";
 
             final String query = "SELECT "+ project +
                     " FROM " + ActivityMember.TABLE_NAME +
                     " INNER JOIN " + Member.TABLE_NAME +
                     " ON " + ActivityMember.Columns.MEMBER_ID_FULL +"="+ Member.Columns._ID_FULL +
                     " WHERE " + selection +
+                    " GROUP BY " + Member.Columns._ID_FULL +
                     " ORDER BY " + sortOrder;
 
             c = mDatabase.rawQuery(query, selectionArgs);

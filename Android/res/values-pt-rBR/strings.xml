@@ -17,10 +17,9 @@
     <string name="action_diplayOption_activities">Todas as atividades</string>
 
     <!-- Sliding Menu Buttons -->
+    <string name="slidingMenu_about">Sobre</string>
     <string name="slidingMenu_events">Eventos</string>
     <string name="slidingMenu_login">Fazer Login</string>
-    <string name="slidingMenu_help">Ajuda</string>
-    <string name="slidingMenu_about">Sobre</string>
 
     <!-- Titles -->
     <string name="title_general">Geral</string>

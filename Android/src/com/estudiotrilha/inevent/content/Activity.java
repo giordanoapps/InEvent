@@ -5,6 +5,7 @@ import static com.estudiotrilha.inevent.content.Activity.Columns.DATE_BEGIN;
 import static com.estudiotrilha.inevent.content.Activity.Columns.DATE_END;
 import static com.estudiotrilha.inevent.content.Activity.Columns.DESCRIPTION;
 import static com.estudiotrilha.inevent.content.Activity.Columns.EVENT_ID;
+import static com.estudiotrilha.inevent.content.Activity.Columns.LOCATION;
 import static com.estudiotrilha.inevent.content.Activity.Columns.NAME;
 
 import java.io.IOException;
@@ -132,6 +133,8 @@ public class Activity
         }
     }
 
+    // Database
+    public static final String TABLE_NAME = "activity";
     public static interface Columns extends BaseColumns
     {
         public static final String EVENT_ID    = "eventID";
@@ -155,20 +158,17 @@ public class Activity
             Activity.Columns.DATE_BEGIN_FULL,
             Activity.Columns.DATE_END_FULL,
             Activity.Columns.NAME_FULL,
+            Activity.Columns.DESCRIPTION_FULL,
             Activity.Columns.LOCATION_FULL
         };
     }
 
-    // Database
-    public static final String TABLE_NAME = "activity";
 
     // Content Provider
     public static final String ACTIVITY_PATH      = "activity";
     public static final Uri ACTIVITY_CONTENT_URI  = Uri.withAppendedPath(InEventProvider.CONTENT_URI, ACTIVITY_PATH);
     public static final String SCHEDULE_PATH      = "activity/schedule";
     public static final Uri SCHEDULE_CONTENT_URI  = Uri.withAppendedPath(InEventProvider.CONTENT_URI, SCHEDULE_PATH);
-    public static final String ATTENDERS_PATH     = "activity/attenders";
-    public static final Uri ATTENDERS_CONTENT_URI = Uri.withAppendedPath(InEventProvider.CONTENT_URI, ATTENDERS_PATH);
 
 
     public static ContentValues valuesFromJson(JSONObject json, long eventID)
@@ -181,6 +181,7 @@ public class Activity
             cv.put(EVENT_ID, eventID);
             cv.put(NAME, Html.fromHtml(json.getString(NAME)).toString());
             cv.put(DESCRIPTION, Html.fromHtml(json.getString(DESCRIPTION)).toString());
+            cv.put(LOCATION, Html.fromHtml(json.getString(LOCATION)).toString());
             cv.put(DATE_BEGIN, json.getLong(DATE_BEGIN));
             cv.put(DATE_END, json.getLong(DATE_END));
         }

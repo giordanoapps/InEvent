@@ -1,11 +1,16 @@
 package com.estudiotrilha.inevent.content;
 
+import com.estudiotrilha.inevent.provider.InEventProvider;
+
 import android.content.ContentValues;
+import android.net.Uri;
 import android.provider.BaseColumns;
 
 
 public class ActivityMember
 {
+    // Database
+    public static final String TABLE_NAME = "activityMember";
     public static interface Columns extends BaseColumns
     {
         public static final String EVENT_ID    = "eventID";
@@ -33,14 +38,16 @@ public class ActivityMember
         };
 
         public static final String[] PROJECTION_ATTENDANCE_LIST = {
-            com.estudiotrilha.inevent.content.Member.TABLE_NAME+"."+com.estudiotrilha.inevent.content.Member.Columns._ID,
-            com.estudiotrilha.inevent.content.Member.TABLE_NAME+"."+com.estudiotrilha.inevent.content.Member.Columns.NAME,
-            TABLE_NAME+"."+PRESENT
+            Member.Columns._ID_FULL,
+            Member.Columns.NAME_FULL,
+            ActivityMember.Columns.PRESENT_FULL
         };
     }
 
-    // Database
-    public static final String TABLE_NAME = "activityMember";
+    // Content Provider
+    public static final String PATH        = "activity/member";
+    public static final Uri    CONTENT_URI = Uri.withAppendedPath(InEventProvider.CONTENT_URI, PATH);
+
 
     public static ContentValues newActivtyMember(long eventID, long activityID, long memberID, boolean approved, boolean present)
     {

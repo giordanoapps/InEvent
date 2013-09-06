@@ -4,9 +4,11 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
+import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
@@ -16,19 +18,20 @@ import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.util.SparseIntArray;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewStub;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
 
 import com.estudiotrilha.android.utils.DateUtils;
-import com.estudiotrilha.android.widget.ExtensibleCursorAdapter;
 import com.estudiotrilha.inevent.R;
+import com.estudiotrilha.inevent.Utils;
 import com.estudiotrilha.inevent.content.Activity;
 import com.estudiotrilha.inevent.content.ActivityMember;
 import com.estudiotrilha.inevent.content.Event;
@@ -51,7 +54,8 @@ public class EventActivitiesListFragment extends ListFragment implements LoaderC
     }
 
     // Instance State
-    private static final String STATE_DISPLAY_OPTION = "state.DISPLAY_OPTION";
+    private static final String STATE_DISPLAY_OPTION   = "state.DISPLAY_OPTION";
+    private static final String STATE_DOWNLOAD_ATTEMPT = "state.DOWNLOAD_ATTEMPT";
 
     // Arguments
     private static final String ARGS_EVENT_ID = "args.EVENT_ID";
@@ -71,73 +75,71 @@ public class EventActivitiesListFragment extends ListFragment implements LoaderC
     }
 
 
-    private ExtensibleCursorAdapter mActivitiesAdapter;
-    private ExtensibleCursorAdapter mScheduleAdapter;
+    private EventActivitiesListAdapter mActivitiesAdapter;
+    private EventActivitiesListAdapter mScheduleAdapter;
 
-    private int mIndexName;
-    private int mIndexDescription;
-    private int mIndexDateBegin;
-    private int mIndexDateEnd;
-    private int mIndexApproved;
 
-    private DisplayOption mDisplayOption = DisplayOption.SCHEDULE;
-    private DateFormat    mTimeFormat;
+    private DisplayOption mDisplayOption = DisplayOption.ACTIVITIES;
+    private LoginManager  mLoginManager;
     private long          mRoleId;
+    private boolean       mApproved = false;
+    private int           mDownloadAttempt;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        mLoginManager = LoginManager.getInstance(getActivity());
         setHasOptionsMenu(true);
 
-        // Setup the adapters
-        mActivitiesAdapter = new EventActivitiesListAdapter(getActivity());
-        mScheduleAdapter = new EventActivitiesListAdapter(getActivity());
-        mScheduleAdapter.registerExtension(new ExtensibleCursorAdapter.AdapterExtension() {
-            @Override public void doBeforeBinding(View v, Context context, Cursor c) {}
-            @Override
-            public void doAfterBinding(View v, Context context, Cursor c)
-            {
-                // Set the color according to the approved state
-                boolean approved = c.getInt(mIndexApproved) == 1;
-                int color = getResources().getColor(approved ? R.color.holo_green_dark : R.color.holo_red_dark);
-                v.findViewById(R.id.activity_approved).setBackgroundColor(color);
-            }
-        });
-
-        // Get the user preferred date format
-        mTimeFormat = android.text.format.DateFormat.getTimeFormat(getActivity());
         long id = getArguments().getLong(ARGS_EVENT_ID);
 
-        // Check the user role for this event
+        if (savedInstanceState != null)
+        {
+            // Display the correct set of data
+            mDisplayOption = DisplayOption.values()[savedInstanceState.getInt(STATE_DISPLAY_OPTION)];
 
-        // Get the info
-        String selection = EventMember.Columns.EVENT_ID_FULL+"="+id+" AND "+EventMember.Columns.MEMBER_ID_FULL+"="+LoginManager.getInstance(getActivity()).getMember().memberId;
-        Cursor c = getActivity().getContentResolver().query(Event.ATTENDERS_CONTENT_URI, new String[] { EventMember.Columns.ROLE_ID }, selection, null, null);
-        if (c.moveToFirst())
-        {
-            mRoleId = c.getLong(c.getColumnIndex(EventMember.Columns.ROLE_ID));
+            mDownloadAttempt = savedInstanceState.getInt(STATE_DOWNLOAD_ATTEMPT);
         }
-        else
+        else if (mLoginManager.isSignedIn())
         {
-            mRoleId = Event.ROLE_ATTENDEE;
+            Cursor c = getActivity().getContentResolver().query(ContentUris.withAppendedId(Event.CONTENT_URI, id), new String[]{ EventMember.Columns.APPROVED_FULL }, null, null, null);
+            if (c.moveToFirst())
+            {
+                mApproved = c.getInt(0) == 1;
+            }
+            c.close();
+
+            mDisplayOption = mApproved ? DisplayOption.SCHEDULE : DisplayOption.ACTIVITIES;                
         }
 
-        if (mRoleId != Event.ROLE_ATTENDEE)
+        // Setup the adapters
+        mActivitiesAdapter = new EventActivitiesListAdapter(getActivity(), false);
+        mScheduleAdapter = new EventActivitiesListAdapter(getActivity(), true);
+
+        if (mLoginManager.isSignedIn())
         {
-            // Show all the activities case the user is staff
-            mDisplayOption = DisplayOption.ACTIVITIES;
+            // Check the user role for this event
+
+            // Get the info
+            String selection = EventMember.Columns.EVENT_ID_FULL+"="+id+" AND "+EventMember.Columns.MEMBER_ID_FULL+"="+mLoginManager.getMember().memberId;
+            Cursor c = getActivity().getContentResolver().query(EventMember.CONTENT_URI, new String[] { EventMember.Columns.ROLE_ID }, selection, null, null);
+            if (c.moveToFirst())
+            {
+                mRoleId = c.getLong(c.getColumnIndex(EventMember.Columns.ROLE_ID));
+            }
+            else
+            {
+                mRoleId = Event.ROLE_ATTENDEE;
+            }
+            c.close();
         }
     }
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState)
     {
         super.onViewCreated(view, savedInstanceState);
-
-        if (savedInstanceState != null)
-        {
-            mDisplayOption = DisplayOption.values()[savedInstanceState.getInt(STATE_DISPLAY_OPTION)];
-        }
 
         // Setup the displayed things on screen
         updateDisplayMode();
@@ -154,13 +156,17 @@ public class EventActivitiesListFragment extends ListFragment implements LoaderC
     {
         super.onStart();
         getLoaderManager().initLoader(LOAD_ACTIVITY, null, this);
-        getLoaderManager().initLoader(LOAD_SCHEDULE, null, this);
+        if (mApproved)
+        {
+            getLoaderManager().initLoader(LOAD_SCHEDULE, null, this);
+        }
     }
     @Override
     public void onSaveInstanceState(Bundle outState)
     {
         super.onSaveInstanceState(outState);
         outState.putInt(STATE_DISPLAY_OPTION, mDisplayOption.ordinal());
+        outState.putInt(STATE_DOWNLOAD_ATTEMPT, mDownloadAttempt);
     }
 
     @Override
@@ -168,18 +174,21 @@ public class EventActivitiesListFragment extends ListFragment implements LoaderC
     {
         inflater.inflate(R.menu.fragment_event_activities_list, menu);
 
-        if (mRoleId != Event.ROLE_ATTENDEE)
+        switch (mDisplayOption)
         {
-            switch (mDisplayOption)
+        case ACTIVITIES:
+            menu.findItem(R.id.menu_display_schedule).setVisible(mApproved);
+            break;
+
+        case SCHEDULE:
+            menu.findItem(R.id.menu_display_activities).setVisible(true);
+            if (!mApproved)
             {
-            case ACTIVITIES:
-                menu.findItem(R.id.menu_display_schedule).setVisible(true);
-                break;
-    
-            case SCHEDULE:
-                menu.findItem(R.id.menu_display_activities).setVisible(true);
-                break;
+                // Abort, the user is no longer logged in
+                mDisplayOption = DisplayOption.ACTIVITIES;
+                updateDisplayMode();
             }
+            break;
         }
     }
     @Override
@@ -208,7 +217,7 @@ public class EventActivitiesListFragment extends ListFragment implements LoaderC
     @Override
     public void onListItemClick(ListView l, View v, int position, long id)
     {
-        if (mDisplayOption == DisplayOption.ACTIVITIES)
+        if (mLoginManager.isSignedIn() && mRoleId != Event.ROLE_ATTENDEE)
         {
             // Open up the attendance control
             getFragmentManager().beginTransaction()
@@ -218,12 +227,15 @@ public class EventActivitiesListFragment extends ListFragment implements LoaderC
         }
         else
         {
+            // Get the proper adapter
+            EventActivitiesListAdapter adapter = (mDisplayOption == DisplayOption.ACTIVITIES) ? mActivitiesAdapter : mScheduleAdapter;
+
             // Show the Activity details
-            Cursor c = mScheduleAdapter.getCursor();
-            c.moveToPosition(position);
-            new AlertDialog.Builder(getActivity())
-                    .setTitle(c.getString(mIndexName))
-                    .setMessage(c.getString(mIndexDescription))
+            Cursor c = adapter.getCursor();
+            c.moveToPosition(adapter.getCursorPosition(position));
+            new AlertDialog.Builder(getActivity()) // TODO change this to a decent dialog fragment
+                    .setTitle(c.getString(c.getColumnIndex(Activity.Columns.NAME)))
+                    .setMessage(c.getString(c.getColumnIndex(Activity.Columns.DESCRIPTION)))
                     .setPositiveButton(android.R.string.ok, null)
                     .show();
         }
@@ -251,12 +263,20 @@ public class EventActivitiesListFragment extends ListFragment implements LoaderC
         // Get the event ID
         long eventId = getArguments().getLong(ARGS_EVENT_ID);
 
-        // Download the schedule
-        SyncService.syncEventSchedule(getActivity(), eventId);
-        // the the activities info
+        // Download the activities info
         SyncService.syncEventActivities(getActivity(), eventId);
-        // and the attenders
-        SyncService.syncEventAttenders(getActivity(), eventId);
+
+        if (mApproved)
+        {
+            // Download the schedule
+            SyncService.syncEventSchedule(getActivity(), eventId);
+
+            if (mRoleId != Event.ROLE_ATTENDEE)
+            {
+                // Download the attenders
+                SyncService.syncEventAttenders(getActivity(), eventId);
+            }
+        }
     }
 
 
@@ -268,28 +288,30 @@ public class EventActivitiesListFragment extends ListFragment implements LoaderC
         String[] projection = null;
         String selection = null;
         String[] selectionArgs = null;
-        String sortOrder = Activity.TABLE_NAME+"."+Activity.Columns.DATE_BEGIN + " ASC";
+        String sortOrder = Activity.Columns.DATE_BEGIN_FULL + " ASC";
+
+        String eventID = Long.toString(getArguments().getLong(ARGS_EVENT_ID));
 
         switch (code)
         {
         case LOAD_ACTIVITY:
             uri = Activity.ACTIVITY_CONTENT_URI;
             projection = Activity.Columns.PROJECTION_LIST;
-            selection = Activity.TABLE_NAME+"."+Activity.Columns.EVENT_ID +"= ?";
+            selection = Activity.Columns.EVENT_ID_FULL +"= ?";
             selectionArgs = new String[1];
 
             // Get the event id
-            selectionArgs[0] = Long.toString(getArguments().getLong(ARGS_EVENT_ID));
+            selectionArgs[0] = eventID;
             break;
 
         case LOAD_SCHEDULE:
             uri = Activity.SCHEDULE_CONTENT_URI;
             projection = ActivityMember.Columns.PROJECTION_SCHEDULE_LIST;
-            selection = ActivityMember.Columns.MEMBER_ID_FULL +"= ?";
+            selection = ActivityMember.Columns.MEMBER_ID_FULL +"= ? AND "+Event.Columns._ID_FULL+"="+eventID;
             selectionArgs = new String[1];
 
             // Get the user id
-            selectionArgs[0] = Long.toString(LoginManager.getInstance(getActivity()).getMember().memberId);
+            selectionArgs[0] = Long.toString(mLoginManager.getMember().memberId);
             break;
         }
 
@@ -298,29 +320,40 @@ public class EventActivitiesListFragment extends ListFragment implements LoaderC
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data)
     {
-        if (data.getCount() == 0)
-        {
-            refresh();
-        }
-
-        mIndexDateBegin = data.getColumnIndex(Activity.Columns.DATE_BEGIN);
-        mIndexDateEnd = data.getColumnIndex(Activity.Columns.DATE_END);
+        EventActivitiesListAdapter adapter;
 
         switch (loader.getId())
         {
         case LOAD_ACTIVITY:
-            mActivitiesAdapter.swapCursor(data);
+            adapter = mActivitiesAdapter;
             break;
 
         case LOAD_SCHEDULE:
-            mIndexName = data.getColumnIndex(Activity.Columns.NAME);
-            mIndexDescription = data.getColumnIndex(Activity.Columns.DESCRIPTION);
-            mIndexApproved = data.getColumnIndex(ActivityMember.Columns.APPROVED);
-            mScheduleAdapter.swapCursor(data);
+            adapter = mScheduleAdapter;
             break;
+            
+        default:
+            return;
         }
 
-        setListShown(true);
+        adapter.swapCursor(data);
+
+        if (adapter.isEmpty())
+        {
+            if (Utils.checkConnectivity(getActivity()) && mDownloadAttempt < Utils.MAX_DOWNLOAD_ATTEMPTS)
+            {
+                mDownloadAttempt++;
+                refresh();
+            }
+            else
+            {
+                setListShown(true);
+            }
+        }
+        else
+        {
+            setListShown(true);
+        }
     }
     @Override
     public void onLoaderReset(Loader<Cursor> loader)
@@ -338,8 +371,7 @@ public class EventActivitiesListFragment extends ListFragment implements LoaderC
     }
 
 
-    // TODO redo this class properly
-    class EventActivitiesListAdapter extends ExtensibleCursorAdapter implements SectionIndexer, ExtensibleCursorAdapter.AdapterExtension
+    class EventActivitiesListAdapter extends BaseAdapter implements SectionIndexer
     {
         private static final int LIST_TITLE = 0;
         private static final int LIST_ITEM  = 1;
@@ -363,52 +395,77 @@ public class EventActivitiesListFragment extends ListFragment implements LoaderC
             }
         }
 
-        private ArrayList<EventSectionHolder> mSections;
-        private SparseIntArray                mSectionMap; 
 
-        public EventActivitiesListAdapter(Context context)
+        final boolean isSchedule;
+
+        private ArrayList<EventSectionHolder> mSections;
+        private Context                       mContext;
+        private Cursor                        mCursor;
+        private LayoutInflater                mInflater;
+        private DateFormat                    mTimeFormat;
+        // Indexes
+        private int mIndexId;
+        private int mIndexName;
+        private int mIndexLocation;
+        private int mIndexDateBegin;
+        private int mIndexDateEnd;
+        private int mIndexApproved;
+
+
+
+        public EventActivitiesListAdapter(Context context, boolean isSchedule)
         {
-            super(context, R.layout.cell_event_activity_item, null,
-                    new String[] { Activity.Columns.NAME, Activity.Columns.LOCATION },
-                    new int[] { R.id.activity_name, R.id.activity_location },
-                    0);
-            registerExtension(this);
+            this.mContext = context;
+            this.isSchedule = isSchedule;
+            this.mInflater = LayoutInflater.from(context);
+
+            // Get the user preferred date format
+            mTimeFormat = android.text.format.DateFormat.getTimeFormat(context);
 
             mSections = new ArrayList<EventSectionHolder>();
-            mSectionMap = new SparseIntArray();
         }
 
-        @Override
-        public Cursor swapCursor(Cursor c)
+        public Cursor getCursor()
+        {
+            return mCursor;
+        }
+
+        public void swapCursor(Cursor c)
         {
             mSections.clear();
-            mSectionMap.clear();
+            mCursor = c;
 
             if (c != null)
             {
-                // Build the sections
+                // Build up indexes
+                mIndexId = c.getColumnIndex(Activity.Columns._ID);
+                mIndexName = c.getColumnIndex(Activity.Columns.NAME);
+                mIndexLocation = c.getColumnIndex(Activity.Columns.LOCATION);
+                mIndexDateBegin = c.getColumnIndex(Activity.Columns.DATE_BEGIN);
+                mIndexDateEnd = c.getColumnIndex(Activity.Columns.DATE_END);
+                mIndexApproved = c.getColumnIndex(ActivityMember.Columns.APPROVED);
 
+                // Build the sections
                 int currentDay = -1;
 
                 c.moveToPosition(-1);
                 while (c.moveToNext())
                 {
                     Calendar date = DateUtils.calendarFromTimestampInGMT(c.getLong(mIndexDateBegin));
+                    date.setTimeZone(TimeZone.getDefault());
 
-                    int thisDay = date.get(Calendar.DAY_OF_MONTH);
+                    int thisDay = date.get(Calendar.DAY_OF_YEAR);
                     if (thisDay != currentDay)
                     {
                         // Setup the new section info
-                        mSections.add(new EventSectionHolder(date, c.getPosition()));
+                        int startingPosition = c.getPosition()+mSections.size();
+                        mSections.add(new EventSectionHolder(date, startingPosition));
                         currentDay = thisDay;
                     }
-
-                    // Map the data position to the section
-                    mSectionMap.put(c.getPosition(), mSections.size()-1);
                 }
             }
 
-            return super.swapCursor(c);
+            notifyDataSetChanged();
         }
 
         @Override
@@ -420,14 +477,15 @@ public class EventActivitiesListFragment extends ListFragment implements LoaderC
         @Override
         public int getItemViewType(int position)
         {
-            if (position == mSections.get(mSectionMap.get(position)).startingPosition)
+            for (int i = 0; i < mSections.size(); i++)
             {
-                return LIST_TITLE;
+                if (mSections.get(i).startingPosition == position)
+                {
+                    return LIST_TITLE;
+                }
             }
-            else
-            {
-                return LIST_ITEM;
-            }
+
+            return LIST_ITEM;
         }
 
         @Override
@@ -438,7 +496,15 @@ public class EventActivitiesListFragment extends ListFragment implements LoaderC
         @Override
         public int getSectionForPosition(int position)
         {
-            return mSectionMap.get(position);
+            for (int i = 1; i < mSections.size(); i++)
+            {
+                if (mSections.get(i).startingPosition > position)
+                {
+                    return i-1;
+                }
+            }
+            // Last section
+            return mSections.size()-1;
         }
         @Override
         public Object[] getSections()
@@ -447,34 +513,118 @@ public class EventActivitiesListFragment extends ListFragment implements LoaderC
         }
 
         @Override
-        public void doBeforeBinding(View v, Context context, Cursor c)
+        public int getCount()
         {
-            int position = c.getPosition();
-            if (getItemViewType(position) == LIST_TITLE)
+            if (mCursor == null || mCursor.getCount() == 0)
             {
-                // Inflate the header
-                ViewStub viewStub = (ViewStub) v.findViewById(R.id.activity_section);
-                if (viewStub != null) v = viewStub.inflate();
+                return 0;
+            }
+            else
+            {
+                return mCursor.getCount() + mSections.size();
+            }
+        }
 
-                // Prepare the title
-                EventSectionHolder section = mSections.get(mSectionMap.get(position));
-                String title = android.text.format.DateFormat.getLongDateFormat(context).format(section.date.getTime());
-                // and set it
-                ((TextView) v.findViewById(R.id.activity_sectionHeader)).setText(title);
+        @Override
+        public Object getItem(int position)
+        {
+            return position;
+        }
+
+        @Override
+        public long getItemId(int position)
+        {
+            switch (getItemViewType(position))
+            {
+            case LIST_ITEM:
+                mCursor.moveToPosition(getCursorPosition(position));
+                return mCursor.getLong(mIndexId);
+
+            case LIST_TITLE:
+                return mSections.get(getSectionForPosition(position)).date.getTimeInMillis();
+
+            default:
+                return -1;
             }
         }
         @Override
-        public void doAfterBinding(View v, Context context, Cursor c)
+        public boolean hasStableIds()
         {
-            // Setup the starting and ending time
+            return true;
+        }
+        @Override
+        public boolean isEnabled(int position)
+        {
+            return getItemViewType(position) == LIST_ITEM;
+        }
 
-            // Parse the dates
-            Date dateBegin = DateUtils.calendarFromTimestampInGMT(c.getLong(mIndexDateBegin)).getTime();
-            Date dateEnd = DateUtils.calendarFromTimestampInGMT(c.getLong(mIndexDateEnd)).getTime();
+        public int getCursorPosition(int listPosition)
+        {
+            return listPosition - (getSectionForPosition(listPosition) + 1);
+        }
 
-            // Setup the views
-            ((TextView) v.findViewById(R.id.activity_dateBegin)).setText(mTimeFormat.format(dateBegin));
-            ((TextView) v.findViewById(R.id.activity_dateEnd)).setText(mTimeFormat.format(dateEnd));
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent)
+        {
+            Integer viewType = getItemViewType(position);
+            if (convertView == null || !viewType.equals(convertView.getTag()))
+            {
+                // Inflate the view
+                switch (viewType)
+                {
+                case LIST_ITEM:
+                    convertView = mInflater.inflate(R.layout.cell_event_activity_item, parent, false);
+                    break;
+
+                case LIST_TITLE:
+                    convertView = mInflater.inflate(R.layout.header_event_activity_section, parent, false);
+                    break;
+                }
+            }
+            convertView.setTag(viewType);
+
+            switch (viewType)
+            {
+            case LIST_ITEM:
+            {
+                // Position the cursor
+                mCursor.moveToPosition(getCursorPosition(position));
+
+                // Layout the information
+                // Activity name
+                ((TextView) convertView.findViewById(R.id.activity_name)).setText(mCursor.getString(mIndexName));
+                ((TextView) convertView.findViewById(R.id.activity_location)).setText(mCursor.getString(mIndexLocation));
+                // Approved state
+                if (isSchedule)
+                {
+                    // Set the color according to the approved state
+                    boolean approved = mCursor.getInt(mIndexApproved) == 1;
+                    int color = getResources().getColor(approved ? R.color.holo_green_dark : R.color.holo_red_dark);
+                    convertView.findViewById(R.id.activity_approved).setBackgroundColor(color);
+                }
+                // Setup the starting and ending time
+                // Parse the dates
+                Date dateBegin = DateUtils.calendarFromTimestampInGMT(mCursor.getLong(mIndexDateBegin)).getTime();
+                Date dateEnd = DateUtils.calendarFromTimestampInGMT(mCursor.getLong(mIndexDateEnd)).getTime();
+                // Setup the views
+                ((TextView) convertView.findViewById(R.id.activity_dateBegin)).setText(mTimeFormat.format(dateBegin));
+                ((TextView) convertView.findViewById(R.id.activity_dateEnd)).setText(mTimeFormat.format(dateEnd));
+                break;
+            }
+
+            case LIST_TITLE:
+            {
+                // Prepare the title
+                EventSectionHolder section = mSections.get(getSectionForPosition(position));
+                String title = android.text.format.DateFormat.getLongDateFormat(mContext).format(section.date.getTime());
+                // and set it
+                ((TextView) convertView.findViewById(R.id.activity_sectionHeader)).setText(title);
+                break;
+            }
+
+            }
+
+            return convertView;
         }
     }
 }
