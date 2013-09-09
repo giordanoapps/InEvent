@@ -21,6 +21,10 @@
     <!-- Member -->
     <color name="member_profile">@color/light_gray</color>
 
+    <!-- Attender -->
+    <color name="attender_presence_confirm">@color/holo_green_dark</color>
+    <color name="attender_presence_revoke">@color/holo_red_dark</color>
+
     <!-- Sliding Menu -->
     <color name="slidingMenu_background">@color/light_gray</color>
 

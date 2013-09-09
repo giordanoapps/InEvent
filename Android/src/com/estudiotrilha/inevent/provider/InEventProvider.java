@@ -161,6 +161,13 @@ public class InEventProvider extends ContentProvider
             c = mDatabase.query(EventMember.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
             break;
 
+        case URI_ACTIVITY_SINGLE:
+        {
+            // obtain the id
+            String id = Long.toString(ContentUris.parseId(uri));
+            selection = Activity.Columns._ID_FULL+"=?";
+            selectionArgs = new String[] { id };
+        }
         case URI_ACTIVITY:
             c = mDatabase.query(Activity.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
             break;
@@ -235,24 +242,24 @@ public class InEventProvider extends ContentProvider
         switch (matchCode)
         {
         case URI_EVENT:
-            answer = mDatabase.insert(Event.TABLE_NAME, null, values);
+            answer = mDatabase.insertWithOnConflict(Event.TABLE_NAME, null, values, SQLiteDatabase.CONFLICT_REPLACE);
             break;
 
         case URI_EVENT_ATTENDERS:
-            answer = mDatabase.insert(EventMember.TABLE_NAME, null, values);
+            answer = mDatabase.insertWithOnConflict(EventMember.TABLE_NAME, null, values, SQLiteDatabase.CONFLICT_REPLACE);
             break;
 
         case URI_ACTIVITY:
-            answer = mDatabase.insert(Activity.TABLE_NAME, null, values);
+            answer = mDatabase.insertWithOnConflict(Activity.TABLE_NAME, null, values, SQLiteDatabase.CONFLICT_REPLACE);
             break;
 
         case URI_ACTIVITY_SCHEDULE:
         case URI_ACTIVITY_ATTENDERS:
-            answer = mDatabase.insert(ActivityMember.TABLE_NAME, null, values);
+            answer = mDatabase.insertWithOnConflict(ActivityMember.TABLE_NAME, null, values, SQLiteDatabase.CONFLICT_REPLACE);
             break;
 
         case URI_MEMBER:
-            answer = mDatabase.insert(Member.TABLE_NAME, null, values);
+            answer = mDatabase.insertWithOnConflict(Member.TABLE_NAME, null, values, SQLiteDatabase.CONFLICT_REPLACE);
             break;
 
         default:

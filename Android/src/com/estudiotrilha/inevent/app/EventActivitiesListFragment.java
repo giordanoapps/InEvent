@@ -8,7 +8,6 @@ import java.util.TimeZone;
 
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
-import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
@@ -24,6 +23,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.SectionIndexer;
@@ -35,12 +36,11 @@ import com.estudiotrilha.inevent.Utils;
 import com.estudiotrilha.inevent.content.Activity;
 import com.estudiotrilha.inevent.content.ActivityMember;
 import com.estudiotrilha.inevent.content.Event;
-import com.estudiotrilha.inevent.content.EventMember;
 import com.estudiotrilha.inevent.content.LoginManager;
 import com.estudiotrilha.inevent.service.SyncService;
 
 
-public class EventActivitiesListFragment extends ListFragment implements LoaderCallbacks<Cursor>
+public class EventActivitiesListFragment extends ListFragment implements LoaderCallbacks<Cursor>, OnItemLongClickListener
 {
     // Loader codes
     private static final int LOAD_ACTIVITY = 1;
@@ -81,19 +81,22 @@ public class EventActivitiesListFragment extends ListFragment implements LoaderC
 
     private DisplayOption mDisplayOption = DisplayOption.ACTIVITIES;
     private LoginManager  mLoginManager;
-    private long          mRoleId;
-    private boolean       mApproved = false;
+    private EventActivity mEventActivity;
     private int           mDownloadAttempt;
 
 
     @Override
+    public void onAttach(android.app.Activity activity)
+    {
+        super.onAttach(activity);
+        mEventActivity = (EventActivity) activity;
+    }
+    @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        mLoginManager = LoginManager.getInstance(getActivity());
+        mLoginManager = LoginManager.getInstance(mEventActivity);
         setHasOptionsMenu(true);
-
-        long id = getArguments().getLong(ARGS_EVENT_ID);
 
         if (savedInstanceState != null)
         {
@@ -104,37 +107,12 @@ public class EventActivitiesListFragment extends ListFragment implements LoaderC
         }
         else if (mLoginManager.isSignedIn())
         {
-            Cursor c = getActivity().getContentResolver().query(ContentUris.withAppendedId(Event.CONTENT_URI, id), new String[]{ EventMember.Columns.APPROVED_FULL }, null, null, null);
-            if (c.moveToFirst())
-            {
-                mApproved = c.getInt(0) == 1;
-            }
-            c.close();
-
-            mDisplayOption = mApproved ? DisplayOption.SCHEDULE : DisplayOption.ACTIVITIES;                
+            mDisplayOption = mEventActivity.isApproved() ? DisplayOption.SCHEDULE : DisplayOption.ACTIVITIES;                
         }
 
         // Setup the adapters
-        mActivitiesAdapter = new EventActivitiesListAdapter(getActivity(), false);
-        mScheduleAdapter = new EventActivitiesListAdapter(getActivity(), true);
-
-        if (mLoginManager.isSignedIn())
-        {
-            // Check the user role for this event
-
-            // Get the info
-            String selection = EventMember.Columns.EVENT_ID_FULL+"="+id+" AND "+EventMember.Columns.MEMBER_ID_FULL+"="+mLoginManager.getMember().memberId;
-            Cursor c = getActivity().getContentResolver().query(EventMember.CONTENT_URI, new String[] { EventMember.Columns.ROLE_ID }, selection, null, null);
-            if (c.moveToFirst())
-            {
-                mRoleId = c.getLong(c.getColumnIndex(EventMember.Columns.ROLE_ID));
-            }
-            else
-            {
-                mRoleId = Event.ROLE_ATTENDEE;
-            }
-            c.close();
-        }
+        mActivitiesAdapter = new EventActivitiesListAdapter(mEventActivity, false);
+        mScheduleAdapter = new EventActivitiesListAdapter(mEventActivity, true);
     }
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState)
@@ -150,13 +128,14 @@ public class EventActivitiesListFragment extends ListFragment implements LoaderC
 
         // Add fastscrolling function
         getListView().setFastScrollEnabled(true);
+        getListView().setOnItemLongClickListener(this);
     }
     @Override
     public void onStart()
     {
         super.onStart();
         getLoaderManager().initLoader(LOAD_ACTIVITY, null, this);
-        if (mApproved)
+        if (mEventActivity.isApproved())
         {
             getLoaderManager().initLoader(LOAD_SCHEDULE, null, this);
         }
@@ -177,12 +156,12 @@ public class EventActivitiesListFragment extends ListFragment implements LoaderC
         switch (mDisplayOption)
         {
         case ACTIVITIES:
-            menu.findItem(R.id.menu_display_schedule).setVisible(mApproved);
+            menu.findItem(R.id.menu_display_schedule).setVisible(mEventActivity.isApproved());
             break;
 
         case SCHEDULE:
             menu.findItem(R.id.menu_display_activities).setVisible(true);
-            if (!mApproved)
+            if (!mEventActivity.isApproved())
             {
                 // Abort, the user is no longer logged in
                 mDisplayOption = DisplayOption.ACTIVITIES;
@@ -217,28 +196,17 @@ public class EventActivitiesListFragment extends ListFragment implements LoaderC
     @Override
     public void onListItemClick(ListView l, View v, int position, long id)
     {
-        if (mLoginManager.isSignedIn() && mRoleId != Event.ROLE_ATTENDEE)
-        {
-            // Open up the attendance control
-            getFragmentManager().beginTransaction()
-                    .replace(R.id.mainContent, AttendanceFragment.instantiate(id, getArguments().getLong(ARGS_EVENT_ID)))
-                    .addToBackStack(null)
-                    .commit();
-        }
-        else
-        {
-            // Get the proper adapter
-            EventActivitiesListAdapter adapter = (mDisplayOption == DisplayOption.ACTIVITIES) ? mActivitiesAdapter : mScheduleAdapter;
+        // Get the proper adapter
+        EventActivitiesListAdapter adapter = (mDisplayOption == DisplayOption.ACTIVITIES) ? mActivitiesAdapter : mScheduleAdapter;
 
-            // Show the Activity details
-            Cursor c = adapter.getCursor();
-            c.moveToPosition(adapter.getCursorPosition(position));
-            new AlertDialog.Builder(getActivity()) // TODO change this to a decent dialog fragment
-                    .setTitle(c.getString(c.getColumnIndex(Activity.Columns.NAME)))
-                    .setMessage(c.getString(c.getColumnIndex(Activity.Columns.DESCRIPTION)))
-                    .setPositiveButton(android.R.string.ok, null)
-                    .show();
-        }
+        // Show the Activity details
+        Cursor c = adapter.getCursor();
+        c.moveToPosition(adapter.getCursorPosition(position));
+        new AlertDialog.Builder(mEventActivity) // TODO change this to a decent dialog fragment
+                .setTitle(c.getString(c.getColumnIndex(Activity.Columns.NAME)))
+                .setMessage(c.getString(c.getColumnIndex(Activity.Columns.DESCRIPTION)))
+                .setPositiveButton(android.R.string.ok, null)
+                .show();
     }
 
 
@@ -248,14 +216,16 @@ public class EventActivitiesListFragment extends ListFragment implements LoaderC
         {
         case ACTIVITIES:
             setListAdapter(mActivitiesAdapter);
+            mEventActivity.getSupportActionBar().setTitle(R.string.title_displayOption_activities);
             break;
 
         case SCHEDULE:
             setListAdapter(mScheduleAdapter);
+            mEventActivity.getSupportActionBar().setTitle(R.string.title_displayOption_schedule);
             break;
         }
 
-        getActivity().supportInvalidateOptionsMenu();
+        mEventActivity.supportInvalidateOptionsMenu();
     }
 
     private void refresh()
@@ -264,14 +234,14 @@ public class EventActivitiesListFragment extends ListFragment implements LoaderC
         long eventId = getArguments().getLong(ARGS_EVENT_ID);
 
         // Download the activities info
-        SyncService.syncEventActivities(getActivity(), eventId);
+        SyncService.syncEventActivities(mEventActivity, eventId);
 
-        if (mApproved)
+        if (mEventActivity.isApproved())
         {
             // Download the schedule
-            SyncService.syncEventSchedule(getActivity(), eventId);
+            SyncService.syncEventSchedule(mEventActivity, eventId);
 
-            if (mRoleId != Event.ROLE_ATTENDEE)
+            if (mEventActivity.getRoleId() != Event.ROLE_ATTENDEE)
             {
                 // Download the attenders
                 SyncService.syncEventAttenders(getActivity(), eventId);
@@ -626,5 +596,23 @@ public class EventActivitiesListFragment extends ListFragment implements LoaderC
 
             return convertView;
         }
+    }
+
+
+    @Override
+    public boolean onItemLongClick(AdapterView<?> adapter, View v, int position, long id)
+    {
+        if (mEventActivity.getRoleId() != Event.ROLE_ATTENDEE)
+        {
+            // Open up the attendance control
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.mainContent, AttendanceFragment.instantiate(id, getArguments().getLong(ARGS_EVENT_ID)))
+                    .addToBackStack(null)
+                    .commit();
+
+            return true;
+        }
+
+        return false;
     }
 }

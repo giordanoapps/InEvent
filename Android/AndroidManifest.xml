@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.estudiotrilha.inevent"
-    android:versionCode="5"
-    android:versionName="1.1.2" >
+    android:versionCode="6"
+    android:versionName="1.1.3" >
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -51,7 +51,10 @@
         <activity android:name="com.estudiotrilha.inevent.app.UserSettingsActivity" />
 
         <!-- About -->
-        <activity android:name="com.estudiotrilha.inevent.app.AboutActivity" />
+        <activity
+            android:name="com.estudiotrilha.inevent.app.AboutActivity"
+            android:label="@string/title_about"
+            android:screenOrientation="portrait" />
 
         <!-- Login -->
         <activity

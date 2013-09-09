@@ -185,17 +185,10 @@ public class EventListFragment extends ListFragment implements LoaderCallbacks<C
     public void onLoadFinished(Loader<Cursor> loader, Cursor data)
     {
         mListAdapter.swapCursor(data);
-        if (mListAdapter.isEmpty())
+        if (mListAdapter.isEmpty() && Utils.checkConnectivity(getActivity()) && mDownloadAttempt < Utils.MAX_DOWNLOAD_ATTEMPTS)
         {
-            if (Utils.checkConnectivity(getActivity()) && mDownloadAttempt < Utils.MAX_DOWNLOAD_ATTEMPTS)
-            {
-                mDownloadAttempt++;
-                refresh();
-            }
-            else
-            {
-                setListShown(true);
-            }
+            mDownloadAttempt++;
+            refresh();
         }
         else
         {

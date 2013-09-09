@@ -1,37 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:minHeight="48dp"
-    android:orientation="horizontal"
-    tools:ignore="UseCompoundDrawables" >
+    android:layout_height="48dp" >
 
-    <TextView
-        android:id="@+id/member_id"
-        android:layout_width="52dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:padding="@dimen/default_textPadding" />
+    <RelativeLayout
+        android:id="@+id/attender_backView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
 
-    <TextView
-        android:id="@id/member_name"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_weight="1"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:padding="@dimen/default_textPadding"
-        android:scrollHorizontally="true"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        <TextView
+            android:layout_width="@dimen/attender_backView_text_width"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@color/attender_presence_revoke"
+            android:gravity="center_vertical|right"
+            android:padding="@dimen/default_textPadding"
+            android:text="@string/message_attender_absent"
+            android:textColor="@android:color/white"
+            android:textStyle="bold" />
 
-    <ImageView
-        android:id="@+id/member_present"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_gravity="top"
-        android:contentDescription="@string/description_attender_present"
-        android:src="@drawable/ic_navigation_accept" />
+        <TextView
+            android:layout_width="@dimen/attender_backView_text_width"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:background="@color/attender_presence_confirm"
+            android:gravity="center_vertical|left"
+            android:padding="@dimen/default_textPadding"
+            android:text="@string/message_attender_present"
+            android:textColor="@android:color/white"
+            android:textStyle="bold" />
+    </RelativeLayout>
 
-</LinearLayout>
+    <LinearLayout
+        android:id="@+id/attender_frontView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/background_light"
+        android:orientation="horizontal"
+        tools:ignore="UseCompoundDrawables" >
+
+        <TextView
+            android:id="@+id/member_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:minWidth="52dp"
+            android:padding="@dimen/default_textPadding" />
+
+        <TextView
+            android:id="@id/member_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:padding="@dimen/default_textPadding"
+            android:scrollHorizontally="true"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <ImageView
+            android:id="@+id/member_present"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="top"
+            android:contentDescription="@string/description_attender_present"
+            android:src="@drawable/ic_navigation_accept" />
+    </LinearLayout>
+
+</FrameLayout>

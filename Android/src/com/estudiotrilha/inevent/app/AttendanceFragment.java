@@ -3,7 +3,7 @@ package com.estudiotrilha.inevent.app;
 
 import java.util.Locale;
 
-import android.content.ContentValues;
+import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
@@ -14,6 +14,7 @@ import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.SearchView;
 import android.text.InputType;
 import android.view.LayoutInflater;
@@ -22,6 +23,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Filter;
@@ -31,18 +34,23 @@ import android.widget.TextView;
 
 import com.estudiotrilha.android.widget.ExtensibleCursorAdapter;
 import com.estudiotrilha.inevent.R;
+import com.estudiotrilha.inevent.Utils;
+import com.estudiotrilha.inevent.content.Activity;
 import com.estudiotrilha.inevent.content.ActivityMember;
 import com.estudiotrilha.inevent.content.LoginManager;
 import com.estudiotrilha.inevent.content.Member;
 import com.estudiotrilha.inevent.service.SyncService;
+import com.fortysevendeg.swipelistview.BaseSwipeListViewListener;
+import com.fortysevendeg.swipelistview.SwipeListView;
 
 
 public class AttendanceFragment extends ListFragment implements LoaderCallbacks<Cursor>, OnItemLongClickListener
 {
-    private static final int INTERVAL_CLICK = 600; // in milliseconds
-
     // Loader coder
     private static final int LOAD_PEOPLE = 1;
+
+    // Instance State
+    private static final String STATE_DOWNLOAD_ATTEMPT = "state.DOWNLOAD_ATTEMPT";
 
     // Arguments
     private static final String ARGS_ACTIVITY_ID = "args.ACTIVITY_ID";
@@ -66,15 +74,14 @@ public class AttendanceFragment extends ListFragment implements LoaderCallbacks<
 
     private PeopleAdapter mPeopleAdapter;
     private Filter        mPeopleFilter;
+    private SearchView    mSearchView;
+    private SwipeListView mListView;
 
     private int mIndexId;
     private int mIndexName;
     private int mIndexPresent;
 
-    private long mLastClickedItemId = -1;
-    private long mLastClickTime;
-
-    private SearchView mSearchView;
+    private int  mDownloadAttempt;
 
 
     @Override
@@ -82,6 +89,14 @@ public class AttendanceFragment extends ListFragment implements LoaderCallbacks<
     {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+
+        // Download new data
+        refresh();
+
+        if (savedInstanceState != null)
+        {
+            mDownloadAttempt = savedInstanceState.getInt(STATE_DOWNLOAD_ATTEMPT);
+        }
 
         // Setup the adapter
         mPeopleAdapter = new PeopleAdapter(getActivity());
@@ -98,7 +113,8 @@ public class AttendanceFragment extends ListFragment implements LoaderCallbacks<
                 present.setVisibility(c.getInt(mIndexPresent) == 1 ? View.VISIBLE : View.GONE);
             }
         });
-        
+
+        // Setup the filter
         mPeopleFilter = new Filter() {
             // The query basic info
             final Uri      uri           = ActivityMember.CONTENT_URI;
@@ -142,7 +158,7 @@ public class AttendanceFragment extends ListFragment implements LoaderCallbacks<
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        return super.onCreateView(inflater, container, savedInstanceState);
+        return inflater.inflate(R.layout.fragment_attendance, container, false);
     }
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState)
@@ -150,22 +166,65 @@ public class AttendanceFragment extends ListFragment implements LoaderCallbacks<
         super.onViewCreated(view, savedInstanceState);
         // Add the adapter to the list
         setListAdapter(mPeopleAdapter);
+        mListView = (SwipeListView) getListView();
+        mListView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw()
+            {
+                // Calculate the left and right offset
+                int width = mListView.getWidth();
+                if (width > 0)
+                {
+                    // Do this once for every time the view is created
+                    mListView.getViewTreeObserver().removeOnPreDrawListener(this);
 
-        // Set the empty text message
-        setEmptyText(getText(R.string.empty_eventActivityAttenders));
-        
-        // Add fastscrolling function
-        getListView().setFastScrollEnabled(true);
+                    float offset = width - getResources().getDimension(R.dimen.attender_backView_text_width);
+                    mListView.setOffsetLeft(offset);
+                    mListView.setOffsetRight(offset);
+                }
+
+                return true;
+            }
+        });
+        mListView.setSwipeListViewListener(new BaseSwipeListViewListener() {
+            @Override
+            public void onOpened(int position, boolean toRight)
+            {
+                setPresence(mPeopleAdapter.getItemId(position), toRight);
+            }
+
+            public void onListChanged()
+            {
+                mListView.closeOpenedItems();
+            }
+        });
 
         // Setup the click listener
         getListView().setOnItemLongClickListener(this);
+
+        // Set the title
+        Cursor c = getActivity().getContentResolver()
+                .query(ContentUris.withAppendedId(Activity.ACTIVITY_CONTENT_URI, getArguments().getLong(ARGS_ACTIVITY_ID)), new String[] { Activity.Columns.NAME_FULL }, null, null, null);
+        if (c.moveToFirst())
+        {
+            ((ActionBarActivity) getActivity()).setTitle(c.getString(0));
+        }
+        c.close();
     }
     @Override
     public void onStart()
     {
         super.onStart();
         // Start loading the content
+        setListShown(false);
         getLoaderManager().initLoader(LOAD_PEOPLE, null, this);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState)
+    {
+        super.onSaveInstanceState(outState);
+        outState.putInt(STATE_DOWNLOAD_ATTEMPT, mDownloadAttempt);
     }
 
     @Override
@@ -201,53 +260,66 @@ public class AttendanceFragment extends ListFragment implements LoaderCallbacks<
     }
 
     @Override
-    public void onListItemClick(ListView l, View v, int position, long id)
-    {
-        // If double clicked, the attendee will have its presence confirmed
-        if (mLastClickedItemId == id && System.currentTimeMillis() - mLastClickTime < INTERVAL_CLICK)
-        {
-            confirmPresence(id);
-        }
-        else
-        {
-            mLastClickedItemId = id;
-            mLastClickTime = System.currentTimeMillis();
-        }
-    }
-    @Override
     public boolean onItemLongClick(AdapterView<?> adapter, View v, int position, long id)
     {
-        confirmPresence(id);
+        setPresence(id, true);
         return true;
     }
 
-    private void confirmPresence(final long id)
+    private void setPresence(final long memberID, boolean present)
     {
-        // Clear the selection
+        // Clear the query text
         mSearchView.setQuery("", false);
-
-        // Mark the member as present
-        setPresence(id, 1);
 
         // And add this to the queue to be sent to the server
         LoginManager.getInstance(getActivity())
-                .confirmPresence(getArguments().getLong(ARGS_ACTIVITY_ID), id);
+                .setPresence(getArguments().getLong(ARGS_ACTIVITY_ID), memberID, present);
+
+        // Notify the change content
+        mPeopleAdapter.notifyDataSetChanged();
     }
 
-    private void setPresence(long memberID, int present)
+    @Override
+    public void setListShown(boolean shown)
     {
-        // Update the values
-        final String selection = ActivityMember.Columns.MEMBER_ID_FULL+"="+memberID+
-                " AND "+ActivityMember.Columns.ACTIVITY_ID_FULL+"="+getArguments().getLong(ARGS_ACTIVITY_ID);
-        final ContentValues values = new ContentValues();
-        values.put(ActivityMember.Columns.PRESENT, present);
-        getActivity().getContentResolver().update(ActivityMember.CONTENT_URI, values, selection, null);
+        View rootView = getView();
 
-        // Reload content
-        getLoaderManager().restartLoader(LOAD_PEOPLE, null, this);
+        // null check
+        if (rootView == null) return;
+
+        View progress = rootView.findViewById(android.R.id.progress);
+
+        int progressAnimation;
+        int listAnimation;
+        int progressVisibility;
+        int listVisibility;
+        if (shown)
+        {
+            progressAnimation = android.R.anim.fade_out;
+            listAnimation = android.R.anim.fade_in;
+
+            progressVisibility = View.GONE;
+            listVisibility = View.VISIBLE;
+        }
+        else
+        {
+            progressAnimation = android.R.anim.fade_in;
+            listAnimation = android.R.anim.fade_out;
+
+            progressVisibility = View.VISIBLE;
+            listVisibility = View.GONE;
+        }
+
+        // Skip unnecessary work
+        if (mListView.getVisibility() == listVisibility) return;
+
+        // Animate the change
+        progress.startAnimation(AnimationUtils.loadAnimation(getActivity(), progressAnimation));
+        mListView.startAnimation(AnimationUtils.loadAnimation(getActivity(), listAnimation));
+        // Set the proper display parameters
+        progress.setVisibility(progressVisibility);
+        mListView.setVisibility(listVisibility);
     }
-
-
 
     private void refresh()
     {
@@ -272,19 +344,22 @@ public class AttendanceFragment extends ListFragment implements LoaderCallbacks<
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data)
     {
-        // Treat the special (empty) cases
-        if (data.getCount() < 3)
-        {
-            // Download new data
-            refresh();
-        }
-
         // Update the indexes
         mIndexId = data.getColumnIndex(ActivityMember.Columns._ID);
         mIndexName = data.getColumnIndex(Member.Columns.NAME);
         mIndexPresent = data.getColumnIndex(ActivityMember.Columns.PRESENT);
 
         mPeopleAdapter.swapCursor(data);
+        
+        if (mPeopleAdapter.getCount() < 3 && Utils.checkConnectivity(getActivity()) && mDownloadAttempt < Utils.MAX_DOWNLOAD_ATTEMPTS)
+        {
+            mDownloadAttempt++;
+            refresh();
+        }
+        else
+        {
+            setListShown(true);
+        }
     }
     @Override
     public void onLoaderReset(Loader<Cursor> loader)

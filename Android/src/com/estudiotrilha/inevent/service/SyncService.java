@@ -193,13 +193,13 @@ public class SyncService extends IntentService implements ApiRequest.ResponseHan
             try
             {
                 String tokenID = LoginManager.getInstance(this).getTokenId();
-                long eventID = intent.getLongExtra(EXTRA_ACTIVITY_ID, -1);
-                HttpURLConnection connection = Activity.Api.getPeople(tokenID, eventID, Activity.Api.PeopleSelection.ALL);
+                long activityID = intent.getLongExtra(EXTRA_ACTIVITY_ID, -1);
+                HttpURLConnection connection = Activity.Api.getPeople(tokenID, activityID, Activity.Api.PeopleSelection.ALL);
                 ApiRequest.getJsonFromConnection(code, connection, this, false);
             }
             catch (IOException e)
             {
-                Log.e(InEvent.NAME, "Couldn't create connection for event.getPeople(tokenID, activityID, selection)", e);
+                Log.e(InEvent.NAME, "Couldn't create connection for activity.getPeople(tokenID, activityID, selection)", e);
             }
 
             // stop the sync state
@@ -519,9 +519,9 @@ public class SyncService extends IntentService implements ApiRequest.ResponseHan
                     boolean present = jobj.getInt(ActivityMember.Columns.PRESENT) == 1;
 
                     // Parse the member
+                    // Parse the link member-activity
                     ContentValues values = ActivityMember.newActivtyMember(eventID, activityID, memberID, approved, present);
 
-                    // Parse the link member-activity
                     // Add the insert operation
                     operations.add(
                             ContentProviderOperation

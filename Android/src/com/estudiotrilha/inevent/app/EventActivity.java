@@ -12,6 +12,8 @@ import android.view.View;
 
 import com.estudiotrilha.inevent.R;
 import com.estudiotrilha.inevent.content.Event;
+import com.estudiotrilha.inevent.content.EventMember;
+import com.estudiotrilha.inevent.content.LoginManager;
 
 
 public class EventActivity extends SlidingMenuBaseActivity
@@ -29,14 +31,21 @@ public class EventActivity extends SlidingMenuBaseActivity
     }
 
 
+    private boolean mApproved = false;
+    private int     mRoleId   = Event.ROLE_ATTENDEE;
+
+    private LoginManager mLoginManager;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event);
 
-        long eventID = getIntent().getLongExtra(EXTRA_EVENT_ID, -1);
+        mLoginManager = LoginManager.getInstance(this);
 
+        long eventID = getIntent().getLongExtra(EXTRA_EVENT_ID, -1);
         if (savedInstanceState == null)
         {
             // Event activities Fragment
@@ -47,16 +56,40 @@ public class EventActivity extends SlidingMenuBaseActivity
         }
 
         // Setup the title
-        CharSequence eventName = getSupportActionBar().getTitle();
         // Query the event name
         Cursor c = getContentResolver().query(ContentUris.withAppendedId(Event.CONTENT_URI, eventID), new String[] { Event.Columns.NAME_FULL }, null, null, null);
         if (c.moveToFirst())
         {
-            eventName = c.getString(0);
+            getSupportActionBar().setSubtitle(c.getString(0));
         }
         c.close();
         // Add it to the action bar title
-        getSupportActionBar().setTitle(eventName);
+
+        if (mLoginManager.isSignedIn())
+        {
+            // Check the user role for this event
+
+            // Get the info
+            String selection = EventMember.Columns.EVENT_ID_FULL+"="+eventID+" AND "+EventMember.Columns.MEMBER_ID_FULL+"="+mLoginManager.getMember().memberId;
+            c = getContentResolver().query(EventMember.CONTENT_URI, new String[] { EventMember.Columns.ROLE_ID }, selection, null, null);
+            if (c.moveToFirst())
+            {
+                mRoleId = c.getInt(0);
+            }
+            else
+            {
+                mRoleId = Event.ROLE_ATTENDEE;
+            }
+            c.close();
+
+             // Check if the user is approved for this event
+            c = getContentResolver().query(ContentUris.withAppendedId(Event.CONTENT_URI, eventID), new String[]{ EventMember.Columns.APPROVED_FULL }, null, null, null);
+            if (c.moveToFirst())
+            {
+                mApproved = c.getInt(0) == 1;
+            }
+            c.close();
+        }
     }
 
     @Override
@@ -99,5 +132,15 @@ public class EventActivity extends SlidingMenuBaseActivity
     public void events(View v)
     {
         finish();
+    }
+
+
+    public int getRoleId()
+    {
+        return mRoleId;
+    }
+    public boolean isApproved()
+    {
+        return mApproved;
     }
 }

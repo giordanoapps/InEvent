@@ -13,8 +13,8 @@
     <string name="action_login">Fazer Login</string>
     <string name="action_signIn">Entrar</string>
     <string name="action_signOut">Sair</string>
-    <string name="action_diplayOption_schedule">Minhas atividades</string>
-    <string name="action_diplayOption_activities">Todas as atividades</string>
+    <string name="action_displayOption_schedule">Minhas atividades</string>
+    <string name="action_displayOption_activities">Todas as atividades</string>
 
     <!-- Sliding Menu Buttons -->
     <string name="slidingMenu_about">Sobre</string>
@@ -22,8 +22,10 @@
     <string name="slidingMenu_login">Fazer Login</string>
 
     <!-- Titles -->
-    <string name="title_general">Geral</string>
     <string name="title_about">Sobre</string>
+    <string name="title_displayOption_schedule">Minhas agenda</string>
+    <string name="title_displayOption_activities">Todas as atividades</string>
+    <string name="title_general">Geral</string>
     <string name="title_preferences">Preferências</string>
     <string name="title_splashScreen">Splash Screen</string>
     <string name="title_appVersion">Versão</string>
@@ -46,6 +48,8 @@
     <!-- Messages -->
     <string name="message_about_estudioTrilha">Estúdio Trilha</string>
     <string name="message_about_inEvent"><b>InEvent</b>, um produto do</string>
+    <string name="message_attender_absent">Ausente</string>
+    <string name="message_attender_present">Presente</string>
     <string name="message_loginNecessary">Faça o login primeiro</string>
 
     <!-- Loading Messages -->
@@ -53,9 +57,9 @@
     <string name="loading_loggingIn">Entrando…</string>
 
     <!-- Empty Messages -->
-    <string name="empty_eventList">Verifique sua conexão, então clique em Menu > Atualizar</string>
+    <string name="empty_eventList">Nenhum evento futuro</string>
     <string name="empty_eventActivities">Nenhuma atividade cadastrada</string>
-    <string name="empty_eventActivityAttenders">Verifique a sua conexão, então clique em Menu > Atualizar</string>
+    <string name="empty_eventActivityAttenders">Ninguém cadastrado nesta atividade ainda</string>
 
     <!-- Preferences -->
     <string name="preference_useMobileNetwork">Usar rede de dados móvel</string>

@@ -17,6 +17,9 @@
    	<dimen name="eventCard_layout_marginVertical">8dp</dimen>
    	<dimen name="eventCard_layout_marginHorizontal">16dp</dimen>
 
+   	<!-- Attenders -->
+   	<dimen name="attender_backView_text_width">150dp</dimen>
+
     <!-- Custom Toast Message Configs -->
    	<dimen name="toast_layout_width">180dp</dimen>
    	<dimen name="toast_layout_height">60dp</dimen>

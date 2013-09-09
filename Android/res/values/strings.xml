@@ -13,8 +13,8 @@
     <string name="action_login">Login</string>
     <string name="action_signIn">Sign In</string>
     <string name="action_signOut">Sign Out</string>
-    <string name="action_diplayOption_schedule">Show schedule</string>
-    <string name="action_diplayOption_activities">Show all activities</string>
+    <string name="action_displayOption_schedule">Show schedule</string>
+    <string name="action_displayOption_activities">Show all activities</string>
 
     <!-- Sliding Menu Buttons -->
     <string name="slidingMenu_about">About</string>
@@ -22,8 +22,10 @@
     <string name="slidingMenu_login">Login</string>
 
     <!-- Titles -->
-    <string name="title_general">General</string>
     <string name="title_about">About</string>
+    <string name="title_displayOption_schedule">My schedule</string>
+    <string name="title_displayOption_activities">All activities</string>
+    <string name="title_general">General</string>
     <string name="title_preferences">Preferences</string>
     <string name="title_splashScreen">Splash Screen</string>
     <string name="title_appVersion">Version</string>
@@ -46,6 +48,8 @@
     <!-- Messages -->
     <string name="message_about_estudioTrilha">Estúdio Trilha</string>
     <string name="message_about_inEvent"><b>InEvent</b>, powered by</string>
+    <string name="message_attender_absent">Absent</string>
+    <string name="message_attender_present">Present</string>
     <string name="message_loginNecessary">Login first</string>
 
     <!-- Loading Messages -->
@@ -53,9 +57,9 @@
     <string name="loading_loggingIn">Loging In…</string>
 
     <!-- Empty Messages -->
-    <string name="empty_eventList">Check your connection, then click Menu > Refresh</string>
-    <string name="empty_eventActivities">Check your connection, then click Menu > Refresh</string>
-    <string name="empty_eventActivityAttenders">Check your connection, then click Menu > Refresh</string>
+    <string name="empty_eventList">No future events</string>
+    <string name="empty_eventActivities">No activities</string>
+    <string name="empty_eventActivityAttenders">No one enrolled for this activity</string>
 
     <!-- Preferences -->
     <string name="preference_useMobileNetwork">Use Mobile Network</string>
