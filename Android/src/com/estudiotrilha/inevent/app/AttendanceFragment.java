@@ -17,14 +17,10 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.SearchView;
 import android.text.InputType;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
-import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Filter;
@@ -40,8 +36,6 @@ import com.estudiotrilha.inevent.content.ActivityMember;
 import com.estudiotrilha.inevent.content.LoginManager;
 import com.estudiotrilha.inevent.content.Member;
 import com.estudiotrilha.inevent.service.SyncService;
-import com.fortysevendeg.swipelistview.BaseSwipeListViewListener;
-import com.fortysevendeg.swipelistview.SwipeListView;
 
 
 public class AttendanceFragment extends ListFragment implements LoaderCallbacks<Cursor>, OnItemLongClickListener
@@ -75,7 +69,6 @@ public class AttendanceFragment extends ListFragment implements LoaderCallbacks<
     private PeopleAdapter mPeopleAdapter;
     private Filter        mPeopleFilter;
     private SearchView    mSearchView;
-    private SwipeListView mListView;
 
     private int mIndexId;
     private int mIndexName;
@@ -156,48 +149,11 @@ public class AttendanceFragment extends ListFragment implements LoaderCallbacks<
         };
     }
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-    {
-        return inflater.inflate(R.layout.fragment_attendance, container, false);
-    }
-    @Override
     public void onViewCreated(View view, Bundle savedInstanceState)
     {
         super.onViewCreated(view, savedInstanceState);
         // Add the adapter to the list
         setListAdapter(mPeopleAdapter);
-        mListView = (SwipeListView) getListView();
-        mListView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-            @Override
-            public boolean onPreDraw()
-            {
-                // Calculate the left and right offset
-                int width = mListView.getWidth();
-                if (width > 0)
-                {
-                    // Do this once for every time the view is created
-                    mListView.getViewTreeObserver().removeOnPreDrawListener(this);
-
-                    float offset = width - getResources().getDimension(R.dimen.attender_backView_text_width);
-                    mListView.setOffsetLeft(offset);
-                    mListView.setOffsetRight(offset);
-                }
-
-                return true;
-            }
-        });
-        mListView.setSwipeListViewListener(new BaseSwipeListViewListener() {
-            @Override
-            public void onOpened(int position, boolean toRight)
-            {
-                setPresence(mPeopleAdapter.getItemId(position), toRight);
-            }
-
-            public void onListChanged()
-            {
-                mListView.closeOpenedItems();
-            }
-        });
 
         // Setup the click listener
         getListView().setOnItemLongClickListener(this);
@@ -262,7 +218,7 @@ public class AttendanceFragment extends ListFragment implements LoaderCallbacks<
     @Override
     public boolean onItemLongClick(AdapterView<?> adapter, View v, int position, long id)
     {
-        setPresence(id, true);
+        setPresence(id, !mPeopleAdapter.isPresent(position));
         return true;
     }
 
@@ -279,47 +235,6 @@ public class AttendanceFragment extends ListFragment implements LoaderCallbacks<
         mPeopleAdapter.notifyDataSetChanged();
     }
 
-    @Override
-    public void setListShown(boolean shown)
-    {
-        View rootView = getView();
-
-        // null check
-        if (rootView == null) return;
-
-        View progress = rootView.findViewById(android.R.id.progress);
-
-        int progressAnimation;
-        int listAnimation;
-        int progressVisibility;
-        int listVisibility;
-        if (shown)
-        {
-            progressAnimation = android.R.anim.fade_out;
-            listAnimation = android.R.anim.fade_in;
-
-            progressVisibility = View.GONE;
-            listVisibility = View.VISIBLE;
-        }
-        else
-        {
-            progressAnimation = android.R.anim.fade_in;
-            listAnimation = android.R.anim.fade_out;
-
-            progressVisibility = View.VISIBLE;
-            listVisibility = View.GONE;
-        }
-
-        // Skip unnecessary work
-        if (mListView.getVisibility() == listVisibility) return;
-
-        // Animate the change
-        progress.startAnimation(AnimationUtils.loadAnimation(getActivity(), progressAnimation));
-        mListView.startAnimation(AnimationUtils.loadAnimation(getActivity(), listAnimation));
-        // Set the proper display parameters
-        progress.setVisibility(progressVisibility);
-        mListView.setVisibility(listVisibility);
-    }
 
     private void refresh()
     {
@@ -415,6 +330,12 @@ public class AttendanceFragment extends ListFragment implements LoaderCallbacks<
             }
 
             return super.swapCursor(c);
+        }
+
+        protected boolean isPresent(int position)
+        {
+            mCursor.moveToPosition(position);
+            return mCursor.getInt(mIndexPresent) == 1;
         }
 
         @Override
