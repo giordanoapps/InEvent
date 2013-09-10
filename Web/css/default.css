@@ -222,7 +222,7 @@ textarea, input {
 	display: inline-block;
 	cursor: pointer;
 	text-align: center;
-	vertical-align: middle;
+	vertical-align: top;
 }
 
 .bar.top > li:hover {
@@ -1176,12 +1176,16 @@ textarea, input {
 
 #eventContent {
 	width: 100%;
-	/*position: fixed;*/
 	height: 100%;
+	position: fixed;
+	overflow: hidden;
 }
 
-#eventContent .boardContent {
-	border: 1px solid #3C3C3C;
+#eventContent .placerContent > ul,
+#eventContent .realContent {
+	position: relative;
+	height: 100%;
+	overflow: hidden;
 }
 
 .emptyCapital {
@@ -1197,8 +1201,7 @@ textarea, input {
 
 .scheduleDay {
 	text-align: left;
-	background-color: rgba(15, 15, 15, 0.8);
-	color: #DBDBDB;
+	border-bottom: 1px solid #C0C0C0;
 }
 
 .scheduleDay span {
@@ -1209,10 +1212,8 @@ textarea, input {
 .scheduleDay span:first-child {
 	width: 20%;
 	text-align: center;
-	border-right: 1px solid #2E2E2E;
-	box-shadow: inset -1px 0px #444;
-	-moz-box-shadow: inset -1px 0px #444;
-	-webkit-box-shadow: inset -1px 0px #444;
+	border-right: 1px solid #FFF;
+	box-shadow: inset -1px 0px #E9E9E9;
 }
 
 .scheduleDay span:last-child {
@@ -1220,14 +1221,15 @@ textarea, input {
 }
 
 .scheduleItem {
-	background-color: #EEE;
+	background-color: #FDFDFD;
 	padding: 0;
-	border-bottom: 1px solid #BDBDBD;
-	box-shadow: 0 1px #444;
-	-moz-box-shadow: 0 1px #444;
-	-webkit-box-shadow: 0 1px #444;
+	border-bottom: 1px solid #E6E6E6;
 	position: relative;
 	height: 100px;
+}
+
+.scheduleItem:last-of-type {
+	padding-bottom: 88px;
 }
 
 .scheduleItemSelectable {
@@ -1258,7 +1260,7 @@ textarea, input {
 	width: 20%;
 	float: left;
 	height: 100%;
-	background-color: #FDFDFD;
+	background-color: whiteSmoke;
 }
 
 .scheduleItem:hover .left,
@@ -1279,6 +1281,7 @@ textarea, input {
 }
 
 .scheduleItem .right .upper {
+	position: relative;
 	height: 40%;
 }
 
@@ -1324,7 +1327,7 @@ textarea, input {
 
 .scheduleItem .right .hint::before {
 	top: 1px;
-	right: 1px;
+	right: 0px;
 	border-width: 0px 25px 25px 0px;
 }
 
@@ -1400,8 +1403,7 @@ textarea, input {
 
 .agendaDay {
 	text-align: left;
-	background-color: rgba(15, 15, 15, 0.8);
-	color: #DBDBDB;
+	border-bottom: 1px solid #C0C0C0;
 }
 
 .agendaDay span {
@@ -1412,10 +1414,8 @@ textarea, input {
 .agendaDay span:first-child {
 	text-align: center;
 	width: 7.5%;
-	border-right: 1px solid #2E2E2E;
-	box-shadow: inset -1px 0px #444;
-	-moz-box-shadow: inset -1px 0px #444;
-	-webkit-box-shadow: inset -1px 0px #444;
+	border-right: 1px solid #FFF;
+	box-shadow: inset -1px 0px #E9E9E9;
 }
 
 .agendaDay span:last-child {
@@ -1423,18 +1423,19 @@ textarea, input {
 }
 
 .agendaItem {
-	background-color: #EEE;
+	background-color: #FDFDFD;
 	padding: 0;
-	border-bottom: 1px solid #BDBDBD;
-	box-shadow: 0 1px #444;
-	-moz-box-shadow: 0 1px #444;
-	-webkit-box-shadow: 0 1px #444;
+	border-bottom: 1px solid #E6E6E6;
 	position: relative;
 	height: 50px;
 }
 
+.agendaItem:last-of-type {
+	margin-bottom: 88px;
+}
+
 .agendaItemHighlight {
-	background-color: #D1D1D1;
+	background-color: #E6E6E6;
 	height: 200px;
 }
 
@@ -1582,9 +1583,27 @@ textarea, input {
 	text-align: center;
 }
 
+.pickerItem:last-of-type td {
+	padding-bottom: 88px;
+}
+
 /* @end */
 
 /* @group People */
+
+#peopleContent {
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	overflow: hidden;
+}
+
+#peopleContent .placerContent > ul,
+#peopleContent .realContent {
+	position: relative;
+	height: 100%;
+	overflow: hidden;
+}
 
 #peopleContent thead td {
 	cursor: pointer;

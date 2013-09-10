@@ -2,7 +2,7 @@ var modules = [];
 modules.push('jquery');
 modules.push('common');
 modules.push('modules/cookie');
-modules.push('jquery.mCustomScrollbar');
+modules.push('jquery.scrollbar');
 modules.push('jquery.chosen');
 
 define(modules, function($, common, cookie) {$(function() {
@@ -16,6 +16,9 @@ define(modules, function($, common, cookie) {$(function() {
 	$("#peopleContent").on("hashDidLoad", function() {
 		// Load the first activity
 		$(this).find(".scheduleItemSelectable").first().trigger("click");
+
+		// Create the scrollable container
+		$(this).find(".placerContent > ul, .realContent").perfectScrollbar();
 	});
 
 // -------------------------------------- TOOLS -------------------------------------- //

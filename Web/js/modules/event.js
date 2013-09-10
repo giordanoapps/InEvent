@@ -2,7 +2,7 @@ var modules = [];
 modules.push('jquery');
 modules.push('common');
 modules.push('modules/cookie');
-modules.push('jquery.mCustomScrollbar');
+modules.push('jquery.scrollbar');
 modules.push('jquery.chosen');
 
 define(modules, function($, common, cookie) {$(function() {
@@ -14,7 +14,8 @@ define(modules, function($, common, cookie) {$(function() {
 	 * @return {null}
 	 */
 	$("#eventContent").on("hashDidLoad", function() {
-		$(this).find(".placerContent ul").mCustomScrollbar({ scrollInertia: 150 });
+		// Create the scrollable container
+		$(this).find(".placerContent > ul, .realContent").perfectScrollbar();
 	});
 
 // -------------------------------------- MENU -------------------------------------- //

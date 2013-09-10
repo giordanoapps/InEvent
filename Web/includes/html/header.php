@@ -26,6 +26,7 @@
 
 	<link rel="stylesheet" href="css/jquery-ui-1.8.21.custom.min.css" type="text/css" />
 	<link rel="stylesheet" href="css/chosen.min.css" type="text/css" />
+	<link rel="stylesheet" href="css/perfect-scrollbar-0.4.4.min.css" type="text/css" />
 	<link rel="stylesheet" href="css/jquery.qtip.min.css" type="text/css" />
 	<link rel="stylesheet" href="css/default.css" type="text/css" media="all" />
 	<link rel="stylesheet" href="css/printer.css" type="text/css" media="print" />

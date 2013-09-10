@@ -152,7 +152,7 @@ define(["jquery", "modules/cookie"], function($, cookie) {$(function() {
 			}
 		}
 
-		$(".notifications").mCustomScrollbar("update");
+		$(".notifications").perfectScrollbar("update");
 
 	}
 	
@@ -191,8 +191,8 @@ define(["jquery", "modules/cookie"], function($, cookie) {$(function() {
 		if (!($notifications.is(":visible"))) {
 		
 			// We check it the slider has already been set up
-			if (!($notifications.hasClass("mCustomScrollbar"))) {
-				$notifications.mCustomScrollbar({
+			if (!($notifications.hasClass("perfectScrollbar"))) {
+				$notifications.perfectScrollbar({
 					scrollInertia: 0,
 					callbacks: {
 						onTotalScroll: function() {
@@ -203,7 +203,7 @@ define(["jquery", "modules/cookie"], function($, cookie) {$(function() {
 			}
 			
 			$notifications.slideToggle(100, function () {
-				$(this).mCustomScrollbar("update");
+				$(this).perfectScrollbar("update");
 			});
 			
 			// And we ask for the notifications
@@ -270,7 +270,7 @@ define(["jquery", "modules/cookie"], function($, cookie) {$(function() {
 			// If the bucket came empty, we inform the user about it
 			if (!data.data) {
 				$ref.text("Todas as notificações foram carregadas.");
-				$(".notifications").mCustomScrollbar("update");
+				$(".notifications").perfectScrollbar("update");
 			}
 		});
 	});

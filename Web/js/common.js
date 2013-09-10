@@ -9,7 +9,7 @@ require.config({
 		'jquery.validate': 'jquery.validate',
 		'jquery.maskedinput': 'jquery.maskedinput-1.3.min',
 		'jquery.mousewheel': 'jquery.mousewheel.min',
-		'jquery.mCustomScrollbar': 'jquery.mCustomScrollbar.min',
+		'jquery.scrollbar': 'perfect-scrollbar-0.4.4.min',
 		'jquery.fileuploader': 'jquery.fileuploader.min',
 		'jquery.chosen': 'chosen.jquery.min',
 		'google.analytics': 'analytics.min',
@@ -25,7 +25,7 @@ require.config({
 		'jquery.validate': ['jquery'],
 		'jquery.maskedinput': ['jquery'],
 		'jquery.mousewheel': ['jquery'],
-		'jquery.mCustomScrollbar': ['jquery'],
+		'jquery.scrollbar': ['jquery', 'jquery.mousewheel'],
 		'jquery.fileuploader': ['jquery'],
 		'jquery.chosen': ['jquery'],
 
@@ -59,7 +59,7 @@ var basic = [];
 basic.push('jquery-ui');
 basic.push('jquery.inview');
 basic.push('jquery.mousewheel');
-basic.push('jquery.mCustomScrollbar');
+basic.push('jquery.scrollbar');
 basic.push('google.analytics');
 
 basic.push('modules/np');
