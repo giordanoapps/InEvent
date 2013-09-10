@@ -13,13 +13,12 @@
 			
 			$activityData = $data["data"][$i];
 
-            if ($dayTimestamp != date("z", $data['dateBegin'])) {
-                $dayTimestamp = date("z", $data['dateBegin']);
+            if ($dayTimestamp != date("z", $activityData['dateBegin'])) {
+                $dayTimestamp = date("z", $activityData['dateBegin']);
 
                 $days++;
 
                 $convertedData["data"][] = array();
-                // $convertedData["data"][$days]["dateDay"] = $dayTimestamp;
             }
 
             $convertedData["data"][$days][] = $data["data"][$i];

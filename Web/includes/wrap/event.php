@@ -10,6 +10,9 @@
 
     function printSchedule($result, $target) {
 
+        // Get the singleton
+        $core = Core::singleton();
+
         ?><ul><?php
 
         $rows = mysql_num_rows($result);
@@ -18,23 +21,21 @@
 
             // Display a row exclusive to all participants
             if ($target == "event") {
-                $dateBegin = mysql_result($result, 0, "dateBegin");
-                $dateEnd = mysql_result($result, $rows - 1, "dateEnd");
 
-                // Reset our pointer
-                mysql_data_seek($result, 0);
+                // Get informations specific for this event
+                $resultEvent = getEventForEventQuery($core->eventID);
 
                 // Element to grab all people
                 printScheduleItem(
                     array(
                         "id" => 1,
                         "type" => "event",
-                        "dateBegin" => $dateBegin,
-                        "dateEnd" => $dateEnd,
+                        "dateBegin" => mysql_result($resultEvent, 0, "dateBegin"),
+                        "dateEnd" => mysql_result($resultEvent, 0, "dateEnd"),
                         "name" => "Todas as pessoas",
                         "description" => "",
                         "capacity" => "0",
-                        "entries" => "&infin;"
+                        "entries" => mysql_result($resultEvent, 0, "entries")
                     ),
                     "event"
                 );

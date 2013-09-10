@@ -38,4 +38,36 @@
         return $result;
     }
 
+    function getEventForEventQuery($eventID) {
+
+        $result = resourceForQuery(
+            "SELECT
+                `event`.`id`,
+                `event`.`name`,
+                `event`.`description`,
+                UNIX_TIMESTAMP(`event`.`dateBegin`) AS `dateBegin`,
+                UNIX_TIMESTAMP(`event`.`dateEnd`) AS `dateEnd`,
+                `event`.`latitude`,
+                `event`.`longitude`,
+                `event`.`address`,
+                `event`.`city`,
+                `event`.`state`,
+                `event`.`zipCode`,
+                COUNT(`eventMember`.`memberID`) AS `entries`
+            FROM
+                `event`
+            LEFT JOIN
+                `eventMember` ON `event`.`id` = `eventMember`.`eventID`
+            WHERE 1
+                AND `event`.`id` = $eventID
+            GROUP BY
+                `event`.`id`
+            ORDER BY
+                `event`.`dateBegin` ASC,
+                `event`.`dateEnd` ASC
+        ");
+
+        return $result;
+    }
+
 ?>
