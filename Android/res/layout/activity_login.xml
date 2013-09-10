@@ -43,21 +43,53 @@
                 android:layout_marginRight="0dp" />
 
             <EditText
+                android:id="@+id/login_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_login_name"
+                android:inputType="textPersonName"
+                android:selectAllOnFocus="true" />
+
+            <EditText
                 android:id="@+id/login_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/hint_login_email"
-                android:inputType="textEmailAddress" >
-
-                <requestFocus />
-            </EditText>
+                android:inputType="textEmailAddress"
+                android:selectAllOnFocus="true" />
 
             <EditText
                 android:id="@+id/login_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/hint_login_password"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:selectAllOnFocus="true" />
+
+            <EditText
+                android:id="@+id/login_confirmPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_login_confirmPassword"
+                android:imeOptions="actionDone"
+                android:inputType="textPassword"
+                android:selectAllOnFocus="true" />
+
+            <EditText
+                android:id="@+id/login_university"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_login_university"
+                android:inputType="textCapWords"
+                android:selectAllOnFocus="true" />
+
+            <EditText
+                android:id="@+id/login_university_course"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_login_university_course"
+                android:inputType="textCapWords"
+                android:selectAllOnFocus="true" />
 
             <com.facebook.widget.LoginButton
                 android:id="@+id/login_facebook"

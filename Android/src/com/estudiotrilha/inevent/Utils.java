@@ -46,7 +46,7 @@ public class Utils
 
     public static void initImageLoader(Context c)
     {
-        // TODO
+        // TODO configure image loader
         if (!ImageLoader.getInstance().isInited())
         {
             // Create default options which will be used for every displayImage(...) call

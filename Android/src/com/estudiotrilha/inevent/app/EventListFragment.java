@@ -23,6 +23,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -36,7 +38,7 @@ import com.estudiotrilha.inevent.content.LoginManager;
 import com.estudiotrilha.inevent.service.SyncService;
 
 
-public class EventListFragment extends ListFragment implements LoaderCallbacks<Cursor>, ExtensibleCursorAdapter.AdapterExtension
+public class EventListFragment extends ListFragment implements LoaderCallbacks<Cursor>, ExtensibleCursorAdapter.AdapterExtension, OnItemLongClickListener
 {
     // Loader codes
     private static final int LOAD_EVENT_LIST = 1;
@@ -89,6 +91,7 @@ public class EventListFragment extends ListFragment implements LoaderCallbacks<C
         // Setup the list
         getListView().setDivider(null);
         getListView().setSelector(new ColorDrawable(Color.TRANSPARENT));
+        getListView().setOnItemLongClickListener(this);
 
         // Setup the list adapter
         setListAdapter(mListAdapter);
@@ -136,6 +139,12 @@ public class EventListFragment extends ListFragment implements LoaderCallbacks<C
         // Open the event
         Intent event = EventActivity.openEvent(getActivity(), id);
         getActivity().startActivity(event);
+    }
+    @Override
+    public boolean onItemLongClick(AdapterView<?> adapter, View v, int position, final long eventId)
+    {
+        // TODO make it possible to register through this interface
+        return false;
     }
     private OnClickListener mInfoClickListener = new OnClickListener() {
         @Override

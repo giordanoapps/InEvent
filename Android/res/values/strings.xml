@@ -6,15 +6,17 @@
     <string name="app_name">InEvent</string>
 
     <!-- Button Actions -->
+    <string name="action_displayOption_activities">Show all activities</string>
+    <string name="action_displayOption_schedule">Show schedule</string>
+    <string name="action_event_enroll">Se inscrever</string>
+    <string name="action_login">Login</string>
+    <string name="action_myAccount">My Account</string>
+    <string name="action_preferences">Preferences</string>
     <string name="action_refresh">Refresh</string>
     <string name="action_search">Search</string>
-    <string name="action_preferences">Preferences</string>
-    <string name="action_myAccount">My Account</string>
-    <string name="action_login">Login</string>
     <string name="action_signIn">Sign In</string>
     <string name="action_signOut">Sign Out</string>
-    <string name="action_displayOption_schedule">Show schedule</string>
-    <string name="action_displayOption_activities">Show all activities</string>
+    <string name="action_signUp">Register</string>
 
     <!-- Sliding Menu Buttons -->
     <string name="slidingMenu_about">About</string>
@@ -33,12 +35,17 @@
     <string name="title_yourAccount">Your Account</string>
     <string name="title_login">Login</string>
     <string name="title_signIn">Sign In</string>
+    <string name="title_signUp">Sign Up</string>
     <string name="title_extraInfo">Info</string>
 
     <!-- Hint Messages -->
     <string name="hint_member_myName">Me</string>
+    <string name="hint_login_confirmPassword">Confirm Password</string>
     <string name="hint_login_email">E-mail</string>
+    <string name="hint_login_name">Name</string>
     <string name="hint_login_password">Password</string>
+    <string name="hint_login_university">University</string>
+    <string name="hint_login_university_course">Course</string>
     <string name="hint_event_name">Name</string>
     <string name="hint_event_description">Description</string>
     <string name="hint_event_address">Address</string>
@@ -54,7 +61,7 @@
 
     <!-- Loading Messages -->
     <string name="loading_general">Loading…</string>
-    <string name="loading_loggingIn">Loging In…</string>
+    <string name="loading_loggingIn">Logining In…</string>
 
     <!-- Empty Messages -->
     <string name="empty_eventList">No future events</string>
@@ -83,6 +90,8 @@
     <string name="error_internal">Some internal error occurred! Try again in a few moments</string>
     <string name="error_unauthorized">Unauthorized</string>
     <string name="error_login_badCredentials">Wrong name and/or password</string>
+    <string name="error_login_emptyField">Field can\'t be empty</string>
+    <string name="error_login_unmatchingPasswords">Senhas não conferem</string>
     <string name="error_invalidEmail">Invalid e-mail address</string>
 
 </resources>

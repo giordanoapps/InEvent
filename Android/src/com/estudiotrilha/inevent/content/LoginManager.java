@@ -96,7 +96,7 @@ public class LoginManager
     /**
      * @return <b>true</b> if the operation was successful
      */
-    private boolean saveInformationToFile(File file, Serializable info)
+    private static boolean saveInformationToFile(File file, Serializable info)
     {
         if (info == null) return false;
 
@@ -183,17 +183,18 @@ public class LoginManager
         mAttendanceRequests.newRequest(personID, activityID, present);
 
         // and send it
-        mAttendanceRequests.sendRequests();
+        mAttendanceRequests.sendRequests(mContext, mAttendanceFile);
     }
 
 
-    class AttendanceHolder implements Serializable
+    static class AttendanceHolder implements Serializable
     {
         private static final long serialVersionUID = -6795878015775849060L;
 
         private final ArrayList<PresenceRequest> requests = new ArrayList<PresenceRequest>();
 
-        class PresenceRequest implements Serializable
+
+        static class PresenceRequest implements Serializable
         {
             private static final long serialVersionUID = -1880881591078217865L;
 
@@ -210,7 +211,7 @@ public class LoginManager
         }
         
 
-        public void sendRequests()
+        public void sendRequests(final Context c, final File file)
         {
             for (final PresenceRequest request : requests)
             {
@@ -218,7 +219,7 @@ public class LoginManager
                 try
                 {
                     // Get some info
-                    String tokenID = LoginManager.getInstance(mContext).getTokenId();
+                    String tokenID = LoginManager.getInstance(c).getTokenId();
                     long activityID = request.activityID;
                     long personID = request.memberID;
 
@@ -253,13 +254,13 @@ public class LoginManager
                     @Override
                     public void run()
                     {
-                        sendRequests();
+                        sendRequests(c, file);
                     }
                 }, INTERVAL_RETRY_SENDING_ATTENDANCE_LIST);
             }
 
             // Save the new state to the file
-            saveInformationToFile(mAttendanceFile, mAttendanceRequests);
+            saveInformationToFile(file, this);
         }
 
 

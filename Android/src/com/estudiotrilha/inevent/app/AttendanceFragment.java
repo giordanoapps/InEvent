@@ -40,6 +40,8 @@ import com.estudiotrilha.inevent.service.SyncService;
 
 public class AttendanceFragment extends ListFragment implements LoaderCallbacks<Cursor>, OnItemLongClickListener
 {
+    private static final int DOUBLE_CLICK_INTERVAL = 600; // in milliseconds
+
     // Loader coder
     private static final int LOAD_PEOPLE = 1;
 
@@ -75,6 +77,9 @@ public class AttendanceFragment extends ListFragment implements LoaderCallbacks<
     private int mIndexPresent;
 
     private int  mDownloadAttempt;
+
+    private long mLastClickId;
+    private long mLastClickTime;
 
 
     @Override
@@ -215,6 +220,19 @@ public class AttendanceFragment extends ListFragment implements LoaderCallbacks<
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id)
+    {
+        long currentTime = System.currentTimeMillis();
+        if (id == mLastClickId && mLastClickTime + DOUBLE_CLICK_INTERVAL > currentTime)
+        {
+            setPresence(id, !mPeopleAdapter.isPresent(position));
+            id = -1;
+        }
+
+        mLastClickId = id;
+        mLastClickTime = currentTime;
+    }
     @Override
     public boolean onItemLongClick(AdapterView<?> adapter, View v, int position, long id)
     {

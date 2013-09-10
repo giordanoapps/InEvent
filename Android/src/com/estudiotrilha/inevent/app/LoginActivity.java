@@ -11,14 +11,19 @@ import org.json.JSONObject;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.estudiotrilha.android.app.ProgressDialogFragment;
@@ -35,11 +40,11 @@ import com.facebook.widget.LoginButton;
 import com.google.analytics.tracking.android.EasyTracker;
 
 
-// TODO check for empty password
 public class LoginActivity extends ActionBarActivity implements ApiRequest.ResponseHandler, Session.StatusCallback
 {
     // App State
-    private static final String STATE_USERNAME = LoginActivity.class.getName()+"state.USERNAME";
+    private static final String STATE_EMAIL = LoginActivity.class.getName()+".state.EMAIL";
+    private static final String STATE_LOGIN = "state.LOGIN";
 
     // Permissions
     private static final List<String> FACEBOOK_PERMISSIONS = Arrays.asList("name", "email");
@@ -47,9 +52,14 @@ public class LoginActivity extends ActionBarActivity implements ApiRequest.Respo
 
     private EditText    mEmail;
     private EditText    mPassword;
+    private EditText    mConfirmPassword;
+    private EditText    mName;
+    private EditText    mUniversity;
+    private EditText    mUniversityCourse;
     private LoginButton mFacebooButton;
 
     private ProgressDialogFragment mLoginProgressDialog;
+    private int                    mScreenOrientation;
 
 
     @Override
@@ -57,6 +67,9 @@ public class LoginActivity extends ActionBarActivity implements ApiRequest.Respo
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        // Saves the current orientation mode
+        mScreenOrientation = getRequestedOrientation();
 
         // Don't show the action bar
         ActionBar actionBar = getSupportActionBar();
@@ -68,30 +81,20 @@ public class LoginActivity extends ActionBarActivity implements ApiRequest.Respo
             @Override
             public void onClick(View v)
             {
-                if (FormUtils.isEmailValid(mEmail.getText().toString()))
-                {
-                    setUserInteractionEnabled(false);
-                    loginAttempt();
-                }
-                else
-                {
-                    mEmail.setError(getText(R.string.error_invalidEmail));
-                }
+                setUserInteractionEnabled(false);
+                loginAttempt();
             }
         });
 
 
         mEmail = (EditText) findViewById(R.id.login_email);
         mPassword = (EditText) findViewById(R.id.login_password);
-
-        if (savedInstanceState == null)
-        {
-            // recover last logged in username
-            String username = PreferenceManager.getDefaultSharedPreferences(this).getString(STATE_USERNAME, "");
-            mEmail.setText(username);
-        }
-
+        mConfirmPassword = (EditText) findViewById(R.id.login_confirmPassword);
+        mName = (EditText) findViewById(R.id.login_name);
+        mUniversity = (EditText) findViewById(R.id.login_university);
+        mUniversityCourse = (EditText) findViewById(R.id.login_university_course);
         mFacebooButton = (LoginButton) findViewById(R.id.login_facebook);
+
         mFacebooButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
@@ -102,6 +105,25 @@ public class LoginActivity extends ActionBarActivity implements ApiRequest.Respo
             }
         });
         mFacebooButton.setReadPermissions(FACEBOOK_PERMISSIONS);
+
+        if (savedInstanceState == null)
+        {
+            // recover last logged in username
+            String username = PreferenceManager.getDefaultSharedPreferences(this).getString(STATE_EMAIL, "");
+            mEmail.setText(username);
+            
+            switchMode(true, false);
+        }
+        else
+        {
+            switchMode(savedInstanceState.getBoolean(STATE_LOGIN), false);
+        }
+    }
+    @Override
+    public void onSaveInstanceState(Bundle outState)
+    {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean(STATE_LOGIN, !mConfirmPassword.isShown());
     }
     @Override
     protected void onStart()
@@ -130,6 +152,17 @@ public class LoginActivity extends ActionBarActivity implements ApiRequest.Respo
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        getMenuInflater().inflate(R.menu.activity_login, menu);
+
+        // Set the proper action title
+        int title = (mConfirmPassword.isShown() ? R.string.action_signIn : R.string.action_signUp);
+        menu.findItem(R.id.menu_switchLoginMode).setTitle(title);
+
+        return true;
+    }
+    @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
         switch(item.getItemId())
@@ -137,14 +170,103 @@ public class LoginActivity extends ActionBarActivity implements ApiRequest.Respo
         case android.R.id.home:
             finish();
             break;
+
+        case R.id.menu_switchLoginMode:
+            setUserInteractionEnabled(false);
+            switchMode(mConfirmPassword.isShown());
+            break;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
 
+    private void switchMode(boolean isLogin)
+    {
+        switchMode(isLogin, false);
+    }
+    private void switchMode(boolean isLogin, boolean animated)
+    {
+        int visibility;
+        int title;
+        int imeAction;
+
+        if (isLogin)
+        {
+            title = R.string.title_login;
+            visibility = View.GONE;
+
+            imeAction = EditorInfo.IME_ACTION_DONE;
+        }
+        else
+        {
+            title = R.string.title_signUp;
+            visibility = View.VISIBLE;
+
+            imeAction = EditorInfo.IME_ACTION_NEXT;
+        }
+
+        mName.setVisibility(visibility);
+        mUniversity.setVisibility(visibility);
+        mUniversityCourse.setVisibility(visibility);
+        mConfirmPassword.setVisibility(visibility);
+        ((TextView) findViewById(R.id.login_title)).setText(title);
+        ((Button) findViewById(R.id.login_confirmButton)).setText(title);
+
+        mPassword.setImeOptions(imeAction);
+
+        mPassword.setError(null);
+        mPassword.setText(null);
+        mConfirmPassword.setText(null);
+
+        // give the user interaction back
+        setUserInteractionEnabled(true);
+
+        // Update the action bar menu
+        supportInvalidateOptionsMenu();
+    }
+
     private void loginAttempt()
     {
+        if (mConfirmPassword.isShown())
+        {
+            // The user is creating a new register
+
+            boolean cancel = false;
+
+            // email validity check
+            if (!FormUtils.isEmailValid(mEmail.getText().toString()))
+            {
+                mEmail.setError(getText(R.string.error_invalidEmail)); 
+                cancel = true;
+            }
+
+            if (mName.getText().length() < 1)
+            {
+                mName.setError(getText(R.string.error_login_emptyField));
+                cancel = true;
+            }
+
+            // password confirmation check
+            if (!mPassword.getText().toString().equals(mConfirmPassword.getText().toString()))
+            {
+                mConfirmPassword.setError(getText(R.string.error_login_unmatchingPasswords));
+                cancel = true;
+            }
+
+            if (cancel)
+            {
+                setUserInteractionEnabled(true);
+                return;
+            }
+        }
+
+        if (mPassword.getText().length() < 1)
+        {
+            mPassword.setError(getText(R.string.error_login_emptyField));
+            return;
+        }
+
         try
         {
             HttpURLConnection connection;
@@ -152,9 +274,19 @@ public class LoginActivity extends ActionBarActivity implements ApiRequest.Respo
             final String email = mEmail.getText().toString();
             final String password = mPassword.getText().toString();
 
+            
             // Send the API request
-            connection = Member.Api.signIn(email, password);
-            ApiRequest.getJsonFromConnection(ApiRequest.RequestCodes.Member.SIGN_IN, connection, this);
+            if (mConfirmPassword.isShown())
+            {
+                connection = Member.Api.enroll();
+                String post = Member.Api.Post.enroll(mName.getText().toString(), password, email, null, null, mUniversity.getText().toString(), mUniversityCourse.getText().toString());
+                ApiRequest.getJsonFromConnection(ApiRequest.RequestCodes.Member.SIGN_UP, connection, LoginActivity.this, post);
+            }
+            else
+            {
+                connection = Member.Api.signIn(email, password);
+                ApiRequest.getJsonFromConnection(ApiRequest.RequestCodes.Member.SIGN_IN, connection, this);
+            }
         }
         catch (IOException e)
         {
@@ -173,6 +305,10 @@ public class LoginActivity extends ActionBarActivity implements ApiRequest.Respo
         // the text fields
         mEmail.setEnabled(enabled);
         mPassword.setEnabled(enabled);
+        mConfirmPassword.setEnabled(enabled);
+        mName.setEnabled(enabled);
+        mUniversity.setEnabled(enabled);
+        mUniversityCourse.setEnabled(enabled);
         mFacebooButton.setEnabled(enabled);
 
         // the buttons
@@ -180,20 +316,45 @@ public class LoginActivity extends ActionBarActivity implements ApiRequest.Respo
 
         if (enabled)
         {
-            // Unlock orientation change
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
-
-            mLoginProgressDialog.dismiss();
+            if (mLoginProgressDialog != null) mLoginProgressDialog.dismiss();
+            unlockScreenOrientationChange();
         }
         else
         {
-            // Lock orientation change
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
-
+            lockScreenOrientationChange();
             // Setup the loading status
             mLoginProgressDialog = ProgressDialogFragment.instantiate(-1, R.string.loading_loggingIn);
             mLoginProgressDialog.show(getSupportFragmentManager(), null);
         }
+    }
+
+    private void lockScreenOrientationChange()
+    {
+        // Saves the current orientation mode
+        mScreenOrientation = getRequestedOrientation();
+
+        // Find out which orientation is going to be locked
+        int orientation;
+        switch(getResources().getConfiguration().orientation)
+        {
+        case Configuration.ORIENTATION_LANDSCAPE:
+            orientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
+            break;
+
+        case Configuration.ORIENTATION_PORTRAIT:
+            orientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
+            break;
+
+        default:
+            orientation = mScreenOrientation;
+        }
+        // Locks the screen orientation
+        setRequestedOrientation(orientation);
+    }
+    private void unlockScreenOrientationChange()
+    {
+        // Unlocks the screen orientation
+        setRequestedOrientation(mScreenOrientation);
     }
 
 
@@ -212,9 +373,10 @@ public class LoginActivity extends ActionBarActivity implements ApiRequest.Respo
             {
             case ApiRequest.RequestCodes.Member.SIGN_IN:
             case ApiRequest.RequestCodes.Member.SIGN_IN_WITH_FACEBOOK:
+            case ApiRequest.RequestCodes.Member.SIGN_UP:
                 // save the username
                 PreferenceManager.getDefaultSharedPreferences(LoginActivity.this).edit()
-                        .putString(STATE_USERNAME, mEmail.getText().toString())
+                        .putString(STATE_EMAIL, mEmail.getText().toString())
                         .commit();
 
                 // close the LoginActivity

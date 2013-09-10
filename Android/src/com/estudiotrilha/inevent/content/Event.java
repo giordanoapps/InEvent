@@ -39,8 +39,8 @@ public class Event
         public static final String  NAMESPACE      = "event";
 
         private static final String GET_EVENTS         = ApiRequest.BASE_URL + NAMESPACE + ".getEvents";
-        private static final String REQUEST_ENROLLMENT = ApiRequest.BASE_URL + NAMESPACE + ".requestEnrollment&tokenID=%s&activityID=%d";
-        private static final String DISMISS_ENROLLMENT = ApiRequest.BASE_URL + NAMESPACE + ".dismissEnrollment&tokenID=%s&activityID=%d";
+        private static final String REQUEST_ENROLLMENT = ApiRequest.BASE_URL + NAMESPACE + ".requestEnrollment&tokenID=%s&eventID=%d";
+        private static final String DISMISS_ENROLLMENT = ApiRequest.BASE_URL + NAMESPACE + ".dismissEnrollment&tokenID=%s&eventID=%d";
         private static final String GET_PEOPLE         = ApiRequest.BASE_URL + NAMESPACE + ".getPeople&tokenID=%s&eventID=%d&selection=%s";
         private static final String GET_ACTIVITIES     = ApiRequest.BASE_URL + NAMESPACE + ".getActivities&eventID=%s";
         private static final String GET_SCHEDULE       = ApiRequest.BASE_URL + NAMESPACE + ".getSchedule&tokenID=%s&eventID=%d";
@@ -64,14 +64,14 @@ public class Event
             return ConnectionHelper.getURLGetConnection(url);
         }
 
-        public static HttpURLConnection requestEnrollment(String tokenID, long activityID) throws IOException
+        public static HttpURLConnection requestEnrollment(String tokenID, long eventID) throws IOException
         {
-            return requestEnrollment(tokenID, activityID, -1);
+            return requestEnrollment(tokenID, eventID, -1);
         }
-        public static HttpURLConnection requestEnrollment(String tokenID, long activityID, long personID) throws IOException
+        public static HttpURLConnection requestEnrollment(String tokenID, long eventID, long personID) throws IOException
         {
             tokenID = URLEncoder.encode(tokenID, ApiRequest.ENCODING);
-            String formatString = String.format(Locale.ENGLISH, REQUEST_ENROLLMENT, tokenID, activityID);
+            String formatString = String.format(Locale.ENGLISH, REQUEST_ENROLLMENT, tokenID, eventID);
             if (personID != -1)
             {
                 formatString += "&personID="+personID;

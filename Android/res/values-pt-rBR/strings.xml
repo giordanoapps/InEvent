@@ -6,15 +6,17 @@
     <string name="app_name">InEvent</string>
 
     <!-- Button Actions -->
-    <string name="action_refresh">Atualizar</string>
-    <string name="action_search">Porcurar</string>
-    <string name="action_preferences">Preferências</string>
-    <string name="action_myAccount">Minha Conta</string>
+    <string name="action_displayOption_activities">Todas as atividades</string>
+    <string name="action_displayOption_schedule">Minhas atividades</string>
+    <string name="action_event_enroll">Enroll</string>
     <string name="action_login">Fazer Login</string>
+    <string name="action_myAccount">Minha Conta</string>
+    <string name="action_preferences">Preferências</string>
+    <string name="action_refresh">Atualizar</string>
+    <string name="action_search">Procurar</string>
     <string name="action_signIn">Entrar</string>
     <string name="action_signOut">Sair</string>
-    <string name="action_displayOption_schedule">Minhas atividades</string>
-    <string name="action_displayOption_activities">Todas as atividades</string>
+    <string name="action_signUp">Criar Conta</string>
 
     <!-- Sliding Menu Buttons -->
     <string name="slidingMenu_about">Sobre</string>
@@ -33,12 +35,17 @@
     <string name="title_yourAccount">Sua Conta</string>
     <string name="title_login">Fazer Login</string>
     <string name="title_signIn">Entrar</string>
+    <string name="title_signUp">Nova Conta</string>
     <string name="title_extraInfo">Informações</string>
 
     <!-- Hint Messages -->
     <string name="hint_member_myName">Eu</string>
+    <string name="hint_login_confirmPassword">Confirmar Senha</string>
     <string name="hint_login_email">E-mail</string>
+    <string name="hint_login_name">Nome</string>
     <string name="hint_login_password">Senha</string>
+    <string name="hint_login_university">Universidade</string>
+    <string name="hint_login_university_course">Curso</string>
     <string name="hint_event_name">Nome</string>
     <string name="hint_event_description">Descrição</string>
     <string name="hint_event_address">Endereço</string>
@@ -83,6 +90,8 @@
     <string name="error_internal">Ocorreu algum erro intero! Tente novamente dentro de alguns instantes</string>
     <string name="error_unauthorized">Sem autorização</string>
     <string name="error_login_badCredentials">Nome e/ou senha inválido(s)</string>
+    <string name="error_login_emptyField">Não pode ser vazio</string>
+    <string name="error_login_unmatchingPasswords">Non matching passwords</string>
     <string name="error_invalidEmail">E-mail inválido</string>
 
 </resources>

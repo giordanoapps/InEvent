@@ -36,7 +36,7 @@ public class Member implements Serializable
     {
         public static final class Post
         {
-            private static final String ENROLL = "name=%s&password=%s&email=%s&cpf=%s&telephone";
+            private static final String ENROLL = "name=%s&password=%s&email=%s&cpf=%s&telephone=%s&university=%s&course=%s";
 
             /**
              * @param cpf - The person CPF. This can be null
@@ -45,7 +45,12 @@ public class Member implements Serializable
              */
             public static String enroll(String name, String password, String email, String cpf, String telephone)
             {
-                return String.format(Locale.ENGLISH, ENROLL, name, password, email, cpf, telephone);
+                return enroll(name, password, email, cpf, telephone, null, null);
+            }
+
+            public static String enroll(String name, String password, String email, String cpf, String telephone, String university, String course)
+            {
+                return String.format(Locale.ENGLISH, ENROLL, name, password, email, cpf, telephone, university, course);
             }
         }
 

@@ -18,7 +18,7 @@
 
     <PreferenceCategory android:title="@string/title_about" >
         <Preference
-            android:summary="@string/app_version"
+            android:summary="?android:attr/versionName"
             android:title="@string/title_appVersion" />
     </PreferenceCategory>
 
