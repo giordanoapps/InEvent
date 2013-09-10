@@ -2031,11 +2031,11 @@ textarea, input {
 	color: #888;
 	font-size: 150%;
 	text-shadow: #CECECE 1px 1px 0px;
-	margin-bottom: 80%;
+	margin-bottom: 10%;
 }
 
 #offlineContent img {
-	width: 18%;
+	width: 30%;
 	padding-bottom: 40px;
 }
 

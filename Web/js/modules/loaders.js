@@ -1,11 +1,11 @@
-$(document).ready(function() {
+define(["jquery", "common"], function($) {$(function() {
 
 // ------------------------------------- LOADERS ------------------------------------- //
 
 	/**
 	 * Remove date picker reference
 	 */
-	$(".ui-datepicker a").live("click", function() {
+	$(document).on("click", ".ui-datepicker a", function() {
 		$(this).removeAttr("href"); 
 	});
 
@@ -14,4 +14,16 @@ $(document).ready(function() {
 	 */
 	$(window).ajax("hashConfigureSource", window.location.hash);
 	
-});
+	/**
+	 * Swap the cache
+	 */
+	window.applicationCache.addEventListener('updateready', function(e) {
+		if (window.applicationCache.status == window.applicationCache.UPDATEREADY) {
+			window.applicationCache.swapCache();
+			// alert(JSON.stringify(localStorage).length);
+		} else {
+			// Manifest didn't changed. Nothing new to server.
+	    }
+	}, false);
+	
+});});

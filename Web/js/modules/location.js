@@ -1,4 +1,9 @@
-$(document).ready(function() {
+var modules = [];
+modules.push('jquery');
+modules.push('common');
+modules.push('google.maps');
+
+define(modules, function($) {$(function() {
 
 // ------------------------------------- LOCATION ------------------------------------- //
 
@@ -6,7 +11,7 @@ $(document).ready(function() {
 	 * Page initialization
 	 * @return {null}
 	 */
-	$("#locationContent").live("hashDidLoad", function() {
+	$("#locationContent").on("hashDidLoad", function() {
 
 		// Some variables
 		var $locationContent = $(this);
@@ -66,7 +71,7 @@ $(document).ready(function() {
 	 * Search for an address and display it
 	 * @return {null}
 	 */
-	$("#locationContent .searchLocationWrapper").live("submit", function() {
+	$("#locationContent").on("submit", "searchLocationWrapper", function() {
 		
 		var text = $(this).find(".searchLocation").val();
 		$("#locationContent #mapCanvas").np("geocoder", text);
@@ -78,7 +83,7 @@ $(document).ready(function() {
 	 * Data must be saved before advancing
 	 * @return {null}
 	 */
-	$("#locationContent .navigator li, #locationContent .sequenceContent li").live("click", function() {
+	$("#locationContent").on("click", ".navigator li, .sequenceContent li", function() {
 
 		var $parent = $(this).parents("#locationContent");
 
@@ -100,4 +105,4 @@ $(document).ready(function() {
 
 	});
 
-});
+});});

@@ -1,6 +1,6 @@
-$(document).ready(function() {
-
 // ------------------------------------- NOTIFICATION ---------------------------------- //
+
+define(["jquery", "modules/cookie"], function($, cookie) {$(function() {
 
 	(function checking() {
 		if ($(".loginBar").length == 0) checkNotifications();
@@ -178,8 +178,12 @@ $(document).ready(function() {
 			$(".notificationBox").hide();
 		}
 	}
-	
-	$(".notificationsInfo").live("click", function () {
+
+	/**
+	 * Load some notifications
+	 * @return {null}
+	 */
+	$(".notificationsInfo").on("click", function () {
 		
 		var $notifications = $(".notifications");
 		
@@ -211,8 +215,9 @@ $(document).ready(function() {
 
 	/**
 	 * The user has clicked on a notification inside the notification box
+	 * @return {null}
 	 */
-	$(".notificationBox li").live({
+	$(".notificationBox").on({
 		mouseenter: function () {
 			// Stop the animation and restore the full opace state
 			$(this).stop(true, true).show();
@@ -227,13 +232,13 @@ $(document).ready(function() {
 			});
 	
 		}
-	});
+	}, "li");
 	
 	/**
 	 * Tell the server that the user has seen the notification
 	 * @return {null}
 	 */
-	$(".notifications .unseenNotification").live("click", function () {
+	$(".notifications").on("click", ".unseenNotification", function () {
 		updateNotificationStatus($(this), true, true);
 	});
 	
@@ -241,7 +246,7 @@ $(document).ready(function() {
 	 * Hide the notification center
 	 * @return {null}
 	 */
-	$(".notificationsContent li").live("click", function () {
+	$(".notificationsContent").on("click", "li", function () {
 		$(this).parents(".notifications").slideToggle(100);
 	});
 	
@@ -249,7 +254,7 @@ $(document).ready(function() {
 	 * Load new notifications on the notification center
 	 * @return {null}
 	 */
-	$(".notificationsBottom .notificationLoadExtra").live("click", function () {
+	$(".notificationsBottom").on("click", ".notificationLoadExtra", function () {
 		var $ref = $(this);
 		var $sibling = $(this).parents(".notificationsBottom").siblings(".notificationsContent");
 		var notificationsLoaded = $sibling.find("li").length;
@@ -270,4 +275,4 @@ $(document).ready(function() {
 		});
 	});
 	
-});
+});});

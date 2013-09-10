@@ -1,9 +1,13 @@
 <?php include_once("../includes/check/login.php"); ?>
 <?php
 	if ($globalDev == 1) {
-		define("URL", "http://localhost:8888/InEvent/Web/developer/api/");
+		$host = ($_SERVER['SERVER_ADDR'] == "::1") ? "localhost" : $_SERVER['SERVER_ADDR'];
+
+		define("URL", "http://" . $host . ":8888/InEvent-dev/Web/developer/api/");
 	} else {
-		define("URL", "http://inevent.us/developer/api/");
+		$host = (strstr($_SERVER['HTTP_HOST'], "dev.") != FALSE) ? "dev.inevent.us" : "inevent.us";
+
+		define("URL", "http://" . $host . "/developer/api/");
 	}
 ?>
 <!--
@@ -24,30 +28,15 @@
 	<![endif]-->
 	
 	<link rel="stylesheet" href="../css/default.css" type="text/css" />
-	<link rel="stylesheet" href="../css/jquery-ui-1.8.21.custom.min.css" type="text/css" />
+	<link rel="stylesheet" href="../css/jquery-ui-1.9.2.custom.min.css" type="text/css" />
 	<link rel="stylesheet" href="../css/shCore.css" type="text/css" />
 	<link rel="stylesheet" href="../css/shThemeDefault.css" type="text/css" />
 	
-	<?php if ($globalDev == 1) { ?>
+	<script src="../js/lib/shCore.js" type="text/javascript"></script>
+	<script src="../js/lib/shBrushJScript.js" type="text/javascript"></script>
+	<script src="../js/lib/require.js" type="text/javascript" data-main="../js/developer"></script>
 	
-	<script src="../js/jquery-1.8.3.min.js" type="text/javascript"></script>
-	<script src="../js/jquery-ui-1.8.21.custom.min.js" type="text/javascript"></script>
-	
-	<?php } else { ?>
-	
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-	<script>!window.jQuery && document.write(unescape('%3Cscript src="../js/jquery-1.8.3.min.js"%3E%3C/script%3E'))</script>
-	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
-	<script>!window.jQuery.ui && document.write(unescape('%3Cscript src="../js/jquery-ui-1.8.21.custom.min.js"%3E%3C/script%3E'))</script>
-	
-	<?php } ?>
-	
-	<script src="../js/analytics.js" type="text/javascript"></script>
-	<script src="../js/modules/functions.js" type="text/javascript"></script>
-	<script src="../js/developer.js" type="text/javascript"></script>
-	<script src="../js/shCore.js" type="text/javascript"></script>
-	<script src="../js/shBrushJScript.js" type="text/javascript"></script>
-
+	<link href="../favicon.ico" rel="icon" type="image/x-icon" />
 	<link href="../favicon.ico" rel="icon" type="image/x-icon" />
 
 </head>

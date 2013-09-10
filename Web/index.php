@@ -11,8 +11,9 @@
 			<div class="titleContent">Voo</div>
 				<div class="boardContent">
 					<div class="tightWrapper">
-						<p class="title">Estamos carregando seus horários!</p>
-						<p class="description">Estamos carregando sua página nesse momento... Se isto não ocorrer, por favor habilite o Javascript para que seu plantão possa ser iniciado!</p>
+						<p class="title">Estamos carregando seus eventos!</p>
+						<p class="description">Estamos carregando sua página nesse momento... Se isto não ocorrer, por favor habilite o Javascript ou verifique se está corretamente credenciado!</p>
+						<img src="images/512-logo.png" alt="Bike">
 					</div>
 				</div>
 			</div>

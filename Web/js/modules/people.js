@@ -1,4 +1,11 @@
-$(document).ready(function() {
+var modules = [];
+modules.push('jquery');
+modules.push('common');
+modules.push('modules/cookie');
+modules.push('jquery.mCustomScrollbar');
+modules.push('jquery.chosen');
+
+define(modules, function($, common, cookie) {$(function() {
 
 // -------------------------------------- LOADER -------------------------------------- //
 	
@@ -6,7 +13,7 @@ $(document).ready(function() {
 	 * Page initialization
 	 * @return {null}
 	 */
-	$("#peopleContent").live("hashDidLoad", function() {
+	$("#peopleContent").on("hashDidLoad", function() {
 		// Load the first activity
 		$(this).find(".scheduleItemSelectable").first().trigger("click");
 	});
@@ -17,14 +24,14 @@ $(document).ready(function() {
 	 * Load an activity and populate with usage
 	 * @return {null}
 	 */
-	$("#peopleContent .scheduleItemSelectable").live("click", function() {
+	$("#peopleContent").on("click", ".scheduleItemSelectable", function() {
 
 		// Change the selected class
 		$(this).siblings(".scheduleItemSelected").removeClass("scheduleItemSelected").end().addClass("scheduleItemSelected");
 
 		// Get the new activityID
 		var activityID = $(this).val();
-		var eventID = readCookie("eventID");
+		var eventID = cookie.read("eventID");
 
 		// Define the namespace
 		var namespace = $(this).attr("data-type");
@@ -58,7 +65,7 @@ $(document).ready(function() {
 	 * Remove a item from the person schedule
 	 * @return {null}
 	 */
-	$("#peopleContent .head").live("click", function() {
+	$("#peopleContent").on("click", ".head", function() {
 
 		var $elem = $(this);
 		var method = ($elem.hasClass("staff")) ? "revokePermission" : "grantPermission";
@@ -85,7 +92,7 @@ $(document).ready(function() {
 	 * Remove a item from the person schedule
 	 * @return {null}
 	 */
-	$("#peopleContent .checkbox.paid, #peopleContent .checkbox.present").live("instantSave", function() {
+	$("#peopleContent").on("instantSave", ".checkbox.paid, .checkbox.present", function() {
 
 		var $elem = $(this);
 		var method = ($elem.hasClass("paid")) ? "confirmPayment" : "confirmEntrance";
@@ -109,7 +116,7 @@ $(document).ready(function() {
 	 * Remove a person from the activity
 	 * @return {null}
 	 */
-	$("#peopleContent .pickerItem .toolRemove").live("click", function() {
+	$("#peopleContent").on("click", ".pickerItem .toolRemove", function() {
 
 		event.stopPropagation();
 
@@ -136,7 +143,7 @@ $(document).ready(function() {
 	 * Remove a person from the activity
 	 * @return {null}
 	 */
-	$("#peopleContent .pickerItem .titleInput").live("keyup", function() {
+	$("#peopleContent").on("keyup", ".pickerItem .titleInput", function() {
 
 		var code = (event.keyCode ? event.keyCode : event.which);
 		// Enter keycode
@@ -180,4 +187,4 @@ $(document).ready(function() {
 
 	});
 	
-});
+});});

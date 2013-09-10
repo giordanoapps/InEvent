@@ -1,4 +1,9 @@
-$(document).ready(function() {
+var modules = [];
+modules.push('jquery');
+modules.push('common');
+modules.push('modules/cookie');
+
+define(modules, function($, common, cookie) {$(function() {
 
 // -------------------------------------- MENU -------------------------------------- //
 
@@ -6,10 +11,10 @@ $(document).ready(function() {
 	 * Go to an event
 	 * @return {null}
 	 */
-	$("#marketplaceContent .toolEnrolled").live("click", function() {
+	$("#marketplaceContent").on("click", ".toolEnrolled", function() {
 
 		// Create the cookie
-		createCookie("eventID", $(this).closest(".eventItem").val(), 10);
+		cookie.create("eventID", $(this).closest(".eventItem").val(), 10);
 
 		// Move to the event page
 		window.location.hash = "event";
@@ -23,7 +28,7 @@ $(document).ready(function() {
 	 * Enroll a person on an event
 	 * @return {null}
 	 */
-	$("#marketplaceContent .toolEnroll").live("click", function() {
+	$("#marketplaceContent .toolEnroll").on("click", function() {
 
 		var $elem = $(this);
 		var $eventItem = $elem.closest(".eventItem");
@@ -55,7 +60,7 @@ $(document).ready(function() {
 	 * Remove a person from a event
 	 * @return {null}
 	 */
-	$("#marketplaceContent .toolExpel").live("click", function() {
+	$("#marketplaceContent").on("click", ".toolExpel", function() {
 
 		var $name = $(this).closest(".eventItem").find(".title");
 		var name = $name.text();
@@ -80,7 +85,7 @@ $(document).ready(function() {
 	 * Remove a person from a event
 	 * @return {null}
 	 */
-	$("#marketplaceContent .titleInput").live("keyup", function() {
+	$("#marketplaceContent").on("keyup", ".titleInput", function() {
 
 		var code = (event.keyCode ? event.keyCode : event.which);
 		// Enter keycode
@@ -114,4 +119,4 @@ $(document).ready(function() {
 
 	});
 
-});
+});});

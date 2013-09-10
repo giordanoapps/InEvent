@@ -1,4 +1,11 @@
-$(document).ready(function() {
+var modules = [];
+modules.push('jquery');
+modules.push('common');
+modules.push('modules/cookie');
+modules.push('jquery.mCustomScrollbar');
+modules.push('jquery.chosen');
+
+define(modules, function($, common, cookie) {$(function() {
 
 // -------------------------------------- LOADER -------------------------------------- //
 	
@@ -6,7 +13,7 @@ $(document).ready(function() {
 	 * Page initialization
 	 * @return {null}
 	 */
-	$("#eventContent").live("hashDidLoad", function() {
+	$("#eventContent").on("hashDidLoad", function() {
 		$(this).find(".placerContent ul").mCustomScrollbar({ scrollInertia: 150 });
 	});
 
@@ -16,7 +23,7 @@ $(document).ready(function() {
 	 * Add a item to the person schedule
 	 * @return {null}
 	 */
-	$("#eventContent .toolEnroll").live("click", function() {
+	$("#eventContent").on("click", ".toolEnroll", function() {
 
 		var $elem = $(this);
 		var $agendaItem = $elem.closest(".agendaItem");
@@ -28,7 +35,7 @@ $(document).ready(function() {
 			var groupID = parseInt($agendaItem.attr("data-group"), 10);
 		} else {
 			var namespace = "event";
-			var eventID = readCookie("eventID");
+			var eventID = cookie.read("eventID");
 			var activityID = undefined;
 		}
 
@@ -72,7 +79,7 @@ $(document).ready(function() {
 	 * Remove a item from the person schedule
 	 * @return {null}
 	 */
-	$("#eventContent .toolExpel").live("click", function() {
+	$("#eventContent").on("click", ".toolExpel", function() {
 
 		var $elem = $(this);
 		var activityID = $elem.closest(".scheduleItem").val();
@@ -106,7 +113,7 @@ $(document).ready(function() {
 	 * Remove a item from the person schedule
 	 * @return {null}
 	 */
-	$("#eventContent .toolPriority").live("click", function() {
+	$("#eventContent").on("click", ".toolPriority", function() {
 
 		var $elem = $(this);
 		var activityID = $elem.closest(".scheduleItem").val();
@@ -126,4 +133,4 @@ $(document).ready(function() {
 
 	});
 
-});
+});});

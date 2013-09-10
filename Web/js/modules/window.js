@@ -1,12 +1,12 @@
-$(document).ready(function() {
-
 // -------------------------------------- WINDOW -------------------------------------- //
+
+define(["jquery", "common"], function($) {$(function() {
 
 	/**
 	 * Callback for windows and popovers dismissal
 	 * @return {null}       
 	 */
-	$("body").live("click", function () {
+	$("body").click(function () {
 
 		// Only trigger the change if there is an activePopover
 		if ($(this).data("activePopover")) {
@@ -59,7 +59,7 @@ $(document).ready(function() {
 	 * Calculate the size of the menu bar
 	 * @return {null}       
 	 */
-	$(".menuContent").live("resizeBar", function() {
+	$(document).on("resizeBar", ".menuContent", function() {
 		$(this).width($(this).parent().width() - $(this).css("padding-left").replace("px", "") - $(this).css("padding-right").replace("px", ""));
 	});
 
@@ -77,17 +77,18 @@ $(document).ready(function() {
 	 * Update the tips for every content load
 	 * @return {null}       
 	 */
-	$(document).bind("ajaxComplete", function(event, jqXHR, settings) {
-		// Tips
-		$("[title != '']").qtip({
-		    style: {
-		    	classes: 'qtip-light qtip-rounded qtip-shadow'
-		    },
-		    position: {
-		        my: 'top left',
-		        at: 'center center',
-		        target: "event" // my target
-		    }
-		});
-	});
-});
+	// $(document).bind("ajaxComplete", function(event, jqXHR, settings) {
+	// 	// Tips
+	// 	$("[title != '']").qtip({
+	// 	    style: {
+	// 	    	classes: 'qtip-light qtip-rounded qtip-shadow'
+	// 	    },
+	// 	    position: {
+	// 	        my: 'top left',
+	// 	        at: 'center center',
+	// 	        target: "event" // my target
+	// 	    }
+	// 	});
+	// });
+	
+});});

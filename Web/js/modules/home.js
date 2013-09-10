@@ -1,5 +1,6 @@
-$(document).ready(function() {
+// --------------------------------------- HOME --------------------------------------- //
 
+define(["jquery", "common", "modules/cookie"], function($, common, cookie) {$(function() {
 
 // -------------------------------------- LOADER -------------------------------------- //
 	
@@ -7,7 +8,7 @@ $(document).ready(function() {
 	 * Page initialization
 	 * @return {null}
 	 */
-	$("#homeContent").live("hashDidLoad", function() {
+	$("#homeContent").on("hashDidLoad", function() {
 
 		// Focus on the element so the key event may work
 		$(this).focus();
@@ -30,7 +31,7 @@ $(document).ready(function() {
 	 * Calculate the position and scroll the menuContent every time the human slides the screen
 	 * @return {null}       
 	 */
-	$("#homeContent").live("mousewheel", function(event, delta, deltaX, deltaY) {
+	$("#homeContent").on("mousewheel", function(event, delta, deltaX, deltaY) {
 		// What the y position of the scroll is
 		$(this).trigger("loadCover", [deltaY]);
 	});
@@ -40,7 +41,7 @@ $(document).ready(function() {
 	 * Change the current cover
 	 * @return {null}
 	 */
-	$("#homeContent").live("loadCover", function(event, y) {
+	$("#homeContent").on("loadCover", function(event, y) {
 
 		// Only scroll if no animation is taking place
 		if(!$(this).is(":animated")) {
@@ -95,7 +96,7 @@ $(document).ready(function() {
 	 * Change the cover based on the keyboard (arrows and page's)
 	 * @return {null}
 	 */
-	$("#homeContent").live("keyup", function(event) {
+	$("#homeContent").on("keyup", function(event) {
 		
 		var code = (event.keyCode ? event.keyCode : event.which);
 		
@@ -114,7 +115,7 @@ $(document).ready(function() {
 	 * Change the cover for mobile devices
 	 * @return {null}
 	 */
-	$("#homeContent .upperDeck, #homeContent .deck").live("click", function(event) {
+	$("#homeContent").on("click", ".upperDeck, .deck", function(event) {
 
 		if ($(this).hasClass("upperDeck")) {
 			$(this).closest("#homeContent").trigger("loadCover", [100]);
@@ -128,7 +129,7 @@ $(document).ready(function() {
 	 * Toggle the app deck
 	 * @return {null}
 	 */
-	$("#homeContent .middlePort .trigger").live("click", function(event) {
+	$("#homeContent").on("click", ".middlePort .trigger", function(event) {
 
 		var $close = $(this).find(".close");
 		var $open = $(this).find(".open");
@@ -151,7 +152,7 @@ $(document).ready(function() {
 	/**
 	 * Login button has been clicked
 	 */	
-	$(".userLoginLeading").live("click", function () {
+	$(".userLoginLeading").on("click", function () {
 		
 		$(this).siblings(".userLoginBox").slideToggle(500);
 	
@@ -161,4 +162,4 @@ $(document).ready(function() {
 
 	});
 
-});
+});});

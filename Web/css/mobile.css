@@ -29,6 +29,10 @@ body {
 	height: 48px;
 }
 
+#homeContent .middlePort {
+	display: none;
+}
+
 #homeContent .deck {
 	height: auto;
 }

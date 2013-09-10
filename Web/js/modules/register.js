@@ -1,12 +1,12 @@
-$(document).ready(function() {
-
 // --------------------------------- REGISTER ------------------------------------ //
+
+define(["jquery", "modules/cookie"], function($) {$(function() {
 
 	/**
 	 * Page initialization
 	 * @return {null}
 	 */
-	$("#registerContent").live("hashDidLoad", function() {
+	$("#registerContent").on("hashDidLoad", function() {
 		
 		// Hold the current content
 		var $content = $(this);
@@ -42,7 +42,7 @@ $(document).ready(function() {
 				}
 
 				// Create our cookie
-				createCookie("tokenID", jsonReturn.tokenID, 30);
+				cookie.create("tokenID", jsonReturn.tokenID, 30);
 
 				// Show the sucess screen
 				$content.find(".registrationComplete").fadeIn(0).delay(4000).fadeOut(300, function() {
@@ -69,4 +69,4 @@ $(document).ready(function() {
 
 	});
 
-});
+});});

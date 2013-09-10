@@ -1,12 +1,25 @@
-$(document).ready(function() {
-
 // -------------------------------------- DEVELOPER -------------------------------------- //
+
+requirejs.config({
+    "baseUrl": "../js/lib",
+    "urlArgs": "bust=" + (new Date()).getTime(),
+    "paths": {
+    	'jquery': 'jquery-1.8.3.min',
+		'google.analytics': 'analytics.min',
+      	'modules': '../modules'
+    },
+    shim: {
+		'jquery-ui': ['jquery']
+    }
+});
+
+define(["jquery", "modules/storageExpiration"], function($, storageExpiration) {$(function() {
 
 	/**
 	 * Change the currently selected documentation tab
 	 * @return {null}
 	 */
-	$(".menuDocumentation li").live("click", function () {
+	$(".developerContent").on("click", ".menuDocumentation li", function () {
 		
 		var index = $(this).index();
 		
@@ -30,7 +43,7 @@ $(document).ready(function() {
 	 * Trigger the inline api debugger
 	 * @return {null}
 	 */
-	$(".contentDocumentation .documentFunctionName img").live("click", function () {
+	$(".developerContent").on("click", ".documentFunctionName .tryItOut", function () {
 		
 		var $sibling = $(this).closest(".documentationFunctionBox").next();
 
@@ -58,7 +71,7 @@ $(document).ready(function() {
 	 * @param  {object} event
 	 * @return {null}
 	 */
-	$(".demoDocumentation input").live("keydown", function (event) {
+	$(".developerContent").on("keydown", ".demoDocumentation input", function (event) {
 		
 		// If the user is typing, we should only process it what he hits enter
 		if (event.type == "keydown" && event.keyCode != 13) return;
@@ -83,9 +96,11 @@ $(document).ready(function() {
 			if ($(this).hasClass("attribute")) {
 				str += $(this).text();
 			} else if ($(this).is("div")) {
-				str += $(this).find("input").val();
+				var value = $(this).find("input").val();
+				str += (value != "nulo") ? value : "";
 			}
 		});
+
 		if (str.slice(-1) == "&") str = str.slice(0, -1);
 
 		return str;
@@ -98,7 +113,7 @@ $(document).ready(function() {
 	 * @param  {string} get   get attributes
 	 * @return {null}
 	 */
-	$(".demoDocumentation pre").live("callback", function (event, post, get) {
+	$(".developerContent").on("callback", ".demoDocumentation pre", function (event, post, get) {
 		
 		var url = $(".oficialURL").text() + "?";
 		var $demoDocumentation = $(this).parents(".demoDocumentation");
@@ -211,7 +226,7 @@ $(document).ready(function() {
 									.appendTo($wrapper);
 
 					$input.attr("value", processedAttributes[attrTemp[0]]);
-					$div.width((($input.val().length + 3) * 9) + 'px');
+					$div.width((($input.val().length + 3) * 8) + 'px');
 				}
 			}
 		}
@@ -219,11 +234,8 @@ $(document).ready(function() {
 		return processedAttributes;
 	};
 
-	$(".demoDocumentation .inert input").live("keydown", function (event) {
-		$(this).parent().width((($(this).val().length + 3) * 9) + 'px');
+	$(".developerContent").on("keydown", ".demoDocumentation .inert input", function (event) {
+		$(this).parent().width((($(this).val().length + 2) * 8) + 'px');
 	});
 
-
-// -------------------------------------------------------------------------------------- //
-
-});
+});});

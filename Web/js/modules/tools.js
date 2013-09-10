@@ -1,20 +1,20 @@
-$(document).ready(function() {
+// -------------------------------------- TOOLS -------------------------------------- //
 
-// -------------------------------------- INFO CONTAINER -------------------------------------- //
+define(["jquery", "common", "modules/cookie"], function($, common, cookie) {$(function() {
 
 	/* Info Cointainer is the name of the generic class I have created to all its subclasses, including infoContainer, card, post , etc ... */
 
 	/**
 	 * Trigger for mouse events on the image
 	 */
-	$(".infoContainerImage").live({
+	$(document).on({
 		"mouseenter": function () {
 			$(this).find("#file-uploader").show();
 		},
 		"mouseleave": function () {
 			$(this).find("#file-uploader").hide();
 		},
-	});
+	}, ".infoContainerImage");
 
 	/**
 	  * CHECKBOX TOOL
@@ -24,7 +24,7 @@ $(document).ready(function() {
 	 * Tool to change the state of a checkbox
 	 * @return {null}
 	 */
-	$(".checkbox").live("click", function(event, isPropagating) {
+	$(document).on("click", ".checkbox", function(event, isPropagating) {
 
 		if ($(this).attr("readonly") == "readonly") return;
 		// Toggle the state of the propagation save
@@ -64,4 +64,4 @@ $(document).ready(function() {
 
 	});
 	
-});
+});});

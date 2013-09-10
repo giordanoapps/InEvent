@@ -1,4 +1,4 @@
-$(document).ready(function() {
+define(["jquery", "common"], function($) {$(function() {
 
 // -------------------------------------- MENU -------------------------------------- //
 
@@ -6,7 +6,7 @@ $(document).ready(function() {
 	 * Enroll a person on an event
 	 * @return {null}
 	 */
-	$("#forgotContent .sendRecovery").live("click", function() {
+	$("#forgotContent").on("click", ".sendRecovery", function() {
 
 		var $elem = $(this);
 		var email = $elem.siblings(".email").val();
@@ -33,4 +33,4 @@ $(document).ready(function() {
 
 	});
 
-});
+});});

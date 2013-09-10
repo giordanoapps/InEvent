@@ -1,4 +1,9 @@
-$(document).ready(function() {
+var modules = [];
+modules.push('jquery');
+modules.push('common');
+modules.push('modules/validator');
+
+define(modules, function($) {$(function() {
 
 // --------------------------------------- DATA -------------------------------------- //
 
@@ -6,7 +11,7 @@ $(document).ready(function() {
 	 * Page initialization
 	 * @return {null}
 	 */
-	$("#dataContent").live("hashDidLoad", function() {
+	$("#dataContent").on("hashDidLoad", function() {
 
 		var $parent = $(this);
 		var $form = $parent.find(".dataForm");
@@ -136,7 +141,7 @@ $(document).ready(function() {
 	 * Cancel the default behavior of the form
 	 * @return {null} 
 	 */
-	$("#dataContent .dataForm").live("submit", function() {
+	$("#dataContent").on("submit", ".dataForm", function() {
 		return false;
 	});
 
@@ -144,7 +149,7 @@ $(document).ready(function() {
 	 * Change the iframe when the user is typing some info
 	 * @return {null} 
 	 */
-	// $("#dataContent .dataForm input").live("focusout", function() {
+	// $("#dataContent .dataForm input").on("focusout", function() {
 
 	// 	var $content = $(this).closest(".pageContentBox");
 
@@ -159,7 +164,7 @@ $(document).ready(function() {
 	 * Trigger the form validator
 	 * @return {null}
 	 */
-	$("#dataContent .navigator li, #dataContent .sequenceContent li").live("click", function() {
+	$("#dataContent").on("click", ".navigator li, .sequenceContent li", function() {
 
 		var $parent = $(this).parents("#dataContent");
 
@@ -184,4 +189,4 @@ $(document).ready(function() {
 		}
 	});
 
-});
+});});
