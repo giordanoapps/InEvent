@@ -10,8 +10,10 @@ define(["jquery", "common", "modules/cookie"], function($, common, cookie) {$(fu
 
 		$ref = $(this).parents(".anchorInfo");
 
+		// Propagate only anchors
+		if (!$(event.target).is(".mapIcon")) event.stopPropagation();
+
 		// Register on our body that a popover is being presented
-		// event.stopPropagation();
 		$("body").data("activePopover", function() {
 			$(this).siblings(".anchorInnerHock").trigger("click");
 		});

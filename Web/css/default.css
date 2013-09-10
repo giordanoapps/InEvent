@@ -262,7 +262,6 @@ textarea, input {
 
 .bar.top .rightBar > li,
 .bar.top .rightBar > a > li {
-	padding: 0;
 	line-height: 44px;
 	font-size: 90%;
 }
@@ -2292,6 +2291,7 @@ textarea, input {
 
 #wrapper {
 	margin: 0px;
+	height: 44px;
 	font-weight: bold;
 	position: absolute;
 	bottom: 0;
