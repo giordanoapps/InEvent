@@ -1,6 +1,8 @@
 <?php
 
-    function printPeopleAtActivity($result) {
+    function printPeopleAtActivity($result, $order = "name") {
+
+        $imageOrder = "<img src='images/64-Power.png' alt='Ordem' title='Essa tabela está ordenada pela coluna zap!'>";
 
         if (mysql_num_rows($result) > 0) {
             ?>
@@ -8,13 +10,13 @@
             <table>
                 <thead>
                     <tr>
-                        <td>Inscrição</td>
-                        <td>Posição</td>
-                        <td>Nome</td>
-                        <td>Telefone</td>
-                        <td>Aprovado</td>
-                        <td>Pago</td>
-                        <td>Presente</td>
+                        <td data-order="memberID">Inscrição <?php if ($order == "memberID") echo $imageOrder ?></td>
+                        <td data-order="requestID">Posição <?php if ($order == "requestID") echo $imageOrder ?></td>
+                        <td data-order="name">Nome <?php if ($order == "name") echo $imageOrder ?></td>
+                        <td data-order="telephone">Telefone <?php if ($order == "telephone") echo $imageOrder ?></td>
+                        <td data-order="approved">Aprovado <?php if ($order == "approved") echo $imageOrder ?></td>
+                        <td data-order="paid">Pago <?php if ($order == "paid") echo $imageOrder ?></td>
+                        <td data-order="present">Presente <?php if ($order == "present") echo $imageOrder ?></td>
                         <td></td>
                     </tr>
                 </thead>
@@ -34,7 +36,7 @@
                             <p class="memberID"><b><?php echo str_pad($data['memberID'], 4, "0", STR_PAD_LEFT) ?></b></p>
                         </td>
                         <td>
-                            <p class="requestID"><b><?php echo ++$position ?>&ordm;</b></p>
+                            <p class="requestID"><b><?php echo str_pad($data['requestID'], 6, "0", STR_PAD_LEFT) ?></b></p>
                         </td>
                         <td>
                             <p class="name"><?php echo ucwords(strtolower($data['name'])) ?></p>
@@ -44,9 +46,9 @@
                         </td>
                         <td>
                             <?php if ($data["approved"] == 1) { ?>
-                            <img src="images/32-Check.png" title="Está pessoa foi aprovada!!">
+                            <img class="approved" src="images/32-Check.png" title="Está pessoa foi aprovada!!">
                             <?php } else { ?>
-                            <img src="images/32-Cross.png" title="Essa pessoa ainda está na lista de espera">
+                            <img class="approved" src="images/32-Cross.png" title="Essa pessoa ainda está na lista de espera">
                             <?php } ?>
                         </td>
                         <td>
@@ -91,7 +93,9 @@
         }
     }
 
-    function printPeopleAtEvent($result) {
+    function printPeopleAtEvent($result, $order = "name") {
+
+        $imageOrder = "<img src='images/64-Power.png' alt='Ordem' title='Essa tabela está ordenada pela coluna zap!'>";
 
         if (mysql_num_rows($result) > 0) {
             ?>
@@ -99,12 +103,12 @@
             <table>
                 <thead>
                     <tr>
-                        <td><i>Staff</i></td>
-                        <td>Inscrição</td>
-                        <td>Nome</td>
-                        <td>Email</td>
-                        <td>Cidade</td>
-                        <td>Universidade</td>
+                        <td data-order="roleID"><i>Staff</i> <?php if ($order == "roleID") echo $imageOrder ?></td>
+                        <td data-order="requestID">Inscrição <?php if ($order == "requestID") echo $imageOrder ?></td>
+                        <td data-order="name">Nome <?php if ($order == "name") echo $imageOrder ?></td>
+                        <td data-order="email">Email <?php if ($order == "email") echo $imageOrder ?></td>
+                        <td data-order="city">Cidade <?php if ($order == "city") echo $imageOrder ?></td>
+                        <td data-order="university">Universidade <?php if ($order == "university") echo $imageOrder ?></td>
                     </tr>
                 </thead>
                 <tbody>
@@ -125,7 +129,7 @@
                             <?php } ?>
                         </td>
                         <td>
-                            <p class="memberID"><b><?php echo str_pad($data['memberID'], 4, "0", STR_PAD_LEFT) ?></b></p>
+                            <p class="requestID"><b><?php echo str_pad($data['requestID'], 4, "0", STR_PAD_LEFT) ?></b></p>
                         </td>
                         <td>
                             <p class="name"><?php echo ucwords(strtolower($data['name'])) ?></p>

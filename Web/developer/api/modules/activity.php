@@ -372,6 +372,7 @@
 			$activityID = getAttribute($_GET['activityID']);
 			$selection = getAttribute($_GET['selection']);
 
+			// Selection
 			switch ($selection) {
 				case 'approved':
 					$complement = "AND `activityMember`.`approved` = 1";
@@ -394,13 +395,27 @@
 					break;
 			}
 
+			// Order
+			if (isset($_GET["order"]) && $_GET["order"] != "null") {
+
+				$order = getAttribute($_GET['order']);
+
+				// Set all the fields that can be ordered
+				$validOrder = array("memberID", "name", "telephone", "requestID", "approved", "paid", "present", "priori");
+
+				if (in_array($order, $validOrder) === FALSE) http_status_code(409);
+
+			} else {
+				$order = "name";
+			}
+
 			// Return its data
 			if ($format == "json") {
-				$result = getPeopleAtActivityQuery($activityID, $complement, "`member`.`name`");
+				$result = getPeopleAtActivityQuery($activityID, $complement, "`$order`");
 				echo printInformation("activityMember", $result, true, 'json');
 			} elseif ($format == "html") {
-				$result = getPeopleAtActivityQuery($activityID, $complement, "`activityMember`.`id`");
-				printPeopleAtActivity($result);
+				$result = getPeopleAtActivityQuery($activityID, $complement, "`$order`");
+				printPeopleAtActivity($result, $order);
 			} else {
 				http_status_code(405);	
 			}

@@ -105,16 +105,17 @@
 
     <div class="documentationFunctionBox">
         <p class="documentFunctionName">
-            <span>event.getPeople(<b>tokenID</b>, <b>eventID</b>, <b>selection</b>)</span>
-            <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=event.getPeople&tokenID=$tokenID&eventID=1&selection=all">
+            <span>event.getPeople(<b>tokenID</b>, <b>eventID</b>, <b>selection</b>, <b>order</b> = null)</span>
+            <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=event.getPeople&tokenID=$tokenID&eventID=1&selection=all&order=name">
         </p>
 
-        <p class="documentFunctionDescription">Retorna todas as pessoas que solicitaram entrar no evento <i>eventID</i>, filtradas por uma seleção <i>selection</i>.</p>
+        <p class="documentFunctionDescription">Retorna todas as pessoas que solicitaram entrar no evento <i>eventID</i>, filtradas por uma seleção <i>selection</i> e ordem <i>order</i>.</p>
 
         <div class="documentationFunctionParametersBox">
             <p><b>tokenID</b><sub>GET</sub> : id de autenticação </p>
             <p><b>eventID</b><sub>GET</sub> : id do evento </p>
             <p><b>selection</b><sub>GET</sub> : quem irá ao evento, podendo ser filtradas em aprovadas <i>approved</i>, negadas <i>denied</i>, não avaliadas <i>unseen</i> e todas <i>all</i></p>
+            <p><b>order</b><sub>GET</sub> : ordem baseada na coluna </p>
         </div>
     </div>
 

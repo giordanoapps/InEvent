@@ -24,7 +24,7 @@ define(modules, function($, common, cookie) {$(function() {
 	 * Load an activity and populate with usage
 	 * @return {null}
 	 */
-	$("#peopleContent").on("click", ".scheduleItemSelectable", function() {
+	$("#peopleContent").on("click", ".scheduleItemSelectable", function(event, order) {
 
 		// Change the selected class
 		$(this).siblings(".scheduleItemSelected").removeClass("scheduleItemSelected").end().addClass("scheduleItemSelected");
@@ -36,12 +36,16 @@ define(modules, function($, common, cookie) {$(function() {
 		// Define the namespace
 		var namespace = $(this).attr("data-type");
 
+		// Filter the order
+		if (order == undefined || order == null) order = "null";
+		
 		// We request the information on the server
 		$.post('developer/api/?' + $.param({
 			method: namespace + ".getPeople",
 			activityID: activityID,
 			eventID: eventID,
 			selection: "all",
+			order: order,
 			format: "html"
 		}), {},
 		function(data, textStatus, jqXHR) {
@@ -55,6 +59,20 @@ define(modules, function($, common, cookie) {$(function() {
 			}
 
 		}, 'html');
+
+	});
+
+	/**
+	 * Order the sequence of a list
+	 * @return {null}
+	 */
+	$("#peopleContent").on("click", "thead td", function() {
+
+		// Get the order
+		var order = $(this).attr("data-order");
+
+		// Change the selected class
+		$("#peopleContent").find(".scheduleItemSelected").trigger("click", [order]);
 
 	});
 

@@ -1584,6 +1584,20 @@ textarea, input {
 
 /* @end */
 
+/* @group People */
+
+#peopleContent thead td {
+	cursor: pointer;
+}
+
+#peopleContent thead img {
+	width: 24px;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+/* @end */
+
 /* @group Marketplace */
 
 .eventItem {

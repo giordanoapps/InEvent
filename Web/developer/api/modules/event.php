@@ -231,14 +231,28 @@
 					break;
 			}
 
+			// Order
+			if (isset($_GET["order"]) && $_GET["order"] != "null") {
+
+				$order = getAttribute($_GET['order']);
+
+				// Set all the fields that can be ordered
+				$validOrder = array("roleID", "memberID", "requestID", "name", "email", "city", "university");
+
+				if (in_array($order, $validOrder) === FALSE) http_status_code(409);
+
+			} else {
+				$order = "name";
+			}
+
 			// The query
-			$result = getPeopleAtEventQuery($eventID, $complement);
+			$result = getPeopleAtEventQuery($eventID, $complement, "`$order`");
 
 			// Return its data
 			if ($format == "json") {
 				echo printInformation("eventMember", $result, true, 'json');
 			} elseif ($format == "html") {
-				printPeopleAtEvent($result);
+				printPeopleAtEvent($result, $order);
 			} else {
 				http_status_code(405);	
 			}
