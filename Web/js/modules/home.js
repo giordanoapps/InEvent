@@ -19,7 +19,7 @@ define(["jquery", "common", "modules/cookie"], function($, common, cookie) {$(fu
 		$(this).find(".section:first-child").addClass("sectionVisible");
 	
 		// Trigger the initial animation		
-		$(this).css("top", $(this).first().height()).trigger("loadCover", [-100]);
+		$(this).css("top", $(this).first().height() * 1.0).trigger("loadCover", [-100]);
 
 	});
 

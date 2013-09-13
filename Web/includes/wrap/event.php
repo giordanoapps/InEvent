@@ -197,7 +197,7 @@
                             <p class="description"><?php echo $data['description'] ?></p>
                         </div>
                         <div class="bottom">
-                            <a target="_blank" href="https://www.google.com/maps/preview#!q=<?php echo urlencode(html_entity_decode($data['location'], ENT_COMPAT, "UTF-8")) ?>">
+                            <a target="_blank" href="https://www.google.com/maps/?q=<?php echo urlencode(html_entity_decode($data['location'], ENT_COMPAT, "UTF-8")) ?>">
                                 <img src="images/32-Google-Maps.png" alt="Local" title="Local de realização da atividade. Para acompanhar no Google Maps, é necessário ter a versão mais nova do produto.">
                             </a>
                             <span>
@@ -205,11 +205,14 @@
                                 <span class="smallPadding"><?php if ($data['capacity'] != 0) { echo $data['capacity']; } else { ?>&infin;<?php } ?></span>
                             </span>
                             <span class="suckyVerticalAlign"></span>
+                        </div>
+                        <div class="controls">
+                            <span class="suckyVerticalAlign"></span>
                             <input
                                 type="button"
-                                value="Inscrever!"
+                                value="<?php if ($enrolled && $data['memberID'] != 0) { ?>Inscrito<?php } else { ?>Inscrever<?php } ?>"
                                 title="Ao entrar nessa atividade, saberá imediatamente se foi aprovado ou está na lista de espera"
-                                class="singleButton toolEnroll <?php if (!$enrolled || $data['memberID'] != 0) { ?>singleButtonInvisible<?php } ?>">
+                                class="singleButton <?php if ($enrolled && $data['memberID'] != 0) { ?>toolEnrolled<?php } else { ?>toolEnroll<?php } ?>">
                         </div>
                     </div>
                 </li>

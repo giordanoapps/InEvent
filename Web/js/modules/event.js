@@ -55,11 +55,15 @@ define(modules, function($, common, cookie) {$(function() {
 			if (jqXHR.status == 200) {
 
 				if ($agendaItem.length > 0) {
-					var $scheduleItem = $(data).addClass("scheduleItemInvisible");
+
+					// Change the properties of the element
+					$elem.removeClass("toolEnroll").addClass("toolEnrolled").val("Inscrito").fadeIn(300);
+
+					// var $scheduleItem = $(data).addClass("scheduleItemInvisible");
 
 					// Find and replace the new element
-					$(".scheduleItem[value = \"" + activityID + "\"]").replaceWith($scheduleItem);
-					$scheduleItem.slideDown(300);
+					// $(".scheduleItem[value = \"" + activityID + "\"]").replaceWith($scheduleItem);
+					// $scheduleItem.slideDown(300);
 
 					// Hide all activities that belong to the same group
 					// if (groupID != 0) $(".agendaItem[data-group = \"" + groupID + "\"]").find(".toolEnroll").hide(200);
@@ -75,6 +79,21 @@ define(modules, function($, common, cookie) {$(function() {
 		});
 
 	});
+
+	/**
+	 * Remove a item from the person schedule
+	 * @return {null}
+	 */
+	$("#eventContent").on("mouseenter", ".toolEnrolled", function () {
+		$(this).removeClass("toolEnrolled").addClass("toolExpel").val("Sair da atividade");
+	});
+
+	$("#eventContent").on("mouseleave", ".toolExpel", function () {
+		// We must verify that the current row has the class and has the same state
+		if ($(this).hasClass("toolExpel")) {
+			$(this).removeClass("toolExpel").addClass("toolEnrolled").val("Inscrito");
+		}
+	});
 	
 	/**
 	 * Remove a item from the person schedule
@@ -83,7 +102,7 @@ define(modules, function($, common, cookie) {$(function() {
 	$("#eventContent").on("click", ".toolExpel", function() {
 
 		var $elem = $(this);
-		var activityID = $elem.closest(".scheduleItem").val();
+		var activityID = $elem.closest(".agendaItem").val();
 
 		// Hide the current button
 		$elem.hide(300);
@@ -97,11 +116,8 @@ define(modules, function($, common, cookie) {$(function() {
 		function(data, textStatus, jqXHR) {
 
 			if (jqXHR.status == 200) {
-				// Hide the current item
-				$elem.closest(".scheduleItem").slideUp(300);
-
-				// Enable the button on the agenda
-				$(".agendaItem[value = \"" + activityID + "\"]").find(".toolEnroll").slideDown(200);
+				// Change the properties of the element
+				$elem.removeClass("toolExpel").addClass("toolEnroll").val("Inscrever").fadeIn(300);
 			}
 
 		}, 'html').fail(function(jqXHR, textStatus, errorThrown) {

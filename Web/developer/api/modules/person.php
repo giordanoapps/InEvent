@@ -196,33 +196,7 @@
 
 			// Send an email if everything went alright
 			if (mysql_affected_rows() > 0) {
-
-				// Import Swift parser
-				require_once(__DIR__ . '/../../../classes/Swift/lib/swift_required.php');
-
-				// Create the Transport
-				$transport = new Swift_AWSTransport(
-					'AKIAJJ7U5KNZFVK2AN5Q',
-					'HJ01wFuJTx8Zow32hQpUEv6ibypkmFBt07siuYJ7'
-				);
-
-				// Create the Mailer using your created Transport
-				$mailer = Swift_Mailer::newInstance($transport);
-
-				// Load our template
-				$template = file_get_contents(__DIR__ . "/email.html");
-
-				// Replace some ocurrences
-				$template = str_replace('{{password}}', $password, $template);
-
-				// Create the message
-				$message = Swift_Message::newInstance()
-					->setSubject("InEvent - Sua nova senha")
-					->setFrom(array("contato@estudiotrilha.com.br"))
-					->setTo(array($email))
-					->setBody($template, "text/html");
-
-				$mailer->send($message);
+				sendRecoveryEmail($password, $email);
 			} else {
 				http_status_code(500, "Not a single email was found");
 			}

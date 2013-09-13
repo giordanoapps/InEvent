@@ -350,6 +350,7 @@ textarea, input {
 .bar .secondary .facebookBox img {
 	height: 48px;
 	cursor: pointer;
+	cursor: not-allowed;
 }
 
 .bar .secondary .middleLine {
@@ -805,40 +806,114 @@ textarea, input {
 /* @group Menu */
 
 .menuContent {
-	padding: 0px 20px;
-	background-color: #EEEEEE;
-	text-shadow: 0 1px 0 white;
-	-webkit-box-shadow: inset 0 1px 0 white, 0 1px 5px #C9C9C9;
-	box-shadow: inset 0 1px 0 white, 0 1px 5px #C9C9C9;
-	border-bottom: 1px solid #B1B1B1;
-	height: 44px;
-	top: 44px;
+	width: 100%;
 	position: fixed;
-	box-sizing: border-box;
-	z-index: 24;
+	height: auto;
+	padding: 0;
+	background-color: rgba(255, 255, 255, 0.8);
+	text-shadow: 0 1px 0 white;
+	z-index: 22;
+}
+
+.menuContent .toolBox {
+	height: 48px;
+	padding: 0px 20px;
+}
+
+.menuContent .toolBox > div {
 	display: none;
 }
 
-.menuContent.notFixed {
-	height: auto;
-	position: static;
+.menuContent .toolBox > div:first-child {
+	display: block;
 }
 
-.menuContent img {
-	height: 26px;
-	width: 26px;
-	margin: 10px 5px;
-	cursor: pointer;
-	display: inline-block;
-	vertical-align: middle;
-}
-
-.menuContent .leftBoard {
+.menuContent .toolBoxLeft {
 	float: left;
 }
 
-.menuContent .rightBoard {
+.menuContent .toolBoxBreadcrumb {
+	display: inline-block;
+}
+
+.menuContent .toolBoxBreadcrumb p {
+	margin: 0 auto;
+	font-size: 110%;
+	line-height: 48px;
+	font-weight: bold;
+}
+
+.menuContent .toolBoxRight {
 	float: right;
+	display: inline-block;
+}
+
+.menuContent .editingToolBox {
+	display: none;
+}
+
+.menuContent .toolBox img {
+	width: 28px;
+	margin: 10px 6px;
+	padding: 0;
+	cursor: pointer;
+	vertical-align: middle;
+	display: inline-block;
+
+}
+
+.menuContent .toolBox p {
+	vertical-align: middle;
+	display: inline-block;
+}
+
+.menuContent .toolBoxButton {
+	background: transparent;
+	border: 1px solid #E2E2E2;
+	background-color: #FCFCFC;
+	color: #333;
+	font-size: 90%;
+	padding: 5px 10px;
+	position: relative;
+	text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
+	-webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);
+	-moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);
+	cursor: pointer;
+	border-radius: 4px;
+	vertical-align: top;
+	line-height: 18px;
+	position: relative;
+	top: 6px;
+}
+
+.menuContent .toolWrapper {
+	background: transparent;
+	color: black;
+	font-size: 1em;
+	padding: 0;
+	margin: 0;
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.4);
+	cursor: pointer;
+	border-radius: 10px;
+	display: inline-block;
+	overflow: hidden;
+
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.menuContent .toolWrapper span {
+	vertical-align: middle;
+	margin: 8px 0px;
+	padding: 0 5px;
+	border-right: 1px solid black;
+	display: inline-block;
+	overflow: hidden;
 }
 
 /* @end */
@@ -1413,7 +1488,7 @@ textarea, input {
 
 .agendaDay span:first-child {
 	text-align: center;
-	width: 7.5%;
+	width: 6%;
 	border-right: 1px solid #FFF;
 	box-shadow: inset -1px 0px #E9E9E9;
 }
@@ -1475,12 +1550,17 @@ textarea, input {
 
 .agendaItem .right .upper,
 .agendaItem .right .middle {
-	width: 38%;
+	width: 34%;
 	float: left;
 }
 
 .agendaItem .right .bottom {
-	width: 24%;
+	width: 18%;
+	float: left;
+}
+
+.agendaItem .right .controls {
+	width: 14%;
 	float: left;
 }
 
@@ -1492,12 +1572,11 @@ textarea, input {
 }
 
 .agendaItem .left .dateBegin {
-	background-color: #FDFDFD;
+	background-color: whiteSmoke;
 	font-weight: bold;
 }
 
 .agendaItem .left .dateEnd {
-	background-color: whiteSmoke;
 	font-size: 80%;
 }
 
@@ -1561,6 +1640,62 @@ textarea, input {
 	border: solid 1px #B44124;
 }
 
+/* @end */
+
+/* @group People */
+
+#peopleContent {
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	overflow: hidden;
+}
+
+#peopleContent .toolBoxOptions {
+	width: 100%;
+	margin: 0 auto;
+	display: none;
+}
+
+#peopleContent .toolBoxOptionsEnrollPerson input[type="text"] {
+	padding: 4.5px;
+	margin: 4px 0;
+	font-size: 90%;
+	text-align: center;
+	width: 40%;
+}
+
+#peopleContent .toolBoxOptionsEnrollPerson .singleButton {
+	padding: 4px 14px;
+	color: #FFF;
+	background: #34348F;
+	border: solid 1px #1F1F63;
+	font-size: 90%;
+	margin: 6px 2px;
+	vertical-align: middle;
+}
+
+#peopleContent .placerContent > ul,
+#peopleContent .realContent {
+	position: relative;
+	height: 100%;
+	overflow: hidden;
+}
+
+#peopleContent .realContent {
+	padding-top: 44px;
+}
+
+#peopleContent thead td {
+	cursor: pointer;
+}
+
+#peopleContent thead img {
+	width: 24px;
+	display: inline-block;
+	vertical-align: middle;
+}
+
 .pickerItem td {
 	padding: 0;
 	font-size: 80%;
@@ -1584,35 +1719,7 @@ textarea, input {
 }
 
 .pickerItem:last-of-type td {
-	padding-bottom: 88px;
-}
-
-/* @end */
-
-/* @group People */
-
-#peopleContent {
-	width: 100%;
-	height: 100%;
-	position: fixed;
-	overflow: hidden;
-}
-
-#peopleContent .placerContent > ul,
-#peopleContent .realContent {
-	position: relative;
-	height: 100%;
-	overflow: hidden;
-}
-
-#peopleContent thead td {
-	cursor: pointer;
-}
-
-#peopleContent thead img {
-	width: 24px;
-	display: inline-block;
-	vertical-align: middle;
+	padding-bottom: 132px; /* 44px * 3 */
 }
 
 /* @end */

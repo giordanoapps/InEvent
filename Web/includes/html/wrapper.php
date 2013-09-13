@@ -1,6 +1,9 @@
 <?php if ($core->auth) { ?>
 
+	<iframe name="excelFrame" id="excelFrame" width="320" height="0" frameborder="0" src="about:blank"></iframe>
+
 	<div id="wrapper">
+
 		<div class="bar bottom">
 			<ul class="leftBar">
 				<li>&reg;<a target="_blank" href="http://estudiotrilha.com.br">Estúdio Trilha 2013</a> &nbsp;&nbsp;&nbsp; Todos os direitos reservados</li>

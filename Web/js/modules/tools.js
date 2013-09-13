@@ -2,7 +2,50 @@
 
 define(["jquery", "common", "modules/cookie"], function($, common, cookie) {$(function() {
 
-	/* Info Cointainer is the name of the generic class I have created to all its subclasses, including infoContainer, card, post , etc ... */
+	/**
+	 * Edit tool has been clicked (or the done button)
+	 * @return {null}
+	 */
+	$(document).on("click", ".toolBox .toolPreferences, .toolBox .toolDone", function() {
+
+		// Get the pageContent
+		var $pageContent = $(".pageContent").toggleClass("editingMode");
+		var $pageContentSector = $(".pageContentSector:visible");
+		var level = $pageContentSector.index();
+
+		// Hide any options box
+		$(".toolBoxOptions").slideUp(300);
+
+		// Sanitize the data
+		if (isNaN(parseFloat(level)) || !isFinite(level) || level < 0) level = 0;
+
+		// PREFERENCES TOOL
+		if ($pageContent.hasClass("editingMode")) {
+			$(".toolBox > div:eq(" + level + ") div")
+				.not(".editingToolBox, .toolBoxBreadcrumb")
+				.slideToggle(300)
+				.end()
+				.filter(".editingToolBox")
+				.delay(300)
+				.slideToggle(300);
+		
+		// DONE TOOL
+		} else {
+			// Hide the items and show others
+			$(".toolBox > div:eq(" + level + ") div")
+				.filter(".editingToolBox")
+				.slideToggle(300)
+				.end()
+				.not(".editingToolBox, .toolBoxBreadcrumb")
+				.delay(300)
+				.slideToggle(300);
+
+			// Make sure that all classes are deselected and that the special itemExtra is hidden
+			$pageContentSector.find(".pageContentItemSelected").toggleClass("pageContentItemSelected");
+			$pageContentSector.find(".pageContentItemExtra").hide();
+		}
+		
+	});
 
 	/**
 	 * Trigger for mouse events on the image

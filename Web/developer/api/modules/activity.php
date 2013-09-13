@@ -5,15 +5,80 @@
 
 		$activityID = getTokenForActivity();
 
-		if (isset($_GET['personID']) && $_GET['personID'] != "null") {
+		if (isset($_GET['name']) && $_GET['name'] != "null" && isset($_GET['email']) && $_GET['email'] != "null") {
 
 			if ($core->workAtEvent) {
-				$personID = getAttribute($_GET['personID']);
 
-				// If the personID is 0, we must create an anonymous member named "Pessoa"
-				if ($personID == 0) $personID = createMember("Pessoa", "", "", "", "", 1);
+				$name = getAttribute($_GET['name']);
+				$email = getAttribute($_GET['email']);
+
+				$result = resourceForQuery(
+					"SELECT
+						`member`.`id`
+					FROM
+						`member`
+					WHERE 1
+						AND BINARY `member`.`email` = '$email'
+				");
+
+				if (mysql_num_rows($result) > 0) {
+					$personID = mysql_result($result, 0, "id");
+				} else {
+					$personID = createMember($name, md5((string)rand()), $email);
+				}
+
+				// See if the person is already inside the event
+				$result = resourceForQuery(
+					"SELECT
+						`eventMember`.`eventID`
+					FROM
+						`eventMember`
+					INNER JOIN
+						`activity` ON `activity`.`eventID` = `eventMember`.`eventID`
+					WHERE 1
+						AND `activity`.`id` = $activityID
+						AND `eventMember`.`memberID` = $personID
+				");
+
+				// Insert the person on the event
+				if (mysql_num_rows($result) == 0) {
+
+					$result = resourceForQuery(
+						"SELECT
+							`event`.`id`,
+							`event`.`name`
+						FROM
+							`activity`
+						INNER JOIN
+							`event` ON `event`.`id` = `activity`.`eventID`
+						WHERE 1
+							AND `activity`.`id` = $activityID
+						LIMIT 1
+					");
+
+					if (mysql_num_rows($result) > 0) {
+
+						// Get some properties
+						$eventID = mysql_result($result, 0, "id");
+						$eventName = mysql_result($result, 0, "name");
+
+						$insert = resourceForQuery(
+							"INSERT INTO
+								`eventMember`
+								(`eventID`, `memberID`, `roleID`, `approved`)
+							VALUES
+								($eventID, $personID, @(ROLE_ATTENDEE), 1)
+						");
+
+						sendEventEnrollmentEmail($eventName, $email);
+
+					} else {
+						http_status_code(404, "eventID does not exist!");
+					}
+				}
+
 			} else {
-				http_status_code(401);
+				http_status_code(401, "Person doesn't work at event");
 			}
 		} else {
 			$personID = $core->memberID;
@@ -90,18 +155,18 @@
 						$result = getActivitiesForMemberAtActivityQuery($activityID, $personID);
 						printScheduleItem(mysql_fetch_assoc($result), "member");
 					} else {
-						http_status_code(405);	
+						http_status_code(405, "this format is not available");
 					}
 				} else {
-					http_status_code(500);
+					http_status_code(500, "insert inside activity failed");
 				}
 
 			} else {
-				http_status_code(406);
+				http_status_code(406, "personID has not been approved on the event");
 			}
 
 		} else {
-			http_status_code(400);
+			http_status_code(400, "personID is null");
 		}
 		
 	} else
@@ -114,9 +179,6 @@
 
 			if ($core->workAtEvent) {
 				$personID = getAttribute($_GET['personID']);
-
-				// If the personID is 0, we must create an anonymous member named "Pessoa"
-				if ($personID == 0) $personID = createMember("Pessoa", "", "", "", "", 1);
 			} else {
 				http_status_code(401);
 			}
@@ -283,7 +345,7 @@
 					$data["activityID"] = $activityID;
 					echo json_encode($data);
 				} else {
-					http_status_code(405);	
+					http_status_code(405, "this format is not available");	
 				}
 			} else {
 				http_status_code(500);
@@ -348,7 +410,7 @@
 						$data["personID"] = $personID;
 						echo json_encode($data);
 					} else {
-						http_status_code(405);	
+						http_status_code(405, "this format is not available");	
 					}
 				} else {
 					http_status_code(500);
@@ -391,7 +453,7 @@
 					break;
 
 				default:
-					http_status_code(405);
+					http_status_code(405, "this format is not available");
 					break;
 			}
 
@@ -409,15 +471,18 @@
 				$order = "name";
 			}
 
+			// The query
+			$result = getPeopleAtActivityQuery($activityID, $complement, "`$order`");
+
 			// Return its data
 			if ($format == "json") {
-				$result = getPeopleAtActivityQuery($activityID, $complement, "`$order`");
 				echo printInformation("activityMember", $result, true, 'json');
 			} elseif ($format == "html") {
-				$result = getPeopleAtActivityQuery($activityID, $complement, "`$order`");
 				printPeopleAtActivity($result, $order);
+			} elseif ($format == "excel") {
+				resourceToExcel($result);
 			} else {
-				http_status_code(405);	
+				http_status_code(405, "this format is not available");	
 			}
 
 		} else {

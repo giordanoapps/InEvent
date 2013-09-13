@@ -15,6 +15,11 @@
 		exit("Monkeys are on the way to solve whatever you need!");
 	}
 
+	/**
+	 * Validate event
+	 * @param  integer $eventID [description]
+	 * @return [type]           [description]
+	 */
 	function validateEvent($eventID = 0) {
 
 		// Get the singleton

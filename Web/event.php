@@ -10,11 +10,6 @@
 	<div id="content">
 
 		<div id="eventContent" class="pageContent fullPageContent">
-			
-			<div class="placerContent">
-				<?php printScheduleForMember($core->eventID, $core->memberID); ?>
-			</div>
-
 			<div class="boardContent">
 				<div class="realContent">
 					<?php printAgenda($core->eventID, $core->memberID); ?>

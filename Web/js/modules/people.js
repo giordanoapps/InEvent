@@ -18,16 +18,61 @@ define(modules, function($, common, cookie) {$(function() {
 		$(this).find(".scheduleItemSelectable").first().trigger("click");
 
 		// Create the scrollable container
-		$(this).find(".placerContent > ul, .realContent").perfectScrollbar();
+		$(this).find(".placerContent > ul").perfectScrollbar();
 	});
 
 // -------------------------------------- TOOLS -------------------------------------- //
 
 	/**
+	 * Toggle the box
+	 * @return {null}
+	 */
+	$("#peopleContent").on("click", ".toolCreate", function() {
+		$(this).closest(".toolBox").siblings(".toolBoxOptionsEnrollPerson").slideToggle(400);
+	});
+
+	/**
+	 * Add a person to the activity
+	 * @return {null}
+	 */
+	$("#peopleContent").on("click", ".toolBoxOptionsEnrollPerson .singleButton", function() {
+		
+		var $elem = $(this);
+		var $scheduleItemSelected = $("#peopleContent .scheduleItemSelected");
+
+		var namespace = $scheduleItemSelected.attr("data-type");
+		var activityID = $scheduleItemSelected.val();
+		var eventID = cookie.read("eventID");
+		var name = $elem.siblings(".name").val();
+		var email = $elem.siblings(".email").val();
+
+		// We request the information on the server
+		$.post('developer/api/?' + $.param({
+			method: namespace + ".requestEnrollment",
+			activityID: activityID,
+			eventID: eventID,
+			name: name,
+			email: email,
+			format: "html"
+		}), {},
+		function(data, textStatus, jqXHR) {
+
+			// Hide the toolbar
+			$elem.closest(".toolBoxOptionsEnrollPerson").slideToggle(400);
+
+			// Reset values
+			$elem.siblings(".name").val('');
+			$elem.siblings(".email").val('');
+
+		}, 'html');
+
+	});
+
+	/**
 	 * Load an activity and populate with usage
 	 * @return {null}
 	 */
-	$("#peopleContent").on("click", ".scheduleItemSelectable", function(event, order) {
+	$("#peopleContent").on("click", ".scheduleItemSelectable", function(event, order, format) {
 
 		// Change the selected class
 		$(this).siblings(".scheduleItemSelected").removeClass("scheduleItemSelected").end().addClass("scheduleItemSelected");
@@ -41,28 +86,55 @@ define(modules, function($, common, cookie) {$(function() {
 
 		// Filter the order
 		if (order == undefined || order == null) order = "null";
+
+		// Filter the format
+		if (format == undefined || format == null) format = "html";
 		
-		// We request the information on the server
-		$.post('developer/api/?' + $.param({
+		// Define the url
+		var url = 'developer/api/?' + $.param({
 			method: namespace + ".getPeople",
 			activityID: activityID,
 			eventID: eventID,
 			selection: "all",
 			order: order,
-			format: "html"
-		}), {},
-		function(data, textStatus, jqXHR) {
+			format: format
+		});
 
-			if (jqXHR.status == 200) {
-				// Append the content
-				$(".realContent").hide(0).html(data).show(300);
+		if (format != "excel") {
+			// We request the information on the server
+			$.post(url, {},
+			function(data, textStatus, jqXHR) {
+				if (jqXHR.status == 200) {
+					// Append the content
+					$(".realContent")
+						.hide(0)
+						.html(data)
+						.show(300)
+						.perfectScrollbar("destroy")
+						.perfectScrollbar({
+							minScrollbarLength: 120
+						});
 
-				// Scroll to top
-				$('html, body').animate({ scrollTop: 0 }, 'slow');
-			}
+					// Scroll to top
+					$('html, body').animate({ scrollTop: 0 }, 'slow');
+				}
+			}, "html");
 
-		}, 'html');
+		} else {
+			console.log(url);
+			// Load the excel requisition on its own frame
+			$("#excelFrame").attr("src", url);
+		}
 
+	});
+
+	/**
+	 * Tool to export data to excel
+	 * @return {null}
+	 */
+	$("#peopleContent").on("click", ".toolBox .toolExport", function () {
+		// Change the selected class
+		$("#peopleContent .scheduleItemSelected").trigger("click", [null, "excel"]);
 	});
 
 	/**
@@ -75,7 +147,7 @@ define(modules, function($, common, cookie) {$(function() {
 		var order = $(this).attr("data-order");
 
 		// Change the selected class
-		$("#peopleContent").find(".scheduleItemSelected").trigger("click", [order]);
+		$("#peopleContent .scheduleItemSelected").trigger("click", [order]);
 
 	});
 
@@ -90,12 +162,13 @@ define(modules, function($, common, cookie) {$(function() {
 
 		var $elem = $(this);
 		var method = ($elem.hasClass("staff")) ? "revokePermission" : "grantPermission";
+		var eventID = cookie.read("eventID");
 		var personID = $elem.closest(".pickerItem").attr("data-value");
 
 		// We request the information on the server
 		$.post('developer/api/?' + $.param({
 			method: "event." + method,
-			eventID: 2,
+			eventID: eventID,
 			personID: personID,
 			format: "html"
 		}), {},

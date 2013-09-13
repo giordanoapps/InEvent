@@ -240,4 +240,40 @@
 
 	}
 
+	/**
+	 * Export some Mysql resource to an Excel spreadsheet
+	 * @param  resource $result mysql resource
+	 * @return file         		the saved file, encoded and headers ready to download
+	 */
+	function resourceToExcel($result) {
+
+		// Import the PHPExcel parser
+		include_once(__DIR__ . "/../../classes/PHPExcel/IOFactory.php");
+
+		// Create a new document and sheet
+		$objPHPExcel = new PHPExcel();
+		$objPHPExcel->createSheet();
+
+		// Headers
+		for ($j = 0; $j < mysql_num_fields($result); $j++) {
+			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($j, 1, mysql_field_name($result, $j));
+		}
+
+		// Content
+		for ($i = 1; $i < mysql_num_rows($result); $i++) {
+			for ($j = 0; $j < mysql_num_fields($result); $j++) {
+				$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($j, $i + 1, mysql_result($result, $i, $j));
+			}
+		}
+
+		// Redirect output to client browser
+		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+		header('Content-Disposition: attachment;filename="document.xlsx"');
+		header('Cache-Control: max-age=0');
+
+		$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+		$objWriter->save('php://output');
+
+	}
+
 ?>

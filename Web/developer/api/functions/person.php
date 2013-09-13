@@ -33,6 +33,9 @@
 
 		$memberID = mysql_insert_id();
 
+		// Send an email
+		sendEnrollmentEmail($name, $email);
+
 		return $memberID;
 	}
 
@@ -68,7 +71,7 @@
 				`memberRole` ON `eventMember`.`roleID` = `memberRole`.`id`
 			WHERE 1
 				AND `eventMember`.`memberID` = $memberID
-				AND (`eventMember`.`roleID` = @(ROLE_STAFF) OR `eventMember`.`roleID` = @(ROLE_COORDINATOR))
+				AND (`eventMember`.`roleID` = " . @(ROLE_STAFF) . " OR `eventMember`.`roleID` = @(ROLE_COORDINATOR))
 		");
 
 		return printInformation("eventMember", $result, true, 'object');

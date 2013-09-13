@@ -18,10 +18,28 @@
 
 		$eventID = getTokenForEvent();
 
-		if (isset($_GET['personID']) && $_GET['personID'] != "null") {
+		if (isset($_GET['name']) && $_GET['name'] != "null" && isset($_GET['email']) && $_GET['email'] != "null") {
 
 			if ($core->workAtEvent) {
-				$personID = getAttribute($_GET['personID']);
+
+				$name = getAttribute($_GET['name']);
+				$email = getAttribute($_GET['email']);
+
+				$result = resourceForQuery(
+					"SELECT
+						`member`.`id`
+					FROM
+						`member`
+					WHERE 1
+						AND BINARY `member`.`email` = '$email'
+				");
+
+				if (mysql_num_rows($result) > 0) {
+					$personID = mysql_result($result, 0, "id");
+				} else {
+					$personID = createMember($name, md5((string)rand()), $email);
+				}
+
 			} else {
 				http_status_code(401, "Person doesn't work at event");
 			}
@@ -44,7 +62,6 @@
 			if (mysql_num_rows($result) == 0) {
 				// Insert the person on the event
 				$insert = resourceForQuery(
-				// echo (
 					"INSERT INTO
 						`eventMember`
 						(`eventID`, `memberID`, `roleID`, `approved`)
@@ -253,6 +270,8 @@
 				echo printInformation("eventMember", $result, true, 'json');
 			} elseif ($format == "html") {
 				printPeopleAtEvent($result, $order);
+			} elseif ($format == "excel") {
+				resourceToExcel($result);
 			} else {
 				http_status_code(405);	
 			}

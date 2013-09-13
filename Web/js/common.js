@@ -1,7 +1,7 @@
 require.config({
     "baseUrl": "js/lib",
     "waitSeconds": 15,
-  	"urlArgs": "bust=" + (new Date()).getTime(),
+  	// "urlArgs": "bust=" + (new Date()).getTime(),
     "paths": {
     	'jquery': 'jquery-1.8.3.min',
     	'jquery-ui': 'jquery-ui-1.9.2.custom.min',
@@ -70,7 +70,7 @@ basic.push('modules/loaders');
 basic.push('modules/window');
 basic.push('modules/collection');
 basic.push('modules/bar');
-basic.push('modules/notification');
+// basic.push('modules/notification');
 basic.push('modules/userSettings');
 basic.push('modules/tools');
 

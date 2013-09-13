@@ -25,6 +25,7 @@ include_once("function/security.php");
 include_once("function/utils.php");
 
 // Extra
+include_once("email.php");
 include_once("push.php");
 include_once("queries.php");
 include_once("wrap.php");

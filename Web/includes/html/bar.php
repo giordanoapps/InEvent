@@ -6,7 +6,7 @@
 		<div class="bar top">
 			<ul class="leftBar">
 				<a href="home.php"><li>Home</li></a>
-				<a href="event.php"><li>Atividades</li></a>
+				<a href="event.php"><li>Evento</li></a>
 				<?php if ($core->workAtEvent) { ?>
 					<a href="people.php"><li>Pessoas</li></a>
 				<?php } ?>
