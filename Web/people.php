@@ -17,6 +17,7 @@
 			</div>
 			
 			<div class="boardContent">
+
 				<div class="menuContent">
 
 					<!-- ToolBox Enroll People -->
@@ -55,9 +56,11 @@
 						</div>
 					</div>
 				</div>
+
 				<div class="realContent">
 					<?php printPeopleAtActivity(getPeopleAtActivityQuery(0)) ?>
 				</div>
+				
 			</div>
 		</div>
     </div>

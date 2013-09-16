@@ -2,7 +2,7 @@
 
     function printPeopleAtActivity($result, $order = "name") {
 
-        $imageOrder = "<img src='images/64-Power.png' alt='Ordem' title='Essa tabela está ordenada pela coluna zap!'>";
+        $imageOrder = "<img src='images/64-Power.png' class='power' alt='Ordem' title='Essa tabela está ordenada pela coluna zap!'>";
 
         if (mysql_num_rows($result) > 0) {
             ?>
@@ -95,7 +95,7 @@
 
     function printPeopleAtEvent($result, $order = "name") {
 
-        $imageOrder = "<img src='images/64-Power.png' alt='Ordem' title='Essa tabela está ordenada pela coluna zap!'>";
+        $imageOrder = "<img src='images/64-Power.png' class='power' alt='Ordem' title='Essa tabela está ordenada pela coluna zap!'>";
 
         if (mysql_num_rows($result) > 0) {
             ?>

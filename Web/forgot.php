@@ -15,7 +15,7 @@
 					
 				<p class="byItself">Me diga seu email ... e lhe enviarei uma nova senha!</p>
 
-				<input type="text" class="email" name="email" placeholder="Digite seu email (espero que não tenha esquecido!)">
+				<input type="text" class="email" name="email" placeholder="Digite seu email (espero que este não tenha esquecido!)">
 
 				<input type="button" class="singleButton sendRecovery" value="Enviar nova senha">
 

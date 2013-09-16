@@ -58,7 +58,6 @@
 				`event`.`address`,
 				`event`.`city`,
 				`event`.`state`,
-				`event`.`zipCode`,
 				`eventMember`.`roleID`,
 				`memberRole`.`constant`,
 				`memberRole`.`title`,

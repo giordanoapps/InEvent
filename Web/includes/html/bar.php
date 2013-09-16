@@ -6,7 +6,8 @@
 		<div class="bar top">
 			<ul class="leftBar">
 				<a href="home.php"><li>Home</li></a>
-				<a href="event.php"><li>Evento</li></a>
+				<a href="front.php"><li>Evento</li></a>
+				<a href="event.php"><li>Atividades</li></a>
 				<?php if ($core->workAtEvent) { ?>
 					<a href="people.php"><li>Pessoas</li></a>
 				<?php } ?>
@@ -53,7 +54,8 @@
 							$result = resourceForQuery(
 								"SELECT
 									`event`.`id`,
-									`event`.`name`
+									`event`.`name`,
+									`event`.`nickname`
 								FROM
 									`eventMember`
 								INNER JOIN
@@ -70,7 +72,10 @@
 								// And then each one of the restaurants
 								for ($i = 0; $i < mysql_num_rows($result); $i++) {
 									?>
-									<li class="locationItem" value="<?php echo mysql_result($result, $i, "id") ?>">
+									<li
+										class="locationItem"
+										value="<?php echo mysql_result($result, $i, "id") ?>"
+										data-nick="<?php echo mysql_result($result, $i, "nickname") ?>">
 										<?php echo mysql_result($result, $i, "name") ?>
 									</li>
 									<?php
@@ -109,7 +114,7 @@
 					<div class="middleLine">OU</div>
 					
 					<div class="memberBox">
-						<form method="post" action="home.php">
+						<form method="post" action="">
 							<input type="text" placeholder="Email" name="email"/>
 							<input type="password" placeholder="Senha" name="password"/>
 							<input type="submit" class="singleButton" value="Entrar" />

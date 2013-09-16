@@ -16,11 +16,8 @@ define(modules, function($, common, cookie) {$(function() {
 		// Create the cookie
 		cookie.create("eventID", $(this).closest(".eventItem").val(), 10);
 
-		// Move to the event page
-		window.location.hash = "event";
-
 		// Reload our page
-		window.location.reload();
+		window.location.replace('/' + $(this).closest(".bottom").attr("data-nick"));
 
 	});
 
@@ -28,7 +25,7 @@ define(modules, function($, common, cookie) {$(function() {
 	 * Enroll a person on an event
 	 * @return {null}
 	 */
-	$("#marketplaceContent .toolEnroll").on("click", function() {
+	$("#marketplaceContent").on("click", ".toolEnroll", function() {
 
 		var $elem = $(this);
 		var $eventItem = $elem.closest(".eventItem");

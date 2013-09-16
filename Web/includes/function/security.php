@@ -5,12 +5,12 @@
 	 */
 
 	function logout() {
-		$filename = basename($_SERVER['PHP_SELF']);
-		$path = str_replace($filename, '', $_SERVER['PHP_SELF']);
+		// Domain to current path
+		$path = substr($_SERVER['REQUEST_URI'], 0, strrpos($_SERVER['REQUEST_URI'], "/") + 1);
 
 		$security = Security::singleton();
 
-		setcookie($security->key, '', 0, $path);
+		setcookie($security->key, '', 0, "/");
 		header("Location: $path");	
 		exit("Monkeys are on the way to solve whatever you need!");
 	}
@@ -25,9 +25,30 @@
 		// Get the singleton
 		$core = Core::singleton();
 
-		if ($eventID == 0 && (isset($_GET["eventID"]) || isset($_COOKIE["eventID"]))) {
-			// See if the user provided a company
-			$eventID = isset($_GET["eventID"]) ? getAttribute($_GET["eventID"]) : getAttribute($_COOKIE["eventID"]);
+		if ($eventID == 0 && (isset($_GET["eventID"]) || isset($_GET["eventNick"]) || isset($_COOKIE["eventID"]))) {
+			// See if a event has been selected
+			if (isset($_GET["eventID"])) {
+				$eventID = getAttribute($_GET["eventID"]);
+			} elseif (isset($_GET["eventNick"])) {
+
+				// Select the nickname
+				$eventNick = getAttribute($_GET["eventNick"]);
+
+				// Select the nickname from the database
+				$result = resourceForQuery(
+					"SELECT
+						`event`.`id`
+					FROM
+						`event`
+					WHERE 1
+						AND `event`.`nickname` = '$eventNick'
+				");
+
+				$eventID = (mysql_num_rows($result) > 0) ? mysql_result($result, 0, "id") : 0;
+
+			} elseif (isset($_COOKIE["eventID"])) {
+				$eventID = getAttribute($_COOKIE["eventID"]);
+			}
 		}
 		
 		// Assign the variable to the property
@@ -54,17 +75,16 @@
 			$core->roleID = mysql_result($result, 0, "roleID");
 		} else {
 			// Since permission is needed to be inside an event, we must reset the $core->eventID
-			$core->eventID = 0;
+			// $core->eventID = 0;
 			$core->workAtEvent = false;
 			$core->roleID = ROLE_ATTENDEE;
 		}
 
-		// Domain current path
-		$filename = basename($_SERVER['PHP_SELF']);
-		$path = str_replace($filename, '', $_SERVER['PHP_SELF']);
+		// Domain to current path
+		$path = substr($_SERVER['REQUEST_URI'], 0, strrpos($_SERVER['REQUEST_URI'], "/") + 1);
 
-		// Create company cookie if not present
-		if (!isset($_COOKIE["eventID"])) setcookie("eventID", $core->eventID, time() + 60*60*24*30, $path);
+		// Rewrite cookie
+		setcookie("eventID", $core->eventID, time() + 60*60*24*30, "/");
 	}
 
 ?>

@@ -60,6 +60,10 @@ define(modules, function($, common, cookie) {$(function() {
 			// Hide the toolbar
 			$elem.closest(".toolBoxOptionsEnrollPerson").slideToggle(400);
 
+			// Reload the table
+			var order = $("#peopleContent .power").closest("td").attr("data-order");
+			$scheduleItemSelected.trigger("click", [order]);
+
 			// Reset values
 			$elem.siblings(".name").val('');
 			$elem.siblings(".email").val('');

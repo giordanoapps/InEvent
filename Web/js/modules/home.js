@@ -146,20 +146,4 @@ define(["jquery", "common", "modules/cookie"], function($, common, cookie) {$(fu
 
 	 });
 
-
-// ------------------------------------- HOME ------------------------------------- //
-
-	/**
-	 * Login button has been clicked
-	 */	
-	$(".userLoginLeading").on("click", function () {
-		
-		$(this).siblings(".userLoginBox").slideToggle(500);
-	
-		if ($(this).siblings(".userRegisterBox").is(":visible")) {
-			$(this).siblings(".userRegisterBox").slideToggle(500);
-		}
-
-	});
-
 });});

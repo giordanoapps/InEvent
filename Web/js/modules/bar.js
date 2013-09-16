@@ -71,10 +71,10 @@ define(["jquery", "common", "modules/cookie"], function($, common, cookie) {$(fu
 	$(".bar .locationBox li:not(.header)").click(function (event) {
 
 		// Create the cookie
-		cookie.create("companyID", $(this).val(), 10);
+		cookie.create("eventID", $(this).val(), 10);
 
-		// Reload the page
-		window.location.reload();
+		// Reload our page
+		window.location.replace('/' + $(this).attr("data-nick"));
 	});
 
 	/**
@@ -83,6 +83,19 @@ define(["jquery", "common", "modules/cookie"], function($, common, cookie) {$(fu
 	 */
 	$(".barAdjacent a").click(function (event) {
 		$(this).siblings().removeClass("tabSelected").end().addClass("tabSelected");
+	});
+
+	/**
+	 * Login button has been clicked
+	 */	
+	$(".bar .userLoginLeading").on("click", function () {
+		
+		$(this).siblings(".userLoginBox").slideToggle(500);
+	
+		if ($(this).siblings(".userRegisterBox").is(":visible")) {
+			$(this).siblings(".userRegisterBox").slideToggle(500);
+		}
+
 	});
 
 });});

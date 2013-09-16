@@ -46,7 +46,8 @@
 					$result = resourceForQuery(
 						"SELECT
 							`event`.`id`,
-							`event`.`name`
+							`event`.`name`,
+							`activity`.`highlight`
 						FROM
 							`activity`
 						INNER JOIN
@@ -61,6 +62,7 @@
 						// Get some properties
 						$eventID = mysql_result($result, 0, "id");
 						$eventName = mysql_result($result, 0, "name");
+						$activityHighlight = mysql_result($result, 0, "highlight");
 
 						$insert = resourceForQuery(
 							"INSERT INTO
@@ -70,7 +72,8 @@
 								($eventID, $personID, @(ROLE_ATTENDEE), 1)
 						");
 
-						sendEventEnrollmentEmail($eventName, $email);
+						// Only send an email if the activity is important
+						if ($activityHighlight) sendEventEnrollmentEmail($eventName, $email);
 
 					} else {
 						http_status_code(404, "eventID does not exist!");

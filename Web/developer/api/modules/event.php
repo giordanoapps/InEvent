@@ -71,6 +71,7 @@
 
 				// Insert all the activities that are general
 				$insert = resourceForQuery(
+				// echo (
 					"INSERT INTO
 						`activityMember`
 						(`activityID`, `memberID`, `approved`, `present`)
@@ -81,8 +82,9 @@
 						0
 					FROM
 						`activity`
-					WHERE
-						`activity`.`general` = 1
+					WHERE 1
+						AND `activity`.`general` = 1
+						AND `activity`.`eventID` = $eventID
 				");
 
 				if ($insert) {

@@ -17,7 +17,7 @@
 					<div class="pageContentBox">
 
 						<div class="registrationConflict">
-							<p><img src="images/64-Alert-2.png" alt="Alert" />Aparentemente elas já estavam cadastradas em nosso banco de dados.</p>
+							<p><img src="images/64-Alert-2.png" alt="Alert" />Aparentemente seu cadastrado já estava concluído. Caso não se lembre de sua senha, peça uma nova em <a href="forgot.php">Esqueci a senha</a>.</p>
 						</div>
 					
 						<div class="registrationComplete">

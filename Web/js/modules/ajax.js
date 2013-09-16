@@ -2,12 +2,15 @@
 
 define(["jquery", "common"], function($) {$(function() {
 
-	$.fn.ajax = function(method) {
+	// Control variables
+	var contentTag = "#content", fileType = ".php";
+	var loadingHtml = '<img src="images/128-loading.gif" class="loadingBike" alt="Carregando..." />';
+	var $mainContent = $(contentTag), $loadingContent = $(loadingHtml);
 
-		// Control variables
-		var contentTag = "#content", fileType = ".php";
-		var loadingHtml = '<img src="images/128-loading.gif" class="loadingBike" alt="Carregando..." />';
-		var $mainContent = $(contentTag), $loadingContent = $(loadingHtml);
+	// Current hash
+	var oldHash = window.location.hash;
+
+	$.fn.ajax = function(method) {
 
 		var methods = {
 
@@ -16,8 +19,6 @@ define(["jquery", "common"], function($) {$(function() {
 			 * @return {null	}
 			 */
 			hashConfigureSource: function(href) {
-
-				var oldHash = window.location.hash;
 
 				// Force the hash to load
 				if (href && window.location.hash == href) {
@@ -28,19 +29,31 @@ define(["jquery", "common"], function($) {$(function() {
 				// Or use the current document to set the path
 				} else {
 
-					var index = window.location.pathname.lastIndexOf('/'); 
-					var hash = window.location.pathname.substring(index+1).replace(fileType, "");
+					var appIndex = window.location.origin.length;
+					var eventIndex = window.location.href.lastIndexOf('/');
 
-					if (hash != "") {
-						window.location.hash = hash;
+					// See if we are on the same position
+					if (appIndex == eventIndex) {
+
+						var hash = window.location.pathname.substring(eventIndex + 1).replace(fileType, "");
+
+						if (hash != "") {
+							window.location.hash = hash;
+						} else {
+							window.location.hash = "home";
+						}
 					} else {
-						window.location.hash = "home";
+						window.location.hash = "front";
 					}
 				}
 
 				// Remove the old hash
 				if (oldHash != window.location.hash) {
+					// Undefine the module
 					require.undef("modules/" + oldHash.replace("#", ""));
+
+					// Inform the old hash
+					oldHash = window.location.hash;
 				}
 			},
 
@@ -124,8 +137,8 @@ define(["jquery", "common"], function($) {$(function() {
 	/**
 	 * Load the new hash
 	 */
-	$(window).bind('hashchange', function(event, href) {
-		$(this).ajax("hashStartLoad");
+	$(window).bind('hashchange', function(event) {
+		$(this).ajax("hashConfigureSource", window.location.hash);
 	});
 
 });});

@@ -10,14 +10,10 @@ include_once(__DIR__ . "/security.php");
 
 if (isset($_POST["email"]) && isset($_POST["password"])) {
 
-	$filename = basename($_SERVER['PHP_SELF']);
-	$path = str_replace($filename, '', $_SERVER['PHP_SELF']);
-
 	$email = getEmptyAttribute($_POST["email"]);
 	$password = getEmptyAttribute($_POST["password"]);
 
 	$result = resourceForQuery(
-	// echo (
 		"SELECT
 			`member`.`id`,
 			`member`.`name`,
@@ -94,10 +90,8 @@ if (isset($_POST["email"]) && isset($_POST["password"])) {
 						`loginAttempts`.`remote` = INET_ATON('$security->remote')
 				");
 
-				// Validate the event
-				validateEvent();
-
-				setcookie($security->key, $sessionKey, time() + 60*60*24*30, $path);
+				$path = substr($_SERVER['REQUEST_URI'], 0, strrpos($_SERVER['REQUEST_URI'], "/") + 1);
+				setcookie($security->key, $sessionKey, time() + 60*60*24*30, "/");
 				header("Location: $path");
 				exit;
 			}
@@ -149,9 +143,6 @@ if (isset($_POST["email"]) && isset($_POST["password"])) {
 
 		$core->memberID = mysql_result($result, 0, "id");
 		$core->name = mysql_result($result, 0, "name");
-		
-		// Validate the event
-		validateEvent();
 
 		// Reset the login count
 		$insert = resourceForQuery(
@@ -164,13 +155,17 @@ if (isset($_POST["email"]) && isset($_POST["password"])) {
 				`loginAttempts`.`remote` = INET_ATON('$security->remote')
 		");
 	} else {
-		$filename = basename($_SERVER['PHP_SELF']);
-		$path = str_replace($filename, '', $_SERVER['PHP_SELF']);
-
-		setcookie($security->key, '', 0, $path);
+		$path = substr($_SERVER['REQUEST_URI'], 0, strrpos($_SERVER['REQUEST_URI'], "/") + 1);
+		setcookie($security->key, '', 0, "/");
 		header("Location: $path");	
 		exit();
 	}
 }
+
+////////////////////////////////////////
+// EVENT
+////////////////////////////////////////
+
+	validateEvent();
 
 ?>

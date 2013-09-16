@@ -25,7 +25,9 @@
 										`member`.`password`,
 										`member`.`cpf`,
 										`member`.`rg`,
+										`member`.`usp`,
 										`member`.`telephone`,
+										`member`.`city`,
 										`member`.`email`,
 										`member`.`university`,
 										`member`.`course`
@@ -68,15 +70,27 @@
 							</p>
 
 							<p class="halfWidth">
-								<span class="inputTitle">Cidade:</span>
+								<span class="inputTitle">CPF:</span>
 								<input
 									type="text"
-									name="city"
-									id="city"
-									class="city"
+									name="cpf"
+									id="cpf"
+									class="cpf"
 									<?php if ($core->auth) { ?> readonly="readonly" <?php } ?>
-									value="<?php if ($core->auth) { echo $data["city"]; } ?>"
-									placeholder="Cidade"
+									value="<?php if ($core->auth) { echo $data["cpf"]; } ?>"
+									placeholder="CPF"
+								/>
+							</p>
+
+							<p class="halfWidth">
+								<span class="inputTitle">RG:</span>
+								<input
+									type="text"
+									name="rg"
+									id="rg"
+									class="rg"
+									value="<?php if ($core->auth) { echo $data["rg"]; } ?>"
+									placeholder="RG"
 								/>
 							</p>
 
@@ -87,11 +101,25 @@
 									name="university"
 									id="university"
 									class="university"
-									value=""
-									placeholder="Caso seja universitário, informe onde estuda"
+									value="<?php if ($core->auth) { echo $data["university"]; } ?>"
+									placeholder="Universidade"
+								/>
+							</p>
+
+							<p class="halfWidth">
+								<span class="inputTitle">USP:</span>
+								<input
+									type="text"
+									name="usp"
+									id="usp"
+									class="usp"
+									<?php if ($core->auth) { ?> readonly="readonly" <?php } ?>
+									value="<?php if ($core->auth) { echo $data["usp"]; } ?>"
+									placeholder="Número USP"
 								/>
 							</p>
 							
+							<?php if (!$core->auth) { ?>
 							<p class="halfWidth">
 								<span class="inputTitle">Senha:</span>
 								<input
@@ -114,6 +142,7 @@
 									placeholder="Senha"
 								/>
 							</p>
+							<?php } ?>
 							
 							<div class="checkBoxWrapper">
 								<p>
@@ -128,19 +157,6 @@
 										Li e estou de acordo com os <a href="terms.php" target="_blank">Termos de Uso do InEvent</a>.
 									</span>
 								</p>
-								<!-- <p>
-									<input
-										type="checkbox"
-										name="newsletter"
-										id="newsletter"
-										class="newsletter"
-										<?php if ($core->auth) { ?> disabled="disabled" <?php } ?>
-										checked="true"
-									/>
-									<span class="newsletterTitle">
-										Desejo receber informações sobre novidades no InEvent (1 email por mês).
-									</span>
-								</p> -->
 							</div>
 						</form>
 

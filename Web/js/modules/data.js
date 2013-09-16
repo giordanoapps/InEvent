@@ -45,6 +45,10 @@ define(modules, function($) {$(function() {
 	                required: true,
 	                minlength: 8
 	            },
+	            usp: {
+	                required: true,
+	                minlength: 7
+	            },
 				telephone: {
 	                required: true, 
 	                minlength: 10
@@ -88,6 +92,10 @@ define(modules, function($) {$(function() {
 				rg: {
 					required: "Insira um RG válido",
 					minlength: jQuery.format("Insira pelo menos {0} caracteres")
+				},
+				usp: {
+					required: "Insira um número USP válido",
+					minlength: jQuery.format("Insira {0} caracteres")
 				},
 				telephone: {
 					required: "Insira um telefone válido",
@@ -167,8 +175,6 @@ define(modules, function($) {$(function() {
 	$("#dataContent").on("click", ".navigator li, .sequenceContent li", function() {
 
 		var $parent = $(this).parents("#dataContent");
-
-		console.log($(".docsFrame").contents());
 
 		if ($parent.find(".dataForm").valid() && $(".docsFrame").contents().find("input[type='text']").length == 0) {
 

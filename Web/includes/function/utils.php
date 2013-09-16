@@ -210,15 +210,20 @@
 		}
 	}
 
+	// encodeEntities();
+
 	function encodeEntities() {
 
 		$result = resourceForQuery(
 			"SELECT
 				`activity`.`id`,
 				`activity`.`name`,
-				`activity`.`description`
+				`activity`.`description`,
+				`activity`.`location`
 			FROM
 				`activity`
+			WHERE
+				`activity`.`eventID` = 4
 		");
 
 		for ($i = 0; $i < mysql_num_rows($result); $i++) {
@@ -226,13 +231,15 @@
 			$id = mysql_result($result, $i, "id");
 			$name = htmlentities(mysql_result($result, $i, "name"), ENT_COMPAT | ENT_HTML401, "ISO-8859-1");
 			$description = htmlentities(mysql_result($result, $i, "description"), ENT_COMPAT | ENT_HTML401, "ISO-8859-1");
+			$location = htmlentities(mysql_result($result, $i, "location"), ENT_COMPAT | ENT_HTML401, "ISO-8859-1");
 
 			$insert = resourceForQuery(
 				"UPDATE
 					`activity`
 				SET
 					`activity`.`name` = '$name',
-					`activity`.`description` = '$description'
+					`activity`.`description` = '$description',
+					`activity`.`location` = '$location'
 				WHERE 1
 					AND `activity`.`id` = $id
 			");
