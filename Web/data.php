@@ -69,6 +69,7 @@
 								/>
 							</p>
 
+							<?php if ($core->eventID == 4) { ?>
 							<p class="halfWidth">
 								<span class="inputTitle">CPF:</span>
 								<input
@@ -81,7 +82,9 @@
 									placeholder="CPF"
 								/>
 							</p>
+							<?php } ?>
 
+							<?php if ($core->eventID == 4) { ?>
 							<p class="halfWidth">
 								<span class="inputTitle">RG:</span>
 								<input
@@ -93,7 +96,9 @@
 									placeholder="RG"
 								/>
 							</p>
+							<?php } ?>
 
+							<?php if ($core->eventID == 4) { ?>
 							<p class="halfWidth">
 								<span class="inputTitle">Universidade:</span>
 								<input
@@ -105,7 +110,9 @@
 									placeholder="Universidade"
 								/>
 							</p>
+							<?php } ?>
 
+							<?php if ($core->eventID == 4) { ?>
 							<p class="halfWidth">
 								<span class="inputTitle">USP:</span>
 								<input
@@ -118,6 +125,7 @@
 									placeholder="Número USP"
 								/>
 							</p>
+							<?php } ?>
 							
 							<?php if (!$core->auth) { ?>
 							<p class="halfWidth">

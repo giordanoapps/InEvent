@@ -40,7 +40,9 @@ define(modules, function($) {$(function() {
 					required: true,
 					minlength: 6
 				},
-				cpf: "cpf",
+				cpf: {
+					cpf: true
+				},
 				rg: {
 	                required: true,
 	                minlength: 8
@@ -58,7 +60,7 @@ define(modules, function($) {$(function() {
 	                email: true
 	            },
 	            university: {
-	                required: false
+	                required: true
 	            },
 	            course: {
 	                required: true, 

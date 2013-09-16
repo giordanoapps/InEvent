@@ -1353,8 +1353,10 @@ textarea, input {
 
 #frontContent .cover {
 	height: 280px;
-	background-size: contain;
 	position: relative;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
 }
 
 #frontContent .titleWrapper,
@@ -1572,7 +1574,7 @@ textarea, input {
 }
 
 #eventContent .agendaItem .limited {
-	width: 50%;
+	width: 100px;
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	display: inline-block;
