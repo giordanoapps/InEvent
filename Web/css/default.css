@@ -1588,6 +1588,35 @@ textarea, input {
 	padding: 0 5px;
 }
 
+#eventContent .agendaItem .right .hint {
+	padding: 0;
+}
+
+#eventContent .agendaItem .right .hint::before,
+#eventContent .agendaItem .right .hint::after {
+	position: absolute;
+	width: 0;
+	height: 0;
+	content: "";
+	border-style: solid;
+	border-color: rgba(0, 0, 0, 0);
+	pointer-events: none;
+}
+
+#eventContent .agendaItem .right .hint::before {
+	top: 1px;
+	right: 1px;
+	border-width: 0px 20px 20px 0px;
+}
+
+#eventContent .agendaItem .right .hintApproved::before {
+	border-right-color: #278D27;	
+}
+
+#eventContent .agendaItem .right .hintDenied::before {
+	border-right-color: #C51F1F;	
+}
+
 /* @group Calendar */
 
 #eventContent .calendarBox p {
@@ -1728,7 +1757,6 @@ textarea, input {
 	padding: 0;
 	border-bottom: 1px solid #E6E6E6;
 	position: relative;
-	height: 100px;
 }
 
 #peopleContent .scheduleItem:last-of-type {
@@ -1762,6 +1790,7 @@ textarea, input {
 #peopleContent .scheduleItem .left {
 	width: 20%;
 	float: left;
+	position: absolute;
 	height: 100%;
 	background-color: whiteSmoke;
 }
@@ -1771,11 +1800,12 @@ textarea, input {
 	background-color: #FAFAFA;
 }
 
-#peopleContent .scheduleItem .left div,
-#peopleContent .scheduleItem .right div {
+#peopleContent .scheduleItem .left > div,
+#peopleContent .scheduleItem .right > div {
 	display: table;
 	width: 100%;
 	height: 100%;
+	padding: 5px 0;
 }
 
 #peopleContent .scheduleItem .left .upper,
@@ -1790,6 +1820,7 @@ textarea, input {
 
 #peopleContent .scheduleItem .right .bottom {
 	height: 60%;
+	padding-bottom: 30px;
 }
 
 #peopleContent .scheduleItem .left p,
@@ -1811,35 +1842,9 @@ textarea, input {
 #peopleContent .scheduleItem .right {
 	overflow: hidden;
 	height: 100%;
-}
-
-#peopleContent .scheduleItem .right .hint {
-	padding: 0;
-}
-
-#peopleContent .scheduleItem .right .hint::before,
-#peopleContent .scheduleItem .right .hint::after {
-	position: absolute;
-	width: 0;
-	height: 0;
-	content: "";
-	border-style: solid;
-	border-color: rgba(0, 0, 0, 0);
-	pointer-events: none;
-}
-
-#peopleContent .scheduleItem .right .hint::before {
-	top: 1px;
-	right: 0px;
-	border-width: 0px 25px 25px 0px;
-}
-
-#peopleContent .scheduleItem .right .hintApproved::before {
-	border-right-color: #278D27;	
-}
-
-#peopleContent .scheduleItem .right .hintDenied::before {
-	border-right-color: #C51F1F;	
+	position: relative;
+	width: 80%;
+	left: 20%;
 }
 
 #peopleContent .scheduleItem .right .name {
@@ -2203,7 +2208,7 @@ textarea, input {
 
 #forgotContent input[type="text"] {
 	padding: 10px 40px;
-	margin: 4px auto;
+	margin: 4px -2px;
 	font-size: 90%;
 	width: 100%;
 	text-align: left;

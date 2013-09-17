@@ -133,33 +133,36 @@
     function printAgenda($eventID, $memberID) {
 
         // See if the person is enrolled on the current event
-        $result = resourceForQuery(
-            "SELECT
-                `eventMember`.`id`
-            FROM
-                `eventMember`
-            WHERE 1
-                AND `eventMember`.`eventID` = $eventID
-                AND `eventMember`.`memberID` = $memberID
-        ");
+        $result = getEventForMemberQuery($eventID, $memberID);
 
-        $enrolled = (mysql_num_rows($result) > 0) ? true : false;
+        // Push some details about the event
+        $data = mysql_fetch_assoc($result);
 
-        $result = getActivitiesForMemberAtEventQuery($eventID, $memberID);
+        // Enrolled at event?
+        $enrolledAtEvent = ($data['memberID'] != 0) ? true : false;
 
         ?><ul><?php
 
-        if (mysql_num_rows($result) > 0) {
+        // If the member is not enrolled, we show a option enabling him to do so
+        if (!$enrolledAtEvent) {
+            ?>
+            <li>
+                <p class="message">Ainda não está registrado nesse evento! Clique no botão caso queira se inscrever.</p>
+                <?php if ($data['enrollmentBegin'] > time()) { ?>
+                    <input type="button" value="Inscrições não abertas" title="As inscrições do evento ainda não foram abertas" class="singleButton toolEarly">
+                <?php } elseif ($data['enrollmentEnd'] < time()) { ?>
+                     <input type="button" value="Inscrições encerradas" title="As inscrições evento já foram encerradas" class="singleButton toolLate">
+                <?php } else { ?>
+                    <input type="button" value="Inscrever" title="Se inscreva para escolher as atividades dentro do evento" class="singleButton toolEnroll">
+                <?php } ?>
+            </li>
+            <?php
+        }
 
-            // If the member is not enrolled, we show a option enabling him to do so
-            if (!$enrolled) {
-                ?>
-                    <li>
-                        <p class="message">Ainda não está registrado nesse evento! Clique no botão caso queira se inscrever.</p>
-                         <input type="button" value="Inscrever" title="Se inscreva para escolher as atividades dentro do evento" class="singleButton toolEnroll">
-                    </li>
-                <?php
-            }
+        // Get activities for this member
+        $result = getActivitiesForMemberAtEventQuery($eventID, $memberID);
+
+        if (mysql_num_rows($result) > 0) {
 
             $day = 0;
 
@@ -208,13 +211,18 @@
                             <span class="suckyVerticalAlign"></span>
                         </div>
                         <div class="controls">
+                            <?php if ($enrolledAtEvent) { ?>
                             <span class="suckyVerticalAlign"></span>
                             <input
                                 type="button"
-                                value="<?php if ($enrolled && $data['memberID'] != 0) { ?>Inscrito<?php } else { ?>Inscrever<?php } ?>"
+                                value="<?php if ($enrolledAtEvent && $data['memberID'] != 0) { ?>Inscrito<?php } else { ?>Inscrever<?php } ?>"
                                 title="Ao entrar nessa atividade, saberá imediatamente se foi aprovado ou está na lista de espera"
-                                class="singleButton <?php if ($enrolled && $data['memberID'] != 0) { ?>toolEnrolled<?php } else { ?>toolEnroll<?php } ?>">
+                                class="singleButton <?php if ($enrolledAtEvent && $data['memberID'] != 0) { ?>toolEnrolled<?php } else { ?>toolEnroll<?php } ?>">
+                            <?php } ?>
                         </div>
+                        <?php if ($data['memberID'] != 0) { ?>
+                        <p class="hint <?php if ($data['approved'] == 1) { ?>hintApproved<?php } else { ?>hintDenied<?php } ?>"></p>
+                        <?php } ?>
                     </div>
                 </li>
                 <?php

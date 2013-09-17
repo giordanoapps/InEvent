@@ -137,7 +137,7 @@
 					SELECT
 						$activityID,
 						$personID,
-						IF((`activity`.`capacity` = 0 OR `activity`.`capacity` > SUM(`activityMember`.`approved`)) AND $valid, 1, 0),
+						IF($valid AND (`activity`.`capacity` = 0 OR `activity`.`capacity` > SUM(`activityMember`.`approved`)), 1, 0),
 						0
 					FROM
 						`activity`

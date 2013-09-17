@@ -77,18 +77,18 @@ define(["jquery", "common"], function($) {$(function() {
 	 * Update the tips for every content load
 	 * @return {null}       
 	 */
-	// $(document).bind("ajaxComplete", function(event, jqXHR, settings) {
-	// 	// Tips
-	// 	$("[title != '']").qtip({
-	// 	    style: {
-	// 	    	classes: 'qtip-light qtip-rounded qtip-shadow'
-	// 	    },
-	// 	    position: {
-	// 	        my: 'top left',
-	// 	        at: 'center center',
-	// 	        target: "event" // my target
-	// 	    }
-	// 	});
-	// });
+	$(document).on("hashDidLoad", function(event, jqXHR, settings) {
+		// Tips
+		$("[title != '']").qtip({
+		    style: {
+		    	classes: 'qtip-light qtip-rounded qtip-shadow'
+		    },
+		    position: {
+		        my: 'top left',
+		        at: 'center center',
+		        target: "event" // my target
+		    }
+		});
+	});
 	
 });});
