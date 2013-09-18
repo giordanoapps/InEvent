@@ -210,8 +210,6 @@
 		}
 	}
 
-	// encodeEntities();
-
 	function encodeEntities() {
 
 		$result = resourceForQuery(
@@ -244,7 +242,38 @@
 					AND `activity`.`id` = $id
 			");
 		}
+	}
 
+	function writePosition() {
+
+		$result = resourceForQuery(
+			"SELECT
+				`activityMember`.`id`,
+				`activity`.`name`,
+				`activity`.`description`,
+				`activity`.`location`
+			FROM
+				`activity`
+			WHERE
+				`activity`.`eventID` = 4
+		");
+
+		for ($i = 0; $i < mysql_num_rows($result); $i++) {
+
+			$id = mysql_result($result, $i, "id");
+			$name = htmlentities(mysql_result($result, $i, "name"), ENT_COMPAT | ENT_HTML401, "ISO-8859-1");
+			$description = htmlentities(mysql_result($result, $i, "description"), ENT_COMPAT | ENT_HTML401, "ISO-8859-1");
+			$location = htmlentities(mysql_result($result, $i, "location"), ENT_COMPAT | ENT_HTML401, "ISO-8859-1");
+
+			$insert = resourceForQuery(
+				"UPDATE
+					`activityMember`
+				SET
+					`activityMember`.`name` = '$name',
+				WHERE 1
+					AND `activityMember`.`id` = $id
+			");
+		}
 	}
 
 	/**
@@ -269,7 +298,8 @@
 		// Content
 		for ($i = 1; $i < mysql_num_rows($result); $i++) {
 			for ($j = 0; $j < mysql_num_fields($result); $j++) {
-				$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($j, $i + 1, mysql_result($result, $i, $j));
+				$value = html_entity_decode(mysql_result($result, $i, $j), ENT_COMPAT | ENT_HTML401, "ISO-8859-1");
+				$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($j, $i + 1, $value);
 			}
 		}
 

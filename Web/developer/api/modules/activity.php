@@ -484,6 +484,10 @@
 				printPeopleAtActivity($result, $order);
 			} elseif ($format == "excel") {
 				resourceToExcel($result);
+			} elseif ($format == "gmail") {
+				for ($i = 0; $i < mysql_num_rows($result); $i++) {
+					echo ($i != 0 ? " , " : "") . mysql_result($result, $i, "name") . " <" . mysql_result($result, $i, "email") . ">";
+				}
 			} else {
 				http_status_code(405, "this format is not available");	
 			}

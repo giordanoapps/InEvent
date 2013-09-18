@@ -27,12 +27,18 @@
 						<input type="button" value="Criar!" class="singleButton">
 					</div>
 
+					<!-- ToolBox Email -->
+					<div class="toolBoxOptions toolBoxOptionsMail">
+						<textarea name="mail"></textarea>
+					</div>
+
 					<!-- Tool Triggers -->
 					<div class="toolBox">
 						<div class="toolBoxPeople">
 							<div class="toolBoxLeft">
 								<img src="images/64-Box-Outgoing-2.png" alt="Exportar" title="Exportar os dados para uma planilha" class="toolExport"/>
 								<img src="images/64-Users.png" alt="Pessoa" title="Adicionar nova pessoa à atividade" class="toolCreate"/>
+								<img src="images/64-Mail.png" alt="Email" title="Exportar o email todas as pessoas para o formato de envio do Gmail" class="toolMail"/>
 								<img src="images/64-Shuffle.png" alt="Aleatório" title="Escolher uma pessoa aleatória" class="toolRandom"/>
 							</div>
 							<div class="toolBoxLeft editingToolBox">

@@ -51,6 +51,23 @@ define(modules, function($) {$(function() {
 	});
 
 	/**
+	 * Recalculates the window size after the resizing has ended
+	 * @param  {object} event
+	 * @return {null}
+	 */
+	$(window).smartresize(function(event) {
+		$(".menuContent").trigger("resizeBar");
+	});
+	
+	/**
+	 * Calculate the size of the menu bar
+	 * @return {null}       
+	 */
+	$(document).on("resizeBar", ".menuContent", function() {
+		$(this).width($(this).parent().width() - $(this).css("padding-left").replace("px", "") - $(this).css("padding-right").replace("px", ""));
+	});
+
+	/**
 	 * Callback for toggling the state of the loadingBox
 	 * @return {null}       
 	 */

@@ -24,11 +24,20 @@ define(modules, function($, common, cookie) {$(function() {
 // -------------------------------------- TOOLS -------------------------------------- //
 
 	/**
+	 * Tool to export data to excel
+	 * @return {null}
+	 */
+	$("#peopleContent").on("click", ".toolBox .toolExport", function(event) {
+		// Change the selected class
+		$("#peopleContent .scheduleItemSelected").trigger("click", [null, "excel"]);
+	});
+
+	/**
 	 * Toggle the box
 	 * @return {null}
 	 */
 	$("#peopleContent").on("click", ".toolCreate", function(event) {
-		$(this).closest(".toolBox").siblings(".toolBoxOptionsEnrollPerson").slideToggle(400);
+		$(this).closest(".toolBox").siblings(".toolBoxOptionsEnrollPerson").slideToggle(400).find("input").first().focus();
 	});
 
 	/**
@@ -73,6 +82,18 @@ define(modules, function($, common, cookie) {$(function() {
 	});
 
 	/**
+	 * Toggle the box
+	 * @return {null}
+	 */
+	$("#peopleContent").on("click", ".toolMail", function(event) {
+		// Toggle the div
+		$(this).closest(".toolBox").siblings(".toolBoxOptionsMail").slideToggle(400);
+
+		// Trigger the content load
+		$("#peopleContent .scheduleItemSelected").trigger("click", [null, "gmail"]);
+	});
+
+	/**
 	 * Load an activity and populate with usage
 	 * @return {null}
 	 */
@@ -104,40 +125,38 @@ define(modules, function($, common, cookie) {$(function() {
 			format: format
 		});
 
-		if (format != "excel") {
+		if (format == "excel") {
+			// Load the excel requisition on its own frame
+			$("#excelFrame").attr("src", url);
+
+		} else {
 			// We request the information on the server
 			$.post(url, {},
 			function(data, textStatus, jqXHR) {
 				if (jqXHR.status == 200) {
-					// Append the content
-					$("#peopleContent .realContent")
-						.hide(0)
-						.html(data)
-						.show(300)
-						.perfectScrollbar("destroy")
-						.perfectScrollbar({
-							minScrollbarLength: 120
-						});
 
-					// Scroll to top
-					$('html, body').animate({ scrollTop: 0 }, 'slow');
+					if (format == "gmail") {
+						// Load the excel requisition on its own frame
+						$(".toolBoxOptionsMail textarea").html(data).focus().select();
+
+					} else {
+						// Append the content
+						$("#peopleContent .realContent")
+							.hide(0)
+							.html(data)
+							.show(300)
+							.perfectScrollbar("destroy")
+							.perfectScrollbar({
+								minScrollbarLength: 120
+							});
+
+						// Scroll to top
+						$('html, body').animate({ scrollTop: 0 }, 'slow');
+					}
 				}
 			}, "html");
-
-		} else {
-			// Load the excel requisition on its own frame
-			$("#excelFrame").attr("src", url);
 		}
 
-	});
-
-	/**
-	 * Tool to export data to excel
-	 * @return {null}
-	 */
-	$("#peopleContent").on("click", ".toolBox .toolExport", function(event) {
-		// Change the selected class
-		$("#peopleContent .scheduleItemSelected").trigger("click", [null, "excel"]);
 	});
 
 	/**

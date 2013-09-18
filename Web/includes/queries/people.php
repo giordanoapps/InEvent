@@ -6,7 +6,7 @@
             "SELECT
                 `member`.`id` AS `memberID`,
                 `member`.`name`,
-                `member`.`telephone`,
+                `member`.`email`,
                 `activityMember`.`id` AS `requestID`,
                 `activityMember`.`approved`,
                 `activityMember`.`paid`,

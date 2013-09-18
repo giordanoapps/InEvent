@@ -13,7 +13,7 @@
                         <td data-order="memberID">Inscrição <?php if ($order == "memberID") echo $imageOrder ?></td>
                         <td data-order="requestID">Posição <?php if ($order == "requestID") echo $imageOrder ?></td>
                         <td data-order="name">Nome <?php if ($order == "name") echo $imageOrder ?></td>
-                        <td data-order="telephone">Telefone <?php if ($order == "telephone") echo $imageOrder ?></td>
+                        <td data-order="email">Email <?php if ($order == "email") echo $imageOrder ?></td>
                         <td data-order="approved">Aprovado <?php if ($order == "approved") echo $imageOrder ?></td>
                         <td data-order="paid">Pago <?php if ($order == "paid") echo $imageOrder ?></td>
                         <td data-order="present">Presente <?php if ($order == "present") echo $imageOrder ?></td>
@@ -28,10 +28,7 @@
                 while ($data = mysql_fetch_assoc($result)) {
 
                     ?>
-                    <tr
-                        class="pickerItem"
-                        data-value="<?php echo $data['memberID'] ?>"
-                        data-request="<?php echo $data['requestID'] ?>">
+                    <tr class="pickerItem" data-value="<?php echo $data['memberID'] ?>">
                         <td>
                             <p class="memberID"><b><?php echo str_pad($data['memberID'], 4, "0", STR_PAD_LEFT) ?></b></p>
                         </td>
@@ -42,7 +39,7 @@
                             <p class="name"><?php echo ucwords(strtolower($data['name'])) ?></p>
                         </td>
                         <td>
-                            <p class="telephone"><?php echo ucwords(strtolower($data['telephone'])) ?></p>
+                            <p class="email"><?php echo $data['email'] ?></p>
                         </td>
                         <td>
                             <?php if ($data["approved"] == 1) { ?>
@@ -104,11 +101,12 @@
                 <thead>
                     <tr>
                         <td data-order="roleID"><i>Staff</i> <?php if ($order == "roleID") echo $imageOrder ?></td>
-                        <td data-order="requestID">Inscrição <?php if ($order == "requestID") echo $imageOrder ?></td>
+                        <td data-order="memberID">Inscrição <?php if ($order == "memberID") echo $imageOrder ?></td>
+                        <td data-order="requestID">Posição <?php if ($order == "requestID") echo $imageOrder ?></td>
                         <td data-order="name">Nome <?php if ($order == "name") echo $imageOrder ?></td>
                         <td data-order="email">Email <?php if ($order == "email") echo $imageOrder ?></td>
-                        <td data-order="city">Cidade <?php if ($order == "city") echo $imageOrder ?></td>
-                        <td data-order="university">Universidade <?php if ($order == "university") echo $imageOrder ?></td>
+                        <td data-order="cpf">CPF <?php if ($order == "cpf") echo $imageOrder ?></td>
+                        <td data-order="rg">RG <?php if ($order == "rg") echo $imageOrder ?></td>
                     </tr>
                 </thead>
                 <tbody>
@@ -117,16 +115,16 @@
                 while ($data = mysql_fetch_assoc($result)) {
 
                     ?>
-                    <tr
-                        class="pickerItem"
-                        data-value="<?php echo $data['memberID'] ?>"
-                        data-request="<?php echo $data['requestID'] ?>">
+                    <tr class="pickerItem" data-value="<?php echo $data['memberID'] ?>">
                         <td>
                             <?php if ($data['roleID'] != ROLE_ATTENDEE) { ?>
                             <img src="images/64-Admin-User.png" class="head staff" alt="Head" title="Altere as permissões da pessoa, concedendo ou revogando poderes">
                             <?php } else { ?>
                             <img src="images/64-User.png" class="head" alt="Head" title="Altere as permissões da pessoa, concedendo ou revogando poderes">
                             <?php } ?>
+                        </td>
+                        <td>
+                            <p class="memberID"><b><?php echo str_pad($data['memberID'], 4, "0", STR_PAD_LEFT) ?></b></p>
                         </td>
                         <td>
                             <p class="requestID"><b><?php echo str_pad($data['requestID'], 4, "0", STR_PAD_LEFT) ?></b></p>
@@ -138,10 +136,10 @@
                             <p class="email"><?php echo $data['email'] ?></p>
                         </td>
                         <td>
-                            <p class="city"><?php echo $data['city'] ?></p>
+                            <p class="cpf"><?php echo $data['cpf'] ?></p>
                         </td>
                         <td>
-                            <p class="university"><?php echo $data['university'] ?></p>
+                            <p class="rg"><?php echo $data['rg'] ?></p>
                         </td>
                         <!-- <td>
                             <input
