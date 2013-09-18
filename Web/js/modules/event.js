@@ -84,11 +84,11 @@ define(modules, function($, common, cookie) {$(function() {
 	 * Remove a item from the person schedule
 	 * @return {null}
 	 */
-	$("#eventContent").on("mouseenter", ".toolEnrolled", function () {
+	$("#eventContent").on("mouseenter", ".toolEnrolled", function() {
 		$(this).removeClass("toolEnrolled").addClass("toolExpel").val("Sair da atividade");
 	});
 
-	$("#eventContent").on("mouseleave", ".toolExpel", function () {
+	$("#eventContent").on("mouseleave", ".toolExpel", function() {
 		// We must verify that the current row has the class and has the same state
 		if ($(this).hasClass("toolExpel")) {
 			$(this).removeClass("toolExpel").addClass("toolEnrolled").val("Inscrito");

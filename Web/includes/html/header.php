@@ -24,7 +24,7 @@
 	<meta name="google-play-app" content="app-id=com.estudiotrilha.inevent">
 	<meta name="viewport" content="width=device-width, maximum-scale=1.0" />
 
-	<link rel="stylesheet" href="css/jquery-ui-1.8.21.custom.min.css" type="text/css" />
+	<link rel="stylesheet" href="css/jquery-ui-1.9.2.custom.min.css" type="text/css" />
 	<link rel="stylesheet" href="css/chosen.min.css" type="text/css" />
 	<link rel="stylesheet" href="css/perfect-scrollbar-0.4.4.min.css" type="text/css" />
 	<link rel="stylesheet" href="css/jquery.qtip.min.css" type="text/css" />

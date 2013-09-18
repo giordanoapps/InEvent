@@ -1010,6 +1010,11 @@ textarea, input {
 	border: solid 1px #B61111;
 }
 
+.emptyCapital {
+	font-weight: bold;
+	font-size: 150%;
+}
+
 /* @end */
 
 /* Index */
@@ -1436,11 +1441,6 @@ textarea, input {
 	overflow: hidden;
 }
 
-#eventContent .emptyCapital {
-	font-weight: bold;
-	font-size: 150%;
-}
-
 #eventContent .message {
 	display: inline-block;
 	font-weight: bold;
@@ -1760,7 +1760,7 @@ textarea, input {
 }
 
 #peopleContent .scheduleItem:last-of-type {
-	padding-bottom: 88px;
+	margin-bottom: 88px;
 }
 
 #peopleContent .scheduleItemSelectable {
@@ -1907,6 +1907,11 @@ textarea, input {
 #peopleContent .scheduleItem .right .dock .toolSelected {
 	-webkit-box-shadow: inset 1px 0px 6px 1px #ACACAC;
 	box-shadow: inset 1px 0px 6px 1px #ACACAC;
+}
+
+#peopleContent .pickerItemLucky {
+	background-color: #333;
+	color: #FFF;
 }
 
 #peopleContent .pickerItem td {

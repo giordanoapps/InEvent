@@ -1,6 +1,10 @@
 // -------------------------------------- WINDOW -------------------------------------- //
 
-define(["jquery", "common"], function($) {$(function() {
+var modules = [];
+modules.push('jquery');
+modules.push('common');
+
+define(modules, function($) {$(function() {
 
 	/**
 	 * Callback for windows and popovers dismissal
@@ -40,27 +44,10 @@ define(["jquery", "common"], function($) {$(function() {
 	 * Callback for toggling the state of the loadingBox
 	 * @return {null}       
 	 */
-	$(".loadingBox").bind("ajaxSend", function(event, jqxhr, settings) {
+	$(".loadingBox").bind("ajaxSend", function(event, jqXHR, settings) {
 		if (settings.url != "ajax.php") $(this).show();	
 	}).bind("ajaxComplete", function() {
 		$(this).hide();
-	});
-
-	/**
-	 * Recalculates the window size after the resizing has ended
-	 * @param  {object} event
-	 * @return {null}
-	 */
-	$(window).smartresize(function(event) {
-		$(".menuContent").trigger("resizeBar");
-	});
-
-	/**
-	 * Calculate the size of the menu bar
-	 * @return {null}       
-	 */
-	$(document).on("resizeBar", ".menuContent", function() {
-		$(this).width($(this).parent().width() - $(this).css("padding-left").replace("px", "") - $(this).css("padding-right").replace("px", ""));
 	});
 
 	/**
@@ -77,18 +64,18 @@ define(["jquery", "common"], function($) {$(function() {
 	 * Update the tips for every content load
 	 * @return {null}       
 	 */
-	$(document).on("hashDidLoad", function(event, jqXHR, settings) {
-		// Tips
-		$("[title != '']").qtip({
-		    style: {
-		    	classes: 'qtip-light qtip-rounded qtip-shadow'
-		    },
-		    position: {
-		        my: 'top left',
-		        at: 'center center',
-		        target: "event" // my target
-		    }
-		});
-	});
+	// $(document).on("hashDidLoad", function(event, jqXHR, settings) {
+	// 	// Tips
+	// 	$("[title != '']").qtip({
+	// 	    style: {
+	// 	    	classes: 'qtip-light qtip-rounded qtip-shadow'
+	// 	    },
+	// 	    position: {
+	// 	        my: 'top left',
+	// 	        at: 'center center',
+	// 	        target: "event" // my target
+	// 	    }
+	// 	});
+	// });
 	
 });});

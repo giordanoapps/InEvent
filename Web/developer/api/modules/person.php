@@ -3,37 +3,18 @@
 
 	if ($method === "signIn") {
 
-		if (isset($_GET["password"])) {
-
-			$email = "";
+		if (isset($_GET["email"]) && isset($_GET["password"])) {
 
 			// Get some properties
-			if (isset($_GET["email"])) {
-				$email = getAttribute($_GET['email']);
-			} elseif (isset($_GET["member"])) {
-				$member = getAttribute($_GET['member']);
-
-				$result = resourceForQuery(
-					"SELECT
-						`member`.`email`
-					FROM
-						`member`
-					WHERE 1
-						AND BINARY `member`.`name` = '$member'
-				");
-
-				if (mysql_num_rows($result) > 0) {	
-					$email = mysql_result($result, 0, "email");
-				}
-
-			}
+			$email = getAttribute($_GET['email']);
 			$password = getAttribute($_GET['password']);
 
 			// Return the desired data
 			$data = processLogIn($email, $password);
 			echo json_encode($data);
+
 		} else {
-			http_status_code(400);
+			http_status_code(400, "email and password are required parameters");
 		}
 				
 	} else
@@ -111,14 +92,14 @@
 					// user ID even though the access token is invalid.
 					// In this case, we'll get an exception, so we'll
 					// just ask the user to login again here.
-					http_status_code(503);
+					http_status_code(503, "facebook error");
 				}
 			} else {
 				// No user, return a non authenticated code
-				http_status_code(401);
+				http_status_code(401, "personID is not authenticated");
 			}
 		} else {
-			http_status_code(400);
+			http_status_code(400, "facebookToken is a required parameter");
 		}
 				
 	} else
@@ -169,7 +150,7 @@
 				http_status_code(303, "Email already exists");
 			}
 		} else {
-			http_status_code(400, "Some parameters are missing");
+			http_status_code(400, "name, password and email are required parameters");
 		}
 
 	} else
@@ -200,6 +181,8 @@
 			} else {
 				http_status_code(500, "Not a single email was found");
 			}
+		} else {
+			http_status_code(500, "email is a required parameter");
 		}
 
 	} else

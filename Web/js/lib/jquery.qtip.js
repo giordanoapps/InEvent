@@ -6,7 +6,7 @@
  * Released under the MIT, GPL licenses
  * http://jquery.org/license
  *
- * Date: Tue Aug 13 2013 09:53 UTC+0000
+ * Date: Wed Aug 28 2013 11:58 UTC+0000
  * Plugins: None
  * Styles: basic css3
  */

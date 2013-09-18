@@ -95,10 +95,10 @@
 					} elseif ($format == "html") {
 
 					} else {
-						http_status_code(405);	
+						http_status_code(405, "this format is not available");
 					}
 				} else {
-					http_status_code(500);
+					http_status_code(500, "row insertion has failed");
 				}
 			} else {
 				http_status_code(303, "The personID is already enrolled on this event");
@@ -157,26 +157,24 @@
 				} elseif ($format == "html") {
 
 				} else {
-					http_status_code(405);	
+					http_status_code(405, "this format is not available");
 				}
 			} else {
-				http_status_code(500);
+				http_status_code(500, "row deletion has failed");
 			}
-
 		} else {
-			http_status_code(400);
+			http_status_code(400, "personID cannot be null");
 		}
 		
 	} else
 
 	if ($method === "grantPermission" || $method === "revokePermission") {
 
-		$tokenID = getToken();
+		$eventID = getTokenForEvent();
 
-		if (isset($_GET["eventID"]) && isset($_GET["personID"])) {
+		if (isset($_GET["personID"])) {
 
 			// Get some properties
-			$eventID = getAttribute($_GET['eventID']);
 			$personID = getAttribute($_GET['personID']);
 
 			if ($core->workAtEvent) {
@@ -204,28 +202,27 @@
 						$data["eventID"] = $eventID;
 						echo json_encode($data);
 					} else {
-						http_status_code(405);	
+						http_status_code(405, "this format is not available");
 					}
 				} else {
-					http_status_code(500);
+					http_status_code(500, "row insertion has failed");
 				}
 			} else {
-				http_status_code(401);
+				http_status_code(401, "Person doesn't work at event");
 			}
 		} else {
-			http_status_code(400);
+			http_status_code(400, "personID is a required parameter");
 		}
 		
 	} else
 
 	if ($method === "getPeople") {
 
-		$tokenID = getToken();
+		$eventID = getTokenForEvent();
 
-		if (isset($_GET["eventID"]) && isset($_GET["selection"])) {
+		if (isset($_GET["selection"])) {
 
 			// Get some properties
-			$eventID = getAttribute($_GET['eventID']);
 			$selection = getAttribute($_GET['selection']);
 
 			switch ($selection) {
@@ -275,11 +272,11 @@
 			} elseif ($format == "excel") {
 				resourceToExcel($result);
 			} else {
-				http_status_code(405);	
+				http_status_code(405, "this format is not available");
 			}
 
 		} else {
-			http_status_code(400);
+			http_status_code(400, "selection is a required parameter");
 		}
 		
 	} else
@@ -317,51 +314,84 @@
 			echo json_encode(groupActivitiesInDays($data));
 
 		} else {
-			http_status_code(400);
+			http_status_code(400, "eventID is a required parameter");
 		}
 		
 	} else
 
 	if ($method === "getSchedule") {
 
-		$tokenID = getToken();
+		$eventID = getTokenForEvent();
 
-		if (isset($_GET["eventID"])) {
+		$result = resourceForQuery(
+            "SELECT
+                `activity`.`id`,
+                `activity`.`name`,
+                `activity`.`description`,
+                `activity`.`location`,
+                `activity`.`highlight`,
+                UNIX_TIMESTAMP(`activity`.`dateBegin`) AS `dateBegin`,
+                UNIX_TIMESTAMP(`activity`.`dateEnd`) AS `dateEnd`,
+                IF(`activityMember`.`memberID` = $core->memberID, `activityMember`.`approved`, 0) AS `approved`
+            FROM
+                `activity`
+            LEFT JOIN
+                `activityMember` ON `activity`.`id` = `activityMember`.`activityID`
+            WHERE 1
+                AND `activity`.`eventID` = $eventID
+                AND `activityMember`.`memberID` = $core->memberID
+            GROUP BY
+                `activity`.`id`
+            ORDER BY
+                `activity`.`dateBegin` ASC,
+                `activity`.`dateEnd` ASC
+        ");
+
+		$data = printInformation("eventMember", $result, true, 'object');
+		echo json_encode(groupActivitiesInDays($data));
+		
+	} else
+
+	if ($method === "sendOpinion") {
+
+		$eventID = getTokenForEvent();
+
+		if (isset ($_POST['rating']) && isset ($_POST['message'])) {
 
 			// Get some properties
-			$eventID = getAttribute($_GET['eventID']);
+			$rating = getAttribute($_POST['rating']);
+			$message = getAttribute($_POST['message']);
 
-			$result = resourceForQuery(
-	            "SELECT
-	                `activity`.`id`,
-	                `activity`.`name`,
-	                `activity`.`description`,
-	                `activity`.`location`,
-	                `activity`.`highlight`,
-	                UNIX_TIMESTAMP(`activity`.`dateBegin`) AS `dateBegin`,
-	                UNIX_TIMESTAMP(`activity`.`dateEnd`) AS `dateEnd`,
-	                IF(`activityMember`.`memberID` = $core->memberID, `activityMember`.`approved`, 0) AS `approved`
-	            FROM
-	                `activity`
-	            LEFT JOIN
-	                `activityMember` ON `activity`.`id` = `activityMember`.`activityID`
-	            WHERE 1
-	                AND `activity`.`eventID` = $eventID
-	                AND `activityMember`.`memberID` = $core->memberID
-	            GROUP BY
-	                `activity`.`id`
-	            ORDER BY
-	                `activity`.`dateBegin` ASC,
-	                `activity`.`dateEnd` ASC
-	        ");
+			// Filter the rating
+			$rating = ($rating > 5) ? 5 : $rating;
+			$rating = ($rating < 0) ? 0 : $rating;
 
-			$data = printInformation("eventMember", $result, true, 'object');
-			echo json_encode(groupActivitiesInDays($data));
+			// Filter the message
+			$message = ($message == "null") ? "" : $message;
+
+			// Update the activity
+			$update = resourceForQuery(
+				"UPDATE
+					`eventMember`
+				SET
+					`eventMember`.`rating` = $rating,
+					`eventMember`.`message` = '$message'
+				WHERE 1
+					AND `eventMember`.`eventID` = $eventID
+					AND `eventMember`.`memberID` = $core->memberID
+			");
+
+			if (mysql_affected_rows() > 0) {
+				$data["eventID"] = $eventID;
+				echo json_encode($data);
+			} else {
+				http_status_code(500, "not a single row was affected");
+			}
 
 		} else {
-			http_status_code(400);
+			http_status_code(400, "rating and message are required parameters");
 		}
-		
+			
 	} else
 
 // ------------------------------------------------------------------------------------------- //

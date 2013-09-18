@@ -147,4 +147,20 @@
         </div>
     </div>
 
+    <div class="documentationFunctionBox">
+        <p class="documentFunctionName">
+            <span>event.sendOpinion(<b>tokenID</b>, <b>eventID</b>, <b>rating</b>, <b>message</b> = null)</span>
+            <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=event.sendOpinion&tokenID=$tokenID&eventID=1" data-post="rating=5&message=Maravilhoso!">
+        </p>
+
+        <p class="documentFunctionDescription">Envia a pontuação <i>rating</i> e a mensagem <i>message</i> para o evento <i>eventID</i>.</p>
+
+        <div class="documentationFunctionParametersBox">
+            <p><b>tokenID</b><sub>GET</sub> : id de autenticação </p>
+            <p><b>eventID</b><sub>GET</sub> : id da atividade </p>
+            <p><b>rating</b><sub>POST</sub> : inteiro com a pontuação </p>
+            <p><b>message</b><sub>POST</sub> : texto da mensagem </p>
+        </div>
+    </div>
+
 </div>

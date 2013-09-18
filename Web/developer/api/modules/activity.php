@@ -78,10 +78,11 @@
 					} else {
 						http_status_code(404, "eventID does not exist!");
 					}
+				} else {
+					http_status_code(404, "personID is not enrolled at this event");
 				}
-
 			} else {
-				http_status_code(401, "Person doesn't work at event");
+				http_status_code(401, "personID doesn't work at event");
 			}
 		} else {
 			$personID = $core->memberID;
@@ -161,15 +162,13 @@
 						http_status_code(405, "this format is not available");
 					}
 				} else {
-					http_status_code(500, "insert inside activity failed");
+					http_status_code(500, "insert inside activity has failed");
 				}
-
 			} else {
 				http_status_code(406, "personID has not been approved on the event");
 			}
-
 		} else {
-			http_status_code(400, "personID is null");
+			http_status_code(400, "personID cannot be null");
 		}
 		
 	} else
@@ -183,7 +182,7 @@
 			if ($core->workAtEvent) {
 				$personID = getAttribute($_GET['personID']);
 			} else {
-				http_status_code(401);
+				http_status_code(401, "personID doesn't work at event");
 			}
 		} else {
 			$personID = $core->memberID;
@@ -336,6 +335,9 @@
 					");
 
 					break;
+
+				} else {
+					http_status_code(400, "personID has chosen to not replace his activity");
 				}
 			}
 
@@ -351,11 +353,10 @@
 					http_status_code(405, "this format is not available");	
 				}
 			} else {
-				http_status_code(500);
+				http_status_code(500, "row deletion could not be completed");
 			}
-
 		} else {
-			http_status_code(400);
+			http_status_code(400, "activityID is a required parameter");
 		}
 		
 	} else
@@ -416,25 +417,24 @@
 						http_status_code(405, "this format is not available");	
 					}
 				} else {
-					http_status_code(500);
+					http_status_code(500, "row update has failed");
 				}
 			} else {
-				http_status_code(401);
+				http_status_code(401, "personID doesn't work at event");
 			}
 		} else {
-			http_status_code(400);
+			http_status_code(400, "activityID and personID are required parameters");
 		}
 		
 	} else
 
 	if ($method === "getPeople") {
 
-		$tokenID = getToken();
+		$activityID = getTokenForActivity();
 
-		if (isset($_GET["activityID"]) && isset($_GET["selection"])) {
+		if (isset($_GET["selection"])) {
 
 			// Get some properties
-			$activityID = getAttribute($_GET['activityID']);
 			$selection = getAttribute($_GET['selection']);
 
 			// Selection
@@ -489,19 +489,16 @@
 			}
 
 		} else {
-			http_status_code(400);
+			http_status_code(400, "activityID and selection are required parameters");
 		}
 		
 	} else
 
 	if ($method === "getQuestions") {
 
-		$tokenID = getToken();
+		$activityID = getTokenForActivity();
 
 		if (isset($_GET["activityID"])) {
-
-			// Get some properties
-			$activityID = getAttribute($_GET['activityID']);
 
 			$result = resourceForQuery(
 			// echo (
@@ -526,19 +523,18 @@
 			echo printInformation("activityQuestion", $result, true, 'json');
 
 		} else {
-			http_status_code(400);
+			http_status_code(400, "activityID is a required parameter");
 		}
 		
 	} else
 
 	if ($method === "sendQuestion") {
 
-		$tokenID = getToken();
+		$activityID = getTokenForActivity();
 
-		if (isset($_GET["activityID"]) && isset($_POST["question"])) {
+		if (isset($_POST["question"])) {
 
 			// Get some properties
-			$activityID = getAttribute($_GET['activityID']);
 			$question = getAttribute($_POST['question']);
 
 			$insert = resourceForQuery(
@@ -567,11 +563,11 @@
 				$data["questionID"] = $questionID;
 				echo json_encode($data);
 			} else {
-				http_status_code(500);
+				http_status_code(500, "row insertion has failed");
 			}
 
 		} else {
-			http_status_code(400);
+			http_status_code(400, "activityID and question are required parameters");
 		}
 		
 	} else
@@ -620,14 +616,53 @@
 				$data["questionID"] = $questionID;
 				echo json_encode($data);
 			} else {
-				http_status_code(500);
+				http_status_code(500, "row insertion has failed");
 			}
 
 		} else {
-			http_status_code(400);
+			http_status_code(400, "questionID is a required parameter");
 		}
 		
 	} else
+
+	if ($method === "sendOpinion") {
+
+		$activityID = getTokenForActivity();
+
+		if (isset ($_POST['rating'])) {
+
+			// Get some properties
+			$rating = getAttribute($_POST['rating']);
+			$message = getAttribute($_POST['message']);
+
+			// Filter the rating
+			$rating = ($rating > 5) ? 5 : $rating;
+			$rating = ($rating < 0) ? 0 : $rating;
+
+			// Update the activity
+			$update = resourceForQuery(
+				"UPDATE
+					`activityMember`
+				SET
+					`activityMember`.`rating` = $rating
+				WHERE 1
+					AND `activityMember`.`activityID` = $activityID
+					AND `activityMember`.`memberID` = $core->memberID
+			");
+
+			if (mysql_affected_rows() > 0) {
+				$data["activityID"] = $activityID;
+				echo json_encode($data);
+			} else {
+				http_status_code(500, "not a single row was affected");
+			}
+
+		} else {
+			http_status_code(400, "rating and message are required parameters");
+		}
+			
+	} else
+
 // ------------------------------------------------------------------------------------------- //
 			
 	{ http_status_code(501); }

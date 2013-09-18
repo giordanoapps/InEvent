@@ -27,7 +27,7 @@ define(modules, function($, common, cookie) {$(function() {
 	 * Toggle the box
 	 * @return {null}
 	 */
-	$("#peopleContent").on("click", ".toolCreate", function() {
+	$("#peopleContent").on("click", ".toolCreate", function(event) {
 		$(this).closest(".toolBox").siblings(".toolBoxOptionsEnrollPerson").slideToggle(400);
 	});
 
@@ -35,7 +35,7 @@ define(modules, function($, common, cookie) {$(function() {
 	 * Add a person to the activity
 	 * @return {null}
 	 */
-	$("#peopleContent").on("click", ".toolBoxOptionsEnrollPerson .singleButton", function() {
+	$("#peopleContent").on("click", ".toolBoxOptionsEnrollPerson .singleButton", function(event) {
 		
 		var $elem = $(this);
 		var $scheduleItemSelected = $("#peopleContent .scheduleItemSelected");
@@ -110,7 +110,7 @@ define(modules, function($, common, cookie) {$(function() {
 			function(data, textStatus, jqXHR) {
 				if (jqXHR.status == 200) {
 					// Append the content
-					$(".realContent")
+					$("#peopleContent .realContent")
 						.hide(0)
 						.html(data)
 						.show(300)
@@ -125,7 +125,6 @@ define(modules, function($, common, cookie) {$(function() {
 			}, "html");
 
 		} else {
-			console.log(url);
 			// Load the excel requisition on its own frame
 			$("#excelFrame").attr("src", url);
 		}
@@ -136,16 +135,40 @@ define(modules, function($, common, cookie) {$(function() {
 	 * Tool to export data to excel
 	 * @return {null}
 	 */
-	$("#peopleContent").on("click", ".toolBox .toolExport", function () {
+	$("#peopleContent").on("click", ".toolBox .toolExport", function(event) {
 		// Change the selected class
 		$("#peopleContent .scheduleItemSelected").trigger("click", [null, "excel"]);
+	});
+
+	/**
+	 * Select a random person on the list
+	 * @return {null}
+	 */
+	$("#peopleContent").on("click", ".toolBox .toolRandom", function(event) {
+
+		// Select all the items on the list
+		var $pickerItem = $("#peopleContent .pickerItem").removeClass("pickerItemLucky");
+
+		// Select a random item from the collection
+		var $pickerItemLucky = $pickerItem.eq(Math.floor(Math.random() * $pickerItem.length));
+
+		// Animate the item transition
+		$pickerItemLucky
+			.stop(true, true)
+			.addClass("pickerItemLucky", 100)
+			.delay(20000) // 20s
+			.removeClass("pickerItemLucky", 100);
+
+		// Scroll the table
+		var $realContent = $("#peopleContent .realContent");
+		$realContent.scrollTop($pickerItemLucky.position().top + $realContent.scrollTop() - 132);
 	});
 
 	/**
 	 * Order the sequence of a list
 	 * @return {null}
 	 */
-	$("#peopleContent").on("click", "thead td", function() {
+	$("#peopleContent").on("click", "thead td", function(event) {
 
 		// Get the order
 		var order = $(this).attr("data-order");
@@ -162,7 +185,7 @@ define(modules, function($, common, cookie) {$(function() {
 	 * Remove a item from the person schedule
 	 * @return {null}
 	 */
-	$("#peopleContent").on("click", ".head", function() {
+	$("#peopleContent").on("click", ".head", function(event) {
 
 		var $elem = $(this);
 		var method = ($elem.hasClass("staff")) ? "revokePermission" : "grantPermission";
@@ -190,7 +213,7 @@ define(modules, function($, common, cookie) {$(function() {
 	 * Remove a item from the person schedule
 	 * @return {null}
 	 */
-	$("#peopleContent").on("instantSave", ".checkbox.paid, .checkbox.present", function() {
+	$("#peopleContent").on("instantSave", ".checkbox.paid, .checkbox.present", function(event) {
 
 		var $elem = $(this);
 		var method = ($elem.hasClass("paid")) ? "confirmPayment" : "confirmEntrance";
@@ -214,7 +237,7 @@ define(modules, function($, common, cookie) {$(function() {
 	 * Remove a person from the activity
 	 * @return {null}
 	 */
-	$("#peopleContent").on("click", ".pickerItem .toolRemove", function() {
+	$("#peopleContent").on("click", ".pickerItem .toolRemove", function(event) {
 
 		event.stopPropagation();
 
@@ -241,7 +264,7 @@ define(modules, function($, common, cookie) {$(function() {
 	 * Remove a person from the activity
 	 * @return {null}
 	 */
-	$("#peopleContent").on("keyup", ".pickerItem .titleInput", function() {
+	$("#peopleContent").on("keyup", ".pickerItem .titleInput", function(event) {
 
 		var code = (event.keyCode ? event.keyCode : event.which);
 		// Enter keycode

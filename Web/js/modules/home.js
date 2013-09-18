@@ -31,7 +31,7 @@ define(["jquery", "common", "modules/cookie"], function($, common, cookie) {$(fu
 	 * Calculate the position and scroll the menuContent every time the human slides the screen
 	 * @return {null}       
 	 */
-	$("#homeContent").on("mousewheel", function(event, delta, deltaX, deltaY) {
+	$("#homeContent").on("mousewheel", function (event, delta, deltaX, deltaY) {
 		// What the y position of the scroll is
 		$(this).trigger("loadCover", [deltaY]);
 	});
@@ -41,7 +41,7 @@ define(["jquery", "common", "modules/cookie"], function($, common, cookie) {$(fu
 	 * Change the current cover
 	 * @return {null}
 	 */
-	$("#homeContent").on("loadCover", function(event, y) {
+	$("#homeContent").on("loadCover", function (event, y) {
 
 		// Only scroll if no animation is taking place
 		if(!$(this).is(":animated")) {
@@ -96,7 +96,7 @@ define(["jquery", "common", "modules/cookie"], function($, common, cookie) {$(fu
 	 * Change the cover based on the keyboard (arrows and page's)
 	 * @return {null}
 	 */
-	$("#homeContent").on("keyup", function(event) {
+	$("#homeContent").on("keyup", function (event) {
 		
 		var code = (event.keyCode ? event.keyCode : event.which);
 		
@@ -115,7 +115,7 @@ define(["jquery", "common", "modules/cookie"], function($, common, cookie) {$(fu
 	 * Change the cover for mobile devices
 	 * @return {null}
 	 */
-	$("#homeContent").on("click", ".upperDeck, .deck", function(event) {
+	$("#homeContent").on("click", ".upperDeck, .deck", function (event) {
 
 		if ($(this).hasClass("upperDeck")) {
 			$(this).closest("#homeContent").trigger("loadCover", [100]);
@@ -129,7 +129,7 @@ define(["jquery", "common", "modules/cookie"], function($, common, cookie) {$(fu
 	 * Toggle the app deck
 	 * @return {null}
 	 */
-	$("#homeContent").on("click", ".middlePort .trigger", function(event) {
+	$("#homeContent").on("click", ".middlePort .trigger", function (event) {
 
 		var $close = $(this).find(".close");
 		var $open = $(this).find(".open");

@@ -82,7 +82,7 @@ define(modules, function($, common, cookie) {$(function() {
 	 * Remove a person from a event
 	 * @return {null}
 	 */
-	$("#marketplaceContent").on("keyup", ".titleInput", function() {
+	$("#marketplaceContent").on("keyup", ".titleInput", function(event) {
 
 		var code = (event.keyCode ? event.keyCode : event.which);
 		// Enter keycode

@@ -67,7 +67,7 @@ define(["jquery", "common", "modules/cookie"], function($, common, cookie) {$(fu
 	 * Tool to change the state of a checkbox
 	 * @return {null}
 	 */
-	$(document).on("click", ".checkbox", function(event, isPropagating) {
+	$(document).on("click", ".checkbox", function (event, isPropagating) {
 
 		if ($(this).attr("readonly") == "readonly") return;
 		// Toggle the state of the propagation save

@@ -1,9 +1,7 @@
 <?php include_once("../includes/check/login.php"); ?>
 <?php
 	if ($globalDev == 1) {
-		$host = ($_SERVER['SERVER_ADDR'] == "::1") ? "localhost" : $_SERVER['SERVER_ADDR'];
-
-		define("URL", "http://" . $host . ":8888/InEvent-dev/Web/developer/api/");
+		define("URL", "http://inevent:8888/developer/api/");
 	} else {
 		$host = (strstr($_SERVER['HTTP_HOST'], "dev.") != FALSE) ? "dev.inevent.us" : "inevent.us";
 

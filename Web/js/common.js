@@ -12,9 +12,10 @@ require.config({
 		'jquery.scrollbar': 'perfect-scrollbar-0.4.4.min',
 		'jquery.fileuploader': 'jquery.fileuploader.min',
 		'jquery.chosen': 'chosen.jquery.min',
+    	'imagesLoaded': 'imagesLoaded.min',
+		'jquery.qtip': 'jquery.qtip.min',
 		'google.analytics': 'analytics.min',
 		'google.maps': 'https://maps.googleapis.com/maps/api/js?sensor=false&region=BR',
-    	'imagesLoaded': 'imagesLoaded.min',
       	'modules': '../modules'
     },
     shim: {
