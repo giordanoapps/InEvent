@@ -1,5 +1,7 @@
 package com.estudiotrilha.inevent.app;
 
+import java.util.Calendar;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,7 +17,8 @@ import com.google.analytics.tracking.android.EasyTracker;
 
 public class SplashActivity extends Activity implements Runnable
 {
-    private static int SPLASH_DURATION = 800; // in milliseconds
+    private static int SPLASH_DURATION           = 800; // in milliseconds
+    private static int SPLASH_REDISPLAY_INTERVAL = 7; // in days
 
     private final Handler mHandler = new Handler();
 
@@ -44,20 +47,31 @@ public class SplashActivity extends Activity implements Runnable
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
         // Obtain the sharedPreference
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
-        // default to true if not available
-        boolean splashEnabled = sp.getBoolean(PreferencesActivity.SPLASH_ENABLED, true);
+        // Check if the splash screen should be shown
+        Calendar lastShownTime = Calendar.getInstance();
+        lastShownTime.setTimeInMillis(preferences.getLong(PreferencesActivity.SPLASH_LAST_SHOWN, 0));
+        lastShownTime.add(Calendar.DAY_OF_YEAR, SPLASH_REDISPLAY_INTERVAL);
 
-        if (splashEnabled)
+        Calendar currentTime = Calendar.getInstance();
+
+        // Only shown the splash screen if the user hasn't
+        // opened the app in a while
+        if (lastShownTime.before(currentTime))
         {
-            // TODO Start the animation
+            // XXX Start the animation
             mHandler.postDelayed(this, SPLASH_DURATION);
         }
         else
         {
             onSplashFinish();
         }
+
+        // Update the splash last shown time
+        preferences.edit()
+            .putLong(PreferencesActivity.SPLASH_LAST_SHOWN, currentTime.getTimeInMillis())
+            .commit();
     }
     @Override
     protected void onStop()

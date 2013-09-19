@@ -72,8 +72,6 @@
     <string name="preference_useMobileNetwork">Use Mobile Network</string>
 
     <!-- Preferences Summaries -->
-    <string name="preference_summary_splashScreen_enabled">Shows a Splash Screen on application launch</string>
-    <string name="preference_summary_splashScreen_unabled">Go straigh to the content, without a Splash Screen</string>
 
     <!-- Descriptions -->
     <string name="description_event_info">Extra information about the event</string>

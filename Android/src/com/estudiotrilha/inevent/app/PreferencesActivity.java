@@ -2,8 +2,8 @@ package com.estudiotrilha.inevent.app;
 
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 
@@ -17,7 +17,7 @@ public class PreferencesActivity extends PreferenceActivity implements OnSharedP
     public static final String SLIDING_MENU_SHOWN      = InEvent.class.getPackage().getName() + ".preferences.SLIDING_MENU_SHOWN";
     public static final int    SLIDING_MENU_SHOWN_MAX  = 3;
 
-    public static final String SPLASH_ENABLED          = InEvent.class.getPackage().getName() + ".preferences.SPLASH_ENABLED";
+    public static final String SPLASH_LAST_SHOWN       = InEvent.class.getPackage().getName() + ".preferences.SPLASH_LAST_SHOWN";
 
     public static final String USE_MOBILE_CONNECTION   = InEvent.class.getPackage().getName() + ".preferences.USE_MOBILE_CONNECTION";
 
@@ -28,8 +28,14 @@ public class PreferencesActivity extends PreferenceActivity implements OnSharedP
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.preferences);
 
-        CheckBoxPreference pref = (CheckBoxPreference) findPreference(SPLASH_ENABLED);
-        pref.setSummary(pref.isChecked() ? R.string.preference_summary_splashScreen_enabled : R.string.preference_summary_splashScreen_unabled);
+        // Setup the version name
+        String versionName = "";
+        try
+        {
+            versionName = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+        }
+        catch (NameNotFoundException e) {}
+        findPreference("com.estudiotrilha.inevent.preference.APP_VERSION").setSummary(versionName);
     }
 
     @Override
@@ -69,10 +75,6 @@ public class PreferencesActivity extends PreferenceActivity implements OnSharedP
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key)
     {
-        if (key.equals(SPLASH_ENABLED))
-        {
-            CheckBoxPreference pref = (CheckBoxPreference) findPreference(key);
-            pref.setSummary(pref.isChecked() ? R.string.preference_summary_splashScreen_enabled : R.string.preference_summary_splashScreen_unabled);
-        }
+        // XXX
     }
 }

@@ -2,10 +2,6 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <PreferenceCategory android:title="@string/title_general" >
-        <CheckBoxPreference
-            android:defaultValue="true"
-            android:key="com.estudiotrilha.inevent.preferences.SPLASH_ENABLED"
-            android:title="@string/title_splashScreen" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/title_mobileNetwork" >
@@ -18,7 +14,7 @@
 
     <PreferenceCategory android:title="@string/title_about" >
         <Preference
-            android:summary="?android:attr/versionName"
+            android:key="com.estudiotrilha.inevent.preference.APP_VERSION"
             android:title="@string/title_appVersion" />
     </PreferenceCategory>
 
