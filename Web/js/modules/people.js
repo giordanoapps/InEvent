@@ -24,6 +24,99 @@ define(modules, function($, common, cookie) {$(function() {
 // -------------------------------------- TOOLS -------------------------------------- //
 
 	/**
+	 * Tool to import a carte from a Excel file
+	 * @return {null}       
+	 */
+	$("#peopleContent").on("click", ".toolImport", function () {
+
+		var $optionsBox = $(".toolBoxOptionsImport").slideToggle(400);
+
+		$optionsBox.find('.file-uploader').each(function () {
+			var uploader = new qq.FileUploader({
+				// pass the dom node (ex. $(selector)[0] for jQuery users)
+				element: $(this)[0],
+				// path to server-side upload script
+				action: 'fileuploader.php',
+
+				onSubmit: function(id, fileName) {
+					$(this.element).attr("data-isuploading", "true");
+				},
+				
+				onComplete: function(id, fileName, responseJSON) {
+					
+					// Adjust the interface
+					var $element = $(this.element);
+					$element
+						.attr("data-file", responseJSON.path)
+						.find(".qq-upload-button")
+							.contents().first()[0].textContent = 'Enviado!';
+
+					// Upload if already set to do so 
+					if ($element.attr("data-sendnow") == "true") {
+						$element.closest(".bottom").find(".submitButton").trigger("click");
+					}
+				}
+			});
+		});
+	});
+
+	/**
+	 * Create the carte from the excel
+	 * @return {null}       
+	 */
+	$("#peopleContent").on("click", ".toolBoxOptionsImport .singleButton", function () {
+
+		var $submitButton = $(this);
+		var $fileBox = $(this).closest(".bottom").find(".file-uploader");
+		var fileName = $fileBox.attr("data-file");
+
+		if (typeof fileName === 'undefined' || fileName === false) {
+
+			if ($fileBox.attr("data-isuploading") == "true") {
+				$fileBox.attr("data-sendnow", "true");
+				$(this).addClass("waitingUpload").text("Carregando ...");
+			} else {
+				$(this).closest(".bottom").find(".magicUnderlineSheet").addClass("magicUnderlineActive");
+			}
+			
+			// Abort the operation
+			return;
+		} else {
+			// Disable the button while processing
+			// $submitButton.attr("disabled", "disabled");
+		}
+
+		var $scheduleItemSelected = $("#peopleContent .scheduleItemSelected");
+
+		var namespace = $scheduleItemSelected.attr("data-type");
+		var activityID = $scheduleItemSelected.val();
+		var eventID = cookie.read("eventID");
+
+		// We request the information on the server
+		$.post('developer/api/?' + $.param({
+			method: namespace + ".requestMultipleEnrollment",
+			activityID: activityID,
+			eventID: eventID,
+			path: fileName
+		}), {},
+		function(data, textStatus, jqXHR) {
+
+			// Unlock the button
+			$submitButton.removeAttr("disabled");
+
+		}, 'html');
+
+	});
+
+	/**
+	 * Show some detailed info about the process
+	 * @return {null}       
+	 */
+	$("#peopleContent").on("click", ".toolBoxOptions .dropDetailedBox", function () {
+		$(this).toggleClass("dropDetailedBoxSelected").siblings(".detailedBox").slideToggle();
+	});
+
+	/**
 	 * Tool to export data to excel
 	 * @return {null}
 	 */

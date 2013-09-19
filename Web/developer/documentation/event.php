@@ -46,6 +46,21 @@
 
     <div class="documentationFunctionBox">
         <p class="documentFunctionName">
+            <span>event.requestMultipleEnrollment(<b>tokenID</b>, <b>eventID</b>, <b>path</b>)</span>
+            <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=event.requestMultipleEnrollment&tokenID=$tokenID&eventID=1&path=null">
+        </p>
+
+        <p class="documentFunctionDescription">Solicita a entrada de múltiplas pessoas no evento <i>eventID</i>.</p>
+
+        <div class="documentationFunctionParametersBox">
+            <p><b>tokenID</b><sub>GET</sub> : id de autenticação </p>
+            <p><b>eventID</b><sub>GET</sub> : id do evento </p>
+            <p><b>path</b><sub>GET</sub> : local do arquivo </p>
+        </div>
+    </div>
+
+    <div class="documentationFunctionBox">
+        <p class="documentFunctionName">
             <span>event.dismissEnrollment(<b>tokenID</b>, <b>eventID</b>, <b>personID</b> = null)</span>
             <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=event.dismissEnrollment&tokenID=$tokenID&eventID=1&personID=null">
         </p>

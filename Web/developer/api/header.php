@@ -1,7 +1,9 @@
 <?php
 
 	// Wrappers
+	include_once("functions/activity.php");
 	include_once("functions/event.php");
+	include_once("functions/excel.php");
 	include_once("functions/person.php");
 	include_once("functions/validation.php");
 

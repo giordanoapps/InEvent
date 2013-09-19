@@ -49,64 +49,34 @@
 
 		if ($personID != 0 && eventExists($eventID)) {
 
-			$result = resourceForQuery(
-				"SELECT
-					`eventMember`.`id`
-				FROM
-					`eventMember`
-				WHERE 1
-					AND `eventMember`.`eventID` = $eventID
-					AND `eventMember`.`memberID` = $personID
-			");
+			// Enroll a person inside an event
+			$sucess = processEventEnrollmentWithEvent($eventID, $personID);
 
-			if (mysql_num_rows($result) == 0) {
-				// Insert the person on the event
-				$insert = resourceForQuery(
-					"INSERT INTO
-						`eventMember`
-						(`eventID`, `memberID`, `roleID`, `approved`)
-					VALUES
-						($eventID, $personID, @(ROLE_ATTENDEE), 1)
-				");
+			if ($sucess) {
+				// Return its data
+				if ($format == "json") {
+					$data["eventID"] = $eventID;
+					echo json_encode($data);
+				} elseif ($format == "html") {
 
-				// Insert all the activities that are general
-				$insert = resourceForQuery(
-				// echo (
-					"INSERT INTO
-						`activityMember`
-						(`activityID`, `memberID`, `approved`, `present`)
-					SELECT
-						`activity`.`id`,
-						$personID,
-						1,
-						0
-					FROM
-						`activity`
-					WHERE 1
-						AND `activity`.`general` = 1
-						AND `activity`.`eventID` = $eventID
-				");
-
-				if ($insert) {
-					// Return its data
-					if ($format == "json") {
-						$data["eventID"] = $eventID;
-						echo json_encode($data);
-					} elseif ($format == "html") {
-
-					} else {
-						http_status_code(405, "this format is not available");
-					}
 				} else {
-					http_status_code(500, "row insertion has failed");
+					http_status_code(405, "this format is not available");
 				}
 			} else {
-				http_status_code(303, "The personID is already enrolled on this event");
+				http_status_code(404, "personID is not enrolled at this event");
 			}
 		} else {
 			http_status_code(400, "The asserted personID is null or the eventID doesn't exist");
 		}
 		
+	} else
+
+	if ($method === "requestMultipleEnrollment") {
+
+		$eventID = getTokenForActivity();
+
+		echo saveFromExcel(getAttribute($_GET['path']), "event", $eventID);
+
 	} else
 
 	if ($method === "dismissEnrollment") {

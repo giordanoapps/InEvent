@@ -12,75 +12,12 @@
 				$name = getAttribute($_GET['name']);
 				$email = getAttribute($_GET['email']);
 
-				$result = resourceForQuery(
-					"SELECT
-						`member`.`id`
-					FROM
-						`member`
-					WHERE 1
-						AND BINARY `member`.`email` = '$email'
-				");
+				// Get the person for the given email
+				$personID = getPersonForEmail($email, $name);
 
-				if (mysql_num_rows($result) > 0) {
-					$personID = mysql_result($result, 0, "id");
-				} else {
-					$personID = createMember($name, md5((string)rand()), $email);
-				}
+				// Enroll the person at the event if necessary
+				processEventEnrollmentWithActivity($activityID, $personID);
 
-				// See if the person is already inside the event
-				$result = resourceForQuery(
-					"SELECT
-						`eventMember`.`eventID`
-					FROM
-						`eventMember`
-					INNER JOIN
-						`activity` ON `activity`.`eventID` = `eventMember`.`eventID`
-					WHERE 1
-						AND `activity`.`id` = $activityID
-						AND `eventMember`.`memberID` = $personID
-				");
-
-				// Insert the person on the event
-				if (mysql_num_rows($result) == 0) {
-
-					$result = resourceForQuery(
-						"SELECT
-							`event`.`id`,
-							`event`.`name`,
-							`activity`.`highlight`
-						FROM
-							`activity`
-						INNER JOIN
-							`event` ON `event`.`id` = `activity`.`eventID`
-						WHERE 1
-							AND `activity`.`id` = $activityID
-						LIMIT 1
-					");
-
-					if (mysql_num_rows($result) > 0) {
-
-						// Get some properties
-						$eventID = mysql_result($result, 0, "id");
-						$eventName = mysql_result($result, 0, "name");
-						$activityHighlight = mysql_result($result, 0, "highlight");
-
-						$insert = resourceForQuery(
-							"INSERT INTO
-								`eventMember`
-								(`eventID`, `memberID`, `roleID`, `approved`)
-							VALUES
-								($eventID, $personID, @(ROLE_ATTENDEE), 1)
-						");
-
-						// Only send an email if the activity is important
-						if ($activityHighlight) sendEventEnrollmentEmail($eventName, $email);
-
-					} else {
-						http_status_code(404, "eventID does not exist!");
-					}
-				} else {
-					http_status_code(404, "personID is not enrolled at this event");
-				}
 			} else {
 				http_status_code(401, "personID doesn't work at event");
 			}
@@ -90,87 +27,35 @@
 
 		if ($personID != 0) {
 
-			// Get some properties
-			$groupID = getGroupForActivity($activityID);
+			// Enroll people at the activity
+			$sucess = processActivityEnrollment($activityID, $personID);
 
-			// See if the member has been approved on the event that has the desired activity
-			$result = resourceForQuery(
-			// echo (
-				"SELECT
-					`eventMember`.`id`
-				FROM
-					`eventMember`
-				INNER JOIN
-					`activity` ON `activity`.`eventID` = `eventMember`.`eventID`
-				WHERE 1
-					AND `activity`.`id` = $activityID
-					AND `eventMember`.`memberID` = $personID
-					AND `eventMember`.`approved` = 1
-			");
-
-			if (mysql_num_rows($result) > 0) {
-
-				// Find if the member is over his limit on different groups
-				$result = resourceForQuery(
-				// echo (
-					"SELECT
-						IF(COALESCE(`activityGroup`.`limit`, 99999) > COALESCE(SUM(`activityMember`.`approved`), 0), 1, 0) AS `valid`
-					FROM
-						`activity`
-					LEFT JOIN
-						`activityMember` ON `activity`.`id` = `activityMember`.`activityID` AND `activityMember`.`memberID` = $personID
-		            LEFT JOIN
-		                `activityGroup` ON `activity`.`groupID` = `activityGroup`.`id`
-					WHERE 1
-						AND `activity`.`groupID` = $groupID
-					GROUP BY
-						`activity`.`groupID`
-				");
-
-				$valid = (mysql_num_rows($result) > 0) ? mysql_result($result, 0, "valid") : 1;
-				
-				// Insert a new row seing if there are vacancies
-				$insert = resourceForQuery(
-				// echo (
-					"INSERT INTO
-						`activityMember`
-						(`activityID`, `memberID`, `approved`, `present`)
-					SELECT
-						$activityID,
-						$personID,
-						IF($valid AND (`activity`.`capacity` = 0 OR `activity`.`capacity` > SUM(`activityMember`.`approved`)), 1, 0),
-						0
-					FROM
-						`activity`
-					LEFT JOIN
-						`activityMember` ON `activity`.`id` = `activityMember`.`activityID`
-					WHERE 1
-						AND `activity`.`id` = $activityID
-					GROUP BY
-						`activity`.`id`
-				");
-
-				if ($insert) {
-					// Return its data
-					if ($format == "json") {
-						$data["activityID"] = $activityID;
-						echo json_encode($data);
-					} elseif ($format == "html") {
-						$result = getActivitiesForMemberAtActivityQuery($activityID, $personID);
-						printScheduleItem(mysql_fetch_assoc($result), "member");
-					} else {
-						http_status_code(405, "this format is not available");
-					}
+			if ($sucess) {
+				// Return its data
+				if ($format == "json") {
+					$data["activityID"] = $activityID;
+					echo json_encode($data);
+				} elseif ($format == "html") {
+					$result = getActivitiesForMemberAtActivityQuery($activityID, $personID);
+					printScheduleItem(mysql_fetch_assoc($result), "member");
 				} else {
-					http_status_code(500, "insert inside activity has failed");
+					http_status_code(405, "this format is not available");
 				}
 			} else {
-				http_status_code(406, "personID has not been approved on the event");
+				http_status_code(500, "insert inside activity has failed");
 			}
 		} else {
 			http_status_code(400, "personID cannot be null");
 		}
 		
+	} else
+
+	if ($method === "requestMultipleEnrollment") {
+
+		$activityID = getTokenForActivity();
+
+		echo saveFromExcel(getAttribute($_GET['path']), "activity", $activityID);
+
 	} else
 
 	if ($method === "dismissEnrollment") {

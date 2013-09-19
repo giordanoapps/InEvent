@@ -15,7 +15,18 @@
 		$insert = resourceForQuery(
 			"INSERT INTO
 				`member`
-				(`name`, `password`, `cpf`, `rg`, `usp`, `telephone`, `city`, `email`, `university`, `course`)
+				(
+					`name`,
+					`password`,
+					`cpf`,
+					`rg`,
+					`usp`,
+					`telephone`,
+					`city`,
+					`email`,
+					`university`,
+					`course`
+				)
 			VALUES 
 				(
 					'$name',

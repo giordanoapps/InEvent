@@ -37,7 +37,7 @@
             <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=activity.requestEnrollment&tokenID=$tokenID&activityID=1&name=null&email=null">
         </p>
 
-        <p class="documentFunctionDescription">Solicita a entrada da pessoa <i>personID</i> no atividade <i>activityID</i>. Se o nome <i>name</i> e email <i>email</i> da pessoa não for especificada ou o <i>tokenID</i> fornecido não tiver permissão para enviar para a pessoa com email <i>email</i>, será utilizada a pessoa associada ao <i>tokenID</i>.</p>
+        <p class="documentFunctionDescription">Solicita a entrada da pessoa <i>personID</i> na atividade <i>activityID</i>. Se o nome <i>name</i> e email <i>email</i> da pessoa não for especificada ou o <i>tokenID</i> fornecido não tiver permissão para enviar para a pessoa com email <i>email</i>, será utilizada a pessoa associada ao <i>tokenID</i>.</p>
 
         <div class="documentationFunctionParametersBox">
             <p><b>tokenID</b><sub>GET</sub> : id de autenticação </p>
@@ -53,13 +53,28 @@
             <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=activity.requestEnrollment&tokenID=$tokenID&activityID=1&name=null&email=null">
         </p>
 
-        <p class="documentFunctionDescription">Solicita a entrada da pessoa <i>personID</i> no atividade <i>activityID</i>. Se o nome <i>name</i> e email <i>email</i> da pessoa não for especificada ou o <i>tokenID</i> fornecido não tiver permissão para enviar para a pessoa com email <i>email</i>, será utilizada a pessoa associada ao <i>tokenID</i>.</p>
+        <p class="documentFunctionDescription">Solicita a entrada da pessoa com email <i>email</i> na atividade <i>activityID</i>. Se o nome <i>name</i> e email <i>email</i> da pessoa não for especificada ou o <i>tokenID</i> fornecido não tiver permissão para enviar para a pessoa com email <i>email</i>, será utilizada a pessoa associada ao <i>tokenID</i>.</p>
 
         <div class="documentationFunctionParametersBox">
             <p><b>tokenID</b><sub>GET</sub> : id de autenticação </p>
             <p><b>activityID</b><sub>GET</sub> : id da atividade </p>
             <p><b>name</b><sub>GET</sub> : nome da pessoa </p>
             <p><b>email</b><sub>GET</sub> : email da pessoa </p>
+        </div>
+    </div>
+
+    <div class="documentationFunctionBox">
+        <p class="documentFunctionName">
+            <span>activity.requestMultipleEnrollment(<b>tokenID</b>, <b>activityID</b>, <b>path</b>)</span>
+            <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=activity.requestMultipleEnrollment&tokenID=$tokenID&activityID=1&path=null">
+        </p>
+
+        <p class="documentFunctionDescription">Solicita a entrada de múltiplas pessoas na atividade <i>activityID</i>.</p>
+
+        <div class="documentationFunctionParametersBox">
+            <p><b>tokenID</b><sub>GET</sub> : id de autenticação </p>
+            <p><b>activityID</b><sub>GET</sub> : id da atividade </p>
+            <p><b>path</b><sub>GET</sub> : local do arquivo </p>
         </div>
     </div>
 
