@@ -6,6 +6,7 @@
     <string name="app_name">InEvent</string>
 
     <!-- Button Actions -->
+    <string name="action_about">Sobre</string>
     <string name="action_displayOption_activities">Todas as atividades</string>
     <string name="action_displayOption_schedule">Minhas atividades</string>
     <string name="action_event_enroll">Enroll</string>
@@ -19,7 +20,6 @@
     <string name="action_signUp">Criar Conta</string>
 
     <!-- Sliding Menu Buttons -->
-    <string name="slidingMenu_about">Sobre</string>
     <string name="slidingMenu_events">Eventos</string>
     <string name="slidingMenu_login">Fazer Login</string>
 
@@ -36,7 +36,6 @@
     <string name="title_login">Fazer Login</string>
     <string name="title_signIn">Entrar</string>
     <string name="title_signUp">Nova Conta</string>
-    <string name="title_extraInfo">Informações</string>
 
     <!-- Hint Messages -->
     <string name="hint_member_myName">Eu</string>

@@ -95,7 +95,7 @@ public class EventActivity extends SlidingMenuBaseActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
-        getMenuInflater().inflate(R.menu.activity_event, menu);
+        getMenuInflater().inflate(R.menu.activity_events, menu);
         return true;
     }
     @Override
@@ -115,6 +115,10 @@ public class EventActivity extends SlidingMenuBaseActivity
         case R.id.menu_preferences:
             // Open the PreferencesActivity
             startActivity(new Intent(this, PreferencesActivity.class));
+            return true;
+
+        case R.id.menu_about:
+            startActivity(new Intent(this, AboutActivity.class));
             return true;
         }
 

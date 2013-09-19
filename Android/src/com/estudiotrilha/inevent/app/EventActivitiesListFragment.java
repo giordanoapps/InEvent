@@ -107,7 +107,8 @@ public class EventActivitiesListFragment extends ListFragment implements LoaderC
         }
         else if (mLoginManager.isSignedIn())
         {
-            mDisplayOption = mEventActivity.isApproved() ? DisplayOption.SCHEDULE : DisplayOption.ACTIVITIES;                
+            mDisplayOption = mEventActivity.isApproved() ? DisplayOption.SCHEDULE : DisplayOption.ACTIVITIES;
+            refresh();
         }
 
         // Setup the adapters

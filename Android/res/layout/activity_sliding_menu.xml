@@ -66,22 +66,6 @@
                 style="@style/SlidingMenuItem"
                 android:onClick="events"
                 android:text="@string/slidingMenu_events" />
-
-            <!-- About Estúdio Trilha -->
-
-            <TextView
-                style="@style/SlidingMenuItem.Section"
-                android:text="@string/title_extraInfo" />
-
-            <View
-                style="@style/Divider.Horizontal"
-                android:layout_height="2dp" />
-
-            <Button
-                android:id="@+id/slidingMenu_about"
-                style="@style/SlidingMenuItem"
-                android:onClick="about"
-                android:text="@string/slidingMenu_about" />
         </LinearLayout>
     </ScrollView>
 

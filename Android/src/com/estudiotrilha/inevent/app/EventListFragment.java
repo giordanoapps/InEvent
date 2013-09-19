@@ -61,6 +61,10 @@ public class EventListFragment extends ListFragment implements LoaderCallbacks<C
         {
             mDownloadAttempt = savedInstanceState.getInt(STATE_DOWNLOAD_ATTEMPT);
         }
+        else
+        {
+            refresh();
+        }
 
         // Initialize the adapter
         int[] to = new int[] { R.id.event_name, R.id.event_description };

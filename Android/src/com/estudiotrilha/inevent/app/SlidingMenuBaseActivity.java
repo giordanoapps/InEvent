@@ -282,11 +282,6 @@ public abstract class SlidingMenuBaseActivity extends ActionBarActivity
         // Opens the Event Marketplace
         startActivity(new Intent(this, EventMarketplaceActivity.class));
     }
-    public void about(View v)
-    {
-        Intent intent = new Intent(this, AboutActivity.class);
-        startActivity(intent);
-    }
 
 
     /** Refresh the activity state according to a new login state */
