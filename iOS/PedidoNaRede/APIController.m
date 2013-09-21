@@ -163,6 +163,13 @@
     }
 }
 
+- (void)eventGetSingleEvent:(NSInteger)eventID {
+    
+    NSDictionary *attributes = @{@"GET" : @{@"eventID" : [NSString stringWithFormat:@"%d", eventID]}};
+    
+    [self JSONObjectWithNamespace:@"event" method:@"getSingle" attributes:attributes];
+}
+
 - (void)eventRequestEnrollmentAtEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID {
 
     if (tokenID != nil) {

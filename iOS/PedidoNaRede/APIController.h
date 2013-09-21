@@ -10,7 +10,7 @@
 
 #ifdef DEBUG
     #if TARGET_IPHONE_SIMULATOR
-        #define URL @"http://localhost:8888/InEvent/Web/"
+        #define URL @"http://inevent:8888/"
         //#define URL @"http://agarca.com.br/"
     #else
         //#define URL @"http://192.168.0.106:8888/InEvent/Web/"
@@ -66,6 +66,7 @@
 #pragma mark - Event
 - (void)eventGetEvents;
 - (void)eventGetEventsWithTokenID:(NSString *)tokenID;
+- (void)eventGetSingleEvent:(NSInteger)eventID;
 - (void)eventRequestEnrollmentAtEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID;
 - (void)eventRequestEnrollmentForPerson:(NSInteger)personID atEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID;
 - (void)eventDismissEnrollmentAtEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID;

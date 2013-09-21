@@ -22,8 +22,6 @@
 		EB25BAA516FE84D6003F142F /* HumanLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB25BAA316FE84D6003F142F /* HumanLoginViewController.xib */; };
 		EB25BAA9170280F1003F142F /* LauchImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB25BAA7170280EF003F142F /* LauchImageViewController.m */; };
 		EB25BAAA170280F1003F142F /* LauchImageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB25BAA8170280F0003F142F /* LauchImageViewController.xib */; };
-		EB25BAAD170289D7003F142F /* ic_splash1.png in Resources */ = {isa = PBXBuildFile; fileRef = EB25BAAB170289D7003F142F /* ic_splash1.png */; };
-		EB25BAAE170289D7003F142F /* ic_splash2.png in Resources */ = {isa = PBXBuildFile; fileRef = EB25BAAC170289D7003F142F /* ic_splash2.png */; };
 		EB25BAB017028CC9003F142F /* Default-Portrait~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = EB25BAAF17028CC9003F142F /* Default-Portrait~ipad.png */; };
 		EB25BAB217028CD6003F142F /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = EB25BAB117028CD5003F142F /* Default-Landscape~ipad.png */; };
 		EB25BAB417028CDF003F142F /* Default-Portrait@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = EB25BAB317028CDF003F142F /* Default-Portrait@2x~ipad.png */; };
@@ -81,6 +79,15 @@
 		EB6749FC1749A5F200748549 /* IntelligentSplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB6749FB1749A5F200748549 /* IntelligentSplitViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		EB73E9A416AC912A000A9039 /* UtilitiesController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB73E9A316AC912A000A9039 /* UtilitiesController.m */; };
 		EB78EF6C17559B0C0016B527 /* UIImage+ResizeAndCrop.m in Sources */ = {isa = PBXBuildFile; fileRef = EB78EF6B17559B0C0016B527 /* UIImage+ResizeAndCrop.m */; };
+		EB79CC4917EB82D500C16CF5 /* QuestionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB79CC4717EB82D500C16CF5 /* QuestionViewController.m */; };
+		EB79CC4A17EB82D500C16CF5 /* QuestionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB79CC4817EB82D500C16CF5 /* QuestionViewController.xib */; };
+		EB79CC4C17ED803600C16CF5 /* 32-Favorite.png in Resources */ = {isa = PBXBuildFile; fileRef = EB79CC4B17ED803600C16CF5 /* 32-Favorite.png */; };
+		EB79CC4E17ED803F00C16CF5 /* 32-Unfavorite.png in Resources */ = {isa = PBXBuildFile; fileRef = EB79CC4D17ED803F00C16CF5 /* 32-Unfavorite.png */; };
+		EB79CC5217ED813D00C16CF5 /* FrontViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB79CC5017ED813D00C16CF5 /* FrontViewController.m */; };
+		EB79CC5317ED813D00C16CF5 /* FrontViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB79CC5117ED813D00C16CF5 /* FrontViewController.xib */; };
+		EB79CC5817ED833700C16CF5 /* 64-Clock-2.png in Resources */ = {isa = PBXBuildFile; fileRef = EB79CC5517ED833600C16CF5 /* 64-Clock-2.png */; };
+		EB79CC5917ED833700C16CF5 /* 64-Clock.png in Resources */ = {isa = PBXBuildFile; fileRef = EB79CC5617ED833600C16CF5 /* 64-Clock.png */; };
+		EB79CC5A17ED833700C16CF5 /* 64-Shades.png in Resources */ = {isa = PBXBuildFile; fileRef = EB79CC5717ED833700C16CF5 /* 64-Shades.png */; };
 		EB7FC68216DC4225007C006D /* MKAnnotationView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = EB7FC66E16DC4225007C006D /* MKAnnotationView+WebCache.m */; };
 		EB7FC68316DC4225007C006D /* SDImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = EB7FC67016DC4225007C006D /* SDImageCache.m */; };
 		EB7FC68416DC4225007C006D /* SDWebImageCompat.m in Sources */ = {isa = PBXBuildFile; fileRef = EB7FC67216DC4225007C006D /* SDWebImageCompat.m */; };
@@ -202,7 +209,6 @@
 		EBDFF55317BE95B200BBFC1D /* 32-Check.png in Resources */ = {isa = PBXBuildFile; fileRef = EBDFF55217BE95B200BBFC1D /* 32-Check.png */; };
 		EBE15D4D169B7D2000E46A15 /* AlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBE15D4C169B7D2000E46A15 /* AlertView.xib */; };
 		EBE8A5011712EA9C00A8A2BD /* UITabBarController+ShowHideBar.m in Sources */ = {isa = PBXBuildFile; fileRef = EBE8A5001712EA9C00A8A2BD /* UITabBarController+ShowHideBar.m */; };
-		EBE8D1D716A87EC3003A196A /* receiptBackground.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EBE8D1D616A87EC3003A196A /* receiptBackground.jpg */; };
 		EBE8D1F816A88ED8003A196A /* blackButton.png in Resources */ = {isa = PBXBuildFile; fileRef = EBE8D1DA16A88D16003A196A /* blackButton.png */; };
 		EBE8D1F916A88ED8003A196A /* blackButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBE8D1DB16A88D16003A196A /* blackButton@2x.png */; };
 		EBE8D1FA16A88ED8003A196A /* blackButtonHighlight.png in Resources */ = {isa = PBXBuildFile; fileRef = EBE8D1DC16A88D16003A196A /* blackButtonHighlight.png */; };
@@ -270,8 +276,6 @@
 		EB25BAA6170280EE003F142F /* LauchImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LauchImageViewController.h; sourceTree = "<group>"; };
 		EB25BAA7170280EF003F142F /* LauchImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LauchImageViewController.m; sourceTree = "<group>"; };
 		EB25BAA8170280F0003F142F /* LauchImageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LauchImageViewController.xib; sourceTree = "<group>"; };
-		EB25BAAB170289D7003F142F /* ic_splash1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_splash1.png; sourceTree = "<group>"; };
-		EB25BAAC170289D7003F142F /* ic_splash2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_splash2.png; sourceTree = "<group>"; };
 		EB25BAAF17028CC9003F142F /* Default-Portrait~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Portrait~ipad.png"; path = "../Default-Portrait~ipad.png"; sourceTree = "<group>"; };
 		EB25BAB117028CD5003F142F /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Landscape~ipad.png"; path = "../Default-Landscape~ipad.png"; sourceTree = "<group>"; };
 		EB25BAB317028CDF003F142F /* Default-Portrait@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Portrait@2x~ipad.png"; path = "../Default-Portrait@2x~ipad.png"; sourceTree = "<group>"; };
@@ -372,6 +376,17 @@
 		EB73E9A316AC912A000A9039 /* UtilitiesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UtilitiesController.m; sourceTree = "<group>"; };
 		EB78EF6A17559B0C0016B527 /* UIImage+ResizeAndCrop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ResizeAndCrop.h"; sourceTree = "<group>"; };
 		EB78EF6B17559B0C0016B527 /* UIImage+ResizeAndCrop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ResizeAndCrop.m"; sourceTree = "<group>"; };
+		EB79CC4617EB82D500C16CF5 /* QuestionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QuestionViewController.h; path = PedidoNaRede/QuestionViewController.h; sourceTree = "<group>"; };
+		EB79CC4717EB82D500C16CF5 /* QuestionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QuestionViewController.m; path = PedidoNaRede/QuestionViewController.m; sourceTree = "<group>"; };
+		EB79CC4817EB82D500C16CF5 /* QuestionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = QuestionViewController.xib; path = PedidoNaRede/QuestionViewController.xib; sourceTree = "<group>"; };
+		EB79CC4B17ED803600C16CF5 /* 32-Favorite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Favorite.png"; sourceTree = "<group>"; };
+		EB79CC4D17ED803F00C16CF5 /* 32-Unfavorite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Unfavorite.png"; sourceTree = "<group>"; };
+		EB79CC4F17ED813D00C16CF5 /* FrontViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FrontViewController.h; path = PedidoNaRede/FrontViewController.h; sourceTree = "<group>"; };
+		EB79CC5017ED813D00C16CF5 /* FrontViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FrontViewController.m; path = PedidoNaRede/FrontViewController.m; sourceTree = "<group>"; };
+		EB79CC5117ED813D00C16CF5 /* FrontViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FrontViewController.xib; path = PedidoNaRede/FrontViewController.xib; sourceTree = "<group>"; };
+		EB79CC5517ED833600C16CF5 /* 64-Clock-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "64-Clock-2.png"; sourceTree = "<group>"; };
+		EB79CC5617ED833600C16CF5 /* 64-Clock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "64-Clock.png"; sourceTree = "<group>"; };
+		EB79CC5717ED833700C16CF5 /* 64-Shades.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "64-Shades.png"; sourceTree = "<group>"; };
 		EB7FC66D16DC4225007C006D /* MKAnnotationView+WebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKAnnotationView+WebCache.h"; sourceTree = "<group>"; };
 		EB7FC66E16DC4225007C006D /* MKAnnotationView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKAnnotationView+WebCache.m"; sourceTree = "<group>"; };
 		EB7FC66F16DC4225007C006D /* SDImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDImageCache.h; sourceTree = "<group>"; };
@@ -531,7 +546,6 @@
 		EBE15D4C169B7D2000E46A15 /* AlertView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlertView.xib; sourceTree = "<group>"; };
 		EBE8A4FF1712EA9C00A8A2BD /* UITabBarController+ShowHideBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITabBarController+ShowHideBar.h"; sourceTree = "<group>"; };
 		EBE8A5001712EA9C00A8A2BD /* UITabBarController+ShowHideBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITabBarController+ShowHideBar.m"; sourceTree = "<group>"; };
-		EBE8D1D616A87EC3003A196A /* receiptBackground.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = receiptBackground.jpg; sourceTree = "<group>"; };
 		EBE8D1DA16A88D16003A196A /* blackButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blackButton.png; sourceTree = "<group>"; };
 		EBE8D1DB16A88D16003A196A /* blackButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blackButton@2x.png"; sourceTree = "<group>"; };
 		EBE8D1DC16A88D16003A196A /* blackButtonHighlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blackButtonHighlight.png; sourceTree = "<group>"; };
@@ -868,6 +882,26 @@
 			name = IntelligentSplitViewController;
 			sourceTree = "<group>";
 		};
+		EB79CC4517EB82C100C16CF5 /* Question */ = {
+			isa = PBXGroup;
+			children = (
+				EB79CC4617EB82D500C16CF5 /* QuestionViewController.h */,
+				EB79CC4717EB82D500C16CF5 /* QuestionViewController.m */,
+				EB79CC4817EB82D500C16CF5 /* QuestionViewController.xib */,
+			);
+			name = Question;
+			sourceTree = "<group>";
+		};
+		EB79CC5417ED814100C16CF5 /* Front */ = {
+			isa = PBXGroup;
+			children = (
+				EB79CC4F17ED813D00C16CF5 /* FrontViewController.h */,
+				EB79CC5017ED813D00C16CF5 /* FrontViewController.m */,
+				EB79CC5117ED813D00C16CF5 /* FrontViewController.xib */,
+			);
+			name = Front;
+			sourceTree = "<group>";
+		};
 		EB7FC66C16DC4225007C006D /* SDWebImage */ = {
 			isa = PBXGroup;
 			children = (
@@ -985,10 +1019,12 @@
 				EB53F6451709141300715E2D /* Libraries */,
 				EB39392B16654B4400580A4E /* General */,
 				EBD055A917AF8D0A008355E8 /* Additional */,
+				EB79CC5417ED814100C16CF5 /* Front */,
 				EB3F1A0B16F7B831005052E7 /* Initial */,
 				EB25BAA016FE73F7003F142F /* Human */,
 				EBFCCF4A16987F3700A5AE73 /* Map */,
 				EB59020417D5D7D60032143C /* Marketplace */,
+				EB79CC4517EB82C100C16CF5 /* Question */,
 				EBFCCF571698B47D00A5AE73 /* Timeline */,
 				EB3BD91417B8C47F008D066D /* Reader */,
 				EB1FEB8C17172A16009834FC /* Log */,
@@ -1075,9 +1111,6 @@
 				EBFD3A3F16DB1F6300AD33C5 /* logo@57.png */,
 				EBFD3A3B16DAE1F100AD33C5 /* logo@114.png */,
 				EBDFF54517BDBF5100BBFC1D /* logo@512.png */,
-				EB25BAAB170289D7003F142F /* ic_splash1.png */,
-				EB25BAAC170289D7003F142F /* ic_splash2.png */,
-				EBE8D1D616A87EC3003A196A /* receiptBackground.jpg */,
 				EBA1862C172B910100336733 /* stripes.png */,
 				EB3939D91666D3AF00580A4E /* cellBg@2x.png */,
 				EB3939DA1666D3AF00580A4E /* cellBgSelected@2x.png */,
@@ -1223,18 +1256,23 @@
 				EBDFF55217BE95B200BBFC1D /* 32-Check.png */,
 				EBB19398168EA54A0060D282 /* 32-Cross.png */,
 				EB4FC576171061AF00CA43EC /* 32-Facebook-F.png */,
+				EB79CC4B17ED803600C16CF5 /* 32-Favorite.png */,
 				EBD27B6516D8604200DA6ACE /* 32-Looking-Glass.png */,
-				EBC59D8617BEC58100E0FC67 /* 64-Balloons.png */,
-				EBC59D8817BEC59B00E0FC67 /* 64-Create-_-Write.png */,
-				EBC59D8C17BEC5C300E0FC67 /* 64-Cloud-Download.png */,
 				EBD8E4E817AF557A00D0F30C /* 32-Minus.png */,
 				EBB19399168EA54A0060D282 /* 32-Plus.png */,
+				EB79CC4D17ED803F00C16CF5 /* 32-Unfavorite.png */,
+				EBC59D8617BEC58100E0FC67 /* 64-Balloons.png */,
 				EBDFF53817BBF5FD00BBFC1D /* 64-Bended-Arrow-Left.png */,
 				EBDFF53917BBF5FD00BBFC1D /* 64-Bended-Arrow-Up.png */,
+				EB79CC5517ED833600C16CF5 /* 64-Clock-2.png */,
+				EB79CC5617ED833600C16CF5 /* 64-Clock.png */,
+				EBC59D8C17BEC5C300E0FC67 /* 64-Cloud-Download.png */,
+				EBC59D8817BEC59B00E0FC67 /* 64-Create-_-Write.png */,
 				EB60420A17B8B6A300D95012 /* 64-Flip-Clock.png */,
 				EBC59D8217BEC49E00E0FC67 /* 64-Footprints.png */,
 				EBC59D8417BEC4DD00E0FC67 /* 64-Map.png */,
 				EBC59D8017BEC48600E0FC67 /* 64-Marker.png */,
+				EB79CC5717ED833700C16CF5 /* 64-Shades.png */,
 				EBDFF55017BE15A900BBFC1D /* 64-Speech-Bubbles.png */,
 			);
 			name = Icons;
@@ -1406,7 +1444,6 @@
 				EB9AB79016A125B3005D4CAA /* barButtonPressed.png in Resources */,
 				EB9AB79116A125B3005D4CAA /* barButtonPressed@2x.png in Resources */,
 				EB28747B16A71F1700A06781 /* StepperView.xib in Resources */,
-				EBE8D1D716A87EC3003A196A /* receiptBackground.jpg in Resources */,
 				EBD47D9216B07BA600F7295E /* Localizable.strings in Resources */,
 				EB8C7D7E16D17AEB00F3C721 /* cb_box_off.png in Resources */,
 				EB8C7D7F16D17AEB00F3C721 /* cb_box_off@2x.png in Resources */,
@@ -1440,8 +1477,6 @@
 				EB25BA9F16FE73F2003F142F /* HumanViewController.xib in Resources */,
 				EB25BAA516FE84D6003F142F /* HumanLoginViewController.xib in Resources */,
 				EB25BAAA170280F1003F142F /* LauchImageViewController.xib in Resources */,
-				EB25BAAD170289D7003F142F /* ic_splash1.png in Resources */,
-				EB25BAAE170289D7003F142F /* ic_splash2.png in Resources */,
 				EB25BAB017028CC9003F142F /* Default-Portrait~ipad.png in Resources */,
 				EB25BAB217028CD6003F142F /* Default-Landscape~ipad.png in Resources */,
 				EB25BAB417028CDF003F142F /* Default-Portrait@2x~ipad.png in Resources */,
@@ -1496,6 +1531,13 @@
 				EBEACD7517C2F65200C65F3F /* AboutViewController~ipad.xib in Resources */,
 				EB59020317D5D7D20032143C /* MarketplaceViewController.xib in Resources */,
 				EB59020917D5D83A0032143C /* MarketplaceViewCell.xib in Resources */,
+				EB79CC4A17EB82D500C16CF5 /* QuestionViewController.xib in Resources */,
+				EB79CC4C17ED803600C16CF5 /* 32-Favorite.png in Resources */,
+				EB79CC4E17ED803F00C16CF5 /* 32-Unfavorite.png in Resources */,
+				EB79CC5317ED813D00C16CF5 /* FrontViewController.xib in Resources */,
+				EB79CC5817ED833700C16CF5 /* 64-Clock-2.png in Resources */,
+				EB79CC5917ED833700C16CF5 /* 64-Clock.png in Resources */,
+				EB79CC5A17ED833700C16CF5 /* 64-Shades.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1626,6 +1668,8 @@
 				EB59020217D5D7D20032143C /* MarketplaceViewController.m in Sources */,
 				EB59020817D5D83A0032143C /* MarketplaceViewCell.m in Sources */,
 				EB30CAF117D6D09E00584FB8 /* UIView+Components.m in Sources */,
+				EB79CC4917EB82D500C16CF5 /* QuestionViewController.m in Sources */,
+				EB79CC5217ED813D00C16CF5 /* FrontViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

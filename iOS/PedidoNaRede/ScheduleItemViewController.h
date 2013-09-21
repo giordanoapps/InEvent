@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import <MapKit/MapKit.h>
+#import <CoreLocation/CoreLocation.h>
 #import "WrapperViewController.h"
 
-@interface ScheduleItemViewController : WrapperViewController <UITableViewDelegate, UITableViewDataSource, APIControllerDelegate, UIGestureRecognizerDelegate, UISplitViewControllerDelegate>
+@interface ScheduleItemViewController : WrapperViewController <UITableViewDelegate, UITableViewDataSource, APIControllerDelegate, UIGestureRecognizerDelegate, UISplitViewControllerDelegate, CLLocationManagerDelegate>
 
 @property (strong, nonatomic) IBOutlet UIView *wrapper;
 @property (strong, nonatomic) IBOutlet UILabel *hour;
@@ -18,10 +19,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *name;
 @property (strong, nonatomic) IBOutlet UIView *line;
 @property (strong, nonatomic) IBOutlet UITextView *description;
-@property (strong, nonatomic) IBOutlet UITableView *tableView;
-@property (strong, nonatomic) IBOutlet UIView *questionWrapper;
-@property (strong, nonatomic) IBOutlet UITextField *questionInput;
-@property (strong, nonatomic) IBOutlet UIButton *questionButton;
+@property (strong, nonatomic) IBOutlet MKMapView *map;
 
 @property (strong, nonatomic) NSDictionary *activityData;
 

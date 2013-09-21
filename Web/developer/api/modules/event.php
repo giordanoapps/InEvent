@@ -14,6 +14,17 @@
 
 	} else
 
+	if ($method === "getSingle") {
+
+		if (isset($_GET['eventID'])) {
+			$result = getEventForEventQuery(getAttribute($_GET['eventID']));
+			echo printInformation("event", $result, true, 'json');
+		} else {
+			http_status_code(400, "eventID is a required parameter");
+		}
+
+	} else
+
 	if ($method === "requestEnrollment") {
 
 		$eventID = getTokenForEvent();
@@ -66,7 +77,7 @@
 				http_status_code(404, "personID is not enrolled at this event");
 			}
 		} else {
-			http_status_code(400, "The asserted personID is null or the eventID doesn't exist");
+			http_status_code(400, "personID is null or the eventID doesn't exist");
 		}
 		
 	} else

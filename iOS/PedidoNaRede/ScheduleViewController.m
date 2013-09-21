@@ -1,6 +1,6 @@
 //
-//  OrderViewController.m
-//  PedidoNaRede
+//  ScheduleViewController.m
+//  InEvent
 //
 //  Created by Pedro Góes on 05/10/12.
 //  Copyright (c) 2012 Pedro Góes. All rights reserved.
@@ -9,6 +9,7 @@
 #import "ScheduleViewController.h"
 #import "ScheduleViewCell.h"
 #import "ScheduleItemViewController.h"
+#import "FrontViewController.h"
 #import "AppDelegate.h"
 #import "UtilitiesController.h"
 #import "UIViewController+Present.h"
@@ -80,7 +81,7 @@
     [self.tableView reloadData];
 }
 
-#pragma mark - Notification
+#pragma mark - Painter
 
 - (void)loadData {
     [self forceDataReload:NO];
@@ -104,7 +105,7 @@
 
 - (void)alertActionSheet {
     
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Actions", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"Exit event", nil), nil];
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Actions", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"Event details", nil), NSLocalizedString(@"Exit event", nil), nil];
     
     [actionSheet showFromBarButtonItem:self.rightBarButton animated:YES];
 }
@@ -115,7 +116,23 @@
     
     NSString *title = [actionSheet buttonTitleAtIndex:buttonIndex];
     
-    if ([title isEqualToString:NSLocalizedString(@"Exit event", nil)]) {
+    if ([title isEqualToString:NSLocalizedString(@"Event details", nil)]) {
+        // Load our reader
+        FrontViewController *fvc = [[FrontViewController alloc] initWithNibName:@"FrontViewController" bundle:nil];
+        
+        [fvc setMoveKeyboardRatio:0.0];
+        
+        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+            fvc.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+            fvc.modalPresentationStyle = UIModalPresentationCurrentContext;
+        } else {
+            fvc.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+            fvc.modalPresentationStyle = UIModalPresentationFormSheet;
+        }
+        
+        [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:fvc animated:YES completion:nil];
+        
+    } else if ([title isEqualToString:NSLocalizedString(@"Exit event", nil)]) {
         // Remove the tokenID and enterprise
         [[EventToken sharedInstance] removeEvent];
         

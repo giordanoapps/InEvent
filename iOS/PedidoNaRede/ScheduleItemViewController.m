@@ -8,6 +8,8 @@
 
 #import "ScheduleItemViewController.h"
 #import "ReaderViewController.h"
+#import "QuestionViewController.h"
+#import "FeedbackViewController.h"
 #import <QuartzCore/QuartzCore.h>
 #import "ColorThemeController.h"
 #import "HumanToken.h"
@@ -20,6 +22,7 @@
 
 @interface ScheduleItemViewController () {
     ODRefreshControl *refreshControl;
+    CLLocationManager *locationManager;
 }
 
 
@@ -46,11 +49,6 @@
 {
     [super viewDidLoad];
     
-    // View
-    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTap)];
-    [tapGesture setDelegate:self];
-    [self.view addGestureRecognizer:tapGesture];
-    
     // Wrapper
     [_wrapper.layer setBorderColor:[[ColorThemeController tableViewCellInternalBorderColor] CGColor]];
     [_wrapper.layer setBorderWidth:0.4f];
@@ -67,48 +65,6 @@
     // Line
     [_line setBackgroundColor:[ColorThemeController tableViewCellInternalBorderColor]];
     [self createBottomIdentation];
-
-    // Refresh Control
-    refreshControl = [[ODRefreshControl alloc] initInScrollView:self.tableView];
-    [refreshControl addTarget:self action:@selector(loadQuestions) forControlEvents:UIControlEventValueChanged];
-    
-    // Question Wrapper
-    [_questionWrapper setBackgroundColor:[ColorThemeController tableViewCellBackgroundColor]];
-    
-    // Create the view for the search field
-    UIView *leftView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 40.0, 30.0)];
-    UIImageView *searchTool = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"64-Speech-Bubbles"]];
-    [searchTool setFrame:CGRectMake(10.0, 3.0, 24.0, 24.0)];
-    [leftView addSubview:searchTool];
-
-    // Text field
-    [_questionInput setPlaceholder:NSLocalizedString(@"What's the question?", nil)];
-    [_questionInput setTextColor:[ColorThemeController tableViewCellTextColor]];
-    [_questionInput setBackgroundColor:[ColorThemeController tableViewCellBackgroundColor]];
-    [_questionInput setLeftView:leftView];
-    [_questionInput setLeftViewMode:UITextFieldViewModeAlways];
-    [_questionInput.layer setCornerRadius:0.0];
-    [_questionInput.layer setMasksToBounds:NO];
-    [_questionInput.layer setBorderWidth:0.0];
-    [_questionInput.layer setBorderColor:[[ColorThemeController tableViewCellInternalBorderColor] CGColor]];
-    
-    // Message Button
-    [_questionButton setTitle:NSLocalizedString(@"Send", @"Send message from chat") forState:UIControlStateNormal];
-    [_questionButton setTitleColor:[ColorThemeController textColor] forState:UIControlStateNormal];
-    [_questionButton setTitleColor:[ColorThemeController textColor] forState:UIControlStateHighlighted];
-    [_questionButton setBackgroundImage:[[UIImage imageNamed:@"greyButton"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)] forState:UIControlStateNormal];
-    [_questionButton setBackgroundImage:[[UIImage imageNamed:@"greyButtonHighlight"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)] forState:UIControlStateHighlighted];
-    [_questionButton addTarget:self action:@selector(sendMessage) forControlEvents:UIControlEventTouchUpInside];
-    [_questionButton.layer setMasksToBounds:YES];
-    [_questionButton.layer setCornerRadius:4.0];
-    [_questionButton.layer setBorderWidth:0.6];
-    [_questionButton.layer setBorderColor:[[ColorThemeController tableViewCellInternalBorderColor] CGColor]];
-    
-    // Right Button
-    self.rightBarButton = [[CoolBarButtonItem alloc] initCustomButtonWithImage:[UIImage imageNamed:@"64-Cog"] frame:CGRectMake(0, 0, 42.0, 30.0) insets:UIEdgeInsetsMake(5.0, 11.0, 5.0, 11.0) target:self action:@selector(alertActionSheet)];
-    self.rightBarButton.accessibilityLabel = NSLocalizedString(@"Event Actions", nil);
-    self.rightBarButton.accessibilityTraits = UIAccessibilityTraitSummaryElement;
-    self.navigationItem.rightBarButtonItem = self.rightBarButton;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -146,7 +102,6 @@
     _activityData = activityData;
     
     [self loadData];
-    [self loadQuestions];
 }
 
 #pragma mark - Private Methods
@@ -154,12 +109,12 @@
 - (void)loadData {
     
     if (_activityData) {
-        if ([[HumanToken sharedInstance] isMemberWorking]) {
-            self.rightBarButton = [[CoolBarButtonItem alloc] initCustomButtonWithImage:[UIImage imageNamed:@"64-Cog"] frame:CGRectMake(0, 0, 42.0, 30.0) insets:UIEdgeInsetsMake(5.0, 11.0, 5.0, 11.0) target:self action:@selector(alertActionSheet)];
-            self.rightBarButton.accessibilityLabel = NSLocalizedString(@"Actions", nil);
-            self.rightBarButton.accessibilityTraits = UIAccessibilityTraitSummaryElement;
-            self.navigationItem.rightBarButtonItem = self.rightBarButton;
-        }
+
+        // Actions
+        self.rightBarButton = [[CoolBarButtonItem alloc] initCustomButtonWithImage:[UIImage imageNamed:@"64-Cog"] frame:CGRectMake(0, 0, 42.0, 30.0) insets:UIEdgeInsetsMake(5.0, 11.0, 5.0, 11.0) target:self action:@selector(alertActionSheet)];
+        self.rightBarButton.accessibilityLabel = NSLocalizedString(@"Actions", nil);
+        self.rightBarButton.accessibilityTraits = UIAccessibilityTraitSummaryElement;
+        self.navigationItem.rightBarButtonItem = self.rightBarButton;
         
         NSDate *date = [NSDate dateWithTimeIntervalSince1970:[[_activityData objectForKey:@"dateBegin"] integerValue]];
         NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
@@ -172,10 +127,12 @@
         _name.text = [[_activityData objectForKey:@"name"] stringByDecodingHTMLEntities];
         _description.text = [[_activityData objectForKey:@"description"] stringByDecodingHTMLEntities];
         
-        if ([[HumanToken sharedInstance] isMemberAuthenticated]) {
-            _tableView.hidden = NO;
-            _questionWrapper.hidden = NO;
-        }
+        // Location Manager
+        locationManager = [[CLLocationManager alloc] init];
+        locationManager.delegate = self;
+        locationManager.distanceFilter = kCLDistanceFilterNone;
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+        [locationManager startUpdatingLocation];
     }
 }
 
@@ -186,39 +143,66 @@
     _minute.text = @"00";
     _name.text = NSLocalizedString(@"Activity", nil);
     _description.text = @"";
-    _tableView.hidden = YES;
-    _questionWrapper.hidden = YES;
 }
 
-- (void)loadQuestions {
-    NSString *tokenID = [[HumanToken sharedInstance] tokenID];
-    NSInteger activityID = [[_activityData objectForKey:@"id"] integerValue];
-    [[[APIController alloc] initWithDelegate:self forcing:NO] activityGetQuestionsAtActivity:activityID withTokenID:tokenID];
+#pragma mark - Location
+
+- (void)updateLocation:(CLLocation *)location {
+    [_map setRegion:MKCoordinateRegionMake(location.coordinate, MKCoordinateSpanMake(0.011, 0.011))];
 }
 
-- (void)didTap {
-    // Remove the keyboard
-    [_questionInput resignFirstResponder];
-}
 
-- (void)sendMessage {
+#pragma mark - Map
+
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation {
+    // If it's the user location, just return nil.
+    if ([annotation isKindOfClass:[MKUserLocation class]]) {
+        return nil;
+    }
     
-    // Check if input is not empty
-    if (![[_questionInput.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] isEqualToString:@""]) {
+    // Handle any custom annotations.
+    // Try to dequeue an existing pin view first.
+    MKPinAnnotationView *pinView = (MKPinAnnotationView*)[mapView dequeueReusableAnnotationViewWithIdentifier:@"CustomPinAnnotationView"];
+    
+    if (pinView) {
+        pinView.annotation = annotation;
         
-        // Send the message to our servers
-        NSString *tokenID = [[HumanToken sharedInstance] tokenID];
-        NSInteger activityID = [[_activityData objectForKey:@"id"] integerValue];
-        [[[APIController alloc] initWithDelegate:self forcing:YES] activitySendQuestion:_questionInput.text toActivity:activityID withTokenID:tokenID];
+    } else {
+        // If an existing pin view was not available, create one.
+        pinView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"CustomPinAnnotation"];
+        pinView.pinColor = MKPinAnnotationColorPurple;
+        pinView.animatesDrop = YES;
+        pinView.canShowCallout = YES;
+        pinView.draggable = NO;
+        pinView.enabled = YES;
+        pinView.annotation = annotation;
         
-        [self loadQuestions];
-        
-        // Add the object to the stack and reload it
-        //        [_questionData addObject:_questionInput.text];
-        //        [_tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:([_questionData count] - 1) inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
-        //        [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:([_questionData count] - 1) inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-        
-        [_questionInput setText:@""];
+        // Add a detail disclosure button to the callout
+        UIButton* rightButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+        pinView.rightCalloutAccessoryView = rightButton;
+    }
+    
+    return pinView;
+}
+
+- (void)reloadMap {
+    
+    // Remove all annotations
+    [_map removeAnnotations:_map.annotations];
+    
+    // Then load the new ones
+    CGFloat latitude = [[_activityData objectForKey:@"latitude"] floatValue];
+    CGFloat longitude = [[_activityData objectForKey:@"longitude"] floatValue];
+    
+    MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
+    annotation.coordinate = CLLocationCoordinate2DMake(latitude, longitude);
+    annotation.title = [[_activityData objectForKey:@"tradeName"] stringByDecodingHTMLEntities];
+    
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        [_map addAnnotation:annotation];
+    } else {
+        // We get the detailController and we push the _mapView controller
+        [_map addAnnotation:annotation];
     }
 }
 
@@ -244,12 +228,7 @@
 #pragma mark - Gesture Recognizer Methods
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
-    
-    if (touch.view != _questionButton) {
-        return YES;
-    } else {
-        return NO;
-    }
+    return YES;
 }
 
 #pragma mark - ActionSheet Methods
@@ -258,7 +237,11 @@
     
     UIActionSheet *actionSheet;
     
-    actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Actions", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"See people", nil), NSLocalizedString(@"Exit event", nil), nil];
+    if ([[HumanToken sharedInstance] isMemberWorking]) {
+        actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Actions", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"See people", nil), NSLocalizedString(@"See questions", nil), NSLocalizedString(@"Send feedback", nil), NSLocalizedString(@"Exit event", nil), nil];
+    } else {
+        actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Actions", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"See questions", nil), NSLocalizedString(@"Send feedback", nil), NSLocalizedString(@"Exit event", nil), nil];
+    }
     
     [actionSheet showFromBarButtonItem:self.rightBarButton animated:YES];
 }
@@ -283,6 +266,38 @@
             rvc.modalPresentationStyle = UIModalPresentationFormSheet;
             
             [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:rvc animated:YES completion:nil];
+        }
+        
+    } else if ([title isEqualToString:NSLocalizedString(@"See questions", nil)]) {
+        // Load our reader
+        QuestionViewController *qvc = [[QuestionViewController alloc] initWithNibName:@"QuestionViewController" bundle:nil];
+        
+        [qvc setMoveKeyboardRatio:0.0];
+        [qvc setActivityData:_activityData];
+        
+        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+            [self.navigationController pushViewController:qvc animated:YES];
+        } else {
+            qvc.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+            qvc.modalPresentationStyle = UIModalPresentationFormSheet;
+            
+            [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:qvc animated:YES completion:nil];
+        }
+        
+    } else if ([title isEqualToString:NSLocalizedString(@"Send feedback", nil)]) {
+        // Load our reader
+        FeedbackViewController *fvc = [[FeedbackViewController alloc] initWithNibName:@"FeedbackViewController" bundle:nil];
+        
+        [fvc setMoveKeyboardRatio:0.7];
+        [fvc setActivityData:_activityData];
+        
+        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+            [self.navigationController pushViewController:fvc animated:YES];
+        } else {
+            fvc.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+            fvc.modalPresentationStyle = UIModalPresentationFormSheet;
+            
+            [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:fvc animated:YES completion:nil];
         }
 
     } else if ([title isEqualToString:NSLocalizedString(@"Exit event", nil)]) {
@@ -334,9 +349,6 @@
     // Assign the data object to the companies
     self.questionData = [NSMutableArray arrayWithArray:[dictionary objectForKey:@"data"]];
     
-    // Reload all table data
-    [self.tableView reloadData];
-    
     [refreshControl endRefreshing];
 }
 
@@ -344,6 +356,24 @@
     [super apiController:apiController didFailWithError:error];
     
     [refreshControl endRefreshing];
+}
+
+#pragma mark - Location Manager Delegate iOS5
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
+    
+    [self updateLocation:newLocation];
+    
+    [manager stopUpdatingLocation];
+}
+
+#pragma mark - Location Manager Delegate iOS6
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
+    
+    [self updateLocation:[locations lastObject]];
+    
+    [manager stopUpdatingLocation];
 }
 
 @end

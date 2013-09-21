@@ -30,6 +30,19 @@
 
     <div class="documentationFunctionBox">
         <p class="documentFunctionName">
+            <span>event.getSingle(<b>eventID</b>)</span>
+            <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=event.getSingle&eventID=1">
+        </p>
+
+        <p class="documentFunctionDescription">Retorna o evento <i>eventID</i>.</p>
+
+        <div class="documentationFunctionParametersBox">
+            <p><b>eventID</b><sub>GET</sub> : id do evento </p>
+        </div>
+    </div>
+
+    <div class="documentationFunctionBox">
+        <p class="documentFunctionName">
             <span>event.requestEnrollment(<b>tokenID</b>, <b>eventID</b>, <b>name</b> = null, <b>email</b> = null)</span>
             <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=event.requestEnrollment&tokenID=$tokenID&eventID=1&name=null&email=null">
         </p>

@@ -4,7 +4,7 @@ InEvent
 Português
 ========
 
-InEvent é a uma plataforma pioneira dentro do Brasil, procurando oferecer a melhor ferramenta para gerenciar seu evento durante a ocorrência do mesmo. Cria um ambiente em que é cada participante recebe uma linha do tempo personalizada e exclusiva, baseada em dados informados previamente pela organização e capaz de detalhar cada acontecimento dentro do evento. Permite o uso de imagens e texto para a comunicação das informações, além de ser possível atualizar de forma instântanea quaisquer mudanças no cronograma.
+InEvent é a uma plataforma pioneira dentro do Brasil, procurando oferecer a melhor ferramenta para gerenciar seu evento durante a ocorrência do mesmo. Cria um ambiente em que cada participante recebe uma linha do tempo personalizada e exclusiva, baseada em dados informados previamente pela organização e capaz de detalhar cada acontecimento dentro do evento. Permite o uso de imagens e texto para a comunicação das informações, além de ser possível atualizar de forma instântanea quaisquer mudanças no cronograma.
 
 O Estúdio Trilha também oferece a versão pronta para uso do InEvent, atualmente hospedada em [http://inevent.us/](http://inevent.us/) e disponível para uso público. Além da versão Web, conta também com aplicativos para iOS e Android.
 

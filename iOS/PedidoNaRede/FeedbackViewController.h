@@ -27,6 +27,8 @@
 @property (strong, nonatomic) IBOutlet UIButton *star4;
 @property (strong, nonatomic) IBOutlet UIButton *star5;
 
+@property (strong, nonatomic) NSDictionary *activityData;
+
 - (IBAction)processStarTap:(id)sender;
 - (IBAction)sendForm:(id)sender;
 
