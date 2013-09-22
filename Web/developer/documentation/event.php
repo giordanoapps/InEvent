@@ -30,14 +30,15 @@
 
     <div class="documentationFunctionBox">
         <p class="documentFunctionName">
-            <span>event.getSingle(<b>eventID</b>)</span>
+            <span>event.getSingle(<b>eventID</b>, <b>tokenID</b> = null)</span>
             <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=event.getSingle&eventID=1">
         </p>
 
-        <p class="documentFunctionDescription">Retorna o evento <i>eventID</i>.</p>
+        <p class="documentFunctionDescription">Retorna o evento <i>eventID</i>. Caso seja fornecido um <i>tokenID</i>, será informado se a pessoa associada ao <i>tokenID</i> está inscrita.</p>
 
         <div class="documentationFunctionParametersBox">
             <p><b>eventID</b><sub>GET</sub> : id do evento </p>
+            <p><b>tokenID</b><sub>GET</sub> : id de autenticação </p>
         </div>
     </div>
 

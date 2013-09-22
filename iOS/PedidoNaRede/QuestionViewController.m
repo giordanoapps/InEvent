@@ -51,6 +51,9 @@
     [tapGesture setDelegate:self];
     [self.view addGestureRecognizer:tapGesture];
     
+    // Table
+    _tableView.allowsSelection = NO;
+    
     // Wrapper
     [_wrapper.layer setBorderColor:[[ColorThemeController tableViewCellInternalBorderColor] CGColor]];
     [_wrapper.layer setBorderWidth:0.4f];
@@ -131,24 +134,20 @@
 
 - (void)loadData {
     
-    if (_activityData) {
-        
-        if ([[HumanToken sharedInstance] isMemberAuthenticated]) {
-            _questionWrapper.hidden = NO;
-        }
+    if (_activityData && [[HumanToken sharedInstance] isMemberAuthenticated]) {
+        _questionWrapper.hidden = NO;
     }
 }
 
 - (void)cleanData {
-    self.navigationItem.rightBarButtonItem = nil;
-
     _questionWrapper.hidden = YES;
 }
 
 - (void)loadQuestions {
-    NSString *tokenID = [[HumanToken sharedInstance] tokenID];
     NSInteger activityID = [[_activityData objectForKey:@"id"] integerValue];
-    [[[APIController alloc] initWithDelegate:self forcing:NO] activityGetQuestionsAtActivity:activityID withTokenID:tokenID];
+    NSString *tokenID = [[HumanToken sharedInstance] tokenID];
+    
+    [[[APIController alloc] initWithDelegate:self forcing:YES] activityGetQuestionsAtActivity:activityID withTokenID:tokenID];
 }
 
 - (void)didTap {
@@ -166,12 +165,8 @@
         NSInteger activityID = [[_activityData objectForKey:@"id"] integerValue];
         [[[APIController alloc] initWithDelegate:self forcing:YES] activitySendQuestion:_questionInput.text toActivity:activityID withTokenID:tokenID];
         
+        // Load these questions
         [self loadQuestions];
-        
-        // Add the object to the stack and reload it
-        //        [_questionData addObject:_questionInput.text];
-        //        [_tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:([_questionData count] - 1) inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
-        //        [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:([_questionData count] - 1) inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
         
         [_questionInput setText:@""];
     }
@@ -218,7 +213,7 @@
             rvc.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
             rvc.modalPresentationStyle = UIModalPresentationFormSheet;
             
-            [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:rvc animated:YES completion:nil];
+            [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:rvc animated:YES completion:nil];
         }
 
     } else if ([title isEqualToString:NSLocalizedString(@"Exit event", nil)]) {
@@ -227,7 +222,6 @@
         
         // Check for it again
         [[NSNotificationCenter defaultCenter] postNotificationName:@"verify" object:nil userInfo:@{@"type": @"enterprise"}];
-        
     }
     
 }
@@ -254,26 +248,38 @@
     NSDictionary *dictionary = [self.questionData objectAtIndex:indexPath.row];
     
     cell.textLabel.text = [[dictionary objectForKey:@"text"] stringByDecodingHTMLEntities];
-//    cell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@""]];
+    UIImageView *facebookLike = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"32-Facebook-Like-2"]];
+    facebookLike.userInteractionEnabled = YES;
+    cell.accessoryView = facebookLike;
     
     return cell;
 }
 
-- (void)tableView:(UITableView *)aTableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)aTableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
     
+    NSString *tokenID = [[HumanToken sharedInstance] tokenID];
+    NSInteger questionID = [[[_questionData objectAtIndex:indexPath.row] objectForKey:@"id"] integerValue];
+
+    [[[APIController alloc] initWithDelegate:self forcing:YES] activityUpvoteQuestion:questionID withTokenID:tokenID];
 }
 
 #pragma mark - APIController Delegate
 
 - (void)apiController:(APIController *)apiController didLoadDictionaryFromServer:(NSDictionary *)dictionary {
     
-    // Assign the data object to the companies
-    self.questionData = [NSMutableArray arrayWithArray:[dictionary objectForKey:@"data"]];
-    
-    // Reload all table data
-    [self.tableView reloadData];
-    
-    [refreshControl endRefreshing];
+    if ([apiController.method isEqualToString:@"getQuestions"]) {
+        // Assign the data object
+        self.questionData = [NSMutableArray arrayWithArray:[dictionary objectForKey:@"data"]];
+        
+        // Reload all table data
+        [self.tableView reloadData];
+        
+        [refreshControl endRefreshing];
+        
+    } else if ([apiController.method isEqualToString:@"upvoteQuestion"]) {
+        // Reload all table data
+        [self.tableView reloadData];
+    }
 }
 
 - (void)apiController:(APIController *)apiController didFailWithError:(NSError *)error {

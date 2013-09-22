@@ -20,6 +20,7 @@
 @property (strong, nonatomic) IBOutlet UIView *line;
 
 @property (assign, nonatomic) NSInteger approved;
+@property (assign, nonatomic) NSInteger canEnroll;
 
 - (void)configureCell;
 

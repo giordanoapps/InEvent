@@ -40,8 +40,7 @@
 		EB39399716654B4400580A4E /* ScheduleViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EB39396016654B4400580A4E /* ScheduleViewCell.m */; };
 		EB39399816654B4400580A4E /* ScheduleViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB39396116654B4400580A4E /* ScheduleViewCell.xib */; };
 		EB39399916654B4400580A4E /* ScheduleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB39396316654B4400580A4E /* ScheduleViewController.m */; };
-		EB39399A16654B4400580A4E /* ScheduleViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB39396416654B4400580A4E /* ScheduleViewController~ipad.xib */; };
-		EB39399B16654B4400580A4E /* ScheduleViewController~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB39396516654B4400580A4E /* ScheduleViewController~iphone.xib */; };
+		EB39399B16654B4400580A4E /* ScheduleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB39396516654B4400580A4E /* ScheduleViewController.xib */; };
 		EB3939A716654BB900580A4E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EB3939A616654BB900580A4E /* main.m */; };
 		EB3939C616654BE300580A4E /* GTMNSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = EB3939AA16654BE300580A4E /* GTMNSString+HTML.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		EB3939C716654BE300580A4E /* NSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = EB3939AC16654BE300580A4E /* NSString+HTML.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc -w"; }; };
@@ -100,6 +99,8 @@
 		EB7FC68B16DC4225007C006D /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = EB7FC68116DC4225007C006D /* UIImageView+WebCache.m */; };
 		EB7FC68D16DC4616007C006D /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB7FC68C16DC4616007C006D /* CoreImage.framework */; };
 		EB7FC68F16DC4623007C006D /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB7FC68E16DC4623007C006D /* ImageIO.framework */; };
+		EB7FF95617EEDB300017E599 /* 32-Facebook-Like-2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB7FF95517EEDB300017E599 /* 32-Facebook-Like-2@2x.png */; };
+		EB7FF95817EEDDE00017E599 /* 32-Facebook-Like-2.png in Resources */ = {isa = PBXBuildFile; fileRef = EB7FF95717EEDDE00017E599 /* 32-Facebook-Like-2.png */; };
 		EB837CB8171AE44300FA1EBC /* 16-Flag-2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB837CB7171AE44300FA1EBC /* 16-Flag-2@2x.png */; };
 		EB837CBA171AE45400FA1EBC /* 16-User@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB837CB9171AE45400FA1EBC /* 16-User@2x.png */; };
 		EB837CBD171B9B5100FA1EBC /* UINavigationBar+Height.m in Sources */ = {isa = PBXBuildFile; fileRef = EB837CBC171B9B5100FA1EBC /* UINavigationBar+Height.m */; };
@@ -302,8 +303,7 @@
 		EB39396116654B4400580A4E /* ScheduleViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ScheduleViewCell.xib; path = PedidoNaRede/ScheduleViewCell.xib; sourceTree = "<group>"; };
 		EB39396216654B4400580A4E /* ScheduleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ScheduleViewController.h; path = PedidoNaRede/ScheduleViewController.h; sourceTree = "<group>"; };
 		EB39396316654B4400580A4E /* ScheduleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ScheduleViewController.m; path = PedidoNaRede/ScheduleViewController.m; sourceTree = "<group>"; };
-		EB39396416654B4400580A4E /* ScheduleViewController~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = "ScheduleViewController~ipad.xib"; path = "PedidoNaRede/ScheduleViewController~ipad.xib"; sourceTree = "<group>"; };
-		EB39396516654B4400580A4E /* ScheduleViewController~iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = "ScheduleViewController~iphone.xib"; path = "PedidoNaRede/ScheduleViewController~iphone.xib"; sourceTree = "<group>"; };
+		EB39396516654B4400580A4E /* ScheduleViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ScheduleViewController.xib; path = PedidoNaRede/ScheduleViewController.xib; sourceTree = "<group>"; };
 		EB3939A616654BB900580A4E /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		EB3939A916654BE300580A4E /* GTMNSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GTMNSString+HTML.h"; sourceTree = "<group>"; };
 		EB3939AA16654BE300580A4E /* GTMNSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GTMNSString+HTML.m"; sourceTree = "<group>"; };
@@ -410,6 +410,10 @@
 		EB7FC68116DC4225007C006D /* UIImageView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+WebCache.m"; sourceTree = "<group>"; };
 		EB7FC68C16DC4616007C006D /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 		EB7FC68E16DC4623007C006D /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		EB7FF95117EED3F40017E599 /* Schedule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Schedule.h; path = PedidoNaRede/Schedule.h; sourceTree = "<group>"; };
+		EB7FF95317EED4AC0017E599 /* Enrollment.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Enrollment.h; path = PedidoNaRede/Enrollment.h; sourceTree = "<group>"; };
+		EB7FF95517EEDB300017E599 /* 32-Facebook-Like-2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Facebook-Like-2@2x.png"; sourceTree = "<group>"; };
+		EB7FF95717EEDDE00017E599 /* 32-Facebook-Like-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Facebook-Like-2.png"; sourceTree = "<group>"; };
 		EB837CB7171AE44300FA1EBC /* 16-Flag-2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "16-Flag-2@2x.png"; sourceTree = "<group>"; };
 		EB837CB9171AE45400FA1EBC /* 16-User@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "16-User@2x.png"; sourceTree = "<group>"; };
 		EB837CBB171B9B5100FA1EBC /* UINavigationBar+Height.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationBar+Height.h"; sourceTree = "<group>"; };
@@ -863,6 +867,7 @@
 		EB59020417D5D7D60032143C /* Marketplace */ = {
 			isa = PBXGroup;
 			children = (
+				EB7FF95417EED4B00017E599 /* Protocols */,
 				EB5901FF17D5D7D20032143C /* MarketplaceViewController.h */,
 				EB59020017D5D7D20032143C /* MarketplaceViewController.m */,
 				EB59020117D5D7D20032143C /* MarketplaceViewController.xib */,
@@ -929,6 +934,22 @@
 			);
 			name = SDWebImage;
 			path = PedidoNaRede/SDWebImage;
+			sourceTree = "<group>";
+		};
+		EB7FF95217EED40A0017E599 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				EB7FF95117EED3F40017E599 /* Schedule.h */,
+			);
+			name = Protocols;
+			sourceTree = "<group>";
+		};
+		EB7FF95417EED4B00017E599 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				EB7FF95317EED4AC0017E599 /* Enrollment.h */,
+			);
+			name = Protocols;
 			sourceTree = "<group>";
 		};
 		EB8C7D6316D17AEB00F3C721 /* SSCheckBoxView */ = {
@@ -1268,6 +1289,8 @@
 				EB79CC5617ED833600C16CF5 /* 64-Clock.png */,
 				EBC59D8C17BEC5C300E0FC67 /* 64-Cloud-Download.png */,
 				EBC59D8817BEC59B00E0FC67 /* 64-Create-_-Write.png */,
+				EB7FF95517EEDB300017E599 /* 32-Facebook-Like-2@2x.png */,
+				EB7FF95717EEDDE00017E599 /* 32-Facebook-Like-2.png */,
 				EB60420A17B8B6A300D95012 /* 64-Flip-Clock.png */,
 				EBC59D8217BEC49E00E0FC67 /* 64-Footprints.png */,
 				EBC59D8417BEC4DD00E0FC67 /* 64-Map.png */,
@@ -1295,10 +1318,10 @@
 			isa = PBXGroup;
 			children = (
 				EBDFF54F17BE0C4D00BBFC1D /* Categories */,
+				EB7FF95217EED40A0017E599 /* Protocols */,
 				EB39396216654B4400580A4E /* ScheduleViewController.h */,
 				EB39396316654B4400580A4E /* ScheduleViewController.m */,
-				EB39396416654B4400580A4E /* ScheduleViewController~ipad.xib */,
-				EB39396516654B4400580A4E /* ScheduleViewController~iphone.xib */,
+				EB39396516654B4400580A4E /* ScheduleViewController.xib */,
 				EB39395F16654B4400580A4E /* ScheduleViewCell.h */,
 				EB39396016654B4400580A4E /* ScheduleViewCell.m */,
 				EB39396116654B4400580A4E /* ScheduleViewCell.xib */,
@@ -1395,6 +1418,7 @@
 				EBE8D1F916A88ED8003A196A /* blackButton@2x.png in Resources */,
 				EBE8D1FA16A88ED8003A196A /* blackButtonHighlight.png in Resources */,
 				EBE8D1FB16A88ED8003A196A /* blackButtonHighlight@2x.png in Resources */,
+				EB7FF95617EEDB300017E599 /* 32-Facebook-Like-2@2x.png in Resources */,
 				EBE8D1FC16A88ED8003A196A /* blueButton.png in Resources */,
 				EBE8D1FD16A88ED8003A196A /* blueButton@2x.png in Resources */,
 				EBE8D1FE16A88ED8003A196A /* blueButtonHighlight.png in Resources */,
@@ -1422,8 +1446,7 @@
 				EBE8D21416A88ED8003A196A /* whiteButtonHighlight@2x.png in Resources */,
 				EB39398D16654B4400580A4E /* MapViewController.xib in Resources */,
 				EB39399816654B4400580A4E /* ScheduleViewCell.xib in Resources */,
-				EB39399A16654B4400580A4E /* ScheduleViewController~ipad.xib in Resources */,
-				EB39399B16654B4400580A4E /* ScheduleViewController~iphone.xib in Resources */,
+				EB39399B16654B4400580A4E /* ScheduleViewController.xib in Resources */,
 				EB3939CC16654BE300580A4E /* PaperFoldResources.bundle in Resources */,
 				EB3939DB1666D3AF00580A4E /* cellBg@2x.png in Resources */,
 				EB3939DC1666D3AF00580A4E /* cellBgSelected@2x.png in Resources */,
@@ -1433,6 +1456,7 @@
 				EB9AB77316A0921A005D4CAA /* DemoViewController.xib in Resources */,
 				EB9AB78616A125B3005D4CAA /* barButton.png in Resources */,
 				EB9AB78716A125B3005D4CAA /* barButton@2x.png in Resources */,
+				EB7FF95817EEDDE00017E599 /* 32-Facebook-Like-2.png in Resources */,
 				EB9AB78816A125B3005D4CAA /* barButtonBack.png in Resources */,
 				EB9AB78916A125B3005D4CAA /* barButtonBack@2x.png in Resources */,
 				EB9AB78A16A125B3005D4CAA /* barButtonBackDisabled.png in Resources */,

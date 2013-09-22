@@ -320,6 +320,10 @@
             
             // Go back to the other screen
             [self dismissViewControllerAnimated:YES completion:^{
+                // Select an event
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"verify" object:nil userInfo:@{@"type": @"enterprise"}];
+                
+                // Reset the UI
                 [_personAction setTitle:NSLocalizedString(@"Enter", nil) forState:UIControlStateNormal];
                 [_personEmail setText:@""];
                 [_personName setText:@""];

@@ -13,9 +13,9 @@
         #define URL @"http://inevent:8888/"
         //#define URL @"http://agarca.com.br/"
     #else
-        //#define URL @"http://192.168.0.106:8888/InEvent/Web/"
+        #define URL @"http://192.168.0.106:8888/InEvent-dev/Web/"
         //#define URL @"http://pedrogoes.info/InEvent/Web/"
-        #define URL @"http://inevent.us/"
+        //#define URL @"http://inevent.us/"
     #endif
 #else
     #define URL @"http://inevent.us/"
@@ -62,11 +62,13 @@
 - (void)activityGetQuestionsAtActivity:(NSInteger)activityID withTokenID:(NSString *)tokenID;
 - (void)activitySendQuestion:(NSString *)question toActivity:(NSInteger)activityID withTokenID:(NSString *)tokenID;
 - (void)activityUpvoteQuestion:(NSInteger)questionID withTokenID:(NSString *)tokenID;
+- (void)activitySendOpinionWithRating:(NSInteger)rating toActivity:(NSInteger)activityID withToken:(NSString *)tokenID;
 
 #pragma mark - Event
 - (void)eventGetEvents;
 - (void)eventGetEventsWithTokenID:(NSString *)tokenID;
 - (void)eventGetSingleEvent:(NSInteger)eventID;
+- (void)eventGetSingleEvent:(NSInteger)eventID WithTokenID:(NSString *)tokenID;
 - (void)eventRequestEnrollmentAtEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID;
 - (void)eventRequestEnrollmentForPerson:(NSInteger)personID atEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID;
 - (void)eventDismissEnrollmentAtEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID;
@@ -78,6 +80,7 @@
 - (void)eventGetPeopleAtEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID;
 - (void)eventGetActivitiesAtEvent:(NSInteger)eventID;
 - (void)eventGetScheduleAtEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID;
+- (void)eventSendOpinionWithRating:(NSInteger)rating withMessage:(NSString *)message toEvent:(NSInteger)eventID withToken:(NSString *)tokenID;
 
 #pragma mark - Notifications
 - (void)notificationGetNumberOfNotificationsWithTokenID:(NSString *)tokenID;

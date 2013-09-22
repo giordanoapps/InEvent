@@ -21,12 +21,13 @@
 #import "EventToken.h"
 #import "GAI.h"
 #import "CoolBarButtonItem.h"
+#import "Schedule.h"
 
 @interface ScheduleViewController () {
     ODRefreshControl *refreshControl;
+    NSArray *activities;
+    ScheduleSelection selection;
 }
-
-@property (nonatomic, strong) NSArray *activities;
 
 @end
 
@@ -38,7 +39,8 @@
     if (self) {
         self.title = NSLocalizedString(@"Schedule", nil);
         self.tabBarItem.image = [UIImage imageNamed:@"16-Map"];
-        self.activities = [NSArray array];
+        activities = [NSArray array];
+        selection = ([[HumanToken sharedInstance] isMemberAuthenticated] && [[HumanToken sharedInstance] isMemberApproved]) ? ScheduleSubscribed : ScheduleAll;
         
         // Add notification observer for new orders
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadData) name:@"scheduleCurrentState" object:nil];
@@ -93,7 +95,7 @@
 
 - (void)forceDataReload:(BOOL)forcing {
     
-    if ([[HumanToken sharedInstance] isMemberAuthenticated] && [[HumanToken sharedInstance] isMemberApproved]) {
+    if (selection == ScheduleSubscribed) {
         NSString *tokenID = [[HumanToken sharedInstance] tokenID];
         [[[APIController alloc] initWithDelegate:self forcing:forcing] eventGetScheduleAtEvent:[[EventToken sharedInstance] eventID] withTokenID:tokenID];
     } else {
@@ -101,11 +103,15 @@
     }
 }
 
+#pragma mark -
+
 #pragma mark - ActionSheet Methods
 
 - (void)alertActionSheet {
     
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Actions", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"Event details", nil), NSLocalizedString(@"Exit event", nil), nil];
+    NSString *title = (selection == ScheduleSubscribed) ? NSLocalizedString(@"All activities", nil) : NSLocalizedString(@"My activities", nil);
+    
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Actions", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"Event details", nil), title, NSLocalizedString(@"Exit event", nil), nil];
     
     [actionSheet showFromBarButtonItem:self.rightBarButton animated:YES];
 }
@@ -116,21 +122,31 @@
     
     NSString *title = [actionSheet buttonTitleAtIndex:buttonIndex];
     
-    if ([title isEqualToString:NSLocalizedString(@"Event details", nil)]) {
-        // Load our reader
-        FrontViewController *fvc = [[FrontViewController alloc] initWithNibName:@"FrontViewController" bundle:nil];
+    if ([title isEqualToString:NSLocalizedString(@"All activities", nil)]) {
+        // Get all the activities
+        selection = ScheduleAll;
         
-        [fvc setMoveKeyboardRatio:0.0];
+        [self loadData];
+        
+    } else if ([title isEqualToString:NSLocalizedString(@"My activities", nil)]) {
+        // Get only the activities that we are enrolled to
+        selection = ScheduleSubscribed;
+        
+        [self loadData];
+        
+    } else if ([title isEqualToString:NSLocalizedString(@"Event details", nil)]) {
+        // Load our reader
+        UINavigationController *nfvc = [[UINavigationController alloc] initWithRootViewController:[[FrontViewController alloc] initWithNibName:@"FrontViewController" bundle:nil]];
         
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-            fvc.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-            fvc.modalPresentationStyle = UIModalPresentationCurrentContext;
+            nfvc.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+            nfvc.modalPresentationStyle = UIModalPresentationCurrentContext;
         } else {
-            fvc.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-            fvc.modalPresentationStyle = UIModalPresentationFormSheet;
+            nfvc.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+            nfvc.modalPresentationStyle = UIModalPresentationFormSheet;
         }
         
-        [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:fvc animated:YES completion:nil];
+        [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:nfvc animated:YES completion:nil];
         
     } else if ([title isEqualToString:NSLocalizedString(@"Exit event", nil)]) {
         // Remove the tokenID and enterprise
@@ -138,18 +154,17 @@
         
         // Check for it again
         [[NSNotificationCenter defaultCenter] postNotificationName:@"verify" object:nil userInfo:@{@"type": @"enterprise"}];
-        
     }
 }
 
 #pragma mark - Table View Data Source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return [self.activities count];
+    return [activities count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [[self.activities objectAtIndex:section] count];
+    return [[activities objectAtIndex:section] count];
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
@@ -160,7 +175,7 @@
     [background setBackgroundColor:[ColorThemeController tableViewCellBackgroundColor]];
     [background setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
     
-    NSDictionary *dictionary = [[self.activities objectAtIndex:section] objectAtIndex:0];
+    NSDictionary *dictionary = [[activities objectAtIndex:section] objectAtIndex:0];
     
     NSDate *date = [NSDate dateWithTimeIntervalSince1970:[[dictionary objectForKey:@"dateBegin"] integerValue]];
     NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
@@ -169,7 +184,7 @@
     UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(21.0, 6.0, tableView.frame.size.width, 32.0)];
     [title setText:[NSString stringWithFormat:@"%.2d/%.2d - %@", [components day], [components month], [UtilitiesController weekNameFromIndex:[components weekday]]]];
     [title setTextAlignment:NSTextAlignmentLeft];
-    [title setFont:[UIFont fontWithName:@"Thonburi-Bold" size:22.0]];
+    [title setFont:[UIFont fontWithName:@"Thonburi-Bold" size:18.0]];
     [title setTextColor:[ColorThemeController textColor]];
     [title setBackgroundColor:[UIColor clearColor]];
     
@@ -199,7 +214,7 @@
     
     [cell configureCell];
     
-    NSDictionary *dictionary = [[self.activities objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+    NSDictionary *dictionary = [[activities objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
     
     NSDate *date = [NSDate dateWithTimeIntervalSince1970:[[dictionary objectForKey:@"dateBegin"] integerValue]];
     NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
@@ -227,7 +242,7 @@
         [sivc setMoveKeyboardRatio:0.5f];
     }
     
-    NSDictionary *dictionary = [[self.activities objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+    NSDictionary *dictionary = [[activities objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
     
     [sivc setTitle:[[dictionary objectForKey:@"name"] stringByDecodingHTMLEntities]];
     [sivc setActivityData:dictionary];
@@ -243,7 +258,7 @@
 - (void)apiController:(APIController *)apiController didLoadDictionaryFromServer:(NSDictionary *)dictionary {
     
     // Assign the data object to the companies
-    self.activities = [dictionary objectForKey:@"data"];
+    activities = [dictionary objectForKey:@"data"];
     
     // Reload all table data
     [self.tableView reloadData];

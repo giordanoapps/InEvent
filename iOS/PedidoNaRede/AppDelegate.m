@@ -56,20 +56,12 @@
     [PushController deliverPushNotification:userInfo];
 }
 
-- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
-    if ([error code] == 3010) {
-        NSLog(@"Push notifications don't work in the simulator!");
-    } else {
-        NSLog(@"didFailToRegisterForRemoteNotificationsWithError: %@", error);
-    }
-}
-
 #pragma mark - Cycle
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackOpaque];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
     // Each controller
     // LOGIN

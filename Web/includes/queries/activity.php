@@ -1,27 +1,32 @@
 <?php
     
-    function getActivitiesForMemberAtEventQuery($eventID, $memberID) {
-        return getActivitiesForMemberQuery("AND `activity`.`eventID` = $eventID", $memberID);
+    function getActivitiesForMemberAtEventQuery($eventID, $memberID, $exclusive = false) {
+        return getActivitiesForMemberQuery("AND `activity`.`eventID` = $eventID", $memberID, $exclusive);
     }
 
-    function getActivitiesForMemberAtActivityQuery($activityID, $memberID) {
-        return getActivitiesForMemberQuery("AND `activity`.`id` = $activityID", $memberID);
+    function getActivitiesForMemberAtActivityQuery($activityID, $memberID, $exclusive = false) {
+        return getActivitiesForMemberQuery("AND `activity`.`id` = $activityID", $memberID, $exclusive);
     }
     
-    function getActivitiesForMemberQuery($selector, $memberID) {
+    function getActivitiesForMemberQuery($selector, $memberID, $exclusive) {
+
+        $filter = ($exclusive == true) ? "AND `activityMember`.`memberID` = $memberID" : "";
 
         $result = resourceForQuery(
         // echo (
             "SELECT
                 `activity`.`id`,
+                `activity`.`groupID`,
                 `activity`.`name`,
-                `activity`.`capacity`,
                 `activity`.`description`,
+                `activity`.`latitude`,
+                `activity`.`longitude`,
                 `activity`.`location`,
-                `activity`.`highlight`,
-                DAYOFYEAR(`activity`.`dateBegin`) AS `day`,
                 UNIX_TIMESTAMP(`activity`.`dateBegin`) AS `dateBegin`,
                 UNIX_TIMESTAMP(`activity`.`dateEnd`) AS `dateEnd`,
+                `activity`.`capacity`,
+                `activity`.`general`,
+                `activity`.`highlight`,
                 IF(`activityMember`.`memberID` = $memberID, $memberID, 0) AS `memberID`,
                 IF(`activityMember`.`memberID` = $memberID, `activityMember`.`approved`, 0) AS `approved`,
                 IF(`activityMember`.`memberID` = $memberID, `activityMember`.`priori`, 0) AS `priori`,
@@ -35,6 +40,7 @@
             WHERE 1
                 AND (`activityMember`.`memberID` = $memberID OR ISNULL(`activityMember`.`memberID`))
                 $selector
+                $filter
             GROUP BY
                 `activity`.`id`
             ORDER BY
@@ -50,13 +56,18 @@
         $result = resourceForQuery(
             "SELECT
                 `activity`.`id`,
+                `activity`.`groupID`,
                 `activity`.`name`,
                 `activity`.`description`,
-                `activity`.`capacity`,
-                COUNT(`activityMember`.`id`) AS `entries`,
-                DAYOFYEAR(`activity`.`dateBegin`) AS `day`,
+                `activity`.`latitude`,
+                `activity`.`longitude`,
+                `activity`.`location`,
                 UNIX_TIMESTAMP(`activity`.`dateBegin`) AS `dateBegin`,
-                UNIX_TIMESTAMP(`activity`.`dateEnd`) AS `dateEnd`
+                UNIX_TIMESTAMP(`activity`.`dateEnd`) AS `dateEnd`,
+                `activity`.`capacity`,
+                `activity`.`general`,
+                `activity`.`highlight`,
+                COUNT(`activityMember`.`id`) AS `entries`
             FROM
                 `activity`
             LEFT JOIN

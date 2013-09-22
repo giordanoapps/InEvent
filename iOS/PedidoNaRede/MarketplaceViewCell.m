@@ -13,6 +13,7 @@
 #import "APIController.h"
 #import "NSObject+Triangle.h"
 #import "UIView+Components.h"
+#import "Enrollment.h"
 
 @implementation MarketplaceViewCell
 
@@ -71,9 +72,13 @@
     
     // Triangle
     [self defineStateForApproved:_approved withView:_wrapper];
+}
+
+- (void) setCanEnroll:(NSInteger)canEnroll {
+    _canEnroll = canEnroll;
     
     // Button
-    if ([[HumanToken sharedInstance] isMemberAuthenticated] && _approved == 0) {
+    if ([[HumanToken sharedInstance] isMemberAuthenticated] && _approved == EnrollmentStateUnknown && _canEnroll == YES) {
         [_status setHidden:NO];
         [_status setBackgroundImage:[[UIImage imageNamed:@"whiteButton"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)] forState:UIControlStateNormal];
         [_status setBackgroundImage:[[UIImage imageNamed:@"whiteButtonHighlight"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)] forState:UIControlStateHighlighted];

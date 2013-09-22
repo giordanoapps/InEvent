@@ -17,7 +17,15 @@
 	if ($method === "getSingle") {
 
 		if (isset($_GET['eventID'])) {
-			$result = getEventForEventQuery(getAttribute($_GET['eventID']));
+
+			$eventID = getAttribute($_GET['eventID']);
+
+			if (isset($_GET['tokenID'])) {
+				$tokenID = getToken();
+				$result = getEventForMemberQuery($eventID, $core->memberID);
+			} else {
+				$result = getEventForEventQuery($eventID);
+			}
 			echo printInformation("event", $result, true, 'json');
 		} else {
 			http_status_code(400, "eventID is a required parameter");
@@ -273,29 +281,9 @@
 			// Get some properties
 			$eventID = getAttribute($_GET['eventID']);
 
-			$result = resourceForQuery(
-				"SELECT
-					`activity`.`id`,
-					`activity`.`groupID`,
-					`activity`.`name`,
-					`activity`.`description`,
-					`activity`.`location`,
-					-- UNIX_TIMESTAMP(MAKEDATE(YEAR(`activity`.`dateBegin`), DAYOFYEAR(`activity`.`dateBegin`))) AS `day`,
-					UNIX_TIMESTAMP(`activity`.`dateBegin`) AS `dateBegin`,
-	                UNIX_TIMESTAMP(`activity`.`dateEnd`) AS `dateEnd`,
-					`activity`.`capacity`,
-					`activity`.`general`,
-					`activity`.`highlight`
-				FROM
-					`activity`
-				WHERE
-					`activity`.`eventID` = $eventID
-	            ORDER BY
-	                `activity`.`dateBegin` ASC,
-	                `activity`.`dateEnd` ASC
-			");
+			$result = getActivitiesForEventQuery($eventID);
 
-			$data = printInformation("eventMember", $result, true, 'object');
+			$data = printInformation("event", $result, true, 'object');
 			echo json_encode(groupActivitiesInDays($data));
 
 		} else {
@@ -308,31 +296,9 @@
 
 		$eventID = getTokenForEvent();
 
-		$result = resourceForQuery(
-            "SELECT
-                `activity`.`id`,
-                `activity`.`name`,
-                `activity`.`description`,
-                `activity`.`location`,
-                `activity`.`highlight`,
-                UNIX_TIMESTAMP(`activity`.`dateBegin`) AS `dateBegin`,
-                UNIX_TIMESTAMP(`activity`.`dateEnd`) AS `dateEnd`,
-                IF(`activityMember`.`memberID` = $core->memberID, `activityMember`.`approved`, 0) AS `approved`
-            FROM
-                `activity`
-            LEFT JOIN
-                `activityMember` ON `activity`.`id` = `activityMember`.`activityID`
-            WHERE 1
-                AND `activity`.`eventID` = $eventID
-                AND `activityMember`.`memberID` = $core->memberID
-            GROUP BY
-                `activity`.`id`
-            ORDER BY
-                `activity`.`dateBegin` ASC,
-                `activity`.`dateEnd` ASC
-        ");
+		$result = getActivitiesForMemberAtEventQuery($eventID, $core->memberID);
 
-		$data = printInformation("eventMember", $result, true, 'object');
+		$data = printInformation("event", $result, true, 'object');
 		echo json_encode(groupActivitiesInDays($data));
 		
 	} else

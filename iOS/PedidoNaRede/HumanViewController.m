@@ -100,7 +100,7 @@
             nhlvc.modalPresentationStyle = UIModalPresentationFormSheet;
         }
         
-        [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:nhlvc animated:YES completion:nil];
+        [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:nhlvc animated:YES completion:nil];
     }
 }
 

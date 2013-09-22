@@ -44,7 +44,13 @@
     self.trackedViewName = @"Wrapper";
     
     // Navigation Bar
-    self.navigationController.navigationBar.tintColor = [ColorThemeController navigationBarBackgroundColor];
+    if ([[[UIDevice currentDevice] systemVersion] isEqualToString:@"7.0"]) {
+        self.navigationController.navigationBar.barTintColor = [ColorThemeController navigationBarBackgroundColor];
+        self.navigationController.navigationBar.translucent = NO;
+        self.navigationController.navigationBar.titleTextAttributes = @{UITextAttributeTextColor : [UIColor whiteColor]};
+    }
+
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
 }
 
 - (void)viewWillAppear:(BOOL)animated

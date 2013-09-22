@@ -18,6 +18,7 @@
 #import "HumanToken.h"
 #import "EventToken.h"
 #import "GAI.h"
+#import "Enrollment.h"
 #import <Parse/Parse.h>
 
 @interface MarketplaceViewController () {
@@ -141,6 +142,21 @@
     
     cell.name.text = [[dictionary objectForKey:@"name"] stringByDecodingHTMLEntities];
     cell.approved = [[dictionary objectForKey:@"approved"] integerValue];
+    
+    // Only query the enrollment date if necessary
+    if (cell.approved == EnrollmentStateUnknown) {
+        NSDate *enrollmentBegin = [NSDate dateWithTimeIntervalSince1970:[[dictionary objectForKey:@"enrollmentBegin"] integerValue]];
+        NSDate *enrollmentEnd = [NSDate dateWithTimeIntervalSince1970:[[dictionary objectForKey:@"enrollmentEnd"] integerValue]];
+        
+        if ([[NSDate date] compare:enrollmentBegin] == NSOrderedDescending
+            && [[NSDate date] compare:enrollmentEnd] == NSOrderedAscending) {
+            cell.canEnroll = YES;
+        } else {
+            cell.canEnroll = NO;
+        }
+    } else {
+        cell.canEnroll = NO;
+    }
     
     UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapEnroll:)];
     [tapRecognizer setNumberOfTouchesRequired:1];

@@ -2,7 +2,7 @@
     
     function getEventsForMemberQuery($memberID, $exclusive = false) {
 
-        $selector = ($exclusive == true) ? "AND `eventMember`.`memberID` = $memberID" : "";
+        $filter = ($exclusive == true) ? "AND `eventMember`.`memberID` = $memberID" : "";
 
         $result = resourceForQuery(
         // echo (
@@ -31,7 +31,7 @@
                 `eventMember` ON `event`.`id` = `eventMember`.`eventID` AND `eventMember`.`memberID` = $memberID
             WHERE 1
                 AND (`event`.`dateEnd` > NOW() OR `eventMember`.`approved` = 1)
-                $selector
+                $filter
             GROUP BY
                 `event`.`id`
             ORDER BY
@@ -97,6 +97,7 @@
                 `event`.`city`,
                 `event`.`state`,
                 `event`.`fugleman`,
+                IF(`eventMember`.`memberID` = $memberID, `eventMember`.`id`, 0) AS `enrollmentID`,
                 IF(`eventMember`.`memberID` = $memberID, $memberID, 0) AS `memberID`,
                 IF(`eventMember`.`memberID` = $memberID, `eventMember`.`approved`, 0) AS `approved`
             FROM

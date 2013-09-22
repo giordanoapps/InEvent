@@ -48,10 +48,6 @@
     _box.frame = CGRectMake((frame.size.width - _box.frame.size.width) / 2.0f, (frame.size.height - _box.frame.size.height) / 2.0, _box.frame.size.width, _box.frame.size.height);
     [_box setBackgroundColor:[ColorThemeController borderColor]];
     [_box.layer setCornerRadius:10.0];
-    [_box.layer setShadowColor:[[ColorThemeController shadowColor] CGColor]];
-    [_box.layer setShadowOffset:CGSizeMake(1.0, 1.0)];
-    [_box.layer setShadowOpacity:1.0];
-    [_box.layer setShadowRadius:5.0];
     [_box.layer setMasksToBounds:NO];
     [_box.layer setBorderWidth:6.0];
     [_box.layer setBorderColor:[[ColorThemeController borderColor] CGColor]];
@@ -61,10 +57,6 @@
     
     // Message Box
     [_messageBox setBackgroundColor:[ColorThemeController backgroundColor]];
-    [_messageBox.layer setShadowColor:[[ColorThemeController shadowColor] CGColor]];
-    [_messageBox.layer setShadowOffset:CGSizeMake(1.0, 1.0)];
-    [_messageBox.layer setShadowOpacity:1.0];
-    [_messageBox.layer setShadowRadius:0.0];
     [_messageBox.layer setMasksToBounds:NO];
     
     // Message
@@ -116,11 +108,8 @@
     }
     
     // Send the information to the server
-//    NSString *tokenID = [[HumanToken sharedInstance] tokenID];
-//    [[[APIController alloc] initWithDelegate:self forcing:YES] opinionSendOpinionWithRating:_rating withMessage:_textView.text withToken:tokenID];
-    
-    // Remove the tokenID and enterprise
-    [[EventToken sharedInstance] removeEvent];
+    NSString *tokenID = [[HumanToken sharedInstance] tokenID];
+    [[[APIController alloc] initWithDelegate:self forcing:YES] activitySendOpinionWithRating:_rating toActivity:[[_activityData objectForKey:@"id"] integerValue] withToken:tokenID];
     
     [self dismissViewControllerAnimated:YES completion:^{
         [[NSNotificationCenter defaultCenter] postNotificationName:@"verify" object:nil userInfo:@{@"type": @"enterprise"}];

@@ -39,7 +39,7 @@
             viewController.modalPresentationStyle = UIModalPresentationFormSheet;
         }
         
-        [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:viewController animated:YES completion:nil];
+        [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:viewController animated:YES completion:nil];
         
         return YES;
     } else {
@@ -69,7 +69,7 @@
             viewController.modalPresentationStyle = UIModalPresentationFormSheet;
         }
         
-        [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:viewController animated:YES completion:nil];
+        [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:viewController animated:YES completion:nil];
         
         return NO;
     } else {
@@ -93,7 +93,7 @@
             viewController.modalPresentationStyle = UIModalPresentationFormSheet;
         }
         
-        [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:viewController animated:YES completion:nil];
+        [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:viewController animated:YES completion:nil];
         
         return NO;
     } else {

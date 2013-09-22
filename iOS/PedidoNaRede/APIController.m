@@ -148,6 +148,15 @@
     }
 }
 
+- (void)activitySendOpinionWithRating:(NSInteger)rating toActivity:(NSInteger)activityID withToken:(NSString *)tokenID {
+    
+    if (tokenID != nil) {
+        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID, @"activityID" : [NSString stringWithFormat:@"%d", activityID]}, @"POST" : @{@"rating" : [NSString stringWithFormat:@"%d", rating]}};
+        
+        [self JSONObjectWithNamespace:@"activity" method:@"sendOpinion" attributes:attributes];
+    }
+}
+
 #pragma mark - Event
 
 - (void)eventGetEvents {
@@ -168,6 +177,15 @@
     NSDictionary *attributes = @{@"GET" : @{@"eventID" : [NSString stringWithFormat:@"%d", eventID]}};
     
     [self JSONObjectWithNamespace:@"event" method:@"getSingle" attributes:attributes];
+}
+
+- (void)eventGetSingleEvent:(NSInteger)eventID WithTokenID:(NSString *)tokenID {
+
+    if (tokenID != nil) {
+        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID, @"eventID" : [NSString stringWithFormat:@"%d", eventID]}};
+        
+        [self JSONObjectWithNamespace:@"event" method:@"getSingle" attributes:attributes];
+    }
 }
 
 - (void)eventRequestEnrollmentAtEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID {
@@ -264,6 +282,15 @@
         NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID, @"eventID" : [NSString stringWithFormat:@"%d", eventID]}};
         
         [self JSONObjectWithNamespace:@"event" method:@"getSchedule" attributes:attributes];
+    }
+}
+
+- (void)eventSendOpinionWithRating:(NSInteger)rating withMessage:(NSString *)message toEvent:(NSInteger)eventID withToken:(NSString *)tokenID {
+    
+    if (tokenID != nil && message != nil) {
+        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID, @"eventID" : [NSString stringWithFormat:@"%d", eventID]}, @"POST" : @{@"message" : message, @"rating" : [NSString stringWithFormat:@"%d", rating]}};
+        
+        [self JSONObjectWithNamespace:@"event" method:@"sendOpinion" attributes:attributes];
     }
 }
 

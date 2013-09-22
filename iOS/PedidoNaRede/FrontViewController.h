@@ -13,10 +13,12 @@
 @interface FrontViewController : WrapperViewController <APIControllerDelegate, UIGestureRecognizerDelegate>
 
 @property (strong, nonatomic) IBOutlet UIImageView *cover;
+@property (strong, nonatomic) IBOutlet UIView *wrapper;
 @property (strong, nonatomic) IBOutlet UILabel *name;
 @property (strong, nonatomic) IBOutlet UILabel *dateBegin;
 @property (strong, nonatomic) IBOutlet UILabel *dateEnd;
 @property (strong, nonatomic) IBOutlet UILabel *location;
 @property (strong, nonatomic) IBOutlet UILabel *fugleman;
+@property (strong, nonatomic) IBOutlet UILabel *enrollmentID;
 
 @end

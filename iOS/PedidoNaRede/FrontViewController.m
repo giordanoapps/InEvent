@@ -7,6 +7,7 @@
 //
 
 #import "FrontViewController.h"
+#import <QuartzCore/QuartzCore.h>
 #import "UtilitiesController.h"
 #import "UIImageView+WebCache.h"
 #import "NSString+HTML.h"
@@ -41,6 +42,13 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    // Right Button
+    self.rightBarButton = self.navigationItem.rightBarButtonItem;
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(dismiss)];
+    
+    // Wrapper
+    _wrapper.layer.cornerRadius = 4.0f;
+    
     // Schedule details
     [self loadData];
 }
@@ -68,7 +76,11 @@
 }
 
 - (void)forceDataReload:(BOOL)forcing {
-    [[[APIController alloc] initWithDelegate:self forcing:forcing] eventGetSingleEvent:[[EventToken sharedInstance] eventID]];
+    if ([[HumanToken sharedInstance] isMemberAuthenticated]) {
+        [[[APIController alloc] initWithDelegate:self forcing:forcing] eventGetSingleEvent:[[EventToken sharedInstance] eventID] WithTokenID:[[HumanToken sharedInstance] tokenID]];
+    } else {
+        [[[APIController alloc] initWithDelegate:self forcing:forcing] eventGetSingleEvent:[[EventToken sharedInstance] eventID]];
+    }
 }
 
 #pragma mark - Painter Methods
@@ -100,7 +112,18 @@
         
         // Fugleman
         _fugleman.text = [[eventData objectForKey:@"fugleman"] stringByDecodingHTMLEntities];
+
+        // Fugleman
+        _enrollmentID.text = [NSString stringWithFormat:@"%.4d", [[eventData objectForKey:@"enrollmentID"] integerValue]];
     }
+}
+
+#pragma mark - User Methods
+
+- (void)dismiss {
+    
+    // Dismiss the controller
+    [self dismissModalViewControllerAnimated:YES];
 }
 
 #pragma mark - APIController Delegate

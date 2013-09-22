@@ -65,6 +65,16 @@
     // Line
     [_line setBackgroundColor:[ColorThemeController tableViewCellInternalBorderColor]];
     [self createBottomIdentation];
+    
+    // Map
+    [_map setShowsUserLocation:YES];
+    
+    // Location Manager
+    locationManager = [[CLLocationManager alloc] init];
+    locationManager.delegate = self;
+    locationManager.distanceFilter = kCLDistanceFilterNone;
+    locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    [locationManager startUpdatingLocation];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -111,10 +121,12 @@
     if (_activityData) {
 
         // Actions
-        self.rightBarButton = [[CoolBarButtonItem alloc] initCustomButtonWithImage:[UIImage imageNamed:@"64-Cog"] frame:CGRectMake(0, 0, 42.0, 30.0) insets:UIEdgeInsetsMake(5.0, 11.0, 5.0, 11.0) target:self action:@selector(alertActionSheet)];
-        self.rightBarButton.accessibilityLabel = NSLocalizedString(@"Actions", nil);
-        self.rightBarButton.accessibilityTraits = UIAccessibilityTraitSummaryElement;
-        self.navigationItem.rightBarButtonItem = self.rightBarButton;
+        if ([[HumanToken sharedInstance] isMemberAuthenticated]) {
+            self.rightBarButton = [[CoolBarButtonItem alloc] initCustomButtonWithImage:[UIImage imageNamed:@"64-Cog"] frame:CGRectMake(0, 0, 42.0, 30.0) insets:UIEdgeInsetsMake(5.0, 11.0, 5.0, 11.0) target:self action:@selector(alertActionSheet)];
+            self.rightBarButton.accessibilityLabel = NSLocalizedString(@"Actions", nil);
+            self.rightBarButton.accessibilityTraits = UIAccessibilityTraitSummaryElement;
+            self.navigationItem.rightBarButtonItem = self.rightBarButton;
+        }
         
         NSDate *date = [NSDate dateWithTimeIntervalSince1970:[[_activityData objectForKey:@"dateBegin"] integerValue]];
         NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
@@ -127,12 +139,7 @@
         _name.text = [[_activityData objectForKey:@"name"] stringByDecodingHTMLEntities];
         _description.text = [[_activityData objectForKey:@"description"] stringByDecodingHTMLEntities];
         
-        // Location Manager
-        locationManager = [[CLLocationManager alloc] init];
-        locationManager.delegate = self;
-        locationManager.distanceFilter = kCLDistanceFilterNone;
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-        [locationManager startUpdatingLocation];
+        [self reloadMap];
     }
 }
 
@@ -165,6 +172,7 @@
     MKPinAnnotationView *pinView = (MKPinAnnotationView*)[mapView dequeueReusableAnnotationViewWithIdentifier:@"CustomPinAnnotationView"];
     
     if (pinView) {
+        // Add a pin
         pinView.annotation = annotation;
         
     } else {
@@ -194,14 +202,30 @@
     CGFloat latitude = [[_activityData objectForKey:@"latitude"] floatValue];
     CGFloat longitude = [[_activityData objectForKey:@"longitude"] floatValue];
     
-    MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
-    annotation.coordinate = CLLocationCoordinate2DMake(latitude, longitude);
-    annotation.title = [[_activityData objectForKey:@"tradeName"] stringByDecodingHTMLEntities];
-    
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        [_map addAnnotation:annotation];
+    if (latitude == 0 && longitude == 0) {
+        // Search using Apple API
+        MKLocalSearchRequest *request = [[MKLocalSearchRequest alloc] init];
+        request.naturalLanguageQuery = [[_activityData objectForKey:@"location"] stringByDecodingHTMLEntities];
+        request.region = _map.region;
+        
+        MKLocalSearch *localSearch = [[MKLocalSearch alloc] initWithRequest:request];
+        [localSearch startWithCompletionHandler:^(MKLocalSearchResponse *response, NSError *error) {
+            
+            NSMutableArray *annotations = [NSMutableArray array];
+            
+            [response.mapItems enumerateObjectsUsingBlock:^(MKMapItem *item, NSUInteger idx, BOOL *stop) {
+                MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
+                annotation.title = [[_activityData objectForKey:@"name"] stringByDecodingHTMLEntities];
+                [annotations addObject:annotation];
+            }];
+            
+            [_map addAnnotations:annotations];
+        }];
     } else {
-        // We get the detailController and we push the _mapView controller
+        // Place using InEvent API
+        MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
+        annotation.coordinate = CLLocationCoordinate2DMake(latitude, longitude);
+        annotation.title = [[_activityData objectForKey:@"name"] stringByDecodingHTMLEntities];
         [_map addAnnotation:annotation];
     }
 }
@@ -238,9 +262,9 @@
     UIActionSheet *actionSheet;
     
     if ([[HumanToken sharedInstance] isMemberWorking]) {
-        actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Actions", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"See people", nil), NSLocalizedString(@"See questions", nil), NSLocalizedString(@"Send feedback", nil), NSLocalizedString(@"Exit event", nil), nil];
-    } else {
-        actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Actions", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"See questions", nil), NSLocalizedString(@"Send feedback", nil), NSLocalizedString(@"Exit event", nil), nil];
+        actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Actions", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"See people", nil), NSLocalizedString(@"See questions", nil), NSLocalizedString(@"Send feedback", nil), nil];
+    } else if ([[HumanToken sharedInstance] isMemberAuthenticated]) {
+        actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Actions", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"See questions", nil), NSLocalizedString(@"Send feedback", nil), nil];
     }
     
     [actionSheet showFromBarButtonItem:self.rightBarButton animated:YES];
@@ -265,14 +289,14 @@
             rvc.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
             rvc.modalPresentationStyle = UIModalPresentationFormSheet;
             
-            [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:rvc animated:YES completion:nil];
+            [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:rvc animated:YES completion:nil];
         }
         
     } else if ([title isEqualToString:NSLocalizedString(@"See questions", nil)]) {
         // Load our reader
         QuestionViewController *qvc = [[QuestionViewController alloc] initWithNibName:@"QuestionViewController" bundle:nil];
         
-        [qvc setMoveKeyboardRatio:0.0];
+        [qvc setMoveKeyboardRatio:2.0];
         [qvc setActivityData:_activityData];
         
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
@@ -281,7 +305,7 @@
             qvc.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
             qvc.modalPresentationStyle = UIModalPresentationFormSheet;
             
-            [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:qvc animated:YES completion:nil];
+            [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:qvc animated:YES completion:nil];
         }
         
     } else if ([title isEqualToString:NSLocalizedString(@"Send feedback", nil)]) {
@@ -297,7 +321,7 @@
             fvc.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
             fvc.modalPresentationStyle = UIModalPresentationFormSheet;
             
-            [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:fvc animated:YES completion:nil];
+            [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:fvc animated:YES completion:nil];
         }
 
     } else if ([title isEqualToString:NSLocalizedString(@"Exit event", nil)]) {
