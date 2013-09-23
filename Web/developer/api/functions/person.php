@@ -45,7 +45,7 @@
 		$memberID = mysql_insert_id();
 
 		// Send an email
-		sendEnrollmentEmail($name, $email);
+		sendEnrollmentEmail($name, $password, $email);
 
 		return $memberID;
 	}
