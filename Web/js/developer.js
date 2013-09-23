@@ -204,7 +204,7 @@ define(["jquery", "modules/storageExpiration"], function($, storageExpiration) {
 			// Process its size
 			if (attrTemp.length >= 2) {
 				// Input them inside the array 
-				if (attrTemp[0] == "tokenID" && tokenID.length > 0) {
+				if (attrTemp[0] == "tokenID" && tokenID.length > 0 && attrTemp[1] != "null") {
 					processedAttributes[attrTemp[0]] = tokenID;
 				} else {
 					processedAttributes[attrTemp[0]] = attrTemp[1];

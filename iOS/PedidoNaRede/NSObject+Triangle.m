@@ -52,15 +52,7 @@
         }
     }
     
-    if ([[HumanToken sharedInstance] isMemberAuthenticated]) {
-        if (approved == 1) {
-            [self createUpperTriangleAtView:view withState:ScheduleStateApproved];
-        } else {
-            [self createUpperTriangleAtView:view withState:ScheduleStateDenied];
-        }
-    } else {
-        [self createUpperTriangleAtView:view withState:ScheduleStateUnknown];
-    }
+    [self createUpperTriangleAtView:view withState:approved];
 }
 
 @end

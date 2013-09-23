@@ -1,6 +1,114 @@
 <?php
 // -------------------------------------- ACTIVITY --------------------------------------- //
 	
+	if ($method === "edit") {
+
+		$activityID = getTokenForActivity();
+
+		if (isset($_GET['name']) && isset($_POST['value'])) {
+
+			$name = getAttribute($_GET['name']);
+			$value = getAttribute($_POST['value']);
+
+			// Permission
+			if ($core->workAtEvent) {
+			
+				// We list all the fields that can be edited by the activity platform
+				$validFields = array("name", "description", "latitude", "longitude", "location", "dayBegin", "monthBegin", "hourBegin", "minuteBegin", "dayEnd", "monthEnd", "hourEnd", "minuteEnd");
+
+				if (in_array($name, $validFields) == TRUE) {
+
+					// Month
+					if ($name == "monthBegin" || $name == "monthEnd") {
+
+						$name = str_replace("month", "date", $name);
+
+						$update = resourceForQuery(
+							"UPDATE
+								`activity` 
+							SET
+								`$name` = CONVERT_TZ((`$name` - INTERVAL MONTH(`$name`) MONTH) + INTERVAL $value MONTH)
+							WHERE
+								`activity`.`id` = $activityID
+						");
+
+					// Day
+					} elseif ($name == "dayBegin" || $name == "dayEnd") {
+
+						$name = str_replace("day", "date", $name);
+
+						$update = resourceForQuery(
+							"UPDATE
+								`activity` 
+							SET
+								`$name` = ((`$name` - INTERVAL DAY(`$name`) DAY) + INTERVAL $value DAY)
+							WHERE
+								`activity`.`id` = $activityID
+						");
+
+					// Hour
+					} elseif ($name == "hourBegin" || $name == "hourEnd") {
+
+						$name = str_replace("hour", "date", $name);
+
+						$update = resourceForQuery(
+							"UPDATE
+								`activity` 
+							SET
+								`$name` = CONVERT_TZ(((`$name` - INTERVAL HOUR(`$name`) HOUR) + INTERVAL $value HOUR), '-03:00','+00:00')
+							WHERE
+								`activity`.`id` = $activityID
+						");
+
+					// Minute
+					} elseif ($name == "minuteBegin" || $name == "minuteEnd") {
+
+						$name = str_replace("minute", "date", $name);
+
+						$update = resourceForQuery(
+							"UPDATE
+								`activity` 
+							SET
+								`$name` = ((`$name` - INTERVAL MINUTE(`$name`) MINUTE) + INTERVAL $value MINUTE)
+							WHERE
+								`activity`.`id` = $activityID
+						");
+
+					// The rest
+					} else {
+						$update = resourceForQuery(
+							"UPDATE
+								`activity`
+							SET
+								`$name` = '$value'
+							WHERE
+								`activity`.`id` = $activityID
+						");
+					}
+
+					// Return its data
+					if ($format == "json") {
+						$data["activityID"] = $activityID;
+						echo json_encode($data);
+					} elseif ($format == "html") {
+						$result = getActivitiesForMemberAtActivityQuery($activityID, $core->memberID);
+						printAgendaItem(mysql_fetch_assoc($result), "member");
+					} else {
+						http_status_code(405, "this format is not available");
+					}
+
+				} else {
+					http_status_code(406, "name field doesn't exist");
+				}
+			} else {
+				http_status_code(401, "personID doesn't work at event");
+			}
+	    } else {
+	    	http_status_code(404, "name and value are required parameters");
+	    }
+
+	} else
+
 	if ($method === "requestEnrollment") {
 
 		$activityID = getTokenForActivity();
@@ -510,6 +618,31 @@
 
 		} else {
 			http_status_code(400, "questionID is a required parameter");
+		}
+		
+	} else
+
+	if ($method === "getOpinion") {
+
+		$activityID = getTokenForActivity();
+
+		if (isset($_GET["activityID"])) {
+
+			$result = resourceForQuery(
+			// echo (
+				"SELECT
+					`activityMember`.`rating`
+				FROM
+					`activityMember`
+				WHERE 1
+					AND `activityMember`.`activityID` = $activityID
+					AND `activityMember`.`memberID` = $core->memberID
+			");
+
+			echo printInformation("activityMember", $result, true, 'json');
+
+		} else {
+			http_status_code(400, "activityID is a required parameter");
 		}
 		
 	} else

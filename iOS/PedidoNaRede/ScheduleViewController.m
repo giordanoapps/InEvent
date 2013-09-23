@@ -97,7 +97,7 @@
     
     if (selection == ScheduleSubscribed) {
         NSString *tokenID = [[HumanToken sharedInstance] tokenID];
-        [[[APIController alloc] initWithDelegate:self forcing:forcing] eventGetScheduleAtEvent:[[EventToken sharedInstance] eventID] withTokenID:tokenID];
+        [[[APIController alloc] initWithDelegate:self forcing:forcing] eventGetActivitiesAtEvent:[[EventToken sharedInstance] eventID] withTokenID:tokenID];
     } else {
         [[[APIController alloc] initWithDelegate:self forcing:forcing] eventGetActivitiesAtEvent:[[EventToken sharedInstance] eventID]];
     }
@@ -109,9 +109,9 @@
 
 - (void)alertActionSheet {
     
-    NSString *title = (selection == ScheduleSubscribed) ? NSLocalizedString(@"All activities", nil) : NSLocalizedString(@"My activities", nil);
+//    NSString *title = (selection == ScheduleSubscribed) ? NSLocalizedString(@"All activities", nil) : NSLocalizedString(@"My activities", nil);
     
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Actions", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"Event details", nil), title, NSLocalizedString(@"Exit event", nil), nil];
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Actions", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"Event details", nil), NSLocalizedString(@"Exit event", nil), nil];
     
     [actionSheet showFromBarButtonItem:self.rightBarButton animated:YES];
 }

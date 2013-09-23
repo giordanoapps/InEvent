@@ -276,12 +276,12 @@
     [self JSONObjectWithNamespace:@"event" method:@"getActivities" attributes:attributes];
 }
 
-- (void)eventGetScheduleAtEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID {
+- (void)eventGetActivitiesAtEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID {
 
     if (tokenID != nil) {
         NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID, @"eventID" : [NSString stringWithFormat:@"%d", eventID]}};
         
-        [self JSONObjectWithNamespace:@"event" method:@"getSchedule" attributes:attributes];
+        [self JSONObjectWithNamespace:@"event" method:@"getActivities" attributes:attributes];
     }
 }
 

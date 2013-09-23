@@ -75,7 +75,8 @@
 				http_status_code(406, "not a single row was inserted");
 			}
 		} else {
-			http_status_code(303, "The personID is already enrolled on this event");
+			return 303;
+			// http_status_code(303, "The personID is already enrolled on this event");
 		}
 
 	}

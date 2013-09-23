@@ -862,7 +862,6 @@ textarea, input {
 }
 
 .menuContent .toolBox {
-	height: 48px;
 	padding: 0px 20px;
 }
 
@@ -900,7 +899,7 @@ textarea, input {
 
 .menuContent .toolBox img {
 	width: 28px;
-	margin: 10px 6px;
+	margin: 8px 6px;
 	padding: 0;
 	cursor: pointer;
 	vertical-align: middle;
@@ -920,7 +919,7 @@ textarea, input {
 	color: #333;
 	font-size: 90%;
 	padding: 5px 10px;
-	position: relative;
+	margin: 8px 0;
 	text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
 	-webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);
 	-moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);
@@ -928,9 +927,7 @@ textarea, input {
 	cursor: pointer;
 	border-radius: 4px;
 	vertical-align: top;
-	line-height: 18px;
-	position: relative;
-	top: 6px;
+	line-height: 16px;
 }
 
 .menuContent .toolWrapper {
@@ -1434,11 +1431,26 @@ textarea, input {
 	overflow: hidden;
 }
 
+#eventContent .toolBoxOptions {
+	border-bottom: 1px solid #333;
+	background-color: #FFF;
+	display: none;
+	width: 100%;
+	margin: 0 auto;
+	text-align: left;
+	padding: 1px 0 0 0;
+	position: relative;
+}
+
 #eventContent .placerContent > ul,
 #eventContent .realContent {
 	position: relative;
 	height: 100%;
 	overflow: hidden;
+}
+
+#eventContent .realContent {
+	padding-top: 44px;
 }
 
 #eventContent .message {
@@ -1468,6 +1480,10 @@ textarea, input {
 	padding: 10px;
 }
 
+#eventContent.editingMode .agendaItem {
+	cursor: pointer;
+}
+
 #eventContent .agendaItem {
 	background-color: #FDFDFD;
 	padding: 0;
@@ -1476,28 +1492,37 @@ textarea, input {
 	height: 50px;
 }
 
-#eventContent .agendaItem:last-of-type {
-	margin-bottom: 88px;
+#eventContent .realContent ul > li:last-of-type {
+	margin-bottom: 132px;
 }
 
 #eventContent .agendaItemHighlight {
 	background-color: #E6E6E6;
-	height: 200px;
+	height: 150px;
 }
 
-#eventContent .agendaItem p {
+#eventContent .agendaItemInvisible {
+	display: none;
+}
+
+#eventContent .agendaItem span {
 	margin: 0;
 	padding: 0% 2%;
 }
 
 #eventContent .agendaItem img {
 	width: 24px;
-	vertical-align: middle;
 	margin: 0 2px;
+	display: inline-block;
+	vertical-align: middle;
 }
 
-#eventContent .agendaItem span {
-	font-weight: bold;
+#eventContent .agendaItem .titleInput {
+	padding: 4.5px;
+	margin: 9px 0;
+	font-size: 90%;
+	width: 95%;
+	text-align: center;
 }
 
 #eventContent .agendaItem .left {
@@ -1530,13 +1555,24 @@ textarea, input {
 	float: left;
 }
 
+#eventContent .agendaItem .right .bottom div {
+	display: inline;
+}
+
+#eventContent .agendaItem .right .bottom span {
+	display: inline-block;
+	font-weight: bold;
+}
+
 #eventContent .agendaItem .right .controls {
 	width: 14%;
 	float: left;
 }
 
-#eventContent .agendaItem .left p,
-#eventContent .agendaItem .right p {
+#eventContent .agendaItem .left span,
+#eventContent .agendaItem .right span,
+#eventContent .agendaItem .left input,
+#eventContent .agendaItem .right input {
 	display: table-cell;
 	vertical-align: middle;
 	text-align: center;
@@ -1570,7 +1606,7 @@ textarea, input {
 
 #eventContent .agendaItem .smallPadding {
 	position: relative;
-	top: 4px;
+	top: 0;
 }
 
 #eventContent .agendaItem .limited {
@@ -1579,11 +1615,12 @@ textarea, input {
 	white-space: nowrap;
 	display: inline-block;
 	overflow: hidden;
+	padding: 0;
 }
 
 #eventContent .agendaItem .suckyVerticalAlign {
-	display: inline-block;
-	vertical-align: middle;
+	display: inline-block !important;
+	vertical-align: middle !important;
 	height: 100%;
 	padding: 0 5px;
 }
@@ -1617,37 +1654,44 @@ textarea, input {
 	border-right-color: #C51F1F;	
 }
 
+#eventContent .toolBonus {
+	display: none;
+}
+
 /* @group Calendar */
 
-#eventContent .calendarBox p {
+#eventContent .toolBonusCalendar p {
 	margin: 0;
 }
 
-#eventContent .calendarBox .left,
-#eventContent .calendarBox .middle,
-#eventContent .calendarBox .right {
+#eventContent .toolBonusCalendar .left,
+#eventContent .toolBonusCalendar .middle,
+#eventContent .toolBonusCalendar .right {
 	display: inline-block;
 	vertical-align: top;
 	float: none;
 }
 
-#eventContent .calendarBox .left {
+#eventContent .toolBonusCalendar .left {
 	width: 30%;
 }
 
-#eventContent .calendarBox .middle {
+#eventContent .toolBonusCalendar .middle {
 	width: 30%;
 }
 
-#eventContent .calendarBox .right {
+#eventContent .toolBonusCalendar .right {
 	width: 38%;
 }
 
-#eventContent .calendarBox .timeBox {
-	display: block;
+#eventContent .toolBonusCalendar .dateBox,
+#eventContent .toolBonusCalendar .timeBox {
+	display: inline-block;
+	width: 50%;
+	padding: 5px 0;
 }
 
-#eventContent .calendarBox input {
+#eventContent .toolBonusCalendar input {
 	padding: 2px;
 	border: 1px solid #A2A2A2;
 	background-color: #DDD;
@@ -1658,19 +1702,34 @@ textarea, input {
 	border-radius: 4px;
 }
 
-#eventContent .calendarBox .badTime {
+#eventContent .toolBonusCalendar .badTime {
 	color: #DD2727;
 }
 
-#eventContent .calendarBox .title {
+#eventContent .toolBonusCalendar .title {
 	display: block;
 	text-align: center;
-	margin-bottom: 10px;
+	margin: 10px 0;
+	font-size: 110%;
+	color: #222;
+	font-weight: bold;
+	line-height: 20px;
+	vertical-align: middle;
+	display: inline-block;
 }
 
-#eventContent .calendarBox .weekDays {
+#eventContent .toolBonusCalendar .weekDays {
 	display: inline-block;
 	padding: 12px 20px;
+}
+
+/* @end */
+
+/* @group Map */
+
+#eventContent .toolBonusMap,
+#eventContent .toolBonusMap #mapCanvas {
+	height: 350px;
 }
 
 /* @end */

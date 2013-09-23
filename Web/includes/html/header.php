@@ -31,6 +31,7 @@
 	
 	<script src="js/lib/require.js" type="text/javascript" data-main="js/common"></script>
 	<script src="js/lib/jquery.fileuploader.min.js" type="text/javascript"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?sensor=false&region=BR" type="text/javascript"></script>
 	
 	<link href="favicon.ico" rel="icon" type="image/x-icon" />
 

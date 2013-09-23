@@ -64,7 +64,7 @@
                 $attribute = array_map("getAttribute", $attr);
             // Else, we can parse the string
             } elseif(is_string($attr)) {
-                $attribute = trim(htmlentities($attr, ENT_COMPAT, "UTF-8"));
+                $attribute = trim(htmlentities($attr, ENT_QUOTES, "UTF-8"));
             } else {
                 $attribute = $attr;
             }

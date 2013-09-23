@@ -9,9 +9,9 @@
 #import <Foundation/Foundation.h>
 
 typedef enum {
-    ScheduleStateUnknown = 0,
-    ScheduleStateApproved,
-    ScheduleStateDenied
+    ScheduleStateUnknown = -1,
+    ScheduleStateDenied,
+    ScheduleStateApproved
 } ScheduleState;
 
 typedef enum {

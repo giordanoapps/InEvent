@@ -79,7 +79,7 @@
 - (void)eventRevokePermissionForPerson:(NSInteger)personID atEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID;
 - (void)eventGetPeopleAtEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID;
 - (void)eventGetActivitiesAtEvent:(NSInteger)eventID;
-- (void)eventGetScheduleAtEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID;
+- (void)eventGetActivitiesAtEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID;
 - (void)eventSendOpinionWithRating:(NSInteger)rating withMessage:(NSString *)message toEvent:(NSInteger)eventID withToken:(NSString *)tokenID;
 
 #pragma mark - Notifications

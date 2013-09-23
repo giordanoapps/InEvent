@@ -74,7 +74,7 @@
         ?>
         <li
             value="<?php echo $data['id'] ?>"
-            class="scheduleItem <?php if ($target == "event") { ?>scheduleItemSelectable<?php } elseif($data['memberID'] == 0) { ?>scheduleItemInvisible<?php } ?>"
+            class="scheduleItem <?php if ($target == "event") { ?>scheduleItemSelectable<?php } elseif($data['approved'] == -1) { ?>scheduleItemInvisible<?php } ?>"
             data-type="<?php if (isset($data["type"])) { echo $data["type"]; } else { ?>activity<?php } ?>">
             <div class="left">
                 <div class="upper">
@@ -139,7 +139,7 @@
         $data = mysql_fetch_assoc($result);
 
         // Enrolled at event?
-        $enrolledAtEvent = ($data['memberID'] != 0) ? true : false;
+        $enrolledAtEvent = ($data['approved'] >= 0) ? true : false;
 
         ?><ul><?php
 
@@ -166,6 +166,27 @@
 
             $day = 0;
 
+            // Print an invisible box
+            printAgendaItem(
+                array(
+                    "id" => 0,
+                    "class" => "agendaItemInvisible",
+                    "groupID" => 0,
+                    "name" => "",
+                    "description" => "",
+                    "latitude" => 0,
+                    "longitude" => 0,
+                    "location" => "",
+                    "dateBegin" => 0,
+                    "dateEnd" => 0,
+                    "capacity" => "",
+                    "highlight" => 0,
+                    "approved" => ""
+                ),
+                $enrolledAtEvent
+            );
+
+
             while ($data = mysql_fetch_assoc($result)) {
 
                 if ($day != date("z", $data['dateBegin'])) {
@@ -179,53 +200,7 @@
                     <?php
                 }
 
-                ?>
-                <li
-                    value="<?php echo $data['id'] ?>"
-                    class="agendaItem <?php if ($data['highlight'] == 1) { ?>agendaItemHighlight<?php } ?>"
-                    data-group="<?php echo $data['groupID'] ?>">
-                    <div class="left">
-                        <div class="upper">
-                            <p class="dateBegin"><?php echo date("G:i", $data['dateBegin']) ?></p>
-                        </div>
-                        <div class="bottom">
-                            <p class="dateEnd"><?php echo date("G:i", $data['dateEnd']) ?></p>
-                        </div>
-                    </div>
-                    <div class="right">
-                        <div class="upper">
-                            <p class="name"><?php echo $data['name'] ?></p>
-                        </div>
-                        <div class="middle">
-                            <p class="description"><?php echo $data['description'] ?></p>
-                        </div>
-                        <div class="bottom">
-                            <a target="_blank" href="https://www.google.com/maps/?q=<?php echo urlencode(html_entity_decode($data['location'], ENT_COMPAT, "UTF-8")) ?>">
-                                <img src="images/32-Google-Maps.png" alt="Local" title="Local de realização da atividade. Para acompanhar no Google Maps, é necessário ter a versão mais nova do produto.">
-                                <span class="smallPadding limited"><?php echo $data['location'] ?></span>
-                            </a>
-                            <span>
-                                <img src="images/32-Users.png" alt="Local" title="Número de vagas na atividade">
-                                <span class="smallPadding"><?php if ($data['capacity'] != 0) { echo $data['capacity']; } else { ?>&infin;<?php } ?></span>
-                            </span>
-                            <span class="suckyVerticalAlign"></span>
-                        </div>
-                        <div class="controls">
-                            <?php if ($enrolledAtEvent) { ?>
-                            <span class="suckyVerticalAlign"></span>
-                            <input
-                                type="button"
-                                value="<?php if ($enrolledAtEvent && $data['memberID'] != 0) { ?>Inscrito<?php } else { ?>Inscrever<?php } ?>"
-                                title="Ao entrar nessa atividade, saberá imediatamente se foi aprovado ou está na lista de espera"
-                                class="singleButton <?php if ($enrolledAtEvent && $data['memberID'] != 0) { ?>toolEnrolled<?php } else { ?>toolEnroll<?php } ?>">
-                            <?php } ?>
-                        </div>
-                        <?php if ($data['memberID'] != 0) { ?>
-                        <p class="hint <?php if ($data['approved'] == 1) { ?>hintApproved<?php } else { ?>hintDenied<?php } ?>"></p>
-                        <?php } ?>
-                    </div>
-                </li>
-                <?php
+                printAgendaItem($data, $enrolledAtEvent);
             }
 
         } else {
@@ -237,6 +212,67 @@
         }
 
         ?></ul><?php
+    }
+
+    function printAgendaItem($data, $enrolledAtEvent) {
+        ?>
+        <li
+            value="<?php echo $data['id'] ?>"
+            class="agendaItem <?php if (isset($data['class'])) { echo $data['class']; } ?> <?php if ($data['highlight'] == 1) { ?>agendaItemHighlight<?php } ?>"
+            data-group="<?php echo $data['groupID'] ?>"
+            data-latitude="<?php echo $data['latitude'] ?>"
+            data-longitude="<?php echo $data['longitude'] ?>"
+            data-dateBegin="<?php echo $data['dateBegin'] ?>"
+            data-dateEnd="<?php echo $data['dateEnd'] ?>">
+            <div class="left">
+                <div class="upper">
+                    <span class="dateBegin" name="dateBegin"><?php echo date("G:i", $data['dateBegin']) ?></span>
+                </div>
+                <div class="bottom">
+                    <span class="dateEnd" name="dateEnd"><?php echo date("G:i", $data['dateEnd']) ?></span>
+                </div>
+            </div>
+            <div class="right">
+                <div class="upper">
+                    <span class="name" name="name"><?php echo $data['name'] ?></span>
+                </div>
+                <div class="middle">
+                    <span class="description" name="description"><?php echo $data['description'] ?></span>
+                </div>
+                <div class="bottom">
+                    <?php
+                        if ($data['latitude'] != 0 && $data['longitude'] != 0) {
+                            $mapsURL = "https://www.google.com/maps/?q=" . $data['latitude'] . "," . $data['longitude'];
+                        } else {
+                            $mapsURL = "https://www.google.com/maps/?q=" . urlencode(html_entity_decode($data['location'], ENT_COMPAT, "UTF-8"));
+                        }
+                    ?>
+                    <a target="_blank" href="<?php echo $mapsURL ?>">
+                        <img id="local" src="images/32-Google-Maps.png" alt="Local" title="Local de realização da atividade. Para acompanhar no Google Maps, é necessário ter a versão mais nova do produto.">
+                        <span class="smallPadding limited location" name="location"><?php echo $data['location'] ?></span>
+                    </a>
+                    <div>
+                        <img src="images/32-Users.png" alt="Local" title="Número de vagas na atividade">
+                        <span class="smallPadding"><?php if ($data['capacity'] != 0) { echo $data['capacity']; } else { ?>&infin;<?php } ?></span>
+                    </div>
+                    <span class="suckyVerticalAlign"></span>
+                </div>
+                <div class="controls">
+                    <?php if ($enrolledAtEvent) { ?>
+                    <span class="suckyVerticalAlign"></span>
+                    <input
+                        type="button"
+                        value="<?php if ($enrolledAtEvent && $data['approved'] >= 0) { ?>Inscrito<?php } else { ?>Inscrever<?php } ?>"
+                        title="Ao entrar nessa atividade, saberá imediatamente se foi aprovado ou está na lista de espera"
+                        class="singleButton <?php if ($enrolledAtEvent && $data['approved'] >= 0) { ?>toolEnrolled<?php } else { ?>toolEnroll<?php } ?>">
+                    <?php } ?>
+                </div>
+                <?php if ($data['approved'] >= 0) { ?>
+                <p class="hint <?php if ($data['approved'] == 1) { ?>hintApproved<?php } else { ?>hintDenied<?php } ?>"></p>
+                <?php } ?>
+            </div>
+        </li>
+        <?php
     }
 
 ?>

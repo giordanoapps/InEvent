@@ -5,7 +5,7 @@ modules.push('jquery');
 modules.push('common');
 modules.push('jquery.maskedinput');
 
-define(modules, function($) {$(function() {
+define(modules, function($, common) {$(function() {
 
 	$.fn.np = function(method) {
 

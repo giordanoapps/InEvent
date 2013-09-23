@@ -92,7 +92,6 @@
 								$email = $value;
 								break;
 						}
-
 					}
 
 					// Get the person for the given email
@@ -100,7 +99,7 @@
 
 					if ($type == "event") {
 						// Enroll the person at all the activities
-						processEventEnrollmentWithActivity($referenceID, $personID);
+						processEventEnrollmentWithEvent($referenceID, $personID);
 					} elseif ($type == "activity") {
 						// Enroll the person at the event if necessary
 						processActivityEnrollment($referenceID, $personID);

@@ -9,9 +9,9 @@
 #import <Foundation/Foundation.h>
 
 typedef enum {
-    EnrollmentStateUnknown = 0,
-    EnrollmentStateApproved,
-    EnrollmentStateDenied
+    EnrollmentStateUnknown = -1,
+    EnrollmentStateDenied,
+    EnrollmentStateApproved
 } EnrollmentState;
 
 @protocol Enrollment <NSObject>

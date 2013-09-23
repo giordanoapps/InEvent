@@ -23,8 +23,7 @@
                 `event`.`state`,
                 `event`.`fugleman`,
                 `eventMember`.`roleID`,
-                IF(`eventMember`.`memberID` = $memberID, $memberID, 0) AS `memberID`,
-                IF(`eventMember`.`memberID` = $memberID, `eventMember`.`approved`, 0) AS `approved`
+                IF(`eventMember`.`memberID` = $memberID, `eventMember`.`approved`, -1) AS `approved`
             FROM
                 `event`
             LEFT JOIN

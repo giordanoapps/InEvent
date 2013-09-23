@@ -3,7 +3,7 @@
 	
 	if ($method === "getEvents") {
 
-		if (isset($_GET['tokenID'])) {
+		if (isset($_GET['tokenID']) && $_GET['tokenID'] != "null") {
 			$tokenID = getToken();
 			$result = getEventsForMemberQuery($core->memberID, false);
 		} else {
@@ -20,7 +20,7 @@
 
 			$eventID = getAttribute($_GET['eventID']);
 
-			if (isset($_GET['tokenID'])) {
+			if (isset($_GET['tokenID']) && $_GET['tokenID'] != "null") {
 				$tokenID = getToken();
 				$result = getEventForMemberQuery($eventID, $core->memberID);
 			} else {
@@ -92,7 +92,7 @@
 
 	if ($method === "requestMultipleEnrollment") {
 
-		$eventID = getTokenForActivity();
+		$eventID = getTokenForEvent();
 
 		echo saveFromExcel(getAttribute($_GET['path']), "event", $eventID);
 
@@ -278,10 +278,16 @@
 
 		if (isset($_GET["eventID"])) {
 
-			// Get some properties
-			$eventID = getAttribute($_GET['eventID']);
+			if (isset($_GET['tokenID']) && $_GET['tokenID'] != "null") {
+				// Get some properties
+				$eventID = getTokenForEvent();
+				$result = getActivitiesForMemberAtEventQuery($eventID, $core->memberID);
 
-			$result = getActivitiesForEventQuery($eventID);
+			} else {
+				// Get some properties
+				$eventID = getAttribute($_GET['eventID']);
+				$result = getActivitiesForMemberAtEventQuery($eventID, 0);
+			}
 
 			$data = printInformation("event", $result, true, 'object');
 			echo json_encode(groupActivitiesInDays($data));

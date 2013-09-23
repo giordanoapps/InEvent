@@ -33,8 +33,8 @@
 
     <div class="documentationFunctionBox">
         <p class="documentFunctionName">
-            <span>activity.create(<b>tokenID</b>, <b>activityID</b>, <b>name</b> = null, <b>email</b> = null)</span>
-            <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=activity.requestEnrollment&tokenID=$tokenID&activityID=1&name=null&email=null">
+            <span>activity.create(<b>tokenID</b>, <b>activityID</b>, <b>name</b>)</span>
+            <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=activity.create&tokenID=$tokenID&activityID=1&name=null&email=null">
         </p>
 
         <p class="documentFunctionDescription">Solicita a entrada da pessoa <i>personID</i> na atividade <i>activityID</i>. Se o nome <i>name</i> e email <i>email</i> da pessoa não for especificada ou o <i>tokenID</i> fornecido não tiver permissão para enviar para a pessoa com email <i>email</i>, será utilizada a pessoa associada ao <i>tokenID</i>.</p>
@@ -44,6 +44,22 @@
             <p><b>activityID</b><sub>GET</sub> : id da atividade </p>
             <p><b>name</b><sub>GET</sub> : nome da pessoa </p>
             <p><b>email</b><sub>GET</sub> : email da pessoa </p>
+        </div>
+    </div>
+
+    <div class="documentationFunctionBox">
+        <p class="documentFunctionName">
+            <span>activity.edit(<b>tokenID</b>, <b>activityID</b>, <b>name</b>, <b>value</b>)</span>
+            <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=activity.edit&tokenID=$tokenID&activityID=1&name=nome" data-post="value=valor">
+        </p>
+
+        <p class="documentFunctionDescription">Escreve o valor <i>value</i> no campo <i>name</i> da atividade <i>activityID</i>.</p>
+
+        <div class="documentationFunctionParametersBox">
+            <p><b>tokenID</b><sub>GET</sub> : id de autenticação </p>
+            <p><b>activityID</b><sub>GET</sub> : id da atividade </p>
+            <p><b>name</b><sub>GET</sub> : nome do campo </p>
+            <p><b>value</b><sub>POST</sub> : valor do campo </p>
         </div>
     </div>
 
@@ -114,7 +130,7 @@
             <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=activity.revokeEntrance&tokenID=$tokenID&activityID=1&personID=1">
         </p>
 
-        <p class="documentFunctionDescription">Confirma que a pessoa <i>personID</i> está presente na atividade <i>activityID</i>.</p>
+        <p class="documentFunctionDescription">Nega que a pessoa <i>personID</i> está presente na atividade <i>activityID</i>.</p>
 
         <div class="documentationFunctionParametersBox">
             <p><b>tokenID</b><sub>GET</sub> : id de autenticação </p>
@@ -130,6 +146,21 @@
         </p>
 
         <p class="documentFunctionDescription">Confirma que a pessoa <i>personID</i> realizou o pagamento da atividade <i>activityID</i>.</p>
+
+        <div class="documentationFunctionParametersBox">
+            <p><b>tokenID</b><sub>GET</sub> : id de autenticação </p>
+            <p><b>activityID</b><sub>GET</sub> : id da atividade </p>
+            <p><b>personID</b><sub>GET</sub> : id da pessoa </p>
+        </div>
+    </div>
+
+    <div class="documentationFunctionBox">
+        <p class="documentFunctionName">
+            <span>activity.revokePayment(<b>tokenID</b>, <b>activityID</b>, <b>personID</b>)</span>
+            <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=activity.revokePayment&tokenID=$tokenID&activityID=1&personID=1">
+        </p>
+
+        <p class="documentFunctionDescription">Nega que a pessoa <i>personID</i> realizou o pagamento da atividade <i>activityID</i>.</p>
 
         <div class="documentationFunctionParametersBox">
             <p><b>tokenID</b><sub>GET</sub> : id de autenticação </p>
@@ -222,6 +253,20 @@
         <div class="documentationFunctionParametersBox">
             <p><b>tokenID</b><sub>GET</sub> : id de autenticação </p>
             <p><b>questionID</b><sub>GET</sub> : id da pergunta </p>
+        </div>
+    </div>
+
+    <div class="documentationFunctionBox">
+        <p class="documentFunctionName">
+            <span>activity.getOpinion(<b>tokenID</b>, <b>activityID</b>)</span>
+            <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=activity.getOpinion&tokenID=$tokenID&activityID=1">
+        </p>
+
+        <p class="documentFunctionDescription">Retorna a pontuação <i>rating</i> para a atividade <i>activityID</i>.</p>
+
+        <div class="documentationFunctionParametersBox">
+            <p><b>tokenID</b><sub>GET</sub> : id de autenticação </p>
+            <p><b>activityID</b><sub>GET</sub> : id da atividade </p>
         </div>
     </div>
 

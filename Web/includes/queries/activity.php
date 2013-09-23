@@ -27,8 +27,7 @@
                 `activity`.`capacity`,
                 `activity`.`general`,
                 `activity`.`highlight`,
-                IF(`activityMember`.`memberID` = $memberID, $memberID, 0) AS `memberID`,
-                IF(`activityMember`.`memberID` = $memberID, `activityMember`.`approved`, 0) AS `approved`,
+                IF(`activityMember`.`memberID` = $memberID, `activityMember`.`approved`, -1) AS `approved`,
                 IF(`activityMember`.`memberID` = $memberID, `activityMember`.`priori`, 0) AS `priori`,
                 COALESCE(`activityGroup`.`id`, 0) AS `groupID`
             FROM

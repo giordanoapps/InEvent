@@ -46,7 +46,7 @@
 				</div>
 
 				<div class="enroll" data-id="<?php echo $data['id'] ?>">
-					<?php if ($core->auth && $data['memberID'] != 0) { ?>
+					<?php if ($core->auth && $data['approved'] >= 0) { ?>
                         <input type="button" value="Ir para evento" title="Veja suas atividades dentro do evento" class="singleButton toolEnrolled">
                     <?php } elseif ($data['enrollmentBegin'] > time()) { ?>
                         <input type="button" value="Inscrições não abertas" title="As inscrições do evento ainda não foram abertas" class="singleButton toolEarly">

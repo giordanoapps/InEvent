@@ -18,7 +18,7 @@
     <div class="documentationFunctionBox">
         <p class="documentFunctionName">
             <span>event.getEvents(<b>tokenID</b> = null)</span>
-            <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=event.getEvents&tokenID=$tokenID">
+            <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=event.getEvents&tokenID=null">
         </p>
 
         <p class="documentFunctionDescription">Retorna todos os eventos cadastrados, com nomes ordenados em ordem alfabética. Caso seja fornecido um <i>tokenID</i>, será informado se a pessoa associada ao <i>tokenID</i> está inscrita.</p>
@@ -31,7 +31,7 @@
     <div class="documentationFunctionBox">
         <p class="documentFunctionName">
             <span>event.getSingle(<b>eventID</b>, <b>tokenID</b> = null)</span>
-            <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=event.getSingle&eventID=1">
+            <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=event.getSingle&eventID=1&tokenID=null">
         </p>
 
         <p class="documentFunctionDescription">Retorna o evento <i>eventID</i>. Caso seja fornecido um <i>tokenID</i>, será informado se a pessoa associada ao <i>tokenID</i> está inscrita.</p>
@@ -151,28 +151,15 @@
 
     <div class="documentationFunctionBox">
         <p class="documentFunctionName">
-            <span>event.getActivities(<b>eventID</b>)</span>
-            <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=event.getActivities&eventID=1">
+            <span>event.getActivities(<b>eventID</b>, <b>tokenID</b> = null)</span>
+            <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=event.getActivities&tokenID=null&eventID=1">
         </p>
 
-        <p class="documentFunctionDescription">Retorna todas as atividades do evento <i>eventID</i>.</p>
+        <p class="documentFunctionDescription">Retorna todas as atividades do evento <i>eventID</i>. Caso seja fornecido um <i>tokenID</i>, será informado se a pessoa associada ao <i>tokenID</i> está inscrita em cada atividade.</p>
 
         <div class="documentationFunctionParametersBox">
             <p><b>eventID</b><sub>GET</sub> : id do evento </p>
-        </div>
-    </div>
-    
-    <div class="documentationFunctionBox">
-        <p class="documentFunctionName">
-            <span>event.getSchedule(<b>tokenID</b>, <b>eventID</b>)</span>
-            <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=event.getSchedule&tokenID=$tokenID&eventID=1">
-        </p>
-
-        <p class="documentFunctionDescription">Retorna todas o cronograma da pessoa com <i>tokenID</i> no evento <i>eventID</i>.</p>
-
-        <div class="documentationFunctionParametersBox">
             <p><b>tokenID</b><sub>GET</sub> : id de autenticação </p>
-            <p><b>eventID</b><sub>GET</sub> : id do evento </p>
         </div>
     </div>
 
