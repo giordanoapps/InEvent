@@ -27,16 +27,6 @@ public class ActivityMember
         public static final String PRESENT_FULL     = TABLE_NAME+"."+PRESENT;
 
 
-        public static final String[] PROJECTION_SCHEDULE_LIST = {
-            Activity.Columns._ID_FULL,
-            Activity.Columns.DATE_BEGIN_FULL,
-            Activity.Columns.DATE_END_FULL,
-            Activity.Columns.NAME_FULL,
-            Activity.Columns.DESCRIPTION_FULL,
-            Activity.Columns.LOCATION_FULL,
-            ActivityMember.Columns.APPROVED_FULL
-        };
-
         public static final String[] PROJECTION_ATTENDANCE_LIST = {
             Member.Columns._ID_FULL,
             Member.Columns.NAME_FULL,
@@ -49,19 +39,19 @@ public class ActivityMember
     public static final Uri    CONTENT_URI = Uri.withAppendedPath(InEventProvider.CONTENT_URI, PATH);
 
 
-    public static ContentValues newActivtyMember(long eventID, long activityID, long memberID, boolean approved, boolean present)
+    public static ContentValues newActivtyMember(long eventID, long activityID, long memberID, int approved, boolean present)
     {
         ContentValues cv = new ContentValues();
 
         cv.put(Columns.EVENT_ID, eventID);
         cv.put(Columns.ACTIVITY_ID, activityID);
         cv.put(Columns.MEMBER_ID, memberID);
-        cv.put(Columns.APPROVED, approved ? 1 : 0);
+        cv.put(Columns.APPROVED, approved);
         cv.put(Columns.PRESENT, present ? 1 : 0);
 
         return cv;
     }
-    public static ContentValues newActivtyMember(long eventID, long activityID, long memberID, boolean approved)
+    public static ContentValues newActivtyMember(long eventID, long activityID, long memberID, int approved)
     {
         return newActivtyMember(eventID, activityID, memberID, approved, false);
     }

@@ -7,8 +7,10 @@
 
     <!-- Button Actions -->
     <string name="action_about">Sobre</string>
-    <string name="action_displayOption_activities">Todas as atividades</string>
-    <string name="action_displayOption_schedule">Minhas atividades</string>
+    <string name="action_displayOption_all">Todas</string>
+    <string name="action_displayOption_schedule_approved">Agenda - Aprovado</string>
+    <string name="action_displayOption_schedule_full">Agenda - Tudo</string>
+    <string name="action_displayOption_schedule_waitList">Agenda - Espera</string>
     <string name="action_event_enroll">Enroll</string>
     <string name="action_login">Fazer Login</string>
     <string name="action_myAccount">Minha Conta</string>
@@ -25,17 +27,19 @@
 
     <!-- Titles -->
     <string name="title_about">Sobre</string>
-    <string name="title_displayOption_schedule">Minhas agenda</string>
-    <string name="title_displayOption_activities">Todas as atividades</string>
-    <string name="title_general">Geral</string>
-    <string name="title_preferences">Preferências</string>
-    <string name="title_splashScreen">Splash Screen</string>
     <string name="title_appVersion">Versão</string>
-    <string name="title_mobileNetwork">Rede Móvel</string>
-    <string name="title_yourAccount">Sua Conta</string>
+    <string name="title_displayOption_all">Todas as atividades</string>
+    <string name="title_displayOption_schedule_approved">Minhas agenda - Aprovado</string>
+    <string name="title_displayOption_schedule_full">Minhas agenda</string>
+    <string name="title_displayOption_schedule_waitList">Minhas agenda - Espera</string>
+    <string name="title_general">Geral</string>
     <string name="title_login">Fazer Login</string>
+    <string name="title_mobileNetwork">Rede Móvel</string>
+    <string name="title_preferences">Preferências</string>
     <string name="title_signIn">Entrar</string>
     <string name="title_signUp">Nova Conta</string>
+    <string name="title_splashScreen">Splash Screen</string>
+    <string name="title_yourAccount">Sua Conta</string>
 
     <!-- Hint Messages -->
     <string name="hint_member_myName">Eu</string>
@@ -45,10 +49,10 @@
     <string name="hint_login_password">Senha</string>
     <string name="hint_login_university">Universidade</string>
     <string name="hint_login_university_course">Curso</string>
-    <string name="hint_event_name">Nome</string>
-    <string name="hint_event_description">Descrição</string>
     <string name="hint_event_address">Endereço</string>
     <string name="hint_event_city">Cidade</string>
+    <string name="hint_event_description">Descrição</string>
+    <string name="hint_event_name">Nome</string>
     <string name="hint_event_state">Estado</string>
 
     <!-- Messages -->
@@ -63,9 +67,9 @@
     <string name="loading_loggingIn">Entrando…</string>
 
     <!-- Empty Messages -->
-    <string name="empty_eventList">Nenhum evento futuro</string>
-    <string name="empty_eventActivities">Nenhuma atividade cadastrada</string>
-    <string name="empty_eventActivityAttenders">Ninguém cadastrado nesta atividade ainda</string>
+    <string name="empty_eventActivities">As atividades do evento serão mostradas aqui</string>
+    <string name="empty_eventActivityAttenders">Pessoas cadastradas nesta atividade aparecerão aqui</string>
+    <string name="empty_eventList">Aqui serão mostrados os eventos</string>
 
     <!-- Preferences -->
     <string name="preference_useMobileNetwork">Usar rede de dados móvel</string>

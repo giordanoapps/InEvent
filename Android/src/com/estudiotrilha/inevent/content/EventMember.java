@@ -51,4 +51,22 @@ public class EventMember
 
         return cv;
     }
+    public static ContentValues valuesFromJson(JSONObject json, long eventID, long memberID)
+    {
+        ContentValues cv = new ContentValues();
+
+        try
+        {
+            cv.put(Columns.EVENT_ID, eventID);
+            cv.put(Columns.MEMBER_ID, memberID);
+            cv.put(Columns.APPROVED, json.getInt(Columns.APPROVED));
+            cv.put(Columns.ROLE_ID, json.getInt(Columns.ROLE_ID));
+        }
+        catch (JSONException e)
+        {
+            Log.w(InEvent.NAME, "Error retrieving information for Event from json = "+json, e);
+        }
+
+        return cv;
+    }
 }

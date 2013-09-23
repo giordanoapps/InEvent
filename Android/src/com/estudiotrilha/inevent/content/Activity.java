@@ -159,7 +159,8 @@ public class Activity
             Activity.Columns.DATE_END_FULL,
             Activity.Columns.NAME_FULL,
             Activity.Columns.DESCRIPTION_FULL,
-            Activity.Columns.LOCATION_FULL
+            Activity.Columns.LOCATION_FULL,
+            "IFNULL("+ActivityMember.Columns.APPROVED_FULL+",-1) AS "+ActivityMember.Columns.APPROVED
         };
     }
 
@@ -167,8 +168,6 @@ public class Activity
     // Content Provider
     public static final String ACTIVITY_PATH      = "activity";
     public static final Uri ACTIVITY_CONTENT_URI  = Uri.withAppendedPath(InEventProvider.CONTENT_URI, ACTIVITY_PATH);
-    public static final String SCHEDULE_PATH      = "activity/schedule";
-    public static final Uri SCHEDULE_CONTENT_URI  = Uri.withAppendedPath(InEventProvider.CONTENT_URI, SCHEDULE_PATH);
 
 
     public static ContentValues valuesFromJson(JSONObject json, long eventID)

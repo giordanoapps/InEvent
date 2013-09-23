@@ -43,7 +43,6 @@ public class Event
         private static final String DISMISS_ENROLLMENT = ApiRequest.BASE_URL + NAMESPACE + ".dismissEnrollment&tokenID=%s&eventID=%d";
         private static final String GET_PEOPLE         = ApiRequest.BASE_URL + NAMESPACE + ".getPeople&tokenID=%s&eventID=%d&selection=%s";
         private static final String GET_ACTIVITIES     = ApiRequest.BASE_URL + NAMESPACE + ".getActivities&eventID=%s";
-        private static final String GET_SCHEDULE       = ApiRequest.BASE_URL + NAMESPACE + ".getSchedule&tokenID=%s&eventID=%d";
 
 
         public static HttpURLConnection getEvents() throws IOException
@@ -108,15 +107,16 @@ public class Event
 
         public static HttpURLConnection getActivities(long eventID) throws IOException
         {
-            URL url = new URL(String.format(GET_ACTIVITIES, eventID));
-
-            return ConnectionHelper.getURLGetConnection(url);
+            return getActivities(eventID, null);
         }
-
-        public static HttpURLConnection getSchedule(String tokenID, long eventID) throws IOException
+        public static HttpURLConnection getActivities(long eventID, String tokenID) throws IOException
         {
-            tokenID = URLEncoder.encode(tokenID, ApiRequest.ENCODING);
-            URL url = new URL(String.format(GET_SCHEDULE, tokenID, eventID));
+            String formatString = String.format(GET_ACTIVITIES, eventID);
+            if (tokenID != null)
+            {
+                formatString += "&tokenID="+URLEncoder.encode(tokenID, ApiRequest.ENCODING);
+            }
+            URL url = new URL(formatString);
 
             return ConnectionHelper.getURLGetConnection(url);
         }

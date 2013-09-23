@@ -45,7 +45,6 @@ public class InEventProvider extends ContentProvider
     public static final int URI_EVENT_ATTENDERS      = 103;
     public static final int URI_ACTIVITY             = 201;
     public static final int URI_ACTIVITY_SINGLE      = 202;
-    public static final int URI_ACTIVITY_SCHEDULE    = 203;
     public static final int URI_ACTIVITY_ATTENDERS   = 204;
     public static final int URI_MEMBER               = 301;
 
@@ -59,7 +58,6 @@ public class InEventProvider extends ContentProvider
         uriMatcher.addURI(AUTHORITY, EventMember.PATH,              URI_EVENT_ATTENDERS);
         uriMatcher.addURI(AUTHORITY, Activity.ACTIVITY_PATH,        URI_ACTIVITY);
         uriMatcher.addURI(AUTHORITY, Activity.ACTIVITY_PATH + "/#", URI_ACTIVITY_SINGLE);
-        uriMatcher.addURI(AUTHORITY, Activity.SCHEDULE_PATH,        URI_ACTIVITY_SCHEDULE);
         uriMatcher.addURI(AUTHORITY, ActivityMember.PATH,           URI_ACTIVITY_ATTENDERS);
         uriMatcher.addURI(AUTHORITY, Member.PATH,                   URI_MEMBER);
     }
@@ -99,9 +97,6 @@ public class InEventProvider extends ContentProvider
 
         case URI_ACTIVITY:
             return ContentResolver.CURSOR_DIR_BASE_TYPE + IN_EVENT + Activity.ACTIVITY_PATH;
-
-        case URI_ACTIVITY_SCHEDULE:
-            return ContentResolver.CURSOR_DIR_BASE_TYPE + IN_EVENT + Activity.SCHEDULE_PATH;
 
         case URI_ACTIVITY_ATTENDERS:
             return ContentResolver.CURSOR_DIR_BASE_TYPE + IN_EVENT + ActivityMember.PATH;
@@ -169,10 +164,6 @@ public class InEventProvider extends ContentProvider
             selectionArgs = new String[] { id };
         }
         case URI_ACTIVITY:
-            c = mDatabase.query(Activity.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
-            break;
-
-        case URI_ACTIVITY_SCHEDULE:
         {
             String project = "*";
             if (projection != null)
@@ -183,12 +174,12 @@ public class InEventProvider extends ContentProvider
             }
             if (selection == null) selection = "1";
 
+            LoginManager loginManager = LoginManager.getInstance(getContext());
             final String query = "SELECT "+ project +
-                    " FROM " + Event.TABLE_NAME +
-                    " INNER JOIN " + Activity.TABLE_NAME +
-                    " ON " + Event.Columns._ID_FULL +"="+ Activity.Columns.EVENT_ID_FULL +
-                    " INNER JOIN " + ActivityMember.TABLE_NAME +
-                    " ON " + ActivityMember.Columns.ACTIVITY_ID_FULL +"="+ Activity.Columns._ID_FULL +
+                    " FROM " + Activity.TABLE_NAME +
+                    " LEFT JOIN " + ActivityMember.TABLE_NAME +
+                    " ON " + ActivityMember.Columns.ACTIVITY_ID_FULL +"="+ Activity.Columns._ID_FULL+
+//                        (loginManager.isSignedIn() ? " AND "+ActivityMember.Columns.MEMBER_ID_FULL+"="+loginManager.getMember().memberId: "") +
                     " WHERE " + selection +
                     " GROUP BY " + Activity.Columns._ID_FULL +
                     " ORDER BY " + sortOrder;
@@ -253,7 +244,6 @@ public class InEventProvider extends ContentProvider
             answer = mDatabase.insertWithOnConflict(Activity.TABLE_NAME, null, values, SQLiteDatabase.CONFLICT_REPLACE);
             break;
 
-        case URI_ACTIVITY_SCHEDULE:
         case URI_ACTIVITY_ATTENDERS:
             answer = mDatabase.insertWithOnConflict(ActivityMember.TABLE_NAME, null, values, SQLiteDatabase.CONFLICT_REPLACE);
             break;
@@ -373,7 +363,6 @@ public class InEventProvider extends ContentProvider
             result = mDatabase.delete(Activity.TABLE_NAME, selection, selectionArgs);
             break;
 
-        case URI_ACTIVITY_SCHEDULE:
         case URI_ACTIVITY_ATTENDERS:
             result = mDatabase.delete(ActivityMember.TABLE_NAME, selection, selectionArgs);
             break;

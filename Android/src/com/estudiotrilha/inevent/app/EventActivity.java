@@ -49,7 +49,7 @@ public class EventActivity extends SlidingMenuBaseActivity
         if (savedInstanceState == null)
         {
             // Event activities Fragment
-            Fragment fragment = EventActivitiesListFragment.instantiate(eventID);
+            Fragment fragment = EventActivitiesPagesFragment.instantiate(eventID);
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.mainContent, fragment)
                     .commit();
