@@ -1751,7 +1751,7 @@ textarea, input {
 	display: none;
 	width: 100%;
 	margin: 0 auto;
-	text-align: left;
+	text-align: center;
 	padding: 1px 0 0 0;
 	position: relative;
 }
@@ -1786,7 +1786,7 @@ textarea, input {
 	margin: 0 0 2px 15px;
 }
 
-#peopleContent .toolBoxOptions input {
+#peopleContent .toolBoxOptions input[type="text"] {
 	border: 1px solid #A2A2A2;
 	background-color: #DDD;
 	padding: 5px;
@@ -1960,6 +1960,10 @@ textarea, input {
 #peopleContent .toolBoxOptions .bottom .action {
 	display: inline-block;
 	width: 10%;
+}
+
+#peopleContent .toolBoxOptionsImport {
+	text-align: left;
 }
 
 #peopleContent .toolBoxOptionsImport .bottom .text {
@@ -2318,6 +2322,18 @@ textarea, input {
 	box-shadow: inset 0px 1px 0 #FCFCFC, 0px 1px 5px rgba(0, 0, 0, 0.22);
 	padding: 5px 20px;
 	background-color: #E2E2E2;
+}
+
+/* @end */
+
+/* @group Certificate */
+
+#certificateContent .introduction {
+	font-size: 150%;
+}
+
+#certificateContent .activity {
+	font-size: 120%;
 }
 
 /* @end */

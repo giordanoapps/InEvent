@@ -151,6 +151,15 @@ define(modules, function($, common, cookie) {$(function() {
 	});
 
 	/**
+	 * Remove a item from the person schedule
+	 * @return {null}
+	 */
+	$("#eventContent").on("click", ".toolCertificate", function() {
+		// Move to the certificate page
+		window.location.hash = "certificate";
+	});
+
+	/**
 	 * Close all the inputs that are open
 	 * @return {null}
 	 */

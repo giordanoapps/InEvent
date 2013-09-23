@@ -328,7 +328,9 @@ define(modules, function($, common, cookie) {$(function() {
 	$("#peopleContent").on("instantSave", ".checkbox.paid, .checkbox.present", function(event) {
 
 		var $elem = $(this);
-		var method = ($elem.hasClass("paid")) ? "confirmPayment" : "confirmEntrance";
+		var action = ($elem.hasClass("active")) ? "revoke" : "confirm";
+		var category = ($elem.hasClass("paid")) ? "Payment" : "Entrance";
+		var method = action + category;
 		var activityID = $(".placerContent .scheduleItemSelected").val();
 		var personID = $elem.closest(".pickerItem").attr("data-value");
 

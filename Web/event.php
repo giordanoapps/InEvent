@@ -24,10 +24,10 @@
 					<!-- Tool Triggers -->
 					<div class="toolBox">
 						<div class="toolBoxPeople">
-							<div class="toolBoxLeft"></div>
-							<div class="toolBoxLeft editingToolBox">
-								<!-- <img src="images/32-Plus.png" alt="Adicionar" title="Adicionar uma atividade à agenda" class="toolAdd"/> -->
+							<div class="toolBoxLeft">
+								<img src="images/64-Text-Document.png" alt="Certificado" title="Emitir certificado de participação" class="toolCertificate"/>
 							</div>
+							<div class="toolBoxLeft editingToolBox"></div>
 							
 							<div class="toolBoxRight">
 								<?php if ($core->roleID != ROLE_ATTENDEE) { ?>
