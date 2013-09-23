@@ -61,11 +61,20 @@
             android:name="com.estudiotrilha.inevent.app.LoginActivity"
             android:launchMode="singleTop" />
 
-        <!-- Event Marketplace Activity -->
+        <!-- Event Marketplace -->
         <activity android:name="com.estudiotrilha.inevent.app.EventMarketplaceActivity" />
 
-        <!-- Event Activity -->
+        <!-- Event -->
         <activity android:name="com.estudiotrilha.inevent.app.EventActivity" />
+
+        <!-- EventActivity Detail -->
+        <activity
+            android:name="com.estudiotrilha.inevent.EventActivityDetailActivity"
+            android:parentActivityName="com.estudiotrilha.inevent.app.EventActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.estudiotrilha.inevent.app.EventActivity" />
+        </activity>
 
         <!-- InEvent Content Provider -->
         <provider
@@ -76,6 +85,7 @@
 
         <!-- Services -->
         <service android:name="com.estudiotrilha.inevent.service.DownloaderService" />
+
     </application>
 
 </manifest>

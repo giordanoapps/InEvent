@@ -35,13 +35,26 @@ public class Activity
 {
     public static final class Api
     {
+        public static final class Post
+        {
+            private static final String SEND_OPINION = "rating=%d";
+
+            public static String sendOpinion(int rating)
+            {
+                return String.format(Locale.ENGLISH, SEND_OPINION, rating);
+            }
+        }
+
         public static final String  NAMESPACE = "activity";
 
         private static final String REQUEST_ENROLLMENT = ApiRequest.BASE_URL + NAMESPACE + ".requestEnrollment&tokenID=%s&activityID=%d";
         private static final String DISMISS_ENROLLMENT = ApiRequest.BASE_URL + NAMESPACE + ".dismissEnrollment&tokenID=%s&activityID=%d";
         private static final String CONFIRM_ENTRANCE   = ApiRequest.BASE_URL + NAMESPACE + ".confirmEntrance&tokenID=%s&activityID=%d&personID=%d";
         private static final String REVOKE_ENTRANCE    = ApiRequest.BASE_URL + NAMESPACE + ".revokeEntrance&tokenID=%s&activityID=%d&personID=%d";
+        private static final String CONFIRM_PAYMENT    = ApiRequest.BASE_URL + NAMESPACE + ".confirmPayment&tokenID=%s&activityID=%d&personID=%d";
+        private static final String REVOKE_PAYMENT     = ApiRequest.BASE_URL + NAMESPACE + ".revokePayment&tokenID=%s&activityID=%d&personID=%d";
         private static final String GET_PEOPLE         = ApiRequest.BASE_URL + NAMESPACE + ".getPeople&tokenID=%s&activityID=%d&selection=%s";
+        private static final String SEND_OPINION       = ApiRequest.BASE_URL + NAMESPACE + ".sendOpinion&tokenID=%s&activityID=%d";
 
         public static HttpURLConnection requestEnrollment(String tokenID, long activityID) throws IOException
         {
@@ -93,12 +106,36 @@ public class Activity
             return ConnectionHelper.getURLGetConnection(url);
         }
 
+        public static HttpURLConnection confirmPayment(String tokenID, long activityID, long personID) throws IOException
+        {
+            tokenID = URLEncoder.encode(tokenID, ApiRequest.ENCODING);
+            URL url = new URL(String.format(CONFIRM_PAYMENT, tokenID, activityID, personID));
+
+            return ConnectionHelper.getURLGetConnection(url);
+        }
+
+        public static HttpURLConnection revokePayment(String tokenID, long activityID, long personID) throws IOException
+        {
+            tokenID = URLEncoder.encode(tokenID, ApiRequest.ENCODING);
+            URL url = new URL(String.format(REVOKE_PAYMENT, tokenID, activityID, personID));
+
+            return ConnectionHelper.getURLGetConnection(url);
+        }
+
         public static HttpURLConnection getPeople(String tokenID, long activityID, PeopleSelection selection) throws IOException
         {
             tokenID = URLEncoder.encode(tokenID, ApiRequest.ENCODING);
             URL url = new URL(String.format(GET_PEOPLE, tokenID, activityID, selection.toString()));
 
             return ConnectionHelper.getURLGetConnection(url);
+        }
+
+        public static HttpURLConnection sendOpinion(String tokenID, long activityID) throws IOException
+        {
+            tokenID = URLEncoder.encode(tokenID, ApiRequest.ENCODING);
+            URL url = new URL(String.format(SEND_OPINION, tokenID, activityID));
+
+            return ConnectionHelper.getURLPostConnection(url);
         }
 
 

@@ -28,7 +28,7 @@
     <!-- Titles -->
     <string name="title_about">About</string>
     <string name="title_appVersion">Version</string>
-	<string name="title_displayOption_all">All activities</string>
+    <string name="title_displayOption_all">All activities</string>
     <string name="title_displayOption_schedule_approved">My schedule - Approved</string>
     <string name="title_displayOption_schedule_full">My schedule</string>
     <string name="title_displayOption_schedule_waitList">My schedule - Wait List</string>
