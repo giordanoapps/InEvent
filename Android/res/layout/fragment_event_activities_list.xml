@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <TextView
+        android:id="@android:id/empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="@string/empty_eventActivities" />
+
+    <LinearLayout
+        android:id="@android:id/content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/activity_sectionHeader"
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:ellipsize="end"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="16dp"
+            android:paddingRight="56dp"
+            android:paddingTop="6dp"
+            android:textAllCaps="true"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <View
+            style="@style/Divider.Horizontal"
+            android:layout_height="2dp"
+            android:layout_margin="0dp" />
+
+        <ListView
+            android:id="@android:id/list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fastScrollEnabled="true"
+            android:headerDividersEnabled="true" />
+    </LinearLayout>
+
+</FrameLayout>

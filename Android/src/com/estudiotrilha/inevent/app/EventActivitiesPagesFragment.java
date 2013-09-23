@@ -1,5 +1,6 @@
 package com.estudiotrilha.inevent.app;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -26,6 +27,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.estudiotrilha.android.utils.DateUtils;
+import com.estudiotrilha.android.utils.ViewUtils;
 import com.estudiotrilha.inevent.R;
 import com.estudiotrilha.inevent.Utils;
 import com.estudiotrilha.inevent.app.EventActivitiesListFragment.EventActivityInfo;
@@ -136,6 +138,7 @@ public class EventActivitiesPagesFragment extends Fragment implements LoaderCall
 
         ViewPager pager = (ViewPager) view.findViewById(R.id.eventActivity_viewPager);
         pager.setAdapter(mActivitiesAdapter);
+        pager.setPageMargin((int) ViewUtils.dipToPixels(mEventActivity, 8));
 
         // Setup the displayed things on screen
         updateDisplayMode();
@@ -281,6 +284,7 @@ public class EventActivitiesPagesFragment extends Fragment implements LoaderCall
 
         private ArrayList<EventSectionHolder> mSections;
         private Cursor                        mCursor;
+        private DateFormat                    mDateFormat;
         // Indexes
         private int mIndexId;
         private int mIndexName;
@@ -294,6 +298,8 @@ public class EventActivitiesPagesFragment extends Fragment implements LoaderCall
         {
             super(getFragmentManager());
             mSections = new ArrayList<EventSectionHolder>();
+            // Get the user preferred date format
+            mDateFormat = android.text.format.DateFormat.getLongDateFormat(mEventActivity);
         }
 
         public Cursor getCursor()
@@ -366,7 +372,10 @@ public class EventActivitiesPagesFragment extends Fragment implements LoaderCall
                 );
             }
 
-            EventActivitiesListFragment fragment = EventActivitiesListFragment.instantiate(getArguments().getLong(ARGS_EVENT_ID), data);
+
+            long eventID = getArguments().getLong(ARGS_EVENT_ID);
+            String header = getPageTitle(position).toString();
+            EventActivitiesListFragment fragment = EventActivitiesListFragment.instantiate(eventID, data, header);
             return fragment;
         }
 
@@ -374,6 +383,12 @@ public class EventActivitiesPagesFragment extends Fragment implements LoaderCall
         public int getCount()
         {
             return mSections.size();
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position)
+        {
+            return mDateFormat.format(mSections.get(position).date.getTime());
         }
     }
 }

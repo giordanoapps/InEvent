@@ -6,11 +6,12 @@ import java.util.Date;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
-import android.support.v4.app.ListFragment;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
@@ -23,18 +24,20 @@ import com.estudiotrilha.inevent.content.Event;
 import com.estudiotrilha.inevent.content.LoginManager;
 
 
-public class EventActivitiesListFragment extends ListFragment implements OnItemLongClickListener
+public class EventActivitiesListFragment extends Fragment implements OnItemClickListener, OnItemLongClickListener
 {
     // Arguments
-    private static final String ARGS_EVENT_ID  = "args.EVENT_ID";
-    private static final String ARGS_LIST_DATA = "args.LIST_DATA";
+    private static final String ARGS_EVENT_ID    = "args.EVENT_ID";
+    private static final String ARGS_LIST_HEADER = "args.LIST_HEADER";
+    private static final String ARGS_LIST_DATA   = "args.LIST_DATA";
 
 
-    public static EventActivitiesListFragment instantiate(long eventID, EventActivityInfo[] data)
+    public static EventActivitiesListFragment instantiate(long eventID, EventActivityInfo[] data, String header)
     {
         // Prepare the arguments
         Bundle args = new Bundle();
         args.putLong(ARGS_EVENT_ID, eventID);
+        args.putString(ARGS_LIST_HEADER, header);
         args.putSerializable(ARGS_LIST_DATA, data);
 
         // Create the fragment
@@ -64,29 +67,35 @@ public class EventActivitiesListFragment extends ListFragment implements OnItemL
 
         // Setup the adapters
         mActivitiesAdapter = new EventActivitiesListAdapter();
+        mActivitiesAdapter.setData((EventActivityInfo[]) getArguments().getSerializable(ARGS_LIST_DATA));
+    }
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
+        return inflater.inflate(R.layout.fragment_event_activities_list, container, false);
     }
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState)
     {
         super.onViewCreated(view, savedInstanceState);
 
-        // Setup the displayed things on screen
-        setListShown(true);
-
-        // Set the empty message
-        setEmptyText(getText(R.string.empty_eventActivities));
-
-        // Add fastscrolling function
-        getListView().setFastScrollEnabled(true);
-        getListView().setOnItemLongClickListener(this);
+        ListView list = (ListView) view.findViewById(android.R.id.list);
+        
+        // Setup callbacks
+        list.setOnItemLongClickListener(this);
+        
 
         // Add the list content
-        mActivitiesAdapter.setData((EventActivityInfo[]) getArguments().getSerializable(ARGS_LIST_DATA));
-        setListAdapter(mActivitiesAdapter);
+        list.setAdapter(mActivitiesAdapter);
+        view.findViewById(mActivitiesAdapter.isEmpty() ? android.R.id.content : android.R.id.empty)
+                .setVisibility(View.GONE);
+        // Setup the list header
+        String header = getArguments().getString(ARGS_LIST_HEADER);
+        ((TextView) view.findViewById(R.id.activity_sectionHeader)).setText(header);
     }
 
     @Override
-    public void onListItemClick(ListView l, View v, int position, long id)
+    public void onItemClick(AdapterView<?> adapter, View v, int position, long id)
     {
         // Show the Activity details
         EventActivityInfo info = mActivitiesAdapter.getData()[position];
@@ -96,6 +105,22 @@ public class EventActivitiesListFragment extends ListFragment implements OnItemL
 //                .setMessage(c.getString(c.getColumnIndex(Activity.Columns.DESCRIPTION)))
                 .setPositiveButton(android.R.string.ok, null)
                 .show();
+    }
+    @Override
+    public boolean onItemLongClick(AdapterView<?> adapter, View v, int position, long id)
+    {
+        if (mEventActivity.getRoleId() != Event.ROLE_ATTENDEE)
+        {
+            // Open up the attendance control
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.mainContent, AttendanceFragment.instantiate(id, getArguments().getLong(ARGS_EVENT_ID)))
+                    .addToBackStack(null)
+                    .commit();
+
+            return true;
+        }
+
+        return false;
     }
 
 
@@ -230,24 +255,8 @@ public class EventActivitiesListFragment extends ListFragment implements OnItemL
         @Override
         public String toString()
         {
-            return super.toString();
+            // TODO
+            return name;
         }
-    }
-
-    @Override
-    public boolean onItemLongClick(AdapterView<?> adapter, View v, int position, long id)
-    {
-        if (mEventActivity.getRoleId() != Event.ROLE_ATTENDEE)
-        {
-            // Open up the attendance control
-            getFragmentManager().beginTransaction()
-                    .replace(R.id.mainContent, AttendanceFragment.instantiate(id, getArguments().getLong(ARGS_EVENT_ID)))
-                    .addToBackStack(null)
-                    .commit();
-
-            return true;
-        }
-
-        return false;
     }
 }
