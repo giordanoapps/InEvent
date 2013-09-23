@@ -20,7 +20,7 @@ import android.os.Handler;
 import android.util.Log;
 
 import com.estudiotrilha.inevent.InEvent;
-import com.estudiotrilha.inevent.service.SyncService;
+import com.estudiotrilha.inevent.service.DownloaderService;
 
 
 public class LoginManager
@@ -134,7 +134,7 @@ public class LoginManager
             mContext.sendBroadcast(new Intent(ACTION_LOGIN_STATE_CHANGED));
 
             // Download this member events
-            SyncService.syncEvents(mContext);
+            DownloaderService.syncEvents(mContext);
 
             return true;
         }

@@ -35,7 +35,7 @@ import com.estudiotrilha.inevent.content.Activity;
 import com.estudiotrilha.inevent.content.ActivityMember;
 import com.estudiotrilha.inevent.content.LoginManager;
 import com.estudiotrilha.inevent.content.Member;
-import com.estudiotrilha.inevent.service.SyncService;
+import com.estudiotrilha.inevent.service.DownloaderService;
 
 
 public class AttendanceFragment extends ListFragment implements LoaderCallbacks<Cursor>, OnItemLongClickListener
@@ -257,7 +257,7 @@ public class AttendanceFragment extends ListFragment implements LoaderCallbacks<
     private void refresh()
     {
         // Download the attenders
-        SyncService.syncEventActivityAttenders(getActivity(), getArguments().getLong(ARGS_EVENT_ID), getArguments().getLong(ARGS_ACTIVITY_ID));
+        DownloaderService.syncEventActivityAttenders(getActivity(), getArguments().getLong(ARGS_EVENT_ID), getArguments().getLong(ARGS_ACTIVITY_ID));
     }
 
 

@@ -75,7 +75,7 @@
             android:label="InEvent Data Provider" />
 
         <!-- Services -->
-        <service android:name="com.estudiotrilha.inevent.service.SyncService" />
+        <service android:name="com.estudiotrilha.inevent.service.DownloaderService" />
     </application>
 
 </manifest>

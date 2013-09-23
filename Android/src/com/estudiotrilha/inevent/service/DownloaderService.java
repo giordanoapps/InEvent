@@ -37,9 +37,9 @@ import com.estudiotrilha.inevent.content.SyncBroadcastManager;
 import com.estudiotrilha.inevent.provider.InEventProvider;
 
 
-public class SyncService extends IntentService implements ApiRequest.ResponseHandler
+public class DownloaderService extends IntentService implements ApiRequest.ResponseHandler
 {
-    public static final String SERVICE_NAME = InEvent.NAME + "." + SyncService.class.getSimpleName();
+    public static final String SERVICE_NAME = InEvent.NAME + "." + DownloaderService.class.getSimpleName();
 
     // JSON hashes
     public static final String HASH_JSON = "Hash for UriCode=%d";
@@ -50,27 +50,27 @@ public class SyncService extends IntentService implements ApiRequest.ResponseHan
 
     public static void syncEvents(Context c)
     {
-        Intent service = new Intent(c, SyncService.class);
+        Intent service = new Intent(c, DownloaderService.class);
         service.setData(Event.CONTENT_URI);
         c.startService(service);
     }
     public static void syncEventAttenders(Context c, long eventId)
     {
-        Intent service = new Intent(c, SyncService.class);
+        Intent service = new Intent(c, DownloaderService.class);
         service.setData(EventMember.CONTENT_URI);
         service.putExtra(EXTRA_EVENT_ID, eventId);
         c.startService(service);
     }
     public static void syncEventActivities(Context c, long eventId)
     {
-        Intent service = new Intent(c, SyncService.class);
+        Intent service = new Intent(c, DownloaderService.class);
         service.setData(Activity.ACTIVITY_CONTENT_URI);
         service.putExtra(EXTRA_EVENT_ID, eventId);
         c.startService(service);
     }
     public static void syncEventActivityAttenders(Context c, long eventId, long activityId)
     {
-        Intent service = new Intent(c, SyncService.class);
+        Intent service = new Intent(c, DownloaderService.class);
         service.setData(ActivityMember.CONTENT_URI);
         service.putExtra(EXTRA_EVENT_ID, eventId);
         service.putExtra(EXTRA_ACTIVITY_ID, activityId);
@@ -84,7 +84,7 @@ public class SyncService extends IntentService implements ApiRequest.ResponseHan
 
 
 
-    public SyncService()
+    public DownloaderService()
     {
         super(SERVICE_NAME);
     }

@@ -35,7 +35,7 @@ import com.estudiotrilha.inevent.Utils;
 import com.estudiotrilha.inevent.content.Event;
 import com.estudiotrilha.inevent.content.EventMember;
 import com.estudiotrilha.inevent.content.LoginManager;
-import com.estudiotrilha.inevent.service.SyncService;
+import com.estudiotrilha.inevent.service.DownloaderService;
 
 
 public class EventListFragment extends ListFragment implements LoaderCallbacks<Cursor>, ExtensibleCursorAdapter.AdapterExtension, OnItemLongClickListener
@@ -178,7 +178,7 @@ public class EventListFragment extends ListFragment implements LoaderCallbacks<C
     private void refresh()
     {
         // Download the event list
-        SyncService.syncEvents(getActivity());
+        DownloaderService.syncEvents(getActivity());
     }
 
 

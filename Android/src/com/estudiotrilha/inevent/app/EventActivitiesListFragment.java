@@ -208,7 +208,7 @@ public class EventActivitiesListFragment extends Fragment implements OnItemClick
                 switch (mData[position].approved)
                 {
                 case -1:
-                    color = getResources().getColor(R.color.dark_gray);
+                    color = getResources().getColor(R.color.light_gray);
                     break;
                 case 0:
                     color = getResources().getColor(R.color.holo_red_dark);
