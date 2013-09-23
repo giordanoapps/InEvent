@@ -5,7 +5,9 @@ import static com.estudiotrilha.inevent.content.Activity.Columns.DATE_BEGIN;
 import static com.estudiotrilha.inevent.content.Activity.Columns.DATE_END;
 import static com.estudiotrilha.inevent.content.Activity.Columns.DESCRIPTION;
 import static com.estudiotrilha.inevent.content.Activity.Columns.EVENT_ID;
+import static com.estudiotrilha.inevent.content.Activity.Columns.LATITUDE;
 import static com.estudiotrilha.inevent.content.Activity.Columns.LOCATION;
+import static com.estudiotrilha.inevent.content.Activity.Columns.LONGITUDE;
 import static com.estudiotrilha.inevent.content.Activity.Columns.NAME;
 
 import java.io.IOException;
@@ -141,6 +143,8 @@ public class Activity
         public static final String NAME        = "name";
         public static final String DESCRIPTION = "description";
         public static final String LOCATION    = "location";
+        public static final String LATITUDE    = "latitude";
+        public static final String LONGITUDE   = "longitude";
         public static final String DATE_BEGIN  = "dateBegin";
         public static final String DATE_END    = "dateEnd";
         // Full names
@@ -149,6 +153,8 @@ public class Activity
         public static final String NAME_FULL        = TABLE_NAME+"."+NAME;
         public static final String DESCRIPTION_FULL = TABLE_NAME+"."+DESCRIPTION;
         public static final String LOCATION_FULL    = TABLE_NAME+"."+LOCATION;
+        public static final String LATITUDE_FULL    = TABLE_NAME+"."+LATITUDE;
+        public static final String LONGITUDE_FULL   = TABLE_NAME+"."+LONGITUDE;
         public static final String DATE_BEGIN_FULL  = TABLE_NAME+"."+DATE_BEGIN;
         public static final String DATE_END_FULL    = TABLE_NAME+"."+DATE_END;
 
@@ -158,7 +164,6 @@ public class Activity
             Activity.Columns.DATE_BEGIN_FULL,
             Activity.Columns.DATE_END_FULL,
             Activity.Columns.NAME_FULL,
-            Activity.Columns.DESCRIPTION_FULL,
             Activity.Columns.LOCATION_FULL,
             "IFNULL("+ActivityMember.Columns.APPROVED_FULL+",-1) AS "+ActivityMember.Columns.APPROVED
         };
@@ -181,6 +186,8 @@ public class Activity
             cv.put(NAME, Html.fromHtml(json.getString(NAME)).toString());
             cv.put(DESCRIPTION, Html.fromHtml(json.getString(DESCRIPTION)).toString());
             cv.put(LOCATION, Html.fromHtml(json.getString(LOCATION)).toString());
+            cv.put(LATITUDE, json.getDouble(LATITUDE));
+            cv.put(LONGITUDE, json.getDouble(LONGITUDE));
             cv.put(DATE_BEGIN, json.getLong(DATE_BEGIN));
             cv.put(DATE_END, json.getLong(DATE_END));
         }

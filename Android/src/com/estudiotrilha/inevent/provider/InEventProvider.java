@@ -32,7 +32,7 @@ import com.estudiotrilha.inevent.content.Member;
 
 public class InEventProvider extends ContentProvider
 {
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
 
     public final static UriMatcher uriMatcher;
 
@@ -179,7 +179,7 @@ public class InEventProvider extends ContentProvider
                     " FROM " + Activity.TABLE_NAME +
                     " LEFT JOIN " + ActivityMember.TABLE_NAME +
                     " ON " + ActivityMember.Columns.ACTIVITY_ID_FULL +"="+ Activity.Columns._ID_FULL+
-//                        (loginManager.isSignedIn() ? " AND "+ActivityMember.Columns.MEMBER_ID_FULL+"="+loginManager.getMember().memberId: "") +
+                        (loginManager.isSignedIn() ? " AND "+ActivityMember.Columns.MEMBER_ID_FULL+"="+loginManager.getMember().memberId: "") +
                     " WHERE " + selection +
                     " GROUP BY " + Activity.Columns._ID_FULL +
                     " ORDER BY " + sortOrder;
@@ -468,7 +468,19 @@ public class InEventProvider extends ContentProvider
 
             case 2:
                 // do the updates for the version 3
+                db.execSQL("ALTER TABLE "+Event.TABLE_NAME+
+                        " ADD "+Event.Columns.COVER + " TEXT");
+
+                db.execSQL("ALTER TABLE "+Activity.TABLE_NAME+
+                        " ADD "+Activity.Columns.LATITUDE + " REAL");
+                db.execSQL("ALTER TABLE "+Activity.TABLE_NAME+
+                        " ADD "+Activity.Columns.LONGITUDE + " REAL");
+
                 Log.i(InEvent.NAME, "Updated database to version 3");
+
+            case 3:
+                // do the updates for the version 4
+//                Log.i(InEvent.NAME, "Updated database to version 4");
             }
         }
 
@@ -479,6 +491,7 @@ public class InEventProvider extends ContentProvider
             db.execSQL("CREATE TABLE " + Event.TABLE_NAME + "(" +
                     Event.Columns._ID + " INTEGER NOT NULL UNIQUE, " +
                     Event.Columns.NAME + " TEXT NOT NULL, " +
+                    Event.Columns.COVER + " TEXT, " +
                     Event.Columns.DESCRIPTION + " TEXT, " +
                     Event.Columns.DATE_BEGIN + " INTEGER, " +
                     Event.Columns.DATE_END + " INTEGER, " +
@@ -509,6 +522,8 @@ public class InEventProvider extends ContentProvider
                     Activity.Columns.NAME + " TEXT NOT NULL, " +
                     Activity.Columns.DESCRIPTION + " TEXT, " +
                     Activity.Columns.LOCATION + " TEXT, " +
+                    Activity.Columns.LATITUDE + " REAL, " +
+                    Activity.Columns.LONGITUDE + " REAL, " +
                     Activity.Columns.DATE_BEGIN + " INTEGER, " +
                     Activity.Columns.DATE_END + " INTEGER)"
             );

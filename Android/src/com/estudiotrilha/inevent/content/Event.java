@@ -1,10 +1,11 @@
 package com.estudiotrilha.inevent.content;
 
 import static android.provider.BaseColumns._ID;
-import static com.estudiotrilha.inevent.content.Activity.Columns.DATE_BEGIN;
-import static com.estudiotrilha.inevent.content.Activity.Columns.DATE_END;
+import static com.estudiotrilha.inevent.content.Event.Columns.DATE_BEGIN;
+import static com.estudiotrilha.inevent.content.Event.Columns.DATE_END;
 import static com.estudiotrilha.inevent.content.Event.Columns.ADDRESS;
 import static com.estudiotrilha.inevent.content.Event.Columns.CITY;
+import static com.estudiotrilha.inevent.content.Event.Columns.COVER;
 import static com.estudiotrilha.inevent.content.Event.Columns.DESCRIPTION;
 import static com.estudiotrilha.inevent.content.Event.Columns.LATITUDE;
 import static com.estudiotrilha.inevent.content.Event.Columns.LONGITUDE;
@@ -152,6 +153,7 @@ public class Event
     public static interface Columns extends BaseColumns
     {
         public static final String NAME        = "name";
+        public static final String COVER       = "cover";
         public static final String DESCRIPTION = "description";
         public static final String DATE_BEGIN  = "dateBegin";
         public static final String DATE_END    = "dateEnd";
@@ -163,6 +165,7 @@ public class Event
         // Full names
         public static final String _ID_FULL         = TABLE_NAME+"."+_ID;
         public static final String NAME_FULL        = TABLE_NAME+"."+NAME;
+        public static final String COVER_FULL       = TABLE_NAME+"."+COVER;
         public static final String DESCRIPTION_FULL = TABLE_NAME+"."+DESCRIPTION;
         public static final String DATE_BEGIN_FULL  = TABLE_NAME+"."+DATE_BEGIN;
         public static final String DATE_END_FULL    = TABLE_NAME+"."+DATE_END;
@@ -216,6 +219,7 @@ public class Event
         {
             cv.put(_ID, json.getLong(JsonUtils.ID));
             cv.put(NAME, Html.fromHtml(json.getString(NAME)).toString());
+            cv.put(COVER, Html.fromHtml(json.getString(COVER)).toString());
             cv.put(DESCRIPTION, Html.fromHtml(json.getString(DESCRIPTION)).toString());
             cv.put(DATE_BEGIN, json.getLong(DATE_BEGIN));
             cv.put(DATE_END, json.getLong(DATE_END));
