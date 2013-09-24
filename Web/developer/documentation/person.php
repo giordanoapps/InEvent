@@ -64,6 +64,21 @@
 			<p><b>email</b><sub>GET</sub> : email da pessoa </p>
 		</div>
 	</div>
+
+	<div class="documentationFunctionBox">
+		<p class="documentFunctionName">
+			<span>person.changePassword(<b>tokenID</b>, <b>oldPassword</b>, <b>newPassword</b>)</span>
+			<img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=person.changePassword&tokenID=$tokenID&oldPassword=123&newPassword=456">
+		</p>
+
+		<p class="documentFunctionDescription">Troca a senha antiga <i>oldPassword</i> pela nova senha <i>newPassword</i>.</p>
+
+		<div class="documentationFunctionParametersBox">
+			<p><b>tokenID</b><sub>GET</sub> : id de autenticação </p>
+			<p><b>oldPassword</b><sub>GET</sub> : senha antiga </p>
+			<p><b>newPassword</b><sub>GET</sub> : senha nova </p>
+		</div>
+	</div>
 	
 	<div class="documentationFunctionBox">
 		<p class="documentFunctionName">

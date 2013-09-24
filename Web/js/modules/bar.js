@@ -41,9 +41,9 @@ define(["jquery", "common", "modules/cookie"], function($, common, cookie) {$(fu
 		$(this).parents(".anchorBox").siblings(".anchorInnerHock").trigger("click");
 	});
 
-	$(".bar .loginBox").click(function (event) {
-		event.stopPropagation();
-	});
+	// $(".bar .loginBox").click(function (event) {
+	// 	event.stopPropagation();
+	// });
 
 	/**
 	 * Item has been clicked, we can hide the box

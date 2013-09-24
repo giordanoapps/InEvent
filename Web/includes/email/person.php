@@ -25,4 +25,13 @@
         sendEmail("Sua nova senha", $template, $email);
     }
 
+	function sendPasswordChangeEmail($email) {
+
+	    // Load our template
+	    $template = file_get_contents(__DIR__ . "/passwordChange.html");
+
+	    // Send the email
+        sendEmail("Senha trocada", $template, $email);
+    }
+
 ?>

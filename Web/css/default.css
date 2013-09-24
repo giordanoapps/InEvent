@@ -360,7 +360,8 @@ textarea, input {
 
 .bar .secondary > div {
 	margin: 0;
-	padding: 2% 2% 1% 2%;
+	/*padding: 2% 2% 1% 2%;*/
+	padding: 2% 4% 2% 2%;
 	font-size: 140%;
 }
 
@@ -391,6 +392,7 @@ textarea, input {
 	border-right: 1px solid #DDD;
 	width: 30%;
 	float: left;
+	display: none;
 }
 
 .bar .secondary .facebookBox img {
@@ -415,6 +417,7 @@ textarea, input {
 	background-color: #F7F7F7;
 	box-shadow: inset 1px 1px 0 #FFF;
 	color: #333;
+	display: none;
 }
 
 .bar .secondary .memberBox {
@@ -446,8 +449,9 @@ textarea, input {
 	color: #333;
 	display: block;
 	font-size: 80%;
-	margin-right: 5%;
+	/*margin-right: 5%;*/
 	text-align: right;
+	float: right;
 }
 
 .bar .rightBar .anchorInnerHock {
@@ -2528,7 +2532,8 @@ textarea, input {
 	margin: 20px 0;
 }
 
-#forgotContent input[type="text"] {
+#forgotContent input[type="text"],
+#forgotContent input[type="password"] {
 	padding: 10px 40px;
 	margin: 4px -2px;
 	font-size: 90%;

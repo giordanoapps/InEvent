@@ -182,7 +182,63 @@
 				http_status_code(500, "Not a single email was found");
 			}
 		} else {
-			http_status_code(500, "email is a required parameter");
+			http_status_code(400, "email is a required parameter");
+		}
+
+	} else
+
+	if ($method === "changePassword") {
+
+		$tokenID = getToken();
+
+		if (isset($_GET["oldPassword"]) && isset($_GET["newPassword"])) {
+
+			// Get some properties
+			$oldPassword = getAttribute($_GET["oldPassword"]);
+			$newPassword = getAttribute($_GET["newPassword"]);
+
+			$result = resourceForQuery(
+				"SELECT
+					`member`.`password`,
+					`member`.`email`
+				FROM
+					`member`
+				WHERE 1
+					AND `member`.`id` = $core->memberID
+			");
+
+			if (mysql_num_rows($result) > 0) {
+
+				$oldHash = mysql_result($result, 0, "password");
+				$email = mysql_result($result, 0, "email");
+
+				if (Bcrypt::check($oldPassword, $oldHash)) {
+
+					$newHash = Bcrypt::hash($newPassword);
+
+					$update = resourceForQuery(
+						"UPDATE
+							`member`
+						SET
+							`member`.`password` = '$newHash'
+						WHERE 1
+							AND `member`.`id` = $core->memberID
+					");
+
+					// Send an email if everything went alright
+					if (mysql_affected_rows() > 0) {
+						sendPasswordChangeEmail($email);
+					} else {
+						http_status_code(500, "Not a single email was rewritten");
+					}
+				} else {
+					http_status_code(406, "oldPassword is wrong");
+				}
+			} else {
+				http_status_code(404, "memberID was not found");
+			}
+		} else {
+			http_status_code(400, "oldPassword and newPassword are required parameters");
 		}
 
 	} else

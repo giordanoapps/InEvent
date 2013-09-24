@@ -87,7 +87,8 @@
 				<li class="loginInfo anchorInfo">
 					<div class="anchorInnerHock"><p><?php echo truncateName($core->name, 15) ?></p></div>
 					<ul class="loginBox anchorBox popover">
-						<a href="logout.php"><li>Sair da Conta</li></a>
+						<a href="reinstate.php"><li>Trocar senha</li></a>
+						<a href="logout.php"><li>Sair da conta</li></a>
 					</ul>
 				</li>
 			</ul>
