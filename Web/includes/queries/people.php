@@ -1,6 +1,6 @@
 <?php
 
-    function getPeopleAtActivityQuery($activityID, $complement = "", $order = "`activityMember`.`id`") {
+    function getPeopleAtActivityQuery($activityID, $complement = "", $order = "`activityMember`.`id` ASC") {
 
         $result = resourceForQuery(
             "SELECT
@@ -8,6 +8,7 @@
                 `member`.`name`,
                 `member`.`email`,
                 `activityMember`.`id` AS `requestID`,
+                `activityMember`.`position`,
                 `activityMember`.`approved`,
                 `activityMember`.`paid`,
                 `activityMember`.`present`,
@@ -20,13 +21,13 @@
                 AND `activityMember`.`activityID` = $activityID
                 $complement
             ORDER BY
-                $order ASC
+                $order
         ");
 
         return $result;
     }
 
-    function getPeopleAtEventQuery($eventID, $complement = "", $order = "`member`.`name`") {
+    function getPeopleAtEventQuery($eventID, $complement = "", $order = "`member`.`name` ASC") {
 
         $result = resourceForQuery(
             "SELECT
@@ -41,6 +42,7 @@
                 `member`.`university`, 
                 `member`.`course`,
                 `eventMember`.`id` AS `requestID`,
+                `eventMember`.`position`,
                 `eventMember`.`approved`,
                 `eventMember`.`roleID`
             FROM
@@ -51,7 +53,7 @@
                 AND `eventMember`.`eventID` = $eventID
                 $complement
             ORDER BY
-                $order ASC
+                $order
         ");
 
         return $result;

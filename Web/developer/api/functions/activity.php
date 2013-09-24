@@ -40,16 +40,29 @@
 			");
 
 			$valid = (mysql_num_rows($result) > 0) ? mysql_result($result, 0, "valid") : 1;
+
+			// Find how many people are already enrolled at this activity
+			$result = resourceForQuery(
+				"SELECT
+					COUNT(`activityMember`.`id`) AS `entries`
+				FROM
+					`activityMember`
+				WHERE 1
+					AND `activityMember`.`activityID` = $activityID
+			");
+
+			$position = (mysql_num_rows($result) > 0) ? mysql_result($result, 0, "entries") : 1;
 			
 			// Insert a new row seing if there are vacancies
 			$insert = resourceForQuery(
 			// echo (
 				"INSERT INTO
 					`activityMember`
-					(`activityID`, `memberID`, `approved`, `present`)
+					(`activityID`, `memberID`, `position`, `approved`, `present`)
 				SELECT
 					$activityID,
 					$personID,
+					$position,
 					IF($valid AND (`activity`.`capacity` = 0 OR `activity`.`capacity` > COALESCE(SUM(`activityMember`.`approved`), 1)), 1, 0),
 					0
 				FROM

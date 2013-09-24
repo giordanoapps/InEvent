@@ -459,16 +459,32 @@
 				$order = getAttribute($_GET['order']);
 
 				// Set all the fields that can be ordered
-				$validOrder = array("memberID", "name", "telephone", "requestID", "approved", "paid", "present", "priori");
+				$orderFilter = array(
+					"memberID" => "ASC",
+					"requestID" => "ASC",
+					"position" => "ASC",
+					"name" => "ASC",
+					"telephone" => "ASC",
+					"email" => "ASC",
+					"approved" => "DESC",
+					"paid" => "DESC",
+					"present" => "DESC",
+					"priori" => "DESC"
+				);
 
-				if (in_array($order, $validOrder) === FALSE) http_status_code(409);
+				if (array_key_exists($order, $orderFilter) === TRUE) {
+					$completeOrderFilter = "`" . $order . "`" . $orderFilter[$order];
+				} else {
+					http_status_code(409);
+				}
 
 			} else {
 				$order = "name";
+				$completeOrderFilter = "`member`.`name` ASC";
 			}
 
 			// The query
-			$result = getPeopleAtActivityQuery($activityID, $complement, "`$order`");
+			$result = getPeopleAtActivityQuery($activityID, $complement, $completeOrderFilter);
 
 			// Return its data
 			if ($format == "json") {

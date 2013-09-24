@@ -13,9 +13,9 @@
         #define URL @"http://inevent:8888/"
         //#define URL @"http://agarca.com.br/"
     #else
-        #define URL @"http://192.168.0.106:8888/InEvent-dev/Web/"
+        //#define URL @"http://192.168.0.106:8888/InEvent-dev/Web/"
         //#define URL @"http://pedrogoes.info/InEvent/Web/"
-        //#define URL @"http://inevent.us/"
+        #define URL @"http://inevent.us/"
     #endif
 #else
     #define URL @"http://inevent.us/"

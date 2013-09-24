@@ -139,7 +139,7 @@
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
                   symbolName = "-[NSObject doesNotRecognizeSelector:]"
-                  moduleName = "CoreFoundation"
+                  moduleName = "libobjc.A.dylib"
                   offsetFromSymbolStart = "0">
                </Location>
                <Location

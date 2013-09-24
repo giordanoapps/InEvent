@@ -22,13 +22,26 @@
 		");
 
 		if (mysql_num_rows($result) == 0) {
+
+			// Find how many people are already enrolled at this activity
+			$result = resourceForQuery(
+				"SELECT
+					COUNT(`eventMember`.`id`) AS `entries`
+				FROM
+					`eventMember`
+				WHERE 1
+					AND `eventMember`.`eventID` = $eventID
+			");
+
+			$position = (mysql_num_rows($result) > 0) ? mysql_result($result, 0, "entries") : 1;
+
 			// Insert the person on the event
 			$insert = resourceForQuery(
 				"INSERT INTO
 					`eventMember`
-					(`eventID`, `memberID`, `roleID`, `approved`)
+					(`eventID`, `memberID`, `position`, `roleID`, `approved`)
 				VALUES
-					($eventID, $personID, @(ROLE_ATTENDEE), 1)
+					($eventID, $personID, $position, @(ROLE_ATTENDEE), 1)
 			");
 
 			if (mysql_affected_rows() > 0) {

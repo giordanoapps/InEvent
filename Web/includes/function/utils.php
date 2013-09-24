@@ -262,34 +262,80 @@
 
 	function writePosition() {
 
+		// Activity
 		$result = resourceForQuery(
 			"SELECT
 				`activityMember`.`id`,
-				`activity`.`name`,
-				`activity`.`description`,
-				`activity`.`location`
+				`activityMember`.`activityID`
 			FROM
-				`activity`
-			WHERE
-				`activity`.`eventID` = 4
+				`activityMember`
+			WHERE 1
+				AND `activityMember`.`activityID` >= 80
+				AND `activityMember`.`activityID` < 150
 		");
 
 		for ($i = 0; $i < mysql_num_rows($result); $i++) {
 
 			$id = mysql_result($result, $i, "id");
-			$name = htmlentities(mysql_result($result, $i, "name"), ENT_COMPAT | ENT_HTML401, "ISO-8859-1");
-			$description = htmlentities(mysql_result($result, $i, "description"), ENT_COMPAT | ENT_HTML401, "ISO-8859-1");
-			$location = htmlentities(mysql_result($result, $i, "location"), ENT_COMPAT | ENT_HTML401, "ISO-8859-1");
+			$activityID = mysql_result($result, $i, "activityID");
+
+			$resultCount = resourceForQuery(
+				"SELECT
+					COUNT(`activityMember`.`id`) AS `entries`
+				FROM
+					`activityMember`
+				WHERE 1
+					AND `activityMember`.`activityID` = $activityID
+					AND `activityMember`.`id` <= $id
+			");
+
+			$entries = mysql_result($resultCount, 0, "entries");
 
 			$insert = resourceForQuery(
 				"UPDATE
 					`activityMember`
 				SET
-					`activityMember`.`name` = '$name',
+					`activityMember`.`position` = $entries
 				WHERE 1
 					AND `activityMember`.`id` = $id
 			");
 		}
+
+		// Event
+		// $result = resourceForQuery(
+		// 	"SELECT
+		// 		`eventMember`.`id`,
+		// 		`eventMember`.`eventID`
+		// 	FROM
+		// 		`eventMember`
+		// ");
+
+		// for ($i = 0; $i < mysql_num_rows($result); $i++) {
+
+		// 	$id = mysql_result($result, $i, "id");
+		// 	$eventID = mysql_result($result, $i, "eventID");
+
+		// 	$resultCount = resourceForQuery(
+		// 		"SELECT
+		// 			COUNT(`eventMember`.`id`) AS `entries`
+		// 		FROM
+		// 			`eventMember`
+		// 		WHERE 1
+		// 			AND `eventMember`.`eventID` = $eventID
+		// 			AND `eventMember`.`id` <= $id
+		// 	");
+
+		// 	$entries = mysql_result($resultCount, 0, "entries");
+
+		// 	$insert = resourceForQuery(
+		// 		"UPDATE
+		// 			`eventMember`
+		// 		SET
+		// 			`eventMember`.`position` = $entries
+		// 		WHERE 1
+		// 			AND `eventMember`.`id` = $id
+		// 	");
+		// }
 	}
 
 ?>

@@ -11,7 +11,7 @@
                 <thead>
                     <tr>
                         <td data-order="memberID">Inscrição <?php if ($order == "memberID") echo $imageOrder ?></td>
-                        <td data-order="requestID">Posição <?php if ($order == "requestID") echo $imageOrder ?></td>
+                        <td data-order="position">Posição <?php if ($order == "position") echo $imageOrder ?></td>
                         <td data-order="name">Nome <?php if ($order == "name") echo $imageOrder ?></td>
                         <td data-order="email">Email <?php if ($order == "email") echo $imageOrder ?></td>
                         <td data-order="approved">Aprovado <?php if ($order == "approved") echo $imageOrder ?></td>
@@ -33,7 +33,7 @@
                             <p class="memberID"><b><?php echo str_pad($data['memberID'], 4, "0", STR_PAD_LEFT) ?></b></p>
                         </td>
                         <td>
-                            <p class="requestID"><b><?php echo str_pad($data['requestID'], 6, "0", STR_PAD_LEFT) ?></b></p>
+                            <p class="position"><b><?php echo $data['position'] ?></b></p>
                         </td>
                         <td>
                             <p class="name"><?php echo ucwords(strtolower($data['name'])) ?></p>
@@ -102,7 +102,7 @@
                     <tr>
                         <td data-order="roleID"><i>Staff</i> <?php if ($order == "roleID") echo $imageOrder ?></td>
                         <td data-order="memberID">Inscrição <?php if ($order == "memberID") echo $imageOrder ?></td>
-                        <td data-order="requestID">Posição <?php if ($order == "requestID") echo $imageOrder ?></td>
+                        <td data-order="position">Posição <?php if ($order == "position") echo $imageOrder ?></td>
                         <td data-order="name">Nome <?php if ($order == "name") echo $imageOrder ?></td>
                         <td data-order="email">Email <?php if ($order == "email") echo $imageOrder ?></td>
                         <td data-order="cpf">CPF <?php if ($order == "cpf") echo $imageOrder ?></td>
@@ -127,7 +127,7 @@
                             <p class="memberID"><b><?php echo str_pad($data['memberID'], 4, "0", STR_PAD_LEFT) ?></b></p>
                         </td>
                         <td>
-                            <p class="requestID"><b><?php echo str_pad($data['requestID'], 4, "0", STR_PAD_LEFT) ?></b></p>
+                            <p class="position"><b><?php echo $data['position'] ?></b></p>
                         </td>
                         <td>
                             <p class="name"><?php echo ucwords(strtolower($data['name'])) ?></p>
