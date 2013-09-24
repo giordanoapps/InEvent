@@ -105,7 +105,7 @@
 		if (mysql_num_rows($result) > 0) {
 			$personID = mysql_result($result, 0, "id");
 		} else {
-			$personID = createMember($name, md5((string)rand()), $email);
+			$personID = createMember($name, "123456", $email);
 		}
 
 		return $personID;

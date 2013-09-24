@@ -655,7 +655,6 @@
 
 			// Get some properties
 			$rating = getAttribute($_POST['rating']);
-			$message = getAttribute($_POST['message']);
 
 			// Filter the rating
 			$rating = ($rating > 5) ? 5 : $rating;

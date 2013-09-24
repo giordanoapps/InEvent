@@ -75,7 +75,7 @@
 					} else {
 
 						// Create a random password for the newly created member
-						$password = md5((string)rand());
+						$password = "123456";
 						// Create the member
 						$memberID = createMember($name, $password, $email);
 
@@ -163,7 +163,7 @@
 			$email = getAttribute($_GET["email"]);
 
 			// Create a new random password
-			$password = md5((string)rand());
+			$password = "123456";
 			$hash = Bcrypt::hash($password);
 
 			$update = resourceForQuery(
