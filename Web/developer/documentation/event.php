@@ -165,6 +165,20 @@
 
     <div class="documentationFunctionBox">
         <p class="documentFunctionName">
+            <span>event.getOpinion(<b>tokenID</b>, <b>eventID</b>)</span>
+            <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=event.getOpinion&tokenID=$tokenID&eventID=1">
+        </p>
+
+        <p class="documentFunctionDescription">Retorna a pontuação <i>rating</i> para o evento <i>eventID</i>.</p>
+
+        <div class="documentationFunctionParametersBox">
+            <p><b>tokenID</b><sub>GET</sub> : id de autenticação </p>
+            <p><b>eventID</b><sub>GET</sub> : id do evento </p>
+        </div>
+    </div>
+
+    <div class="documentationFunctionBox">
+        <p class="documentFunctionName">
             <span>event.sendOpinion(<b>tokenID</b>, <b>eventID</b>, <b>rating</b>, <b>message</b> = null)</span>
             <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=event.sendOpinion&tokenID=$tokenID&eventID=1" data-post="rating=5&message=Maravilhoso!">
         </p>

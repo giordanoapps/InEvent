@@ -626,24 +626,18 @@
 
 		$activityID = getTokenForActivity();
 
-		if (isset($_GET["activityID"])) {
+		$result = resourceForQuery(
+		// echo (
+			"SELECT
+				`activityMember`.`rating`
+			FROM
+				`activityMember`
+			WHERE 1
+				AND `activityMember`.`activityID` = $activityID
+				AND `activityMember`.`memberID` = $core->memberID
+		");
 
-			$result = resourceForQuery(
-			// echo (
-				"SELECT
-					`activityMember`.`rating`
-				FROM
-					`activityMember`
-				WHERE 1
-					AND `activityMember`.`activityID` = $activityID
-					AND `activityMember`.`memberID` = $core->memberID
-			");
-
-			echo printInformation("activityMember", $result, true, 'json');
-
-		} else {
-			http_status_code(400, "activityID is a required parameter");
-		}
+		echo printInformation("activityMember", $result, true, 'json');
 		
 	} else
 
@@ -671,15 +665,15 @@
 					AND `activityMember`.`memberID` = $core->memberID
 			");
 
-			if (mysql_affected_rows() > 0) {
+			if ($update) {
 				$data["activityID"] = $activityID;
 				echo json_encode($data);
 			} else {
-				http_status_code(500, "not a single row was affected");
+				http_status_code(500, "sql query error");
 			}
 
 		} else {
-			http_status_code(400, "rating and message are required parameters");
+			http_status_code(400, "rating is required parameter");
 		}
 			
 	} else

@@ -148,6 +148,15 @@
     }
 }
 
+- (void)activityGetOpinionFromActivity:(NSInteger)activityID withToken:(NSString *)tokenID {
+    
+    if (tokenID != nil) {
+        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID, @"activityID" : [NSString stringWithFormat:@"%d", activityID]}};
+        
+        [self JSONObjectWithNamespace:@"activity" method:@"getOpinion" attributes:attributes];
+    }
+}
+
 - (void)activitySendOpinionWithRating:(NSInteger)rating toActivity:(NSInteger)activityID withToken:(NSString *)tokenID {
     
     if (tokenID != nil) {
@@ -282,6 +291,15 @@
         NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID, @"eventID" : [NSString stringWithFormat:@"%d", eventID]}};
         
         [self JSONObjectWithNamespace:@"event" method:@"getActivities" attributes:attributes];
+    }
+}
+
+- (void)eventGetOpinionFromEvent:(NSInteger)eventID withToken:(NSString *)tokenID {
+    
+    if (tokenID != nil) {
+        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID, @"eventID" : [NSString stringWithFormat:@"%d", eventID]}};
+        
+        [self JSONObjectWithNamespace:@"event" method:@"getOpinion" attributes:attributes];
     }
 }
 

@@ -3,10 +3,10 @@ define(["jquery", "common"], function($) {$(function() {
 // -------------------------------------- MENU -------------------------------------- //
 
 	/**
-	 * Enroll a person on an event
+	 * Change the password of a person
 	 * @return {null}
 	 */
-	$("#forgotContent").on("click", ".sendRecovery", function() {
+	$("#forgotContent").on("click", ".changePass", function() {
 
 		var $elem = $(this);
 		var oldPassword = $elem.siblings(".oldPassword").val();

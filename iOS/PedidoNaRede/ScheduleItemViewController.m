@@ -311,18 +311,20 @@
     } else if ([title isEqualToString:NSLocalizedString(@"Send feedback", nil)]) {
         // Load our reader
         FeedbackViewController *fvc = [[FeedbackViewController alloc] initWithNibName:@"FeedbackViewController" bundle:nil];
+        UINavigationController *nfvc = [[UINavigationController alloc] initWithRootViewController:fvc];
         
         [fvc setMoveKeyboardRatio:0.7];
-        [fvc setActivityData:_activityData];
+        [fvc setFeedbackType:FeedbackTypeActivity withReference:[[_activityData objectForKey:@"id"] integerValue]];
         
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-            [self.navigationController pushViewController:fvc animated:YES];
+            nfvc.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+            nfvc.modalPresentationStyle = UIModalPresentationCurrentContext;
         } else {
-            fvc.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-            fvc.modalPresentationStyle = UIModalPresentationFormSheet;
-            
-            [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:fvc animated:YES completion:nil];
+            nfvc.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+            nfvc.modalPresentationStyle = UIModalPresentationFormSheet;
         }
+        
+        [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:nfvc animated:YES completion:nil];
 
     } else if ([title isEqualToString:NSLocalizedString(@"Exit event", nil)]) {
         // Remove the tokenID and enterprise

@@ -309,6 +309,25 @@
 		
 	} else
 
+	if ($method === "getOpinion") {
+
+		$eventID = getTokenForEvent();
+
+		$result = resourceForQuery(
+			"SELECT
+				`eventMember`.`rating`,
+				`eventMember`.`message`
+			FROM
+				`eventMember`
+			WHERE 1
+				AND `eventMember`.`eventID` = $eventID
+				AND `eventMember`.`memberID` = $core->memberID
+		");
+
+		echo printInformation("eventMember", $result, true, 'json');
+		
+	} else
+
 	if ($method === "sendOpinion") {
 
 		$eventID = getTokenForEvent();

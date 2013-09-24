@@ -19,7 +19,7 @@
 				<p class="byItself">E agora sua senha nova:</p>
 				<input type="password" class="newPassword" name="newPassword" placeholder="Digite sua senha nova">
 
-				<input type="button" class="singleButton sendRecovery" value="Trocar senha">
+				<input type="button" class="singleButton changePass" value="Trocar senha">
 
 				<p class="byItself alert">Senha alterada com sucesso!</p>
 

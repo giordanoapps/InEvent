@@ -62,6 +62,7 @@
 - (void)activityGetQuestionsAtActivity:(NSInteger)activityID withTokenID:(NSString *)tokenID;
 - (void)activitySendQuestion:(NSString *)question toActivity:(NSInteger)activityID withTokenID:(NSString *)tokenID;
 - (void)activityUpvoteQuestion:(NSInteger)questionID withTokenID:(NSString *)tokenID;
+- (void)activityGetOpinionFromActivity:(NSInteger)activityID withToken:(NSString *)tokenID;
 - (void)activitySendOpinionWithRating:(NSInteger)rating toActivity:(NSInteger)activityID withToken:(NSString *)tokenID;
 
 #pragma mark - Event
@@ -80,6 +81,7 @@
 - (void)eventGetPeopleAtEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID;
 - (void)eventGetActivitiesAtEvent:(NSInteger)eventID;
 - (void)eventGetActivitiesAtEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID;
+- (void)eventGetOpinionFromEvent:(NSInteger)eventID withToken:(NSString *)tokenID;
 - (void)eventSendOpinionWithRating:(NSInteger)rating withMessage:(NSString *)message toEvent:(NSInteger)eventID withToken:(NSString *)tokenID;
 
 #pragma mark - Notifications

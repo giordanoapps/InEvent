@@ -234,15 +234,11 @@
 }
 
 - (void)didTouch {
-    [self triggerConfirmation];
-}
-
-- (void)triggerConfirmation {
     // Get the current number and confirm it
     [self toggleEntranceForIndexPath:hightlightedIndexPath highligthing:YES];
     
     // Erase the current number
-    [_numberInput setText:@"000"];
+    [_numberInput setText:@""];
 }
 
 - (void)toggleEntranceForIndexPath:(NSIndexPath *)indexPath highligthing:(BOOL)highlight {
@@ -385,9 +381,12 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
+
+    // Get the current number and confirm it
+    [self toggleEntranceForIndexPath:hightlightedIndexPath highligthing:YES];
     
-    // Save the current number
-    [self triggerConfirmation];
+    // Erase the current number
+    [_numberInput setText:@"000"];
     
     return YES;
 }

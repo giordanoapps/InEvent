@@ -10,6 +10,7 @@
 #import "ScheduleViewCell.h"
 #import "ScheduleItemViewController.h"
 #import "FrontViewController.h"
+#import "FeedbackViewController.h"
 #import "AppDelegate.h"
 #import "UtilitiesController.h"
 #import "UIViewController+Present.h"
@@ -111,7 +112,7 @@
     
 //    NSString *title = (selection == ScheduleSubscribed) ? NSLocalizedString(@"All activities", nil) : NSLocalizedString(@"My activities", nil);
     
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Actions", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"Event details", nil), NSLocalizedString(@"Exit event", nil), nil];
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Actions", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"Event details", nil), NSLocalizedString(@"Send feedback", nil), NSLocalizedString(@"Exit event", nil), nil];
     
     [actionSheet showFromBarButtonItem:self.rightBarButton animated:YES];
 }
@@ -137,6 +138,24 @@
     } else if ([title isEqualToString:NSLocalizedString(@"Event details", nil)]) {
         // Load our reader
         UINavigationController *nfvc = [[UINavigationController alloc] initWithRootViewController:[[FrontViewController alloc] initWithNibName:@"FrontViewController" bundle:nil]];
+        
+        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+            nfvc.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+            nfvc.modalPresentationStyle = UIModalPresentationCurrentContext;
+        } else {
+            nfvc.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+            nfvc.modalPresentationStyle = UIModalPresentationFormSheet;
+        }
+        
+        [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:nfvc animated:YES completion:nil];
+        
+    } else if ([title isEqualToString:NSLocalizedString(@"Send feedback", nil)]) {
+        // Load our reader
+        FeedbackViewController *fvc = [[FeedbackViewController alloc] initWithNibName:@"FeedbackViewController" bundle:nil];
+        UINavigationController *nfvc = [[UINavigationController alloc] initWithRootViewController:fvc];
+        
+        [fvc setMoveKeyboardRatio:0.7];
+        [fvc setFeedbackType:FeedbackTypeEvent withReference:[[EventToken sharedInstance] eventID]];
         
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
             nfvc.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
