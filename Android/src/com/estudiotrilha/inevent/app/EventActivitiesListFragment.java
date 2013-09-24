@@ -2,9 +2,9 @@ package com.estudiotrilha.inevent.app;
 
 import java.io.Serializable;
 import java.text.DateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
-import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -67,7 +67,8 @@ public class EventActivitiesListFragment extends Fragment implements OnItemClick
 
         // Setup the adapters
         mActivitiesAdapter = new EventActivitiesListAdapter();
-        mActivitiesAdapter.setData((EventActivityInfo[]) getArguments().getSerializable(ARGS_LIST_DATA));
+        Serializable object = getArguments().getSerializable(ARGS_LIST_DATA);
+        if (object != null) mActivitiesAdapter.setData((EventActivityInfo[]) object);
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -80,8 +81,9 @@ public class EventActivitiesListFragment extends Fragment implements OnItemClick
         super.onViewCreated(view, savedInstanceState);
 
         ListView list = (ListView) view.findViewById(android.R.id.list);
-        
+
         // Setup callbacks
+        list.setOnItemClickListener(this);
         list.setOnItemLongClickListener(this);
         
 
@@ -98,13 +100,7 @@ public class EventActivitiesListFragment extends Fragment implements OnItemClick
     public void onItemClick(AdapterView<?> adapter, View v, int position, long id)
     {
         // Show the Activity details
-        EventActivityInfo info = mActivitiesAdapter.getData()[position];
-        // TODO
-        new AlertDialog.Builder(mEventActivity)
-                .setTitle(info.name)
-//                .setMessage(c.getString(c.getColumnIndex(Activity.Columns.DESCRIPTION)))
-                .setPositiveButton(android.R.string.ok, null)
-                .show();
+        mEventActivity.startActivity(EventActivityDetailActivity.newInstance(mEventActivity, id));
     }
     @Override
     public boolean onItemLongClick(AdapterView<?> adapter, View v, int position, long id)
@@ -255,8 +251,8 @@ public class EventActivitiesListFragment extends Fragment implements OnItemClick
         @Override
         public String toString()
         {
-            // TODO
-            return name;
+            Calendar date = DateUtils.calendarFromTimestampInGMT(dateBegin);
+            return Integer.toString(date.get(Calendar.HOUR_OF_DAY));
         }
     }
 }

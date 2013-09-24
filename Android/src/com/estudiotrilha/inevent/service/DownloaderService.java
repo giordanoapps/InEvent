@@ -64,7 +64,7 @@ public class DownloaderService extends IntentService implements ApiRequest.Respo
     public static void syncEventActivities(Context c, long eventId)
     {
         Intent service = new Intent(c, DownloaderService.class);
-        service.setData(Activity.ACTIVITY_CONTENT_URI);
+        service.setData(Activity.CONTENT_URI);
         service.putExtra(EXTRA_EVENT_ID, eventId);
         c.startService(service);
     }
@@ -340,7 +340,7 @@ public class DownloaderService extends IntentService implements ApiRequest.Respo
                     // Delete the previous stored activities
                     deletes.add(
                         ContentProviderOperation
-                            .newDelete(Activity.ACTIVITY_CONTENT_URI)
+                            .newDelete(Activity.CONTENT_URI)
                             .withSelection(Activity.Columns.EVENT_ID_FULL+"="+eventID, null)
                             .build()
                     );
@@ -359,7 +359,7 @@ public class DownloaderService extends IntentService implements ApiRequest.Respo
                             // Add the insert operation for the activity
                             inserts.add(
                                 ContentProviderOperation
-                                    .newInsert(Activity.ACTIVITY_CONTENT_URI)
+                                    .newInsert(Activity.CONTENT_URI)
                                     .withValues(values)
                                     .build()
                             );

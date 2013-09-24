@@ -122,7 +122,7 @@ public class EventActivitiesPagesFragment extends Fragment implements LoaderCall
             boolean approved = mEventActivity.isApproved();
             mDisplayOption = approved ? DisplayOption.SCHEDULE_FULL : DisplayOption.ALL;
             ActionBar actionBar = mEventActivity.getSupportActionBar();
-            actionBar.setNavigationMode(approved ? ActionBar.NAVIGATION_MODE_LIST : ActionBar.NAVIGATION_MODE_STANDARD);
+//            actionBar.setNavigationMode(approved ? ActionBar.NAVIGATION_MODE_LIST : ActionBar.NAVIGATION_MODE_STANDARD);
             actionBar.setListNavigationCallbacks(null, this);
             refresh();
         }
@@ -231,7 +231,7 @@ public class EventActivitiesPagesFragment extends Fragment implements LoaderCall
         switch (code)
         {
         case LOAD_ACTIVITY:
-            uri = Activity.ACTIVITY_CONTENT_URI;
+            uri = Activity.CONTENT_URI;
             projection = Activity.Columns.PROJECTION_LIST;
             selection = Activity.Columns.EVENT_ID_FULL+"="+Long.toString(getArguments().getLong(ARGS_EVENT_ID));
             sortOrder = Activity.Columns.DATE_BEGIN_FULL + " ASC";

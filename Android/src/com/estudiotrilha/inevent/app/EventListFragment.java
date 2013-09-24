@@ -78,12 +78,12 @@ public class EventListFragment extends ListFragment implements LoaderCallbacks<C
         if (dateOrder[0] == 'd' || (dateOrder[0] != 'M' && dateOrder[1] == 'd'))
         {
             // Day, month
-            format = "d, MMM";
+            format = "d MMM";
         }
         else
         {
             // Month, day
-            format = "MMM, d";
+            format = "MMM d";
         }
         mTimeFormat = new SimpleDateFormat(format, Locale.getDefault());
     }

@@ -36,6 +36,8 @@
     <string name="title_login">Fazer Login</string>
     <string name="title_mobileNetwork">Rede Móvel</string>
     <string name="title_preferences">Preferências</string>
+    <string name="title_rate_activity">O que você achou?</string>
+    <string name="title_rate_event">O que você achou?</string>
     <string name="title_signIn">Entrar</string>
     <string name="title_signUp">Nova Conta</string>
     <string name="title_splashScreen">Splash Screen</string>
@@ -54,6 +56,8 @@
     <string name="hint_event_description">Descrição</string>
     <string name="hint_event_name">Nome</string>
     <string name="hint_event_state">Estado</string>
+    <string name="hint_eventActivity_name">Nome</string>
+    <string name="hint_eventActivity_time">Horário</string>
 
     <!-- Messages -->
     <string name="message_about_estudioTrilha">Estúdio Trilha</string>

@@ -165,7 +165,7 @@ public class AttendanceFragment extends ListFragment implements LoaderCallbacks<
 
         // Set the title
         Cursor c = getActivity().getContentResolver()
-                .query(ContentUris.withAppendedId(Activity.ACTIVITY_CONTENT_URI, getArguments().getLong(ARGS_ACTIVITY_ID)), new String[] { Activity.Columns.NAME_FULL }, null, null, null);
+                .query(ContentUris.withAppendedId(Activity.CONTENT_URI, getArguments().getLong(ARGS_ACTIVITY_ID)), new String[] { Activity.Columns.NAME_FULL }, null, null, null);
         if (c.moveToFirst())
         {
             ((ActionBarActivity) getActivity()).setTitle(c.getString(0));

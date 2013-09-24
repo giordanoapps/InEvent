@@ -62,7 +62,7 @@
     </LinearLayout>
 
     <View
-        android:id="@+id/activity_approved"
+        android:id="@id/activity_approved"
         android:layout_width="8dp"
         android:layout_height="match_parent"
         android:layout_marginBottom="4dp"

@@ -54,6 +54,7 @@ public class Activity
         private static final String CONFIRM_PAYMENT    = ApiRequest.BASE_URL + NAMESPACE + ".confirmPayment&tokenID=%s&activityID=%d&personID=%d";
         private static final String REVOKE_PAYMENT     = ApiRequest.BASE_URL + NAMESPACE + ".revokePayment&tokenID=%s&activityID=%d&personID=%d";
         private static final String GET_PEOPLE         = ApiRequest.BASE_URL + NAMESPACE + ".getPeople&tokenID=%s&activityID=%d&selection=%s";
+        private static final String GET_OPINION        = ApiRequest.BASE_URL + NAMESPACE + ".getOpinion&tokenID=%s&activityID=%d";
         private static final String SEND_OPINION       = ApiRequest.BASE_URL + NAMESPACE + ".sendOpinion&tokenID=%s&activityID=%d";
 
         public static HttpURLConnection requestEnrollment(String tokenID, long activityID) throws IOException
@@ -126,6 +127,14 @@ public class Activity
         {
             tokenID = URLEncoder.encode(tokenID, ApiRequest.ENCODING);
             URL url = new URL(String.format(GET_PEOPLE, tokenID, activityID, selection.toString()));
+
+            return ConnectionHelper.getURLGetConnection(url);
+        }
+
+        public static HttpURLConnection getOpinion(String tokenID, long activityID) throws IOException
+        {
+            tokenID = URLEncoder.encode(tokenID, ApiRequest.ENCODING);
+            URL url = new URL(String.format(GET_OPINION, tokenID, activityID));
 
             return ConnectionHelper.getURLGetConnection(url);
         }
@@ -204,12 +213,22 @@ public class Activity
             Activity.Columns.LOCATION_FULL,
             "IFNULL("+ActivityMember.Columns.APPROVED_FULL+",-1) AS "+ActivityMember.Columns.APPROVED
         };
+        public static final String[] PROJECTION_DETAIL = {
+            Activity.Columns.NAME_FULL,
+            Activity.Columns.DESCRIPTION_FULL,
+            Activity.Columns.DATE_BEGIN_FULL,
+            Activity.Columns.DATE_END_FULL,
+            Activity.Columns.LOCATION_FULL,
+            Activity.Columns.LATITUDE_FULL,
+            Activity.Columns.LONGITUDE_FULL,
+            "IFNULL("+ActivityMember.Columns.APPROVED_FULL+",-1) AS "+ActivityMember.Columns.APPROVED
+        };
     }
 
 
     // Content Provider
-    public static final String ACTIVITY_PATH      = "activity";
-    public static final Uri ACTIVITY_CONTENT_URI  = Uri.withAppendedPath(InEventProvider.CONTENT_URI, ACTIVITY_PATH);
+    public static final String PATH     = "activity";
+    public static final Uri CONTENT_URI = Uri.withAppendedPath(InEventProvider.CONTENT_URI, PATH);
 
 
     public static ContentValues valuesFromJson(JSONObject json, long eventID)

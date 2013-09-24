@@ -1,12 +1,74 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:trilha="http://schemas.android.com/apk/res/com.estudiotrilha.inevent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".EventActivityDetailActivity" >
+    android:padding="8dp" >
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
 
-</RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#fff"
+            android:minHeight="120dp" >
+
+            <com.estudiotrilha.android.widget.TriangleView
+                android:id="@id/activity_approved"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                trilha:triangleType="squareTopRight" />
+
+            <TextView
+                android:id="@id/activity_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:paddingLeft="@dimen/default_textPadding"
+                android:paddingRight="@dimen/default_textPadding"
+                android:paddingTop="@dimen/default_textPadding"
+                android:text="@string/hint_eventActivity_name"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/activity_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/activity_name"
+                android:paddingBottom="@dimen/default_textPadding"
+                android:paddingLeft="@dimen/default_textPadding"
+                android:paddingRight="@dimen/default_textPadding"
+                android:text="@string/hint_eventActivity_time"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <RatingBar
+                android:id="@id/activity_rating"
+                style="?android:attr/ratingBarStyleIndicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/activity_location"
+                android:isIndicator="true"
+                android:numStars="5" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/activity_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="#fff"
+            android:minHeight="144dp"
+            android:padding="@dimen/default_textPadding" />
+    </LinearLayout>
+
+</ScrollView>

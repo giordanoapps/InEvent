@@ -25,4 +25,5 @@
     <item name="activity_dateBegin" type="id"/>
     <item name="activity_dateEnd" type="id"/>
     <item name="activity_approved" type="id"/>
+    <item name="activity_rating" type="id"/>
 </resources>

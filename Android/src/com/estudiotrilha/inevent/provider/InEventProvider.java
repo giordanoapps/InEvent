@@ -56,8 +56,8 @@ public class InEventProvider extends ContentProvider
         uriMatcher.addURI(AUTHORITY, Event.PATH,                    URI_EVENT);
         uriMatcher.addURI(AUTHORITY, Event.PATH + "/#",             URI_EVENT_SINGLE);
         uriMatcher.addURI(AUTHORITY, EventMember.PATH,              URI_EVENT_ATTENDERS);
-        uriMatcher.addURI(AUTHORITY, Activity.ACTIVITY_PATH,        URI_ACTIVITY);
-        uriMatcher.addURI(AUTHORITY, Activity.ACTIVITY_PATH + "/#", URI_ACTIVITY_SINGLE);
+        uriMatcher.addURI(AUTHORITY, Activity.PATH,        URI_ACTIVITY);
+        uriMatcher.addURI(AUTHORITY, Activity.PATH + "/#", URI_ACTIVITY_SINGLE);
         uriMatcher.addURI(AUTHORITY, ActivityMember.PATH,           URI_ACTIVITY_ATTENDERS);
         uriMatcher.addURI(AUTHORITY, Member.PATH,                   URI_MEMBER);
     }
@@ -96,13 +96,13 @@ public class InEventProvider extends ContentProvider
             return ContentResolver.CURSOR_DIR_BASE_TYPE + IN_EVENT + EventMember.PATH;
 
         case URI_ACTIVITY:
-            return ContentResolver.CURSOR_DIR_BASE_TYPE + IN_EVENT + Activity.ACTIVITY_PATH;
+            return ContentResolver.CURSOR_DIR_BASE_TYPE + IN_EVENT + Activity.PATH;
 
         case URI_ACTIVITY_ATTENDERS:
             return ContentResolver.CURSOR_DIR_BASE_TYPE + IN_EVENT + ActivityMember.PATH;
 
         case URI_ACTIVITY_SINGLE:
-            return ContentResolver.CURSOR_ITEM_BASE_TYPE + IN_EVENT + Activity.ACTIVITY_PATH;
+            return ContentResolver.CURSOR_ITEM_BASE_TYPE + IN_EVENT + Activity.PATH;
 
         case URI_MEMBER:
             return ContentResolver.CURSOR_DIR_BASE_TYPE + IN_EVENT + Member.PATH;
