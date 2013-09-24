@@ -14,7 +14,7 @@
 #import "HumanToken.h"
 #import "EventToken.h"
 #import "GAI.h"
-#import "CoolBarButtonItem.h"
+#import "UIViewController+TapBehind.h"
 
 @interface FrontViewController () {
     NSDictionary *eventData;
@@ -57,6 +57,13 @@
     [super viewWillAppear:animated];
 
     [self loadData];
+}
+
+- (void) viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    // Window
+    [self allocTapBehind];
 }
 
 - (void)didReceiveMemoryWarning

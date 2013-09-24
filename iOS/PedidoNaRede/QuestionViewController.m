@@ -17,6 +17,7 @@
 #import "NSString+HTML.h"
 #import "ODRefreshControl.h"
 #import "NSObject+Triangle.h"
+#import "UIViewController+TapBehind.h"
 
 @interface QuestionViewController () {
     ODRefreshControl *refreshControl;
@@ -108,6 +109,9 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    
+    // Window
+    [self allocTapBehind];
     
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
         [self cleanData];
@@ -248,11 +252,28 @@
     NSDictionary *dictionary = [self.questionData objectAtIndex:indexPath.row];
     
     cell.textLabel.text = [[dictionary objectForKey:@"text"] stringByDecodingHTMLEntities];
-    UIImageView *facebookLike = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"32-Facebook-Like-2"]];
-    facebookLike.userInteractionEnabled = YES;
-    cell.accessoryView = facebookLike;
+    
+    UILabel *votes = [[UILabel alloc] initWithFrame:CGRectMake(4.0f, 8.0f, 12.0f, 32.0f)];
+    [votes setFont:[UIFont fontWithName:@"TrebuchetMS-Bold" size:20.0]];
+    [votes setText:[dictionary objectForKey:@"votes"]];
+    UIButton *facebookLike = [[UIButton alloc] initWithFrame:CGRectMake(20.0f, 6.0f, 32.0f, 32.0f)];
+    [facebookLike setImage:[UIImage imageNamed:@"32-Facebook-Like-2"] forState:UIControlStateNormal];
+    [facebookLike setUserInteractionEnabled:YES];
+    [facebookLike addTarget:self action: @selector(accessoryButtonTapped:withEvent:) forControlEvents:UIControlEventTouchUpInside];
+    UIView *accessory = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 52.0f, 44.0f)];
+    [accessory addSubview:votes];
+    [accessory addSubview:facebookLike];
+    
+    cell.accessoryView = accessory;
     
     return cell;
+}
+
+- (void) accessoryButtonTapped:(UIControl *)button withEvent:(UIEvent *)event {
+    // Apple does not allow that we use the accessory custom view with the stock tableview's delegate method, so have to simulate it
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:[[[event touchesForView:button] anyObject] locationInView:self.tableView]];
+    
+    if (indexPath != nil) [self.tableView.delegate tableView:self.tableView accessoryButtonTappedForRowWithIndexPath:indexPath];
 }
 
 - (void)tableView:(UITableView *)aTableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {

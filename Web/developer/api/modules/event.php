@@ -357,11 +357,11 @@
 					AND `eventMember`.`memberID` = $core->memberID
 			");
 
-			if (mysql_affected_rows() > 0) {
+			if ($update) {
 				$data["eventID"] = $eventID;
 				echo json_encode($data);
 			} else {
-				http_status_code(500, "not a single row was affected");
+				http_status_code(500, "sql query error");
 			}
 
 		} else {

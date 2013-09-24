@@ -7,6 +7,7 @@
 //
 
 #import "ReaderViewController.h"
+#import "UIViewController+TapBehind.h"
 #import <QuartzCore/QuartzCore.h>
 #import "ColorThemeController.h"
 #import "NSString+HTML.h"
@@ -82,10 +83,7 @@
     [super viewDidAppear:animated];
     
     // Window
-    UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapBehind:)];
-    [recognizer setNumberOfTapsRequired:1];
-    [recognizer setCancelsTouchesInView:NO]; // So the user can still interact with controls in the modal view
-    [self.view.window addGestureRecognizer:recognizer];
+    [self allocTapBehind];
     
     // Table View
     UIPanGestureRecognizer *panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didPan:)];
@@ -112,21 +110,6 @@
 
 #pragma mark - Private Methods
 
-- (void)handleTapBehind:(UITapGestureRecognizer *)sender {
-    
-    if (sender.state == UIGestureRecognizerStateEnded) {
-        CGPoint location = [sender locationInView:nil]; //Passing nil gives us coordinates in the window
-        
-        // Then we convert the tap's location into the local view's coordinate system, and test to see if it's in or outside.
-        // If outside, dismiss the view.
-        if (![self.view pointInside:[self.view convertPoint:location fromView:self.view.window] withEvent:nil]) {
-            // Remove the recognizer first so it's view.window is valid.
-            [self.view.window removeGestureRecognizer:sender];
-            [self dismissModalViewControllerAnimated:YES];
-        }
-    }
-}
-
 - (void)didPan:(UIPanGestureRecognizer *)gestureRecognizer {
 
     CGPoint swipeLocation = [gestureRecognizer locationInView:self.tableView];
@@ -144,7 +127,8 @@
             panIndexPath = nil;
         }
         
-        [swipedCell setBackgroundView:[[UIView alloc] initWithFrame:CGRectZero]];
+//        [swipedCell setBackgroundView:[[UIView alloc] initWithFrame:CGRectZero]];
+        [swipedCell setBackgroundView:[[UIView alloc] initWithFrame:swipedCell.contentView.frame]];
         
         UILabel *title = [[UILabel alloc] initWithFrame:CGRectZero];
         [title setFont:[UIFont fontWithName:@"Thonburi-Bold" size:22.0]];
@@ -165,7 +149,6 @@
             CGRect frame = swipedCell.contentView.frame;
             frame.origin.x = actualLocation.x - panStartLocation.x;
             swipedCell.contentView.frame = frame;
-            
             
             UISwipeGestureRecognizerDirection direction = (actualLocation.x > panStartLocation.x) ? UISwipeGestureRecognizerDirectionRight : UISwipeGestureRecognizerDirectionLeft;
             
@@ -341,6 +324,7 @@
     NSDictionary *dictionary = [self.people objectAtIndex:indexPath.row];
     cell.textLabel.text = [[dictionary objectForKey:@"name"] stringByDecodingHTMLEntities];
     cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+    cell.contentView.backgroundColor = [UIColor whiteColor];
     cell.backgroundView = nil;
     
     if ([[dictionary objectForKey:@"present"] integerValue] == 1) {

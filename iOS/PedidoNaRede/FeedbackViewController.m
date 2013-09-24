@@ -12,6 +12,7 @@
 #import "UIPlaceHolderTextView.h"
 #import "HumanToken.h"
 #import "EventToken.h"
+#import "UIViewController+TapBehind.h"
 
 @interface FeedbackViewController () {
     BOOL hideCommentBox;
@@ -84,6 +85,13 @@
     
     if (hideCommentBox) [self hideCommentBox];
     [self loadPreviousOpinion];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    // Window
+    [self allocTapBehind];
 }
 
 - (void)didReceiveMemoryWarning
@@ -188,6 +196,7 @@
             NSInteger rating = [[[answers objectAtIndex:0] objectForKey:@"rating"] integerValue];
             // Make sure that the rating has been set
             if (rating != 0) [self setRating:rating];
+            // Set some text if available
             if (_type == FeedbackTypeEvent) [_textView setText:[[answers objectAtIndex:0] objectForKey:@"message"]];
         }
     }

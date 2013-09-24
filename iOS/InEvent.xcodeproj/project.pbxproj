@@ -182,6 +182,7 @@
 		EBD055AC17AF919C008355E8 /* 16-Footprints.png in Resources */ = {isa = PBXBuildFile; fileRef = EBD055AA17AF919C008355E8 /* 16-Footprints.png */; };
 		EBD055AD17AF919C008355E8 /* 16-Footprints@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBD055AB17AF919C008355E8 /* 16-Footprints@2x.png */; };
 		EBD0DB5616AF953B00F78F93 /* UIViewController+Present.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD0DB5516AF953B00F78F93 /* UIViewController+Present.m */; };
+		EBD101A517F1DF09009C50F6 /* UIViewController+TapBehind.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD101A417F1DF09009C50F6 /* UIViewController+TapBehind.m */; };
 		EBD27B6316D827C300DA6ACE /* ColorThemeController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD27B6216D827C300DA6ACE /* ColorThemeController.m */; };
 		EBD27B6616D8604200DA6ACE /* 32-Looking-Glass.png in Resources */ = {isa = PBXBuildFile; fileRef = EBD27B6516D8604200DA6ACE /* 32-Looking-Glass.png */; };
 		EBD47D9216B07BA600F7295E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = EBD47D9416B07BA600F7295E /* Localizable.strings */; };
@@ -512,6 +513,8 @@
 		EBD055AB17AF919C008355E8 /* 16-Footprints@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "16-Footprints@2x.png"; sourceTree = "<group>"; };
 		EBD0DB5416AF953B00F78F93 /* UIViewController+Present.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Present.h"; sourceTree = "<group>"; };
 		EBD0DB5516AF953B00F78F93 /* UIViewController+Present.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Present.m"; sourceTree = "<group>"; };
+		EBD101A317F1DF09009C50F6 /* UIViewController+TapBehind.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+TapBehind.h"; sourceTree = "<group>"; };
+		EBD101A417F1DF09009C50F6 /* UIViewController+TapBehind.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+TapBehind.m"; sourceTree = "<group>"; };
 		EBD27B6116D827C300DA6ACE /* ColorThemeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorThemeController.h; sourceTree = "<group>"; };
 		EBD27B6216D827C300DA6ACE /* ColorThemeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorThemeController.m; sourceTree = "<group>"; };
 		EBD27B6516D8604200DA6ACE /* 32-Looking-Glass.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Looking-Glass.png"; sourceTree = "<group>"; };
@@ -806,6 +809,7 @@
 		EB3BD91417B8C47F008D066D /* Reader */ = {
 			isa = PBXGroup;
 			children = (
+				EBD101A617F1DF0E009C50F6 /* Tap Behind */,
 				EB3BD90F17B8C47A008D066D /* ReaderViewController.h */,
 				EB3BD91017B8C47A008D066D /* ReaderViewController.m */,
 				EB3BD91117B8C47A008D066D /* ReaderViewController.xib */,
@@ -1177,6 +1181,15 @@
 			);
 			name = Additional;
 			path = PedidoNaRede;
+			sourceTree = "<group>";
+		};
+		EBD101A617F1DF0E009C50F6 /* Tap Behind */ = {
+			isa = PBXGroup;
+			children = (
+				EBD101A317F1DF09009C50F6 /* UIViewController+TapBehind.h */,
+				EBD101A417F1DF09009C50F6 /* UIViewController+TapBehind.m */,
+			);
+			name = "Tap Behind";
 			sourceTree = "<group>";
 		};
 		EBDA918F17ACBA5000969A08 /* Bar Buttons Icons */ = {
@@ -1650,6 +1663,7 @@
 				EBAD3CB416A27BFB003735AD /* UIImage+Color.m in Sources */,
 				EB28747916A71EF600A06781 /* StepperView.m in Sources */,
 				EB73E9A416AC912A000A9039 /* UtilitiesController.m in Sources */,
+				EBD101A517F1DF09009C50F6 /* UIViewController+TapBehind.m in Sources */,
 				EBD0DB5616AF953B00F78F93 /* UIViewController+Present.m in Sources */,
 				EB8C7D9216D17AEB00F3C721 /* UIHelpers.m in Sources */,
 				EB8C7D9316D17AEB00F3C721 /* SSCheckBoxView.m in Sources */,

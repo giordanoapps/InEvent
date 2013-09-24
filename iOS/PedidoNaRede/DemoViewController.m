@@ -86,7 +86,7 @@
         [title setNumberOfLines:2];
         [title setBackgroundColor:[UIColor whiteColor]];
         [title setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin];
-        [title setFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:24.0]];
+        [title setFont:[UIFont fontWithName:@"Thnoburi-Bold" size:24.0]];
         [title setTextColor:[ColorThemeController tableViewCellTextColor]];
         [title setHighlightedTextColor:[ColorThemeController tableViewCellTextHighlightedColor]];
         
@@ -103,7 +103,7 @@
         [description setNumberOfLines:0];
         [description setBackgroundColor:[UIColor whiteColor]];
         [description setAutoresizingMask: UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin];
-        [description setFont:[UIFont fontWithName:@"HelveticaNeue" size:14.0]];
+        [description setFont:[UIFont fontWithName:@"Thonburi" size:14.0]];
         [description setHighlightedTextColor:[ColorThemeController tableViewCellTextColor]];
         [description setTextColor:[ColorThemeController tableViewCellTextHighlightedColor]];
         
