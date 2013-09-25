@@ -17,7 +17,6 @@
 #import "NSString+HTML.h"
 #import "ODRefreshControl.h"
 #import "NSObject+Triangle.h"
-#import "UIViewController+TapBehind.h"
 
 @interface QuestionViewController () {
     ODRefreshControl *refreshControl;
@@ -117,6 +116,13 @@
         [self cleanData];
         [self loadData];
     }
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    // Window
+    [self deallocTapBehind];
 }
 
 - (void)didReceiveMemoryWarning

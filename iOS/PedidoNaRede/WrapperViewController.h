@@ -20,7 +20,13 @@
 @property (assign, nonatomic) CGFloat moveKeyboardRatio;
 @property (assign, nonatomic) WrapperViewController *decentPresentingViewController;
 
+// Keyboard
 - (void)keyboardWillShow:(NSNotification*)notification;
 - (void)keyboardWillHide:(NSNotification*)notification;
+
+// Tap Behind
+- (void)allocTapBehind;
+- (void)deallocTapBehind;
+- (void)handleTapBehind:(UITapGestureRecognizer *)sender;
 
 @end

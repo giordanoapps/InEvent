@@ -25,9 +25,6 @@
     CLLocationManager *locationManager;
 }
 
-
-@property (strong, nonatomic) NSMutableArray *questionData;
-
 @end
 
 @implementation ScheduleItemViewController
@@ -36,9 +33,6 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
-        self.questionData = [NSMutableArray array];
-        
         // Add notification observer for new orders
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cleanData) name:@"scheduleCurrentState" object:nil];
     }
@@ -262,9 +256,17 @@
     UIActionSheet *actionSheet;
     
     if ([[HumanToken sharedInstance] isMemberWorking]) {
-        actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Actions", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"See people", nil), NSLocalizedString(@"See questions", nil), NSLocalizedString(@"Send feedback", nil), nil];
+        if ([[_activityData objectForKey:@"approved"] integerValue] == ScheduleStateApproved) {
+            actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Actions", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"See people", nil), NSLocalizedString(@"See questions", nil), NSLocalizedString(@"Send feedback", nil), nil];
+        } else {
+            actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Actions", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"See people", nil), NSLocalizedString(@"See questions", nil), nil];
+        }
     } else if ([[HumanToken sharedInstance] isMemberAuthenticated]) {
-        actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Actions", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"See questions", nil), NSLocalizedString(@"Send feedback", nil), nil];
+        if ([[_activityData objectForKey:@"approved"] integerValue] == ScheduleStateApproved) {
+            actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Actions", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"See questions", nil), NSLocalizedString(@"Send feedback", nil), nil];
+        } else {
+            actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Actions", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"See questions", nil), nil];
+        }
     }
     
     [actionSheet showFromBarButtonItem:self.rightBarButton animated:YES];
@@ -335,53 +337,6 @@
         
     }
     
-}
-
-#pragma mark - Table View Data Source
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)aTableView {
-    return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)aTableView numberOfRowsInSection:(NSInteger)section {
-    return [self.questionData count];
-}
-
-- (UITableViewCell *)tableView:(UITableView *)aTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    static NSString *CustomCellIdentifier = @"CustomCellIdentifier";
-    UITableViewCell *cell = [aTableView dequeueReusableCellWithIdentifier: CustomCellIdentifier];
-    
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CustomCellIdentifier];
-    }
-    
-    NSDictionary *dictionary = [self.questionData objectAtIndex:indexPath.row];
-    
-    cell.textLabel.text = [[dictionary objectForKey:@"text"] stringByDecodingHTMLEntities];
-//    cell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@""]];
-    
-    return cell;
-}
-
-- (void)tableView:(UITableView *)aTableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-}
-
-#pragma mark - APIController Delegate
-
-- (void)apiController:(APIController *)apiController didLoadDictionaryFromServer:(NSDictionary *)dictionary {
-    
-    // Assign the data object to the companies
-    self.questionData = [NSMutableArray arrayWithArray:[dictionary objectForKey:@"data"]];
-    
-    [refreshControl endRefreshing];
-}
-
-- (void)apiController:(APIController *)apiController didFailWithError:(NSError *)error {
-    [super apiController:apiController didFailWithError:error];
-    
-    [refreshControl endRefreshing];
 }
 
 #pragma mark - Location Manager Delegate iOS5

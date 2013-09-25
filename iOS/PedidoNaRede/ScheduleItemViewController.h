@@ -11,7 +11,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import "WrapperViewController.h"
 
-@interface ScheduleItemViewController : WrapperViewController <UITableViewDelegate, UITableViewDataSource, APIControllerDelegate, UIGestureRecognizerDelegate, UISplitViewControllerDelegate, CLLocationManagerDelegate>
+@interface ScheduleItemViewController : WrapperViewController <APIControllerDelegate, UIGestureRecognizerDelegate, UISplitViewControllerDelegate, CLLocationManagerDelegate>
 
 @property (strong, nonatomic) IBOutlet UIView *wrapper;
 @property (strong, nonatomic) IBOutlet UILabel *hour;

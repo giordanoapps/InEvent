@@ -86,8 +86,12 @@
 - (void)checkSession {
     if (FBSession.activeSession.isOpen) {
         [self populateUserDetails];
+        [self.photo setHidden:NO];
+        [self.defaultPhoto setHidden:YES];
     } else if ([[HumanToken sharedInstance] isMemberAuthenticated]) {
         [self.name setTitle:[[HumanToken sharedInstance] name] forState:UIControlStateNormal];
+        [self.photo setHidden:YES];
+        [self.defaultPhoto setHidden:NO];
     } else {
         [_hlvc setMoveKeyboardRatio:0.7];
         UINavigationController *nhlvc = [[UINavigationController alloc] initWithRootViewController:_hlvc];

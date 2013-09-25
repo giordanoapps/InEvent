@@ -2235,11 +2235,11 @@ textarea, input {
 #peopleContent .pickerItem img {
 	cursor: pointer;
 	margin-top: 4px;
-	width: 24px;
+	width: 20px;
 }
 
 #peopleContent .pickerItem input {
-	padding: 4.5px;
+	padding: 3px 6px;
 	margin: 4px 0;
 	font-size: 90%;
 	text-align: center;

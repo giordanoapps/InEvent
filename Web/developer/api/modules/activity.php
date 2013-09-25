@@ -594,6 +594,7 @@
 			// Get some properties
 			$questionID = getAttribute($_GET['questionID']);
 
+			// Make sure that the person is not voting on the same question that he posted
 			$insert = resourceForQuery(
 			// echo (
 				"INSERT INTO

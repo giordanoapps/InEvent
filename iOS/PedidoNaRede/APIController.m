@@ -23,15 +23,15 @@
 #pragma mark - Initializers
 
 - (id)initWithDelegate:(id<APIControllerDelegate>)aDelegate {
-    return [self initWithDelegate:aDelegate forcing:NO withMaxAge:3600.0 withUserInfo:nil];
+    return [self initWithDelegate:aDelegate forcing:NO withMaxAge:604800.0 withUserInfo:nil];
 }
 
 - (id)initWithDelegate:(id<APIControllerDelegate>)aDelegate forcing:(BOOL)aForce {
-    return [self initWithDelegate:aDelegate forcing:aForce withMaxAge:3600.0 withUserInfo:nil];
+    return [self initWithDelegate:aDelegate forcing:aForce withMaxAge:604800.0 withUserInfo:nil];
 }
 
 - (id)initWithDelegate:(id<APIControllerDelegate>)aDelegate forcing:(BOOL)aForce withUserInfo:(NSDictionary *)aUserInfo {
-    return [self initWithDelegate:aDelegate forcing:aForce withMaxAge:3600.0 withUserInfo:aUserInfo];
+    return [self initWithDelegate:aDelegate forcing:aForce withMaxAge:604800.0 withUserInfo:aUserInfo];
 }
 
 - (id)initWithDelegate:(id<APIControllerDelegate>)aDelegate forcing:(BOOL)aForce withMaxAge:(NSTimeInterval)aMaxAge withUserInfo:(NSDictionary *)aUserInfo {

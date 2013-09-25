@@ -14,7 +14,6 @@
 #import "HumanToken.h"
 #import "EventToken.h"
 #import "GAI.h"
-#import "UIViewController+TapBehind.h"
 
 @interface FrontViewController () {
     NSDictionary *eventData;
@@ -64,6 +63,13 @@
     
     // Window
     [self allocTapBehind];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    // Window
+    [self deallocTapBehind];
 }
 
 - (void)didReceiveMemoryWarning

@@ -15,7 +15,9 @@
 #import "HumanToken.h"
 #import "UINavigationBar+Height.h"
 
-@interface WrapperViewController ()
+@interface WrapperViewController () {
+    UITapGestureRecognizer *behindRecognizer;
+}
 
 @property (assign, nonatomic) BOOL isUp;
 @property (strong, nonatomic) APIController *apiController;
@@ -242,26 +244,35 @@
     }
 }
 
-#pragma mark - MG Split View Controller Delegate
+#pragma mark - Tap Behind methods
 
-//- (void)splitViewController:(MGSplitViewController*)svc
-//	 willHideViewController:(UIViewController *)aViewController
-//		  withBarButtonItem:(UIBarButtonItem*)barButtonItem
-//	   forPopoverController: (UIPopoverController*)pc {
-//	
-//    self.barButtonItem = barButtonItem;
-//    [self showRootPopoverButtonItem];
-//}
-//
-//
-//// Called when the view is shown again in the split view, invalidating the button and popover controller.
-//- (void)splitViewController:(MGSplitViewController*)svc
-//	 willShowViewController:(UIViewController *)aViewController
-//  invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem
-//{
-//    self.barButtonItem = nil;
-//    [self invalidateRootPopoverButtonItem];
-//}
+- (void)allocTapBehind {
+    // Add the gesture recognizer
+    behindRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapBehind:)];
+    [behindRecognizer setNumberOfTapsRequired:1];
+    [behindRecognizer setCancelsTouchesInView:NO]; // So the user can still interact with controls in the modal view
+    [self.view.window addGestureRecognizer:behindRecognizer];
+}
+
+- (void)deallocTapBehind {
+    // Remove the gesture recognizer
+    [self.view.window removeGestureRecognizer:behindRecognizer];
+}
+
+- (void)handleTapBehind:(UITapGestureRecognizer *)sender {
+    
+    if (sender.state == UIGestureRecognizerStateEnded) {
+        CGPoint location = [sender locationInView:nil]; //Passing nil gives us coordinates in the window
+        
+        // Then we convert the tap's location into the local view's coordinate system, and test to see if it's in or outside.
+        // If outside, dismiss the view.
+        if (![self.view pointInside:[self.view convertPoint:location fromView:self.view.window] withEvent:nil]) {
+            // Remove the recognizer first so it's view.window is valid.
+            [self.view.window removeGestureRecognizer:sender];
+            [self dismissModalViewControllerAnimated:YES];
+        }
+    }
+}
 
 #pragma mark - Split View Controller Delegate
 
@@ -284,12 +295,6 @@
 #pragma mark - Split View Controller Rotation Methods
 
 - (void)showRootPopoverButtonItem {
-    // See if we can get the title of the navigation controller
-//    if ([viewController isKindOfClass:[UINavigationController class]]) {
-//        _barButtonItem.title = [[((UINavigationController *)viewController).viewControllers objectAtIndex:0] title];
-//    } else {
-//        _barButtonItem.title = self.title;
-//    }
     // Append the button into the ones that we already have
     NSMutableArray *barButtons = [NSMutableArray arrayWithArray:self.navigationItem.leftBarButtonItems];
     if (_barButtonItem && ![barButtons containsObject:_barButtonItem]) [barButtons addObject:_barButtonItem];
@@ -302,13 +307,5 @@
     [barButtons removeObject:_barButtonItem];
     [self.navigationItem setLeftBarButtonItems:barButtons animated:YES];
 }
-//
-//- (void)viewWillLayoutSubviews {
-//    if (UIInterfaceOrientationIsPortrait([UIApplication sharedApplication].statusBarOrientation)) {
-//        [self showRootPopoverButtonItem];
-//    } else {
-//        [self invalidateRootPopoverButtonItem];
-//    }
-//}
 
 @end

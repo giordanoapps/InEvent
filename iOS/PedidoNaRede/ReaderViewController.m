@@ -7,7 +7,6 @@
 //
 
 #import "ReaderViewController.h"
-#import "UIViewController+TapBehind.h"
 #import <QuartzCore/QuartzCore.h>
 #import "ColorThemeController.h"
 #import "NSString+HTML.h"
@@ -89,6 +88,13 @@
     UIPanGestureRecognizer *panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didPan:)];
     [panGesture setDelegate:self];
     [self.tableView addGestureRecognizer:panGesture];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    // Window
+    [self deallocTapBehind];
 }
 
 - (void)didReceiveMemoryWarning

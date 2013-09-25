@@ -12,7 +12,7 @@
 #import "UIPlaceHolderTextView.h"
 #import "HumanToken.h"
 #import "EventToken.h"
-#import "UIViewController+TapBehind.h"
+#import "NSString+HTML.h"
 
 @interface FeedbackViewController () {
     BOOL hideCommentBox;
@@ -92,6 +92,13 @@
     
     // Window
     [self allocTapBehind];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    // Window
+    [self deallocTapBehind];
 }
 
 - (void)didReceiveMemoryWarning
@@ -193,17 +200,18 @@
     if ([apiController.method isEqualToString:@"getOpinion"]) {
         NSArray *answers = [dictionary objectForKey:@"data"];
         if ([answers count] > 0) {
+            // Get the rating
             NSInteger rating = [[[answers objectAtIndex:0] objectForKey:@"rating"] integerValue];
+            
             // Make sure that the rating has been set
             if (rating != 0) [self setRating:rating];
+            
             // Set some text if available
-            if (_type == FeedbackTypeEvent) [_textView setText:[[answers objectAtIndex:0] objectForKey:@"message"]];
+            if (_type == FeedbackTypeEvent) {
+                [_textView setText:[[[answers objectAtIndex:0] objectForKey:@"message"] stringByDecodingHTMLEntities]];
+            }
         }
     }
-}
-
-- (void)apiController:(APIController *)apiController didFailWithError:(NSError *)error {
-    [super apiController:apiController didFailWithError:error];
 }
 
 #pragma mark - TextView Delegate

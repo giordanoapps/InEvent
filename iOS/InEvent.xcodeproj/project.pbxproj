@@ -131,6 +131,7 @@
 		EB95437317ACBE7300229EE2 /* 64-Cog.png in Resources */ = {isa = PBXBuildFile; fileRef = EB95437217ACBE7300229EE2 /* 64-Cog.png */; };
 		EB95437617ACCB2000229EE2 /* 16-Map.png in Resources */ = {isa = PBXBuildFile; fileRef = EB95437417ACCB2000229EE2 /* 16-Map.png */; };
 		EB95437717ACCB2000229EE2 /* 16-Map@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB95437517ACCB2000229EE2 /* 16-Map@2x.png */; };
+		EB97144217F2B306009260AE /* 128-user.png in Resources */ = {isa = PBXBuildFile; fileRef = EB97144117F2B306009260AE /* 128-user.png */; };
 		EB9AB77216A0921A005D4CAA /* DemoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB9AB77016A0921A005D4CAA /* DemoViewController.m */; };
 		EB9AB77316A0921A005D4CAA /* DemoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB9AB77116A0921A005D4CAA /* DemoViewController.xib */; };
 		EB9AB78616A125B3005D4CAA /* barButton.png in Resources */ = {isa = PBXBuildFile; fileRef = EB9AB77A16A125B3005D4CAA /* barButton.png */; };
@@ -182,7 +183,6 @@
 		EBD055AC17AF919C008355E8 /* 16-Footprints.png in Resources */ = {isa = PBXBuildFile; fileRef = EBD055AA17AF919C008355E8 /* 16-Footprints.png */; };
 		EBD055AD17AF919C008355E8 /* 16-Footprints@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBD055AB17AF919C008355E8 /* 16-Footprints@2x.png */; };
 		EBD0DB5616AF953B00F78F93 /* UIViewController+Present.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD0DB5516AF953B00F78F93 /* UIViewController+Present.m */; };
-		EBD101A517F1DF09009C50F6 /* UIViewController+TapBehind.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD101A417F1DF09009C50F6 /* UIViewController+TapBehind.m */; };
 		EBD27B6316D827C300DA6ACE /* ColorThemeController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD27B6216D827C300DA6ACE /* ColorThemeController.m */; };
 		EBD27B6616D8604200DA6ACE /* 32-Looking-Glass.png in Resources */ = {isa = PBXBuildFile; fileRef = EBD27B6516D8604200DA6ACE /* 32-Looking-Glass.png */; };
 		EBD47D9216B07BA600F7295E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = EBD47D9416B07BA600F7295E /* Localizable.strings */; };
@@ -448,6 +448,7 @@
 		EB95437217ACBE7300229EE2 /* 64-Cog.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "64-Cog.png"; sourceTree = "<group>"; };
 		EB95437417ACCB2000229EE2 /* 16-Map.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "16-Map.png"; sourceTree = "<group>"; };
 		EB95437517ACCB2000229EE2 /* 16-Map@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "16-Map@2x.png"; sourceTree = "<group>"; };
+		EB97144117F2B306009260AE /* 128-user.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "128-user.png"; sourceTree = "<group>"; };
 		EB9AB76F16A0921A005D4CAA /* DemoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoViewController.h; sourceTree = "<group>"; };
 		EB9AB77016A0921A005D4CAA /* DemoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoViewController.m; sourceTree = "<group>"; };
 		EB9AB77116A0921A005D4CAA /* DemoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DemoViewController.xib; sourceTree = "<group>"; };
@@ -513,8 +514,6 @@
 		EBD055AB17AF919C008355E8 /* 16-Footprints@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "16-Footprints@2x.png"; sourceTree = "<group>"; };
 		EBD0DB5416AF953B00F78F93 /* UIViewController+Present.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Present.h"; sourceTree = "<group>"; };
 		EBD0DB5516AF953B00F78F93 /* UIViewController+Present.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Present.m"; sourceTree = "<group>"; };
-		EBD101A317F1DF09009C50F6 /* UIViewController+TapBehind.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+TapBehind.h"; sourceTree = "<group>"; };
-		EBD101A417F1DF09009C50F6 /* UIViewController+TapBehind.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+TapBehind.m"; sourceTree = "<group>"; };
 		EBD27B6116D827C300DA6ACE /* ColorThemeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorThemeController.h; sourceTree = "<group>"; };
 		EBD27B6216D827C300DA6ACE /* ColorThemeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorThemeController.m; sourceTree = "<group>"; };
 		EBD27B6516D8604200DA6ACE /* 32-Looking-Glass.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Looking-Glass.png"; sourceTree = "<group>"; };
@@ -809,7 +808,6 @@
 		EB3BD91417B8C47F008D066D /* Reader */ = {
 			isa = PBXGroup;
 			children = (
-				EBD101A617F1DF0E009C50F6 /* Tap Behind */,
 				EB3BD90F17B8C47A008D066D /* ReaderViewController.h */,
 				EB3BD91017B8C47A008D066D /* ReaderViewController.m */,
 				EB3BD91117B8C47A008D066D /* ReaderViewController.xib */,
@@ -1183,15 +1181,6 @@
 			path = PedidoNaRede;
 			sourceTree = "<group>";
 		};
-		EBD101A617F1DF0E009C50F6 /* Tap Behind */ = {
-			isa = PBXGroup;
-			children = (
-				EBD101A317F1DF09009C50F6 /* UIViewController+TapBehind.h */,
-				EBD101A417F1DF09009C50F6 /* UIViewController+TapBehind.m */,
-			);
-			name = "Tap Behind";
-			sourceTree = "<group>";
-		};
 		EBDA918F17ACBA5000969A08 /* Bar Buttons Icons */ = {
 			isa = PBXGroup;
 			children = (
@@ -1287,6 +1276,7 @@
 		EBE8D21716A89740003A196A /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				EB97144117F2B306009260AE /* 128-user.png */,
 				EBDFF55217BE95B200BBFC1D /* 32-Check.png */,
 				EBB19398168EA54A0060D282 /* 32-Cross.png */,
 				EB4FC576171061AF00CA43EC /* 32-Facebook-F.png */,
@@ -1393,6 +1383,11 @@
 			attributes = {
 				LastUpgradeCheck = 0450;
 				ORGANIZATIONNAME = "Pedro Góes";
+				TargetAttributes = {
+					EBAAFD1B161FCF020007637B = {
+						DevelopmentTeam = X85KB267D9;
+					};
+				};
 			};
 			buildConfigurationList = EBAAFD16161FCF020007637B /* Build configuration list for PBXProject "InEvent" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1501,6 +1496,7 @@
 				EB8C7D8E16D17AEB00F3C721 /* cb_mono_off.png in Resources */,
 				EB8C7D8F16D17AEB00F3C721 /* cb_mono_off@2x.png in Resources */,
 				EB8C7D9016D17AEB00F3C721 /* cb_mono_on.png in Resources */,
+				EB97144217F2B306009260AE /* 128-user.png in Resources */,
 				EB8C7D9116D17AEB00F3C721 /* cb_mono_on@2x.png in Resources */,
 				EBD27B6616D8604200DA6ACE /* 32-Looking-Glass.png in Resources */,
 				EBFD3A3A16DA96D000AD33C5 /* FeedbackViewController.xib in Resources */,
@@ -1663,7 +1659,6 @@
 				EBAD3CB416A27BFB003735AD /* UIImage+Color.m in Sources */,
 				EB28747916A71EF600A06781 /* StepperView.m in Sources */,
 				EB73E9A416AC912A000A9039 /* UtilitiesController.m in Sources */,
-				EBD101A517F1DF09009C50F6 /* UIViewController+TapBehind.m in Sources */,
 				EBD0DB5616AF953B00F78F93 /* UIViewController+Present.m in Sources */,
 				EB8C7D9216D17AEB00F3C721 /* UIHelpers.m in Sources */,
 				EB8C7D9316D17AEB00F3C721 /* SSCheckBoxView.m in Sources */,
@@ -1786,7 +1781,7 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1816,7 +1811,7 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -1835,7 +1830,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 01A9A353CC7D4F35B9275C85 /* Pods.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../Documents/Objective-C/facebook-ios-sdk/build\"",
@@ -1864,7 +1859,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 01A9A353CC7D4F35B9275C85 /* Pods.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../Documents/Objective-C/facebook-ios-sdk/build\"",

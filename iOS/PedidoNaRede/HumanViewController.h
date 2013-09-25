@@ -15,6 +15,7 @@
 
 @property (nonatomic, strong) IBOutlet UIView *photoWrapper;
 @property (nonatomic, strong) IBOutlet FBProfilePictureView *photo;
+@property (nonatomic, strong) IBOutlet UIImageView *defaultPhoto;
 @property (nonatomic, strong) IBOutlet UILabel *introduction;
 @property (nonatomic, strong) IBOutlet UIButton *name;
 
