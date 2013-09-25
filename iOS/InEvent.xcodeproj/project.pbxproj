@@ -1901,7 +1901,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
-					"/Users/pedro/Sites/InEvent-dev/iOS",
 				);
 				OTHER_LDFLAGS = (
 					"-lsqlite3.0",
@@ -1933,7 +1932,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
-					"/Users/pedro/Sites/InEvent-dev/iOS",
 				);
 				OTHER_LDFLAGS = (
 					"-lsqlite3.0",
