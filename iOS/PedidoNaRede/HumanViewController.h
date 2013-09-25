@@ -19,4 +19,6 @@
 @property (nonatomic, strong) IBOutlet UILabel *introduction;
 @property (nonatomic, strong) IBOutlet UIButton *name;
 
+- (void)checkSession;
+
 @end

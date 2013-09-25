@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "WrapperViewController.h"
 
+@class HumanViewController;
+
 @interface HumanLoginViewController : WrapperViewController
 
 @property (nonatomic, strong) IBOutlet UIControl *topBox;
@@ -26,5 +28,7 @@
 @property (nonatomic, strong) IBOutlet UITextField *personPassword;
 @property (nonatomic, strong) IBOutlet UITextField *personEmail;
 @property (nonatomic, strong) IBOutlet UIButton *personAction;
+
+@property (nonatomic, weak) HumanViewController *delegate;
 
 @end

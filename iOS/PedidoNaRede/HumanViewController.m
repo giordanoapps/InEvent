@@ -28,9 +28,6 @@
         // Custom initialization
         self.title = NSLocalizedString(@"Me", nil);
         self.tabBarItem.image = [UIImage imageNamed:@"16-User"];
-        
-        // Alloc login controller
-        _hlvc = [[HumanLoginViewController alloc] initWithNibName:@"HumanLoginViewController" bundle:nil];
     }
     return self;
 }
@@ -81,7 +78,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - User Methods
+#pragma mark - Public Methods
 
 - (void)checkSession {
     if (FBSession.activeSession.isOpen) {
@@ -93,7 +90,10 @@
         [self.photo setHidden:YES];
         [self.defaultPhoto setHidden:NO];
     } else {
+        // Alloc login controller
+        _hlvc = [[HumanLoginViewController alloc] initWithNibName:@"HumanLoginViewController" bundle:nil];
         [_hlvc setMoveKeyboardRatio:0.7];
+        [_hlvc setDelegate:self];
         UINavigationController *nhlvc = [[UINavigationController alloc] initWithRootViewController:_hlvc];
         
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {

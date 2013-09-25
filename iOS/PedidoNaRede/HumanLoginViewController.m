@@ -7,6 +7,7 @@
 //
 
 #import "HumanLoginViewController.h"
+#import "HumanViewController.h"
 #import <FacebookSDK/FacebookSDK.h>
 #import <QuartzCore/QuartzCore.h>
 #import "ColorThemeController.h"
@@ -163,6 +164,7 @@
     [menuController setSelectedIndex:1];
     
     [self dismissViewControllerAnimated:YES completion:^{
+        // Select an event
         [[NSNotificationCenter defaultCenter] postNotificationName:@"verify" object:nil userInfo:@{@"type": @"enterprise"}];
     }];
 }
@@ -328,6 +330,9 @@
                 [_personEmail setText:@""];
                 [_personName setText:@""];
                 [_personPassword setText:@""];
+                
+                // Reload the UI beneath this on
+                [_delegate checkSession];
             }];
         } else {
             // Set loaded message on button
