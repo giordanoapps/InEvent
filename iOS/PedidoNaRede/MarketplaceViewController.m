@@ -18,6 +18,7 @@
 #import "HumanToken.h"
 #import "EventToken.h"
 #import "GAI.h"
+#import "GAIDictionaryBuilder.h"
 #import "Enrollment.h"
 #import <Parse/Parse.h>
 
@@ -183,7 +184,7 @@
     
     // Notify our tracker about the new event
     id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-    [tracker sendEventWithCategory:@"event" withAction:@"getEvents" withLabel:@"iOS" withValue:[NSNumber numberWithInteger:eventID]];
+    [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"event" action:@"getEvents" label:@"iOS" value:[NSNumber numberWithInteger:eventID]] build]];
     
     // Notify our tracker about the new event
     PFInstallation *currentInstallation = [PFInstallation currentInstallation];

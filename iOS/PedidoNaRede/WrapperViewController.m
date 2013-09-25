@@ -43,7 +43,7 @@
 {
     [super viewDidLoad];
     
-    self.trackedViewName = @"Wrapper";
+    self.screenName = @"Wrapper";
     
     // Navigation Bar
     if ([[[UIDevice currentDevice] systemVersion] isEqualToString:@"7.0"]) {

@@ -15,6 +15,7 @@
 #import "ODRefreshControl.h"
 #import "EventToken.h"
 #import "GAI.h"
+#import "GAIDictionaryBuilder.h"
 #import <Parse/Parse.h>
 
 @interface MapViewController () {
@@ -174,7 +175,7 @@
     
     // Notify our tracker about the new event
     id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-    [tracker sendEventWithCategory:@"event" withAction:@"getEvent" withLabel:@"iOS" withValue:[NSNumber numberWithInteger:eventID]];
+    [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"event" action:@"getEvent" label:@"iOS" value:[NSNumber numberWithInteger:eventID]] build]];
     
     // Notify our tracker about the new event
     PFInstallation *currentInstallation = [PFInstallation currentInstallation];
