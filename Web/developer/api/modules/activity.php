@@ -444,12 +444,21 @@
 					$complement = "AND `activityMember`.`id` = 0"; // Don't need to implement it yet
 					break;
 
+				case 'paid':
+					$complement = "AND `activityMember`.`paid` = 1";
+					break;
+
+				case 'present':
+					$complement = "AND `activityMember`.`present` = 1";
+					break;
+
 				case 'all':
 					$complement = "";
 					break;
 
 				default:
-					http_status_code(405, "this format is not available");
+					$complement = "";
+					// http_status_code(405, "this format is not available");
 					break;
 			}
 

@@ -122,7 +122,7 @@ define(modules, function($, common, cookie) {$(function() {
 	 */
 	$("#peopleContent").on("click", ".toolBox .toolExport", function(event) {
 		// Change the selected class
-		$("#peopleContent .scheduleItemSelected").trigger("click", [null, "excel"]);
+		$("#peopleContent .scheduleItemSelected").trigger("click", ["excel"]);
 	});
 
 	/**
@@ -163,8 +163,7 @@ define(modules, function($, common, cookie) {$(function() {
 			$elem.closest(".toolBoxOptionsEnrollPerson").slideToggle(400);
 
 			// Reload the table
-			var order = $("#peopleContent .power").closest("td").attr("data-order");
-			$scheduleItemSelected.trigger("click", [order]);
+			$scheduleItemSelected.trigger("click");
 
 			// Reset values
 			$elem.siblings(".name").val('');
@@ -183,14 +182,14 @@ define(modules, function($, common, cookie) {$(function() {
 		$(this).closest(".toolBox").siblings(".toolBoxOptionsMail").slideToggle(400);
 
 		// Trigger the content load
-		$("#peopleContent .scheduleItemSelected").trigger("click", [null, "gmail"]);
+		$("#peopleContent .scheduleItemSelected").trigger("click", ["gmail"]);
 	});
 
 	/**
 	 * Load an activity and populate with usage
 	 * @return {null}
 	 */
-	$("#peopleContent").on("click", ".scheduleItemSelectable", function(event, order, format) {
+	$("#peopleContent").on("click", ".scheduleItemSelectable", function(event, format) {
 
 		// Change the selected class
 		$(this).siblings(".scheduleItemSelected").removeClass("scheduleItemSelected").end().addClass("scheduleItemSelected");
@@ -202,8 +201,11 @@ define(modules, function($, common, cookie) {$(function() {
 		// Define the namespace
 		var namespace = $(this).attr("data-type");
 
-		// Filter the order
-		if (order == undefined || order == null) order = "null";
+		// Define the selection
+		var selection = $("#peopleContent #filterOptions").val();
+
+		// Define the order
+		var order = $("#peopleContent .power").closest("td").attr("data-order") || "null";
 
 		// Filter the format
 		if (format == undefined || format == null) format = "html";
@@ -213,7 +215,7 @@ define(modules, function($, common, cookie) {$(function() {
 			method: namespace + ".getPeople",
 			activityID: activityID,
 			eventID: eventID,
-			selection: "all",
+			selection: selection,
 			order: order,
 			format: format
 		});
@@ -277,16 +279,41 @@ define(modules, function($, common, cookie) {$(function() {
 	});
 
 	/**
+	 * Create the tool for filtering
+	 * @return {null}
+	 */
+	$("#peopleContent").on("click", ".toolBox .toolFilter", function(event) {
+
+		// Toggle the div
+		var $optionsBox = $(this).closest(".toolBox").siblings(".toolBoxOptionsFilter").slideToggle(400);
+
+		// Create a chosen select
+  		$optionsBox.find("#filterOptions").chosen({
+  			width: "150px",
+  			disable_search_threshold: 100
+  		});
+	});
+
+	/**
+	 * Filter the list using a given clause
+	 * @return {null}
+	 */
+	$("#peopleContent").on("change", "#filterOptions", function(event) {
+		// Refilter some people
+		$("#peopleContent .scheduleItemSelected").trigger("click");
+	});
+
+	/**
 	 * Order the sequence of a list
 	 * @return {null}
 	 */
 	$("#peopleContent").on("click", "thead td", function(event) {
 
-		// Get the order
-		var order = $(this).attr("data-order");
+		// Change the position of the cursor
+		$(this).siblings().find(".power").appendTo($(this));
 
 		// Change the selected class
-		$("#peopleContent .scheduleItemSelected").trigger("click", [order]);
+		$("#peopleContent .scheduleItemSelected").trigger("click");
 
 	});
 

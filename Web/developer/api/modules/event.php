@@ -232,7 +232,8 @@
 					break;
 
 				default:
-					http_status_code(405);
+					$complement = "";
+					// http_status_code(405, "this format is not available");
 					break;
 			}
 
@@ -243,7 +244,7 @@
 
 				// Set all the fields that can be ordered
 				$orderFilter = array(
-					"roleID" => "ASC",
+					"roleID" => "DESC",
 					"memberID" => "ASC",
 					"requestID" => "ASC",
 					"position" => "ASC",

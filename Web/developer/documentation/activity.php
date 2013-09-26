@@ -208,7 +208,7 @@
         <div class="documentationFunctionParametersBox">
             <p><b>tokenID</b><sub>GET</sub> : id de autenticação </p>
             <p><b>activityID</b><sub>GET</sub> : id da atividade </p>
-            <p><b>selection</b><sub>GET</sub> : quem irá ao evento, podendo ser filtradas em aprovadas <i>approved</i>, negadas <i>denied</i>, não avaliadas <i>unseen</i> e todas <i>all</i></p>
+            <p><b>selection</b><sub>GET</sub> : quem irá ao evento, podendo ser filtradas em aprovadas <i>approved</i>, negadas <i>denied</i>, não avaliadas <i>unseen</i>, pagas <i>paid</i>, presentes <i>present</i> e todas <i>all</i></p>
             <p><b>order</b><sub>GET</sub> : ordem baseada na coluna </p>
         </div>
     </div>

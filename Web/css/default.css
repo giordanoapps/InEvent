@@ -1760,7 +1760,9 @@ textarea, input {
 	position: relative;
 }
 
-#peopleContent .toolBoxOptions p {
+#peopleContent .toolBoxOptions p,
+#peopleContent .toolBoxOptions select,
+#peopleContent .toolBoxOptions .chzn-container {
 	margin: 10px 20px;
 	display: inline-block;
 	vertical-align: top;
