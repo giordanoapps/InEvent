@@ -1,74 +1,116 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:trilha="http://schemas.android.com/apk/res/com.estudiotrilha.inevent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="8dp" >
+    android:orientation="vertical" >
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:layout_height="match_parent"
+        android:padding="8dp" >
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#fff"
-            android:minHeight="120dp" >
+            android:orientation="vertical" >
 
-            <com.estudiotrilha.android.widget.TriangleView
-                android:id="@id/activity_approved"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
-                trilha:triangleType="squareTopRight" />
-
-            <TextView
-                android:id="@id/activity_name"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:paddingLeft="@dimen/default_textPadding"
-                android:paddingRight="@dimen/default_textPadding"
-                android:paddingTop="@dimen/default_textPadding"
-                android:text="@string/hint_eventActivity_name"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textStyle="bold" />
+                android:background="@drawable/card"
+                android:minHeight="72dp" >
 
-            <TextView
-                android:id="@+id/activity_location"
-                android:layout_width="wrap_content"
+                <com.estudiotrilha.android.widget.TriangleView
+                    android:id="@id/activity_approved"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    trilha:triangleType="squareTopRight" />
+
+                <TextView
+                    android:id="@id/activity_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:paddingLeft="@dimen/default_textPadding"
+                    android:paddingRight="@dimen/default_textPadding"
+                    android:paddingTop="@dimen/default_textPadding"
+                    android:text="@string/hint_eventActivity_name"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/activity_location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@id/activity_name"
+                    android:paddingBottom="@dimen/default_textPadding"
+                    android:paddingLeft="@dimen/default_textPadding"
+                    android:paddingRight="@dimen/default_textPadding"
+                    android:text="@string/hint_eventActivity_time"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                <RelativeLayout
+                    android:id="@+id/activity_ratingContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/activity_location"
+                    android:background="@drawable/item_background_holo_light"
+                    android:visibility="gone" >
+
+                    <View
+                        style="@style/Divider.Horizontal"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_margin="0dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:fontFamily="sans-serif-light"
+                        android:text="@string/title_rating"
+                        android:textSize="18sp" />
+
+                    <RatingBar
+                        android:id="@id/activity_rating"
+                        style="?android:attr/ratingBarStyleIndicator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:duplicateParentState="true"
+                        android:isIndicator="true"
+                        android:numStars="5"
+                        android:padding="8dp" />
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentRight="true"
-                android:layout_below="@id/activity_name"
-                android:paddingBottom="@dimen/default_textPadding"
-                android:paddingLeft="@dimen/default_textPadding"
-                android:paddingRight="@dimen/default_textPadding"
-                android:text="@string/hint_eventActivity_time"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:layout_marginTop="8dp"
+                android:background="@drawable/card"
+                android:minHeight="72dp"
+                android:padding="@dimen/default_textPadding" >
 
-            <RatingBar
-                android:id="@id/activity_rating"
-                style="?android:attr/ratingBarStyleIndicator"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_below="@+id/activity_location"
-                android:isIndicator="true"
-                android:numStars="5" />
-        </RelativeLayout>
+                <TextView
+                    android:id="@+id/activity_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/empty_eventActivityDescription" />
+            </FrameLayout>
+        </LinearLayout>
+    </ScrollView>
 
-        <TextView
-            android:id="@+id/activity_description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:background="#fff"
-            android:minHeight="144dp"
-            android:padding="@dimen/default_textPadding" />
-    </LinearLayout>
+    <!-- Map View goes here -->
 
-</ScrollView>
+    <View style="@style/Divider.Horizontal" />
+
+</LinearLayout>

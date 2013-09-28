@@ -6,7 +6,6 @@ import java.text.DateFormat;
 import java.util.Date;
 
 import org.apache.http.HttpStatus;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.BroadcastReceiver;
@@ -14,9 +13,11 @@ import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.database.ContentObserver;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.CursorLoader;
@@ -25,7 +26,6 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.RatingBar;
@@ -33,7 +33,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.estudiotrilha.android.utils.DateUtils;
-import com.estudiotrilha.android.utils.JsonUtils;
 import com.estudiotrilha.android.widget.TriangleView;
 import com.estudiotrilha.inevent.InEvent;
 import com.estudiotrilha.inevent.R;
@@ -41,16 +40,15 @@ import com.estudiotrilha.inevent.Utils;
 import com.estudiotrilha.inevent.content.Activity;
 import com.estudiotrilha.inevent.content.ActivityMember;
 import com.estudiotrilha.inevent.content.ApiRequest;
+import com.estudiotrilha.inevent.content.ApiRequestCode;
 import com.estudiotrilha.inevent.content.LoginManager;
+import com.estudiotrilha.inevent.content.Rating;
 import com.estudiotrilha.inevent.content.SyncBroadcastManager;
+import com.estudiotrilha.inevent.service.DownloaderService;
 
 
 public class EventActivityDetailActivity extends ActionBarActivity implements LoaderCallbacks<Cursor>
 {
-    // Request codes
-    private static final int REQUEST_SEND_OPINION = 0;
-    private static final int REQUEST_GET_OPINION  = 1;
-
     // Extras
     private static final String EXTRA_ACTIVITY_ID = "extra.ACTIVITY_ID";
 
@@ -76,7 +74,15 @@ public class EventActivityDetailActivity extends ActionBarActivity implements Lo
             }
         }
     };
-    private DateFormat mTimeFormat;
+    private final ContentObserver mContentObserver = new ContentObserver(new Handler()) {
+        @Override
+        public void onChange(boolean selfChange)
+        {
+            super.onChange(selfChange);
+            getSupportLoaderManager().restartLoader(LOAD_ACTIVITY, null, EventActivityDetailActivity.this);
+        }
+    };
+    private DateFormat   mTimeFormat;
     private LoginManager mLoginManager;
 
     @Override
@@ -86,32 +92,19 @@ public class EventActivityDetailActivity extends ActionBarActivity implements Lo
         supportRequestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.activity_event_activity_detail);
         mLoginManager = LoginManager.getInstance(this);
+        if (savedInstanceState == null)
+        {
+            refresh();
+        }
 
         // Show the Up button in the action bar.
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        findViewById(R.id.activity_rating).setOnTouchListener(new View.OnTouchListener() {
-
-            boolean mDown = false;
-
+        findViewById(R.id.activity_ratingContainer).setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event)
+            public void onClick(View v)
             {
-                switch (event.getAction())
-                {
-                case MotionEvent.ACTION_DOWN:
-                    mDown = true;
-                    break;
-                case MotionEvent.ACTION_UP:
-                    if (mDown)
-                    {
-                        DialogFragment dialog = ActivityRatingFragmentDialog.instantiate();
-                        dialog.show(getSupportFragmentManager(), null);
-                    }
-                case MotionEvent.ACTION_CANCEL:
-                    mDown = false;
-                    break;
-                }
-                return true;
+                DialogFragment dialog = ActivityRatingFragmentDialog.instantiate();
+                dialog.show(getSupportFragmentManager(), null);
             }
         });
 
@@ -124,6 +117,8 @@ public class EventActivityDetailActivity extends ActionBarActivity implements Lo
         getSupportLoaderManager().initLoader(LOAD_ACTIVITY, null, this);
         // register a broadcast
         registerReceiver(mReceiver, new IntentFilter(SyncBroadcastManager.ACTION_SYNC));
+        // and an observer
+        getContentResolver().registerContentObserver(Rating.CONTENT_URI, true, mContentObserver);
     }
     @Override
     protected void onStop()
@@ -131,11 +126,21 @@ public class EventActivityDetailActivity extends ActionBarActivity implements Lo
         super.onStop();
         // unregister listeners
         unregisterReceiver(mReceiver);
+        // and the observer
+        getContentResolver().unregisterContentObserver(mContentObserver);
+    }
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        // Setup the loading status
+        setSupportProgressBarIndeterminateVisibility(SyncBroadcastManager.isSyncing());
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
+        // TODO add more options here
         getMenuInflater().inflate(R.menu.event_activity_detail, menu);
         return true;
     }
@@ -153,46 +158,9 @@ public class EventActivityDetailActivity extends ActionBarActivity implements Lo
     }
 
 
-    private void updateRating()
+    private void refresh()
     {
-        SyncBroadcastManager.setSyncState(this, "Syncing rating");
-        String tokenID = mLoginManager.getTokenId();
-
-        long activityID = getIntent().getLongExtra(EXTRA_ACTIVITY_ID, -1);
-        try
-        {
-            // Prepare the connection
-            HttpURLConnection connection = Activity.Api.getOpinion(tokenID, activityID);
-
-            ApiRequest.getJsonFromConnection(REQUEST_GET_OPINION, connection, new ApiRequest.ResponseHandler() {
-                @Override
-                public void handleResponse(int requestCode, JSONObject json, int responseCode)
-                {
-                    if (responseCode == HttpStatus.SC_OK && json != null)
-                    {
-                        try
-                        {
-                            // All done!
-                            // update the display
-                            json = json.getJSONArray(JsonUtils.DATA).getJSONObject(0);
-                            int rating = json.getInt("rating");
-                            ((RatingBar) findViewById(R.id.activity_rating)).setRating(rating);
-                        }
-                        catch (JSONException e)
-                        {
-                            // TODO
-                        }
-                    }
-
-                    SyncBroadcastManager.setSyncState(EventActivityDetailActivity.this, false);
-                }
-            });
-        }
-        catch (IOException e)
-        {
-            // TODO
-            SyncBroadcastManager.setSyncState(this, false);
-        }
+        DownloaderService.downloadEventActivityRating(this, getIntent().getLongExtra(EXTRA_ACTIVITY_ID, -1));
     }
 
 
@@ -222,25 +190,25 @@ public class EventActivityDetailActivity extends ActionBarActivity implements Lo
 
             ((TextView) findViewById(R.id.activity_location)).setText(dateLocation);
 
+            RatingBar ratingBar = (RatingBar) findViewById(R.id.activity_rating);
+            ratingBar.setRating(data.getInt(data.getColumnIndex(ActivityMember.Columns.APPROVED)));
+            ratingBar.setVisibility(View.GONE);
+
             if (mLoginManager.isSignedIn())
             {
                 int approved = data.getInt(data.getColumnIndex(ActivityMember.Columns.APPROVED));
-                View ratingBar = findViewById(R.id.activity_rating);
                 int color = 0;
                 switch (approved)
                 {
                 case -1:
                     color = getResources().getColor(R.color.light_gray);
-                    ratingBar.setVisibility(View.GONE);
                     break;
                 case 0:
                     color = getResources().getColor(R.color.holo_red_dark);
-                    ratingBar.setVisibility(View.GONE);
                     break;
                 case 1:
                     color = getResources().getColor(R.color.holo_green_dark);
-                    // Load up the rating
-                    updateRating();
+                    ratingBar.setVisibility(View.VISIBLE);
                     break;
                 }
 
@@ -287,7 +255,7 @@ public class EventActivityDetailActivity extends ActionBarActivity implements Lo
                 String post = Activity.Api.Post.sendOpinion(rating);
 
                 // Send the API request
-                ApiRequest.getJsonFromConnection(REQUEST_SEND_OPINION, connection, new ApiRequest.ResponseHandler() {
+                ApiRequest.getJsonFromConnection(ApiRequestCode.ACTIVITY_SEND_OPINION, connection, new ApiRequest.ResponseHandler() {
                     @Override
                     public void handleResponse(int requestCode, JSONObject json, int responseCode)
                     {

@@ -32,6 +32,7 @@ import com.estudiotrilha.inevent.InEvent;
 import com.estudiotrilha.inevent.R;
 import com.estudiotrilha.inevent.Utils;
 import com.estudiotrilha.inevent.content.ApiRequest;
+import com.estudiotrilha.inevent.content.ApiRequestCode;
 import com.estudiotrilha.inevent.content.LoginManager;
 import com.estudiotrilha.inevent.content.Member;
 import com.facebook.Session;
@@ -280,12 +281,12 @@ public class LoginActivity extends ActionBarActivity implements ApiRequest.Respo
             {
                 connection = Member.Api.enroll();
                 String post = Member.Api.Post.enroll(mName.getText().toString(), password, email, null, null, mUniversity.getText().toString(), mUniversityCourse.getText().toString());
-                ApiRequest.getJsonFromConnection(ApiRequest.RequestCodes.Member.SIGN_UP, connection, LoginActivity.this, post);
+                ApiRequest.getJsonFromConnection(ApiRequestCode.MEMBER_SIGN_UP, connection, LoginActivity.this, post);
             }
             else
             {
                 connection = Member.Api.signIn(email, password);
-                ApiRequest.getJsonFromConnection(ApiRequest.RequestCodes.Member.SIGN_IN, connection, this);
+                ApiRequest.getJsonFromConnection(ApiRequestCode.MEMBER_SIGN_IN, connection, this);
             }
         }
         catch (IOException e)
@@ -371,9 +372,9 @@ public class LoginActivity extends ActionBarActivity implements ApiRequest.Respo
         {
             switch (requestCode)
             {
-            case ApiRequest.RequestCodes.Member.SIGN_IN:
-            case ApiRequest.RequestCodes.Member.SIGN_IN_WITH_FACEBOOK:
-            case ApiRequest.RequestCodes.Member.SIGN_UP:
+            case ApiRequestCode.MEMBER_SIGN_IN:
+            case ApiRequestCode.MEMBER_SIGN_IN_WITH_FACEBOOK:
+            case ApiRequestCode.MEMBER_SIGN_UP:
                 // save the username
                 PreferenceManager.getDefaultSharedPreferences(LoginActivity.this).edit()
                         .putString(STATE_EMAIL, mEmail.getText().toString())
@@ -410,7 +411,7 @@ public class LoginActivity extends ActionBarActivity implements ApiRequest.Respo
             {
                 // Pass it on to our API
                 HttpURLConnection connection = Member.Api.signInWithFacebook(token);
-                ApiRequest.getJsonFromConnection(ApiRequest.RequestCodes.Member.SIGN_IN_WITH_FACEBOOK, connection, LoginActivity.this);
+                ApiRequest.getJsonFromConnection(ApiRequestCode.MEMBER_SIGN_IN_WITH_FACEBOOK, connection, LoginActivity.this);
             }
             catch (IOException e)
             {

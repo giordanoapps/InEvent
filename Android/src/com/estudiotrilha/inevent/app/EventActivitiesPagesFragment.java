@@ -208,12 +208,12 @@ public class EventActivitiesPagesFragment extends Fragment implements LoaderCall
         long eventId = getArguments().getLong(ARGS_EVENT_ID);
 
         // Download the activities info
-        DownloaderService.syncEventActivities(mEventActivity, eventId);
+        DownloaderService.downloadEventActivities(mEventActivity, eventId);
 
         if (mEventActivity.isApproved() && mEventActivity.getRoleId() != Event.ROLE_ATTENDEE)
         {
             // Download the attenders
-            DownloaderService.syncEventAttenders(getActivity(), eventId);
+            DownloaderService.downloadEventAttenders(getActivity(), eventId);
         }
     }
 

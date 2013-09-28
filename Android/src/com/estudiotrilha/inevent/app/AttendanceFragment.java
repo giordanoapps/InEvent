@@ -257,7 +257,7 @@ public class AttendanceFragment extends ListFragment implements LoaderCallbacks<
     private void refresh()
     {
         // Download the attenders
-        DownloaderService.syncEventActivityAttenders(getActivity(), getArguments().getLong(ARGS_EVENT_ID), getArguments().getLong(ARGS_ACTIVITY_ID));
+        DownloaderService.downloadEventActivityAttenders(getActivity(), getArguments().getLong(ARGS_EVENT_ID), getArguments().getLong(ARGS_ACTIVITY_ID));
     }
 
 

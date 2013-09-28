@@ -68,7 +68,7 @@ public class EventActivitiesListFragment extends Fragment implements OnItemClick
         // Setup the adapters
         mActivitiesAdapter = new EventActivitiesListAdapter();
         Serializable object = getArguments().getSerializable(ARGS_LIST_DATA);
-        if (object != null) mActivitiesAdapter.setData((EventActivityInfo[]) object);
+        if (object != null && object instanceof EventActivityInfo[]) mActivitiesAdapter.setData((EventActivityInfo[]) object);
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)

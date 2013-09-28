@@ -178,7 +178,7 @@ public class EventListFragment extends ListFragment implements LoaderCallbacks<C
     private void refresh()
     {
         // Download the event list
-        DownloaderService.syncEvents(getActivity());
+        DownloaderService.downloadEvents(getActivity());
     }
 
 

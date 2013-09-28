@@ -37,13 +37,14 @@ public class Event
 {
     public static class Api
     {
-        public static final String  NAMESPACE      = "event";
+        public static final String  NAMESPACE          = "event";
 
         private static final String GET_EVENTS         = ApiRequest.BASE_URL + NAMESPACE + ".getEvents";
         private static final String REQUEST_ENROLLMENT = ApiRequest.BASE_URL + NAMESPACE + ".requestEnrollment&tokenID=%s&eventID=%d";
         private static final String DISMISS_ENROLLMENT = ApiRequest.BASE_URL + NAMESPACE + ".dismissEnrollment&tokenID=%s&eventID=%d";
         private static final String GET_PEOPLE         = ApiRequest.BASE_URL + NAMESPACE + ".getPeople&tokenID=%s&eventID=%d&selection=%s";
         private static final String GET_ACTIVITIES     = ApiRequest.BASE_URL + NAMESPACE + ".getActivities&eventID=%s";
+        private static final String GET_OPINION        = ApiRequest.BASE_URL + NAMESPACE + ".getOpinion&tokenID=%s&eventID=%d";
 
 
         public static HttpURLConnection getEvents() throws IOException
@@ -118,6 +119,14 @@ public class Event
                 formatString += "&tokenID="+URLEncoder.encode(tokenID, ApiRequest.ENCODING);
             }
             URL url = new URL(formatString);
+
+            return ConnectionHelper.getURLGetConnection(url);
+        }
+
+        public static HttpURLConnection getOpinion(String tokenID, long eventID) throws IOException
+        {
+            tokenID = URLEncoder.encode(tokenID, ApiRequest.ENCODING);
+            URL url = new URL(String.format(GET_OPINION, tokenID, eventID));
 
             return ConnectionHelper.getURLGetConnection(url);
         }

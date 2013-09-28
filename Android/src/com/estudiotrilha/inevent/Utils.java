@@ -9,7 +9,7 @@ import android.preference.PreferenceManager;
 
 import com.estudiotrilha.android.net.ConnectionHelper;
 import com.estudiotrilha.inevent.app.PreferencesActivity;
-import com.estudiotrilha.inevent.content.ApiRequest;
+import com.estudiotrilha.inevent.content.ApiRequestCode;
 import com.nostra13.universalimageloader.cache.memory.impl.LRULimitedMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -82,7 +82,7 @@ public class Utils
         case HttpStatus.SC_UNAUTHORIZED:
             switch (requestCode)
             {
-            case ApiRequest.RequestCodes.Member.SIGN_IN:
+            case ApiRequestCode.MEMBER_SIGN_IN:
                 // Bad credentials
                 message = R.string.error_login_badCredentials;
                 break;

@@ -44,21 +44,4 @@ public class ApiRequest extends com.estudiotrilha.android.content.ApiRequest
             @Override public void OnPostExceute(int requestCode, int responseCode, ResponseHandler handler, JSONObject json) {}            
         });
     }
-
-
-    public interface RequestCodes
-    {
-        public interface Member
-        {
-            public static final int SIGN_IN               = 0;
-            public static final int SIGN_UP               = 1;
-            public static final int SIGN_IN_WITH_FACEBOOK = 2;
-            public static final int GET_EVENTS            = 3;
-        }
-
-        public interface Event
-        {
-            public static final int REQUEST_ENROLLMENT = 0;
-        }
-    }
 }

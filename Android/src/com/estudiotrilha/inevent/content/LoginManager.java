@@ -134,7 +134,7 @@ public class LoginManager
             mContext.sendBroadcast(new Intent(ACTION_LOGIN_STATE_CHANGED));
 
             // Download this member events
-            DownloaderService.syncEvents(mContext);
+            DownloaderService.downloadEvents(mContext);
 
             return true;
         }

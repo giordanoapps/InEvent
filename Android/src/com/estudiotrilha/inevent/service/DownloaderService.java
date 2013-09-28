@@ -33,6 +33,7 @@ import com.estudiotrilha.inevent.content.Event;
 import com.estudiotrilha.inevent.content.EventMember;
 import com.estudiotrilha.inevent.content.LoginManager;
 import com.estudiotrilha.inevent.content.Member;
+import com.estudiotrilha.inevent.content.Rating;
 import com.estudiotrilha.inevent.content.SyncBroadcastManager;
 import com.estudiotrilha.inevent.provider.InEventProvider;
 
@@ -48,27 +49,41 @@ public class DownloaderService extends IntentService implements ApiRequest.Respo
     private static final String EXTRA_EVENT_ID    = "extra.EVENT_ID";
     private static final String EXTRA_ACTIVITY_ID = "extra.ACTIVITY_ID";
 
-    public static void syncEvents(Context c)
+    public static void downloadEvents(Context c)
     {
         Intent service = new Intent(c, DownloaderService.class);
         service.setData(Event.CONTENT_URI);
         c.startService(service);
     }
-    public static void syncEventAttenders(Context c, long eventId)
+    public static void downloadEventAttenders(Context c, long eventId)
     {
         Intent service = new Intent(c, DownloaderService.class);
         service.setData(EventMember.CONTENT_URI);
         service.putExtra(EXTRA_EVENT_ID, eventId);
         c.startService(service);
     }
-    public static void syncEventActivities(Context c, long eventId)
+    public static void downloadEventActivities(Context c, long eventId)
     {
         Intent service = new Intent(c, DownloaderService.class);
         service.setData(Activity.CONTENT_URI);
         service.putExtra(EXTRA_EVENT_ID, eventId);
         c.startService(service);
     }
-    public static void syncEventActivityAttenders(Context c, long eventId, long activityId)
+    public static void downloadEventActivityRating(Context c, long activityId)
+    {
+        Intent service = new Intent(c, DownloaderService.class);
+        service.setData(Rating.CONTENT_URI);
+        service.putExtra(EXTRA_ACTIVITY_ID, activityId);
+        c.startService(service);
+    }
+    public static void downloadEventRating(Context c, long eventId)
+    {
+        Intent service = new Intent(c, DownloaderService.class);
+        service.setData(Rating.CONTENT_URI);
+        service.putExtra(EXTRA_EVENT_ID, eventId);
+        c.startService(service);
+    }
+    public static void downloadEventActivityAttenders(Context c, long eventId, long activityId)
     {
         Intent service = new Intent(c, DownloaderService.class);
         service.setData(ActivityMember.CONTENT_URI);
@@ -171,6 +186,30 @@ public class DownloaderService extends IntentService implements ApiRequest.Respo
                 break;
             }
     
+            case InEventProvider.URI_RATING:
+            {
+                // Download the user rating
+                syncMessage = "Syncing Rating";
+                long id = intent.getLongExtra(EXTRA_EVENT_ID, -1);
+                String tokenID = mLoginManager.getTokenId();
+                if (id == -1)
+                {
+                    id = intent.getLongExtra(EXTRA_ACTIVITY_ID, -1);
+                    apiMethodName = "activity.getOpinion(tokenID, activityID)";
+
+                    // Prepare the connection
+                    connection = Activity.Api.getOpinion(tokenID, id);
+                }
+                else
+                {
+                    apiMethodName = "event.getOpinion(tokenID, eventID)";                    
+                    // Prepare the connection
+                    connection = Event.Api.getOpinion(tokenID, id);
+                }
+    
+                break;
+            }
+
             default:
                 return;
             }
@@ -429,7 +468,28 @@ public class DownloaderService extends IntentService implements ApiRequest.Respo
                     allDoneLogMessage = "All activitiy attenders from activity id="+activityID+" were downloaded successfully!";
                     break;
                 }
-                
+
+                case InEventProvider.URI_RATING:
+                {
+                    // Get some info
+                    long activityID = mIntent.getLongExtra(EXTRA_ACTIVITY_ID, -1);
+                    long eventID = mIntent.getLongExtra(EXTRA_EVENT_ID, -1);
+
+                    // Parse the info
+                    JSONObject jobj = json.getJSONArray(JsonUtils.DATA).getJSONObject(0);
+                    ContentValues values = Rating.valuesFromJson(jobj, eventID, activityID);
+
+                    // Add to the database
+                    inserts.add(
+                            ContentProviderOperation
+                                .newInsert(Rating.CONTENT_URI)
+                                .withValues(values)
+                                .build()
+                    );
+
+                    break;
+                }
+
                 default:
                     break;
                 }

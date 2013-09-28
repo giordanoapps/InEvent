@@ -36,8 +36,9 @@
     <string name="title_login">Fazer Login</string>
     <string name="title_mobileNetwork">Rede Móvel</string>
     <string name="title_preferences">Preferências</string>
-    <string name="title_rate_activity">O que você achou?</string>
-    <string name="title_rate_event">O que você achou?</string>
+    <string name="title_rate_activity">O que você achou da atividade?</string>
+    <string name="title_rate_event">O que você achou do evento?</string>
+    <string name="title_rating">Avaliação</string>
     <string name="title_signIn">Entrar</string>
     <string name="title_signUp">Nova Conta</string>
     <string name="title_splashScreen">Splash Screen</string>
@@ -73,6 +74,7 @@
     <!-- Empty Messages -->
     <string name="empty_eventActivities">As atividades do evento serão mostradas aqui</string>
     <string name="empty_eventActivityAttenders">Pessoas cadastradas nesta atividade aparecerão aqui</string>
+    <string name="empty_eventActivityDescription">Nenhuma descrição</string>
     <string name="empty_eventList">Aqui serão mostrados os eventos</string>
 
     <!-- Preferences -->
