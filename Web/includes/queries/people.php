@@ -2,12 +2,14 @@
 
     function getPeopleAtActivityQuery($activityID, $complement = "", $order = "`activityMember`.`id` ASC") {
 
+        $eventID = getEventForActivity($activityID);
+
         $result = resourceForQuery(
             "SELECT
                 `member`.`id` AS `memberID`,
                 `member`.`name`,
                 `member`.`email`,
-                `activityMember`.`id` AS `requestID`,
+                `eventMember`.`position` AS `enrollmentID`,
                 `activityMember`.`position`,
                 `activityMember`.`approved`,
                 `activityMember`.`paid`,
@@ -16,9 +18,12 @@
             FROM
                 `member`
             INNER JOIN
+                `eventMember` ON `member`.`id` = `eventMember`.`memberID`
+            INNER JOIN
                 `activityMember` ON `member`.`id` = `activityMember`.`memberID`
             WHERE 1
                 AND `activityMember`.`activityID` = $activityID
+                AND `eventMember`.`eventID` = $eventID
                 $complement
             ORDER BY
                 $order
@@ -41,8 +46,7 @@
                 `member`.`email`, 
                 `member`.`university`, 
                 `member`.`course`,
-                `eventMember`.`id` AS `requestID`,
-                `eventMember`.`position`,
+                `eventMember`.`position` AS `enrollmentID`,
                 `eventMember`.`approved`,
                 `eventMember`.`roleID`
             FROM

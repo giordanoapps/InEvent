@@ -8,13 +8,13 @@
 		if (isset($_GET['name']) && isset($_POST['value'])) {
 
 			$name = getAttribute($_GET['name']);
-			$value = getAttribute($_POST['value']);
+			$value = getEmptyAttribute($_POST['value']);
 
 			// Permission
 			if ($core->workAtEvent) {
 			
 				// We list all the fields that can be edited by the activity platform
-				$validFields = array("name", "description", "latitude", "longitude", "location", "dayBegin", "monthBegin", "hourBegin", "minuteBegin", "dayEnd", "monthEnd", "hourEnd", "minuteEnd");
+				$validFields = array("name", "description", "latitude", "longitude", "location", "dayBegin", "monthBegin", "hourBegin", "minuteBegin", "dayEnd", "monthEnd", "hourEnd", "minuteEnd", "capacity");
 
 				if (in_array($name, $validFields) == TRUE) {
 
@@ -70,6 +70,78 @@
 								`activity` 
 							SET
 								`$name` = ((`$name` - INTERVAL MINUTE(`$name`) MINUTE) + INTERVAL $value MINUTE)
+							WHERE
+								`activity`.`id` = $activityID
+						");
+
+					// Capacity
+					} elseif ($name == "capacity") {
+
+						// See the intentions of the person
+						if ($value == 0) {
+
+							// Approve everyone in the activity
+							$update = resourceForQuery(
+								"UPDATE
+									`activityMember` 
+								SET
+									`activityMember`.`approved` = 1
+								WHERE 1
+									AND `activityMember`.`activityID` = $activityID
+							");
+							
+						} else {
+
+							// Get the event capacity
+							$result = resourceForQuery(
+								"SELECT
+									`activity`.`capacity`
+								FROM
+									`activity`
+								WHERE 1
+									AND `activity`.`id` = $activityID
+							");
+
+							if (mysql_num_rows($result) > 0) {
+
+								$capacity = mysql_result($result, 0, "capacity");
+
+								$result = resourceForQuery(
+									"SELECT
+										`activityMember`.`id`
+									FROM
+										`activityMember`
+									WHERE 1
+										AND `activityMember`.`activityID` = $activityID
+										AND `activityMember`.`approved` = 1
+									LIMIT
+										$capacity
+								");
+
+								$lastApproved = (mysql_num_rows($result) > 0) ? mysql_result($result, mysql_num_rows($result) - 1, "id") : 0;
+
+								// Deny a bunch of folks that are beyond the limit
+								$update = resourceForQuery(
+									"UPDATE
+										`activityMember` 
+									SET
+										`activityMember`.`approved` = 0
+									WHERE 1
+										AND `activityMember`.`activityID` = $activityID
+										AND `activityMember`.`id` > $lastApproved
+								");
+
+							} else {
+								http_status_code(404, "activityID capacity not found");
+							}
+						}
+
+						// Update the number of seats
+						$update = resourceForQuery(
+							"UPDATE
+								`activity`
+							SET
+								`$name` = '$value'
 							WHERE
 								`activity`.`id` = $activityID
 						");
@@ -299,7 +371,7 @@
 
 						if (mysql_num_rows($resultOther) > 0) {
 							$requestID = mysql_result($resultOther, 0, "id");
-							echo "$requestID";
+
 							$update = resourceForQuery(
 								"UPDATE
 									`activityMember`
@@ -470,7 +542,7 @@
 				// Set all the fields that can be ordered
 				$orderFilter = array(
 					"memberID" => "ASC",
-					"requestID" => "ASC",
+					"enrollmentID" => "ASC",
 					"position" => "ASC",
 					"name" => "ASC",
 					"telephone" => "ASC",

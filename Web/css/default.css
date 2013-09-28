@@ -1360,8 +1360,8 @@ textarea, input {
 #frontContent .cover {
 	height: 280px;
 	position: relative;
-	background-size: cover;
-	background-repeat: no-repeat;
+	background-size: contain;
+	background-repeat: space;
 	background-position: center;
 }
 
@@ -1568,6 +1568,10 @@ textarea, input {
 	font-weight: bold;
 }
 
+#eventContent .agendaItem .right .bottom input.capacity {
+	width: 10%;
+}
+
 #eventContent .agendaItem .right .controls {
 	width: 14%;
 	float: left;
@@ -1619,7 +1623,7 @@ textarea, input {
 	white-space: nowrap;
 	display: inline-block;
 	overflow: hidden;
-	padding: 0;
+	padding: 4.5px;
 }
 
 #eventContent .agendaItem .suckyVerticalAlign {

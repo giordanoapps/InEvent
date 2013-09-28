@@ -253,7 +253,7 @@
                     </a>
                     <div>
                         <img src="images/32-Users.png" alt="Local" title="Número de vagas na atividade">
-                        <span class="smallPadding"><?php if ($data['capacity'] != 0) { echo $data['capacity']; } else { ?>&infin;<?php } ?></span>
+                        <span class="smallPadding capacity" name="capacity"><?php if ($data['capacity'] != 0) { echo $data['capacity']; } else { ?>&infin;<?php } ?></span>
                     </div>
                     <span class="suckyVerticalAlign"></span>
                 </div>

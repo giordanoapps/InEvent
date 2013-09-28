@@ -245,8 +245,7 @@
 				// Set all the fields that can be ordered
 				$orderFilter = array(
 					"roleID" => "DESC",
-					"memberID" => "ASC",
-					"requestID" => "ASC",
+					"enrollmentID" => "ASC",
 					"position" => "ASC",
 					"name" => "ASC",
 					"rg" => "DESC",

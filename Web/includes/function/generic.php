@@ -103,7 +103,7 @@
                 $value = stripslashes($value);
             }
 
-            $value = trim(htmlspecialchars($value, ENT_QUOTES, "utf-8")); //convert input into friendly characters to stop XSS
+            $value = trim(htmlspecialchars($value, ENT_QUOTES, "UTF-8")); //convert input into friendly characters to stop XSS
             $value = mysql_real_escape_string($value);
         }
    

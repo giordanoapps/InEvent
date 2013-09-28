@@ -182,7 +182,7 @@ define(modules, function($, common, cookie) {$(function() {
 	 * Start a text inline edition
 	 * @return {null}
 	 */
-	$("#eventContent").on("click", ".agendaItem .name, .agendaItem .description, .agendaItem .location", function(event) {
+	$("#eventContent").on("click", ".agendaItem .name, .agendaItem .description, .agendaItem .location, .agendaItem .capacity", function(event) {
 
 		if (!$("#eventContent").hasClass("editingMode")) return true;
 		if ($(this).hasClass("titleInput")) return true;

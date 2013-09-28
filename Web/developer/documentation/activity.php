@@ -33,17 +33,15 @@
 
     <div class="documentationFunctionBox">
         <p class="documentFunctionName">
-            <span>activity.create(<b>tokenID</b>, <b>activityID</b>, <b>name</b>)</span>
-            <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=activity.create&tokenID=$tokenID&activityID=1&name=null&email=null">
+            <span>activity.create(<b>tokenID</b>, <b>eventID</b>)</span>
+            <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=activity.create&tokenID=$tokenID&eventID=1">
         </p>
 
-        <p class="documentFunctionDescription">Solicita a entrada da pessoa <i>personID</i> na atividade <i>activityID</i>. Se o nome <i>name</i> e email <i>email</i> da pessoa não for especificada ou o <i>tokenID</i> fornecido não tiver permissão para enviar para a pessoa com email <i>email</i>, será utilizada a pessoa associada ao <i>tokenID</i>.</p>
+       <p class="documentFunctionDescription">Cria a atividade dentro do evento <i>eventID</i>.</p>
 
         <div class="documentationFunctionParametersBox">
             <p><b>tokenID</b><sub>GET</sub> : id de autenticação </p>
-            <p><b>activityID</b><sub>GET</sub> : id da atividade </p>
-            <p><b>name</b><sub>GET</sub> : nome da pessoa </p>
-            <p><b>email</b><sub>GET</sub> : email da pessoa </p>
+            <p><b>eventID</b><sub>GET</sub> : id do evento </p>
         </div>
     </div>
 
@@ -53,7 +51,7 @@
             <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=activity.edit&tokenID=$tokenID&activityID=1&name=nome" data-post="value=valor">
         </p>
 
-        <p class="documentFunctionDescription">Escreve o valor <i>value</i> no campo <i>name</i> da atividade <i>activityID</i>.</p>
+        <p class="documentFunctionDescription">Edita o valor <i>value</i> no campo <i>name</i> da atividade <i>activityID</i>.</p>
 
         <div class="documentationFunctionParametersBox">
             <p><b>tokenID</b><sub>GET</sub> : id de autenticação </p>
