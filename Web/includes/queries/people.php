@@ -39,8 +39,8 @@
                 COUNT(`activity`.`id`) AS `entries`
             FROM
                 `activity`
-            WHERE
-                `activity`.`eventID` = $eventID
+            WHERE 1
+                AND `activity`.`eventID` = $eventID
             GROUP BY
                 `activity`.`eventID`
         ");

@@ -20,10 +20,10 @@
 		}
 
 		// Content
-		for ($i = 1; $i < mysql_num_rows($result); $i++) {
+		for ($i = 0; $i < mysql_num_rows($result); $i++) {
 			for ($j = 0; $j < mysql_num_fields($result); $j++) {
 				$value = html_entity_decode(mysql_result($result, $i, $j), ENT_COMPAT, "UTF-8");
-				$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($j, $i + 1, $value);
+				$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($j, $i + 2, $value);
 			}
 		}
 

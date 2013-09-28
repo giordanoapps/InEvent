@@ -259,12 +259,14 @@
                 </div>
                 <div class="controls">
                     <?php if ($enrolledAtEvent) { ?>
-                    <span class="suckyVerticalAlign"></span>
-                    <input
-                        type="button"
-                        value="<?php if ($enrolledAtEvent && $data['approved'] >= 0) { ?>Inscrito<?php } else { ?>Inscrever<?php } ?>"
-                        title="Ao entrar nessa atividade, saberá imediatamente se foi aprovado ou está na lista de espera"
-                        class="singleButton <?php if ($enrolledAtEvent && $data['approved'] >= 0) { ?>toolEnrolled<?php } else { ?>toolEnroll<?php } ?>">
+                        <span class="suckyVerticalAlign"></span>
+                        <?php if ($data['approved'] == -1) { ?>
+                            <input type="button" value="Inscrever" title="Saberá imediatamente se foi aprovado ou está na lista de espera" class="singleButton toolEnroll">
+                        <?php } elseif ($data['approved'] == 0) { ?>
+                             <input type="button" value="Lista de espera" title="Aguarde até a próxima chamada!" class="singleButton toolLate">
+                        <?php } elseif ($data['approved'] == 1) { ?>
+                            <input type="button" value="Inscrito" title="Sua entrada já foi confirmada" class="singleButton toolEnrolled">
+                        <?php } ?>
                     <?php } ?>
                 </div>
                 <?php if ($data['approved'] >= 0) { ?>

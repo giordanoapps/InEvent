@@ -217,7 +217,7 @@
 					echo json_encode($data);
 				} elseif ($format == "html") {
 					$result = getActivitiesForMemberAtActivityQuery($activityID, $personID);
-					printScheduleItem(mysql_fetch_assoc($result), "member");
+					printAgendaItem(mysql_fetch_assoc($result), "member");
 				} else {
 					http_status_code(405, "this format is not available");
 				}
@@ -412,8 +412,8 @@
 					$data["activityID"] = $activityID;
 					echo json_encode($data);
 				} elseif ($format == "html") {
-					$data["activityID"] = $activityID;
-					echo json_encode($data);
+					$result = getActivitiesForMemberAtActivityQuery($activityID, $core->memberID);
+					printAgendaItem(mysql_fetch_assoc($result), "member");
 				} else {
 					http_status_code(405, "this format is not available");	
 				}

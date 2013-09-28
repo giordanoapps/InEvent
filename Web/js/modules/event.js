@@ -57,7 +57,7 @@ define(modules, function($, common, cookie) {$(function() {
 				if ($agendaItem.length > 0) {
 
 					// Change the properties of the element
-					$elem.removeClass("toolEnroll").addClass("toolEnrolled").val("Inscrito").fadeIn(300);
+					$elem.closest(".agendaItem").replaceWith(data);
 
 					// var $scheduleItem = $(data).addClass("scheduleItemInvisible");
 
@@ -117,7 +117,7 @@ define(modules, function($, common, cookie) {$(function() {
 
 			if (jqXHR.status == 200) {
 				// Change the properties of the element
-				$elem.removeClass("toolExpel").addClass("toolEnroll").val("Inscrever").fadeIn(300);
+				$elem.closest(".agendaItem").replaceWith(data);
 			}
 
 		}, 'html').fail(function(jqXHR, textStatus, errorThrown) {
