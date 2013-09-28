@@ -251,6 +251,7 @@
 					"rg" => "DESC",
 					"cpf" => "DESC",
 					"email" => "ASC",
+					"present" => "DESC",
 					"city" => "ASC",
 					"university" => "ASC"
 				);
