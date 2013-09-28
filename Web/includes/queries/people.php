@@ -6,7 +6,7 @@
 
         $result = resourceForQuery(
             "SELECT
-                `member`.`id` AS `memberID`,
+                `eventMember`.`position` AS `memberID`,
                 `member`.`name`,
                 `member`.`email`,
                 `eventMember`.`position` AS `enrollmentID`,
@@ -50,7 +50,7 @@
 
         $result = resourceForQuery(
             "SELECT
-                `member`.`id` AS `memberID`,
+                `eventMember`.`position` AS `memberID`,
                 `member`.`name`,
                 `member`.`cpf`, 
                 `member`.`rg`, 

@@ -103,7 +103,7 @@
                                 <li class="">
                                     <img src="images/32-Users.png" alt="Pessoas" title="Número de pessoas inscritas na atividade">
                                     <span>
-                                        <b><?php echo $data['entries'] ?></b> /
+                                        <b class="entries"><?php echo $data['entries'] ?></b> /
                                         <?php if ($data['capacity'] != 0) { echo $data['capacity']; } else { ?>&infin;<?php } ?></span>
                                 </li>
                             </ul>

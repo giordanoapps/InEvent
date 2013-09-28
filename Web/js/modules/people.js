@@ -191,15 +191,17 @@ define(modules, function($, common, cookie) {$(function() {
 	 */
 	$("#peopleContent").on("click", ".scheduleItemSelectable", function(event, format) {
 
+		var $elem = $(this);
+
 		// Change the selected class
-		$(this).siblings(".scheduleItemSelected").removeClass("scheduleItemSelected").end().addClass("scheduleItemSelected");
+		$elem.siblings(".scheduleItemSelected").removeClass("scheduleItemSelected").end().addClass("scheduleItemSelected");
 
 		// Get the new activityID
-		var activityID = $(this).val();
+		var activityID = $elem.val();
 		var eventID = cookie.read("eventID");
 
 		// Define the namespace
-		var namespace = $(this).attr("data-type");
+		var namespace = $elem.attr("data-type");
 
 		// Define the selection
 		var selection = $("#peopleContent #filterOptions").val();
@@ -244,6 +246,9 @@ define(modules, function($, common, cookie) {$(function() {
 							.perfectScrollbar({
 								minScrollbarLength: 120
 							});
+
+						// Change the display with the number of items
+						$elem.find(".entries").text($(data).find("tr").length - 1);
 
 						// Scroll to top
 						$('html, body').animate({ scrollTop: 0 }, 'slow');
