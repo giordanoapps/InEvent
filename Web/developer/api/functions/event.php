@@ -33,7 +33,7 @@
 					AND `eventMember`.`eventID` = $eventID
 			");
 
-			$position = (mysql_num_rows($result) > 0) ? mysql_result($result, 0, "entries") : 1;
+			$position = (mysql_num_rows($result) > 0) ? mysql_result($result, 0, "entries") + 1 : 1;
 
 			// Insert the person on the event
 			$insert = resourceForQuery(

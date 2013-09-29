@@ -28,7 +28,7 @@
                 while ($data = mysql_fetch_assoc($result)) {
 
                     ?>
-                    <tr class="pickerItem" data-value="<?php echo $data['memberID'] ?>">
+                    <tr class="pickerItem" data-value="<?php echo $data['internalMemberID'] ?>">
                         <td>
                             <p class="enrollmentID"><b><?php echo str_pad($data['enrollmentID'], 4, "0", STR_PAD_LEFT) ?></b></p>
                         </td>
@@ -115,7 +115,7 @@
                 while ($data = mysql_fetch_assoc($result)) {
 
                     ?>
-                    <tr class="pickerItem" data-value="<?php echo $data['memberID'] ?>">
+                    <tr class="pickerItem" data-value="<?php echo $data['internalMemberID'] ?>">
                         <td>
                             <?php if ($data['roleID'] != ROLE_ATTENDEE) { ?>
                             <img src="images/64-Admin-User.png" class="head staff" alt="Head" title="Altere as permissões da pessoa, concedendo ou revogando poderes">

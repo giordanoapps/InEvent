@@ -1,6 +1,67 @@
 <?php
 // -------------------------------------- ACTIVITY --------------------------------------- //
 	
+	if ($method === "create") {
+
+		$eventID = getTokenForEvent();
+
+		// Permission
+		if ($core->workAtEvent) {
+
+			// Insert a new activity
+			$insert = resourceForQuery(
+				"INSERT INTO
+					`activity`
+					(
+						`eventID`,
+						`groupID`,
+						`name`,
+						`description`,
+						`latitude`,
+						`longitude`,
+						`location`,
+						`dateBegin`,
+						`dateEnd`,
+						`capacity`,
+						`general`,
+						`highlight`
+					)
+				VALUES
+					(
+						$eventID,
+						0,
+						'',
+						'',
+						0,
+						0,
+						'',
+						NOW(),
+						NOW(),
+						0,
+						1,
+						0
+					)
+			");
+
+			$activityID = mysql_insert_id();
+
+			// Return its data
+			if ($format == "json") {
+				$data["activityID"] = $activityID;
+				echo json_encode($data);
+			} elseif ($format == "html") {
+				$result = getActivitiesForMemberAtActivityQuery($activityID, $core->memberID);
+				printAgendaItem(mysql_fetch_assoc($result), "member");
+			} else {
+				http_status_code(405, "this format is not available");
+			}
+
+		} else {
+			http_status_code(401, "personID doesn't work at event");
+		}
+
+	} else
+
 	if ($method === "edit") {
 
 		$activityID = getTokenForActivity();
@@ -27,7 +88,7 @@
 							"UPDATE
 								`activity` 
 							SET
-								`$name` = CONVERT_TZ((`$name` - INTERVAL MONTH(`$name`) MONTH) + INTERVAL $value MONTH)
+								`$name` = ((`$name` - INTERVAL MONTH(`$name`) MONTH) + INTERVAL $value MONTH)
 							WHERE
 								`activity`.`id` = $activityID
 						");
@@ -240,7 +301,7 @@
 
 	if ($method === "dismissEnrollment") {
 
-		$tokenID = getToken();
+		$activityID = getTokenForActivity();
 
 		if (isset($_GET['personID']) && $_GET['personID'] != "null") {
 
@@ -253,10 +314,9 @@
 			$personID = $core->memberID;
 		}
 
-		if (isset($_GET["activityID"])) {
+		if ($personID != 0) {
 
 			// Get some properties
-			$activityID = getAttribute($_GET['activityID']);
 			$groupID = getGroupForActivity($activityID);
 				
 			// Remove the current person

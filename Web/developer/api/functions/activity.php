@@ -51,7 +51,7 @@
 					AND `activityMember`.`activityID` = $activityID
 			");
 
-			$position = (mysql_num_rows($result) > 0) ? mysql_result($result, 0, "entries") : 1;
+			$position = (mysql_num_rows($result) > 0) ? mysql_result($result, 0, "entries") + 1 : 1;
 			
 			// Insert a new row seing if there are vacancies
 			$insert = resourceForQuery(

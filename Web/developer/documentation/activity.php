@@ -37,7 +37,7 @@
             <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=activity.create&tokenID=$tokenID&eventID=1">
         </p>
 
-       <p class="documentFunctionDescription">Cria a atividade dentro do evento <i>eventID</i>.</p>
+       <p class="documentFunctionDescription">Cria uma atividade dentro do evento <i>eventID</i>.</p>
 
         <div class="documentationFunctionParametersBox">
             <p><b>tokenID</b><sub>GET</sub> : id de autenticação </p>

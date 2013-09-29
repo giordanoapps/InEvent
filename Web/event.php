@@ -13,21 +13,16 @@
 			<div class="boardContent">
 
 				<div class="menuContent">
-
-					<!-- ToolBox Create Activity -->
-					<div class="toolBoxOptions toolBoxOptionsCreateActivity">
-						<input type="text" placeholder="Nome completo" class="name">
-						<input type="text" placeholder="Email" class="email">
-						<input type="button" value="Criar!" class="singleButton">
-					</div>
-
+					
 					<!-- Tool Triggers -->
 					<div class="toolBox">
 						<div class="toolBoxPeople">
 							<div class="toolBoxLeft">
 								<img src="images/64-Text-Document.png" alt="Certificado" title="Emitir certificado de participação" class="toolCertificate"/>
 							</div>
-							<div class="toolBoxLeft editingToolBox"></div>
+							<div class="toolBoxLeft editingToolBox">
+								<img src="images/32-Plus.png" alt="Adicionar" title="Adicionar uma atividade à agenda" class="toolAdd"/>
+							</div>
 							
 							<div class="toolBoxRight">
 								<?php if ($core->roleID != ROLE_ATTENDEE) { ?>

@@ -11,7 +11,7 @@
 			<?php
 
 				// Get only the activities where the person is present
-				$result = getActivitiesForMemberQuery("AND `activityMember`.`present` = 1", $core->memberID, true);
+				$result = getActivitiesForMemberQuery("AND `activity`.`eventID` = $core->eventID AND `activityMember`.`present` = 1", $core->memberID, true);
 
 				if (mysql_num_rows($result) > 0) {
             ?>
@@ -32,7 +32,7 @@
 	                while ($data = mysql_fetch_assoc($result)) {
 
 	                    ?>
-	                    <tr class="pickerItem" data-value="<?php echo $data['memberID'] ?>">
+	                    <tr class="pickerItem">
 	                        <td>
 	                            <p class="name"><?php echo ucwords($data['name']) ?></p>
 	                        </td>

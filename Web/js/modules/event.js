@@ -21,6 +21,33 @@ define(modules, function($, common, cookie) {$(function() {
 // -------------------------------------- MENU -------------------------------------- //
 
 	/**
+	 * Add a item to the event
+	 * @return {null}
+	 */
+	$("#eventContent").on("click", ".toolAdd", function() {
+
+		// Hide the current button
+		var $elem = $(this).hide(200);
+
+		// We request the information on the server
+		$.post('developer/api/?' + $.param({
+			method: "activity.create",
+			eventID: cookie.read("eventID"),
+			format: "html"
+		}), {},
+		function(data, textStatus, jqXHR) {
+
+			if (jqXHR.status == 200) {
+				$(".realContent > ul").prepend($(data).hide(0).slideDown(300));
+			}
+
+		}, 'html').fail(function(jqXHR, textStatus, errorThrown) {
+			$elem.fadeIn(300);
+		});
+
+	});
+
+	/**
 	 * Add a item to the person schedule
 	 * @return {null}
 	 */
@@ -171,6 +198,10 @@ define(modules, function($, common, cookie) {$(function() {
 
 		// Send it
 		$("#eventContent .titleInput").trigger(event);
+
+		// Close all the bonus boxes
+		$(".toolBonus").slideUp(300);
+		
 	});
 
 
@@ -191,7 +222,12 @@ define(modules, function($, common, cookie) {$(function() {
 		var value = $(this).text();
 
 		// Create the input
-		$(this).field("createField", "input", { "class" : $(this).attr("class") + " titleInput", "value" : value, "placeholder": value }).focus();
+		$(this).field("createField", "input", {
+			"class" : $(this).attr("class") + " titleInput",
+			"value" : value,
+			"placeholder": value,
+			"maxlength": 150
+		}).focus();
 
 		// Stop propagating
 		event.stopPropagation();
