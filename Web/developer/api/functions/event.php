@@ -26,14 +26,17 @@
 			// Find how many people are already enrolled at this activity
 			$result = resourceForQuery(
 				"SELECT
-					COUNT(`eventMember`.`id`) AS `entries`
+					`eventMember`.`position`
 				FROM
 					`eventMember`
 				WHERE 1
 					AND `eventMember`.`eventID` = $eventID
+				ORDER BY
+					`eventMember`.`id` DESC
+				LIMIT 1
 			");
 
-			$position = (mysql_num_rows($result) > 0) ? mysql_result($result, 0, "entries") + 1 : 1;
+			$position = (mysql_num_rows($result) > 0) ? mysql_result($result, 0, "position") + 1 : 1;
 
 			// Insert the person on the event
 			$insert = resourceForQuery(

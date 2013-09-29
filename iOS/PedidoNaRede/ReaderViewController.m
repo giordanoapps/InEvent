@@ -356,7 +356,7 @@
     NSInteger number = [textField.text integerValue];
     
     for (int i = 0; i < [_people count]; i++) {
-        if ([[[_people objectAtIndex:i] objectForKey:@"memberID"] integerValue] == number) {
+        if ([[[_people objectAtIndex:i] objectForKey:@"enrollmentID"] integerValue] == number) {
             NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
             hightlightedIndexPath = indexPath;
             

@@ -44,14 +44,17 @@
 			// Find how many people are already enrolled at this activity
 			$result = resourceForQuery(
 				"SELECT
-					COUNT(`activityMember`.`id`) AS `entries`
+					`activityMember`.`position`
 				FROM
 					`activityMember`
 				WHERE 1
 					AND `activityMember`.`activityID` = $activityID
+				ORDER BY
+					`activityMember`.`id` DESC
+				LIMIT 1
 			");
 
-			$position = (mysql_num_rows($result) > 0) ? mysql_result($result, 0, "entries") + 1 : 1;
+			$position = (mysql_num_rows($result) > 0) ? mysql_result($result, 0, "position") + 1 : 1;
 			
 			// Insert a new row seing if there are vacancies
 			$insert = resourceForQuery(
