@@ -1532,7 +1532,7 @@ textarea, input {
 #eventContent .agendaItem .left {
 	width: 12%;
 	height: 100%;
-	position: absolute;
+	float: left;
 }
 
 #eventContent .agendaItem .left div,
@@ -1597,9 +1597,9 @@ textarea, input {
 
 #eventContent .agendaItem .right {
 	width: 88%;
-	left: 12%;
 	height: 100%;
-	position: absolute;
+	float: left;
+	overflow: hidden;
 }
 
 #eventContent .agendaItem .right .name {

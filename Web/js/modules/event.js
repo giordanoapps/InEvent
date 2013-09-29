@@ -41,6 +41,8 @@ define(modules, function($, common, cookie) {$(function() {
 				$(".realContent > ul").prepend($(data).hide(0).slideDown(300));
 			}
 
+			$elem.fadeIn(300);
+
 		}, 'html').fail(function(jqXHR, textStatus, errorThrown) {
 			$elem.fadeIn(300);
 		});
@@ -226,7 +228,7 @@ define(modules, function($, common, cookie) {$(function() {
 			"class" : $(this).attr("class") + " titleInput",
 			"value" : value,
 			"placeholder": value,
-			"maxlength": 150
+			"maxlength": 200
 		}).focus();
 
 		// Stop propagating
@@ -241,11 +243,19 @@ define(modules, function($, common, cookie) {$(function() {
 	 * Conclude a text inline edition
 	 * @return {null}
 	 */
-	$("#eventContent").on("keyup", ".agendaItem .titleInput", function(event) {
+	$("#eventContent").on("keyup focusout", ".agendaItem .titleInput", function(event) {
 
-		var code = (event.keyCode ? event.keyCode : event.which);
-		// Enter keycode
-		if (code == 13) {
+		// Get the event type
+		if (event.type == "keyup") {
+			var code = (event.keyCode ? event.keyCode : event.which);
+			var validate = (code == 13) ? true : false;
+		} else if (event.type == "focusout") {
+			var validate = true;
+		} else {
+			var validate = false;
+		}
+	
+		if (validate) {
 
 			var $elem = $(this);
 			var $agendaItem = $elem.closest(".agendaItem");
@@ -317,6 +327,36 @@ define(modules, function($, common, cookie) {$(function() {
 
 		// Update the clocks onscreen
 		$toolBonusCalendar.find("input").trigger("keyup");
+	});
+
+	/**
+	 * Update the month everytime the human hits any key
+	 * @return {null}
+	 */
+	$("#eventContent").on("keyup", ".calendarBox .month", function () {
+
+		var month = parseInt($(this).val(), 10);
+
+		if (month <= 12) {
+			$(this).removeClass("badTime");
+		} else {
+			$(this).addClass("badTime");
+		}
+	});
+
+	/**
+	 * Update the day everytime the human hits any key
+	 * @return {null}
+	 */
+	$("#eventContent").on("keyup", ".calendarBox .day", function () {
+
+		var day = parseInt($(this).val(), 10);
+
+		if (day <= 31) {
+			$(this).removeClass("badTime");
+		} else {
+			$(this).addClass("badTime");
+		}
 	});
 
 	/**
