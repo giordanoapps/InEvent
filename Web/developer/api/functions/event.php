@@ -64,23 +64,46 @@
 					// Get some properties and send an email
 					sendEventEnrollmentEmail(mysql_result($result, 0, "name"), getEmailForPerson($personID));
 
-					// Insert all the activities that are general
-					$insert = resourceForQuery(
-					// echo (
-						"INSERT INTO
-							`activityMember`
-							(`activityID`, `memberID`, `approved`, `present`)
-						SELECT
-							`activity`.`id`,
-							$personID,
-							1,
-							0
+					// Get all the activities
+					$result = resourceForQuery(
+						"SELECT
+							`activity`.`id`
 						FROM
 							`activity`
 						WHERE 1
 							AND `activity`.`general` = 1
 							AND `activity`.`eventID` = $eventID
 					");
+
+					for ($i = 0; $i < mysql_num_rows($result); $i++) {
+
+						// Get some properties
+						$activityID = mysql_result($result, $i, "id");
+
+						// Find how many people are already enrolled at this activity
+						$resultPosition = resourceForQuery(
+							"SELECT
+								`activityMember`.`position`
+							FROM
+								`activityMember`
+							WHERE 1
+								AND `activityMember`.`activityID` = $activityID
+							ORDER BY
+								`activityMember`.`id` DESC
+							LIMIT 1
+						");
+
+						$position = (mysql_num_rows($resultPosition) > 0) ? mysql_result($resultPosition, 0, "position") + 1 : 1;
+
+						// Insert all the activities that are general
+						$insert = resourceForQuery(
+							"INSERT INTO
+								`activityMember`
+								(`activityID`, `memberID`, `position`, `approved`, `present`)
+							VALUES
+								($activityID, $personID, $position, 1, 0)
+						");
+					}
 
 					return $insert;
 

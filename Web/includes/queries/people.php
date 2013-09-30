@@ -69,7 +69,9 @@
             INNER JOIN
                 `eventMember` ON `member`.`id` = `eventMember`.`memberID`
             INNER JOIN
-                `activityMember` ON `member`.`id` = `activityMember`.`memberID`
+                `activity` ON `activity`.`eventID` = `eventMember`.`eventID`
+            INNER JOIN
+                `activityMember` ON `activityMember`.`activityID` = `activity`.`id` AND `activityMember`.`memberID` = `member`.`id`
             WHERE 1
                 AND `eventMember`.`eventID` = $eventID
                 $complement

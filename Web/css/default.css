@@ -1972,6 +1972,10 @@ textarea, input {
 	width: 10%;
 }
 
+#peopleContent .toolBoxOptions .bottom .singleButton {
+	padding: 4px 20px;
+}
+
 #peopleContent .toolBoxOptionsImport {
 	text-align: left;
 }

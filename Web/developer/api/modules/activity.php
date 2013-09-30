@@ -616,7 +616,8 @@
 				if (array_key_exists($order, $orderFilter) === TRUE) {
 					$completeOrderFilter = "`" . $order . "`" . $orderFilter[$order];
 				} else {
-					http_status_code(409);
+					$order = "name";
+					$completeOrderFilter = "`member`.`name` ASC";
 				}
 
 			} else {
