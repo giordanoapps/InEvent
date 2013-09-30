@@ -217,6 +217,7 @@ define(modules, function($, common, cookie) {$(function() {
 	 */
 	$("#eventContent").on("click", ".agendaItem .name, .agendaItem .description, .agendaItem .location, .agendaItem .capacity", function(event) {
 
+		// Make sure that we are on editing mode
 		if (!$("#eventContent").hasClass("editingMode")) return true;
 		if ($(this).hasClass("titleInput")) return true;
 
@@ -297,6 +298,7 @@ define(modules, function($, common, cookie) {$(function() {
 	 */
 	$("#eventContent").on("click", ".agendaItem .dateBegin, .agendaItem .dateEnd", function() {
 
+		// Make sure that we are on editing mode
 		if (!$("#eventContent").hasClass("editingMode")) return true;
 
 		// Get some properties
@@ -454,6 +456,7 @@ define(modules, function($, common, cookie) {$(function() {
 	 */
 	$("#eventContent").on("click", ".agendaItem #local", function(event) {
 
+		// Make sure that we are on editing mode
 		if (!$("#eventContent").hasClass("editingMode")) return true;
 		
 		// Some variables

@@ -2255,6 +2255,14 @@ textarea, input {
 	text-align: center;
 }
 
+#peopleContent .pickerItem .toolRemove {
+	display: none;
+}
+
+#peopleContent.editingMode .pickerItem .toolRemove {
+	display: inline-block;
+}
+
 #peopleContent .pickerItem:last-of-type td {
 	padding-bottom: 132px; /* 44px * 3 */
 }
