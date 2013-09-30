@@ -487,6 +487,8 @@
 	} else
 
 	if (0
+		|| $method === "confirmApproval"
+		|| $method === "revokeApproval"
 		|| $method === "confirmEntrance"
 		|| $method === "revokeEntrance"
 		|| $method === "confirmPayment"
@@ -504,7 +506,11 @@
 			if ($core->workAtEvent) {
 
 				// See which field we want to update
-				if ($method === "confirmEntrance") {
+				if ($method === "confirmApproval") {
+					$attribute = "`activityMember`.`approved` = 1";
+				} elseif ($method === "revokeApproval") {
+					$attribute = "`activityMember`.`approved` = 0";
+				} elseif ($method === "confirmEntrance") {
 					$attribute = "`activityMember`.`present` = 1";
 				} elseif ($method === "revokeEntrance") {
 					$attribute = "`activityMember`.`present` = 0";

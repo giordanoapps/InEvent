@@ -42,11 +42,18 @@
                             <p class="email"><?php echo $data['email'] ?></p>
                         </td>
                         <td>
-                            <?php if ($data["approved"] == 1) { ?>
+                            <?php /* if ($data["approved"] == 1) { ?>
                             <img class="approved" src="images/32-Check.png" title="Está pessoa foi aprovada!!">
                             <?php } else { ?>
                             <img class="approved" src="images/32-Cross.png" title="Essa pessoa ainda está na lista de espera">
-                            <?php } ?>
+                            <?php } */ ?>
+                            <img 
+                                src="images/<?php if ($data["approved"]) { echo '44-checkOn.png'; } else { echo '44-checkOff.png'; } ?>" 
+                                alt="checkBox"
+                                title="Aprovar a entrada!"
+                                class="checkbox approved <?php if ($data["approved"]) { echo 'active'; } ?>" 
+                                data-exclusive="yes" 
+                                data-value="<?php if ($data["approved"]) { echo '1'; } else { echo '0'; } ?>">
                         </td>
                         <td>
                             <img 

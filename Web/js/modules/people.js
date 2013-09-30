@@ -357,12 +357,22 @@ define(modules, function($, common, cookie) {$(function() {
 	 * Remove a item from the person schedule
 	 * @return {null}
 	 */
-	$("#peopleContent").on("instantSave", ".checkbox.paid, .checkbox.present", function(event) {
+	$("#peopleContent").on("instantSave", ".checkbox.approved, .checkbox.paid, .checkbox.present", function(event) {
 
 		var $elem = $(this);
+
+		// Assemble url
 		var action = ($elem.hasClass("active")) ? "revoke" : "confirm";
-		var category = ($elem.hasClass("paid")) ? "Payment" : "Entrance";
+		if ($elem.hasClass("approved")) {
+			var category = "Approval";
+		} else if ($elem.hasClass("paid")) {
+			var category = "Payment";
+		} else if ($elem.hasClass("present")) {
+			var category = "Entrance";
+		}
 		var method = action + category;
+
+		// Get some properties
 		var activityID = $(".placerContent .scheduleItemSelected").val();
 		var personID = $elem.closest(".pickerItem").attr("data-value");
 

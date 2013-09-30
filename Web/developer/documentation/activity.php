@@ -106,7 +106,37 @@
             <p><b>personID</b><sub>GET</sub> : id da pessoa </p>
         </div>
     </div>
-    
+
+    <div class="documentationFunctionBox">
+        <p class="documentFunctionName">
+            <span>activity.confirmApproval(<b>tokenID</b>, <b>activityID</b>, <b>personID</b>)</span>
+            <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=activity.confirmApproval&tokenID=$tokenID&activityID=1&personID=1">
+        </p>
+
+        <p class="documentFunctionDescription">Confirma que a pessoa <i>personID</i> está aprovada na atividade <i>activityID</i>.</p>
+
+        <div class="documentationFunctionParametersBox">
+            <p><b>tokenID</b><sub>GET</sub> : id de autenticação </p>
+            <p><b>activityID</b><sub>GET</sub> : id da atividade </p>
+            <p><b>personID</b><sub>GET</sub> : id da pessoa </p>
+        </div>
+    </div>
+
+    <div class="documentationFunctionBox">
+        <p class="documentFunctionName">
+            <span>activity.revokeApproval(<b>tokenID</b>, <b>activityID</b>, <b>personID</b>)</span>
+            <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=activity.revokeApproval&tokenID=$tokenID&activityID=1&personID=1">
+        </p>
+
+        <p class="documentFunctionDescription">Nega que a pessoa <i>personID</i> está aprovada na atividade <i>activityID</i>.</p>
+
+        <div class="documentationFunctionParametersBox">
+            <p><b>tokenID</b><sub>GET</sub> : id de autenticação </p>
+            <p><b>activityID</b><sub>GET</sub> : id da atividade </p>
+            <p><b>personID</b><sub>GET</sub> : id da pessoa </p>
+        </div>
+    </div>
+
     <div class="documentationFunctionBox">
         <p class="documentFunctionName">
             <span>activity.confirmEntrance(<b>tokenID</b>, <b>activityID</b>, <b>personID</b>)</span>
