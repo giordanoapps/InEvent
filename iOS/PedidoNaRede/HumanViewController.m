@@ -10,10 +10,13 @@
 #import "HumanLoginViewController.h"
 #import <FacebookSDK/FacebookSDK.h>
 #import <QuartzCore/QuartzCore.h>
+#import "ODRefreshControl.h"
 #import "HumanToken.h"
 #import "NSString+HTML.h"
 
-@interface HumanViewController ()
+@interface HumanViewController () {
+    ODRefreshControl *refreshControl;
+}
 
 @property (nonatomic, strong) HumanLoginViewController *hlvc;
 
@@ -35,15 +38,17 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]
-                                              initWithTitle:NSLocalizedString(@"Logout", nil)
-                                              style:UIBarButtonItemStyleBordered
-                                              target:self
-                                              action:@selector(logoutButtonWasPressed:)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Logout", nil) style:UIBarButtonItemStyleBordered target:self action:@selector(logoutButtonWasPressed:)];
     
     [self.view setBackgroundColor:[ColorThemeController tableViewCellBackgroundColor]];
+    
+    // Refresh Control
+    refreshControl = [[ODRefreshControl alloc] initInScrollView:self.scrollView];
+    [refreshControl addTarget:self action:@selector(reloadData) forControlEvents:UIControlEventValueChanged];
+    
+    // Scroll view
+    [_scrollView setContentSize:CGSizeMake(_scrollView.frame.size.width, _scrollView.frame.size.height * 1.01)];
     
     // Photo Wrapper
     [_photoWrapper.layer setCornerRadius:10.0];
@@ -76,6 +81,22 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - Loader Methods
+
+- (void)loadData {
+    [self forceDataReload:NO];
+}
+
+- (void)reloadData {
+    [self forceDataReload:YES];
+}
+
+- (void)forceDataReload:(BOOL)forcing {
+    if ([[HumanToken sharedInstance] isMemberAuthenticated]) {
+        [[[APIController alloc] initWithDelegate:self forcing:forcing] personGetWorkingEventsWithToken:[[HumanToken sharedInstance] tokenID]];
+    }
 }
 
 #pragma mark - Public Methods
@@ -137,6 +158,23 @@
     
     // Load the login form
     [self checkSession];
+}
+
+#pragma mark - APIController Delegate
+
+- (void)apiController:(APIController *)apiController didLoadDictionaryFromServer:(NSDictionary *)dictionary {
+    
+    // Assign the working events
+    [[HumanToken sharedInstance] setWorkingEvents:[dictionary objectForKey:@"data"]];
+    
+    // Stop refreshing
+    [refreshControl endRefreshing];
+}
+
+- (void)apiController:(APIController *)apiController didFailWithError:(NSError *)error {
+    [super apiController:apiController didFailWithError:error];
+    
+    [refreshControl endRefreshing];
 }
 
 @end

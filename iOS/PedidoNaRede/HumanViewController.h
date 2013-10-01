@@ -8,11 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "WrapperViewController.h"
+#import "APIController.h"
 
 @class FBProfilePictureView;
 
-@interface HumanViewController : WrapperViewController
+@interface HumanViewController : WrapperViewController <APIControllerDelegate>
 
+@property (nonatomic, strong) IBOutlet UIScrollView *scrollView;
 @property (nonatomic, strong) IBOutlet UIView *photoWrapper;
 @property (nonatomic, strong) IBOutlet FBProfilePictureView *photo;
 @property (nonatomic, strong) IBOutlet UIImageView *defaultPhoto;

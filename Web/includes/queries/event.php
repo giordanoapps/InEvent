@@ -96,7 +96,7 @@
                 `event`.`city`,
                 `event`.`state`,
                 `event`.`fugleman`,
-                IF(`eventMember`.`memberID` = $memberID, `eventMember`.`id`, 0) AS `enrollmentID`,
+                IF(`eventMember`.`memberID` = $memberID, `eventMember`.`position`, 0) AS `enrollmentID`,
                 IF(`eventMember`.`memberID` = $memberID, $memberID, 0) AS `memberID`,
                 IF(`eventMember`.`memberID` = $memberID, `eventMember`.`approved`, -1) AS `approved`
             FROM

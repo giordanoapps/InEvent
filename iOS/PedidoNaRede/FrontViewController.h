@@ -12,6 +12,7 @@
 
 @interface FrontViewController : WrapperViewController <APIControllerDelegate, UIGestureRecognizerDelegate>
 
+@property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (strong, nonatomic) IBOutlet UIImageView *cover;
 @property (strong, nonatomic) IBOutlet UIView *wrapper;
 @property (strong, nonatomic) IBOutlet UILabel *name;

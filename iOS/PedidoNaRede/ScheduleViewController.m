@@ -289,6 +289,26 @@
     [self.tableView reloadData];
     
     [refreshControl endRefreshing];
+    
+    // Scroll to the current moment
+    NSTimeInterval timestamp = [[NSDate date] timeIntervalSince1970];
+    
+    for (int i = 0; i < [activities count]; i++) {
+        for (int j = 0; j < [[activities objectAtIndex:i] count]; j++) {
+            // Get the current dictionary
+            NSDictionary *activity = [[activities objectAtIndex:i] objectAtIndex:j];
+            
+            // See if it matches
+            if (timestamp < [[activity objectForKey:@"dateEnd"] integerValue]) {
+                
+                // Scroll to the moment before the next activity finishes
+                [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:((j > 0) ? (j - 1) : j) inSection:i] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+                
+                // Break the current loop
+                return;
+            }
+        }
+    }
 }
 
 - (void)apiController:(APIController *)apiController didFailWithError:(NSError *)error {

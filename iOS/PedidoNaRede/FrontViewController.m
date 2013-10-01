@@ -11,11 +11,13 @@
 #import "UtilitiesController.h"
 #import "UIImageView+WebCache.h"
 #import "NSString+HTML.h"
+#import "ODRefreshControl.h"
 #import "HumanToken.h"
 #import "EventToken.h"
 #import "GAI.h"
 
 @interface FrontViewController () {
+    ODRefreshControl *refreshControl;
     NSDictionary *eventData;
 }
 
@@ -44,6 +46,13 @@
     // Right Button
     self.rightBarButton = self.navigationItem.rightBarButtonItem;
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(dismiss)];
+    
+    // Refresh Control
+    refreshControl = [[ODRefreshControl alloc] initInScrollView:self.scrollView];
+    [refreshControl addTarget:self action:@selector(reloadData) forControlEvents:UIControlEventValueChanged];
+    
+    // Scroll view
+    [_scrollView setContentSize:CGSizeMake(_scrollView.frame.size.width, _scrollView.frame.size.height * 1.01)];
     
     // Wrapper
     _wrapper.layer.cornerRadius = 4.0f;
@@ -146,13 +155,17 @@
     // Assign the data object to the companies
     eventData = [[dictionary objectForKey:@"data"] objectAtIndex:0];
     
+    // Stop refreshing
+    [refreshControl endRefreshing];
+    
     // Paint the UI
     [self paint];
 }
 
 - (void)apiController:(APIController *)apiController didFailWithError:(NSError *)error {
     [super apiController:apiController didFailWithError:error];
-
+    
+    [refreshControl endRefreshing];
 }
 
 @end

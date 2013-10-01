@@ -219,7 +219,7 @@
         // Place using InEvent API
         MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
         annotation.coordinate = CLLocationCoordinate2DMake(latitude, longitude);
-        annotation.title = [[_activityData objectForKey:@"name"] stringByDecodingHTMLEntities];
+        annotation.title = [[_activityData objectForKey:@"location"] stringByDecodingHTMLEntities];
         [_map addAnnotation:annotation];
     }
 }
