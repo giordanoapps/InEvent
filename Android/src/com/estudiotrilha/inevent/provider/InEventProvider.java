@@ -28,7 +28,7 @@ import com.estudiotrilha.inevent.content.Event;
 import com.estudiotrilha.inevent.content.EventMember;
 import com.estudiotrilha.inevent.content.LoginManager;
 import com.estudiotrilha.inevent.content.Member;
-import com.estudiotrilha.inevent.content.Rating;
+import com.estudiotrilha.inevent.content.Feedback;
 
 
 public class InEventProvider extends ContentProvider
@@ -49,6 +49,7 @@ public class InEventProvider extends ContentProvider
     public static final int URI_ACTIVITY_ATTENDERS   = 204;
     public static final int URI_MEMBER               = 301;
     public static final int URI_RATING               = 401;
+    public static final int URI_RATING_SINGLE        = 402;
 
     static
     {
@@ -62,7 +63,8 @@ public class InEventProvider extends ContentProvider
         uriMatcher.addURI(AUTHORITY, Activity.PATH + "/#",          URI_ACTIVITY_SINGLE);
         uriMatcher.addURI(AUTHORITY, ActivityMember.PATH,           URI_ACTIVITY_ATTENDERS);
         uriMatcher.addURI(AUTHORITY, Member.PATH,                   URI_MEMBER);
-        uriMatcher.addURI(AUTHORITY, Rating.PATH,                   URI_RATING);
+        uriMatcher.addURI(AUTHORITY, Feedback.PATH,                 URI_RATING);
+        uriMatcher.addURI(AUTHORITY, Feedback.PATH + "/#",          URI_RATING_SINGLE);
     }
 
     private DatabaseOpenHelper mDatabaseOpenHelper;
@@ -111,7 +113,10 @@ public class InEventProvider extends ContentProvider
             return ContentResolver.CURSOR_DIR_BASE_TYPE + IN_EVENT + Member.PATH;
 
         case URI_RATING:
-            return ContentResolver.CURSOR_DIR_BASE_TYPE + IN_EVENT + Rating.PATH;
+            return ContentResolver.CURSOR_DIR_BASE_TYPE + IN_EVENT + Feedback.PATH;
+
+        case URI_RATING_SINGLE:
+            return ContentResolver.CURSOR_ITEM_BASE_TYPE+ IN_EVENT + Feedback.PATH;
         }
 
         return null;
@@ -150,8 +155,8 @@ public class InEventProvider extends ContentProvider
                     (loginManager.isSignedIn() ?
                                 " ON " + Event.Columns._ID_FULL +"="+ EventMember.Columns.EVENT_ID_FULL+
                                 " AND "+EventMember.Columns.MEMBER_ID_FULL+"="+loginManager.getMember().memberId : "") +
-                    " LEFT JOIN " + Rating.TABLE_NAME +
-                    " ON " + EventMember.Columns.EVENT_ID_FULL +"="+ Rating.Columns.EVENT_ID_FULL +
+                    " LEFT JOIN " + Feedback.TABLE_NAME +
+                    " ON " + EventMember.Columns.EVENT_ID_FULL +"="+ Feedback.Columns.EVENT_ID_FULL +
                     " WHERE " + selection +
                     " GROUP BY " + Event.Columns._ID_FULL +
                     " ORDER BY " + sortOrder;
@@ -188,8 +193,8 @@ public class InEventProvider extends ContentProvider
                     " LEFT JOIN " + ActivityMember.TABLE_NAME +
                     " ON " + ActivityMember.Columns.ACTIVITY_ID_FULL +"="+ Activity.Columns._ID_FULL +
                         (loginManager.isSignedIn() ? " AND "+ActivityMember.Columns.MEMBER_ID_FULL+"="+loginManager.getMember().memberId: "") +
-                    " LEFT JOIN " + Rating.TABLE_NAME +
-                    " ON " + ActivityMember.Columns.ACTIVITY_ID_FULL +"="+ Rating.Columns.ACTIVITY_ID_FULL +
+                    " LEFT JOIN " + Feedback.TABLE_NAME +
+                    " ON " + ActivityMember.Columns.ACTIVITY_ID_FULL +"="+ Feedback.Columns.ACTIVITY_ID_FULL +
                     " WHERE " + selection +
                     " GROUP BY " + Activity.Columns._ID_FULL +
                     " ORDER BY " + sortOrder;
@@ -221,8 +226,17 @@ public class InEventProvider extends ContentProvider
             break;
         }
 
+        case URI_RATING_SINGLE:
+        {
+            // obtain the id
+            Long id = ContentUris.parseId(uri);
+
+            // set the selection
+            selection = Feedback.Columns._ID+"=?";
+            selectionArgs = new String[] {id.toString()};
+        }
         case URI_RATING:
-            c = mDatabase.query(Rating.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
+            c = mDatabase.query(Feedback.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
             break;
 
         default:
@@ -267,7 +281,7 @@ public class InEventProvider extends ContentProvider
             break;
 
         case URI_RATING:
-            answer = mDatabase.insertWithOnConflict(Rating.TABLE_NAME, null, values, SQLiteDatabase.CONFLICT_REPLACE);
+            answer = mDatabase.insertWithOnConflict(Feedback.TABLE_NAME, null, values, SQLiteDatabase.CONFLICT_REPLACE);
             break;
 
         default:
@@ -326,8 +340,17 @@ public class InEventProvider extends ContentProvider
             result = mDatabase.update(ActivityMember.TABLE_NAME, values, selection, selectionArgs);
             break;
 
+        case URI_RATING_SINGLE:
+        {
+            // obtain the id
+            Long id = ContentUris.parseId(uri);
+
+            // set the selection
+            selection = Feedback.Columns._ID+"=?";
+            selectionArgs = new String[] {id.toString()};
+        }
         case URI_RATING:
-            result = mDatabase.update(Rating.TABLE_NAME, values, selection, selectionArgs);
+            result = mDatabase.update(Feedback.TABLE_NAME, values, selection, selectionArgs);
             break;
 
         default:
@@ -577,15 +600,15 @@ public class InEventProvider extends ContentProvider
 
         private void createRatingTable(SQLiteDatabase db)
         {
-            Log.i(InEvent.NAME, "Creating " + Rating.TABLE_NAME + " table");
+            Log.i(InEvent.NAME, "Creating " + Feedback.TABLE_NAME + " table");
 
-            db.execSQL("CREATE TABLE " + Rating.TABLE_NAME + "(" +
-                    Rating.Columns._ID + SQLiteUtils.PRIMARY_KEY+", "+
-                    Rating.Columns.ACTIVITY_ID + " INTEGER DEFAULT -1, " +
-                    Rating.Columns.EVENT_ID + " INTEGER DEFAULT NULL, " +
-                    Rating.Columns.RATING + " INTEGER NOT NULL, " +
-                    Rating.Columns.MESSAGE + " TEXT, " +
-                    Rating.Columns.SYNCHRONIZED + SQLiteUtils.BOOLEAN
+            db.execSQL("CREATE TABLE " + Feedback.TABLE_NAME + "(" +
+                    Feedback.Columns._ID + SQLiteUtils.PRIMARY_KEY+", "+
+                    Feedback.Columns.ACTIVITY_ID + " INTEGER DEFAULT NULL, " +
+                    Feedback.Columns.EVENT_ID + " INTEGER DEFAULT NULL, " +
+                    Feedback.Columns.RATING + " INTEGER NOT NULL, " +
+                    Feedback.Columns.MESSAGE + " TEXT, " +
+                    Feedback.Columns.SYNCHRONIZED + SQLiteUtils.BOOLEAN +")"
             );
         }
     }

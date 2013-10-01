@@ -113,9 +113,6 @@ public abstract class SlidingMenuBaseActivity extends ActionBarActivity
                 }
         });
 
-        // set the sync status
-        setSupportProgressBarIndeterminateVisibility(SyncBroadcastManager.isSyncing());
-
         // creates and setups the toast manager
         mToastManager = new ViewToastManager(this, (ViewGroup) findViewById(R.id.main_toastMessage));
         // Set the enter and leave animations for the custom toast
@@ -148,6 +145,9 @@ public abstract class SlidingMenuBaseActivity extends ActionBarActivity
         filter.addAction(LoginManager.ACTION_LOGIN_STATE_CHANGED);
         filter.addAction(InEvent.ACTION_TOAST_NOTIFICATION);
         registerReceiver(mReceiver, filter);
+
+        // set the sync status
+        setSupportProgressBarIndeterminateVisibility(SyncBroadcastManager.isSyncing());
     }
     @Override
     protected void onPause()

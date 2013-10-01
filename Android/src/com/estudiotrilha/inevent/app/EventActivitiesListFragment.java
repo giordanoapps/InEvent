@@ -119,6 +119,15 @@ public class EventActivitiesListFragment extends Fragment implements OnItemClick
         return false;
     }
 
+    public void updateContent(EventActivityInfo[] data)
+    {
+        // null check
+        if (data == null) return;
+
+        mActivitiesAdapter.setData(data);
+        getArguments().putSerializable(ARGS_LIST_DATA, data);
+    }
+
 
     class EventActivitiesListAdapter extends BaseAdapter implements SectionIndexer
     {
@@ -142,6 +151,7 @@ public class EventActivitiesListFragment extends Fragment implements OnItemClick
         public void setData(EventActivityInfo[] data)
         {
             mData = data;
+            notifyDataSetChanged();
         }
 
         @Override

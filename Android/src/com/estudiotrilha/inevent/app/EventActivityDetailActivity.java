@@ -42,13 +42,18 @@ import com.estudiotrilha.inevent.content.ActivityMember;
 import com.estudiotrilha.inevent.content.ApiRequest;
 import com.estudiotrilha.inevent.content.ApiRequestCode;
 import com.estudiotrilha.inevent.content.LoginManager;
-import com.estudiotrilha.inevent.content.Rating;
+import com.estudiotrilha.inevent.content.Feedback;
 import com.estudiotrilha.inevent.content.SyncBroadcastManager;
 import com.estudiotrilha.inevent.service.DownloaderService;
 
 
 public class EventActivityDetailActivity extends ActionBarActivity implements LoaderCallbacks<Cursor>
 {
+    private static final int APPROVED_OK        = 1;
+    private static final int APPROVED_WAIT_LIST = 0;
+    private static final int APPROVED_NOT       = -1;
+
+
     // Extras
     private static final String EXTRA_ACTIVITY_ID = "extra.ACTIVITY_ID";
 
@@ -74,7 +79,7 @@ public class EventActivityDetailActivity extends ActionBarActivity implements Lo
             }
         }
     };
-    private final ContentObserver mContentObserver = new ContentObserver(new Handler()) {
+    private final ContentObserver   mContentObserver = new ContentObserver(new Handler()) {
         @Override
         public void onChange(boolean selfChange)
         {
@@ -82,8 +87,10 @@ public class EventActivityDetailActivity extends ActionBarActivity implements Lo
             getSupportLoaderManager().restartLoader(LOAD_ACTIVITY, null, EventActivityDetailActivity.this);
         }
     };
+
     private DateFormat   mTimeFormat;
     private LoginManager mLoginManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -118,7 +125,7 @@ public class EventActivityDetailActivity extends ActionBarActivity implements Lo
         // register a broadcast
         registerReceiver(mReceiver, new IntentFilter(SyncBroadcastManager.ACTION_SYNC));
         // and an observer
-        getContentResolver().registerContentObserver(Rating.CONTENT_URI, true, mContentObserver);
+        getContentResolver().registerContentObserver(Feedback.CONTENT_URI, true, mContentObserver);
     }
     @Override
     protected void onStop()
@@ -200,13 +207,16 @@ public class EventActivityDetailActivity extends ActionBarActivity implements Lo
                 int color = 0;
                 switch (approved)
                 {
-                case -1:
+                // Not enrolled
+                case APPROVED_NOT:
                     color = getResources().getColor(R.color.light_gray);
                     break;
-                case 0:
+                // Waiting list
+                case APPROVED_WAIT_LIST:
                     color = getResources().getColor(R.color.holo_red_dark);
                     break;
-                case 1:
+                // enrolled
+                case APPROVED_OK:
                     color = getResources().getColor(R.color.holo_green_dark);
                     ratingBar.setVisibility(View.VISIBLE);
                     break;

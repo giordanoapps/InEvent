@@ -222,7 +222,7 @@ public class Activity
             Activity.Columns.LATITUDE_FULL,
             Activity.Columns.LONGITUDE_FULL,
             "IFNULL("+ActivityMember.Columns.APPROVED_FULL+",-1) AS "+ActivityMember.Columns.APPROVED,
-            "IFNULL("+Rating.Columns.RATING_FULL+", 0) AS "+Rating.Columns.RATING_FULL
+            "IFNULL("+Feedback.Columns.RATING_FULL+", 0) AS "+Feedback.Columns.RATING
         };
     }
 

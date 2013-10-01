@@ -20,6 +20,10 @@
    	<!-- Attenders -->
    	<dimen name="attender_backView_text_width">150dp</dimen>
 
+   	<!-- Action Bar Spinner -->
+    <dimen name="spinner_title_textSize">16dp</dimen>
+    <dimen name="spinner_subtitle_textSize">14dp</dimen>
+
     <!-- Custom Toast Message Configs -->
    	<dimen name="toast_layout_width">180dp</dimen>
    	<dimen name="toast_layout_height">60dp</dimen>

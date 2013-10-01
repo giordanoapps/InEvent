@@ -37,6 +37,16 @@ public class Event
 {
     public static class Api
     {
+        public static final class Post
+        {
+            private static final String SEND_OPINION = "rating=%d&message=%s";
+
+            public static String sendOpinion(int rating, String message)
+            {
+                return String.format(Locale.ENGLISH, SEND_OPINION, rating, message);
+            }
+        }
+
         public static final String  NAMESPACE          = "event";
 
         private static final String GET_EVENTS         = ApiRequest.BASE_URL + NAMESPACE + ".getEvents";
@@ -45,6 +55,7 @@ public class Event
         private static final String GET_PEOPLE         = ApiRequest.BASE_URL + NAMESPACE + ".getPeople&tokenID=%s&eventID=%d&selection=%s";
         private static final String GET_ACTIVITIES     = ApiRequest.BASE_URL + NAMESPACE + ".getActivities&eventID=%s";
         private static final String GET_OPINION        = ApiRequest.BASE_URL + NAMESPACE + ".getOpinion&tokenID=%s&eventID=%d";
+        private static final String SEND_OPINION       = ApiRequest.BASE_URL + NAMESPACE + ".sendOpinion&tokenID=%s&eventID=%d";
 
 
         public static HttpURLConnection getEvents() throws IOException
@@ -129,6 +140,14 @@ public class Event
             URL url = new URL(String.format(GET_OPINION, tokenID, eventID));
 
             return ConnectionHelper.getURLGetConnection(url);
+        }
+
+        public static HttpURLConnection sendOpinion(String tokenID, long eventID) throws IOException
+        {
+            tokenID = URLEncoder.encode(tokenID, ApiRequest.ENCODING);
+            URL url = new URL(String.format(SEND_OPINION, tokenID, eventID));
+
+            return ConnectionHelper.getURLPostConnection(url);
         }
 
         public static enum PeopleSelection

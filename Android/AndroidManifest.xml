@@ -78,6 +78,7 @@
             android:label="InEvent Data Provider" />
 
         <!-- Services -->
+        <service android:name="com.estudiotrilha.inevent.service.UploaderService" />
         <service android:name="com.estudiotrilha.inevent.service.DownloaderService" />
     </application>
 

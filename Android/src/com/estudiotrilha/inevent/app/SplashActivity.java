@@ -12,6 +12,7 @@ import android.preference.PreferenceManager;
 import com.estudiotrilha.inevent.InEvent;
 import com.estudiotrilha.inevent.R;
 import com.estudiotrilha.inevent.content.ApiRequest;
+import com.estudiotrilha.inevent.service.UploaderService;
 import com.google.analytics.tracking.android.EasyTracker;
 
 
@@ -31,6 +32,8 @@ public class SplashActivity extends Activity implements Runnable
         if (savedInstanceState == null)
         {
             ApiRequest.init(getApplicationContext());
+            // Sync up!
+            UploaderService.sync(this);
         }
     }
 

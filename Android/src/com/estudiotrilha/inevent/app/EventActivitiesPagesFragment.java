@@ -1,11 +1,13 @@
 package com.estudiotrilha.inevent.app;
 
+import java.lang.ref.WeakReference;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.TimeZone;
 
 import android.annotation.TargetApi;
+import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
@@ -25,6 +27,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.TextView;
 
 import com.estudiotrilha.android.utils.DateUtils;
 import com.estudiotrilha.android.utils.ViewUtils;
@@ -48,18 +52,28 @@ public class EventActivitiesPagesFragment extends Fragment implements LoaderCall
     {
         ALL {
             @Override public int getTitle() { return R.string.title_displayOption_all; }
+            @Override public int getActionTitle() { return R.string.action_displayOption_all; }
+            @Override public String getQueryFilter() { return "1"; }
         },
         SCHEDULE_FULL {
             @Override public int getTitle() { return R.string.title_displayOption_schedule_full; }
+            @Override public int getActionTitle() { return R.string.action_displayOption_schedule_full; }
+            @Override public String getQueryFilter() { return ActivityMember.Columns.APPROVED_FULL+"!=-1"; }
         },
         SCHEDULE_APPROVED {
             @Override public int getTitle() { return R.string.title_displayOption_schedule_approved; }
+            @Override public int getActionTitle() { return R.string.action_displayOption_schedule_approved; }
+            @Override public String getQueryFilter() { return ActivityMember.Columns.APPROVED_FULL+"=1"; }
         },
         SCHEDULE_WAIT_LIST {
             @Override public int getTitle() { return R.string.title_displayOption_schedule_waitList; }
+            @Override public int getActionTitle() { return R.string.action_displayOption_schedule_waitList; }
+            @Override public String getQueryFilter() { return ActivityMember.Columns.APPROVED_FULL+"=0"; }
         };
 
         public abstract int getTitle();
+        public abstract int getActionTitle();
+        public abstract String getQueryFilter();
     }
 
     // Instance State
@@ -117,14 +131,42 @@ public class EventActivitiesPagesFragment extends Fragment implements LoaderCall
 
             mDownloadAttempt = savedInstanceState.getInt(STATE_DOWNLOAD_ATTEMPT);
         }
-        else if (mLoginManager.isSignedIn())
+        else
         {
-            boolean approved = mEventActivity.isApproved();
-            mDisplayOption = approved ? DisplayOption.SCHEDULE_FULL : DisplayOption.ALL;
-            ActionBar actionBar = mEventActivity.getSupportActionBar();
-//            actionBar.setNavigationMode(approved ? ActionBar.NAVIGATION_MODE_LIST : ActionBar.NAVIGATION_MODE_STANDARD);
-            actionBar.setListNavigationCallbacks(null, this);
             refresh();
+        }
+
+        if (mLoginManager.isSignedIn())
+        {
+            ActionBar actionBar = mEventActivity.getSupportActionBar();
+            if (actionBar == null) throw new IllegalStateException("It's F***ing NULL!");
+
+            if (mEventActivity.isApproved())
+            {
+                // Get the event name
+                long eventID = getArguments().getLong(ARGS_EVENT_ID);
+                Cursor c = getActivity().getContentResolver().query(
+                        ContentUris.withAppendedId(Event.CONTENT_URI, eventID),
+                        new String[]{ Event.Columns.NAME_FULL }, null, null, null);
+                String title = "";
+                if (c.moveToFirst())
+                {
+                    title = c.getString(0);
+                }
+                c.close();
+
+                mDisplayOption = DisplayOption.SCHEDULE_FULL;
+                actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+                actionBar.setListNavigationCallbacks(new EventActivityFilterSpinnerAdapter(title), this);
+                actionBar.setSelectedNavigationItem(mDisplayOption.ordinal());
+                actionBar.setDisplayShowTitleEnabled(false);
+            }
+            else
+            {
+                mDisplayOption = DisplayOption.ALL;
+                actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+                mEventActivity.getSupportActionBar().setTitle(mDisplayOption.getTitle());
+            }
         }
 
         // Setup the adapters
@@ -143,9 +185,6 @@ public class EventActivitiesPagesFragment extends Fragment implements LoaderCall
         mViewPager = (ViewPager) view.findViewById(R.id.eventActivity_viewPager);
         mViewPager.setAdapter(mActivitiesAdapter);
         mViewPager.setPageMargin((int) ViewUtils.dipToPixels(mEventActivity, 16));
-
-        // Setup the displayed things on screen
-        updateDisplayMode();
     }
     @Override
     public void onStart()
@@ -191,15 +230,11 @@ public class EventActivitiesPagesFragment extends Fragment implements LoaderCall
     public boolean onNavigationItemSelected(int itemPosition, long itemId)
     {
         if (itemPosition == mDisplayOption.ordinal()) return false;
+        
+        mDisplayOption = DisplayOption.values()[itemPosition];
+        getLoaderManager().restartLoader(LOAD_ACTIVITY, null, this);
 
-        // TODO
-        updateDisplayMode();
-
-        return false;
-    }
-    private void updateDisplayMode()
-    {
-        mEventActivity.getSupportActionBar().setTitle(mDisplayOption.getTitle());
+        return true;
     }
 
     private void refresh()
@@ -233,7 +268,7 @@ public class EventActivitiesPagesFragment extends Fragment implements LoaderCall
         case LOAD_ACTIVITY:
             uri = Activity.CONTENT_URI;
             projection = Activity.Columns.PROJECTION_LIST;
-            selection = Activity.Columns.EVENT_ID_FULL+"="+Long.toString(getArguments().getLong(ARGS_EVENT_ID));
+            selection = Activity.Columns.EVENT_ID_FULL+"="+Long.toString(getArguments().getLong(ARGS_EVENT_ID))+" AND "+mDisplayOption.getQueryFilter();
             sortOrder = Activity.Columns.DATE_BEGIN_FULL + " ASC";
             break;
         }
@@ -304,9 +339,11 @@ public class EventActivitiesPagesFragment extends Fragment implements LoaderCall
             }
         }
 
-        private ArrayList<EventSectionHolder> mSections;
-        private Cursor                        mCursor;
-        private DateFormat                    mDateFormat;
+        private WeakReference
+                <EventActivitiesListFragment>[] mFragments;
+        private ArrayList<EventSectionHolder>   mSections;
+        private Cursor                          mCursor;
+        private DateFormat                      mDateFormat;
         // Indexes
         private int mIndexId;
         private int mIndexName;
@@ -365,6 +402,7 @@ public class EventActivitiesPagesFragment extends Fragment implements LoaderCall
             return mCursor;
         }
 
+        @SuppressWarnings("unchecked")
         public void swapCursor(Cursor c)
         {
             mSections.clear();
@@ -400,12 +438,35 @@ public class EventActivitiesPagesFragment extends Fragment implements LoaderCall
                 }
             }
 
+            // Rebuild the pages if necessary
             notifyDataSetChanged();
-        }
 
+            // Update the pages content
+            mFragments = new WeakReference[mSections.size()];
+            for (int i = 0; i < mFragments.length; i++)
+            {
+                EventActivitiesListFragment fragment = mFragments[i].get();
+                if (fragment != null)
+                {
+                    fragment.updateContent(getItemData(i));
+                }
+            }
+        }
 
         @Override
         public Fragment getItem(int position)
+        {
+            EventActivityInfo[] data = getItemData();
+
+            long eventID = getArguments().getLong(ARGS_EVENT_ID);
+            String header = getPageTitle(position).toString();
+            EventActivitiesListFragment fragment = EventActivitiesListFragment.instantiate(eventID, data, header);
+            mFragments[position] = new WeakReference<EventActivitiesListFragment>(fragment);
+
+            return fragment;
+        }
+
+        private EventActivityInfo[] getItemData(int position)
         {
             // Build up the list info
             // Get the starting and end position
@@ -429,12 +490,7 @@ public class EventActivitiesPagesFragment extends Fragment implements LoaderCall
                         mCursor.getLong(mIndexDateEnd)
                 );
             }
-
-
-            long eventID = getArguments().getLong(ARGS_EVENT_ID);
-            String header = getPageTitle(position).toString();
-            EventActivitiesListFragment fragment = EventActivitiesListFragment.instantiate(eventID, data, header);
-            return fragment;
+            return data;
         }
 
         @Override
@@ -447,6 +503,62 @@ public class EventActivitiesPagesFragment extends Fragment implements LoaderCall
         public CharSequence getPageTitle(int position)
         {
             return mDateFormat.format(mSections.get(position).date.getTime());
+        }
+    }
+
+    class EventActivityFilterSpinnerAdapter extends BaseAdapter
+    {
+        private LayoutInflater mInflater;
+        private CharSequence   mActivityTitle;
+
+
+        public EventActivityFilterSpinnerAdapter(CharSequence title)
+        {
+            mActivityTitle = title;
+            mInflater = getActivity().getLayoutInflater();
+        }
+
+        @Override
+        public int getCount()
+        {
+            return DisplayOption.values().length;
+        }
+        @Override
+        public Object getItem(int position)
+        {
+            return DisplayOption.values()[position].getActionTitle();
+        }
+        @Override
+        public long getItemId(int position)
+        {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent)
+        {
+            if (convertView == null)
+            {
+                convertView = mInflater.inflate(R.layout.cell_event_activity_filter_spinner_view, parent, false);
+            }
+
+            ((TextView) convertView.findViewById(R.id.spinner_title)).setText(DisplayOption.values()[position].getTitle());
+            ((TextView) convertView.findViewById(R.id.spinner_subtitle)).setText(mActivityTitle);
+
+            return convertView;
+        }
+        
+        @Override
+        public View getDropDownView(int position, View convertView, ViewGroup parent)
+        {
+            if (convertView == null)
+            {
+                convertView = mInflater.inflate(R.layout.support_simple_spinner_dropdown_item, parent, false);
+            }
+
+            ((TextView) convertView.findViewById(android.R.id.text1)).setText((Integer) getItem(position));
+
+            return convertView;
         }
     }
 }

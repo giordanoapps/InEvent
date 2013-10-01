@@ -86,7 +86,7 @@ public class EventActivity extends SlidingMenuBaseActivity
             c = getContentResolver().query(ContentUris.withAppendedId(Event.CONTENT_URI, eventID), new String[]{ EventMember.Columns.APPROVED_FULL }, null, null, null);
             if (c.moveToFirst())
             {
-                mApproved = c.getInt(0) == 1;
+                mApproved = (c.getInt(0) == 1);
             }
             c.close();
         }

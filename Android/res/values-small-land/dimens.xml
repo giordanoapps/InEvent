@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Small Screens & Landscape -->
+<resources>
+
+    <!-- Action Bar Spinner -->
+    <dimen name="spinner_title_textSize">14dp</dimen>
+    <dimen name="spinner_subtitle_textSize">12dp</dimen>
+
+</resources>

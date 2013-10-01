@@ -33,7 +33,7 @@ import com.estudiotrilha.inevent.content.Event;
 import com.estudiotrilha.inevent.content.EventMember;
 import com.estudiotrilha.inevent.content.LoginManager;
 import com.estudiotrilha.inevent.content.Member;
-import com.estudiotrilha.inevent.content.Rating;
+import com.estudiotrilha.inevent.content.Feedback;
 import com.estudiotrilha.inevent.content.SyncBroadcastManager;
 import com.estudiotrilha.inevent.provider.InEventProvider;
 
@@ -72,14 +72,14 @@ public class DownloaderService extends IntentService implements ApiRequest.Respo
     public static void downloadEventActivityRating(Context c, long activityId)
     {
         Intent service = new Intent(c, DownloaderService.class);
-        service.setData(Rating.CONTENT_URI);
+        service.setData(Feedback.CONTENT_URI);
         service.putExtra(EXTRA_ACTIVITY_ID, activityId);
         c.startService(service);
     }
     public static void downloadEventRating(Context c, long eventId)
     {
         Intent service = new Intent(c, DownloaderService.class);
-        service.setData(Rating.CONTENT_URI);
+        service.setData(Feedback.CONTENT_URI);
         service.putExtra(EXTRA_EVENT_ID, eventId);
         c.startService(service);
     }
@@ -96,7 +96,6 @@ public class DownloaderService extends IntentService implements ApiRequest.Respo
     private Intent            mIntent;
     private LoginManager      mLoginManager;
     private SharedPreferences mPreferences;
-
 
 
     public DownloaderService()
@@ -477,12 +476,12 @@ public class DownloaderService extends IntentService implements ApiRequest.Respo
 
                     // Parse the info
                     JSONObject jobj = json.getJSONArray(JsonUtils.DATA).getJSONObject(0);
-                    ContentValues values = Rating.valuesFromJson(jobj, eventID, activityID);
+                    ContentValues values = Feedback.valuesFromJson(jobj, eventID, activityID);
 
                     // Add to the database
                     inserts.add(
                             ContentProviderOperation
-                                .newInsert(Rating.CONTENT_URI)
+                                .newInsert(Feedback.CONTENT_URI)
                                 .withValues(values)
                                 .build()
                     );
