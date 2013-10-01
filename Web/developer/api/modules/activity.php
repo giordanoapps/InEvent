@@ -533,7 +533,6 @@
 					WHERE 1
 						AND `activityMember`.`activityID` = $activityID
 						AND `activityMember`.`memberID` = $personID
-						AND `activityMember`.`approved` = 1
 				");
 
 				if ($update) {
