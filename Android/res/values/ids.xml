@@ -11,6 +11,7 @@
 
     <!-- Event -->
     <item name="event_name" type="id"/>
+    <item name="event_cover" type="id"/>
     <item name="event_description" type="id"/>
     <item name="event_address" type="id"/>
     <item name="event_city" type="id"/>

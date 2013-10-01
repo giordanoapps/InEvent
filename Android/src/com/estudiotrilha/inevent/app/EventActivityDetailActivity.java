@@ -49,8 +49,8 @@ import com.estudiotrilha.inevent.service.DownloaderService;
 
 public class EventActivityDetailActivity extends ActionBarActivity implements LoaderCallbacks<Cursor>
 {
-    private static final int APPROVED_OK        = 1;
-    private static final int APPROVED_WAIT_LIST = 0;
+    private static final int APPROVED_OK        =  1;
+    private static final int APPROVED_WAIT_LIST =  0;
     private static final int APPROVED_NOT       = -1;
 
 

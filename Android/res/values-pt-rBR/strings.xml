@@ -28,11 +28,13 @@
     <!-- Titles -->
     <string name="title_about">Sobre</string>
     <string name="title_appVersion">Versão</string>
+    <string name="title_description">Descrição</string>
     <string name="title_displayOption_all">Todas as atividades</string>
     <string name="title_displayOption_schedule_approved">Minhas agenda - Aprovado</string>
     <string name="title_displayOption_schedule_full">Minhas agenda</string>
     <string name="title_displayOption_schedule_waitList">Minhas agenda - Espera</string>
     <string name="title_general">Geral</string>
+    <string name="title_location">Local</string>
     <string name="title_login">Fazer Login</string>
     <string name="title_mobileNetwork">Rede Móvel</string>
     <string name="title_preferences">Preferências</string>
@@ -54,7 +56,7 @@
     <string name="hint_login_university_course">Curso</string>
     <string name="hint_event_address">Endereço</string>
     <string name="hint_event_city">Cidade</string>
-    <string name="hint_event_description">Descrição</string>
+    <string name="hint_event_description">Nenhuma descrição</string>
     <string name="hint_event_name">Nome</string>
     <string name="hint_event_state">Estado</string>
     <string name="hint_eventActivity_name">Nome</string>
@@ -72,6 +74,8 @@
     <string name="loading_loggingIn">Entrando…</string>
 
     <!-- Empty Messages -->
+    <string name="empty_event_description">Nenhuma descrição</string>
+    <string name="empty_event_location">Não especificado</string>
     <string name="empty_eventActivities">As atividades do evento serão mostradas aqui</string>
     <string name="empty_eventActivityAttenders">Pessoas cadastradas nesta atividade aparecerão aqui</string>
     <string name="empty_eventActivityDescription">Nenhuma descrição</string>
@@ -83,22 +87,23 @@
     <!-- Preferences Summaries -->
 
     <!-- Descriptions -->
-    <string name="description_event_info">Mais informações sobre o evento</string>
-    <string name="description_attender_present">Participante presente</string>
     <string name="description_attender_absent">Participante ausente</string>
-    <string name="description_slidingMenu_open">Abrir menu lateral</string>
-    <string name="description_slidingMenu_close">Fechar menu lateral</string>
+    <string name="description_attender_present">Participante presente</string>
+    <string name="description_event_cover">Foto de capa do evento</string>
+    <string name="description_event_info">Mais informações sobre o evento</string>
     <string name="description_preference_useMobileNetwork">Permitir o uso da rede de dados móvel para baixar conteúdo</string>
+    <string name="description_slidingMenu_close">Fechar menu lateral</string>
+    <string name="description_slidingMenu_open">Abrir menu lateral</string>
 
     <!-- Error Messages -->
     <string name="error_connection">Erro de conexão</string>
     <string name="error_connection_internetless">Sem conexão</string>
     <string name="error_connection_timeout">A conexão expirou</string>
     <string name="error_internal">Ocorreu algum erro intero! Tente novamente dentro de alguns instantes</string>
-    <string name="error_unauthorized">Sem autorização</string>
+    <string name="error_invalidEmail">E-mail inválido</string>
     <string name="error_login_badCredentials">Nome e/ou senha inválido(s)</string>
     <string name="error_login_emptyField">Não pode ser vazio</string>
     <string name="error_login_unmatchingPasswords">Non matching passwords</string>
-    <string name="error_invalidEmail">E-mail inválido</string>
+    <string name="error_unauthorized">Sem autorização</string>
 
 </resources>

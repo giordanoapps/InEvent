@@ -28,11 +28,13 @@
     <!-- Titles -->
     <string name="title_about">About</string>
     <string name="title_appVersion">Version</string>
+    <string name="title_description">Description</string>
     <string name="title_displayOption_all">All activities</string>
     <string name="title_displayOption_schedule_approved">My schedule - Approved</string>
     <string name="title_displayOption_schedule_full">My schedule</string>
     <string name="title_displayOption_schedule_waitList">My schedule - Wait List</string>
     <string name="title_general">General</string>
+    <string name="title_location">Location</string>
     <string name="title_login">Login</string>
     <string name="title_mobileNetwork">Mobile Network</string>
     <string name="title_preferences">Preferences</string>
@@ -54,7 +56,7 @@
     <string name="hint_login_university_course">Course</string>
     <string name="hint_event_address">Address</string>
     <string name="hint_event_city">City</string>
-    <string name="hint_event_description">Description</string>
+    <string name="hint_event_description">No description</string>
     <string name="hint_event_name">Name</string>
     <string name="hint_event_state">State</string>
     <string name="hint_eventActivity_name">Name</string>
@@ -72,6 +74,8 @@
     <string name="loading_loggingIn">Logining In…</string>
 
     <!-- Empty Messages -->
+    <string name="empty_event_description">No description</string>
+    <string name="empty_event_location">Not specified</string>
     <string name="empty_eventActivities">Event activities will be shown here</string>
     <string name="empty_eventActivityAttenders">People enrolled for this activity will be displayed here</string>
     <string name="empty_eventActivityDescription">No description</string>
@@ -83,22 +87,23 @@
     <!-- Preferences Summaries -->
 
     <!-- Descriptions -->
-    <string name="description_event_info">Extra information about the event</string>
-    <string name="description_attender_present">Attender present</string>
     <string name="description_attender_absent">Attender absent</string>
-    <string name="description_slidingMenu_open">Open sliding menu</string>
-    <string name="description_slidingMenu_close">Close sliding menu</string>
+    <string name="description_attender_present">Attender present</string>
+    <string name="description_event_cover">Event cover picture</string>
+    <string name="description_event_info">Extra information about the event</string>
     <string name="description_preference_useMobileNetwork">Allow use of the mobile network to download data</string>
+    <string name="description_slidingMenu_close">Close sliding menu</string>
+    <string name="description_slidingMenu_open">Open sliding menu</string>
 
     <!-- Error Messages -->
     <string name="error_connection">Connection error</string>
     <string name="error_connection_internetless">No connection</string>
     <string name="error_connection_timeout">Connection timeout</string>
     <string name="error_internal">Some internal error occurred! Try again in a few moments</string>
-    <string name="error_unauthorized">Unauthorized</string>
+    <string name="error_invalidEmail">Invalid e-mail address</string>
     <string name="error_login_badCredentials">Wrong name and/or password</string>
     <string name="error_login_emptyField">Field can\'t be empty</string>
     <string name="error_login_unmatchingPasswords">Senhas não conferem</string>
-    <string name="error_invalidEmail">Invalid e-mail address</string>
+    <string name="error_unauthorized">Unauthorized</string>
 
 </resources>

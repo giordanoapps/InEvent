@@ -54,9 +54,9 @@ public class Utils
                 .cacheInMemory(true)
                 .cacheOnDisc(true)
                 .resetViewBeforeLoading(true)
-//                .showImageOnLoading(R.drawable.ic_loading_image)
-//                .showImageOnFail(R.drawable.default_carte_item_tilt)
-//                .showImageForEmptyUri(R.drawable.default_carte_item_tilt)
+                .showImageOnLoading(R.drawable.ic_logo_estudio_trilha)
+                .showImageOnFail(R.drawable.ic_logo_in_event)
+                .showImageForEmptyUri(R.drawable.ic_logo_in_event)
                 .build();
             ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(c.getApplicationContext())
                 .tasksProcessingOrder(QueueProcessingType.LIFO)

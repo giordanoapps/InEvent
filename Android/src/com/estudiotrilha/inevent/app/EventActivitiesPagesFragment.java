@@ -456,7 +456,7 @@ public class EventActivitiesPagesFragment extends Fragment implements LoaderCall
         @Override
         public Fragment getItem(int position)
         {
-            EventActivityInfo[] data = getItemData();
+            EventActivityInfo[] data = getItemData(position);
 
             long eventID = getArguments().getLong(ARGS_EVENT_ID);
             String header = getPageTitle(position).toString();

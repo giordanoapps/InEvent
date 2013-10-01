@@ -218,9 +218,9 @@ public class Event
 
         public static final String[] PROJECTION_DETAIL = {
             Event.Columns.NAME_FULL,
+            Event.Columns.COVER_FULL,
             Event.Columns.DESCRIPTION_FULL,
             Event.Columns.DATE_BEGIN_FULL,
-            Event.Columns.DATE_END_FULL,
             Event.Columns.LATITUDE_FULL,
             Event.Columns.LONGITUDE_FULL,
             Event.Columns.ADDRESS_FULL

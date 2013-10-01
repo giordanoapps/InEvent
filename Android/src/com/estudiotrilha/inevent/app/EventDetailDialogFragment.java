@@ -3,6 +3,8 @@ package com.estudiotrilha.inevent.app;
 import com.estudiotrilha.inevent.R;
 import com.estudiotrilha.inevent.Utils;
 import com.estudiotrilha.inevent.content.Event;
+import com.estudiotrilha.inevent.content.Image;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import android.content.ContentUris;
 import android.database.Cursor;
@@ -18,6 +20,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ViewAnimator;
 
@@ -88,15 +91,10 @@ public class EventDetailDialogFragment extends DialogFragment implements LoaderC
         return new CursorLoader(getActivity(), uri, projection, selection, selectionArgs, sortOrder);
     }
     @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor data) // TODO finish this
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data)
     {
-        if (!data.moveToFirst())
-        {
-            // TODO something is wrong!!
-            return;
-        }
-
         // Populate the view
+        data.moveToFirst();
 
         // Setup the title
         String title = data.getString(data.getColumnIndex(Event.Columns.NAME));
@@ -110,7 +108,14 @@ public class EventDetailDialogFragment extends DialogFragment implements LoaderC
             ((ActionBarActivity) getActivity()).getSupportActionBar().setTitle(title);
         }
 
+        // Cover
+        ImageLoader.getInstance().displayImage(
+                Image.getImageLink(data.getString(data.getColumnIndex(Event.Columns.COVER))),
+                ((ImageView) getView().findViewById(R.id.event_cover))
+        );
+        // Description
         ((TextView) getView().findViewById(R.id.event_description)).setText(data.getString(data.getColumnIndex(Event.Columns.DESCRIPTION)));
+        // Address
         ((TextView) getView().findViewById(R.id.event_address)).setText(data.getString(data.getColumnIndex(Event.Columns.ADDRESS)));
 
         // Show the results
