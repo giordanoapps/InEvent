@@ -272,6 +272,20 @@
 
     <div class="documentationFunctionBox">
         <p class="documentFunctionName">
+            <span>activity.removeQuestion(<b>tokenID</b>, <b>questionID</b>)</span>
+            <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=activity.removeQuestion&tokenID=$tokenID&questionID=1">
+        </p>
+
+        <p class="documentFunctionDescription">Remove a pergunta <i>questionID</i>.</p>
+
+        <div class="documentationFunctionParametersBox">
+            <p><b>tokenID</b><sub>GET</sub> : id de autenticação </p>
+            <p><b>questionID</b><sub>GET</sub> : id da pergunta </p>
+        </div>
+    </div>
+
+    <div class="documentationFunctionBox">
+        <p class="documentFunctionName">
             <span>activity.upvoteQuestion(<b>tokenID</b>, <b>questionID</b>)</span>
             <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=activity.upvoteQuestion&tokenID=$tokenID&questionID=1">
         </p>

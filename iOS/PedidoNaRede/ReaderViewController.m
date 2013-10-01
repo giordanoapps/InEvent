@@ -82,7 +82,7 @@
     [super viewDidAppear:animated];
     
     // Window
-    [self allocTapBehind];
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) [self allocTapBehind];
     
     // Table View
     UIPanGestureRecognizer *panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didPan:)];
@@ -94,7 +94,7 @@
     [super viewWillDisappear:animated];
     
     // Window
-    [self deallocTapBehind];
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) [self deallocTapBehind];
 }
 
 - (void)didReceiveMemoryWarning

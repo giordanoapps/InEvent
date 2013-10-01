@@ -51,6 +51,8 @@
 - (id)initWithDelegate:(id<APIControllerDelegate>)aDelegate forcing:(BOOL)aForce withMaxAge:(NSTimeInterval)aMaxAge withUserInfo:(NSDictionary *)aUserInfo;
 
 #pragma mark - Activity
+- (void)activityCreateActivityAtEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID;
+- (void)activityEditField:(NSString *)name withValue:(NSString *)value atActivity:(NSInteger)activityID withTokenID:(NSString *)tokenID;
 - (void)activityRequestEnrollmentAtActivity:(NSInteger)activityID withTokenID:(NSString *)tokenID;
 - (void)activityRequestEnrollmentForPerson:(NSInteger)personID atActivity:(NSInteger)activityID withTokenID:(NSString *)tokenID;
 - (void)activityDismissEnrollmentAtActivity:(NSInteger)activityID withTokenID:(NSString *)tokenID;
@@ -61,6 +63,7 @@
 - (void)activityGetPeopleAtActivity:(NSInteger)activityID withTokenID:(NSString *)tokenID;
 - (void)activityGetQuestionsAtActivity:(NSInteger)activityID withTokenID:(NSString *)tokenID;
 - (void)activitySendQuestion:(NSString *)question toActivity:(NSInteger)activityID withTokenID:(NSString *)tokenID;
+- (void)activityRemoveQuestion:(NSInteger)questionID withTokenID:(NSString *)tokenID;
 - (void)activityUpvoteQuestion:(NSInteger)questionID withTokenID:(NSString *)tokenID;
 - (void)activityGetOpinionFromActivity:(NSInteger)activityID withToken:(NSString *)tokenID;
 - (void)activitySendOpinionWithRating:(NSInteger)rating toActivity:(NSInteger)activityID withToken:(NSString *)tokenID;

@@ -699,7 +699,6 @@
 			$question = getAttribute($_POST['question']);
 
 			$insert = resourceForQuery(
-			// echo (
 				"INSERT INTO
 					`activityQuestion`
 					(`activityID`, `memberID`, `text`)
@@ -731,6 +730,36 @@
 			http_status_code(400, "activityID and question are required parameters");
 		}
 		
+	} else
+
+	if ($method === "removeQuestion") {
+
+		$tokenID = getToken();
+
+		if (isset($_GET["questionID"])) {
+
+			// Get some properties
+			$questionID = getAttribute($_GET['questionID']);
+
+			$delete = resourceForQuery(
+				"DELETE FROM
+					`activityQuestion`
+				WHERE 1
+					AND `activityQuestion`.`id` = $questionID
+					AND `activityQuestion`.`memberID` = $core->memberID
+			");
+
+			if ($delete) {
+				$data["questionID"] = $questionID;
+				echo json_encode($data);
+			} else {
+				http_status_code(500, "row deletion has failed");
+			}
+
+		} else {
+			http_status_code(400, "questionID is a required parameter");
+		}
+
 	} else
 
 	if ($method === "upvoteQuestion") {

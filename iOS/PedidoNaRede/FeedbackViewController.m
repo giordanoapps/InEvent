@@ -24,7 +24,7 @@
 @property (assign, nonatomic) NSInteger rating;
 
 - (IBAction)processStarTap:(id)sender;
-- (IBAction)sendForm:(id)sender;
+- (IBAction)sendForm;
 
 @end
 
@@ -46,7 +46,7 @@
     
     // Right Button
     self.rightBarButton = self.navigationItem.rightBarButtonItem;
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(sendForm:)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(sendForm)];
     
     // View
     [((UIControl *)self.view) addTarget:self action:@selector(dismissKeyboard) forControlEvents:UIControlEventTouchUpInside];
@@ -91,14 +91,14 @@
     [super viewDidAppear:animated];
     
     // Window
-    [self allocTapBehind];
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) [self allocTapBehind];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
     // Window
-    [self deallocTapBehind];
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) [self deallocTapBehind];
 }
 
 - (void)didReceiveMemoryWarning
@@ -169,7 +169,7 @@
     }
 }
 
-- (IBAction)sendForm:(id)sender {
+- (IBAction)sendForm {
     
     if ([_textView.text length] < 1) {
         [_textView setText:@"0"];
@@ -189,8 +189,8 @@
     }];
 }
 
- - (void)dismissKeyboard {
-     [_textView resignFirstResponder];
+- (void)dismissKeyboard {
+    [_textView resignFirstResponder];
 }
 
 #pragma mark - APIController Delegate

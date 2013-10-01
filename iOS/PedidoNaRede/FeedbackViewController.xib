@@ -157,7 +157,7 @@
                                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
                                     <connections>
-                                        <action selector="sendForm:" destination="-1" eventType="touchUpInside" id="35"/>
+                                        <action selector="sendForm" destination="-1" eventType="touchUpInside" id="sfk-4H-Yke"/>
                                     </connections>
                                 </button>
                             </subviews>

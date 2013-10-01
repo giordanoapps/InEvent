@@ -49,6 +49,24 @@
 
 #pragma mark - Activity
 
+- (void)activityCreateActivityAtEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID {
+    
+    if (tokenID != nil) {
+        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID, @"eventID" : [NSString stringWithFormat:@"%d", eventID]}};
+        
+        [self JSONObjectWithNamespace:@"activity" method:@"create" attributes:attributes];
+    }
+}
+
+- (void)activityEditField:(NSString *)name withValue:(NSString *)value atActivity:(NSInteger)activityID withTokenID:(NSString *)tokenID {
+    
+    if (tokenID != nil && name != nil) {
+        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID, @"name" : name, @"activityID" : [NSString stringWithFormat:@"%d", activityID]}, @"POST": @{@"value" : value}};
+        
+        [self JSONObjectWithNamespace:@"activity" method:@"edit" attributes:attributes];
+    }
+}
+
 - (void)activityRequestEnrollmentAtActivity:(NSInteger)activityID withTokenID:(NSString *)tokenID {
 
     if (tokenID != nil) {
@@ -136,6 +154,15 @@
         NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID, @"activityID" : [NSString stringWithFormat:@"%d", activityID]}, @"POST" : @{@"question" : question}};
         
         [self JSONObjectWithNamespace:@"activity" method:@"sendQuestion" attributes:attributes];
+    }
+}
+
+- (void)activityRemoveQuestion:(NSInteger)questionID withTokenID:(NSString *)tokenID {
+   
+    if (tokenID != nil) {
+        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID, @"questionID" : [NSString stringWithFormat:@"%d", questionID]}};
+        
+        [self JSONObjectWithNamespace:@"activity" method:@"removeQuestion" attributes:attributes];
     }
 }
 

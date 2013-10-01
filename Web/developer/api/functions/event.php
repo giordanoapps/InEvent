@@ -51,7 +51,8 @@
 
 				$result = resourceForQuery(
 					"SELECT
-						`event`.`name`
+						`event`.`name`,
+						`event`.`nickname`
 					FROM
 						`event`
 					WHERE 1
@@ -61,8 +62,13 @@
 
 				if (mysql_num_rows($result) > 0) {
 
+					// Get some properties from the event
+					$name = mysql_result($result, 0, "name");
+					$nick = mysql_result($result, 0, "nickname");
+					$email = getEmailForPerson($personID);
+
 					// Get some properties and send an email
-					sendEventEnrollmentEmail(mysql_result($result, 0, "name"), getEmailForPerson($personID));
+					sendEventEnrollmentEmail($name, $nick, $email);
 
 					// Get all the activities
 					$result = resourceForQuery(

@@ -110,7 +110,7 @@
     [super viewDidAppear:animated];
     
     // Window
-    [self allocTapBehind];
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) [self allocTapBehind];
     
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
         [self cleanData];
@@ -122,7 +122,7 @@
     [super viewWillDisappear:animated];
     
     // Window
-    [self deallocTapBehind];
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) [self deallocTapBehind];
 }
 
 - (void)didReceiveMemoryWarning
@@ -265,7 +265,7 @@
     UIButton *facebookLike = [[UIButton alloc] initWithFrame:CGRectMake(20.0f, 6.0f, 32.0f, 32.0f)];
     [facebookLike setImage:[UIImage imageNamed:@"32-Facebook-Like-2"] forState:UIControlStateNormal];
     [facebookLike setUserInteractionEnabled:YES];
-    [facebookLike addTarget:self action: @selector(accessoryButtonTapped:withEvent:) forControlEvents:UIControlEventTouchUpInside];
+    [facebookLike addTarget:self action:@selector(accessoryButtonTapped:withEvent:) forControlEvents:UIControlEventTouchUpInside];
     UIView *accessory = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 52.0f, 44.0f)];
     [accessory addSubview:votes];
     [accessory addSubview:facebookLike];
@@ -275,7 +275,7 @@
     return cell;
 }
 
-- (void) accessoryButtonTapped:(UIControl *)button withEvent:(UIEvent *)event {
+- (void)accessoryButtonTapped:(UIControl *)button withEvent:(UIEvent *)event {
     // Apple does not allow that we use the accessory custom view with the stock tableview's delegate method, so have to simulate it
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:[[[event touchesForView:button] anyObject] locationInView:self.tableView]];
     
@@ -288,6 +288,27 @@
     NSInteger questionID = [[[_questionData objectAtIndex:indexPath.row] objectForKey:@"id"] integerValue];
 
     [[[APIController alloc] initWithDelegate:self forcing:YES] activityUpvoteQuestion:questionID withTokenID:tokenID];
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    NSDictionary *dictionary = [self.questionData objectAtIndex:indexPath.row];
+    
+    if ([[dictionary objectForKey:@"memberID"] integerValue] == [[HumanToken sharedInstance] memberID]) {
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        NSString *tokenID = [[HumanToken sharedInstance] tokenID];
+        NSInteger questionID = [[[_questionData objectAtIndex:indexPath.row] objectForKey:@"id"] integerValue];
+        
+        [[[APIController alloc] initWithDelegate:self forcing:YES] activityRemoveQuestion:questionID withTokenID:tokenID];
+    }
 }
 
 #pragma mark - APIController Delegate
