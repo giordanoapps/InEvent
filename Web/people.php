@@ -24,12 +24,14 @@
 					<div class="toolBoxOptions toolBoxOptionsEnrollPerson">
 						<input type="text" placeholder="Nome completo" class="name">
 						<input type="text" placeholder="Email" class="email">
-						<input type="button" value="Criar!" class="singleButton">
+						<input type="button" value="Criar" class="singleButton">
 					</div>
 
 					<!-- ToolBox Email -->
 					<div class="toolBoxOptions toolBoxOptionsMail">
 						<textarea name="mail"></textarea>
+						<input type="text" placeholder="Qual o template que deseja enviar para todos os selecionados na lista?" class="template">
+						<input type="button" value="Enviar" class="singleButton">
 					</div>
 
 					<!-- ToolBox Import -->

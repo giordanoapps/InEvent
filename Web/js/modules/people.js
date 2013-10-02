@@ -186,6 +186,36 @@ define(modules, function($, common, cookie) {$(function() {
 	});
 
 	/**
+	 * Send an email template to a lot of people
+	 * @return {null}
+	 */
+	$("#peopleContent").on("click", ".toolBoxOptionsMail .singleButton", function(event) {
+		
+		var $elem = $(this);
+		var $scheduleItemSelected = $("#peopleContent .scheduleItemSelected");
+
+		var namespace = $scheduleItemSelected.attr("data-type");
+		var activityID = $scheduleItemSelected.val();
+		var eventID = cookie.read("eventID");
+
+		// We request the information on the server
+		$.post('developer/api/?' + $.param({
+			method: namespace + ".sendMail",
+			activityID: activityID,
+			eventID: eventID,
+			selection: "all",
+			format: "html"
+		}), {},
+		function(data, textStatus, jqXHR) {
+
+			// Hide the toolbar
+			$elem.closest(".toolBoxOptionsMail").slideToggle(400);
+
+		}, 'html');
+
+	});
+
+	/**
 	 * Load an activity and populate with usage
 	 * @return {null}
 	 */

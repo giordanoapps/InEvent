@@ -30,6 +30,7 @@ function sendEmail($title, $template, $email) {
 
 // Pages
 include_once("email/activity.php");
+include_once("email/app.php");
 include_once("email/event.php");
 include_once("email/person.php");
 

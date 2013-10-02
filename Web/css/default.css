@@ -2011,6 +2011,22 @@ textarea, input {
 	width: 95%;
 }
 
+#peopleContent .toolBoxOptionsMail input {
+	display: none;
+}
+
+#peopleContent .toolBoxOptionsMail input[type="text"] {
+	padding: 4.5px;
+	margin: 4px 10px 10px 0;
+	font-size: 100%;
+	text-align: justify;
+	width: 85%;
+}
+
+#peopleContent .toolBoxOptionsMail .singleButton {
+	padding: 4px 14px;
+}
+
 #peopleContent .toolBoxOptionsEnrollPerson input[type="text"] {
 	padding: 4.5px;
 	margin: 4px 0;

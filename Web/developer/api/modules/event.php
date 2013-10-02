@@ -205,7 +205,7 @@
 		
 	} else
 
-	if ($method === "getPeople") {
+	if ($method === "getPeople" || $method === "sendMail") {
 
 		$eventID = getTokenForEvent();
 
@@ -272,19 +272,26 @@
 			// The query
 			$result = getPeopleAtEventQuery($eventID, $complement, $completeOrderFilter);
 
-			// Return its data
-			if ($format == "json") {
-				echo printInformation("eventMember", $result, true, 'json');
-			} elseif ($format == "html") {
-				printPeopleAtEvent($result, $order);
-			} elseif ($format == "excel") {
-				resourceToExcel($result);
-			} elseif ($format == "gmail") {
-				for ($i = 0; $i < mysql_num_rows($result); $i++) {
-					echo ($i != 0 ? " , " : "") . mysql_result($result, $i, "name") . " <" . mysql_result($result, $i, "email") . ">";
+			if ($method === "getPeople") {
+				// Return its data
+				if ($format == "json") {
+					echo printInformation("eventMember", $result, true, 'json');
+				} elseif ($format == "html") {
+					printPeopleAtEvent($result, $order);
+				} elseif ($format == "excel") {
+					resourceToExcel($result);
+				} elseif ($format == "gmail") {
+					for ($i = 0; $i < mysql_num_rows($result); $i++) {
+						echo ($i != 0 ? " , " : "") . mysql_result($result, $i, "name") . " <" . mysql_result($result, $i, "email") . ">";
+					}
+				} else {
+					http_status_code(405, "this format is not available");
 				}
-			} else {
-				http_status_code(405, "this format is not available");
+
+			} elseif ($method === "sendMail") {
+				for ($i = 0; $i < mysql_num_rows($result); $i++) {
+					sendAppInformation(mysql_result($result, $i, "email"));
+				}
 			}
 
 		} else {
