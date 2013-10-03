@@ -9,7 +9,7 @@ require.config({
 		'jquery.validate': 'jquery.validate',
 		'jquery.maskedinput': 'jquery.maskedinput-1.3.min',
 		'jquery.mousewheel': 'jquery.mousewheel.min',
-		'jquery.scrollbar': 'perfect-scrollbar-0.4.4.min',
+		'jquery.scrollbar': 'perfect-scrollbar-0.4.5.min',
 		'jquery.fileuploader': 'jquery.fileuploader.min',
 		'jquery.chosen': 'chosen.jquery.min',
     	'imagesLoaded': 'imagesLoaded.min',

@@ -17,29 +17,29 @@
 
         $rows = mysql_num_rows($result);
 
+        // Display a row exclusive to all participants
+        if ($target == "event") {
+
+            // Get informations specific for this event
+            $resultEvent = getEventForEventQuery($core->eventID);
+
+            // Element to grab all people
+            printScheduleItem(
+                array(
+                    "id" => 1,
+                    "type" => "event",
+                    "dateBegin" => mysql_result($resultEvent, 0, "dateBegin"),
+                    "dateEnd" => mysql_result($resultEvent, 0, "dateEnd"),
+                    "name" => "Todas as pessoas",
+                    "description" => "",
+                    "capacity" => "0",
+                    "entries" => mysql_result($resultEvent, 0, "entries")
+                ),
+                "event"
+            );
+        }
+
         if ($rows > 0) {
-
-            // Display a row exclusive to all participants
-            if ($target == "event") {
-
-                // Get informations specific for this event
-                $resultEvent = getEventForEventQuery($core->eventID);
-
-                // Element to grab all people
-                printScheduleItem(
-                    array(
-                        "id" => 1,
-                        "type" => "event",
-                        "dateBegin" => mysql_result($resultEvent, 0, "dateBegin"),
-                        "dateEnd" => mysql_result($resultEvent, 0, "dateEnd"),
-                        "name" => "Todas as pessoas",
-                        "description" => "",
-                        "capacity" => "0",
-                        "entries" => mysql_result($resultEvent, 0, "entries")
-                    ),
-                    "event"
-                );
-            }
 
             $day = 0;
 
@@ -191,11 +191,14 @@
 
                 if ($day != date("z", $data['dateBegin'])) {
                     $day = date("z", $data['dateBegin']);
-
+                    
                     ?>
-                        <li value="" class="agendaDay">
-                            <span><?php echo date("j/m", $data['dateBegin']) ?></span>
-                            <span><?php echo getDayNameForDate($data['dateBegin']) ?></span>
+                        <li
+                            class="agendaDay"
+                            data-dateBegin="<?php echo ($data['dateBegin'] - $data['dateBegin'] % 86400) ?>"
+                            data-dateEnd="<?php echo ($data['dateBegin'] + 86400 - $data['dateBegin'] % 86400) ?>">
+                                <span><?php echo date("j/m", $data['dateBegin']) ?></span>
+                                <span><?php echo getDayNameForDate($data['dateBegin']) ?></span>
                         </li>
                     <?php
                 }

@@ -2180,6 +2180,7 @@ textarea, input {
 	position: relative;
 	width: 80%;
 	left: 20%;
+	min-height: 60px;
 }
 
 #peopleContent .scheduleItem .right .name {

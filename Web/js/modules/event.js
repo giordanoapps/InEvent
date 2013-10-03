@@ -206,11 +206,10 @@ define(modules, function($, common, cookie) {$(function() {
 		
 	});
 
-
 	/**
 	  * TEXT BOX
 	  */
-	 
+
 	/**
 	 * Start a text inline edition
 	 * @return {null}
@@ -244,47 +243,42 @@ define(modules, function($, common, cookie) {$(function() {
 	 * Conclude a text inline edition
 	 * @return {null}
 	 */
-	$("#eventContent").on("keyup focusout", ".agendaItem .titleInput", function(event) {
+	$("#eventContent").on("keyup", ".agendaItem .titleInput", function(event) {
 
-		// Get the event type
-		if (event.type == "keyup") {
-			var code = (event.keyCode ? event.keyCode : event.which);
-			var validate = (code == 13) ? true : false;
-		} else if (event.type == "focusout") {
-			var validate = true;
-		} else {
-			var validate = false;
+		var code = (event.keyCode ? event.keyCode : event.which);
+		if (code == 13) {
+			$(this).trigger("focusout");
 		}
-	
-		if (validate) {
+	});
 
-			var $elem = $(this);
-			var $agendaItem = $elem.closest(".agendaItem");
+	$("#eventContent").on("focusout", ".agendaItem .titleInput", function(event) {
 
-			var activityID = $agendaItem.val();
-			var value = $elem.val();
-			var name = $elem.attr("name");
+		var $elem = $(this);
+		var $agendaItem = $elem.closest(".agendaItem");
 
-			$elem = $elem.field("removeField", {"class": "name"});
+		var activityID = $agendaItem.val();
+		var value = $elem.val();
+		var name = $elem.attr("name");
 
-			// We request the information on the server
-			$.post('developer/api/?' + $.param({
-				method: "activity.edit",
-				activityID: activityID,
-				name: name,
-				format: "html"
-			}), {
-				value: value
-			},
-			function(data, textStatus, jqXHR) {
+		$elem = $elem.field("removeField", {"class": "name"});
 
-				if (jqXHR.status == 200) {
-					// Replace the entry
-					$agendaItem.replaceWith(data);
-				}
+		// We request the information on the server
+		$.post('developer/api/?' + $.param({
+			method: "activity.edit",
+			activityID: activityID,
+			name: name,
+			format: "html"
+		}), {
+			value: value
+		},
+		function(data, textStatus, jqXHR) {
 
-			}, 'html').fail(function(jqXHR, textStatus, errorThrown) {});
-		}
+			if (jqXHR.status == 200) {
+				// Replace the entry
+				$agendaItem.replaceWith(data);
+			}
+
+		}, 'html').fail(function(jqXHR, textStatus, errorThrown) {});
 
 	});
 	
@@ -339,7 +333,7 @@ define(modules, function($, common, cookie) {$(function() {
 
 		var month = parseInt($(this).val(), 10);
 
-		if (month <= 12) {
+		if (month > 0 && month <= 12) {
 			$(this).removeClass("badTime");
 		} else {
 			$(this).addClass("badTime");
@@ -354,7 +348,7 @@ define(modules, function($, common, cookie) {$(function() {
 
 		var day = parseInt($(this).val(), 10);
 
-		if (day <= 31) {
+		if (day > 0 && day <= 31) {
 			$(this).removeClass("badTime");
 		} else {
 			$(this).addClass("badTime");
@@ -430,7 +424,8 @@ define(modules, function($, common, cookie) {$(function() {
 			$(this).val(("0" + parseInt($(this).val())).slice(-2));
 
 			// Get some properties
-			var activityID = $(this).closest(".toolBonusCalendar").prev().val();
+			var $agendaItem = $(this).closest(".toolBonusCalendar").prev();
+			var activityID = $agendaItem.val();
 			var name = $(this).attr("name");
 			var value = $(this).val();
 
@@ -442,7 +437,36 @@ define(modules, function($, common, cookie) {$(function() {
 				format: "html"
 			}), {
 				value: value
-			});
+			}, function(data, textStatus, jqXHR) {
+
+				if (jqXHR.status == 200) {
+
+					// Get the new date of the element
+					var dateBeginOld = parseInt($agendaItem.attr("data-datebegin"), 10);
+					var dateBeginNew = parseInt($(data).attr("data-datebegin"), 10);
+
+					var dateBeginMax = (dateBeginOld > dateBeginNew) ? dateBeginOld : dateBeginNew;
+					var dateBeginMin = (dateBeginOld < dateBeginNew) ? dateBeginOld : dateBeginNew;
+
+					// Move all the cells in between the new and old datas
+					var $movable = $agendaItem.siblings().filter(function() {
+						var dateBegin = parseInt($(this).attr("data-datebegin"), 10);
+					    return (dateBegin > dateBeginMin && dateBegin < dateBeginMax);
+					});
+
+					// Decide to where ww should move the elements
+					if (dateBeginOld > dateBeginNew) {
+						$movable.insertAfter($agendaItem.add($agendaItem.siblings(".toolBonus")).last());
+					} else {
+						$movable.insertBefore($agendaItem);
+					}
+
+					// Replace the old one
+					$agendaItem.replaceWith(data);
+				}
+
+			}, 'html').fail(function(jqXHR, textStatus, errorThrown) {});
+
 		}
 	});
 
