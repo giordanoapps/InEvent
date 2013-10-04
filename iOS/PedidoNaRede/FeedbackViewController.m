@@ -68,7 +68,7 @@
     [_messageBox.layer setMasksToBounds:NO];
     
     // Message
-    [_message.titleLabel setTextAlignment: UITextAlignmentCenter];
+    [_message.titleLabel setTextAlignment:NSTextAlignmentCenter];
     [_message setTitle:NSLocalizedString(@"Do you wanna rate me?", nil) forState:UIControlStateNormal];
     [_message setTitleColor:[ColorThemeController textColor]  forState:UIControlStateHighlighted];
     

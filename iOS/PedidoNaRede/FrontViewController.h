@@ -15,11 +15,11 @@
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (strong, nonatomic) IBOutlet UIImageView *cover;
 @property (strong, nonatomic) IBOutlet UIView *wrapper;
-@property (strong, nonatomic) IBOutlet UILabel *name;
-@property (strong, nonatomic) IBOutlet UILabel *dateBegin;
-@property (strong, nonatomic) IBOutlet UILabel *dateEnd;
-@property (strong, nonatomic) IBOutlet UILabel *location;
-@property (strong, nonatomic) IBOutlet UILabel *fugleman;
+@property (strong, nonatomic) IBOutlet UIView *name; // UILabel
+@property (strong, nonatomic) IBOutlet UIView *dateBegin; // UILabel
+@property (strong, nonatomic) IBOutlet UIView *dateEnd; // UILabel
+@property (strong, nonatomic) IBOutlet UIView *location; // UILabel
+@property (strong, nonatomic) IBOutlet UIView *fugleman; // UILabel
 @property (strong, nonatomic) IBOutlet UILabel *enrollmentID;
 
 @end

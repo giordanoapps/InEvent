@@ -195,6 +195,15 @@
 
 #pragma mark - Event
 
+- (void)eventEditField:(NSString *)name withValue:(NSString *)value atEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID {
+    
+    if (tokenID != nil && name != nil) {
+        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID, @"name" : name, @"eventID" : [NSString stringWithFormat:@"%d", eventID]}, @"POST": @{@"value" : value}};
+        
+        [self JSONObjectWithNamespace:@"event" method:@"edit" attributes:attributes];
+    }
+}
+
 - (void)eventGetEvents {
     [self JSONObjectWithNamespace:@"event" method:@"getEvents" attributes:@{}];
 }

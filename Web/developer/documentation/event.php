@@ -17,6 +17,22 @@
 
     <div class="documentationFunctionBox">
         <p class="documentFunctionName">
+            <span>event.edit(<b>tokenID</b>, <b>eventID</b>, <b>name</b>, <b>value</b>)</span>
+            <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=event.edit&tokenID=$tokenID&eventID=1&name=nome" data-post="value=valor">
+        </p>
+
+        <p class="documentFunctionDescription">Edita o valor <i>value</i> no campo <i>name</i> do evento <i>eventID</i>.</p>
+
+        <div class="documentationFunctionParametersBox">
+            <p><b>tokenID</b><sub>GET</sub> : id de autenticação </p>
+            <p><b>eventID</b><sub>GET</sub> : id da atividade </p>
+            <p><b>name</b><sub>GET</sub> : nome do campo </p>
+            <p><b>value</b><sub>POST</sub> : valor do campo </p>
+        </div>
+    </div>
+
+    <div class="documentationFunctionBox">
+        <p class="documentFunctionName">
             <span>event.getEvents(<b>tokenID</b> = null)</span>
             <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=event.getEvents&tokenID=null">
         </p>

@@ -6,11 +6,12 @@
 //  Copyright (c) 2013 Pedro Góes. All rights reserved.
 //
 
+#import <QuartzCore/QuartzCore.h>
+#import <GoogleMaps/GoogleMaps.h>
 #import "ScheduleItemViewController.h"
 #import "ReaderViewController.h"
 #import "QuestionViewController.h"
 #import "FeedbackViewController.h"
-#import <QuartzCore/QuartzCore.h>
 #import "ColorThemeController.h"
 #import "HumanToken.h"
 #import "EventToken.h"
@@ -19,6 +20,8 @@
 #import "NSString+HTML.h"
 #import "ODRefreshControl.h"
 #import "NSObject+Triangle.h"
+#import "NSObject+Field.h"
+#import "UIPlaceHolderTextView.h"
 
 @interface ScheduleItemViewController () {
     ODRefreshControl *refreshControl;
@@ -50,11 +53,11 @@
     [_wrapper.layer setMasksToBounds:YES];
     
     // Title
-    [_name setTextColor:[ColorThemeController tableViewCellTextColor]];
-    [_name setHighlightedTextColor:[ColorThemeController tableViewCellTextHighlightedColor]];
+    [(UILabel *)_name setTextColor:[ColorThemeController tableViewCellTextColor]];
+    [(UILabel *)_name setHighlightedTextColor:[ColorThemeController tableViewCellTextHighlightedColor]];
     
     // Description
-    [_description setBackgroundColor:[ColorThemeController tableViewCellBackgroundColor]];
+    [(UITextView *)_description setBackgroundColor:[ColorThemeController tableViewCellBackgroundColor]];
     
     // Line
     [_line setBackgroundColor:[ColorThemeController tableViewCellInternalBorderColor]];
@@ -62,6 +65,10 @@
     
     // Map
     [_map setShowsUserLocation:YES];
+//    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:-33.86 longitude:151.20 zoom:6];
+//    _map = [GMSMapView mapWithFrame:CGRectZero camera:camera];
+//    _map.myLocationEnabled = YES;
+//    _map.settings.myLocationButton = YES;
     
     // Location Manager
     locationManager = [[CLLocationManager alloc] init];
@@ -115,12 +122,7 @@
     if (_activityData) {
 
         // Actions
-        if ([[HumanToken sharedInstance] isMemberAuthenticated]) {
-            self.rightBarButton = [[CoolBarButtonItem alloc] initCustomButtonWithImage:[UIImage imageNamed:@"64-Cog"] frame:CGRectMake(0, 0, 42.0, 30.0) insets:UIEdgeInsetsMake(5.0, 11.0, 5.0, 11.0) target:self action:@selector(alertActionSheet)];
-            self.rightBarButton.accessibilityLabel = NSLocalizedString(@"Actions", nil);
-            self.rightBarButton.accessibilityTraits = UIAccessibilityTraitSummaryElement;
-            self.navigationItem.rightBarButtonItem = self.rightBarButton;
-        }
+        if ([[HumanToken sharedInstance] isMemberAuthenticated]) [self loadMenuButton];
         
         NSDate *date = [NSDate dateWithTimeIntervalSince1970:[[_activityData objectForKey:@"dateBegin"] integerValue]];
         NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
@@ -128,10 +130,10 @@
         
         [self defineStateForApproved:[[_activityData objectForKey:@"approved"] integerValue] withView:_wrapper];
         
-        _hour.text = [NSString stringWithFormat:@"%.2d", [components hour]];
-        _minute.text = [NSString stringWithFormat:@"%.2d", [components minute]];
-        _name.text = [[_activityData objectForKey:@"name"] stringByDecodingHTMLEntities];
-        _description.text = [[_activityData objectForKey:@"description"] stringByDecodingHTMLEntities];
+        ((UILabel *)_hour).text = [NSString stringWithFormat:@"%.2d", [components hour]];
+        ((UILabel *)_minute).text = [NSString stringWithFormat:@"%.2d", [components minute]];
+        ((UILabel *)_name).text = [[_activityData objectForKey:@"name"] stringByDecodingHTMLEntities];
+        ((UITextView *)_description).text = [[_activityData objectForKey:@"description"] stringByDecodingHTMLEntities];
         
         [self reloadMap];
     }
@@ -140,15 +142,69 @@
 - (void)cleanData {
     self.navigationItem.rightBarButtonItem = nil;
     [self defineStateForApproved:ScheduleStateUnknown withView:_wrapper];
-    _hour.text = @"00";
-    _minute.text = @"00";
-    _name.text = NSLocalizedString(@"Activity", nil);
-    _description.text = @"";
+    ((UILabel *)_hour).text = @"00";
+    ((UILabel *)_minute).text = @"00";
+    ((UILabel *)_name).text = NSLocalizedString(@"Activity", nil);
+    ((UITextView *)_description).text = @"";
+}
+
+- (void)loadMenuButton {
+    self.rightBarButton = [[CoolBarButtonItem alloc] initCustomButtonWithImage:[UIImage imageNamed:@"64-Cog"] frame:CGRectMake(0, 0, 42.0, 30.0) insets:UIEdgeInsetsMake(5.0, 11.0, 5.0, 11.0) target:self action:@selector(alertActionSheet)];
+    self.rightBarButton.accessibilityLabel = NSLocalizedString(@"Actions", nil);
+    self.rightBarButton.accessibilityTraits = UIAccessibilityTraitSummaryElement;
+    self.navigationItem.rightBarButtonItem = self.rightBarButton;
+}
+
+- (void)loadDoneButton {
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(endEditing)];
+}
+
+#pragma mark - Editing
+
+- (void)startEditing {
+    _hour = [self createField:_hour withAttributes:@[@"trimPadding"]];
+    _minute = [self createField:_minute withAttributes:@[@"trimPadding"]];
+    _name = [self createField:_name];
+    _description = [self createField:_description];
+    
+    [self loadDoneButton];
+}
+
+- (void)endEditing {
+    
+    // Save the fields
+    NSString *tokenID = [[HumanToken sharedInstance] tokenID];
+    
+    if (![((UIPlaceHolderTextView *)_hour).placeholder isEqualToString:((UIPlaceHolderTextView *)_hour).text]) {
+        [[[APIController alloc] initWithDelegate:self forcing:YES] activityEditField:@"hourBegin" withValue:((UIPlaceHolderTextView *)_hour).text atActivity:[[_activityData objectForKey:@"id"] integerValue] withTokenID:tokenID];
+    }
+    
+    if (![((UIPlaceHolderTextView *)_minute).placeholder isEqualToString:((UIPlaceHolderTextView *)_minute).text]) {
+        [[[APIController alloc] initWithDelegate:self forcing:YES] activityEditField:@"minuteBegin" withValue:((UIPlaceHolderTextView *)_minute).text atActivity:[[_activityData objectForKey:@"id"] integerValue] withTokenID:tokenID];
+    }
+    
+    if (![((UIPlaceHolderTextView *)_name).placeholder isEqualToString:((UIPlaceHolderTextView *)_name).text]) {
+        [[[APIController alloc] initWithDelegate:self forcing:YES] activityEditField:@"name" withValue:((UIPlaceHolderTextView *)_name).text atActivity:[[_activityData objectForKey:@"id"] integerValue] withTokenID:tokenID];
+    }
+    
+    if (![((UIPlaceHolderTextView *)_description).placeholder isEqualToString:((UIPlaceHolderTextView *)_description).text]) {
+        [[[APIController alloc] initWithDelegate:self forcing:YES] activityEditField:@"description" withValue:((UIPlaceHolderTextView *)_description).text atActivity:[[_activityData objectForKey:@"id"] integerValue] withTokenID:tokenID];
+    }
+    
+    // Remove them
+    _hour = [self removeField:_hour];
+    _minute = [self removeField:_minute];
+    _name = [self removeField:_name];
+    _description = [self removeField:_description];
+    
+    [self loadMenuButton];
 }
 
 #pragma mark - Location
 
 - (void)updateLocation:(CLLocation *)location {
+//    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:location.coordinate.latitude longitude:location.coordinate.longitude zoom:6];
+//    [_map setCamera:camera];
     [_map setRegion:MKCoordinateRegionMake(location.coordinate, MKCoordinateSpanMake(0.011, 0.011))];
 }
 
@@ -191,6 +247,7 @@
     
     // Remove all annotations
     [_map removeAnnotations:_map.annotations];
+//    [_map clear];
     
     // Then load the new ones
     CGFloat latitude = [[_activityData objectForKey:@"latitude"] floatValue];
@@ -221,6 +278,11 @@
         annotation.coordinate = CLLocationCoordinate2DMake(latitude, longitude);
         annotation.title = [[_activityData objectForKey:@"location"] stringByDecodingHTMLEntities];
         [_map addAnnotation:annotation];
+//        GMSMarker *marker = [[GMSMarker alloc] init];
+//        marker.position = CLLocationCoordinate2DMake(latitude, longitude);
+//        marker.title = [[_activityData objectForKey:@"location"] stringByDecodingHTMLEntities];
+//        marker.snippet = [[_activityData objectForKey:@"location"] stringByDecodingHTMLEntities];
+//        marker.map = _map;
     }
 }
 
@@ -257,9 +319,9 @@
     
     if ([[HumanToken sharedInstance] isMemberWorking]) {
         if ([[_activityData objectForKey:@"approved"] integerValue] == ScheduleStateApproved) {
-            actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Actions", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"See people", nil), NSLocalizedString(@"See questions", nil), NSLocalizedString(@"Send feedback", nil), nil];
+            actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Actions", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"Edit fields", nil), NSLocalizedString(@"See people", nil), NSLocalizedString(@"See questions", nil), NSLocalizedString(@"Send feedback", nil), nil];
         } else {
-            actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Actions", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"See people", nil), NSLocalizedString(@"See questions", nil), nil];
+            actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Actions", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"Edit fields", nil), NSLocalizedString(@"See people", nil), NSLocalizedString(@"See questions", nil), nil];
         }
     } else if ([[HumanToken sharedInstance] isMemberAuthenticated]) {
         if ([[_activityData objectForKey:@"approved"] integerValue] == ScheduleStateApproved) {
@@ -277,8 +339,11 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     
     NSString *title = [actionSheet buttonTitleAtIndex:buttonIndex];
-    
-    if ([title isEqualToString:NSLocalizedString(@"See people", nil)]) {
+
+    if ([title isEqualToString:NSLocalizedString(@"Edit fields", nil)]) {
+        [self startEditing];
+        
+    } else if ([title isEqualToString:NSLocalizedString(@"See people", nil)]) {
         // Load our reader
         ReaderViewController *rvc = [[ReaderViewController alloc] initWithNibName:@"ReaderViewController" bundle:nil];
         

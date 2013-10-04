@@ -1,6 +1,114 @@
 <?php
 // -------------------------------------- EVENT --------------------------------------- //
 	
+	if ($method === "edit") {
+
+		$eventID = getTokenForEvent();
+
+		if (isset($_GET['name']) && isset($_POST['value'])) {
+
+			$name = getAttribute($_GET['name']);
+			$value = getEmptyAttribute($_POST['value']);
+
+			// Permission
+			if ($core->workAtEvent) {
+			
+				// We list all the fields that can be edited by the event platform
+				$validFields = array("name", "nickname", "description", "latitude", "longitude", "address", "city", "state", "dayBegin", "monthBegin", "hourBegin", "minuteBegin", "dayEnd", "monthEnd", "hourEnd", "minuteEnd", "fugleman");
+
+				if (in_array($name, $validFields) == TRUE) {
+
+					// Month
+					if ($name == "monthBegin" || $name == "monthEnd") {
+
+						$name = str_replace("month", "date", $name);
+
+						$update = resourceForQuery(
+							"UPDATE
+								`event` 
+							SET
+								`$name` = ((`$name` - INTERVAL MONTH(`$name`) MONTH) + INTERVAL $value MONTH)
+							WHERE
+								`event`.`id` = $eventID
+						");
+
+					// Day
+					} elseif ($name == "dayBegin" || $name == "dayEnd") {
+
+						$name = str_replace("day", "date", $name);
+
+						$update = resourceForQuery(
+							"UPDATE
+								`event` 
+							SET
+								`$name` = ((`$name` - INTERVAL DAY(`$name`) DAY) + INTERVAL $value DAY)
+							WHERE
+								`event`.`id` = $eventID
+						");
+
+					// Hour
+					} elseif ($name == "hourBegin" || $name == "hourEnd") {
+
+						$name = str_replace("hour", "date", $name);
+
+						$update = resourceForQuery(
+							"UPDATE
+								`event` 
+							SET
+								`$name` = CONVERT_TZ(((`$name` - INTERVAL HOUR(`$name`) HOUR) + INTERVAL $value HOUR), '-03:00','+00:00')
+							WHERE
+								`event`.`id` = $eventID
+						");
+
+					// Minute
+					} elseif ($name == "minuteBegin" || $name == "minuteEnd") {
+
+						$name = str_replace("minute", "date", $name);
+
+						$update = resourceForQuery(
+							"UPDATE
+								`event` 
+							SET
+								`$name` = ((`$name` - INTERVAL MINUTE(`$name`) MINUTE) + INTERVAL $value MINUTE)
+							WHERE
+								`event`.`id` = $eventID
+						");
+
+					// The rest
+					} else {
+						$update = resourceForQuery(
+							"UPDATE
+								`event`
+							SET
+								`$name` = '$value'
+							WHERE
+								`event`.`id` = $eventID
+						");
+					}
+
+					// Return its data
+					if ($format == "json") {
+						$data["eventID"] = $eventID;
+						echo json_encode($data);
+					} elseif ($format == "html") {
+						$result = getActivitiesForMemberAtActivityQuery($eventID, $core->memberID);
+						printAgendaItem(mysql_fetch_assoc($result), "member");
+					} else {
+						http_status_code(405, "this format is not available");
+					}
+
+				} else {
+					http_status_code(406, "name field doesn't exist");
+				}
+			} else {
+				http_status_code(401, "personID doesn't work at event");
+			}
+	    } else {
+	    	http_status_code(404, "name and value are required parameters");
+	    }
+
+	} else
+
 	if ($method === "getEvents") {
 
 		if (isset($_GET['tokenID']) && $_GET['tokenID'] != "null") {

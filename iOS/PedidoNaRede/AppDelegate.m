@@ -20,6 +20,7 @@
 #import "IntelligentSplitViewController.h"
 #import <FacebookSDK/FacebookSDK.h>
 #import <Parse/Parse.h>
+#import <GoogleMaps/GoogleMaps.h>
 
 @interface AppDelegate ()
 
@@ -103,6 +104,7 @@
     [self createCustomAppearance];
     [self createGoogleAnalyticsTracker];
     [self createParseTrackerWithApplication:application withOptions:launchOptions];
+    [GMSServices provideAPIKey:@"AIzaSyAdQ_ARtScsEywqn6vQfYKT8m0QyObDaFQ"];
     
     // Set the default controller
     self.window.rootViewController = self.menuController;

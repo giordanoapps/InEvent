@@ -15,6 +15,9 @@
 #import "HumanToken.h"
 #import "EventToken.h"
 #import "GAI.h"
+#import "NSObject+Field.h"
+#import "UIPlaceHolderTextView.h"
+#import "CoolBarButtonItem.h"
 
 @interface FrontViewController () {
     ODRefreshControl *refreshControl;
@@ -44,8 +47,7 @@
     // Do any additional setup after loading the view from its nib.
     
     // Right Button
-    self.rightBarButton = self.navigationItem.rightBarButtonItem;
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(dismiss)];
+    [self loadMenuButton];
     
     // Refresh Control
     refreshControl = [[ODRefreshControl alloc] initInScrollView:self.scrollView];
@@ -115,37 +117,96 @@
         [_cover setImageWithURL:[UtilitiesController urlWithFile:[eventData objectForKey:@"cover"]]];
         
         // Name
-        _name.text = [[eventData objectForKey:@"name"] stringByDecodingHTMLEntities];
+        ((UILabel *)_name).text = [[eventData objectForKey:@"name"] stringByDecodingHTMLEntities];
         
         NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
         
         // Date begin
         NSDate *date = [NSDate dateWithTimeIntervalSince1970:[[eventData objectForKey:@"dateBegin"] integerValue]];
         NSDateComponents *components = [gregorian components:(NSMonthCalendarUnit | NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:date];
-        _dateBegin.text = [NSString stringWithFormat:@"%.2d/%.2d %.2d:%.2d", [components month], [components day], [components hour], [components minute]];
+        ((UILabel *)_dateBegin).text = [NSString stringWithFormat:@"%.2d/%.2d %.2d:%.2d", [components month], [components day], [components hour], [components minute]];
         
         // Date end
         date = [NSDate dateWithTimeIntervalSince1970:[[eventData objectForKey:@"dateEnd"] integerValue]];
         components = [gregorian components:(NSMonthCalendarUnit | NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:date];
-        _dateEnd.text = [NSString stringWithFormat:@"%.2d/%.2d %.2d:%.2d", [components month], [components day], [components hour], [components minute]];
+        ((UILabel *)_dateEnd).text = [NSString stringWithFormat:@"%.2d/%.2d %.2d:%.2d", [components month], [components day], [components hour], [components minute]];
         
         // Location
-        _location.text = [[NSString stringWithFormat:@"%@ %@", [eventData objectForKey:@"address"], [eventData objectForKey:@"city"]] stringByDecodingHTMLEntities];
+        ((UILabel *)_location).text = [[NSString stringWithFormat:@"%@ %@", [eventData objectForKey:@"address"], [eventData objectForKey:@"city"]] stringByDecodingHTMLEntities];
         
         // Fugleman
-        _fugleman.text = [[eventData objectForKey:@"fugleman"] stringByDecodingHTMLEntities];
+        ((UILabel *)_fugleman).text = [[eventData objectForKey:@"fugleman"] stringByDecodingHTMLEntities];
 
         // Fugleman
-        _enrollmentID.text = [NSString stringWithFormat:@"%.4d", [[eventData objectForKey:@"enrollmentID"] integerValue]];
+        ((UILabel *)_enrollmentID).text = [NSString stringWithFormat:@"%.4d", [[eventData objectForKey:@"enrollmentID"] integerValue]];
     }
 }
 
-#pragma mark - User Methods
+#pragma mark - Private Methods
 
 - (void)dismiss {
     
     // Dismiss the controller
     [self dismissModalViewControllerAnimated:YES];
+}
+
+- (void)loadMenuButton {
+    // Right Button
+    self.rightBarButton = [[CoolBarButtonItem alloc] initCustomButtonWithImage:[UIImage imageNamed:@"32-Pencil-_-Edit.png"] frame:CGRectMake(0, 0, 42.0, 30.0) insets:UIEdgeInsetsMake(5.0, 11.0, 5.0, 11.0) target:self action:@selector(startEditing)];
+    self.navigationItem.rightBarButtonItem = self.rightBarButton;
+}
+
+- (void)loadDoneButton {
+    // Right Button
+    self.rightBarButton = self.navigationItem.rightBarButtonItem;
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(dismiss)];
+}
+
+#pragma mark - Editing
+
+- (void)startEditing {
+    _name = [self createField:_name withAttributes:@[@"trimPadding"]];
+    _dateBegin = [self createField:_dateBegin withAttributes:@[@"trimPadding"]];
+    _dateEnd = [self createField:_dateEnd];
+    _location = [self createField:_location];
+    _fugleman = [self createField:_fugleman];
+    
+    [self loadDoneButton];
+}
+
+- (void)endEditing {
+    
+    // Save the fields
+    NSString *tokenID = [[HumanToken sharedInstance] tokenID];
+    
+    if (![((UIPlaceHolderTextView *)_name).placeholder isEqualToString:((UIPlaceHolderTextView *)_name).text]) {
+        [[[APIController alloc] initWithDelegate:self forcing:YES] eventEditField:@"name" withValue:((UIPlaceHolderTextView *)_name).text atEvent:[[eventData objectForKey:@"id"] integerValue] withTokenID:tokenID];
+    }
+    
+    if (![((UIPlaceHolderTextView *)_dateBegin).placeholder isEqualToString:((UIPlaceHolderTextView *)_dateBegin).text]) {
+        [[[APIController alloc] initWithDelegate:self forcing:YES] eventEditField:@"dateBegin" withValue:((UIPlaceHolderTextView *)_dateBegin).text atEvent:[[eventData objectForKey:@"id"] integerValue] withTokenID:tokenID];
+    }
+    
+    if (![((UIPlaceHolderTextView *)_dateEnd).placeholder isEqualToString:((UIPlaceHolderTextView *)_dateEnd).text]) {
+        [[[APIController alloc] initWithDelegate:self forcing:YES] eventEditField:@"dateEnd" withValue:((UIPlaceHolderTextView *)_dateEnd).text atEvent:[[eventData objectForKey:@"id"] integerValue] withTokenID:tokenID];
+    }
+    
+    if (![((UIPlaceHolderTextView *)_location).placeholder isEqualToString:((UIPlaceHolderTextView *)_location).text]) {
+        [[[APIController alloc] initWithDelegate:self forcing:YES] eventEditField:@"location" withValue:((UIPlaceHolderTextView *)_location).text atEvent:[[eventData objectForKey:@"id"] integerValue] withTokenID:tokenID];
+    }
+    
+    if (![((UIPlaceHolderTextView *)_fugleman).placeholder isEqualToString:((UIPlaceHolderTextView *)_fugleman).text]) {
+        [[[APIController alloc] initWithDelegate:self forcing:YES] eventEditField:@"fugleman" withValue:((UIPlaceHolderTextView *)_fugleman).text atEvent:[[eventData objectForKey:@"id"] integerValue] withTokenID:tokenID];
+    }
+    
+    // Remove them
+    _name = [self removeField:_name];
+    _dateBegin = [self removeField:_dateBegin];
+    _dateEnd = [self removeField:_dateEnd];
+    _location = [self removeField:_location];
+    _fugleman = [self removeField:_fugleman];
+    
+    [self loadMenuButton];
 }
 
 #pragma mark - APIController Delegate

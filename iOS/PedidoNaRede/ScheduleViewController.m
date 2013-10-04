@@ -260,7 +260,7 @@
     
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
         sivc = [[ScheduleItemViewController alloc] initWithNibName:@"ScheduleItemViewController" bundle:nil];
-        [sivc setMoveKeyboardRatio:2.0f];
+        [sivc setMoveKeyboardRatio:0.0f];
     } else {
         // Find the sibling navigation controller first child and send the appropriate data
         sivc = (ScheduleItemViewController *)[[[self.splitViewController.viewControllers lastObject] viewControllers] objectAtIndex:0];

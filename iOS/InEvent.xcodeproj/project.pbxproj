@@ -8,6 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		39C737AEF4534B47ACEF33AA /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A6A516917D844488748DC44 /* libPods.a */; };
+		EB1FE9DC17FE4123001C2906 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB1FE9DB17FE4123001C2906 /* FacebookSDK.framework */; };
+		EB1FE9DE17FE841D001C2906 /* GoogleMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = EB1FE9DD17FE841D001C2906 /* GoogleMaps.bundle */; };
+		EB1FE9E017FE8582001C2906 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB1FE9DF17FE8582001C2906 /* CoreFoundation.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		EB1FE9E317FF0CA0001C2906 /* NSObject+Field.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1FE9E217FF0CA0001C2906 /* NSObject+Field.m */; };
+		EB1FE9E717FF2B85001C2906 /* AdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1FE9E517FF2B85001C2906 /* AdViewController.m */; };
+		EB1FE9E817FF2B85001C2906 /* AdViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB1FE9E617FF2B85001C2906 /* AdViewController.xib */; };
+		EB1FE9EB17FF5A5C001C2906 /* 32-Pencil-_-Edit.png in Resources */ = {isa = PBXBuildFile; fileRef = EB1FE9EA17FF5A5C001C2906 /* 32-Pencil-_-Edit.png */; };
 		EB1FEB8517171FC3009834FC /* LogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1FEB8317171FC3009834FC /* LogViewController.m */; };
 		EB1FEB89171729A6009834FC /* LogItemViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1FEB88171729A6009834FC /* LogItemViewCell.m */; };
 		EB1FEB8B171729C7009834FC /* LogItemViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB1FEB8A171729C7009834FC /* LogItemViewCell.xib */; };
@@ -31,7 +38,7 @@
 		EB25BABC17028D0A003F142F /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB25BABB17028D0A003F142F /* Default-568h@2x.png */; };
 		EB28747916A71EF600A06781 /* StepperView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB28747816A71EF500A06781 /* StepperView.m */; };
 		EB28747B16A71F1700A06781 /* StepperView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB28747A16A71F1700A06781 /* StepperView.xib */; };
-		EB30CAF117D6D09E00584FB8 /* UIView+Components.m in Sources */ = {isa = PBXBuildFile; fileRef = EB30CAF017D6D09E00584FB8 /* UIView+Components.m */; };
+		EB30CAF117D6D09E00584FB8 /* NSObject+Components.m in Sources */ = {isa = PBXBuildFile; fileRef = EB30CAF017D6D09E00584FB8 /* NSObject+Components.m */; };
 		EB39397616654B4400580A4E /* AlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB39393116654B4400580A4E /* AlertView.m */; };
 		EB39397716654B4400580A4E /* APIController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB39393316654B4400580A4E /* APIController.m */; };
 		EB39397816654B4400580A4E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EB39393516654B4400580A4E /* AppDelegate.m */; };
@@ -102,7 +109,6 @@
 		EB7FF95817EEDDE00017E599 /* 32-Facebook-Like-2.png in Resources */ = {isa = PBXBuildFile; fileRef = EB7FF95717EEDDE00017E599 /* 32-Facebook-Like-2.png */; };
 		EB837CB8171AE44300FA1EBC /* 16-Flag-2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB837CB7171AE44300FA1EBC /* 16-Flag-2@2x.png */; };
 		EB837CBA171AE45400FA1EBC /* 16-User@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB837CB9171AE45400FA1EBC /* 16-User@2x.png */; };
-		EB837CBD171B9B5100FA1EBC /* UINavigationBar+Height.m in Sources */ = {isa = PBXBuildFile; fileRef = EB837CBC171B9B5100FA1EBC /* UINavigationBar+Height.m */; };
 		EB8C7D7E16D17AEB00F3C721 /* cb_box_off.png in Resources */ = {isa = PBXBuildFile; fileRef = EB8C7D6516D17AEB00F3C721 /* cb_box_off.png */; };
 		EB8C7D7F16D17AEB00F3C721 /* cb_box_off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB8C7D6616D17AEB00F3C721 /* cb_box_off@2x.png */; };
 		EB8C7D8016D17AEB00F3C721 /* cb_box_on.png in Resources */ = {isa = PBXBuildFile; fileRef = EB8C7D6716D17AEB00F3C721 /* cb_box_on.png */; };
@@ -173,7 +179,7 @@
 		EBA186551731DAEB00336733 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = EBA186531731DAEB00336733 /* InfoPlist.strings */; };
 		EBA186581731DAEB00336733 /* Allocation.m in Sources */ = {isa = PBXBuildFile; fileRef = EBA186571731DAEB00336733 /* Allocation.m */; };
 		EBA89EB217AFEAFA00D9CD6B /* PushController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBA89EB117AFEAFA00D9CD6B /* PushController.m */; };
-		EBAAFD21161FCF020007637B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBAAFD20161FCF020007637B /* UIKit.framework */; };
+		EBAAFD21161FCF020007637B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBAAFD20161FCF020007637B /* UIKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		EBAAFD23161FCF020007637B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBAAFD22161FCF020007637B /* Foundation.framework */; };
 		EBAAFD25161FCF020007637B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBAAFD24161FCF020007637B /* CoreGraphics.framework */; };
 		EBAD3CB416A27BFB003735AD /* UIImage+Color.m in Sources */ = {isa = PBXBuildFile; fileRef = EBAD3CB316A27BFB003735AD /* UIImage+Color.m */; };
@@ -196,7 +202,6 @@
 		EBC59D8717BEC58100E0FC67 /* 64-Balloons.png in Resources */ = {isa = PBXBuildFile; fileRef = EBC59D8617BEC58100E0FC67 /* 64-Balloons.png */; };
 		EBC59D8917BEC59B00E0FC67 /* 64-Create-_-Write.png in Resources */ = {isa = PBXBuildFile; fileRef = EBC59D8817BEC59B00E0FC67 /* 64-Create-_-Write.png */; };
 		EBC59D8D17BEC5C300E0FC67 /* 64-Cloud-Download.png in Resources */ = {isa = PBXBuildFile; fileRef = EBC59D8C17BEC5C300E0FC67 /* 64-Cloud-Download.png */; };
-		EBCF5635175461D10083837B /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBCF5634175461D10083837B /* FacebookSDK.framework */; };
 		EBD055A717AF8CF3008355E8 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD055A517AF8CF3008355E8 /* AboutViewController.m */; };
 		EBD055A817AF8CF3008355E8 /* AboutViewController~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBD055A617AF8CF3008355E8 /* AboutViewController~iphone.xib */; };
 		EBD055AC17AF919C008355E8 /* 16-Footprints.png in Resources */ = {isa = PBXBuildFile; fileRef = EBD055AA17AF919C008355E8 /* 16-Footprints.png */; };
@@ -207,6 +212,14 @@
 		EBD47D9216B07BA600F7295E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = EBD47D9416B07BA600F7295E /* Localizable.strings */; };
 		EBD5474E16F62E7900A195FF /* InformationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD5474C16F62E7900A195FF /* InformationViewController.m */; };
 		EBD5474F16F62E7900A195FF /* InformationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBD5474D16F62E7900A195FF /* InformationViewController.xib */; };
+		EBD6626A17FE3F8800B190E2 /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBD6626917FE3F8800B190E2 /* GoogleMaps.framework */; };
+		EBD6626C17FE3FC800B190E2 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBD6626B17FE3FC800B190E2 /* AVFoundation.framework */; };
+		EBD6626E17FE3FD900B190E2 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBD6626D17FE3FD900B190E2 /* CoreText.framework */; };
+		EBD6627017FE3FE500B190E2 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBD6626F17FE3FE500B190E2 /* GLKit.framework */; };
+		EBD6627217FE3FFC00B190E2 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = EBD6627117FE3FFC00B190E2 /* libc++.dylib */; };
+		EBD6627417FE401400B190E2 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = EBD6627317FE401400B190E2 /* libicucore.dylib */; };
+		EBD6627617FE401F00B190E2 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = EBD6627517FE401F00B190E2 /* libz.dylib */; };
+		EBD6627817FE402900B190E2 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBD6627717FE402900B190E2 /* OpenGLES.framework */; };
 		EBD8E4E917AF557A00D0F30C /* 32-Minus.png in Resources */ = {isa = PBXBuildFile; fileRef = EBD8E4E817AF557A00D0F30C /* 32-Minus.png */; };
 		EBDA918117ACB10100969A08 /* 16-Check.png in Resources */ = {isa = PBXBuildFile; fileRef = EBDA917F17ACB10100969A08 /* 16-Check.png */; };
 		EBDA918217ACB10100969A08 /* 16-Check@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBDA918017ACB10100969A08 /* 16-Check@2x.png */; };
@@ -273,6 +286,15 @@
 /* Begin PBXFileReference section */
 		01A9A353CC7D4F35B9275C85 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		5A6A516917D844488748DC44 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		EB1FE9DB17FE4123001C2906 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = "../../../Documents/Objective-C/facebook-ios-sdk/build/FacebookSDK.framework"; sourceTree = "<group>"; };
+		EB1FE9DD17FE841D001C2906 /* GoogleMaps.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = GoogleMaps.bundle; path = GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle; sourceTree = "<group>"; };
+		EB1FE9DF17FE8582001C2906 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		EB1FE9E117FF0CA0001C2906 /* NSObject+Field.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Field.h"; sourceTree = "<group>"; };
+		EB1FE9E217FF0CA0001C2906 /* NSObject+Field.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Field.m"; sourceTree = "<group>"; };
+		EB1FE9E417FF2B85001C2906 /* AdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AdViewController.h; path = PedidoNaRede/AdViewController.h; sourceTree = "<group>"; };
+		EB1FE9E517FF2B85001C2906 /* AdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AdViewController.m; path = PedidoNaRede/AdViewController.m; sourceTree = "<group>"; };
+		EB1FE9E617FF2B85001C2906 /* AdViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AdViewController.xib; path = PedidoNaRede/AdViewController.xib; sourceTree = "<group>"; };
+		EB1FE9EA17FF5A5C001C2906 /* 32-Pencil-_-Edit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Pencil-_-Edit.png"; sourceTree = "<group>"; };
 		EB1FEB8217171FC3009834FC /* LogViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LogViewController.h; path = PedidoNaRede/LogViewController.h; sourceTree = "<group>"; };
 		EB1FEB8317171FC3009834FC /* LogViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LogViewController.m; path = PedidoNaRede/LogViewController.m; sourceTree = "<group>"; };
 		EB1FEB87171729A6009834FC /* LogItemViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LogItemViewCell.h; path = PedidoNaRede/LogItemViewCell.h; sourceTree = "<group>"; };
@@ -302,8 +324,8 @@
 		EB28747716A71EF500A06781 /* StepperView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StepperView.h; sourceTree = "<group>"; };
 		EB28747816A71EF500A06781 /* StepperView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StepperView.m; sourceTree = "<group>"; };
 		EB28747A16A71F1700A06781 /* StepperView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StepperView.xib; sourceTree = "<group>"; };
-		EB30CAEF17D6D09E00584FB8 /* UIView+Components.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Components.h"; sourceTree = "<group>"; };
-		EB30CAF017D6D09E00584FB8 /* UIView+Components.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Components.m"; sourceTree = "<group>"; };
+		EB30CAEF17D6D09E00584FB8 /* NSObject+Components.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Components.h"; sourceTree = "<group>"; };
+		EB30CAF017D6D09E00584FB8 /* NSObject+Components.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Components.m"; sourceTree = "<group>"; };
 		EB39393016654B4400580A4E /* AlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlertView.h; sourceTree = "<group>"; };
 		EB39393116654B4400580A4E /* AlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlertView.m; sourceTree = "<group>"; };
 		EB39393216654B4400580A4E /* APIController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APIController.h; sourceTree = "<group>"; };
@@ -424,8 +446,6 @@
 		EB7FF95717EEDDE00017E599 /* 32-Facebook-Like-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Facebook-Like-2.png"; sourceTree = "<group>"; };
 		EB837CB7171AE44300FA1EBC /* 16-Flag-2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "16-Flag-2@2x.png"; sourceTree = "<group>"; };
 		EB837CB9171AE45400FA1EBC /* 16-User@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "16-User@2x.png"; sourceTree = "<group>"; };
-		EB837CBB171B9B5100FA1EBC /* UINavigationBar+Height.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationBar+Height.h"; sourceTree = "<group>"; };
-		EB837CBC171B9B5100FA1EBC /* UINavigationBar+Height.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationBar+Height.m"; sourceTree = "<group>"; };
 		EB8C7D6516D17AEB00F3C721 /* cb_box_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cb_box_off.png; sourceTree = "<group>"; };
 		EB8C7D6616D17AEB00F3C721 /* cb_box_off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cb_box_off@2x.png"; sourceTree = "<group>"; };
 		EB8C7D6716D17AEB00F3C721 /* cb_box_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cb_box_on.png; sourceTree = "<group>"; };
@@ -539,7 +559,6 @@
 		EBC59D8617BEC58100E0FC67 /* 64-Balloons.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "64-Balloons.png"; sourceTree = "<group>"; };
 		EBC59D8817BEC59B00E0FC67 /* 64-Create-_-Write.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "64-Create-_-Write.png"; sourceTree = "<group>"; };
 		EBC59D8C17BEC5C300E0FC67 /* 64-Cloud-Download.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "64-Cloud-Download.png"; sourceTree = "<group>"; };
-		EBCF5634175461D10083837B /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = "../../../Documents/Objective-C/facebook-ios-sdk/build/FacebookSDK.framework"; sourceTree = "<group>"; };
 		EBD055A417AF8CF3008355E8 /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
 		EBD055A517AF8CF3008355E8 /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
 		EBD055A617AF8CF3008355E8 /* AboutViewController~iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "AboutViewController~iphone.xib"; sourceTree = "<group>"; };
@@ -556,6 +575,14 @@
 		EBD5474B16F62E7900A195FF /* InformationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InformationViewController.h; sourceTree = "<group>"; };
 		EBD5474C16F62E7900A195FF /* InformationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InformationViewController.m; sourceTree = "<group>"; };
 		EBD5474D16F62E7900A195FF /* InformationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InformationViewController.xib; sourceTree = "<group>"; };
+		EBD6626917FE3F8800B190E2 /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMaps.framework; sourceTree = "<group>"; };
+		EBD6626B17FE3FC800B190E2 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		EBD6626D17FE3FD900B190E2 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		EBD6626F17FE3FE500B190E2 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
+		EBD6627117FE3FFC00B190E2 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
+		EBD6627317FE401400B190E2 /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
+		EBD6627517FE401F00B190E2 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		EBD6627717FE402900B190E2 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		EBD8E4E817AF557A00D0F30C /* 32-Minus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Minus.png"; sourceTree = "<group>"; };
 		EBDA917F17ACB10100969A08 /* 16-Check.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "16-Check.png"; sourceTree = "<group>"; };
 		EBDA918017ACB10100969A08 /* 16-Check@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "16-Check@2x.png"; sourceTree = "<group>"; };
@@ -642,19 +669,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EB1FE9E017FE8582001C2906 /* CoreFoundation.framework in Frameworks */,
+				EBD6627817FE402900B190E2 /* OpenGLES.framework in Frameworks */,
+				EBD6627617FE401F00B190E2 /* libz.dylib in Frameworks */,
+				EBD6627417FE401400B190E2 /* libicucore.dylib in Frameworks */,
+				EBD6627217FE3FFC00B190E2 /* libc++.dylib in Frameworks */,
+				EBD6627017FE3FE500B190E2 /* GLKit.framework in Frameworks */,
+				EBD6626E17FE3FD900B190E2 /* CoreText.framework in Frameworks */,
+				EBD6626C17FE3FC800B190E2 /* AVFoundation.framework in Frameworks */,
 				EB25BA8A16FE636B003F142F /* Accounts.framework in Frameworks */,
 				EB25BA8B16FE636B003F142F /* AdSupport.framework in Frameworks */,
 				EB3F1A0D16F90F4F005052E7 /* AudioToolbox.framework in Frameworks */,
 				EBEA9FD01795873D00C6FEEC /* CFNetwork.framework in Frameworks */,
 				EB53F63A1709136A00715E2D /* CoreData.framework in Frameworks */,
 				EB7FC68D16DC4616007C006D /* CoreImage.framework in Frameworks */,
+				EBD6626A17FE3F8800B190E2 /* GoogleMaps.framework in Frameworks */,
 				EBAAFD25161FCF020007637B /* CoreGraphics.framework in Frameworks */,
 				EBBDCB8D1623E51E00C32523 /* CoreLocation.framework in Frameworks */,
 				EB7FC68F16DC4623007C006D /* ImageIO.framework in Frameworks */,
-				EBCF5635175461D10083837B /* FacebookSDK.framework in Frameworks */,
 				EBAAFD23161FCF020007637B /* Foundation.framework in Frameworks */,
 				EBBDCB8B1623D3E700C32523 /* MapKit.framework in Frameworks */,
 				EBEA9FD41795879300C6FEEC /* MobileCoreServices.framework in Frameworks */,
+				EB1FE9DC17FE4123001C2906 /* FacebookSDK.framework in Frameworks */,
 				EBEA9FCE179586B100C6FEEC /* Parse.framework in Frameworks */,
 				EBBDCB5916223A9E00C32523 /* QuartzCore.framework in Frameworks */,
 				EBEA9FD6179587A800C6FEEC /* Security.framework in Frameworks */,
@@ -695,22 +731,32 @@
 			children = (
 				EBB28D5816E3D6BC0090AB40 /* NSCache+Assertions.h */,
 				EBB28D5916E3D6BC0090AB40 /* NSCache+Assertions.m */,
+				EB30CAEF17D6D09E00584FB8 /* NSObject+Components.h */,
+				EB30CAF017D6D09E00584FB8 /* NSObject+Components.m */,
+				EB1FE9E117FF0CA0001C2906 /* NSObject+Field.h */,
+				EB1FE9E217FF0CA0001C2906 /* NSObject+Field.m */,
 				EB4FC578171061AF00CA43EC /* NSString+URLEncoding.h */,
 				EB4FC579171061AF00CA43EC /* NSString+URLEncoding.m */,
 				EBAD3CB216A27BFB003735AD /* UIImage+Color.h */,
 				EBAD3CB316A27BFB003735AD /* UIImage+Color.m */,
 				EB78EF6A17559B0C0016B527 /* UIImage+ResizeAndCrop.h */,
 				EB78EF6B17559B0C0016B527 /* UIImage+ResizeAndCrop.m */,
-				EB837CBB171B9B5100FA1EBC /* UINavigationBar+Height.h */,
-				EB837CBC171B9B5100FA1EBC /* UINavigationBar+Height.m */,
 				EBE8A4FF1712EA9C00A8A2BD /* UITabBarController+ShowHideBar.h */,
 				EBE8A5001712EA9C00A8A2BD /* UITabBarController+ShowHideBar.m */,
-				EB30CAEF17D6D09E00584FB8 /* UIView+Components.h */,
-				EB30CAF017D6D09E00584FB8 /* UIView+Components.m */,
 				EBD0DB5416AF953B00F78F93 /* UIViewController+Present.h */,
 				EBD0DB5516AF953B00F78F93 /* UIViewController+Present.m */,
 			);
 			name = Categories;
+			sourceTree = "<group>";
+		};
+		EB1FE9E917FF2B89001C2906 /* Ad */ = {
+			isa = PBXGroup;
+			children = (
+				EB1FE9E417FF2B85001C2906 /* AdViewController.h */,
+				EB1FE9E517FF2B85001C2906 /* AdViewController.m */,
+				EB1FE9E617FF2B85001C2906 /* AdViewController.xib */,
+			);
+			name = Ad;
 			sourceTree = "<group>";
 		};
 		EB1FEB8C17172A16009834FC /* Log */ = {
@@ -1073,6 +1119,7 @@
 				EB53F6451709141300715E2D /* Libraries */,
 				EB39392B16654B4400580A4E /* General */,
 				EBD055A917AF8D0A008355E8 /* Additional */,
+				EB1FE9E917FF2B89001C2906 /* Ad */,
 				EB79CC5417ED814100C16CF5 /* Front */,
 				EB3F1A0B16F7B831005052E7 /* Initial */,
 				EB25BAA016FE73F7003F142F /* Human */,
@@ -1102,19 +1149,29 @@
 				EB25BA8716FE636B003F142F /* Accounts.framework */,
 				EB25BA8816FE636B003F142F /* AdSupport.framework */,
 				EB3F1A0C16F90F4F005052E7 /* AudioToolbox.framework */,
+				EBD6626B17FE3FC800B190E2 /* AVFoundation.framework */,
 				EBEA9FCF1795873D00C6FEEC /* CFNetwork.framework */,
 				EB53F6391709136A00715E2D /* CoreData.framework */,
+				EB1FE9DF17FE8582001C2906 /* CoreFoundation.framework */,
 				EBAAFD24161FCF020007637B /* CoreGraphics.framework */,
 				EB7FC68C16DC4616007C006D /* CoreImage.framework */,
 				EBBDCB8C1623E51D00C32523 /* CoreLocation.framework */,
-				EBCF5634175461D10083837B /* FacebookSDK.framework */,
+				EBD6626D17FE3FD900B190E2 /* CoreText.framework */,
+				EB1FE9DB17FE4123001C2906 /* FacebookSDK.framework */,
 				EBAAFD22161FCF020007637B /* Foundation.framework */,
+				EBD6626F17FE3FE500B190E2 /* GLKit.framework */,
+				EB1FE9DD17FE841D001C2906 /* GoogleMaps.bundle */,
+				EBD6626917FE3F8800B190E2 /* GoogleMaps.framework */,
 				EB7FC68E16DC4623007C006D /* ImageIO.framework */,
-				5A6A516917D844488748DC44 /* libPods.a */,
+				EBD6627117FE3FFC00B190E2 /* libc++.dylib */,
 				EB97147317F35784009260AE /* libGoogleAnalyticsServices.a */,
+				EBD6627317FE401400B190E2 /* libicucore.dylib */,
+				5A6A516917D844488748DC44 /* libPods.a */,
 				EBEA9FD11795877C00C6FEEC /* libz.1.1.3.dylib */,
+				EBD6627517FE401F00B190E2 /* libz.dylib */,
 				EBBDCB8A1623D3E700C32523 /* MapKit.framework */,
 				EBEA9FD31795879300C6FEEC /* MobileCoreServices.framework */,
+				EBD6627717FE402900B190E2 /* OpenGLES.framework */,
 				EBEA9FCD179586B100C6FEEC /* Parse.framework */,
 				EBBDCB5816223A9E00C32523 /* QuartzCore.framework */,
 				EBEA9FD5179587A800C6FEEC /* Security.framework */,
@@ -1322,9 +1379,12 @@
 				EBDFF55217BE95B200BBFC1D /* 32-Check.png */,
 				EBB19398168EA54A0060D282 /* 32-Cross.png */,
 				EB4FC576171061AF00CA43EC /* 32-Facebook-F.png */,
+				EB7FF95717EEDDE00017E599 /* 32-Facebook-Like-2.png */,
+				EB7FF95517EEDB300017E599 /* 32-Facebook-Like-2@2x.png */,
 				EB79CC4B17ED803600C16CF5 /* 32-Favorite.png */,
 				EBD27B6516D8604200DA6ACE /* 32-Looking-Glass.png */,
 				EBD8E4E817AF557A00D0F30C /* 32-Minus.png */,
+				EB1FE9EA17FF5A5C001C2906 /* 32-Pencil-_-Edit.png */,
 				EBB19399168EA54A0060D282 /* 32-Plus.png */,
 				EB79CC4D17ED803F00C16CF5 /* 32-Unfavorite.png */,
 				EBC59D8617BEC58100E0FC67 /* 64-Balloons.png */,
@@ -1334,8 +1394,6 @@
 				EB79CC5617ED833600C16CF5 /* 64-Clock.png */,
 				EBC59D8C17BEC5C300E0FC67 /* 64-Cloud-Download.png */,
 				EBC59D8817BEC59B00E0FC67 /* 64-Create-_-Write.png */,
-				EB7FF95517EEDB300017E599 /* 32-Facebook-Like-2@2x.png */,
-				EB7FF95717EEDDE00017E599 /* 32-Facebook-Like-2.png */,
 				EB60420A17B8B6A300D95012 /* 64-Flip-Clock.png */,
 				EBC59D8217BEC49E00E0FC67 /* 64-Footprints.png */,
 				EBC59D8417BEC4DD00E0FC67 /* 64-Map.png */,
@@ -1501,6 +1559,7 @@
 				EB39399B16654B4400580A4E /* ScheduleViewController.xib in Resources */,
 				EB3939CC16654BE300580A4E /* PaperFoldResources.bundle in Resources */,
 				EB3939DB1666D3AF00580A4E /* cellBg@2x.png in Resources */,
+				EB1FE9E817FF2B85001C2906 /* AdViewController.xib in Resources */,
 				EB3939DC1666D3AF00580A4E /* cellBgSelected@2x.png in Resources */,
 				EBB1939A168EA54A0060D282 /* 32-Cross.png in Resources */,
 				EBB1939B168EA54A0060D282 /* 32-Plus.png in Resources */,
@@ -1514,6 +1573,7 @@
 				EB9AB78A16A125B3005D4CAA /* barButtonBackDisabled.png in Resources */,
 				EB9AB78B16A125B3005D4CAA /* barButtonBackDisabled@2x.png in Resources */,
 				EB97146317F2DE30009260AE /* logo@40.png in Resources */,
+				EB1FE9EB17FF5A5C001C2906 /* 32-Pencil-_-Edit.png in Resources */,
 				EB9AB78C16A125B3005D4CAA /* barButtonBackPressed.png in Resources */,
 				EB9AB78D16A125B3005D4CAA /* barButtonBackPressed@2x.png in Resources */,
 				EB9AB78E16A125B3005D4CAA /* barButtonDisabled.png in Resources */,
@@ -1527,6 +1587,7 @@
 				EB8C7D7F16D17AEB00F3C721 /* cb_box_off@2x.png in Resources */,
 				EB97146817F2DEAE009260AE /* logo@100.png in Resources */,
 				EB8C7D8016D17AEB00F3C721 /* cb_box_on.png in Resources */,
+				EB1FE9DE17FE841D001C2906 /* GoogleMaps.bundle in Resources */,
 				EB8C7D8116D17AEB00F3C721 /* cb_box_on@2x.png in Resources */,
 				EB8C7D8216D17AEB00F3C721 /* cb_dark_off.png in Resources */,
 				EB8C7D8316D17AEB00F3C721 /* cb_dark_off@2x.png in Resources */,
@@ -1737,15 +1798,16 @@
 				EB25BA9E16FE73F2003F142F /* HumanViewController.m in Sources */,
 				EB25BAA416FE84D6003F142F /* HumanLoginViewController.m in Sources */,
 				EB25BAA9170280F1003F142F /* LauchImageViewController.m in Sources */,
+				EB1FE9E717FF2B85001C2906 /* AdViewController.m in Sources */,
 				EB4FC57C171061AF00CA43EC /* NSString+URLEncoding.m in Sources */,
 				EB4FC5851710644000CA43EC /* HumanToken.m in Sources */,
 				EB4FC58F1710DFE000CA43EC /* EventToken.m in Sources */,
 				EBE8A5011712EA9C00A8A2BD /* UITabBarController+ShowHideBar.m in Sources */,
+				EB1FE9E317FF0CA0001C2906 /* NSObject+Field.m in Sources */,
 				EB1FEB8517171FC3009834FC /* LogViewController.m in Sources */,
 				EB1FEB89171729A6009834FC /* LogItemViewCell.m in Sources */,
 				EBB1E7AA1717B93700B73DDF /* PopoverView.m in Sources */,
 				EBB1E7AE1717B95100B73DDF /* ODRefreshControl.m in Sources */,
-				EB837CBD171B9B5100FA1EBC /* UINavigationBar+Height.m in Sources */,
 				EB5FD40B171ED1EB00B76552 /* CustomPopoverBackgroundView.m in Sources */,
 				EB6749FC1749A5F200748549 /* IntelligentSplitViewController.m in Sources */,
 				EB78EF6C17559B0C0016B527 /* UIImage+ResizeAndCrop.m in Sources */,
@@ -1756,7 +1818,7 @@
 				EBDFF54E17BE0C4500BBFC1D /* NSObject+Triangle.m in Sources */,
 				EB59020217D5D7D20032143C /* MarketplaceViewController.m in Sources */,
 				EB59020817D5D83A0032143C /* MarketplaceViewCell.m in Sources */,
-				EB30CAF117D6D09E00584FB8 /* UIView+Components.m in Sources */,
+				EB30CAF117D6D09E00584FB8 /* NSObject+Components.m in Sources */,
 				EB79CC4917EB82D500C16CF5 /* QuestionViewController.m in Sources */,
 				EB79CC5217ED813D00C16CF5 /* FrontViewController.m in Sources */,
 			);
@@ -1891,8 +1953,10 @@
 				CODE_SIGN_IDENTITY = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../../../Documents/Objective-C/facebook-ios-sdk/build\"",
-					"\"$(SRCROOT)\"",
+					"\\\\\\\"$(SRCROOT)/../../../Documents/Objective-C/facebook-ios-sdk/build\\\\\\\"",
+					"$(SRCROOT)",
+					"/Users/pedro/Sites/InEvent-dev/iOS",
+					"/Users/pedro/Documents/Objective-C/facebook-ios-sdk/build",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PedidoNaRede/InEvent-Prefix.pch";
@@ -1922,8 +1986,10 @@
 				CODE_SIGN_IDENTITY = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../../../Documents/Objective-C/facebook-ios-sdk/build\"",
-					"\"$(SRCROOT)\"",
+					"\\\\\\\"$(SRCROOT)/../../../Documents/Objective-C/facebook-ios-sdk/build\\\\\\\"",
+					"$(SRCROOT)",
+					"/Users/pedro/Sites/InEvent-dev/iOS",
+					"/Users/pedro/Documents/Objective-C/facebook-ios-sdk/build",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PedidoNaRede/InEvent-Prefix.pch";

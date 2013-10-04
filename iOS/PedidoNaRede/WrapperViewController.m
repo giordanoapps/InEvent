@@ -13,7 +13,6 @@
 #import "CoolBarButtonItem.h"
 #import "EventToken.h"
 #import "HumanToken.h"
-#import "UINavigationBar+Height.h"
 
 @interface WrapperViewController () {
     UITapGestureRecognizer *behindRecognizer;

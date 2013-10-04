@@ -69,6 +69,7 @@
 - (void)activitySendOpinionWithRating:(NSInteger)rating toActivity:(NSInteger)activityID withToken:(NSString *)tokenID;
 
 #pragma mark - Event
+- (void)eventEditField:(NSString *)name withValue:(NSString *)value atEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID;
 - (void)eventGetEvents;
 - (void)eventGetEventsWithTokenID:(NSString *)tokenID;
 - (void)eventGetSingleEvent:(NSInteger)eventID;

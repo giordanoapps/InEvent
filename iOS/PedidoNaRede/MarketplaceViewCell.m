@@ -12,7 +12,7 @@
 #import "HumanToken.h"
 #import "APIController.h"
 #import "NSObject+Triangle.h"
-#import "UIView+Components.h"
+#import "NSObject+Components.h"
 #import "Enrollment.h"
 
 @implementation MarketplaceViewCell

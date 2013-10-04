@@ -11,15 +11,18 @@
 #import <CoreLocation/CoreLocation.h>
 #import "WrapperViewController.h"
 
+@class GMSMapView;
+
 @interface ScheduleItemViewController : WrapperViewController <APIControllerDelegate, UIGestureRecognizerDelegate, UISplitViewControllerDelegate, CLLocationManagerDelegate>
 
 @property (strong, nonatomic) IBOutlet UIView *wrapper;
-@property (strong, nonatomic) IBOutlet UILabel *hour;
-@property (strong, nonatomic) IBOutlet UILabel *minute;
-@property (strong, nonatomic) IBOutlet UILabel *name;
+@property (strong, nonatomic) IBOutlet UIView *hour; // UILabel
+@property (strong, nonatomic) IBOutlet UIView *minute; // UILabel
+@property (strong, nonatomic) IBOutlet UIView *name; // UILabel
 @property (strong, nonatomic) IBOutlet UIView *line;
-@property (strong, nonatomic) IBOutlet UITextView *description;
+@property (strong, nonatomic) IBOutlet UIView *description; // UITextView
 @property (strong, nonatomic) IBOutlet MKMapView *map;
+//@property (strong, nonatomic) IBOutlet GMSMapView *map;
 
 @property (strong, nonatomic) NSDictionary *activityData;
 
