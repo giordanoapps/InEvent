@@ -61,8 +61,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_below="@+id/activity_location"
-                    android:background="@drawable/item_background_holo_light"
-                    android:visibility="gone" >
+                    android:background="@drawable/item_background_holo_light" >
 
                     <View
                         style="@style/Divider.Horizontal"
@@ -76,6 +75,7 @@
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
                         android:fontFamily="sans-serif-light"
+                        android:padding="@dimen/default_textPadding"
                         android:text="@string/title_rating"
                         android:textSize="18sp" />
 
@@ -85,10 +85,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="8dp"
                         android:duplicateParentState="true"
                         android:isIndicator="true"
-                        android:numStars="5"
-                        android:padding="8dp" />
+                        android:numStars="5" />
                 </RelativeLayout>
             </RelativeLayout>
 
@@ -108,7 +109,6 @@
             </FrameLayout>
         </LinearLayout>
     </ScrollView>
-
     <!-- Map View goes here -->
 
     <View style="@style/Divider.Horizontal" />

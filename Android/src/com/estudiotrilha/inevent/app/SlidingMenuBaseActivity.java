@@ -169,7 +169,8 @@ public abstract class SlidingMenuBaseActivity extends ActionBarActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        if (item.getItemId() == android.R.id.home)
+        if (item.getItemId() == android.R.id.home &&
+                getSupportFragmentManager().getBackStackEntryCount() == 0)
         {
             if (isSlidingMenuOpen())
             {

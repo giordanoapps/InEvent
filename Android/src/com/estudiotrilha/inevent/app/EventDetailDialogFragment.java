@@ -1,10 +1,7 @@
 package com.estudiotrilha.inevent.app;
 
-import com.estudiotrilha.inevent.R;
-import com.estudiotrilha.inevent.Utils;
-import com.estudiotrilha.inevent.content.Event;
-import com.estudiotrilha.inevent.content.Image;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import java.text.DateFormat;
+import java.util.Date;
 
 import android.content.ContentUris;
 import android.database.Cursor;
@@ -18,11 +15,19 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ViewAnimator;
+
+import com.estudiotrilha.android.utils.DateUtils;
+import com.estudiotrilha.inevent.R;
+import com.estudiotrilha.inevent.Utils;
+import com.estudiotrilha.inevent.content.Event;
+import com.estudiotrilha.inevent.content.Image;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 
 public class EventDetailDialogFragment extends DialogFragment implements LoaderCallbacks<Cursor>
@@ -48,6 +53,8 @@ public class EventDetailDialogFragment extends DialogFragment implements LoaderC
 
 
     private ViewAnimator mViewAnimator;
+    private DateFormat   mDateFormat;
+    private DateFormat   mTimeFormat;
 
 
     @Override
@@ -55,11 +62,17 @@ public class EventDetailDialogFragment extends DialogFragment implements LoaderC
     {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        mDateFormat = android.text.format.DateFormat.getDateFormat(getActivity());
+        mTimeFormat = android.text.format.DateFormat.getTimeFormat(getActivity());
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View view = inflater.inflate(R.layout.fragment_event_detail, container, false);
+        if (!getResources().getBoolean(R.bool.useDialogs))
+        {
+            view.setBackgroundResource(android.R.color.background_light);
+        }
         mViewAnimator = (ViewAnimator) view.findViewById(R.id.event_detail_container);
         return view;
     }
@@ -75,6 +88,18 @@ public class EventDetailDialogFragment extends DialogFragment implements LoaderC
     {
         // Clean the action bar
         menu.clear();
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+        case android.R.id.home:
+            getFragmentManager().popBackStackImmediate();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 
@@ -117,6 +142,10 @@ public class EventDetailDialogFragment extends DialogFragment implements LoaderC
         ((TextView) getView().findViewById(R.id.event_description)).setText(data.getString(data.getColumnIndex(Event.Columns.DESCRIPTION)));
         // Address
         ((TextView) getView().findViewById(R.id.event_address)).setText(data.getString(data.getColumnIndex(Event.Columns.ADDRESS)));
+        // Date
+        Date dateBegin = DateUtils.calendarFromTimestampInGMT(data.getLong(data.getColumnIndex(Event.Columns.DATE_BEGIN))).getTime();
+        ((TextView) getView().findViewById(R.id.event_dateBegin))
+            .setText(mDateFormat.format(dateBegin)+" "+getText(R.string.raw_time_at)+" "+mTimeFormat.format(dateBegin));
 
         // Show the results
         mViewAnimator.setDisplayedChild(Utils.VIEW_ANIMATOR_CONTENT);

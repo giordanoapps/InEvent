@@ -1,12 +1,7 @@
 package com.estudiotrilha.inevent.app;
 
-import java.io.IOException;
-import java.net.HttpURLConnection;
 import java.text.DateFormat;
 import java.util.Date;
-
-import org.apache.http.HttpStatus;
-import org.json.JSONObject;
 
 import android.content.BroadcastReceiver;
 import android.content.ContentUris;
@@ -23,28 +18,25 @@ import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.estudiotrilha.android.utils.DateUtils;
 import com.estudiotrilha.android.widget.TriangleView;
 import com.estudiotrilha.inevent.InEvent;
 import com.estudiotrilha.inevent.R;
-import com.estudiotrilha.inevent.Utils;
 import com.estudiotrilha.inevent.content.Activity;
 import com.estudiotrilha.inevent.content.ActivityMember;
-import com.estudiotrilha.inevent.content.ApiRequest;
-import com.estudiotrilha.inevent.content.ApiRequestCode;
-import com.estudiotrilha.inevent.content.LoginManager;
 import com.estudiotrilha.inevent.content.Feedback;
+import com.estudiotrilha.inevent.content.LoginManager;
 import com.estudiotrilha.inevent.content.SyncBroadcastManager;
 import com.estudiotrilha.inevent.service.DownloaderService;
+import com.estudiotrilha.inevent.service.UploaderService;
+import com.google.analytics.tracking.android.EasyTracker;
 
 
 public class EventActivityDetailActivity extends ActionBarActivity implements LoaderCallbacks<Cursor>
@@ -126,6 +118,11 @@ public class EventActivityDetailActivity extends ActionBarActivity implements Lo
         registerReceiver(mReceiver, new IntentFilter(SyncBroadcastManager.ACTION_SYNC));
         // and an observer
         getContentResolver().registerContentObserver(Feedback.CONTENT_URI, true, mContentObserver);
+        // Analytics stuff
+        if (!InEvent.DEBUG)
+        {
+            EasyTracker.getInstance().activityStart(this);
+        }
     }
     @Override
     protected void onStop()
@@ -135,6 +132,11 @@ public class EventActivityDetailActivity extends ActionBarActivity implements Lo
         unregisterReceiver(mReceiver);
         // and the observer
         getContentResolver().unregisterContentObserver(mContentObserver);
+        // Analytics stuff
+        if (!InEvent.DEBUG)
+        {
+            EasyTracker.getInstance().activityStop(this);
+        }
     }
     @Override
     protected void onResume()
@@ -197,9 +199,9 @@ public class EventActivityDetailActivity extends ActionBarActivity implements Lo
 
             ((TextView) findViewById(R.id.activity_location)).setText(dateLocation);
 
-            RatingBar ratingBar = (RatingBar) findViewById(R.id.activity_rating);
-            ratingBar.setRating(data.getInt(data.getColumnIndex(ActivityMember.Columns.APPROVED)));
-            ratingBar.setVisibility(View.GONE);
+            ((RatingBar) findViewById(R.id.activity_rating)).setRating(data.getInt(data.getColumnIndex(ActivityMember.Columns.APPROVED)));
+            View ratingContainer = findViewById(R.id.activity_ratingContainer);
+            ratingContainer.setVisibility(View.GONE);
 
             if (mLoginManager.isSignedIn())
             {
@@ -207,18 +209,17 @@ public class EventActivityDetailActivity extends ActionBarActivity implements Lo
                 int color = 0;
                 switch (approved)
                 {
-                // Not enrolled
                 case APPROVED_NOT:
                     color = getResources().getColor(R.color.light_gray);
                     break;
-                // Waiting list
+
                 case APPROVED_WAIT_LIST:
                     color = getResources().getColor(R.color.holo_red_dark);
                     break;
-                // enrolled
+
                 case APPROVED_OK:
                     color = getResources().getColor(R.color.holo_green_dark);
-                    ratingBar.setVisibility(View.VISIBLE);
+                    ratingContainer.setVisibility(View.VISIBLE);
                     break;
                 }
 
@@ -251,47 +252,8 @@ public class EventActivityDetailActivity extends ActionBarActivity implements Lo
         protected void onSendOpinion()
         {
             // Prepare the parameters
-            final EventActivityDetailActivity activity = (EventActivityDetailActivity) getActivity();
-            String tokenID = LoginManager.getInstance(activity).getTokenId();
-            long activityID = activity.getIntent().getLongExtra(EXTRA_ACTIVITY_ID, -1);
-            final int rating = (int) getRatingBar().getRating();
-            try
-            {
-                // TODO Show loading stats
-                SyncBroadcastManager.setSyncState(activity, "Sending opinion");
-
-                // Create the connection
-                HttpURLConnection connection = Activity.Api.sendOpinion(tokenID, activityID);
-                String post = Activity.Api.Post.sendOpinion(rating);
-
-                // Send the API request
-                ApiRequest.getJsonFromConnection(ApiRequestCode.ACTIVITY_SEND_OPINION, connection, new ApiRequest.ResponseHandler() {
-                    @Override
-                    public void handleResponse(int requestCode, JSONObject json, int responseCode)
-                    {
-                        if (responseCode == HttpStatus.SC_OK && json != null)
-                        {
-                            // All done!
-                            // update the display
-                            ((RatingBar) activity.findViewById(R.id.activity_rating)).setRating(rating);
-                        }
-                        else
-                        {
-                            // TODO
-                            Toast.makeText(activity, Utils.getBadResponseMessage(-1, responseCode), Toast.LENGTH_SHORT).show();
-                        }
-
-                        SyncBroadcastManager.setSyncState(activity, false);
-                    }
-                }, post);
-            }
-            catch (IOException e)
-            {
-                // TODO
-                Log.e(InEvent.NAME, "Error creating connection for activity.sendOpinion(tokenID, activityID="+activityID+", rating="+rating+")");
-
-                SyncBroadcastManager.setSyncState(activity, false);
-            }
+            int rating = (int) getRatingBar().getRating();
+            UploaderService.sendOpinionForActivity(getActivity(), getActivity().getIntent().getLongExtra(EXTRA_ACTIVITY_ID, -1), rating);
         }
     }
 }

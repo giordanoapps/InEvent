@@ -1,6 +1,8 @@
 package com.estudiotrilha.inevent.app;
 
+import com.estudiotrilha.inevent.InEvent;
 import com.estudiotrilha.inevent.R;
+import com.google.analytics.tracking.android.EasyTracker;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
@@ -96,6 +98,24 @@ public class AboutActivity extends ActionBarActivity
 
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+    @Override
+    protected void onStart()
+    {
+        super.onStart();
+        if (!InEvent.DEBUG)
+        {
+            EasyTracker.getInstance().activityStart(this);
+        }
+    }
+    @Override
+    protected void onStop()
+    {
+        super.onStop();
+        if (!InEvent.DEBUG)
+        {
+            EasyTracker.getInstance().activityStop(this);
+        }
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item)

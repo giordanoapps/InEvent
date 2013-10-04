@@ -89,6 +89,7 @@
     <!-- Descriptions -->
     <string name="description_attender_absent">Participante ausente</string>
     <string name="description_attender_present">Participante presente</string>
+    <string name="description_event_approved">Pessoa participa do evento</string>
     <string name="description_event_cover">Foto de capa do evento</string>
     <string name="description_event_info">Mais informações sobre o evento</string>
     <string name="description_preference_useMobileNetwork">Permitir o uso da rede de dados móvel para baixar conteúdo</string>
@@ -103,7 +104,10 @@
     <string name="error_invalidEmail">E-mail inválido</string>
     <string name="error_login_badCredentials">Nome e/ou senha inválido(s)</string>
     <string name="error_login_emptyField">Não pode ser vazio</string>
-    <string name="error_login_unmatchingPasswords">Non matching passwords</string>
+    <string name="error_login_unmatchingPasswords">Senhas não conferem</string>
     <string name="error_unauthorized">Sem autorização</string>
+
+    <!-- Raw -->
+    <string name="raw_time_at">às</string>
 
 </resources>

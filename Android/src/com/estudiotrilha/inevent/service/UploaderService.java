@@ -33,7 +33,8 @@ public class UploaderService extends IntentService implements ApiRequest.Respons
     public static void sync(Context context)
     {
         // Wake the Uploader
-        context.startService(new Intent(context, UploaderService.class).setAction(Intent.ACTION_SYNC));
+        final Intent intent = new Intent(context, UploaderService.class).setAction(Intent.ACTION_SYNC);
+        context.startService(intent);
     }
     public static void sendOpinionForActivity(Context context, long activityID, int rating)
     {
@@ -54,11 +55,17 @@ public class UploaderService extends IntentService implements ApiRequest.Respons
     private LoginManager mLoginManager;
 
 
-    public UploaderService(String name)
+    public UploaderService()
     {
         super(SERVICE_NAME);
     }
 
+    @Override
+    public void onCreate()
+    {
+        super.onCreate();
+        mLoginManager = LoginManager.getInstance(this);
+    }
     @Override
     protected void onHandleIntent(Intent intent)
     {

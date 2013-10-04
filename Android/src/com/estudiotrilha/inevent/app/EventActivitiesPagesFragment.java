@@ -133,40 +133,8 @@ public class EventActivitiesPagesFragment extends Fragment implements LoaderCall
         }
         else
         {
+            mDisplayOption = DisplayOption.ALL;
             refresh();
-        }
-
-        if (mLoginManager.isSignedIn())
-        {
-            ActionBar actionBar = mEventActivity.getSupportActionBar();
-            if (actionBar == null) throw new IllegalStateException("It's F***ing NULL!");
-
-            if (mEventActivity.isApproved())
-            {
-                // Get the event name
-                long eventID = getArguments().getLong(ARGS_EVENT_ID);
-                Cursor c = getActivity().getContentResolver().query(
-                        ContentUris.withAppendedId(Event.CONTENT_URI, eventID),
-                        new String[]{ Event.Columns.NAME_FULL }, null, null, null);
-                String title = "";
-                if (c.moveToFirst())
-                {
-                    title = c.getString(0);
-                }
-                c.close();
-
-                mDisplayOption = DisplayOption.SCHEDULE_FULL;
-                actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
-                actionBar.setListNavigationCallbacks(new EventActivityFilterSpinnerAdapter(title), this);
-                actionBar.setSelectedNavigationItem(mDisplayOption.ordinal());
-                actionBar.setDisplayShowTitleEnabled(false);
-            }
-            else
-            {
-                mDisplayOption = DisplayOption.ALL;
-                actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-                mEventActivity.getSupportActionBar().setTitle(mDisplayOption.getTitle());
-            }
         }
 
         // Setup the adapters
@@ -181,6 +149,35 @@ public class EventActivitiesPagesFragment extends Fragment implements LoaderCall
     public void onViewCreated(View view, Bundle savedInstanceState)
     {
         super.onViewCreated(view, savedInstanceState);
+
+        if (mLoginManager.isSignedIn())
+        {
+            ActionBar actionBar = mEventActivity.getSupportActionBar();
+            if (mEventActivity.isApproved())
+            {
+                // Get the event name
+                long eventID = getArguments().getLong(ARGS_EVENT_ID);
+                Cursor c = getActivity().getContentResolver().query(
+                        ContentUris.withAppendedId(Event.CONTENT_URI, eventID),
+                        new String[]{ Event.Columns.NAME_FULL }, null, null, null);
+                String title = "";
+                if (c.moveToFirst())
+                {
+                    title = c.getString(0);
+                }
+                c.close();
+
+                actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+                actionBar.setListNavigationCallbacks(new EventActivityFilterSpinnerAdapter(title), this);
+                actionBar.setSelectedNavigationItem(mDisplayOption.ordinal());
+                actionBar.setDisplayShowTitleEnabled(false);
+            }
+            else
+            {
+                actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+                mEventActivity.getSupportActionBar().setTitle(mDisplayOption.getTitle());
+            }
+        }
 
         mViewPager = (ViewPager) view.findViewById(R.id.eventActivity_viewPager);
         mViewPager.setAdapter(mActivitiesAdapter);
@@ -438,20 +435,27 @@ public class EventActivitiesPagesFragment extends Fragment implements LoaderCall
                 }
             }
 
-            // Rebuild the pages if necessary
-            notifyDataSetChanged();
-
             // Update the pages content
             mFragments = new WeakReference[mSections.size()];
             for (int i = 0; i < mFragments.length; i++)
             {
-                EventActivitiesListFragment fragment = mFragments[i].get();
+                // Null check one
+                WeakReference<EventActivitiesListFragment> reference = mFragments[i];
+                if (reference == null) continue;
+
+                // Second null check
+                EventActivitiesListFragment fragment = reference.get();
                 if (fragment != null)
                 {
                     fragment.updateContent(getItemData(i));
                 }
             }
+
+            // Rebuild the pages if necessary
+            notifyDataSetChanged();
         }
+
+        
 
         @Override
         public Fragment getItem(int position)

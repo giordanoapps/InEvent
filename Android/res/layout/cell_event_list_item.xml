@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:background="@drawable/card"
+        android:baselineAligned="false"
         android:duplicateParentState="true"
         android:gravity="center_vertical"
         android:orientation="horizontal"
@@ -60,10 +61,9 @@
                 android:ellipsize="end"
                 android:hint="@string/hint_event_name"
                 android:lines="1"
-                android:maxLines="2"
+                android:maxLines="1"
                 android:scrollHorizontally="true"
                 android:textColor="@android:color/black"
-                android:textIsSelectable="false"
                 android:textSize="22sp" />
 
             <TextView
@@ -97,8 +97,8 @@
 
             <ImageView
                 android:id="@+id/event_info"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
                 android:layout_gravity="top"
                 android:clickable="true"
                 android:contentDescription="@string/description_event_info"
@@ -110,6 +110,7 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_gravity="bottom"
+                android:contentDescription="@string/description_event_approved"
                 android:src="@drawable/ic_navigation_accept"
                 android:visibility="invisible" />
         </FrameLayout>

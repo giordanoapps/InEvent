@@ -11,7 +11,6 @@ import android.preference.PreferenceManager;
 
 import com.estudiotrilha.inevent.InEvent;
 import com.estudiotrilha.inevent.R;
-import com.estudiotrilha.inevent.Utils;
 import com.estudiotrilha.inevent.content.ApiRequest;
 import com.estudiotrilha.inevent.service.UploaderService;
 import com.google.analytics.tracking.android.EasyTracker;

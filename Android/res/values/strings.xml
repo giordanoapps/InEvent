@@ -89,6 +89,7 @@
     <!-- Descriptions -->
     <string name="description_attender_absent">Attender absent</string>
     <string name="description_attender_present">Attender present</string>
+    <string name="description_event_approved">Person is approved in the event</string>
     <string name="description_event_cover">Event cover picture</string>
     <string name="description_event_info">Extra information about the event</string>
     <string name="description_preference_useMobileNetwork">Allow use of the mobile network to download data</string>
@@ -103,7 +104,10 @@
     <string name="error_invalidEmail">Invalid e-mail address</string>
     <string name="error_login_badCredentials">Wrong name and/or password</string>
     <string name="error_login_emptyField">Field can\'t be empty</string>
-    <string name="error_login_unmatchingPasswords">Senhas não conferem</string>
+    <string name="error_login_unmatchingPasswords">Non matching passwords</string>
     <string name="error_unauthorized">Unauthorized</string>
+
+    <!-- Raw -->
+    <string name="raw_time_at">at</string>
 
 </resources>

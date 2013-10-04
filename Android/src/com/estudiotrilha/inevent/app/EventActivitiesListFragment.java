@@ -19,6 +19,7 @@ import android.widget.SectionIndexer;
 import android.widget.TextView;
 
 import com.estudiotrilha.android.utils.DateUtils;
+import com.estudiotrilha.android.widget.TriangleView;
 import com.estudiotrilha.inevent.R;
 import com.estudiotrilha.inevent.content.Event;
 import com.estudiotrilha.inevent.content.LoginManager;
@@ -223,7 +224,7 @@ public class EventActivitiesListFragment extends Fragment implements OnItemClick
                     color = getResources().getColor(R.color.holo_green_dark);
                     break;
                 }
-                convertView.findViewById(R.id.activity_approved).setBackgroundColor(color);
+                ((TriangleView) convertView.findViewById(R.id.activity_approved)).setFillColor(color);
             }
             // Setup the starting and ending time
             // Parse the dates
