@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WrapperViewController.h"
+#import "APIController.h"
 
-@interface AdViewController : UIViewController
+@interface AdViewController : WrapperViewController <APIControllerDelegate, UIGestureRecognizerDelegate>
+
+@property (strong, nonatomic) IBOutlet UIImageView *piece;
 
 @end

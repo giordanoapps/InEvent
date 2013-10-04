@@ -18,6 +18,7 @@
 #import "LauchImageViewController.h"
 #import "GAI.h"
 #import "IntelligentSplitViewController.h"
+#import "AdViewController.h"
 #import <FacebookSDK/FacebookSDK.h>
 #import <Parse/Parse.h>
 #import <GoogleMaps/GoogleMaps.h>
@@ -103,8 +104,8 @@
     // Create components
     [self createCustomAppearance];
     [self createGoogleAnalyticsTracker];
+    [self createGoogleMapsTracker];
     [self createParseTrackerWithApplication:application withOptions:launchOptions];
-    [GMSServices provideAPIKey:@"AIzaSyAdQ_ARtScsEywqn6vQfYKT8m0QyObDaFQ"];
     
     // Set the default controller
     self.window.rootViewController = self.menuController;
@@ -203,6 +204,10 @@
     [[GAI sharedInstance] trackerWithTrackingId:@"UA-33888939-6"];
 }
 
+- (void)createGoogleMapsTracker {
+    [GMSServices provideAPIKey:@"AIzaSyAdQ_ARtScsEywqn6vQfYKT8m0QyObDaFQ"];
+}
+
 - (void)createParseTrackerWithApplication:(UIApplication *)application withOptions:(NSDictionary *)launchOptions {
     // Create the Parse tracker
     [Parse setApplicationId:@"GVhc1mnm0Zi2b7RxOZ8jFNbqhYQIE59sYxfKSlyE" clientKey:@"vaCGSz1JXSVkDNTX9oE8bwu15faHHVi3B3ChLgRL"];
@@ -219,7 +224,9 @@
 }
 
 - (void)loadEssentialData {
-    
+    // Create ad
+    AdViewController *avc = [[AdViewController alloc] initWithNibName:@"AdViewController" bundle:nil];
+    [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:avc animated:YES completion:nil];
 }
 
 @end

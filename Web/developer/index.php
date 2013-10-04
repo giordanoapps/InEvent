@@ -66,6 +66,7 @@
 					<div class="menuDocumentation">
 						<ul>
 							<li class="optionMenuDocumentationCategory optionMenuDocumentationSelected"><b>Como usar</b></li>
+							<li>Anúncio</li>
 							<li>Atividade</li>
 							<li>Evento</li>
 							<li>Notificação</li>
@@ -76,6 +77,7 @@
 
 						<?php
 							include_once("documentation/howTo.php");
+							include_once("documentation/ad.php");
 							include_once("documentation/activity.php");
 							include_once("documentation/event.php");
 							include_once("documentation/notification.php");

@@ -134,7 +134,9 @@
 			} else {
 				$result = getEventForEventQuery($eventID);
 			}
+			
 			echo printInformation("event", $result, true, 'json');
+
 		} else {
 			http_status_code(400, "eventID is a required parameter");
 		}

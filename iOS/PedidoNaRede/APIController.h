@@ -50,6 +50,10 @@
 - (id)initWithDelegate:(id<APIControllerDelegate>)aDelegate forcing:(BOOL)aForce withUserInfo:(NSDictionary *)aUserInfo;
 - (id)initWithDelegate:(id<APIControllerDelegate>)aDelegate forcing:(BOOL)aForce withMaxAge:(NSTimeInterval)aMaxAge withUserInfo:(NSDictionary *)aUserInfo;
 
+#pragma mark - Ad
+- (void)adGetAdsAtEvent:(NSInteger)eventID;
+- (void)adSeenAd:(NSInteger)adID;
+
 #pragma mark - Activity
 - (void)activityCreateActivityAtEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID;
 - (void)activityEditField:(NSString *)name withValue:(NSString *)value atActivity:(NSInteger)activityID withTokenID:(NSString *)tokenID;

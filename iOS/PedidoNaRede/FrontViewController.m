@@ -22,6 +22,7 @@
 @interface FrontViewController () {
     ODRefreshControl *refreshControl;
     NSDictionary *eventData;
+    BOOL isEditing;
 }
 
 @property (nonatomic, strong) NSArray *activities;
@@ -46,8 +47,11 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    // Left Button
+    if ([[HumanToken sharedInstance] isMemberWorking]) [self loadMenuButton];
+    
     // Right Button
-    [self loadMenuButton];
+    [self loadDismissButton];
     
     // Refresh Control
     refreshControl = [[ODRefreshControl alloc] initInScrollView:self.scrollView];
@@ -145,18 +149,25 @@
 #pragma mark - Private Methods
 
 - (void)dismiss {
+    if (isEditing) [self endEditing];
     
     // Dismiss the controller
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)loadMenuButton {
     // Right Button
-    self.rightBarButton = [[CoolBarButtonItem alloc] initCustomButtonWithImage:[UIImage imageNamed:@"32-Pencil-_-Edit.png"] frame:CGRectMake(0, 0, 42.0, 30.0) insets:UIEdgeInsetsMake(5.0, 11.0, 5.0, 11.0) target:self action:@selector(startEditing)];
-    self.navigationItem.rightBarButtonItem = self.rightBarButton;
+    self.leftBarButton = [[CoolBarButtonItem alloc] initCustomButtonWithImage:[UIImage imageNamed:@"32-Pencil-_-Edit.png"] frame:CGRectMake(0, 0, 42.0, 30.0) insets:UIEdgeInsetsMake(5.0, 11.0, 5.0, 11.0) target:self action:@selector(startEditing)];
+    self.navigationItem.leftBarButtonItem = self.leftBarButton;
 }
 
 - (void)loadDoneButton {
+    // Right Button
+    self.leftBarButton = [[CoolBarButtonItem alloc] initCustomButtonWithImage:[UIImage imageNamed:@"32-Check-2.png"] frame:CGRectMake(0, 0, 42.0, 30.0) insets:UIEdgeInsetsMake(5.0, 11.0, 5.0, 11.0) target:self action:@selector(endEditing)];
+    self.navigationItem.leftBarButtonItem = self.leftBarButton;
+}
+
+- (void)loadDismissButton {
     // Right Button
     self.rightBarButton = self.navigationItem.rightBarButtonItem;
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(dismiss)];
@@ -170,6 +181,8 @@
     _dateEnd = [self createField:_dateEnd];
     _location = [self createField:_location];
     _fugleman = [self createField:_fugleman];
+    
+    isEditing = YES;
     
     [self loadDoneButton];
 }
@@ -205,6 +218,8 @@
     _dateEnd = [self removeField:_dateEnd];
     _location = [self removeField:_location];
     _fugleman = [self removeField:_fugleman];
+    
+    isEditing = NO;
     
     [self loadMenuButton];
 }

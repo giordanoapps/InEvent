@@ -658,33 +658,27 @@
 
 		$activityID = getTokenForActivity();
 
-		if (isset($_GET["activityID"])) {
+		$result = resourceForQuery(
+		// echo (
+			"SELECT
+				`activityQuestion`.`id`,
+				`member`.`name` AS `memberName`,
+				`activityQuestion`.`memberID`,
+				`activityQuestion`.`text`,
+				COUNT(`activityQuestion`.`id`) AS `votes`
+			FROM
+				`activityQuestion`
+			INNER JOIN
+				`member` ON `member`.`id` = `activityQuestion`.`memberID`
+			LEFT JOIN
+				`activityQuestionMember` ON `activityQuestion`.`id` = `activityQuestionMember`.`questionID`
+			WHERE 1
+				AND `activityQuestion`.`activityID` = $activityID
+			GROUP BY
+				`activityQuestion`.`id` ASC
+		");
 
-			$result = resourceForQuery(
-			// echo (
-				"SELECT
-					`activityQuestion`.`id`,
-					`member`.`name` AS `memberName`,
-					`activityQuestion`.`memberID`,
-					`activityQuestion`.`text`,
-					COUNT(`activityQuestion`.`id`) AS `votes`
-				FROM
-					`activityQuestion`
-				INNER JOIN
-					`member` ON `member`.`id` = `activityQuestion`.`memberID`
-				LEFT JOIN
-					`activityQuestionMember` ON `activityQuestion`.`id` = `activityQuestionMember`.`questionID`
-				WHERE 1
-					AND `activityQuestion`.`activityID` = $activityID
-				GROUP BY
-					`activityQuestion`.`id` ASC
-			");
-
-			echo printInformation("activityQuestion", $result, true, 'json');
-
-		} else {
-			http_status_code(400, "activityID is a required parameter");
-		}
+		echo printInformation("activityQuestion", $result, true, 'json');
 		
 	} else
 

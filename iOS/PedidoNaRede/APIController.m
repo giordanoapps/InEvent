@@ -47,6 +47,21 @@
     return self;
 }
 
+#pragma mark - Ad
+- (void)adGetAdsAtEvent:(NSInteger)eventID {
+    
+    NSDictionary *attributes = @{@"GET" : @{@"eventID" : [NSString stringWithFormat:@"%d", eventID]}};
+    
+    [self JSONObjectWithNamespace:@"ad" method:@"getAds" attributes:attributes];
+}
+
+- (void)adSeenAd:(NSInteger)adID {
+
+    NSDictionary *attributes = @{@"GET" : @{@"adID" : [NSString stringWithFormat:@"%d", adID]}};
+    
+    [self JSONObjectWithNamespace:@"ad" method:@"seenAd" attributes:attributes];
+}
+
 #pragma mark - Activity
 
 - (void)activityCreateActivityAtEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID {

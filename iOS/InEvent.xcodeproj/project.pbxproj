@@ -15,6 +15,7 @@
 		EB1FE9E717FF2B85001C2906 /* AdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1FE9E517FF2B85001C2906 /* AdViewController.m */; };
 		EB1FE9E817FF2B85001C2906 /* AdViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB1FE9E617FF2B85001C2906 /* AdViewController.xib */; };
 		EB1FE9EB17FF5A5C001C2906 /* 32-Pencil-_-Edit.png in Resources */ = {isa = PBXBuildFile; fileRef = EB1FE9EA17FF5A5C001C2906 /* 32-Pencil-_-Edit.png */; };
+		EB1FE9ED17FF5DEA001C2906 /* 32-Check-2.png in Resources */ = {isa = PBXBuildFile; fileRef = EB1FE9EC17FF5DEA001C2906 /* 32-Check-2.png */; };
 		EB1FEB8517171FC3009834FC /* LogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1FEB8317171FC3009834FC /* LogViewController.m */; };
 		EB1FEB89171729A6009834FC /* LogItemViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1FEB88171729A6009834FC /* LogItemViewCell.m */; };
 		EB1FEB8B171729C7009834FC /* LogItemViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB1FEB8A171729C7009834FC /* LogItemViewCell.xib */; };
@@ -295,6 +296,7 @@
 		EB1FE9E517FF2B85001C2906 /* AdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AdViewController.m; path = PedidoNaRede/AdViewController.m; sourceTree = "<group>"; };
 		EB1FE9E617FF2B85001C2906 /* AdViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AdViewController.xib; path = PedidoNaRede/AdViewController.xib; sourceTree = "<group>"; };
 		EB1FE9EA17FF5A5C001C2906 /* 32-Pencil-_-Edit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Pencil-_-Edit.png"; sourceTree = "<group>"; };
+		EB1FE9EC17FF5DEA001C2906 /* 32-Check-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Check-2.png"; sourceTree = "<group>"; };
 		EB1FEB8217171FC3009834FC /* LogViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LogViewController.h; path = PedidoNaRede/LogViewController.h; sourceTree = "<group>"; };
 		EB1FEB8317171FC3009834FC /* LogViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LogViewController.m; path = PedidoNaRede/LogViewController.m; sourceTree = "<group>"; };
 		EB1FEB87171729A6009834FC /* LogItemViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LogItemViewCell.h; path = PedidoNaRede/LogItemViewCell.h; sourceTree = "<group>"; };
@@ -1376,6 +1378,7 @@
 			isa = PBXGroup;
 			children = (
 				EB97144117F2B306009260AE /* 128-user.png */,
+				EB1FE9EC17FF5DEA001C2906 /* 32-Check-2.png */,
 				EBDFF55217BE95B200BBFC1D /* 32-Check.png */,
 				EBB19398168EA54A0060D282 /* 32-Cross.png */,
 				EB4FC576171061AF00CA43EC /* 32-Facebook-F.png */,
@@ -1621,6 +1624,7 @@
 				EB25BAB017028CC9003F142F /* Default-Portrait~ipad.png in Resources */,
 				EB25BAB217028CD6003F142F /* Default-Landscape~ipad.png in Resources */,
 				EB25BAB417028CDF003F142F /* Default-Portrait@2x~ipad.png in Resources */,
+				EB1FE9ED17FF5DEA001C2906 /* 32-Check-2.png in Resources */,
 				EB97145D17F2DDDB009260AE /* logo@120.png in Resources */,
 				EB25BAB617028CE5003F142F /* Default-Landscape@2x~ipad.png in Resources */,
 				EB25BAB817028CF2003F142F /* Default.png in Resources */,

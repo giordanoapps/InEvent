@@ -13,12 +13,21 @@
 
 @implementation NSObject (Field)
 
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    UITextView *tv = object;
+    // Center vertical alignment
+    CGFloat topCorrect = ([tv bounds].size.height - [tv contentSize].height * [tv zoomScale])/2.0;
+    topCorrect = ( topCorrect < 0.0 ? 0.0 : topCorrect );
+    tv.contentOffset = (CGPoint){.x = 0, .y = -topCorrect};
+}
+
 - (UIView *)createField:(UIView *)field {
     return [self createField:field withAttributes:nil];
 }
 
 - (UIView *)createField:(UIView *)field withAttributes:(NSArray *)attributes {
     UIPlaceHolderTextView *textView = [[UIPlaceHolderTextView alloc] initWithFrame:field.frame];
+    [textView addObserver:self forKeyPath:@"contentSize" options:(NSKeyValueObservingOptionNew) context:NULL];
     [textView setBackgroundColor:field.backgroundColor];
     if ([attributes containsObject:@"trimPadding"]) [textView setContentInset:UIEdgeInsetsMake(-11, -8, 0, 0)];
 //    [textView.layer setBorderColor:[[ColorThemeController tableViewCellInternalBorderColor] CGColor]];
@@ -55,16 +64,18 @@
 }
 
 - (UIView *)removeField:(UIView *)field {
-    
     UIButton *label = [UIButton buttonWithType:UIButtonTypeCustom];
     [label setFrame:field.frame];
     [label setBackgroundColor:field.backgroundColor];
     [label setTitle:((UIPlaceHolderTextView *)field).text forState:UIControlStateNormal];
     [label setTitleColor:((UIPlaceHolderTextView *)field).textColor forState:UIControlStateNormal];
-    [label.titleLabel setTextAlignment:((UIPlaceHolderTextView *)field).textAlignment];
     [label.titleLabel setFont:((UIPlaceHolderTextView *)field).font];
-    [label.titleLabel setNumberOfLines:0];
+    [label.titleLabel setNumberOfLines:2];
+    [label.titleLabel setLineBreakMode:UILineBreakModeWordWrap];
+    [label setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
     [label setContentVerticalAlignment:UIControlContentVerticalAlignmentCenter];
+    
+    [field removeObserver:self forKeyPath:@"contentSize"];
 
     [[field superview] addSubview:label];
     [field removeFromSuperview];
