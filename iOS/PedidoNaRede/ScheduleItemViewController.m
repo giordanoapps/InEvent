@@ -12,6 +12,7 @@
 #import "ReaderViewController.h"
 #import "QuestionViewController.h"
 #import "FeedbackViewController.h"
+#import "MaterialViewController.h"
 #import "ColorThemeController.h"
 #import "HumanToken.h"
 #import "EventToken.h"
@@ -53,11 +54,13 @@
     [_wrapper.layer setMasksToBounds:YES];
     
     // Title
-    [(UILabel *)_name setTextColor:[ColorThemeController tableViewCellTextColor]];
-    [(UILabel *)_name setHighlightedTextColor:[ColorThemeController tableViewCellTextHighlightedColor]];
+    [((UIButton *)_name).titleLabel setNumberOfLines:0];
+    [(UIButton *)_name setTitleColor:[ColorThemeController tableViewCellTextColor] forState:UIControlStateNormal];
+    [(UIButton *)_name setTitleColor:[ColorThemeController tableViewCellTextHighlightedColor] forState:UIControlStateHighlighted];
     
     // Description
-    [(UITextView *)_description setBackgroundColor:[ColorThemeController tableViewCellBackgroundColor]];
+    [((UIButton *)_description).titleLabel setNumberOfLines:0];
+    [(UIButton *)_description setBackgroundColor:[ColorThemeController tableViewCellBackgroundColor]];
     
     // Line
     [_line setBackgroundColor:[ColorThemeController tableViewCellInternalBorderColor]];
@@ -130,10 +133,10 @@
         
         [self defineStateForApproved:[[_activityData objectForKey:@"approved"] integerValue] withView:_wrapper];
         
-        ((UILabel *)_hour).text = [NSString stringWithFormat:@"%.2d", [components hour]];
-        ((UILabel *)_minute).text = [NSString stringWithFormat:@"%.2d", [components minute]];
-        ((UILabel *)_name).text = [[_activityData objectForKey:@"name"] stringByDecodingHTMLEntities];
-        ((UITextView *)_description).text = [[_activityData objectForKey:@"description"] stringByDecodingHTMLEntities];
+        [((UIButton *)_hour) setTitle:[NSString stringWithFormat:@"%.2d", [components hour]] forState:UIControlStateNormal];
+        [((UIButton *)_minute) setTitle:[NSString stringWithFormat:@"%.2d", [components minute]] forState:UIControlStateNormal];
+        [((UIButton *)_name) setTitle:[[_activityData objectForKey:@"name"] stringByDecodingHTMLEntities] forState:UIControlStateNormal];
+        [((UIButton *)_description) setTitle:[[_activityData objectForKey:@"description"] stringByDecodingHTMLEntities] forState:UIControlStateNormal];
         
         [self reloadMap];
     }
@@ -142,10 +145,10 @@
 - (void)cleanData {
     self.navigationItem.rightBarButtonItem = nil;
     [self defineStateForApproved:ScheduleStateUnknown withView:_wrapper];
-    ((UILabel *)_hour).text = @"00";
-    ((UILabel *)_minute).text = @"00";
-    ((UILabel *)_name).text = NSLocalizedString(@"Activity", nil);
-    ((UITextView *)_description).text = @"";
+    [((UIButton *)_hour) setTitle:@"00" forState:UIControlStateNormal];
+    [((UIButton *)_minute) setTitle:@"00" forState:UIControlStateNormal];
+    [((UIButton *)_name) setTitle:NSLocalizedString(@"Activity", nil) forState:UIControlStateNormal];
+    [((UIButton *)_description) setTitle:@"" forState:UIControlStateNormal];
 }
 
 - (void)loadMenuButton {
@@ -195,7 +198,7 @@
     _hour = [self removeField:_hour];
     _minute = [self removeField:_minute];
     _name = [self removeField:_name];
-    _description = [self removeField:_description];
+    _description = [self removeField:_description belowView:_quickFeedback];
     
     [self loadMenuButton];
 }
@@ -345,53 +348,15 @@
         
     } else if ([title isEqualToString:NSLocalizedString(@"See people", nil)]) {
         // Load our reader
-        ReaderViewController *rvc = [[ReaderViewController alloc] initWithNibName:@"ReaderViewController" bundle:nil];
-        
-        [rvc setMoveKeyboardRatio:0.0];
-        [rvc setActivityData:_activityData];
-        
-        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-            [self.navigationController pushViewController:rvc animated:YES];
-        } else {
-            rvc.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-            rvc.modalPresentationStyle = UIModalPresentationFormSheet;
-            
-            [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:rvc animated:YES completion:nil];
-        }
+        [self loadReaderController];
         
     } else if ([title isEqualToString:NSLocalizedString(@"See questions", nil)]) {
-        // Load our reader
-        QuestionViewController *qvc = [[QuestionViewController alloc] initWithNibName:@"QuestionViewController" bundle:nil];
-        
-        [qvc setMoveKeyboardRatio:([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad && [UIScreen mainScreen].scale == 1.0) ? 0.65 : 2.0];
-        [qvc setActivityData:_activityData];
-        
-        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-            [self.navigationController pushViewController:qvc animated:YES];
-        } else {
-            qvc.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-            qvc.modalPresentationStyle = UIModalPresentationFormSheet;
-            
-            [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:qvc animated:YES completion:nil];
-        }
-        
+        // Load questions
+        [self loadQuestionController];
+
     } else if ([title isEqualToString:NSLocalizedString(@"Send feedback", nil)]) {
-        // Load our reader
-        FeedbackViewController *fvc = [[FeedbackViewController alloc] initWithNibName:@"FeedbackViewController" bundle:nil];
-        UINavigationController *nfvc = [[UINavigationController alloc] initWithRootViewController:fvc];
-        
-        [fvc setMoveKeyboardRatio:0.7];
-        [fvc setFeedbackType:FeedbackTypeActivity withReference:[[_activityData objectForKey:@"id"] integerValue]];
-        
-        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-            nfvc.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-            nfvc.modalPresentationStyle = UIModalPresentationCurrentContext;
-        } else {
-            nfvc.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-            nfvc.modalPresentationStyle = UIModalPresentationFormSheet;
-        }
-        
-        [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:nfvc animated:YES completion:nil];
+        // Load feedback
+        [self loadFeedbackController];
 
     } else if ([title isEqualToString:NSLocalizedString(@"Exit event", nil)]) {
         // Remove the tokenID and enterprise
@@ -401,7 +366,71 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:@"verify" object:nil userInfo:@{@"type": @"enterprise"}];
         
     }
+}
+
+- (IBAction)loadReaderController {
+    ReaderViewController *rvc = [[ReaderViewController alloc] initWithNibName:@"ReaderViewController" bundle:nil];
     
+    [rvc setMoveKeyboardRatio:0.0];
+    [rvc setActivityData:_activityData];
+    
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        [self.navigationController pushViewController:rvc animated:YES];
+    } else {
+        rvc.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+        rvc.modalPresentationStyle = UIModalPresentationFormSheet;
+        
+        [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:rvc animated:YES completion:nil];
+    }
+}
+
+- (IBAction)loadQuestionController {
+    QuestionViewController *qvc = [[QuestionViewController alloc] initWithNibName:@"QuestionViewController" bundle:nil];
+    
+    [qvc setMoveKeyboardRatio:([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad && [UIScreen mainScreen].scale == 1.0) ? 0.65 : 2.0];
+    [qvc setActivityData:_activityData];
+    
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        [self.navigationController pushViewController:qvc animated:YES];
+    } else {
+        qvc.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+        qvc.modalPresentationStyle = UIModalPresentationFormSheet;
+        
+        [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:qvc animated:YES completion:nil];
+    }
+}
+
+- (IBAction)loadFeedbackController {
+    FeedbackViewController *fvc = [[FeedbackViewController alloc] initWithNibName:@"FeedbackViewController" bundle:nil];
+    UINavigationController *nfvc = [[UINavigationController alloc] initWithRootViewController:fvc];
+    
+    [fvc setMoveKeyboardRatio:0.7];
+    [fvc setFeedbackType:FeedbackTypeActivity withReference:[[_activityData objectForKey:@"id"] integerValue]];
+    
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        nfvc.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+        nfvc.modalPresentationStyle = UIModalPresentationCurrentContext;
+    } else {
+        nfvc.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+        nfvc.modalPresentationStyle = UIModalPresentationFormSheet;
+    }
+    
+    [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:nfvc animated:YES completion:nil];
+}
+
+- (IBAction)loadMaterialController {
+    MaterialViewController *mvc = [[MaterialViewController alloc] initWithNibName:@"MaterialViewController" bundle:nil];
+    UINavigationController *nmvc = [[UINavigationController alloc] initWithRootViewController:mvc];
+    
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        nmvc.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+        nmvc.modalPresentationStyle = UIModalPresentationCurrentContext;
+    } else {
+        nmvc.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+        nmvc.modalPresentationStyle = UIModalPresentationFormSheet;
+    }
+    
+    [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:nmvc animated:YES completion:nil];
 }
 
 #pragma mark - Location Manager Delegate iOS5

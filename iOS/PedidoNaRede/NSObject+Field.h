@@ -13,5 +13,6 @@
 - (UIView *)createField:(UIView *)field;
 - (UIView *)createField:(UIView *)field withAttributes:(NSArray *)attributes;
 - (UIView *)removeField:(UIView *)field;
+- (UIView *)removeField:(UIView *)field belowView:(UIView *)awningView;
 
 @end

@@ -13,21 +13,12 @@
 
 @implementation NSObject (Field)
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    UITextView *tv = object;
-    // Center vertical alignment
-    CGFloat topCorrect = ([tv bounds].size.height - [tv contentSize].height * [tv zoomScale])/2.0;
-    topCorrect = ( topCorrect < 0.0 ? 0.0 : topCorrect );
-    tv.contentOffset = (CGPoint){.x = 0, .y = -topCorrect};
-}
-
 - (UIView *)createField:(UIView *)field {
     return [self createField:field withAttributes:nil];
 }
 
 - (UIView *)createField:(UIView *)field withAttributes:(NSArray *)attributes {
     UIPlaceHolderTextView *textView = [[UIPlaceHolderTextView alloc] initWithFrame:field.frame];
-    [textView addObserver:self forKeyPath:@"contentSize" options:(NSKeyValueObservingOptionNew) context:NULL];
     [textView setBackgroundColor:field.backgroundColor];
     if ([attributes containsObject:@"trimPadding"]) [textView setContentInset:UIEdgeInsetsMake(-11, -8, 0, 0)];
 //    [textView.layer setBorderColor:[[ColorThemeController tableViewCellInternalBorderColor] CGColor]];
@@ -43,14 +34,51 @@
         [textView setPlaceholder:((UILabel *)field).text];
         [textView setText:((UILabel *)field).text];
         [textView setTextColor:((UILabel *)field).textColor];
-        [textView setTextAlignment:((UILabel *)field).textAlignment];
         [textView setFont:((UILabel *)field).font];
+        [textView setTextAlignment:((UILabel *)field).textAlignment];
     } else if ([field isKindOfClass:[UIButton class]]) {
         [textView setPlaceholder:((UIButton *)field).titleLabel.text];
         [textView setText:((UIButton *)field).titleLabel.text];
         [textView setTextColor:((UIButton *)field).titleLabel.textColor];
-        [textView setTextAlignment:((UIButton *)field).titleLabel.textAlignment];
         [textView setFont:((UIButton *)field).titleLabel.font];
+        [textView setContentInset:((UIButton *)field).contentEdgeInsets];
+        
+        // Horizontal
+        switch (((UIButton *)field).titleLabel.textAlignment) {
+            case UIControlContentHorizontalAlignmentLeft:
+                [textView setTextAlignment:NSTextAlignmentLeft];
+                break;
+                
+            case UIControlContentHorizontalAlignmentCenter:
+                [textView setTextAlignment:NSTextAlignmentCenter];
+                break;
+                
+            case UIControlContentHorizontalAlignmentRight:
+                [textView setTextAlignment:NSTextAlignmentRight];
+                break;
+                
+            default:
+                break;
+        }
+        
+        // Vertical
+        switch (((UIButton *)field).contentVerticalAlignment) {
+            case UIControlContentVerticalAlignmentTop:
+                [textView setVerticalAlignment:UIPlaceHolderTextViewVerticalAlignmentTop];
+                break;
+                
+            case UIControlContentVerticalAlignmentCenter:
+                [textView setVerticalAlignment:UIPlaceHolderTextViewVerticalAlignmentCenter];
+                break;
+                
+            case UIControlContentVerticalAlignmentBottom:
+                [textView setVerticalAlignment:UIPlaceHolderTextViewVerticalAlignmentBottom];
+                break;
+                
+            default:
+                break;
+        }
+    
     } else if ([field isKindOfClass:[UITextView class]]) {
         [textView setPlaceholder:((UITextView *)field).text];
         [textView setText:((UITextView *)field).text];
@@ -64,6 +92,10 @@
 }
 
 - (UIView *)removeField:(UIView *)field {
+    return [self removeField:field belowView:nil];
+}
+
+- (UIView *)removeField:(UIView *)field belowView:(UIView *)awningView {
     UIButton *label = [UIButton buttonWithType:UIButtonTypeCustom];
     [label setFrame:field.frame];
     [label setBackgroundColor:field.backgroundColor];
@@ -72,12 +104,58 @@
     [label.titleLabel setFont:((UIPlaceHolderTextView *)field).font];
     [label.titleLabel setNumberOfLines:2];
     [label.titleLabel setLineBreakMode:UILineBreakModeWordWrap];
-    [label setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
-    [label setContentVerticalAlignment:UIControlContentVerticalAlignmentCenter];
-    
-    [field removeObserver:self forKeyPath:@"contentSize"];
 
-    [[field superview] addSubview:label];
+    if ([field isKindOfClass:[UIPlaceHolderTextView class]]) {
+        
+        // Horizontal
+        switch (((UIPlaceHolderTextView *)field).textAlignment) {
+            case NSTextAlignmentLeft:
+                [label setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
+                break;
+                
+            case NSTextAlignmentCenter:
+                [label setContentHorizontalAlignment:UIControlContentHorizontalAlignmentCenter];
+                break;
+                
+            case NSTextAlignmentRight:
+                [label setContentHorizontalAlignment:UIControlContentHorizontalAlignmentRight];
+                break;
+                
+            default:
+                break;
+        }
+        
+        // Vertical
+        switch (((UIPlaceHolderTextView *)field).verticalAlignment) {
+            case UIPlaceHolderTextViewVerticalAlignmentTop:
+                [label setContentVerticalAlignment:UIControlContentVerticalAlignmentTop];
+                break;
+                
+            case UIPlaceHolderTextViewVerticalAlignmentCenter:
+                [label setContentVerticalAlignment:UIControlContentVerticalAlignmentCenter];
+                break;
+                
+            case UIPlaceHolderTextViewVerticalAlignmentBottom:
+                [label setContentVerticalAlignment:UIControlContentVerticalAlignmentBottom];
+                break;
+        }
+        
+        [label setContentEdgeInsets:((UIPlaceHolderTextView *)field).contentInset];
+
+    } else if ([field isKindOfClass:[UIButton class]]) {
+        [label setContentHorizontalAlignment:((UIButton *)field).contentHorizontalAlignment];
+        [label setContentVerticalAlignment:((UIButton *)field).contentVerticalAlignment];
+    } else {
+        [label setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
+        [label setContentVerticalAlignment:UIControlContentVerticalAlignmentCenter];
+    }
+
+    if (awningView) {
+        [[field superview] insertSubview:label belowSubview:awningView];
+    } else {
+        [[field superview] addSubview:label];
+    }
+    
     [field removeFromSuperview];
     
     return label;

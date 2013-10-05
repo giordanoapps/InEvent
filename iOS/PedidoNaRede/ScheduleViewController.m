@@ -56,6 +56,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    // Navigation delegate
+    self.navigationController.delegate = self;
+    
     // Schedule details
     [self loadData];
     
@@ -276,6 +279,14 @@
         [self.navigationController pushViewController:sivc animated:YES];
         [aTableView deselectRowAtIndexPath:indexPath animated:YES];
     }
+}
+
+#pragma mark - Navigation Controller Delegate
+
+- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    
+    // Reload all table data
+    [self.tableView reloadData];
 }
 
 #pragma mark - APIController Delegate

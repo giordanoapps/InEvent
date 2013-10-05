@@ -226,7 +226,7 @@
 - (void)loadEssentialData {
     // Create ad
     AdViewController *avc = [[AdViewController alloc] initWithNibName:@"AdViewController" bundle:nil];
-    [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:avc animated:YES completion:nil];
+//    [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:avc animated:YES completion:nil];
 }
 
 @end

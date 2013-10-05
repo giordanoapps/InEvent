@@ -21,6 +21,10 @@
 @property (strong, nonatomic) IBOutlet UIView *name; // UILabel
 @property (strong, nonatomic) IBOutlet UIView *line;
 @property (strong, nonatomic) IBOutlet UIView *description; // UITextView
+@property (strong, nonatomic) IBOutlet UIButton *quickFeedback;
+@property (strong, nonatomic) IBOutlet UIButton *quickQuestion;
+@property (strong, nonatomic) IBOutlet UIButton *quickPeople;
+@property (strong, nonatomic) IBOutlet UIButton *quickMaterial;
 @property (strong, nonatomic) IBOutlet MKMapView *map;
 //@property (strong, nonatomic) IBOutlet GMSMapView *map;
 

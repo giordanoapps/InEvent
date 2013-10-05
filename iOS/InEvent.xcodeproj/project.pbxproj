@@ -16,6 +16,15 @@
 		EB1FE9E817FF2B85001C2906 /* AdViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB1FE9E617FF2B85001C2906 /* AdViewController.xib */; };
 		EB1FE9EB17FF5A5C001C2906 /* 32-Pencil-_-Edit.png in Resources */ = {isa = PBXBuildFile; fileRef = EB1FE9EA17FF5A5C001C2906 /* 32-Pencil-_-Edit.png */; };
 		EB1FE9ED17FF5DEA001C2906 /* 32-Check-2.png in Resources */ = {isa = PBXBuildFile; fileRef = EB1FE9EC17FF5DEA001C2906 /* 32-Check-2.png */; };
+		EB1FE9EF17FF87D2001C2906 /* 32-Users.png in Resources */ = {isa = PBXBuildFile; fileRef = EB1FE9EE17FF87D2001C2906 /* 32-Users.png */; };
+		EB1FE9F117FF884E001C2906 /* 32-Users@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB1FE9F017FF884E001C2906 /* 32-Users@2x.png */; };
+		EB1FE9F417FF8886001C2906 /* 32-Book-Large.png in Resources */ = {isa = PBXBuildFile; fileRef = EB1FE9F217FF8886001C2906 /* 32-Book-Large.png */; };
+		EB1FE9F517FF8886001C2906 /* 32-Book-Large@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB1FE9F317FF8886001C2906 /* 32-Book-Large@2x.png */; };
+		EB1FE9F917FF9CF1001C2906 /* MaterialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1FE9F717FF9CF1001C2906 /* MaterialViewController.m */; };
+		EB1FE9FA17FF9CF1001C2906 /* MaterialViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB1FE9F817FF9CF1001C2906 /* MaterialViewController.xib */; };
+		EB1FE9FD17FF9DA2001C2906 /* 32-Speech-Bubble@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB1FE9FC17FF9DA2001C2906 /* 32-Speech-Bubble@2x.png */; };
+		EB1FE9FF17FF9DBE001C2906 /* 32-Speech-Bubble.png in Resources */ = {isa = PBXBuildFile; fileRef = EB1FE9FE17FF9DBE001C2906 /* 32-Speech-Bubble.png */; };
+		EB1FEA0117FF9EF7001C2906 /* 32-Create-_-Write.png in Resources */ = {isa = PBXBuildFile; fileRef = EB1FEA0017FF9EF7001C2906 /* 32-Create-_-Write.png */; };
 		EB1FEB8517171FC3009834FC /* LogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1FEB8317171FC3009834FC /* LogViewController.m */; };
 		EB1FEB89171729A6009834FC /* LogItemViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1FEB88171729A6009834FC /* LogItemViewCell.m */; };
 		EB1FEB8B171729C7009834FC /* LogItemViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB1FEB8A171729C7009834FC /* LogItemViewCell.xib */; };
@@ -201,7 +210,7 @@
 		EBC59D8317BEC49E00E0FC67 /* 64-Footprints.png in Resources */ = {isa = PBXBuildFile; fileRef = EBC59D8217BEC49E00E0FC67 /* 64-Footprints.png */; };
 		EBC59D8517BEC4DD00E0FC67 /* 64-Map.png in Resources */ = {isa = PBXBuildFile; fileRef = EBC59D8417BEC4DD00E0FC67 /* 64-Map.png */; };
 		EBC59D8717BEC58100E0FC67 /* 64-Balloons.png in Resources */ = {isa = PBXBuildFile; fileRef = EBC59D8617BEC58100E0FC67 /* 64-Balloons.png */; };
-		EBC59D8917BEC59B00E0FC67 /* 64-Create-_-Write.png in Resources */ = {isa = PBXBuildFile; fileRef = EBC59D8817BEC59B00E0FC67 /* 64-Create-_-Write.png */; };
+		EBC59D8917BEC59B00E0FC67 /* 32-Create-_-Write@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBC59D8817BEC59B00E0FC67 /* 32-Create-_-Write@2x.png */; };
 		EBC59D8D17BEC5C300E0FC67 /* 64-Cloud-Download.png in Resources */ = {isa = PBXBuildFile; fileRef = EBC59D8C17BEC5C300E0FC67 /* 64-Cloud-Download.png */; };
 		EBD055A717AF8CF3008355E8 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD055A517AF8CF3008355E8 /* AboutViewController.m */; };
 		EBD055A817AF8CF3008355E8 /* AboutViewController~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBD055A617AF8CF3008355E8 /* AboutViewController~iphone.xib */; };
@@ -297,6 +306,16 @@
 		EB1FE9E617FF2B85001C2906 /* AdViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AdViewController.xib; path = PedidoNaRede/AdViewController.xib; sourceTree = "<group>"; };
 		EB1FE9EA17FF5A5C001C2906 /* 32-Pencil-_-Edit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Pencil-_-Edit.png"; sourceTree = "<group>"; };
 		EB1FE9EC17FF5DEA001C2906 /* 32-Check-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Check-2.png"; sourceTree = "<group>"; };
+		EB1FE9EE17FF87D2001C2906 /* 32-Users.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Users.png"; sourceTree = "<group>"; };
+		EB1FE9F017FF884E001C2906 /* 32-Users@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Users@2x.png"; sourceTree = "<group>"; };
+		EB1FE9F217FF8886001C2906 /* 32-Book-Large.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Book-Large.png"; sourceTree = "<group>"; };
+		EB1FE9F317FF8886001C2906 /* 32-Book-Large@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Book-Large@2x.png"; sourceTree = "<group>"; };
+		EB1FE9F617FF9CF1001C2906 /* MaterialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaterialViewController.h; sourceTree = "<group>"; };
+		EB1FE9F717FF9CF1001C2906 /* MaterialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MaterialViewController.m; sourceTree = "<group>"; };
+		EB1FE9F817FF9CF1001C2906 /* MaterialViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MaterialViewController.xib; sourceTree = "<group>"; };
+		EB1FE9FC17FF9DA2001C2906 /* 32-Speech-Bubble@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Speech-Bubble@2x.png"; sourceTree = "<group>"; };
+		EB1FE9FE17FF9DBE001C2906 /* 32-Speech-Bubble.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Speech-Bubble.png"; sourceTree = "<group>"; };
+		EB1FEA0017FF9EF7001C2906 /* 32-Create-_-Write.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Create-_-Write.png"; sourceTree = "<group>"; };
 		EB1FEB8217171FC3009834FC /* LogViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LogViewController.h; path = PedidoNaRede/LogViewController.h; sourceTree = "<group>"; };
 		EB1FEB8317171FC3009834FC /* LogViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LogViewController.m; path = PedidoNaRede/LogViewController.m; sourceTree = "<group>"; };
 		EB1FEB87171729A6009834FC /* LogItemViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LogItemViewCell.h; path = PedidoNaRede/LogItemViewCell.h; sourceTree = "<group>"; };
@@ -559,7 +578,7 @@
 		EBC59D8217BEC49E00E0FC67 /* 64-Footprints.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "64-Footprints.png"; sourceTree = "<group>"; };
 		EBC59D8417BEC4DD00E0FC67 /* 64-Map.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "64-Map.png"; sourceTree = "<group>"; };
 		EBC59D8617BEC58100E0FC67 /* 64-Balloons.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "64-Balloons.png"; sourceTree = "<group>"; };
-		EBC59D8817BEC59B00E0FC67 /* 64-Create-_-Write.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "64-Create-_-Write.png"; sourceTree = "<group>"; };
+		EBC59D8817BEC59B00E0FC67 /* 32-Create-_-Write@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Create-_-Write@2x.png"; sourceTree = "<group>"; };
 		EBC59D8C17BEC5C300E0FC67 /* 64-Cloud-Download.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "64-Cloud-Download.png"; sourceTree = "<group>"; };
 		EBD055A417AF8CF3008355E8 /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
 		EBD055A517AF8CF3008355E8 /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
@@ -759,6 +778,17 @@
 				EB1FE9E617FF2B85001C2906 /* AdViewController.xib */,
 			);
 			name = Ad;
+			sourceTree = "<group>";
+		};
+		EB1FE9FB17FF9CF6001C2906 /* Material */ = {
+			isa = PBXGroup;
+			children = (
+				EB1FE9F617FF9CF1001C2906 /* MaterialViewController.h */,
+				EB1FE9F717FF9CF1001C2906 /* MaterialViewController.m */,
+				EB1FE9F817FF9CF1001C2906 /* MaterialViewController.xib */,
+			);
+			name = Material;
+			path = PedidoNaRede;
 			sourceTree = "<group>";
 		};
 		EB1FEB8C17172A16009834FC /* Log */ = {
@@ -1127,6 +1157,7 @@
 				EB25BAA016FE73F7003F142F /* Human */,
 				EBFCCF4A16987F3700A5AE73 /* Map */,
 				EB59020417D5D7D60032143C /* Marketplace */,
+				EB1FE9FB17FF9CF6001C2906 /* Material */,
 				EB79CC4517EB82C100C16CF5 /* Question */,
 				EBFCCF571698B47D00A5AE73 /* Timeline */,
 				EB3BD91417B8C47F008D066D /* Reader */,
@@ -1378,8 +1409,12 @@
 			isa = PBXGroup;
 			children = (
 				EB97144117F2B306009260AE /* 128-user.png */,
+				EB1FE9F217FF8886001C2906 /* 32-Book-Large.png */,
+				EB1FE9F317FF8886001C2906 /* 32-Book-Large@2x.png */,
 				EB1FE9EC17FF5DEA001C2906 /* 32-Check-2.png */,
 				EBDFF55217BE95B200BBFC1D /* 32-Check.png */,
+				EB1FEA0017FF9EF7001C2906 /* 32-Create-_-Write.png */,
+				EBC59D8817BEC59B00E0FC67 /* 32-Create-_-Write@2x.png */,
 				EBB19398168EA54A0060D282 /* 32-Cross.png */,
 				EB4FC576171061AF00CA43EC /* 32-Facebook-F.png */,
 				EB7FF95717EEDDE00017E599 /* 32-Facebook-Like-2.png */,
@@ -1389,14 +1424,17 @@
 				EBD8E4E817AF557A00D0F30C /* 32-Minus.png */,
 				EB1FE9EA17FF5A5C001C2906 /* 32-Pencil-_-Edit.png */,
 				EBB19399168EA54A0060D282 /* 32-Plus.png */,
+				EB1FE9FE17FF9DBE001C2906 /* 32-Speech-Bubble.png */,
+				EB1FE9FC17FF9DA2001C2906 /* 32-Speech-Bubble@2x.png */,
 				EB79CC4D17ED803F00C16CF5 /* 32-Unfavorite.png */,
+				EB1FE9EE17FF87D2001C2906 /* 32-Users.png */,
+				EB1FE9F017FF884E001C2906 /* 32-Users@2x.png */,
 				EBC59D8617BEC58100E0FC67 /* 64-Balloons.png */,
 				EBDFF53817BBF5FD00BBFC1D /* 64-Bended-Arrow-Left.png */,
 				EBDFF53917BBF5FD00BBFC1D /* 64-Bended-Arrow-Up.png */,
 				EB79CC5517ED833600C16CF5 /* 64-Clock-2.png */,
 				EB79CC5617ED833600C16CF5 /* 64-Clock.png */,
 				EBC59D8C17BEC5C300E0FC67 /* 64-Cloud-Download.png */,
-				EBC59D8817BEC59B00E0FC67 /* 64-Create-_-Write.png */,
 				EB60420A17B8B6A300D95012 /* 64-Flip-Clock.png */,
 				EBC59D8217BEC49E00E0FC67 /* 64-Footprints.png */,
 				EBC59D8417BEC4DD00E0FC67 /* 64-Map.png */,
@@ -1555,6 +1593,7 @@
 				EBE8D21016A88ED8003A196A /* tanButtonHighlight@2x.png in Resources */,
 				EBE8D21116A88ED8003A196A /* whiteButton.png in Resources */,
 				EBE8D21216A88ED8003A196A /* whiteButton@2x.png in Resources */,
+				EB1FEA0117FF9EF7001C2906 /* 32-Create-_-Write.png in Resources */,
 				EBE8D21316A88ED8003A196A /* whiteButtonHighlight.png in Resources */,
 				EBE8D21416A88ED8003A196A /* whiteButtonHighlight@2x.png in Resources */,
 				EB39398D16654B4400580A4E /* MapViewController.xib in Resources */,
@@ -1567,7 +1606,9 @@
 				EBB1939A168EA54A0060D282 /* 32-Cross.png in Resources */,
 				EBB1939B168EA54A0060D282 /* 32-Plus.png in Resources */,
 				EBE15D4D169B7D2000E46A15 /* AlertView.xib in Resources */,
+				EB1FE9F117FF884E001C2906 /* 32-Users@2x.png in Resources */,
 				EB9AB77316A0921A005D4CAA /* DemoViewController.xib in Resources */,
+				EB1FE9EF17FF87D2001C2906 /* 32-Users.png in Resources */,
 				EB9AB78616A125B3005D4CAA /* barButton.png in Resources */,
 				EB9AB78716A125B3005D4CAA /* barButton@2x.png in Resources */,
 				EB7FF95817EEDDE00017E599 /* 32-Facebook-Like-2.png in Resources */,
@@ -1591,6 +1632,7 @@
 				EB97146817F2DEAE009260AE /* logo@100.png in Resources */,
 				EB8C7D8016D17AEB00F3C721 /* cb_box_on.png in Resources */,
 				EB1FE9DE17FE841D001C2906 /* GoogleMaps.bundle in Resources */,
+				EB1FE9FF17FF9DBE001C2906 /* 32-Speech-Bubble.png in Resources */,
 				EB8C7D8116D17AEB00F3C721 /* cb_box_on@2x.png in Resources */,
 				EB8C7D8216D17AEB00F3C721 /* cb_dark_off.png in Resources */,
 				EB8C7D8316D17AEB00F3C721 /* cb_dark_off@2x.png in Resources */,
@@ -1610,11 +1652,13 @@
 				EB8C7D8F16D17AEB00F3C721 /* cb_mono_off@2x.png in Resources */,
 				EB8C7D9016D17AEB00F3C721 /* cb_mono_on.png in Resources */,
 				EB97145B17F2DDDB009260AE /* logo@76.png in Resources */,
+				EB1FE9F417FF8886001C2906 /* 32-Book-Large.png in Resources */,
 				EB97144217F2B306009260AE /* 128-user.png in Resources */,
 				EB8C7D9116D17AEB00F3C721 /* cb_mono_on@2x.png in Resources */,
 				EBD27B6616D8604200DA6ACE /* 32-Looking-Glass.png in Resources */,
 				EBFD3A3A16DA96D000AD33C5 /* FeedbackViewController.xib in Resources */,
 				EBD5474F16F62E7900A195FF /* InformationViewController.xib in Resources */,
+				EB1FE9FD17FF9DA2001C2906 /* 32-Speech-Bubble@2x.png in Resources */,
 				EB97146017F2DDDB009260AE /* logo@512.png in Resources */,
 				EB25BA9016FE6D21003F142F /* 16-Flag-2.png in Resources */,
 				EB25BA9216FE6EC9003F142F /* 16-User.png in Resources */,
@@ -1665,7 +1709,9 @@
 				EBD055AC17AF919C008355E8 /* 16-Footprints.png in Resources */,
 				EBD055AD17AF919C008355E8 /* 16-Footprints@2x.png in Resources */,
 				EB60420B17B8B6A300D95012 /* 64-Flip-Clock.png in Resources */,
+				EB1FE9F517FF8886001C2906 /* 32-Book-Large@2x.png in Resources */,
 				EB3BD91317B8C47A008D066D /* ReaderViewController.xib in Resources */,
+				EB1FE9FA17FF9CF1001C2906 /* MaterialViewController.xib in Resources */,
 				EBDFF53A17BBF5FD00BBFC1D /* 64-Bended-Arrow-Left.png in Resources */,
 				EBDFF53B17BBF5FD00BBFC1D /* 64-Bended-Arrow-Up.png in Resources */,
 				EBDFF53D17BBF63700BBFC1D /* logo.png in Resources */,
@@ -1677,7 +1723,7 @@
 				EBC59D8317BEC49E00E0FC67 /* 64-Footprints.png in Resources */,
 				EBC59D8517BEC4DD00E0FC67 /* 64-Map.png in Resources */,
 				EBC59D8717BEC58100E0FC67 /* 64-Balloons.png in Resources */,
-				EBC59D8917BEC59B00E0FC67 /* 64-Create-_-Write.png in Resources */,
+				EBC59D8917BEC59B00E0FC67 /* 32-Create-_-Write@2x.png in Resources */,
 				EB97144A17F2DD11009260AE /* Images.xcassets in Resources */,
 				EBC59D8D17BEC5C300E0FC67 /* 64-Cloud-Download.png in Resources */,
 				EBEACD7517C2F65200C65F3F /* AboutViewController~ipad.xib in Resources */,
@@ -1779,6 +1825,7 @@
 				EB9AB77216A0921A005D4CAA /* DemoViewController.m in Sources */,
 				EBAD3CB416A27BFB003735AD /* UIImage+Color.m in Sources */,
 				EB28747916A71EF600A06781 /* StepperView.m in Sources */,
+				EB1FE9F917FF9CF1001C2906 /* MaterialViewController.m in Sources */,
 				EB73E9A416AC912A000A9039 /* UtilitiesController.m in Sources */,
 				EBD0DB5616AF953B00F78F93 /* UIViewController+Present.m in Sources */,
 				EB8C7D9216D17AEB00F3C721 /* UIHelpers.m in Sources */,
