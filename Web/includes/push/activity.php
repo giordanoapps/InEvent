@@ -1,11 +1,15 @@
 <?php
 
-	function pushOrderCreation($tableID, $orderID) {
-        pushURI("order/new", "table", $tableID, $orderID);
+	function pushActivityCreation($eventID, $activityID) {
+        pushURI("activity/new", "event", $eventID, $activityID);
     }
 
-    function pushOrderUpdate($tableID, $orderID) {
-        pushURI("order/update", "table", $tableID, $orderID);
+    function pushActivityUpdate($eventID, $activityID) {
+        pushURI("activity/update", "event", $eventID, $activityID);
+    }
+
+    function pushActivityRemove($eventID, $activityID) {
+        pushURI("activity/remove", "event", $eventID, $activityID);
     }
 
 ?>

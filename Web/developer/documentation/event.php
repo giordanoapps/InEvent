@@ -7,10 +7,10 @@
     
     <div class="documentationFunctionBox">
         <p class="documentFunctionName">
-            <span>event/ : <b>eventID</b></span>
-            <span><img src="../images/64-Archive.png" alt="Channel">event/<b>eventID</b></span>
+            <span>event/new : <b>eventID</b></span>
+            <span><img src="../images/64-Archive.png" alt="Channel">event_<b>eventID</b></span>
         </p>
-        <p class="documentFunctionDescription">Requisita a validação do evento <i>eventID</i>.</p>
+        <p class="documentFunctionDescription">Informa a criação do evento <i>eventID</i>.</p>
     </div>
 
     <h3 class="documentationHeader">Funções</h3>

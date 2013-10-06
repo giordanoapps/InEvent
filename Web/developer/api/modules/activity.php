@@ -45,6 +45,9 @@
 
 			$activityID = mysql_insert_id();
 
+			// Send a push notification
+			pushActivityCreation($eventID, $activityID);
+
 			// Return its data
 			if ($format == "json") {
 				$data["activityID"] = $activityID;
@@ -218,6 +221,9 @@
 								`activity`.`id` = $activityID
 						");
 					}
+
+					// Send a push notification
+					pushActivityUpdate(getEventForActivity($activityID), $activityID);
 
 					// Return its data
 					if ($format == "json") {

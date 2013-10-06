@@ -14,8 +14,8 @@ function pushNotification($data) {
     // curl_setopt($ch, CURLOPT_HEADER, 1);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
     curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-        "X-Parse-Application-Id: 7ivHXgEjQsWGz9fiZ9PcvMsCXgq2KdK6a3oyUbuV",
-        "X-Parse-REST-API-Key: JnankyhpAsnyWt9AoIn3j5Vn38cRbfOwGXFiB6zC",
+        "X-Parse-Application-Id: GVhc1mnm0Zi2b7RxOZ8jFNbqhYQIE59sYxfKSlyE",
+        "X-Parse-REST-API-Key: majWJZdGB0t1EFVrRU8PR1t5w57nlB8AKtmiUMun",
         "Content-Type: application/json"
     ));
     curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
@@ -36,15 +36,15 @@ function pushURI($uri, $channel, $channelID, $value) {
     if ($channel == null) $channel = substr($uri, 0, strpos($uri, "/"));
 
     // Send a update to our global channel, company
-    if ($channel != "company") pushURI($uri, "company", $core->companyID, $value);
+    if ($channel != "event") pushURI($uri, "event", $core->eventID, $value);
 
     $data = array(
-        "channels" => array($channel . "/" . $channelID),
+        "channels" => array($channel . "_" . $channelID),
         "data" => array(
             "alert" => array(
                 "body" => null
             ),
-            "action" => "com.estudiotrilha.garca.PUSH_NOTIFICATION",
+            "action" => "com.estudiotrilha.inevent.PUSH_NOTIFICATION",
             // "sound" => null,
             "uri" => "$uri",
             "value" => "$value"

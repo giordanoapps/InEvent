@@ -8,7 +8,7 @@
     <div class="documentationFunctionBox">
         <p class="documentFunctionName">
             <span>activity/new : <b>activityID</b></span>
-            <span><img src="../images/64-Archive.png" alt="Channel">event/<b>eventID</b></span>
+            <span><img src="../images/64-Archive.png" alt="Channel">event_<b>eventID</b></span>
         </p>
         <p class="documentFunctionDescription">Informa a criação da atividade <i>activityID</i> no evento <i>eventID</i>.</p>
     </div>
@@ -16,7 +16,7 @@
     <div class="documentationFunctionBox">
         <p class="documentFunctionName">
             <span>activity/update : <b>activityID</b></span>
-            <span><img src="../images/64-Archive.png" alt="Channel">event/<b>eventID</b></span>
+            <span><img src="../images/64-Archive.png" alt="Channel">event_<b>eventID</b></span>
         </p>
         <p class="documentFunctionDescription">Informa a atualização da atividade <i>activityID</i> no evento <i>eventID</i>.</p>
     </div>
@@ -24,7 +24,7 @@
     <div class="documentationFunctionBox">
         <p class="documentFunctionName">
             <span>activity/remove : <b>activityID</b></span>
-            <span><img src="../images/64-Archive.png" alt="Channel">event/<b>eventID</b></span>
+            <span><img src="../images/64-Archive.png" alt="Channel">event_<b>eventID</b></span>
         </p>
         <p class="documentFunctionDescription">Informa a remoção da atividade <i>activityID</i> no evento <i>eventID</i>.</p>
     </div>
