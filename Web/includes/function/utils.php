@@ -55,6 +55,42 @@
 		}
 	}
 
+    function getActivityName($activityID) {
+
+		$result = resourceForQuery(
+			"SELECT
+				`activity`.`name`
+			FROM
+				`activity`
+			WHERE 1
+				AND `activity`.`id` = $activityID
+		");
+
+		if (mysql_num_rows($result) > 0) {
+			return html_entity_decode(mysql_result($result, 0, "name"), ENT_COMPAT, "UTF-8");
+		} else {
+			return "";
+		}
+	}
+
+    function getEventName($eventID) {
+
+		$result = resourceForQuery(
+			"SELECT
+				`event`.`name`
+			FROM
+				`event`
+			WHERE 1
+				AND `event`.`id` = $eventID
+		");
+
+		if (mysql_num_rows($result) > 0) {
+			return html_entity_decode(mysql_result($result, 0, "name"), ENT_COMPAT, "UTF-8");
+		} else {
+			return "";
+		}
+	}
+
     function getGroupForActivity($activityID) {
 
 		$result = resourceForQuery(

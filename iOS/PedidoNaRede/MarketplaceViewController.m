@@ -195,10 +195,6 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:@"scheduleCurrentState" object:nil userInfo:nil];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"verify" object:nil userInfo:@{@"type": @"menu"}];
     
-    // Push the controller with the schedule information
-//    InformationViewController *ivc = [[InformationViewController alloc] initWithNibName:@"InformationViewController" bundle:nil];
-//    [ivc setCompanyData:dictionary];
-//    [self.navigationController pushViewController:ivc animated:YES];
     [self dismissViewControllerAnimated:YES completion:nil];
     
 

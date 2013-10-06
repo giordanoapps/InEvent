@@ -245,13 +245,19 @@ define(modules, function($, common, cookie) {$(function() {
 	 */
 	$("#eventContent").on("keyup", ".agendaItem .titleInput", function(event) {
 
+		// Remove the focus from the current field
 		var code = (event.keyCode ? event.keyCode : event.which);
-		if (code == 13) {
-			$(this).trigger("focusout");
-		}
+		if (code == 13) $(this).blur();
 	});
 
-	$("#eventContent").on("focusout", ".agendaItem .titleInput", function(event) {
+	$("#eventContent").on("focusin", ".agendaItem .titleInput", function(event) {
+		var $elem = $(this);
+		$elem.on("focusout", function() {
+			$elem.trigger("saveField");
+		})
+	});
+
+	$("#eventContent").on("saveField", ".agendaItem .titleInput", function(event) {
 
 		var $elem = $(this);
 		var $agendaItem = $elem.closest(".agendaItem");
@@ -259,7 +265,7 @@ define(modules, function($, common, cookie) {$(function() {
 		var activityID = $agendaItem.val();
 		var value = $elem.val();
 		var name = $elem.attr("name");
-
+		
 		$elem = $elem.field("removeField", {"class": "name"});
 
 		// We request the information on the server

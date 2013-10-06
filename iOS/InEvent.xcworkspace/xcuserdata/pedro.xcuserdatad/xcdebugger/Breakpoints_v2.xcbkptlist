@@ -74,11 +74,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PedidoNaRede/ScheduleViewController.m"
-            timestampString = "402622128.552739"
+            timestampString = "402726559.993046"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "157"
-            endingLineNumber = "157"
+            startingLineNumber = "158"
+            endingLineNumber = "158"
             landmarkName = "-actionSheet:clickedButtonAtIndex:"
             landmarkType = "5">
          </BreakpointContent>
@@ -160,11 +160,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PedidoNaRede/ScheduleViewController.m"
-            timestampString = "402622128.552739"
+            timestampString = "402726559.993046"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "149"
-            endingLineNumber = "149"
+            startingLineNumber = "150"
+            endingLineNumber = "150"
             landmarkName = "-actionSheet:clickedButtonAtIndex:"
             landmarkType = "5">
          </BreakpointContent>
@@ -192,11 +192,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PedidoNaRede/ScheduleViewController.m"
-            timestampString = "402622128.552739"
+            timestampString = "402726559.993046"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "101"
-            endingLineNumber = "101"
+            startingLineNumber = "102"
+            endingLineNumber = "102"
             landmarkName = "-forceDataReload:"
             landmarkType = "5">
          </BreakpointContent>
@@ -510,11 +510,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PedidoNaRede/ScheduleViewController.m"
-            timestampString = "402622128.552739"
+            timestampString = "402726559.993046"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "306"
-            endingLineNumber = "306"
+            startingLineNumber = "307"
+            endingLineNumber = "307"
             landmarkName = "-apiController:didLoadDictionaryFromServer:"
             landmarkType = "5">
             <Locations>
@@ -556,11 +556,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PedidoNaRede/ScheduleViewController.m"
-            timestampString = "402622128.552739"
+            timestampString = "402726559.993046"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "314"
-            endingLineNumber = "314"
+            startingLineNumber = "315"
+            endingLineNumber = "315"
             landmarkName = "-apiController:didLoadDictionaryFromServer:"
             landmarkType = "5">
          </BreakpointContent>
@@ -812,11 +812,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PedidoNaRede/ScheduleViewController.m"
-            timestampString = "402622128.552739"
+            timestampString = "402726559.993046"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "287"
-            endingLineNumber = "287"
+            startingLineNumber = "288"
+            endingLineNumber = "288"
             landmarkName = "-navigationController:willShowViewController:animated:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1024,6 +1024,54 @@
             startingLineNumber = "402"
             endingLineNumber = "402"
             landmarkName = "-apiController:didLoadDictionaryFromServer:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PedidoNaRede/AppDelegate.m"
+            timestampString = "402726559.993046"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "55"
+            endingLineNumber = "55"
+            landmarkName = "-application:didReceiveRemoteNotification:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PedidoNaRede/AppDelegate.m"
+            timestampString = "402728053.480519"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "69"
+            endingLineNumber = "69"
+            landmarkName = "-application:didFinishLaunchingWithOptions:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PedidoNaRede/PushController.m"
+            timestampString = "402727960.189383"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "38"
+            endingLineNumber = "38"
+            landmarkName = "+deliverPushNotification:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

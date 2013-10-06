@@ -11,7 +11,6 @@
 #import "AppDelegate.h"
 #import "NSString+HTML.h"
 #import "MKPointExpandedAnnotation.h"
-#import "InformationViewController.h"
 #import "ODRefreshControl.h"
 #import "EventToken.h"
 #import "GAI.h"
@@ -184,11 +183,6 @@
 
     // Notify about the new company to our views
     [[NSNotificationCenter defaultCenter] postNotificationName:@"verify" object:nil userInfo:@{@"type": @"menu"}];
-    
-    // Push the controller with the schedule information
-    InformationViewController *ivc = [[InformationViewController alloc] initWithNibName:@"InformationViewController" bundle:nil];
-    [ivc setCompanyData:dictionary];
-    [self.navigationController pushViewController:ivc animated:YES];
 }
 
 - (void)reloadMap {

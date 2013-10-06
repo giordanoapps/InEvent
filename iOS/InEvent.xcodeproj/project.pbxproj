@@ -222,8 +222,6 @@
 		EBD27B6316D827C300DA6ACE /* ColorThemeController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD27B6216D827C300DA6ACE /* ColorThemeController.m */; };
 		EBD27B6616D8604200DA6ACE /* 32-Looking-Glass.png in Resources */ = {isa = PBXBuildFile; fileRef = EBD27B6516D8604200DA6ACE /* 32-Looking-Glass.png */; };
 		EBD47D9216B07BA600F7295E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = EBD47D9416B07BA600F7295E /* Localizable.strings */; };
-		EBD5474E16F62E7900A195FF /* InformationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD5474C16F62E7900A195FF /* InformationViewController.m */; };
-		EBD5474F16F62E7900A195FF /* InformationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBD5474D16F62E7900A195FF /* InformationViewController.xib */; };
 		EBD6626A17FE3F8800B190E2 /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBD6626917FE3F8800B190E2 /* GoogleMaps.framework */; };
 		EBD6626C17FE3FC800B190E2 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBD6626B17FE3FC800B190E2 /* AVFoundation.framework */; };
 		EBD6626E17FE3FD900B190E2 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBD6626D17FE3FD900B190E2 /* CoreText.framework */; };
@@ -597,9 +595,6 @@
 		EBD47D9316B07BA600F7295E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		EBD47D9616B07BAD00F7295E /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/Localizable.strings; sourceTree = "<group>"; };
 		EBD47D9716B0854900F7295E /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
-		EBD5474B16F62E7900A195FF /* InformationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InformationViewController.h; sourceTree = "<group>"; };
-		EBD5474C16F62E7900A195FF /* InformationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InformationViewController.m; sourceTree = "<group>"; };
-		EBD5474D16F62E7900A195FF /* InformationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InformationViewController.xib; sourceTree = "<group>"; };
 		EBD6626917FE3F8800B190E2 /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMaps.framework; sourceTree = "<group>"; };
 		EBD6626B17FE3FC800B190E2 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		EBD6626D17FE3FD900B190E2 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
@@ -938,17 +933,6 @@
 			path = PedidoNaRede;
 			sourceTree = "<group>";
 		};
-		EB3F1A0B16F7B831005052E7 /* Initial */ = {
-			isa = PBXGroup;
-			children = (
-				EBD5474B16F62E7900A195FF /* InformationViewController.h */,
-				EBD5474C16F62E7900A195FF /* InformationViewController.m */,
-				EBD5474D16F62E7900A195FF /* InformationViewController.xib */,
-			);
-			name = Initial;
-			path = PedidoNaRede;
-			sourceTree = "<group>";
-		};
 		EB4FC58C1710DE4300CA43EC /* Token Singleton */ = {
 			isa = PBXGroup;
 			children = (
@@ -1169,7 +1153,6 @@
 				EB1FE9E917FF2B89001C2906 /* Ad */,
 				EB1FEA061800FE46001C2906 /* Feedback */,
 				EB79CC5417ED814100C16CF5 /* Front */,
-				EB3F1A0B16F7B831005052E7 /* Initial */,
 				EB25BAA016FE73F7003F142F /* Human */,
 				EBFCCF4A16987F3700A5AE73 /* Map */,
 				EB59020417D5D7D60032143C /* Marketplace */,
@@ -1674,7 +1657,6 @@
 				EB8C7D9116D17AEB00F3C721 /* cb_mono_on@2x.png in Resources */,
 				EBD27B6616D8604200DA6ACE /* 32-Looking-Glass.png in Resources */,
 				EBFD3A3A16DA96D000AD33C5 /* FeedbackViewController.xib in Resources */,
-				EBD5474F16F62E7900A195FF /* InformationViewController.xib in Resources */,
 				EB1FE9FD17FF9DA2001C2906 /* 32-Speech-Bubble@2x.png in Resources */,
 				EB97146017F2DDDB009260AE /* logo@512.png in Resources */,
 				EB25BA9016FE6D21003F142F /* 16-Flag-2.png in Resources */,
@@ -1862,7 +1844,6 @@
 				EB7FC68B16DC4225007C006D /* UIImageView+WebCache.m in Sources */,
 				EBB28D5A16E3D6BC0090AB40 /* NSCache+Assertions.m in Sources */,
 				EBDC99A816E83631009BB6D7 /* CoolBarButtonItem.m in Sources */,
-				EBD5474E16F62E7900A195FF /* InformationViewController.m in Sources */,
 				EB25BA9E16FE73F2003F142F /* HumanViewController.m in Sources */,
 				EB25BAA416FE84D6003F142F /* HumanLoginViewController.m in Sources */,
 				EB25BAA9170280F1003F142F /* LauchImageViewController.m in Sources */,
@@ -1982,7 +1963,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "ADC993DB-5DA7-4F63-AE5F-F850A63A9DFB";
+				PROVISIONING_PROFILE = "F6E8E87B-87CE-4520-A046-D9BFA61F1910";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -2005,7 +1986,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "ADC993DB-5DA7-4F63-AE5F-F850A63A9DFB";
+				PROVISIONING_PROFILE = "F6E8E87B-87CE-4520-A046-D9BFA61F1910";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -2039,7 +2020,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = InEvent;
-				PROVISIONING_PROFILE = "ADC993DB-5DA7-4F63-AE5F-F850A63A9DFB";
+				PROVISIONING_PROFILE = "F6E8E87B-87CE-4520-A046-D9BFA61F1910";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
@@ -2072,7 +2053,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = InEvent;
-				PROVISIONING_PROFILE = "ADC993DB-5DA7-4F63-AE5F-F850A63A9DFB";
+				PROVISIONING_PROFILE = "F6E8E87B-87CE-4520-A046-D9BFA61F1910";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};

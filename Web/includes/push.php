@@ -27,7 +27,7 @@ function pushNotification($data) {
     curl_close($ch); 
 }
 
-function pushURI($uri, $channel, $channelID, $value) {
+function pushURI($uri, $channel, $channelID, $value, $message = null) {
 
     // Get the singleton
     $core = Core::singleton();
@@ -42,10 +42,11 @@ function pushURI($uri, $channel, $channelID, $value) {
         "channels" => array($channel . "_" . $channelID),
         "data" => array(
             "alert" => array(
-                "body" => null
+                "body" => $message
             ),
+            "badge" => "Increment",
             "action" => "com.estudiotrilha.inevent.PUSH_NOTIFICATION",
-            // "sound" => null,
+            "sound" => "default",
             "uri" => "$uri",
             "value" => "$value"
         )

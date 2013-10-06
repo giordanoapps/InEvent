@@ -43,8 +43,9 @@
         activities = [NSArray array];
         selection = ([[HumanToken sharedInstance] isMemberAuthenticated] && [[HumanToken sharedInstance] isMemberApproved]) ? ScheduleSubscribed : ScheduleAll;
         
-        // Add notification observer for new orders
+        // Add notification observer for updates
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadData) name:@"scheduleCurrentState" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadData) name:@"activityNotification" object:nil];
     }
     return self;
 }

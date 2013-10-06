@@ -53,7 +53,6 @@
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
-
     // Deliver a notification to the proper controller
     [PushController deliverPushNotification:userInfo];
 }
@@ -61,6 +60,12 @@
 #pragma mark - Cycle
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+    NSDictionary *userInfo = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+    if (userInfo) {
+        [PushController deliverPushNotification:userInfo];
+        application.applicationIconBadgeNumber = 0;
+    }
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
@@ -135,12 +140,16 @@
 {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     [self loadEssentialData];
+    
+    application.applicationIconBadgeNumber = 0;
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     [self loadEssentialData];
+    
+    application.applicationIconBadgeNumber = 0;
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
@@ -225,7 +234,7 @@
 
 - (void)loadEssentialData {
     // Create ad
-    AdViewController *avc = [[AdViewController alloc] initWithNibName:@"AdViewController" bundle:nil];
+//    AdViewController *avc = [[AdViewController alloc] initWithNibName:@"AdViewController" bundle:nil];
 //    [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:avc animated:YES completion:nil];
 }
 
