@@ -43,7 +43,7 @@ public class DownloaderService extends IntentService implements ApiRequest.Respo
     public static final String SERVICE_NAME = InEvent.NAME + "." + DownloaderService.class.getSimpleName();
 
     // JSON hashes
-    public static final String HASH_JSON = "Hash for UriCode=%d";
+    public static final String HASH_JSON = "Hash for UriCode=%d Arguments=%s";
 
     // Extras
     private static final String EXTRA_EVENT_ID    = "extra.EVENT_ID";
@@ -239,7 +239,7 @@ public class DownloaderService extends IntentService implements ApiRequest.Respo
         {
             // Check if there are differences from the last downloaded JSON
 
-            String jsonHash = String.format(Locale.ENGLISH, HASH_JSON, requestCode);
+            String jsonHash = String.format(Locale.ENGLISH, HASH_JSON, requestCode, mIntent.getExtras().toString());
             String oldHash = mPreferences.getString(jsonHash, "Hash");
             String newHash = JsonUtils.generateHash(json);
 
