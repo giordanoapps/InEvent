@@ -604,12 +604,17 @@ public class InEventProvider extends ContentProvider
 
             db.execSQL("CREATE TABLE " + Feedback.TABLE_NAME + "(" +
                     Feedback.Columns._ID + SQLiteUtils.PRIMARY_KEY+", "+
-                    Feedback.Columns.ACTIVITY_ID + " INTEGER DEFAULT NULL, " +
-                    Feedback.Columns.EVENT_ID + " INTEGER DEFAULT NULL, " +
+                    Feedback.Columns.ACTIVITY_ID + " INTEGER UNIQUE DEFAULT NULL, " +
+                    Feedback.Columns.EVENT_ID + " INTEGER UNIQUE DEFAULT NULL, " +
                     Feedback.Columns.RATING + " INTEGER NOT NULL, " +
                     Feedback.Columns.MESSAGE + " TEXT, " +
                     Feedback.Columns.SYNCHRONIZED + SQLiteUtils.BOOLEAN +")"
             );
+            db.execSQL("CREATE UNIQUE INDEX " + Feedback.TABLE_NAME+"_index" +
+            		" ON "+Feedback.TABLE_NAME+
+            		    " ("+Feedback.Columns.EVENT_ID+
+            		    ", "+Feedback.Columns.ACTIVITY_ID+")"
+    		);
         }
     }
 }

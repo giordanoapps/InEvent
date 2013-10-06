@@ -6,6 +6,14 @@ import java.net.HttpURLConnection;
 import org.apache.http.HttpStatus;
 import org.json.JSONObject;
 
+import android.app.IntentService;
+import android.content.ContentUris;
+import android.content.ContentValues;
+import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.util.Log;
+
 import com.estudiotrilha.inevent.InEvent;
 import com.estudiotrilha.inevent.R;
 import com.estudiotrilha.inevent.Utils;
@@ -15,14 +23,6 @@ import com.estudiotrilha.inevent.content.ApiRequestCode;
 import com.estudiotrilha.inevent.content.Event;
 import com.estudiotrilha.inevent.content.Feedback;
 import com.estudiotrilha.inevent.content.LoginManager;
-
-import android.app.IntentService;
-import android.content.ContentUris;
-import android.content.ContentValues;
-import android.content.Context;
-import android.content.Intent;
-import android.database.Cursor;
-import android.util.Log;
 
 
 public class UploaderService extends IntentService implements ApiRequest.ResponseHandler
@@ -121,7 +121,7 @@ public class UploaderService extends IntentService implements ApiRequest.Respons
                         post = Activity.Api.Post.sendOpinion(rating);
                         ApiRequest.getJsonFromConnection(ApiRequestCode.ACTIVITY_SEND_OPINION, connection, this, post, false);
                     }
-                    else if (c.isNull(indexEventID))
+                    else if (c.isNull(indexActivityID))
                     {
                         // This is an Event opinion
                         long eventID = c.getLong(indexEventID);

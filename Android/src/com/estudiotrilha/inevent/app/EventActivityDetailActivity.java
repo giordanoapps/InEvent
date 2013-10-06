@@ -24,11 +24,13 @@ import android.view.View;
 import android.view.Window;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.ViewAnimator;
 
 import com.estudiotrilha.android.utils.DateUtils;
 import com.estudiotrilha.android.widget.TriangleView;
 import com.estudiotrilha.inevent.InEvent;
 import com.estudiotrilha.inevent.R;
+import com.estudiotrilha.inevent.Utils;
 import com.estudiotrilha.inevent.content.Activity;
 import com.estudiotrilha.inevent.content.ActivityMember;
 import com.estudiotrilha.inevent.content.Feedback;
@@ -169,7 +171,10 @@ public class EventActivityDetailActivity extends ActionBarActivity implements Lo
 
     private void refresh()
     {
-        DownloaderService.downloadEventActivityRating(this, getIntent().getLongExtra(EXTRA_ACTIVITY_ID, -1));
+        if (mLoginManager.isSignedIn())
+        {
+            DownloaderService.downloadEventActivityRating(this, getIntent().getLongExtra(EXTRA_ACTIVITY_ID, -1));
+        }
     }
 
 
@@ -187,6 +192,7 @@ public class EventActivityDetailActivity extends ActionBarActivity implements Lo
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data)
     {
+        ViewAnimator container = (ViewAnimator) findViewById(R.id.viewAnimator);
         if (data.moveToFirst())
         {
             ((TextView) findViewById(R.id.activity_name)).setText(data.getString(data.getColumnIndex(Activity.Columns.NAME)));
@@ -199,7 +205,7 @@ public class EventActivityDetailActivity extends ActionBarActivity implements Lo
 
             ((TextView) findViewById(R.id.activity_location)).setText(dateLocation);
 
-            ((RatingBar) findViewById(R.id.activity_rating)).setRating(data.getInt(data.getColumnIndex(ActivityMember.Columns.APPROVED)));
+            ((RatingBar) findViewById(R.id.activity_rating)).setRating(data.getInt(data.getColumnIndex(Feedback.Columns.RATING)));
             View ratingContainer = findViewById(R.id.activity_ratingContainer);
             ratingContainer.setVisibility(View.GONE);
 
@@ -225,11 +231,14 @@ public class EventActivityDetailActivity extends ActionBarActivity implements Lo
 
                 ((TriangleView) findViewById(R.id.activity_approved)).setFillColor(color);
             }
+            
+            container.setDisplayedChild(Utils.VIEW_ANIMATOR_CONTENT);
         }
         else
         {
             // Empty!
             // TODO
+            container.setDisplayedChild(Utils.VIEW_ANIMATOR_ERROR);
         }
     }
     @Override public void onLoaderReset(Loader<Cursor> loader) {}

@@ -60,8 +60,8 @@ public class Feedback
         {
             cv.put(RATING, json.getInt(RATING));
             cv.put(MESSAGE, json.optString(MESSAGE, null));
-            cv.put(EVENT_ID, eventID);
-            cv.put(ACTIVITY_ID, activityID);
+            if (eventID != -1) cv.put(EVENT_ID, eventID);
+            if (activityID != -1) cv.put(ACTIVITY_ID, activityID);
             cv.put(SYNCHRONIZED, 1);
         }
         catch (JSONException e)
