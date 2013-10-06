@@ -19,6 +19,7 @@
     [super awakeFromNib];
     [self setPlaceholder:@""];
     [self setPlaceholderColor:[UIColor lightGrayColor]];
+    [self addObserver:self forKeyPath:@"contentSize" options:(NSKeyValueObservingOptionNew) context:NULL];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textChanged:) name:UITextViewTextDidChangeNotification object:nil];
 }
 

@@ -20,6 +20,7 @@
 
 @interface QuestionViewController () {
     ODRefreshControl *refreshControl;
+    NSString *dataPath;
 }
 
 
@@ -319,6 +320,9 @@
         // Assign the data object
         self.questionData = [NSMutableArray arrayWithArray:[dictionary objectForKey:@"data"]];
         
+        // Save the path of the current file object
+        dataPath = apiController.path;
+        
         // Reload all table data
         [self.tableView reloadData];
         
@@ -334,6 +338,22 @@
     [super apiController:apiController didFailWithError:error];
     
     [refreshControl endRefreshing];
+}
+
+- (void)apiController:(APIController *)apiController didSaveForLaterWithError:(NSError *)error {
+    
+    if ([apiController.method isEqualToString:@"getQuestions"]) {
+        // Save the path of the current file object
+        dataPath = apiController.path;
+    } else {
+        if ([apiController.method isEqualToString:@"sendQuestion"]) {
+            // Save the current object
+            [[NSDictionary dictionaryWithObject:self.questionData forKey:@"data"] writeToFile:dataPath atomically:YES];
+        }
+        
+        // Load the UI controls
+        [super apiController:apiController didSaveForLaterWithError:error];
+    }
 }
 
 @end

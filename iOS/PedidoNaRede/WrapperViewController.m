@@ -165,7 +165,6 @@
     }
 }
 
-
 - (void)moveViewUp:(BOOL)moveUp withNotification:(NSNotification*)notification {
     // Move the view up/down whenever the keyboard is shown/dismissed
 
@@ -191,43 +190,6 @@
     [UIView animateWithDuration:0.2 animations:^{
         self.view.frame = rect;
     }];
-}
-
-#pragma mark - APIController Delegate
-
-- (void)apiController:(APIController *)apiController didFailWithError:(NSError *)error {
-    // Implement a method that allows every failing requisition to be reloaded
-    
-    AlertView *alertView;
-    
-    if ((int)(error.code / 100) == 5) {
-        // We have a server error
-        alertView = [[AlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"Oh oh.. It appears that our server is having some trouble. Do you want to try again?", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"No", nil) otherButtonTitle:NSLocalizedString(@"Yes", nil)];
-        
-        [self setApiController:apiController];
-        
-    } else if (error.code == 401 || error.code == 204) {
-        // We have a server error
-        alertView = [[AlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"It appears that your credentials expired! Can you log again?", nil) delegate:self cancelButtonTitle:nil otherButtonTitle:NSLocalizedString(@"Ok!", nil)];
-        
-        // We check which permission we should remove
-        if ([[HumanToken sharedInstance] isMemberAuthenticated]) {
-            [[HumanToken sharedInstance] removeMember];
-        }
-        
-        // Update the current state of the schedule controller
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"scheduleCurrentState" object:nil userInfo:nil];
-        
-        [self setApiController:nil];
-        
-    } else {
-        alertView = [[AlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"Hum, it appears that the connectivity is unstable.. Do you want to try again?", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"No", nil) otherButtonTitle:NSLocalizedString(@"Yes", nil)];
-        
-        [self setApiController:apiController];
-    }
-    
-    [alertView setErrorCode:error.code];
-    [alertView show];
 }
 
 #pragma mark - Alert View Delegate
@@ -305,6 +267,67 @@
     NSMutableArray *barButtons = [NSMutableArray arrayWithArray:self.navigationItem.leftBarButtonItems];
     [barButtons removeObject:_barButtonItem];
     [self.navigationItem setLeftBarButtonItems:barButtons animated:YES];
+}
+
+#pragma mark - APIController Delegate
+
+- (void)apiController:(APIController *)apiController didFailWithError:(NSError *)error {
+    // Implement a method that allows every failing requisition to be reloaded
+    
+    AlertView *alertView;
+    
+    if ((int)(error.code / 100) == 5) {
+        // We have a server error
+        alertView = [[AlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"Oh oh.. It appears that our server is having some trouble. Do you want to try again?", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"No", nil) otherButtonTitle:NSLocalizedString(@"Yes", nil)];
+        
+        [self setApiController:apiController];
+        
+    } else if (error.code == 401 || error.code == 204) {
+        // We have a server error
+        alertView = [[AlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"It appears that your credentials expired! Can you log again?", nil) delegate:self cancelButtonTitle:nil otherButtonTitle:NSLocalizedString(@"Ok!", nil)];
+        
+        // We check which permission we should remove
+        if ([[HumanToken sharedInstance] isMemberAuthenticated]) {
+            [[HumanToken sharedInstance] removeMember];
+        }
+        
+        // Update the current state of the schedule controller
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"scheduleCurrentState" object:nil userInfo:nil];
+        
+        [self setApiController:nil];
+        
+    } else {
+        alertView = [[AlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"Hum, it appears that the connectivity is unstable.. Do you want to try again?", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"No", nil) otherButtonTitle:NSLocalizedString(@"Yes", nil)];
+        
+        [self setApiController:apiController];
+    }
+    
+    [alertView setErrorCode:error.code];
+    [alertView show];
+}
+
+- (void)apiController:(APIController *)apiController didSaveForLaterWithError:(NSError *)error {
+    
+    CGRect rect = CGRectMake((self.view.frame.size.width - 100.0f) / 2.0f, -100.0f, 100.0f, 100.0f);
+    UIView *view = [[UIView alloc] initWithFrame:rect];
+    [view setBackgroundColor:[ColorThemeController tableViewBackgroundColor]];
+    [view setAlpha:0.95f];
+    [view.layer setCornerRadius:4.0f];
+    [view.layer setBorderColor:[[ColorThemeController tableViewCellBorderColor] CGColor]];
+
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"32-File-Cabinet"]];
+    [imageView setFrame:CGRectMake((view.frame.size.width - imageView.frame.size.width) / 2.0f, (view.frame.size.height - imageView.frame.size.height) / 2.0f, imageView.frame.size.width, imageView.frame.size.height)];
+    [view addSubview:imageView];
+    
+    [self.view addSubview:view];
+    
+    [UIView animateWithDuration:0.2 animations:^{
+        view.frame = CGRectMake(rect.origin.x, 0.0f, rect.size.width, rect.size.height);
+    } completion:^(BOOL completion){
+        [UIView animateWithDuration:0.2 delay:2.0 options:0 animations:^{
+            view.frame = CGRectMake(rect.origin.x, -120.0f, rect.size.width, rect.size.height);
+        } completion:NULL];
+    }];
 }
 
 @end

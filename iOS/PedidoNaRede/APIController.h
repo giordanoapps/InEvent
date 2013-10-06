@@ -27,14 +27,17 @@
 @optional
 - (void)apiController:(APIController *)apiController didLoadDictionaryFromServer:(NSDictionary *)dictionary;
 - (void)apiController:(APIController *)apiController didFailWithError:(NSError *)error;
+- (void)apiController:(APIController *)apiController didSaveForLaterWithError:(NSError *)error;
 
 @end
 
-@interface APIController : NSObject <NSURLConnectionDelegate>
+@interface APIController : NSObject <NSURLConnectionDelegate, NSCoding>
 
 @property (strong, nonatomic) id<APIControllerDelegate> delegate;
 // Override the maxAge checkpoint
 @property (assign, nonatomic) BOOL force;
+// Save controller for later syncing
+@property (assign, nonatomic) BOOL saveForLater;
 // Maximum allowed age of the cache
 @property (assign, nonatomic) NSTimeInterval maxAge;
 // Dictionary as a reference point
@@ -43,6 +46,8 @@
 @property (nonatomic, strong) NSString *namespace;
 // The given method for the requisition
 @property (nonatomic, strong) NSString *method;
+// Path for the current json file
+@property (nonatomic, strong, readonly) NSString *path;
 
 #pragma mark - Initializers
 - (id)initWithDelegate:(id<APIControllerDelegate>)aDelegate;

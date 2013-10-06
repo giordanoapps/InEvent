@@ -10,12 +10,15 @@
 #import "FeedbackViewController.h"
 #import "ColorThemeController.h"
 #import "UIPlaceHolderTextView.h"
+#import "ODRefreshControl.h"
 #import "HumanToken.h"
 #import "EventToken.h"
 #import "NSString+HTML.h"
 
 @interface FeedbackViewController () {
+    ODRefreshControl *refreshControl;
     BOOL hideCommentBox;
+    NSString *dataPath;
 }
 
 @property (strong, nonatomic) NSArray *stars;
@@ -51,6 +54,13 @@
     // View
     [((UIControl *)self.view) addTarget:self action:@selector(dismissKeyboard) forControlEvents:UIControlEventTouchUpInside];
     
+    // Refresh Control
+    refreshControl = [[ODRefreshControl alloc] initInScrollView:self.scrollView];
+    [refreshControl addTarget:self action:@selector(reloadData) forControlEvents:UIControlEventValueChanged];
+    
+    // Scroll view
+    [_scrollView setContentSize:CGSizeMake(_scrollView.frame.size.width, _scrollView.frame.size.height * 1.01)];
+    
     // Box
     CGRect frame = self.view.frame;
     _box.frame = CGRectMake((frame.size.width - _box.frame.size.width) / 2.0f, (frame.size.height - _box.frame.size.height) / 2.0, _box.frame.size.width, _box.frame.size.height);
@@ -84,7 +94,7 @@
     [_sendButton setTitle:NSLocalizedString(@"Send", nil) forState:UIControlStateNormal];
     
     if (hideCommentBox) [self hideCommentBox];
-    [self loadPreviousOpinion];
+    [self loadData];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -126,6 +136,27 @@
     }
 }
 
+#pragma mark - Loader Methods
+
+- (void)loadData {
+    [self forceDataReload:NO];
+}
+
+- (void)reloadData {
+    [self forceDataReload:YES];
+}
+
+- (void)forceDataReload:(BOOL)forcing {
+    // Send the information to the server
+    NSString *tokenID = [[HumanToken sharedInstance] tokenID];
+    
+    if (_type == FeedbackTypeEvent) {
+        [[[APIController alloc] initWithDelegate:self forcing:forcing] eventGetOpinionFromEvent:_referenceID withToken:tokenID];
+    } else if (_type == FeedbackTypeActivity) {
+        [[[APIController alloc] initWithDelegate:self forcing:forcing] activityGetOpinionFromActivity:_referenceID withToken:tokenID];
+    }
+}
+
 #pragma mark - Public Methods
 
 - (void)setFeedbackType:(FeedbackType)type withReference:(NSInteger)referenceID {
@@ -146,17 +177,6 @@
         [_textView setHidden:YES];
     } else {
         hideCommentBox = YES;
-    }
-}
-
-- (void)loadPreviousOpinion {
-    // Send the information to the server
-    NSString *tokenID = [[HumanToken sharedInstance] tokenID];
-    
-    if (_type == FeedbackTypeEvent) {
-        [[[APIController alloc] initWithDelegate:self forcing:YES] eventGetOpinionFromEvent:_referenceID withToken:tokenID];
-    } else if (_type == FeedbackTypeActivity) {
-        [[[APIController alloc] initWithDelegate:self forcing:YES] activityGetOpinionFromActivity:_referenceID withToken:tokenID];
     }
 }
 
@@ -193,6 +213,13 @@
     [_textView resignFirstResponder];
 }
 
+
+#pragma mark - TextView Delegate
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+    return textView.text.length + (text.length - range.length) <= 160;
+}
+
 #pragma mark - APIController Delegate
 
 - (void)apiController:(APIController *)apiController didLoadDictionaryFromServer:(NSDictionary *)dictionary {
@@ -202,6 +229,9 @@
         if ([answers count] > 0) {
             // Get the rating
             NSInteger rating = [[[answers objectAtIndex:0] objectForKey:@"rating"] integerValue];
+            
+            // Save the path of the current file object
+            dataPath = apiController.path;
             
             // Make sure that the rating has been set
             if (rating != 0) [self setRating:rating];
@@ -214,10 +244,28 @@
     }
 }
 
-#pragma mark - TextView Delegate
+- (void)apiController:(APIController *)apiController didSaveForLaterWithError:(NSError *)error {
 
-- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
-    return textView.text.length + (text.length - range.length) <= 160;
+    if ([apiController.method isEqualToString:@"getOpinion"]) {
+        // Save the path of the current file object
+        dataPath = apiController.path;
+    } else {
+        if ([apiController.method isEqualToString:@"sendOpinion"]) {
+            // Create the object
+            NSArray *opinion;
+            if (_type == FeedbackTypeEvent) {
+                opinion = @[@{@"rating": [NSNumber numberWithInteger:_rating], @"message": _textView.text}];
+            } else {
+                opinion = @[@{@"rating": [NSNumber numberWithInteger:_rating]}];
+            }
+            
+            // Save the current object
+            [[NSDictionary dictionaryWithObject:opinion forKey:@"data"] writeToFile:dataPath atomically:YES];
+        }
+        
+        // Load the UI controls
+        [super apiController:apiController didSaveForLaterWithError:error];
+    }
 }
 
 @end

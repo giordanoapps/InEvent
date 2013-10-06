@@ -56,8 +56,7 @@ function pushURI($uri, $channel, $channelID, $value) {
 }
 
 // Pages
-include_once("push/carte.php");
-include_once("push/order.php");
-include_once("push/table.php");
+include_once("push/activity.php");
+include_once("push/event.php");
 
 ?>

@@ -20,6 +20,32 @@
 
 @implementation APIController
 
+#pragma mark - Coding
+
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    if (self = [super init]) {
+        self.force = [[aDecoder decodeObjectForKey:@"force"] boolValue];
+        self.saveForLater = [[aDecoder decodeObjectForKey:@"saveForLater"] boolValue];
+        self.maxAge = [[aDecoder decodeObjectForKey:@"maxAge"] doubleValue];
+        self.userInfo = [aDecoder decodeObjectForKey:@"userInfo"];
+        self.namespace = [aDecoder decodeObjectForKey:@"namespace"];
+        self.method = [aDecoder decodeObjectForKey:@"method"];
+        self.attributes = [aDecoder decodeObjectForKey:@"attributes"];
+    }
+    
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+    [aCoder encodeObject:[NSNumber numberWithBool:self.force] forKey:@"force"];
+    [aCoder encodeObject:[NSNumber numberWithBool:self.saveForLater] forKey:@"saveForLater"];
+    [aCoder encodeObject:[NSNumber numberWithDouble:self.maxAge] forKey:@"maxAge"];
+    [aCoder encodeObject:self.userInfo forKey:@"userInfo"];
+    [aCoder encodeObject:self.namespace forKey:@"namespace"];
+    [aCoder encodeObject:self.method forKey:@"method"];
+    [aCoder encodeObject:self.attributes forKey:@"attributes"];
+}
+
 #pragma mark - Initializers
 
 - (id)initWithDelegate:(id<APIControllerDelegate>)aDelegate {
@@ -41,6 +67,7 @@
         // Set our properties
         self.delegate = aDelegate;
         self.force = aForce;
+        self.saveForLater = YES;
         self.maxAge = aMaxAge;
         self.userInfo = aUserInfo;
     }
@@ -467,6 +494,12 @@
     }
 }
 
+#pragma mark - Setters
+
+- (NSString *)path {
+    return [self generatePath];
+}
+
 #pragma mark - Setup Methods
 
 - (void)JSONObjectWithNamespace:(NSString *)namespace method:(NSString *)method attributes:(NSDictionary *)attributes {
@@ -491,6 +524,21 @@
     NSString *path = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:cleanFilename];
     
     return path;
+}
+
+- (BOOL)cacheFileForLaterSync {
+    NSString *filename = [NSString stringWithFormat:@"%f.bin", [[NSDate date] timeIntervalSince1970]];
+    
+    NSString *directory = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:@"queue"];
+    
+    // Create directory if necessary
+    BOOL isDir;
+    [[NSFileManager defaultManager] fileExistsAtPath:directory isDirectory:&isDir];
+    if (!isDir) [[NSFileManager defaultManager] createDirectoryAtPath:directory withIntermediateDirectories:NO attributes:nil error:nil];
+    
+    NSString *path = [directory stringByAppendingPathComponent:filename];
+    
+    return [NSKeyedArchiver archiveRootObject:self toFile:path];
 }
 
 #pragma mark - Connection Support
@@ -567,7 +615,7 @@
         // Kill the connection
         [connection cancel];
         
-        // Notify the delegate about the error
+        // Send a notification to the delegate
         if ([self.delegate respondsToSelector:@selector(apiController:didFailWithError:)]) {
             NSError *error = [NSError errorWithDomain:@"HTTP Code Error" code:[((NSHTTPURLResponse *)response) statusCode] userInfo:nil];
             [self.delegate apiController:self didFailWithError:error];
@@ -581,8 +629,14 @@
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
+    // Save the file for later
+    if (self.saveForLater) [self cacheFileForLaterSync];
+    
     // Notify the delegate about the error
-    if ([self.delegate respondsToSelector:@selector(apiController:didFailWithError:)]) {
+    if ([self.delegate respondsToSelector:@selector(apiController:didSaveForLaterWithError:)]) {
+        [self.delegate apiController:self didSaveForLaterWithError:error];
+        
+    } else if ([self.delegate respondsToSelector:@selector(apiController:didFailWithError:)]) {
         [self.delegate apiController:self didFailWithError:error];
     }
 }
@@ -621,6 +675,26 @@
         // Return our parsed object
         if ([self.delegate respondsToSelector:@selector(apiController:didLoadDictionaryFromServer:)]) {
             [self.delegate apiController:self didLoadDictionaryFromServer:JSON];
+        }
+    }
+    
+    // Try to send older cached files still on the queue
+    NSString *directory = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:@"queue"];
+    
+    NSDirectoryEnumerator *queueFiles = [[NSFileManager defaultManager] enumeratorAtPath:directory];
+    
+    NSString *path;
+    while (path = [queueFiles nextObject]) {
+        if ([[path pathExtension] isEqualToString:@"bin"]) {
+            // Load the object from the file system
+            APIController *apiController = [NSKeyedUnarchiver unarchiveObjectWithFile:[directory stringByAppendingPathComponent:path]];
+            // Remove the reference
+            [[NSFileManager defaultManager] removeItemAtPath:[directory stringByAppendingPathComponent:path] error:nil];
+            // Define a new delegate and launch it
+            [apiController setDelegate:nil];
+            [apiController start];
+            // Finish loop
+            break;
         }
     }
 }

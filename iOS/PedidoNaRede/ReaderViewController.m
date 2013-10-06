@@ -19,6 +19,7 @@
     NSIndexPath *hightlightedIndexPath;
     NSIndexPath *panIndexPath;
     CGPoint panStartLocation;
+    NSString *dataPath;
 }
 
 @property (nonatomic, strong) NSMutableArray *people;
@@ -72,7 +73,7 @@
     
     // Refresh Control
     refreshControl = [[ODRefreshControl alloc] initInScrollView:self.tableView];
-    [refreshControl addTarget:self action:@selector(loadData) forControlEvents:UIControlEventValueChanged];
+    [refreshControl addTarget:self action:@selector(reloadData) forControlEvents:UIControlEventValueChanged];
     
     // Table View
     [self.tableView setAllowsSelection:NO];
@@ -103,14 +104,22 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Notification
+#pragma mark - Loader
 
 - (void)loadData {
+    [self forceDataReload:NO];
+}
+
+- (void)reloadData {
+    [self forceDataReload:YES];
+}
+
+- (void)forceDataReload:(BOOL)forcing {
     
     if ([[HumanToken sharedInstance] isMemberAuthenticated]) {
         NSString *tokenID = [[HumanToken sharedInstance] tokenID];
         NSInteger activityID = [[_activityData objectForKey:@"id"] integerValue];
-        [[[APIController alloc] initWithDelegate:self forcing:YES] activityGetPeopleAtActivity:activityID withTokenID:tokenID];
+        [[[APIController alloc] initWithDelegate:self forcing:forcing] activityGetPeopleAtActivity:activityID withTokenID:tokenID];
     }
 }
 
@@ -393,6 +402,9 @@
         // Assign the data object to the companies
         self.people = [NSMutableArray arrayWithArray:[dictionary objectForKey:@"data"]];
         
+        // Save the path of the current file object
+        dataPath = apiController.path;
+        
         // Reload all table data
         [self.tableView reloadData];
         
@@ -404,6 +416,20 @@
     [super apiController:apiController didFailWithError:error];
     
     [refreshControl endRefreshing];
+}
+
+- (void)apiController:(APIController *)apiController didSaveForLaterWithError:(NSError *)error {
+    
+    if ([apiController.method isEqualToString:@"getPeople"]) {
+        // Save the path of the current file object
+        dataPath = apiController.path;
+    } else {
+        // Save the current object
+        [[NSDictionary dictionaryWithObject:self.people forKey:@"data"] writeToFile:dataPath atomically:YES];
+        
+        // Load the UI controls
+        [super apiController:apiController didSaveForLaterWithError:error];
+    }
 }
 
 @end

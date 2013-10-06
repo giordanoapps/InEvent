@@ -87,7 +87,7 @@
     [self.tableView reloadData];
 }
 
-#pragma mark - Painter
+#pragma mark - Loader
 
 - (void)loadData {
     [self forceDataReload:NO];

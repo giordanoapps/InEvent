@@ -25,6 +25,8 @@
 		EB1FE9FD17FF9DA2001C2906 /* 32-Speech-Bubble@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB1FE9FC17FF9DA2001C2906 /* 32-Speech-Bubble@2x.png */; };
 		EB1FE9FF17FF9DBE001C2906 /* 32-Speech-Bubble.png in Resources */ = {isa = PBXBuildFile; fileRef = EB1FE9FE17FF9DBE001C2906 /* 32-Speech-Bubble.png */; };
 		EB1FEA0117FF9EF7001C2906 /* 32-Create-_-Write.png in Resources */ = {isa = PBXBuildFile; fileRef = EB1FEA0017FF9EF7001C2906 /* 32-Create-_-Write.png */; };
+		EB1FEA031800C8F0001C2906 /* 32-File-Cabinet.png in Resources */ = {isa = PBXBuildFile; fileRef = EB1FEA021800C8F0001C2906 /* 32-File-Cabinet.png */; };
+		EB1FEA051800FBF4001C2906 /* 32-File-Cabinet@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB1FEA041800FBF4001C2906 /* 32-File-Cabinet@2x.png */; };
 		EB1FEB8517171FC3009834FC /* LogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1FEB8317171FC3009834FC /* LogViewController.m */; };
 		EB1FEB89171729A6009834FC /* LogItemViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1FEB88171729A6009834FC /* LogItemViewCell.m */; };
 		EB1FEB8B171729C7009834FC /* LogItemViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB1FEB8A171729C7009834FC /* LogItemViewCell.xib */; };
@@ -316,6 +318,8 @@
 		EB1FE9FC17FF9DA2001C2906 /* 32-Speech-Bubble@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Speech-Bubble@2x.png"; sourceTree = "<group>"; };
 		EB1FE9FE17FF9DBE001C2906 /* 32-Speech-Bubble.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Speech-Bubble.png"; sourceTree = "<group>"; };
 		EB1FEA0017FF9EF7001C2906 /* 32-Create-_-Write.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Create-_-Write.png"; sourceTree = "<group>"; };
+		EB1FEA021800C8F0001C2906 /* 32-File-Cabinet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-File-Cabinet.png"; sourceTree = "<group>"; };
+		EB1FEA041800FBF4001C2906 /* 32-File-Cabinet@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-File-Cabinet@2x.png"; sourceTree = "<group>"; };
 		EB1FEB8217171FC3009834FC /* LogViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LogViewController.h; path = PedidoNaRede/LogViewController.h; sourceTree = "<group>"; };
 		EB1FEB8317171FC3009834FC /* LogViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LogViewController.m; path = PedidoNaRede/LogViewController.m; sourceTree = "<group>"; };
 		EB1FEB87171729A6009834FC /* LogItemViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LogItemViewCell.h; path = PedidoNaRede/LogItemViewCell.h; sourceTree = "<group>"; };
@@ -791,6 +795,17 @@
 			path = PedidoNaRede;
 			sourceTree = "<group>";
 		};
+		EB1FEA061800FE46001C2906 /* Feedback */ = {
+			isa = PBXGroup;
+			children = (
+				EBFD3A3616DA96D000AD33C5 /* FeedbackViewController.h */,
+				EBFD3A3716DA96D000AD33C5 /* FeedbackViewController.m */,
+				EBFD3A3816DA96D000AD33C5 /* FeedbackViewController.xib */,
+			);
+			name = Feedback;
+			path = PedidoNaRede;
+			sourceTree = "<group>";
+		};
 		EB1FEB8C17172A16009834FC /* Log */ = {
 			isa = PBXGroup;
 			children = (
@@ -1152,6 +1167,7 @@
 				EB39392B16654B4400580A4E /* General */,
 				EBD055A917AF8D0A008355E8 /* Additional */,
 				EB1FE9E917FF2B89001C2906 /* Ad */,
+				EB1FEA061800FE46001C2906 /* Feedback */,
 				EB79CC5417ED814100C16CF5 /* Front */,
 				EB3F1A0B16F7B831005052E7 /* Initial */,
 				EB25BAA016FE73F7003F142F /* Human */,
@@ -1302,9 +1318,6 @@
 				EB9AB76F16A0921A005D4CAA /* DemoViewController.h */,
 				EB9AB77016A0921A005D4CAA /* DemoViewController.m */,
 				EB9AB77116A0921A005D4CAA /* DemoViewController.xib */,
-				EBFD3A3616DA96D000AD33C5 /* FeedbackViewController.h */,
-				EBFD3A3716DA96D000AD33C5 /* FeedbackViewController.m */,
-				EBFD3A3816DA96D000AD33C5 /* FeedbackViewController.xib */,
 				EB25BAA6170280EE003F142F /* LauchImageViewController.h */,
 				EB25BAA7170280EF003F142F /* LauchImageViewController.m */,
 				EB25BAA8170280F0003F142F /* LauchImageViewController.xib */,
@@ -1420,6 +1433,8 @@
 				EB7FF95717EEDDE00017E599 /* 32-Facebook-Like-2.png */,
 				EB7FF95517EEDB300017E599 /* 32-Facebook-Like-2@2x.png */,
 				EB79CC4B17ED803600C16CF5 /* 32-Favorite.png */,
+				EB1FEA021800C8F0001C2906 /* 32-File-Cabinet.png */,
+				EB1FEA041800FBF4001C2906 /* 32-File-Cabinet@2x.png */,
 				EBD27B6516D8604200DA6ACE /* 32-Looking-Glass.png */,
 				EBD8E4E817AF557A00D0F30C /* 32-Minus.png */,
 				EB1FE9EA17FF5A5C001C2906 /* 32-Pencil-_-Edit.png */,
@@ -1564,6 +1579,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EBE8D1F816A88ED8003A196A /* blackButton.png in Resources */,
+				EB1FEA051800FBF4001C2906 /* 32-File-Cabinet@2x.png in Resources */,
 				EBE8D1F916A88ED8003A196A /* blackButton@2x.png in Resources */,
 				EBE8D1FA16A88ED8003A196A /* blackButtonHighlight.png in Resources */,
 				EBE8D1FB16A88ED8003A196A /* blackButtonHighlight@2x.png in Resources */,
@@ -1654,6 +1670,7 @@
 				EB97145B17F2DDDB009260AE /* logo@76.png in Resources */,
 				EB1FE9F417FF8886001C2906 /* 32-Book-Large.png in Resources */,
 				EB97144217F2B306009260AE /* 128-user.png in Resources */,
+				EB1FEA031800C8F0001C2906 /* 32-File-Cabinet.png in Resources */,
 				EB8C7D9116D17AEB00F3C721 /* cb_mono_on@2x.png in Resources */,
 				EBD27B6616D8604200DA6ACE /* 32-Looking-Glass.png in Resources */,
 				EBFD3A3A16DA96D000AD33C5 /* FeedbackViewController.xib in Resources */,
