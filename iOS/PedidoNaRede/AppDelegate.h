@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 
 #import "MenuViewController.h"
+#import "AdViewController.h"
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate, UITabBarControllerDelegate, UINavigationControllerDelegate, PaperFoldMenuControllerDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate, UITabBarControllerDelegate, UINavigationControllerDelegate, PaperFoldMenuControllerDelegate, AdViewControllerDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) MenuViewController *menuController;

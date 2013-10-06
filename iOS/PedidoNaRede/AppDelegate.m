@@ -18,7 +18,6 @@
 #import "LauchImageViewController.h"
 #import "GAI.h"
 #import "IntelligentSplitViewController.h"
-#import "AdViewController.h"
 #import <FacebookSDK/FacebookSDK.h>
 #import <Parse/Parse.h>
 #import <GoogleMaps/GoogleMaps.h>
@@ -234,8 +233,17 @@
 
 - (void)loadEssentialData {
     // Create ad
-//    AdViewController *avc = [[AdViewController alloc] initWithNibName:@"AdViewController" bundle:nil];
-//    [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:avc animated:YES completion:nil];
+    AdViewController *avc = [[AdViewController alloc] initWithNibName:@"AdViewController" bundle:nil];
+    [avc setDelegate:self];
+}
+
+#pragma mark - Ad Delegate
+
+- (void)adController:(AdViewController *)adController shouldLoadController:(BOOL)shouldLoad {
+    // Only load the ad if there is any
+    if (shouldLoad) {
+        [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:adController animated:YES completion:nil];
+    }
 }
 
 @end

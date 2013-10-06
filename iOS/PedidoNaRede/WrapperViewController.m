@@ -230,7 +230,7 @@
         if (![self.view pointInside:[self.view convertPoint:location fromView:self.view.window] withEvent:nil]) {
             // Remove the recognizer first so it's view.window is valid.
             [self.view.window removeGestureRecognizer:sender];
-            [self dismissModalViewControllerAnimated:YES];
+            [self dismissViewControllerAnimated:YES completion:nil];
         }
     }
 }
@@ -326,7 +326,9 @@
     } completion:^(BOOL completion){
         [UIView animateWithDuration:0.2 delay:2.0 options:0 animations:^{
             view.frame = CGRectMake(rect.origin.x, -120.0f, rect.size.width, rect.size.height);
-        } completion:NULL];
+        } completion:^(BOOL completion){
+            [view removeFromSuperview];
+        }];
     }];
 }
 

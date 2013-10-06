@@ -63,6 +63,20 @@
 
     <div class="documentationFunctionBox">
         <p class="documentFunctionName">
+            <span>activity.remove(<b>tokenID</b>, <b>activityID</b>)</span>
+            <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=activity.remove&tokenID=$tokenID&activityID=1">
+        </p>
+
+        <p class="documentFunctionDescription">Remove a atividade <i>activityID</i>.</p>
+
+        <div class="documentationFunctionParametersBox">
+            <p><b>tokenID</b><sub>GET</sub> : id de autenticação </p>
+            <p><b>activityID</b><sub>GET</sub> : id da atividade </p>
+        </div>
+    </div>
+
+    <div class="documentationFunctionBox">
+        <p class="documentFunctionName">
             <span>activity.requestEnrollment(<b>tokenID</b>, <b>activityID</b>, <b>name</b> = null, <b>email</b> = null)</span>
             <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=activity.requestEnrollment&tokenID=$tokenID&activityID=1&name=null&email=null">
         </p>

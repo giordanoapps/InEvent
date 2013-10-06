@@ -33,13 +33,22 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    [self loadData];
+    // Paint the UI
+    [self paint];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - Setters
+
+- (void)setDelegate:(id<AdViewControllerDelegate>)delegate {
+    _delegate = delegate;
+    
+    [self loadData];
 }
 
 #pragma mark - Loader Methods
@@ -60,7 +69,7 @@
 
 - (void)paint {
     
-    if (adData) {
+    if (adData && [adData count] > 0) {
         // Ad piece
         NSDictionary *singleAd = [adData objectAtIndex:(arc4random() % [adData count])];
         [_piece setImageWithURL:[UtilitiesController urlWithFile:[singleAd objectForKey:@"image"]]];
@@ -87,19 +96,25 @@
         adData = [dictionary objectForKey:@"data"];
         
         // Schedule the timer
-        [NSTimer scheduledTimerWithTimeInterval:3.0f target:self selector:@selector(dismiss) userInfo:nil repeats:NO];
+        [NSTimer scheduledTimerWithTimeInterval:2.2f target:self selector:@selector(dismiss) userInfo:nil repeats:NO];
         
-        // Paint the UI
-        [self paint];
+        if ([self.delegate respondsToSelector:@selector(adController:shouldLoadController:)]) {
+            if ([adData count] > 0) {
+                [self.delegate adController:self shouldLoadController:YES];
+            } else {
+                [self.delegate adController:self shouldLoadController:NO];
+            }
+        }
     }
 }
 
 - (void)apiController:(APIController *)apiController didFailWithError:(NSError *)error {
-    
-    // CHANGE IT IN THE FUTURE
-    if (![apiController.method isEqualToString:@"seenAd"]) {
-        [super apiController:apiController didFailWithError:error];
+
+    if ([self.delegate respondsToSelector:@selector(adController:shouldLoadController:)]) {
+        [self.delegate adController:self shouldLoadController:NO];
     }
+    
+    [super apiController:apiController didFailWithError:error];
 }
 
 @end

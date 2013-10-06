@@ -20,10 +20,9 @@
 - (UIView *)createField:(UIView *)field withAttributes:(NSArray *)attributes {
     UIPlaceHolderTextView *textView = [[UIPlaceHolderTextView alloc] initWithFrame:field.frame];
     [textView setBackgroundColor:field.backgroundColor];
-    if ([attributes containsObject:@"trimPadding"]) [textView setContentInset:UIEdgeInsetsMake(-11, -8, 0, 0)];
 //    [textView.layer setBorderColor:[[ColorThemeController tableViewCellInternalBorderColor] CGColor]];
     [textView.layer setBorderColor:[[UIColor blackColor] CGColor]];
-    [textView.layer setBorderWidth:0.4f];
+//    [textView.layer setBorderWidth:0.4f];
     [textView.layer setCornerRadius:4.0f];
     
     if (textView.frame.size.height < 30.0f) {
@@ -41,10 +40,11 @@
         [textView setText:((UIButton *)field).titleLabel.text];
         [textView setTextColor:((UIButton *)field).titleLabel.textColor];
         [textView setFont:((UIButton *)field).titleLabel.font];
-        [textView setContentInset:((UIButton *)field).contentEdgeInsets];
+        UIEdgeInsets edgeInsets = ((UIButton *)field).contentEdgeInsets;
+        [textView setContentInset:UIEdgeInsetsMake(edgeInsets.top - 11, edgeInsets.left - 8, edgeInsets.bottom, edgeInsets.right)];
         
         // Horizontal
-        switch (((UIButton *)field).titleLabel.textAlignment) {
+        switch (((UIButton *)field).contentHorizontalAlignment) {
             case UIControlContentHorizontalAlignmentLeft:
                 [textView setTextAlignment:NSTextAlignmentLeft];
                 break;
@@ -84,6 +84,8 @@
         [textView setText:((UITextView *)field).text];
         [textView setFont:((UITextView *)field).font];
     }
+    
+    if ([attributes containsObject:@"trimPadding"]) [textView setContentInset:UIEdgeInsetsMake(-11, -8, 0, 0)];
     
     [[field superview] addSubview:textView];
     [field removeFromSuperview];
@@ -140,7 +142,8 @@
                 break;
         }
         
-        [label setContentEdgeInsets:((UIPlaceHolderTextView *)field).contentInset];
+        UIEdgeInsets edgeInsets = ((UIPlaceHolderTextView *)field).contentInset;
+        [label setContentEdgeInsets:UIEdgeInsetsMake(edgeInsets.top + 11, edgeInsets.left + 8, edgeInsets.bottom, edgeInsets.right)];
 
     } else if ([field isKindOfClass:[UIButton class]]) {
         [label setContentHorizontalAlignment:((UIButton *)field).contentHorizontalAlignment];

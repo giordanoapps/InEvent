@@ -75,7 +75,7 @@
                     <td>
                         <input
                             type="button"
-                            value="Remover!"
+                            value="Remover"
                             title="Remover a inscrição da pessoa e chamar a próxima na lista de espera"
                             class="singleButton toolRemove">
                     </td>

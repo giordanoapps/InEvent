@@ -109,6 +109,15 @@
     }
 }
 
+- (void)activityRemoveActivity:(NSInteger)activityID withTokenID:(NSString *)tokenID {
+    
+    if (tokenID != nil) {
+        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID, @"activityID" : [NSString stringWithFormat:@"%d", activityID]}};
+        
+        [self JSONObjectWithNamespace:@"activity" method:@"remove" attributes:attributes];
+    }
+}
+
 - (void)activityRequestEnrollmentAtActivity:(NSInteger)activityID withTokenID:(NSString *)tokenID {
 
     if (tokenID != nil) {

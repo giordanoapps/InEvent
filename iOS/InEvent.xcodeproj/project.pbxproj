@@ -2002,7 +2002,6 @@
 				CODE_SIGN_IDENTITY = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\\\\\\\"$(SRCROOT)/../../../Documents/Objective-C/facebook-ios-sdk/build\\\\\\\"",
 					"$(SRCROOT)",
 					"/Users/pedro/Sites/InEvent-dev/iOS",
 					"/Users/pedro/Documents/Objective-C/facebook-ios-sdk/build",
@@ -2035,7 +2034,6 @@
 				CODE_SIGN_IDENTITY = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\\\\\\\"$(SRCROOT)/../../../Documents/Objective-C/facebook-ios-sdk/build\\\\\\\"",
 					"$(SRCROOT)",
 					"/Users/pedro/Sites/InEvent-dev/iOS",
 					"/Users/pedro/Documents/Objective-C/facebook-ios-sdk/build",

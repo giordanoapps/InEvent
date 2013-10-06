@@ -21,7 +21,7 @@ define(modules, function($, common, cookie) {$(function() {
 // -------------------------------------- MENU -------------------------------------- //
 
 	/**
-	 * Add a item to the event
+	 * Add an activity to the event
 	 * @return {null}
 	 */
 	$("#eventContent").on("click", ".toolAdd", function() {
@@ -46,6 +46,70 @@ define(modules, function($, common, cookie) {$(function() {
 		}, 'html').fail(function(jqXHR, textStatus, errorThrown) {
 			$elem.fadeIn(300);
 		});
+
+	});
+
+	/**
+	 * Remove an activity from the event
+	 * @return {null}
+	 */
+	$("#eventContent").on("click", ".toolRemove", function(event) {
+
+		event.stopPropagation();
+
+		var $name = $(this).closest(".agendaItem").find(".name");
+		var name = $name.text();
+		var firstName = name.split(" ")[0];
+
+		// Create the input
+		$name
+			.field("createField", "input", {
+				"class" : "titleInputRemove",
+				"value" : "",
+				"placeholder": "Digite: " + firstName,
+				"data-first": firstName,
+				"data-name": name,
+			}).focus();
+
+		// Hide the current button
+		$(this).hide(300);
+
+	});
+
+	/**
+	 * Confirm removal of an activity from the event
+	 * @return {null}
+	 */
+	$("#eventContent").on("keyup", ".titleInputRemove", function() {
+
+		var code = (event.keyCode ? event.keyCode : event.which);
+		// Enter keycode
+		if (code == 13) {
+
+			var $elem = $(this);
+
+			if ($elem.val() == $elem.attr("data-first")) {
+				$elem = $elem.val($elem.attr("data-name")).field("removeField", {"class": "name"});
+
+				var $agendaItem = $elem.closest(".agendaItem");
+
+				// We request the information on the server
+				$.post('developer/api/?' + $.param({
+					method: "activity.remove",
+					activityID: $agendaItem.val(),
+					format: "html"
+				}), {},
+				function(data, textStatus, jqXHR) {
+
+					if (jqXHR.status == 200) {
+						$agendaItem.slideUp(300).remove();
+					}
+
+				}, 'html').fail(function(jqXHR, textStatus, errorThrown) {
+					$elem.fadeIn(300);
+				});
+			}
+		}
 
 	});
 

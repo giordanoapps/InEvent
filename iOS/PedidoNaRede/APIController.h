@@ -62,6 +62,7 @@
 #pragma mark - Activity
 - (void)activityCreateActivityAtEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID;
 - (void)activityEditField:(NSString *)name withValue:(NSString *)value atActivity:(NSInteger)activityID withTokenID:(NSString *)tokenID;
+- (void)activityRemoveActivity:(NSInteger)activityID withTokenID:(NSString *)tokenID;
 - (void)activityRequestEnrollmentAtActivity:(NSInteger)activityID withTokenID:(NSString *)tokenID;
 - (void)activityRequestEnrollmentForPerson:(NSInteger)personID atActivity:(NSInteger)activityID withTokenID:(NSString *)tokenID;
 - (void)activityDismissEnrollmentAtActivity:(NSInteger)activityID withTokenID:(NSString *)tokenID;

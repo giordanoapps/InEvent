@@ -10,8 +10,17 @@
 #import "WrapperViewController.h"
 #import "APIController.h"
 
+@class AdViewController;
+
+@protocol AdViewControllerDelegate <NSObject>
+@optional
+- (void)adController:(AdViewController *)adController shouldLoadController:(BOOL)shouldLoad;
+
+@end
+
 @interface AdViewController : WrapperViewController <APIControllerDelegate, UIGestureRecognizerDelegate>
 
+@property (strong, nonatomic) id<AdViewControllerDelegate> delegate;
 @property (strong, nonatomic) IBOutlet UIImageView *piece;
 
 @end

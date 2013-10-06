@@ -270,6 +270,7 @@
                         <?php } elseif ($data['approved'] == 1) { ?>
                             <input type="button" value="Inscrito" title="Sua entrada já foi confirmada" class="singleButton toolEnrolled">
                         <?php } ?>
+                        <input type="button" value="Remover" title="Remover esta atividade e todas as pessoas nela inscritas" class="singleButton toolRemove">
                     <?php } ?>
                 </div>
                 <?php if ($data['approved'] >= 0) { ?>

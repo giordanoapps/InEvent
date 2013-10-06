@@ -1520,7 +1520,8 @@ textarea, input {
 	vertical-align: middle;
 }
 
-#eventContent .agendaItem .titleInput {
+#eventContent .agendaItem .titleInput,
+#eventContent .agendaItem .titleInputRemove {
 	padding: 4.5px;
 	margin: 9px 0;
 	font-size: 90%;
@@ -1574,6 +1575,18 @@ textarea, input {
 #eventContent .agendaItem .right .controls {
 	width: 14%;
 	float: left;
+}
+
+#eventContent.editingMode .agendaItem .right .controls .singleButton {
+	display: none;
+}
+
+#eventContent .agendaItem .right .controls .toolRemove {
+	display: none;
+}
+
+#eventContent.editingMode .agendaItem .right .controls .toolRemove {
+	display: table-cell;
 }
 
 #eventContent .agendaItem .left span,
