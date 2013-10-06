@@ -229,18 +229,24 @@ public class LoginActivity extends ActionBarActivity implements ApiRequest.Respo
 
     private void loginAttempt()
     {
+        // Form checks
+        boolean cancel = false;
+
+        // email validity check
+        if (!FormUtils.isEmailValid(mEmail.getText().toString()))
+        {
+            mEmail.setError(getText(R.string.error_invalidEmail)); 
+            cancel = true;
+        }
+        if (mPassword.getText().length() < 1)
+        {
+            mPassword.setError(getText(R.string.error_login_emptyField));
+            cancel = true;
+        }
+
         if (mConfirmPassword.isShown())
         {
             // The user is creating a new register
-
-            boolean cancel = false;
-
-            // email validity check
-            if (!FormUtils.isEmailValid(mEmail.getText().toString()))
-            {
-                mEmail.setError(getText(R.string.error_invalidEmail)); 
-                cancel = true;
-            }
 
             if (mName.getText().length() < 1)
             {
@@ -248,26 +254,19 @@ public class LoginActivity extends ActionBarActivity implements ApiRequest.Respo
                 cancel = true;
             }
 
-            // password confirmation check
+            // password confirmation
             if (!mPassword.getText().toString().equals(mConfirmPassword.getText().toString()))
             {
                 mConfirmPassword.setError(getText(R.string.error_login_unmatchingPasswords));
                 cancel = true;
             }
-
-            if (cancel)
-            {
-                setUserInteractionEnabled(true);
-                return;
-            }
         }
 
-        if (mPassword.getText().length() < 1)
+        if (cancel)
         {
-            mPassword.setError(getText(R.string.error_login_emptyField));
+            setUserInteractionEnabled(true);
             return;
         }
-
         try
         {
             HttpURLConnection connection;
@@ -275,7 +274,7 @@ public class LoginActivity extends ActionBarActivity implements ApiRequest.Respo
             final String email = mEmail.getText().toString();
             final String password = mPassword.getText().toString();
 
-            
+
             // Send the API request
             if (mConfirmPassword.isShown())
             {
