@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.estudiotrilha.inevent"
     android:versionCode="8"
-    android:versionName="1.3" >
+    android:versionName="1.2.1" >
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -51,8 +51,7 @@
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_appId" />
-
-        <activity android:name="com.facebook.LoginActivity" />
+        <activity android:name="com.facebook.LoginActivity" />
 
         <!-- Parse (Push Notifications) -->
         <service android:name="com.parse.PushService" />
@@ -63,11 +62,11 @@
                 <action android:name="android.intent.action.USER_PRESENT" />
             </intent-filter>
         </receiver>
-        <!-- Garça (Push Notifications) -->
+        <!-- InEvent (Push Notifications) -->
         <receiver
             android:name="com.estudiotrilha.inevent.receiver.PushNotificationReceiver"
             android:exported="false" >
-            <intent-filter android:priority="1000" >
+            <intent-filter>
                 <action android:name="com.estudiotrilha.inevent.PUSH_NOTIFICATION" />
             </intent-filter>
         </receiver>

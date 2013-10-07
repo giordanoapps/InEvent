@@ -14,6 +14,9 @@ import com.estudiotrilha.inevent.R;
 import com.estudiotrilha.inevent.content.ApiRequest;
 import com.estudiotrilha.inevent.service.UploaderService;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.parse.Parse;
+import com.parse.ParseInstallation;
+import com.parse.PushService;
 
 
 public class SplashActivity extends Activity implements Runnable
@@ -34,6 +37,13 @@ public class SplashActivity extends Activity implements Runnable
             ApiRequest.init(getApplicationContext());
             // Sync up!
             UploaderService.sync(this);
+
+            // XXX
+//            // Initialize parse
+//            Parse.initialize(this, getString(R.string.parse_app_id), getString(R.string.parse_client_key));
+//            // Setup the push notification configs
+//            PushService.setDefaultPushCallback(this, SplashActivity.class, R.drawable.ic_stat_notification_general);
+//            ParseInstallation.getCurrentInstallation().saveInBackground();
         }
     }
 

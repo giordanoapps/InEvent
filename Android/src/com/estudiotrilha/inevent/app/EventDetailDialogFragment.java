@@ -69,10 +69,10 @@ public class EventDetailDialogFragment extends DialogFragment implements LoaderC
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View view = inflater.inflate(R.layout.fragment_event_detail, container, false);
-        if (!getResources().getBoolean(R.bool.useDialogs))
-        {
+//        if (!getResources().getBoolean(R.bool.useDialogs))
+//        {
             view.setBackgroundResource(android.R.color.background_light);
-        }
+//        }
         mViewAnimator = (ViewAnimator) view.findViewById(R.id.event_detail_container);
         return view;
     }
@@ -124,15 +124,15 @@ public class EventDetailDialogFragment extends DialogFragment implements LoaderC
 
         // Setup the title
         String title = data.getString(data.getColumnIndex(Event.Columns.NAME));
-        if (getResources().getBoolean(R.bool.useDialogs))
-        {
-            getDialog().setTitle(title);
-        }
-        else
-        {
+//        if (getResources().getBoolean(R.bool.useDialogs))
+//        {
+//            getDialog().setTitle(title);
+//        }
+//        else
+//        {
             // There is no dialog
             ((ActionBarActivity) getActivity()).getSupportActionBar().setTitle(title);
-        }
+//        }
 
         // Cover
         ImageLoader.getInstance().displayImage(
@@ -155,9 +155,9 @@ public class EventDetailDialogFragment extends DialogFragment implements LoaderC
                         data.getDouble(data.getColumnIndex(Event.Columns.LONGITUDE))
                 );
                 getFragmentManager().beginTransaction()
-                    .add(R.id.mainContent, fragment)
-                    .addToBackStack(null)
-                    .commit();
+                        .add(R.id.mainContent, fragment)
+                        .addToBackStack(null)
+                        .commit();
             }
         });
         // Date

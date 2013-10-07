@@ -516,7 +516,7 @@ public class EventActivitiesPagesFragment extends Fragment implements LoaderCall
         @Override
         public int getCount()
         {
-            return DisplayOption.values().length-1;
+            return DisplayOption.values().length;
         }
         @Override
         public Object getItem(int position)

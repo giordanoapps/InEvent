@@ -78,7 +78,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/abc_item_background_holo_light"
-                    android:drawableRight="@drawable/ic_action_location_directions"
+                    android:drawableRight="@drawable/ic_action_location_place"
                     android:hint="@string/empty_event_location"
                     android:paddingBottom="16dp"
                     android:paddingLeft="@dimen/default_textPadding"

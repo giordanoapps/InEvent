@@ -143,11 +143,17 @@ public class LoginManager
     }
     public void signOut()
     {
+        // Erase the references
+        mContext.getContentResolver().delete(ActivityMember.CONTENT_URI, ActivityMember.Columns.MEMBER_ID_FULL+"="+mMember.memberId, null);
+
         mMemberFile.delete();
         mMember = null;
 
         // broadcasts that the user has logged in
         mContext.sendBroadcast(new Intent(ACTION_LOGIN_STATE_CHANGED));
+
+        // Download this member events
+        DownloaderService.downloadEvents(mContext);
     }
 
 

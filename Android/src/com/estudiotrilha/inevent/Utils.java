@@ -46,7 +46,7 @@ public class Utils
 
     public static void initImageLoader(Context c)
     {
-        // TODO configure image loader
+        // configure image loader
         if (!ImageLoader.getInstance().isInited())
         {
             // Create default options which will be used for every displayImage(...) call
@@ -54,9 +54,9 @@ public class Utils
                 .cacheInMemory(true)
                 .cacheOnDisc(true)
                 .resetViewBeforeLoading(true)
-                .showImageOnLoading(R.drawable.ic_logo_estudio_trilha)
-                .showImageOnFail(R.drawable.ic_logo_in_event)
-                .showImageForEmptyUri(R.drawable.ic_logo_in_event)
+                .showImageOnLoading(R.drawable.ic_loading_image)
+                .showImageOnFail(R.drawable.ic_loading_image)
+                .showImageForEmptyUri(R.drawable.ic_loading_image)
                 .build();
             ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(c.getApplicationContext())
                 .tasksProcessingOrder(QueueProcessingType.LIFO)

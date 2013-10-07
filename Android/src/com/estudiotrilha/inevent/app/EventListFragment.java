@@ -161,17 +161,17 @@ public class EventListFragment extends ListFragment implements LoaderCallbacks<C
 
             // Open up a dialog to show extra info about the event
             EventDetailDialogFragment fragment = EventDetailDialogFragment.instantiate(id);
-            if (getResources().getBoolean(R.bool.useDialogs))
-            {
-                fragment.show(getFragmentManager(), null);
-            }
-            else
-            {
+//            if (getResources().getBoolean(R.bool.useDialogs))
+//            {
+//                fragment.show(getFragmentManager(), null);
+//            }
+//            else
+//            {
                 getFragmentManager().beginTransaction()
                         .replace(R.id.mainContent, fragment)
                         .addToBackStack(null)
                         .commit();
-            }
+//            }
         }
     };
 

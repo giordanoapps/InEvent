@@ -26,6 +26,9 @@ import android.widget.TextView;
 
 public class LocationMapFragment extends Fragment
 {
+    // Tag
+    private static final String TAG = "tag.LOCATION_MAP";
+
     // Arguments
     private static final String ARGS_TEXT      = "args.TEXT";
     private static final String ARGS_LATITUDE  = "args.LATITUDE";
@@ -48,6 +51,8 @@ public class LocationMapFragment extends Fragment
 
     private GoogleMap mMap;
 
+    private SupportMapFragment mMapFragment;
+
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
@@ -63,15 +68,37 @@ public class LocationMapFragment extends Fragment
     public void onViewCreated(View view, Bundle savedInstanceState)
     {
         super.onViewCreated(view, savedInstanceState);
-        final TextView text = (TextView) view.findViewById(R.id.location_text);
+
+        if (savedInstanceState == null)
+        {
+            mMapFragment = SupportMapFragment.newInstance();
+            getChildFragmentManager().beginTransaction()
+                .add(R.id.location_container, mMapFragment, TAG)
+                .commit();
+        }
+        else
+        {
+            mMapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentByTag(TAG);
+        }
+
+    }
+    @Override
+    public void onStart()
+    {
+        super.onStart();
+
+        if (getView() == null) return;
+
+        final TextView text = (TextView) getView().findViewById(R.id.location_text);
         text.setText(getArguments().getString(ARGS_TEXT));
-        
+        text.bringToFront();
+
         // setup map if needed
-        // Do a null check to confirm that we have not already instantiated the map.
         if (mMap == null)
         {
             // Try to obtain the map from the SupportMapFragment.
-            mMap = ((SupportMapFragment) getFragmentManager().findFragmentById(R.id.location_map)).getMap();
+            mMap = mMapFragment.getMap();
+
             // Check if we were successful in obtaining the map.
             if (mMap != null)
             {
@@ -82,7 +109,7 @@ public class LocationMapFragment extends Fragment
                     {
                         text.getViewTreeObserver().removeOnPreDrawListener(this);
                         mMap.setPadding(0, text.getHeight(), 0, 0);
-
+    
                         Marker marker = mMap.addMarker(getMarker());
                         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(marker.getPosition(), 16));
                         return true;
