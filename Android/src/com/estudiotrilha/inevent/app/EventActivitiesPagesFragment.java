@@ -1,6 +1,5 @@
 package com.estudiotrilha.inevent.app;
 
-import java.lang.ref.WeakReference;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -182,6 +181,21 @@ public class EventActivitiesPagesFragment extends Fragment implements LoaderCall
         mViewPager = (ViewPager) view.findViewById(R.id.eventActivity_viewPager);
         mViewPager.setAdapter(mActivitiesAdapter);
         mViewPager.setPageMargin((int) ViewUtils.dipToPixels(mEventActivity, 16));
+
+        if (savedInstanceState == null)
+        {
+            if (mPagePosition != -1)
+            {
+                // Move to the selected page
+                mViewPager.setCurrentItem(mPagePosition);
+            }
+            else
+            {
+                // Move to the preferred page, which may be today's activities list
+                mPagePosition = mActivitiesAdapter.getPreferredPage();
+                mViewPager.setCurrentItem(mPagePosition);
+            }
+        }
     }
     @Override
     public void onStart()
@@ -232,6 +246,12 @@ public class EventActivitiesPagesFragment extends Fragment implements LoaderCall
         getLoaderManager().restartLoader(LOAD_ACTIVITY, null, this);
 
         return true;
+    }
+
+
+    public EventActivityInfo[] getItemData(int position)
+    {
+        return mActivitiesAdapter.getItemData(position);
     }
 
     private void refresh()
@@ -288,17 +308,6 @@ public class EventActivitiesPagesFragment extends Fragment implements LoaderCall
                     refresh();
                 }
             }
-            else if (mPagePosition != -1)
-            {
-                // Move to the selected page
-                mViewPager.setCurrentItem(mPagePosition);
-            }
-            else
-            {
-                // Move to the preferred page, which may be today's activities list
-                mPagePosition = mActivitiesAdapter.getPreferredPage();
-                mViewPager.setCurrentItem(mPagePosition);
-            }
             break;
         }
 
@@ -336,11 +345,9 @@ public class EventActivitiesPagesFragment extends Fragment implements LoaderCall
             }
         }
 
-        private WeakReference
-                <EventActivitiesListFragment>[] mFragments;
-        private ArrayList<EventSectionHolder>   mSections;
-        private Cursor                          mCursor;
-        private DateFormat                      mDateFormat;
+        private ArrayList<EventSectionHolder> mSections;
+        private Cursor                        mCursor;
+        private DateFormat                    mDateFormat;
         // Indexes
         private int mIndexId;
         private int mIndexName;
@@ -399,7 +406,6 @@ public class EventActivitiesPagesFragment extends Fragment implements LoaderCall
             return mCursor;
         }
 
-        @SuppressWarnings("unchecked")
         public void swapCursor(Cursor c)
         {
             mSections.clear();
@@ -435,24 +441,9 @@ public class EventActivitiesPagesFragment extends Fragment implements LoaderCall
                 }
             }
 
-            // Update the pages content
-            mFragments = new WeakReference[mSections.size()];
-            for (int i = 0; i < mFragments.length; i++)
-            {
-                // Null check one
-                WeakReference<EventActivitiesListFragment> reference = mFragments[i];
-                if (reference == null) continue;
-
-                // Second null check
-                EventActivitiesListFragment fragment = reference.get();
-                if (fragment != null)
-                {
-                    fragment.updateContent(getItemData(i));
-                }
-            }
-
             // Rebuild the pages if necessary
             notifyDataSetChanged();
+            mEventActivity.getContentResolver().notifyChange(ContentUris.withAppendedId(Event.CONTENT_URI, getArguments().getLong(ARGS_EVENT_ID)), null);
         }
 
         
@@ -460,18 +451,18 @@ public class EventActivitiesPagesFragment extends Fragment implements LoaderCall
         @Override
         public Fragment getItem(int position)
         {
-            EventActivityInfo[] data = getItemData(position);
-
             long eventID = getArguments().getLong(ARGS_EVENT_ID);
             String header = getPageTitle(position).toString();
-            EventActivitiesListFragment fragment = EventActivitiesListFragment.instantiate(eventID, data, header);
-            mFragments[position] = new WeakReference<EventActivitiesListFragment>(fragment);
+            EventActivitiesListFragment fragment = EventActivitiesListFragment.instantiate(eventID, header, position);
 
             return fragment;
         }
 
         private EventActivityInfo[] getItemData(int position)
         {
+            // Out of bounds check
+            if (mSections.size() <= position) return null;
+
             // Build up the list info
             // Get the starting and end position
             int start = mSections.get(position).startingPosition;
@@ -525,7 +516,7 @@ public class EventActivitiesPagesFragment extends Fragment implements LoaderCall
         @Override
         public int getCount()
         {
-            return DisplayOption.values().length;
+            return DisplayOption.values().length-1;
         }
         @Override
         public Object getItem(int position)

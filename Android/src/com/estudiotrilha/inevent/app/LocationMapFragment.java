@@ -72,22 +72,22 @@ public class LocationMapFragment extends Fragment
         {
             // Try to obtain the map from the SupportMapFragment.
             mMap = ((SupportMapFragment) getFragmentManager().findFragmentById(R.id.location_map)).getMap();
-            mMap.setMyLocationEnabled(true);
-            text.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-                @Override
-                public boolean onPreDraw()
-                {
-                    text.getViewTreeObserver().removeOnPreDrawListener(this);
-                    mMap.setPadding(0, text.getHeight(), 0, 0);
-
-                    return true;
-                }
-            });
             // Check if we were successful in obtaining the map.
             if (mMap != null)
             {
-                Marker marker = mMap.addMarker(getMarker());
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(marker.getPosition(), 18));
+                mMap.setMyLocationEnabled(true);
+                text.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+                    @Override
+                    public boolean onPreDraw()
+                    {
+                        text.getViewTreeObserver().removeOnPreDrawListener(this);
+                        mMap.setPadding(0, text.getHeight(), 0, 0);
+
+                        Marker marker = mMap.addMarker(getMarker());
+                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(marker.getPosition(), 16));
+                        return true;
+                    }
+                });
             }
             else
             {

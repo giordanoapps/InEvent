@@ -157,6 +157,7 @@ public class AttendanceFragment extends ListFragment implements LoaderCallbacks<
     public void onViewCreated(View view, Bundle savedInstanceState)
     {
         super.onViewCreated(view, savedInstanceState);
+        view.setBackgroundResource(android.R.color.background_light);
         // Add the adapter to the list
         setListAdapter(mPeopleAdapter);
 
@@ -191,6 +192,7 @@ public class AttendanceFragment extends ListFragment implements LoaderCallbacks<
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
     {
+        menu.clear();
         inflater.inflate(R.menu.fragment_attendance, menu);
 
         // Setup the search text entry

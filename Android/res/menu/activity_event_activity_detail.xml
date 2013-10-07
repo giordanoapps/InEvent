@@ -16,6 +16,14 @@
         android:orderInCategory="5"
         trilha:showAsAction="never"/>
 
+    <item
+        android:id="@+id/action_eventActivity_managePeople"
+        android:title="@string/action_eventActivity_managePeople"
+        android:visible="false"
+        android:orderInCategory="8"
+        trilha:showAsAction="never"/>
+
+
     <item android:id="@+id/action_location"
         android:title="@string/action_location"
         android:icon="@drawable/ic_action_location_place"

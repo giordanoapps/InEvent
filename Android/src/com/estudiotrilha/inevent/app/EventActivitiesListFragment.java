@@ -4,15 +4,18 @@ import java.io.Serializable;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
+import android.content.ContentUris;
+import android.database.ContentObserver;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.SectionIndexer;
@@ -25,21 +28,21 @@ import com.estudiotrilha.inevent.content.Event;
 import com.estudiotrilha.inevent.content.LoginManager;
 
 
-public class EventActivitiesListFragment extends Fragment implements OnItemClickListener, OnItemLongClickListener
+public class EventActivitiesListFragment extends Fragment implements OnItemClickListener
 {
     // Arguments
-    private static final String ARGS_EVENT_ID    = "args.EVENT_ID";
-    private static final String ARGS_LIST_HEADER = "args.LIST_HEADER";
-    private static final String ARGS_LIST_DATA   = "args.LIST_DATA";
+    private static final String ARGS_EVENT_ID      = "args.EVENT_ID";
+    private static final String ARGS_LIST_HEADER   = "args.LIST_HEADER";
+    private static final String ARGS_LIST_POSITION = "args.LIST_POSITION";
 
 
-    public static EventActivitiesListFragment instantiate(long eventID, EventActivityInfo[] data, String header)
+    public static EventActivitiesListFragment instantiate(long eventID, String header, int position)
     {
         // Prepare the arguments
         Bundle args = new Bundle();
         args.putLong(ARGS_EVENT_ID, eventID);
         args.putString(ARGS_LIST_HEADER, header);
-        args.putSerializable(ARGS_LIST_DATA, data);
+        args.putInt(ARGS_LIST_POSITION, position);
 
         // Create the fragment
         EventActivitiesListFragment fragment = new EventActivitiesListFragment();
@@ -49,10 +52,28 @@ public class EventActivitiesListFragment extends Fragment implements OnItemClick
     }
 
 
-    private EventActivitiesListAdapter mActivitiesAdapter;
+    private EventActivitiesListAdapter   mActivitiesAdapter;
+    private EventActivitiesPagesFragment mPageContainer;
 
 
-    private EventActivity mEventActivity;
+    private EventActivity   mEventActivity;
+    private ContentObserver mContentObserver = new ContentObserver(new Handler()) {
+        @Override
+        public void onChange(boolean selfChange)
+        {
+            super.onChange(selfChange);
+            mActivitiesAdapter.setData(mPageContainer.getItemData(getArguments().getInt(ARGS_LIST_POSITION)));
+            View view = getView();
+            if (view != null)
+            {
+                boolean empty = mActivitiesAdapter.isEmpty();
+                view.findViewById(empty ? android.R.id.content : android.R.id.empty)
+                    .setVisibility(View.GONE);
+                view.findViewById(!empty ? android.R.id.content : android.R.id.empty)
+                    .setVisibility(View.VISIBLE);
+            }
+        }
+    };
 
 
     @Override
@@ -65,11 +86,18 @@ public class EventActivitiesListFragment extends Fragment implements OnItemClick
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        mPageContainer = (EventActivitiesPagesFragment) getFragmentManager().findFragmentByTag(EventActivity.TAG_ACTIVITY_PAGER);
 
         // Setup the adapters
         mActivitiesAdapter = new EventActivitiesListAdapter();
-        Serializable object = getArguments().getSerializable(ARGS_LIST_DATA);
-        if (object != null && object instanceof EventActivityInfo[]) mActivitiesAdapter.setData((EventActivityInfo[]) object);
+        mActivitiesAdapter.setData(mPageContainer.getItemData(getArguments().getInt(ARGS_LIST_POSITION)));
+        mEventActivity.getContentResolver().registerContentObserver(ContentUris.withAppendedId(Event.CONTENT_URI, getArguments().getLong(ARGS_EVENT_ID)), true, mContentObserver);
+    }
+    @Override
+    public void onDestroy()
+    {
+        super.onDestroy();
+        mEventActivity.getContentResolver().unregisterContentObserver(mContentObserver);
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -85,8 +113,6 @@ public class EventActivitiesListFragment extends Fragment implements OnItemClick
 
         // Setup callbacks
         list.setOnItemClickListener(this);
-        list.setOnItemLongClickListener(this);
-        
 
         // Add the list content
         list.setAdapter(mActivitiesAdapter);
@@ -101,32 +127,7 @@ public class EventActivitiesListFragment extends Fragment implements OnItemClick
     public void onItemClick(AdapterView<?> adapter, View v, int position, long id)
     {
         // Show the Activity details
-        mEventActivity.startActivity(EventActivityDetailActivity.newInstance(mEventActivity, id, getArguments().getLong(ARGS_EVENT_ID), mEventActivity.isApproved()));
-    }
-    @Override
-    public boolean onItemLongClick(AdapterView<?> adapter, View v, int position, long id)
-    {
-        if (mEventActivity.getRoleId() != Event.ROLE_ATTENDEE)
-        {
-            // Open up the attendance control
-            getFragmentManager().beginTransaction()
-                    .replace(R.id.mainContent, AttendanceFragment.instantiate(id, getArguments().getLong(ARGS_EVENT_ID)))
-                    .addToBackStack(null)
-                    .commit();
-
-            return true;
-        }
-
-        return false;
-    }
-
-    public void updateContent(EventActivityInfo[] data)
-    {
-        // null check
-        if (data == null) return;
-
-        mActivitiesAdapter.setData(data);
-        getArguments().putSerializable(ARGS_LIST_DATA, data);
+        mEventActivity.startActivity(EventActivityDetailActivity.newInstance(mEventActivity, id, getArguments().getLong(ARGS_EVENT_ID), mEventActivity.isApproved(), mEventActivity.getRoleId()));
     }
 
 
@@ -263,6 +264,7 @@ public class EventActivitiesListFragment extends Fragment implements OnItemClick
         public String toString()
         {
             Calendar date = DateUtils.calendarFromTimestampInGMT(dateBegin);
+            date.setTimeZone(TimeZone.getDefault());
             return Integer.toString(date.get(Calendar.HOUR_OF_DAY));
         }
     }

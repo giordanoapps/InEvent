@@ -46,6 +46,7 @@ import com.estudiotrilha.inevent.content.Activity;
 import com.estudiotrilha.inevent.content.ActivityMember;
 import com.estudiotrilha.inevent.content.ApiRequest;
 import com.estudiotrilha.inevent.content.ApiRequestCode;
+import com.estudiotrilha.inevent.content.Event;
 import com.estudiotrilha.inevent.content.Feedback;
 import com.estudiotrilha.inevent.content.LoginManager;
 import com.estudiotrilha.inevent.content.SyncBroadcastManager;
@@ -65,13 +66,15 @@ public class EventActivityDetailActivity extends ActionBarActivity implements Lo
     private static final String EXTRA_EVENT_ID       = "extra.EVENT_ID";
     private static final String EXTRA_ACTIVITY_ID    = "extra.ACTIVITY_ID";
     private static final String EXTRA_EVENT_APPROVED = "extra.EVENT_APPROVED";
+    private static final String EXTRA_EVENT_ROLE_ID  = "extra.EVENT_ROLE_ID";
 
-    public static Intent newInstance(Context context, long activityID, long eventID, boolean eventApproved)
+    public static Intent newInstance(Context context, long activityID, long eventID, boolean eventApproved, int eventRoleId)
     {
         Intent intent = new Intent(context, EventActivityDetailActivity.class);
         intent.putExtra(EXTRA_ACTIVITY_ID, activityID);
         intent.putExtra(EXTRA_EVENT_ID, eventID);
         intent.putExtra(EXTRA_EVENT_APPROVED, eventApproved);
+        intent.putExtra(EXTRA_EVENT_ROLE_ID, eventRoleId);
 
         return intent;
     }
@@ -177,12 +180,17 @@ public class EventActivityDetailActivity extends ActionBarActivity implements Lo
             switch (mInfo.approved)
             {
             case APPROVED_OK:
-                menu.findItem(R.id.action_eventActivity_unenroll).setVisible(true && eventApproval);            
+                menu.findItem(R.id.action_eventActivity_unenroll).setVisible(eventApproval);            
                 break;
 
             case APPROVED_NOT:
-                menu.findItem(R.id.action_eventActivity_enroll).setVisible(true && eventApproval);
+                menu.findItem(R.id.action_eventActivity_enroll).setVisible(eventApproval);
                 break;
+            }
+
+            if (eventApproval && getIntent().getIntExtra(EXTRA_EVENT_ROLE_ID, Event.ROLE_ATTENDEE) != Event.ROLE_ATTENDEE)
+            {
+                menu.findItem(R.id.action_eventActivity_managePeople).setVisible(true);
             }
         }
         return true;
@@ -202,7 +210,7 @@ public class EventActivityDetailActivity extends ActionBarActivity implements Lo
             // Show the map
             LocationMapFragment fragment = LocationMapFragment.instantiate(mInfo.location, mInfo.latitude, mInfo.longitude);
             getSupportFragmentManager().beginTransaction()
-                .add(R.id.mainContent, fragment) // XXX should this be like that?
+                .add(R.id.mainContent, fragment)
                 .addToBackStack(null)
                 .commit();
             return true;
@@ -234,6 +242,14 @@ public class EventActivityDetailActivity extends ActionBarActivity implements Lo
                 Log.e(InEvent.NAME, "Could not create connection for activity.dismissEnrollment(tokenId, activityID="+activityID+")", e);
             }
             return true;
+
+        case R.id.action_eventActivity_managePeople:
+            // Open up the attendance control
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.mainContent, AttendanceFragment.instantiate(getIntent().getLongExtra(EXTRA_ACTIVITY_ID, -1), getIntent().getLongExtra(EXTRA_EVENT_ID, -1)))
+                    .addToBackStack(null)
+                    .commit();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -263,30 +279,23 @@ public class EventActivityDetailActivity extends ActionBarActivity implements Lo
     public void onLoadFinished(Loader<Cursor> loader, Cursor data)
     {
         ViewAnimator container = (ViewAnimator) findViewById(R.id.viewAnimator);
-        if (data.moveToFirst())
-        {
-            // Retrieve the activity info
-            mInfo.name = data.getString(data.getColumnIndex(Activity.Columns.NAME));
-            mInfo.description = data.getString(data.getColumnIndex(Activity.Columns.DESCRIPTION));
-            mInfo.location = data.getString(data.getColumnIndex(Activity.Columns.LOCATION));
-            mInfo.latitude = data.getDouble(data.getColumnIndex(Activity.Columns.LATITUDE));
-            mInfo.longitude = data.getDouble(data.getColumnIndex(Activity.Columns.LONGITUDE));
-            mInfo.approved = data.getInt(data.getColumnIndex(ActivityMember.Columns.APPROVED));
-            mInfo.rating = data.getInt(data.getColumnIndex(Feedback.Columns.RATING));
-            mInfo.dateBegin = DateUtils.calendarFromTimestampInGMT(data.getLong(data.getColumnIndex(Activity.Columns.DATE_BEGIN))).getTime();
-            mInfo.dateEnd = DateUtils.calendarFromTimestampInGMT(data.getLong(data.getColumnIndex(Activity.Columns.DATE_END))).getTime();
+        data.moveToFirst();
 
-            setupViewInfo();
-            supportInvalidateOptionsMenu();
+        // Retrieve the activity info
+        mInfo.name = data.getString(data.getColumnIndex(Activity.Columns.NAME));
+        mInfo.description = data.getString(data.getColumnIndex(Activity.Columns.DESCRIPTION));
+        mInfo.location = data.getString(data.getColumnIndex(Activity.Columns.LOCATION));
+        mInfo.latitude = data.getDouble(data.getColumnIndex(Activity.Columns.LATITUDE));
+        mInfo.longitude = data.getDouble(data.getColumnIndex(Activity.Columns.LONGITUDE));
+        mInfo.approved = data.getInt(data.getColumnIndex(ActivityMember.Columns.APPROVED));
+        mInfo.rating = data.getInt(data.getColumnIndex(Feedback.Columns.RATING));
+        mInfo.dateBegin = DateUtils.calendarFromTimestampInGMT(data.getLong(data.getColumnIndex(Activity.Columns.DATE_BEGIN))).getTime();
+        mInfo.dateEnd = DateUtils.calendarFromTimestampInGMT(data.getLong(data.getColumnIndex(Activity.Columns.DATE_END))).getTime();
 
-            container.setDisplayedChild(Utils.VIEW_ANIMATOR_CONTENT);
-        }
-        else
-        {
-            // Empty!
-            // TODO
-            container.setDisplayedChild(Utils.VIEW_ANIMATOR_ERROR);
-        }
+        setupViewInfo();
+        supportInvalidateOptionsMenu();
+
+        container.setDisplayedChild(Utils.VIEW_ANIMATOR_CONTENT);
     }
     private void setupViewInfo()
     {

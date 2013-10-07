@@ -18,6 +18,9 @@ import com.estudiotrilha.inevent.content.LoginManager;
 
 public class EventActivity extends SlidingMenuBaseActivity
 {
+    // Tags
+    public static final String TAG_ACTIVITY_PAGER = "tag.ACTIVITY_PAGER";
+
     // Extras
     private static final String EXTRA_EVENT_ID = "extra.EVENT_ID";
 
@@ -51,7 +54,7 @@ public class EventActivity extends SlidingMenuBaseActivity
             // Event activities Fragment
             Fragment fragment = EventActivitiesPagesFragment.instantiate(eventID);
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.mainContent, fragment)
+                    .add(R.id.mainContent, fragment, TAG_ACTIVITY_PAGER)
                     .commit();
         }
 
