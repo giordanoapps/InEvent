@@ -35,9 +35,6 @@ function pushURI($uri, $channel, $channelID, $value, $message = null) {
     // Extract the channel from the uri
     if ($channel == null) $channel = substr($uri, 0, strpos($uri, "/"));
 
-    // Send a update to our global channel, company
-    if ($channel != "event") pushURI($uri, "event", $core->eventID, $value);
-
     $data = array(
         "channels" => array($channel . "_" . $channelID),
         "data" => array(
@@ -59,5 +56,6 @@ function pushURI($uri, $channel, $channelID, $value, $message = null) {
 // Pages
 include_once("push/activity.php");
 include_once("push/event.php");
+include_once("push/person.php");
 
 ?>

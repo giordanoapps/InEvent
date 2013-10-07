@@ -101,4 +101,29 @@
     }
 }
 
+- (BOOL)verifyAd {
+    
+    AdViewController *avc = [[AdViewController alloc] initWithNibName:@"AdViewController" bundle:nil];
+    [avc setDelegate:self];
+    
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        avc.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+        avc.modalPresentationStyle = UIModalPresentationCurrentContext;
+    } else {
+        avc.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+        avc.modalPresentationStyle = UIModalPresentationFullScreen;
+    }
+        
+    return YES;
+}
+
+#pragma mark - Ad Delegate
+
+- (void)adController:(AdViewController *)adController shouldLoadController:(BOOL)shouldLoad {
+    // Only load the ad if there is any
+    if (shouldLoad) {
+        [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:adController animated:YES completion:nil];
+    }
+}
+
 @end

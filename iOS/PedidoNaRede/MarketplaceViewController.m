@@ -172,10 +172,7 @@
     // We set some essential data
     NSDictionary *dictionary = [self.events objectAtIndex:indexPath.row];
     
-    // Allow login if the member is approved or just wants to see
-//    if ([[dictionary objectForKey:@"approved"] integerValue] == 1 || ![[HumanToken sharedInstance] isMemberAuthenticated]) {
-    
-    // Properties
+    // Get some properties
     NSInteger eventID = [[dictionary objectForKey:@"id"] integerValue];
     
     [[EventToken sharedInstance] setEventID:eventID];

@@ -323,8 +323,8 @@
 			if ($sucess) {
 				// Return its data
 				if ($format == "json") {
-					$data["activityID"] = $activityID;
-					echo json_encode($data);
+					$result = getActivitiesForMemberAtActivityQuery($activityID, $personID);
+					echo printInformation("activity", $result, true, 'json');
 				} elseif ($format == "html") {
 					$result = getActivitiesForMemberAtActivityQuery($activityID, $personID);
 					printAgendaItem(mysql_fetch_assoc($result), "member");
@@ -518,8 +518,8 @@
 			if ($delete) {
 				// Return its data
 				if ($format == "json") {
-					$data["activityID"] = $activityID;
-					echo json_encode($data);
+					$result = getActivitiesForMemberAtActivityQuery($activityID, $personID);
+					echo printInformation("activity", $result, true, 'json');
 				} elseif ($format == "html") {
 					$result = getActivitiesForMemberAtActivityQuery($activityID, $core->memberID);
 					printAgendaItem(mysql_fetch_assoc($result), "member");

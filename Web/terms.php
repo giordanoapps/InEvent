@@ -23,9 +23,9 @@
 						
 						<p>InEvent: Plataforma composta por uma aplicação web localizada em "http://www.inevent.us", um aplicativo oficial para a plataforma iOS nomeado "InEvent" e um aplicativo oficial para a plataforma Android nomeado "InEvent", assim como todos seus serviços associados não referidos aqui.</p>
 						
-						<p>Estabelecimento: Lugar em que a plataforma está cadastrado e em operação, seja este um local público ou privado, de variadas atividades comerciais assim como referido na seção de cadastro nos campos "nome da companhia" e identificada no campo "cnpj" através de seu CNPJ.</p>
+						<p>Evento: Local em que a plataforma está cadastrada e em operação, seja este um local público ou privado, de variadas atividades comerciais assim como referido na seção de cadastro nos campos "nome do evento" e "endereço".</p>
 						
-						<p>Contratado: Pessoa Jurídica aqui referida por Estúdio Trilha, empresa cadastrada sobre o MEI 16.916.147/0001-66, localiza em na cidade de São Carlos, no Estado de São Paulo, território brasileiro. Todos os direitos da plataforma InEvent e seus serviços associados são direito exclusivo de acesso ao Estúdio Trilha.</p>
+						<p>Contratado: Pessoa Jurídica aqui referida por Estúdio Trilha, empresa cadastrada sobre o MEI 16.916.147/0001-66, localizada na cidade de São Carlos, no Estado de São Paulo, território brasileiro. Todos os direitos da plataforma InEvent e seus serviços associados são direito exclusivo de acesso ao Estúdio Trilha.</p>
 						
 						<p>Contratante: Pessoa Jurídica que, dentro dos termos da lei, preencheu o formulário de cadastro para obter o InEvent em seu estabelecimento comercial.</p>
 						
@@ -37,18 +37,13 @@
 						
 						<p>Privacidade: Todas as informações associadas as ações realizadas dentro do estabelecimento são confidenciais, ficando ao Estúdio Trilha responsável em não compartilhá-las sob nenhuma circunstância.</p>
 						
-						
 						<h3>Pessoa Jurídica</h3>
 						
-						<p>Licença: O InEvent concede a você uma licença limitada, não exclusiva, intransferível para acessar e usar o InEvent apenas no local estabelecido como restaurante parceiro cujas informações foram fornecidas no momento de cadastro. Fica a cargo do contratante a responsabilidade de efetuar os pagamentos para obtenção do serviço em plena forma e funcionamento.</p>
+						<p>Licença: O InEvent concede a você uma licença limitada, não exclusiva, intransferível para acessar e usar o InEvent apenas no local estabelecido do evento cujas informações foram fornecidas no momento de cadastro. Fica a cargo do contratante a responsabilidade de efetuar os pagamentos para obtenção do serviço em plena forma e funcionamento.</p>
 						
-						<p>Utilização: Para utilizar a plataforma InEvent, é necessário que o contratante efetue um cadastro contendo informações referentes a sua empresa. Neste cadastro, o contratante certifica-se que fornecerá todos os dados corretos e verdadeiros, sob pena do crime de falsidade ideológica. Após o cadastro ser efetuado, é necessário ter um dispositivo compatível (dotado de navegador <a href="http://www.google.com/intl/pt-BR/chrome/browser/">Google Chrome</a>) e utilizar diretamente a aplicação web localizada única e exclusivamente em "http://www.inevent.us". O Estúdio Trilha reserva-se no direito de revogar acesso a plataforma caso o número de acessos e dados seja superior ao volume considerado adequado da empresa, embora ressaltamos que tal fato nunca ocorreu.</p>
+						<p>Utilização: Para utilizar a plataforma InEvent, é necessário que o contratante efetue um cadastro contendo informações referentes a seu evento. Neste cadastro, o contratante certifica-se que fornecerá todos os dados corretos e verdadeiros, sob pena do crime de falsidade ideológica. Após o cadastro ser efetuado, é necessário ter um dispositivo compatível (dotado de navegador <a href="http://www.google.com/intl/pt-BR/chrome/browser/">Google Chrome</a>) e utilizar diretamente a aplicação web localizada única e exclusivamente em "http://www.inevent.us". O Estúdio Trilha reserva-se no direito de revogar acesso a plataforma caso o número de acessos e dados seja superior ao volume considerado adequado da empresa, embora ressaltamos que tal fato nunca ocorreu.</p>
 						
-						<p>Plano: O contratante poderá escolher entre os planos referidos na página inicial da plataforma InEvent, sendo suas durações referidas abaixo apenas por razões legais:</p>
-						<ul>
-							<li>Mensal: licença oferecida pelo período que se inicia no dia do mês contratado e se encerra um dia antes do dia equivalente no mês seguinte.</li>
-							<li>Anual: licença oferecida pelo período de 365 dias.</li>
-						<ul>
+						<p>Plano: Para acesso a plataforma InEvent durante a realização de seu evento, o contratante deverá efetuar o pagamento equivalente aos serviços contratados, podendo este ser substituído por contrato oferecido pela equipe do InEvent.</p>
 						
 						<p>Valores: Os valores das contas definidas acima podem variar ao longo do tempo, ficando o contratante com direito ao valor apenas no prazo máximo ao equivalente a duração de seu plano, podendo, após esse período, ter seu valor modificado, caso nenhum outro acordo esteja em vigor.</p>
 						

@@ -225,25 +225,14 @@
     [application registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound];
 }
 
-#pragma mark - Store
+#pragma mark - Data
 
 - (void)storeEssentialData {
     
 }
 
 - (void)loadEssentialData {
-    // Create ad
-    AdViewController *avc = [[AdViewController alloc] initWithNibName:@"AdViewController" bundle:nil];
-    [avc setDelegate:self];
-}
-
-#pragma mark - Ad Delegate
-
-- (void)adController:(AdViewController *)adController shouldLoadController:(BOOL)shouldLoad {
-    // Only load the ad if there is any
-    if (shouldLoad) {
-        [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:adController animated:YES completion:nil];
-    }
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"verify" object:nil userInfo:@{@"type": @"ad"}];
 }
 
 @end

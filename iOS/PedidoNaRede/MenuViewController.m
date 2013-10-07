@@ -80,24 +80,27 @@
         
         NSString *type = [userInfo objectForKey:@"type"];
         
-        if ([type isEqualToString:@"person"]) {
+        if ([type isEqualToString:@"ad"]) {
+            // Load a single ad
+            [self performSelector:@selector(verifyAd) withObject:nil afterDelay:0.2f];
+            
+        } else if ([type isEqualToString:@"person"]) {
             // Verify if company is already selected
-            [self performSelector:@selector(verifyPerson) withObject:nil afterDelay:0];
+            [self performSelector:@selector(verifyPerson) withObject:nil afterDelay:0.1f];
             
         } else if ([type isEqualToString:@"enterprise"]) {
             // Verify if company is already selected
-            [self performSelector:@selector(verifyEvent) withObject:nil afterDelay:0];
+            [self performSelector:@selector(verifyEvent) withObject:nil afterDelay:0.1f];
             
-        } else if ([type isEqualToString:@"person"]) {
+        } else if ([type isEqualToString:@"feedback"]) {
             // Load the feedback controler
-            [self performSelector:@selector(verifyFeedback) withObject:nil afterDelay:0];
+            [self performSelector:@selector(verifyFeedback) withObject:nil afterDelay:0.1f];
             
         } else if ([type isEqualToString:@"menu"]) {
             // Update the menu
             [self performSelector:@selector(reloadMenu)];
         }
     }
-    
 }
 
 #pragma mark - Table View Delegate

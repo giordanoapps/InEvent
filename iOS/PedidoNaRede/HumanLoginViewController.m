@@ -16,6 +16,9 @@
 #import "HumanToken.h"
 #import "NSString+HTML.h"
 #import "EventToken.h"
+#import "GAI.h"
+#import "GAIDictionaryBuilder.h"
+#import <Parse/Parse.h>
 
 @interface HumanLoginViewController ()
 
@@ -189,11 +192,6 @@
 
 - (void)hideFieldBox {
     [self toggleFieldBoxWithDuration:0.5 andHideIt:YES];
-    
-    // Resign the keyboard on all the fields
-    [_personEmail resignFirstResponder];
-    [_personName resignFirstResponder];
-    [_personPassword resignFirstResponder];
 }
 
 - (void)toggleFieldBox:(id)sender {
@@ -209,6 +207,12 @@
 
 - (void)toggleFieldBoxWithDuration:(CGFloat)duration andHideIt:(BOOL)hide {
     
+    // Resign the keyboard on all the fields
+    [_personEmail resignFirstResponder];
+    [_personName resignFirstResponder];
+    [_personPassword resignFirstResponder];
+    
+    // Create the frames
     CGRect frameBox, frameInternal;
     
     if (_bottomInternalBox.frame.origin.y == 0.0 && hide == NO) {
@@ -310,11 +314,23 @@
             // Remove the current event so the information can be reloaded
             [[EventToken sharedInstance] removeEvent];
             
+            // Get some properties
+            NSInteger memberID = [[dictionary objectForKey:@"memberID"] integerValue];
+            
             // Notify the singleton that we have authenticated the user
             [[HumanToken sharedInstance] setTokenID:tokenID];
             [[HumanToken sharedInstance] setWorkingEvents:events];
-            [[HumanToken sharedInstance] setMemberID:[[dictionary objectForKey:@"memberID"] integerValue]];
+            [[HumanToken sharedInstance] setMemberID:memberID];
             [[HumanToken sharedInstance] setName:[[dictionary objectForKey:@"name"] stringByDecodingHTMLEntities]];
+            
+            // Notify our tracker about the new event
+            id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+            [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"person" action:@"signIn" label:@"iOS" value:[NSNumber numberWithInteger:memberID]] build]];
+            
+            // Notify our tracker about the new event
+            PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+            [currentInstallation addUniqueObject:[NSString stringWithFormat:@"person_%d", memberID] forKey:@"channels"];
+            [currentInstallation saveEventually];
             
             // Update the current state of the schedule controller
             [[NSNotificationCenter defaultCenter] postNotificationName:@"scheduleCurrentState" object:nil userInfo:nil];
@@ -337,6 +353,9 @@
         } else {
             // Set loaded message on button
             [_personAction setTitle:NSLocalizedString(@"Try Again :(", nil) forState:UIControlStateNormal];
+            
+            // Reset password
+            [_personPassword setText:@""];
         }
     } else if ([apiController.method isEqualToString:@"getEvents"]) {
         

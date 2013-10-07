@@ -7,10 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AdViewController.h"
 
-@interface UIViewController (Present)
+@interface UIViewController (Present) <AdViewControllerDelegate>
 
 - (BOOL)verifyEvent;
 - (BOOL)verifyPerson;
+- (BOOL)verifyAd;
 
 @end

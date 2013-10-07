@@ -292,6 +292,15 @@
 						AND `eventMember`.`memberID` = $personID
 				");
 
+				// Send a push notification
+				if ($globalDev == 0) {
+					if ($method === "grantPermission") {
+						pushPersonPromotion($eventID, $personID);
+					} elseif ($method === "revokePermission") {
+						pushPersonDemote($eventID, $personID);
+					}
+				}
+
 				if (mysql_affected_rows() > 0) {
 					// Return its data
 					if ($format == "json") {

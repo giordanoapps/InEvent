@@ -47,8 +47,9 @@
             notificationName = @"activityNotification";
         } else if ([type isEqualToString:@"event"]) {
             notificationName = @"eventNotification";
+        } else if ([type isEqualToString:@"person"]) {
+            notificationName = @"personNotification";
         }
-        
         // Send the notification
         [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:@{@"action": action, @"value": value}];
     }

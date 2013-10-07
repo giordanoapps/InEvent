@@ -2,7 +2,25 @@
 	<h2>Pessoa</h2>
 	
 	<p>O conteúdo abaixo é referente as operações sobre a Pessoa. As informações fornecidas sobre a mesma serão seu nome, identificador, eventos em que está inscrito e seu id de autenticação.</p>
-	
+
+	<h3 class="documentationHeader">Push</h3>
+    
+    <div class="documentationFunctionBox">
+        <p class="documentFunctionName">
+            <span>person/promote : <b>eventID</b></span>
+            <span><img src="../images/64-Archive.png" alt="Channel">person_<b>personID</b></span>
+        </p>
+        <p class="documentFunctionDescription">Informa que a pessoa <i>personID</i> foi promovida no evento <i>eventID</i>.</p>
+    </div>
+
+    <div class="documentationFunctionBox">
+        <p class="documentFunctionName">
+            <span>person/demote : <b>eventID</b></span>
+            <span><img src="../images/64-Archive.png" alt="Channel">person_<b>personID</b></span>
+        </p>
+        <p class="documentFunctionDescription">Informa que a pessoa <i>personID</i> foi demitida no evento <i>eventID</i>.</p>
+    </div>
+
 	<h3 class="documentationHeader">Funções</h3>
 	
 	<div class="documentationFunctionBox">

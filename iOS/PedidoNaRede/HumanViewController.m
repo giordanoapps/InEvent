@@ -31,6 +31,9 @@
         // Custom initialization
         self.title = NSLocalizedString(@"Me", nil);
         self.tabBarItem.image = [UIImage imageNamed:@"16-User"];
+        
+        // Register for some updates
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadData) name:@"personNotification" object:nil];
     }
     return self;
 }

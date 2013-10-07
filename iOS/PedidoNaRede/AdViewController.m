@@ -72,7 +72,26 @@
     if (adData && [adData count] > 0) {
         // Ad piece
         NSDictionary *singleAd = [adData objectAtIndex:(arc4random() % [adData count])];
-        [_piece setImageWithURL:[UtilitiesController urlWithFile:[singleAd objectForKey:@"image"]]];
+        
+        SDWebImageManager *manager = [SDWebImageManager sharedManager];
+        [manager downloadWithURL:[UtilitiesController urlWithFile:[singleAd objectForKey:@"image"]] options:0 progress:NULL completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished) {
+            
+            if (image != nil) {
+                // Calculate the ratio
+                CGFloat ratioWidth = image.size.width / _piece.frame.size.width;
+                CGFloat ratioHeight = image.size.height / _piece.frame.size.height;
+                
+                // Apply the frame
+                if (ratioWidth > ratioHeight) {
+                    [_piece setFrame:CGRectMake(_piece.frame.origin.x, (_piece.frame.size.height * (1 - (ratioWidth / ratioHeight))) / 2.0f, _piece.frame.size.width, _piece.frame.size.height * (ratioWidth / ratioHeight))];
+                } else {
+                    [_piece setFrame:CGRectMake((_piece.frame.size.width * (1 - (ratioHeight / ratioWidth))) / 2.0f, _piece.frame.origin.y, _piece.frame.size.width * (ratioHeight / ratioWidth), _piece.frame.size.height)];
+                }
+                
+                // Apply the image settings
+                [_piece setImage:image];
+            }
+        }];
         
         // Mark the ad as seen
         [[[APIController alloc] initWithDelegate:self forcing:YES] adSeenAd:[[singleAd objectForKey:@"id"] integerValue]];

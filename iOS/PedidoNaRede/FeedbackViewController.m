@@ -242,6 +242,8 @@
             }
         }
     }
+    
+    [refreshControl endRefreshing];
 }
 
 - (void)apiController:(APIController *)apiController didSaveForLaterWithError:(NSError *)error {
