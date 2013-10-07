@@ -101,7 +101,7 @@ public class EventActivitiesListFragment extends Fragment implements OnItemClick
     public void onItemClick(AdapterView<?> adapter, View v, int position, long id)
     {
         // Show the Activity details
-        mEventActivity.startActivity(EventActivityDetailActivity.newInstance(mEventActivity, id));
+        mEventActivity.startActivity(EventActivityDetailActivity.newInstance(mEventActivity, id, getArguments().getLong(ARGS_EVENT_ID), mEventActivity.isApproved()));
     }
     @Override
     public boolean onItemLongClick(AdapterView<?> adapter, View v, int position, long id)

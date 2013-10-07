@@ -86,6 +86,7 @@ public class EventDetailDialogFragment extends DialogFragment implements LoaderC
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
     {
+        super.onCreateOptionsMenu(menu, inflater);
         // Clean the action bar
         menu.clear();
     }
@@ -116,7 +117,7 @@ public class EventDetailDialogFragment extends DialogFragment implements LoaderC
         return new CursorLoader(getActivity(), uri, projection, selection, selectionArgs, sortOrder);
     }
     @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor data)
+    public void onLoadFinished(Loader<Cursor> loader, final Cursor data)
     {
         // Populate the view
         data.moveToFirst();
@@ -141,7 +142,24 @@ public class EventDetailDialogFragment extends DialogFragment implements LoaderC
         // Description
         ((TextView) getView().findViewById(R.id.event_description)).setText(data.getString(data.getColumnIndex(Event.Columns.DESCRIPTION)));
         // Address
-        ((TextView) getView().findViewById(R.id.event_address)).setText(data.getString(data.getColumnIndex(Event.Columns.ADDRESS)));
+        TextView address = (TextView) getView().findViewById(R.id.event_address);
+        final String location = data.getString(data.getColumnIndex(Event.Columns.ADDRESS));
+        address.setText(location);
+        address.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                // Show the map
+                LocationMapFragment fragment = LocationMapFragment.instantiate(location,
+                        data.getDouble(data.getColumnIndex(Event.Columns.LATITUDE)),
+                        data.getDouble(data.getColumnIndex(Event.Columns.LONGITUDE))
+                );
+                getFragmentManager().beginTransaction()
+                    .add(R.id.mainContent, fragment)
+                    .addToBackStack(null)
+                    .commit();
+            }
+        });
         // Date
         Date dateBegin = DateUtils.calendarFromTimestampInGMT(data.getLong(data.getColumnIndex(Event.Columns.DATE_BEGIN))).getTime();
         ((TextView) getView().findViewById(R.id.event_dateBegin))

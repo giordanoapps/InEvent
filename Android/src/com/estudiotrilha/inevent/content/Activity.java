@@ -76,7 +76,7 @@ public class Activity
 
         public static HttpURLConnection dismissEnrollment(String tokenID, long activityID) throws IOException
         {
-            return requestEnrollment(tokenID, activityID, -1);
+            return dismissEnrollment(tokenID, activityID, -1);
         }
         public static HttpURLConnection dismissEnrollment(String tokenID, long activityID, long personID) throws IOException
         {

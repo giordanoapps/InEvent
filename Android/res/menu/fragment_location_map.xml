@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:trilha="http://schemas.android.com/apk/res-auto" >
+
+    <item
+        android:id="@+id/action_directions"
+        android:orderInCategory="5"
+        android:icon="@drawable/ic_action_location_directions"
+        android:title="@string/action_directions"
+        trilha:showAsAction="ifRoom"/>
+
+</menu>

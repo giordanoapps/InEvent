@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.estudiotrilha.inevent"
-    android:versionCode="7"
-    android:versionName="1.2" >
+    android:versionCode="8"
+    android:versionName="1.3" >
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -12,6 +12,27 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
+    <!-- Map Permissions -->
+    <permission
+        android:name="com.estudiotrilha.garca.permission.MAPS_RECEIVE"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="com.estudiotrilha.garca.permission.MAPS_RECEIVE" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
+
+    <!-- External storage access for caching. -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <!-- Parse (Push Notifications) -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
     <!-- InEvent Application -->
     <application
         android:allowBackup="true"
@@ -19,12 +40,37 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
 
+        <!-- Google Maps -->
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="@string/google_maps_key" />
+
+        <uses-library android:name="com.google.android.maps" />
+
         <!-- Facebook -->
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_appId" />
 
         <activity android:name="com.facebook.LoginActivity" />
+
+        <!-- Parse (Push Notifications) -->
+        <service android:name="com.parse.PushService" />
+
+        <receiver android:name="com.parse.ParseBroadcastReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.USER_PRESENT" />
+            </intent-filter>
+        </receiver>
+        <!-- Garça (Push Notifications) -->
+        <receiver
+            android:name="com.estudiotrilha.inevent.receiver.PushNotificationReceiver"
+            android:exported="false" >
+            <intent-filter android:priority="1000" >
+                <action android:name="com.estudiotrilha.inevent.PUSH_NOTIFICATION" />
+            </intent-filter>
+        </receiver>
 
         <!-- Splash Screen -->
         <activity

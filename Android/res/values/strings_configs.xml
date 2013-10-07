@@ -3,5 +3,11 @@
 
     <!-- Keys -->
     <string name="facebook_appId">1376709179224018</string>
+<!--     <string name="google_maps_key">AIzaSyBuv3qACI8UK5FYyIUqe7c0aEQxospT580</string> -->
+    <string name="parse_app_id">GVhc1mnm0Zi2b7RxOZ8jFNbqhYQIE59sYxfKSlyE</string>
+    <string name="parse_client_key">vaCGSz1JXSVkDNTX9oE8bwu15faHHVi3B3ChLgRL</string>
+
+    <!-- Debug Keys -->
+    <string name="google_maps_key">AIzaSyCC7vTKwzLtidmAWczn_CR-kM2zzwQ7l_s</string>
 
 </resources>

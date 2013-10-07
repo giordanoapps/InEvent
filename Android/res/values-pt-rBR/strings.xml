@@ -7,11 +7,15 @@
 
     <!-- Button Actions -->
     <string name="action_about">Sobre</string>
+    <string name="action_directions">Direções</string>
     <string name="action_displayOption_all">Todas</string>
     <string name="action_displayOption_schedule_approved">Agenda - Aprovado</string>
     <string name="action_displayOption_schedule_full">Agenda - Tudo</string>
     <string name="action_displayOption_schedule_waitList">Agenda - Espera</string>
-    <string name="action_event_enroll">Enroll</string>
+    <string name="action_event_enroll">Se inscrever</string>
+    <string name="action_eventActivity_enroll">Se inscrever</string>
+    <string name="action_eventActivity_unenroll">Sair da atividade</string>
+    <string name="action_location">Local</string>
     <string name="action_login">Fazer Login</string>
     <string name="action_myAccount">Minha Conta</string>
     <string name="action_preferences">Preferências</string>

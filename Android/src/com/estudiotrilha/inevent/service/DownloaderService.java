@@ -43,7 +43,7 @@ public class DownloaderService extends IntentService implements ApiRequest.Respo
     public static final String SERVICE_NAME = InEvent.NAME + "." + DownloaderService.class.getSimpleName();
 
     // JSON hashes
-    public static final String HASH_JSON = "Hash for UriCode=%d Arguments=%s";
+    public static final String HASH_JSON = "Hash for UriCode=%d, Arguments=%s";
 
     // Extras
     private static final String EXTRA_EVENT_ID    = "extra.EVENT_ID";
@@ -239,7 +239,7 @@ public class DownloaderService extends IntentService implements ApiRequest.Respo
         {
             // Check if there are differences from the last downloaded JSON
 
-            String jsonHash = String.format(Locale.ENGLISH, HASH_JSON, requestCode, mIntent.getExtras().toString());
+            String jsonHash = String.format(Locale.ENGLISH, HASH_JSON, requestCode, ""+mIntent.getExtras());
             String oldHash = mPreferences.getString(jsonHash, "Hash");
             String newHash = JsonUtils.generateHash(json);
 
@@ -382,6 +382,14 @@ public class DownloaderService extends IntentService implements ApiRequest.Respo
                             .withSelection(Activity.Columns.EVENT_ID_FULL+"="+eventID, null)
                             .build()
                     );
+                    // And the activity member link
+                    deletes.add(
+                            ContentProviderOperation
+                                .newDelete(ActivityMember.CONTENT_URI)
+                                .withSelection(ActivityMember.Columns.EVENT_ID_FULL+"="+eventID+" AND "
+                                        +ActivityMember.Columns.MEMBER_ID_FULL+"="+memberID, null)
+                                .build()
+                    );
 
                     // Get the new ones
                     JSONArray dayArray = json.getJSONArray(JsonUtils.DATA);
@@ -454,7 +462,7 @@ public class DownloaderService extends IntentService implements ApiRequest.Respo
                         // Parse the member
                         // Parse the link member-activity
                         ContentValues values = ActivityMember.newActivtyMember(eventID, activityID, memberID, approved, present);
-                        
+
                         // Add the insert operation
                         inserts.add(
                             ContentProviderOperation

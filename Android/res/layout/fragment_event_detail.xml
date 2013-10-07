@@ -44,15 +44,9 @@
                 android:paddingTop="@dimen/activity_vertical_margin" >
 
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="6dp"
+                    style="@style/SlidingMenuItem.Section"
                     android:paddingLeft="@dimen/default_textPadding"
-                    android:paddingRight="@dimen/default_textPadding"
-                    android:paddingTop="@dimen/default_textPadding"
-                    android:text="@string/title_description"
-                    android:textAllCaps="true"
-                    android:textSize="14sp" />
+                    android:text="@string/title_description" />
 
                 <View
                     style="@style/Divider.Horizontal"
@@ -70,15 +64,9 @@
                     android:paddingTop="@dimen/default_textPadding" />
 
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="6dp"
+                    style="@style/SlidingMenuItem.Section"
                     android:paddingLeft="@dimen/default_textPadding"
-                    android:paddingRight="@dimen/default_textPadding"
-                    android:paddingTop="@dimen/default_textPadding"
-                    android:text="@string/title_location"
-                    android:textAllCaps="true"
-                    android:textSize="14sp" />
+                    android:text="@string/title_location" />
 
                 <View
                     style="@style/Divider.Horizontal"
@@ -89,6 +77,8 @@
                     android:id="@id/event_address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/abc_item_background_holo_light"
+                    android:drawableRight="@drawable/ic_action_location_directions"
                     android:hint="@string/empty_event_location"
                     android:paddingBottom="16dp"
                     android:paddingLeft="@dimen/default_textPadding"

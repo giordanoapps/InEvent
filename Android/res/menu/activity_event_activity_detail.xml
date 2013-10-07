@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:trilha="http://schemas.android.com/apk/res-auto" >
+
+    <item
+        android:id="@+id/action_eventActivity_enroll"
+        android:title="@string/action_eventActivity_enroll"
+        android:visible="false"
+        android:orderInCategory="5"
+        trilha:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_eventActivity_unenroll"
+        android:title="@string/action_eventActivity_unenroll"
+        android:visible="false"
+        android:orderInCategory="5"
+        trilha:showAsAction="never"/>
+
+    <item android:id="@+id/action_location"
+        android:title="@string/action_location"
+        android:icon="@drawable/ic_action_location_place"
+        android:orderInCategory="10"
+        trilha:showAsAction="ifRoom"/>
+</menu>

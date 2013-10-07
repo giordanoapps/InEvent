@@ -12,6 +12,8 @@ public interface ApiRequestCode
     public static final int EVENT_GET_OPINION            = 11;
     public static final int EVENT_SEND_OPINION           = 12;
 
-    public static final int ACTIVITY_SEND_OPINION        = 20;
-    public static final int ACTIVITY_GET_OPINION         = 21;
+    public static final int ACTIVITY_REQUEST_ENROLLMENT  = 20;
+    public static final int ACTIVITY_DISMISS_ENROLLMENT  = 21;
+    public static final int ACTIVITY_SEND_OPINION        = 22;
+    public static final int ACTIVITY_GET_OPINION         = 23;
 }
