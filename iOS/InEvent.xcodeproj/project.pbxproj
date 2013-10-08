@@ -28,6 +28,8 @@
 		EB1FEA031800C8F0001C2906 /* 32-File-Cabinet.png in Resources */ = {isa = PBXBuildFile; fileRef = EB1FEA021800C8F0001C2906 /* 32-File-Cabinet.png */; };
 		EB1FEA051800FBF4001C2906 /* 32-File-Cabinet@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB1FEA041800FBF4001C2906 /* 32-File-Cabinet@2x.png */; };
 		EB1FEA0818032D7D001C2906 /* 32-Plus-2.png in Resources */ = {isa = PBXBuildFile; fileRef = EB1FEA0718032D7D001C2906 /* 32-Plus-2.png */; };
+		EB1FEA0A1803CB30001C2906 /* ReaderViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB1FEA091803CB30001C2906 /* ReaderViewCell.xib */; };
+		EB1FEA0D1803CB56001C2906 /* ReaderViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1FEA0C1803CB56001C2906 /* ReaderViewCell.m */; };
 		EB1FEB8517171FC3009834FC /* LogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1FEB8317171FC3009834FC /* LogViewController.m */; };
 		EB1FEB89171729A6009834FC /* LogItemViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1FEB88171729A6009834FC /* LogItemViewCell.m */; };
 		EB1FEB8B171729C7009834FC /* LogItemViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB1FEB8A171729C7009834FC /* LogItemViewCell.xib */; };
@@ -320,6 +322,9 @@
 		EB1FEA021800C8F0001C2906 /* 32-File-Cabinet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-File-Cabinet.png"; sourceTree = "<group>"; };
 		EB1FEA041800FBF4001C2906 /* 32-File-Cabinet@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-File-Cabinet@2x.png"; sourceTree = "<group>"; };
 		EB1FEA0718032D7D001C2906 /* 32-Plus-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Plus-2.png"; sourceTree = "<group>"; };
+		EB1FEA091803CB30001C2906 /* ReaderViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReaderViewCell.xib; sourceTree = "<group>"; };
+		EB1FEA0B1803CB56001C2906 /* ReaderViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReaderViewCell.h; sourceTree = "<group>"; };
+		EB1FEA0C1803CB56001C2906 /* ReaderViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReaderViewCell.m; sourceTree = "<group>"; };
 		EB1FEB8217171FC3009834FC /* LogViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LogViewController.h; path = PedidoNaRede/LogViewController.h; sourceTree = "<group>"; };
 		EB1FEB8317171FC3009834FC /* LogViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LogViewController.m; path = PedidoNaRede/LogViewController.m; sourceTree = "<group>"; };
 		EB1FEB87171729A6009834FC /* LogItemViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LogItemViewCell.h; path = PedidoNaRede/LogItemViewCell.h; sourceTree = "<group>"; };
@@ -930,6 +935,9 @@
 				EB3BD90F17B8C47A008D066D /* ReaderViewController.h */,
 				EB3BD91017B8C47A008D066D /* ReaderViewController.m */,
 				EB3BD91117B8C47A008D066D /* ReaderViewController.xib */,
+				EB1FEA0B1803CB56001C2906 /* ReaderViewCell.h */,
+				EB1FEA0C1803CB56001C2906 /* ReaderViewCell.m */,
+				EB1FEA091803CB30001C2906 /* ReaderViewCell.xib */,
 			);
 			name = Reader;
 			path = PedidoNaRede;
@@ -1577,6 +1585,7 @@
 				EBE8D1FF16A88ED8003A196A /* blueButtonHighlight@2x.png in Resources */,
 				EBE8D20016A88ED8003A196A /* greenButton.png in Resources */,
 				EBE8D20116A88ED8003A196A /* greenButton@2x.png in Resources */,
+				EB1FEA0A1803CB30001C2906 /* ReaderViewCell.xib in Resources */,
 				EBE8D20216A88ED8003A196A /* greenButtonHighlight.png in Resources */,
 				EBE8D20316A88ED8003A196A /* greenButtonHighlight@2x.png in Resources */,
 				EBE8D20416A88ED8003A196A /* greyButton.png in Resources */,
@@ -1852,6 +1861,7 @@
 				EB25BAA416FE84D6003F142F /* HumanLoginViewController.m in Sources */,
 				EB25BAA9170280F1003F142F /* LauchImageViewController.m in Sources */,
 				EB1FE9E717FF2B85001C2906 /* AdViewController.m in Sources */,
+				EB1FEA0D1803CB56001C2906 /* ReaderViewCell.m in Sources */,
 				EB4FC57C171061AF00CA43EC /* NSString+URLEncoding.m in Sources */,
 				EB4FC5851710644000CA43EC /* HumanToken.m in Sources */,
 				EB4FC58F1710DFE000CA43EC /* EventToken.m in Sources */,

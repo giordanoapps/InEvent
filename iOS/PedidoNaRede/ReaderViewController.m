@@ -14,6 +14,7 @@
 #import "UtilitiesController.h"
 #import "ODRefreshControl.h"
 #import "CoolBarButtonItem.h"
+#import "ReaderViewCell.h"
 
 @interface ReaderViewController () {
     ODRefreshControl *refreshControl;
@@ -394,14 +395,18 @@
 - (UITableViewCell *)tableView:(UITableView *)aTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     static NSString *CustomCellIdentifier = @"CustomCellIdentifier";
-    UITableViewCell *cell = [aTableView dequeueReusableCellWithIdentifier:CustomCellIdentifier];
+    ReaderViewCell *cell = (ReaderViewCell *)[aTableView dequeueReusableCellWithIdentifier:CustomCellIdentifier];
     
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CustomCellIdentifier];
+        [aTableView registerNib:[UINib nibWithNibName:@"ReaderViewCell" bundle:nil] forCellReuseIdentifier:CustomCellIdentifier];
+        cell =  (ReaderViewCell *)[aTableView dequeueReusableCellWithIdentifier: CustomCellIdentifier];
     }
     
+    [cell configureCell];
+    
     NSDictionary *dictionary = [self.people objectAtIndex:indexPath.row];
-    cell.textLabel.text = [[dictionary objectForKey:@"name"] stringByDecodingHTMLEntities];
+    cell.enrollmentID.text = [dictionary objectForKey:@"enrollmentID"];
+    cell.name.text = [[dictionary objectForKey:@"name"] stringByDecodingHTMLEntities];
     cell.selectionStyle = UITableViewCellSelectionStyleBlue;
     cell.contentView.backgroundColor = [UIColor whiteColor];
     cell.backgroundView = nil;

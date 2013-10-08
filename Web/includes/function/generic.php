@@ -86,7 +86,7 @@
         $attribute = getEmptyAttribute($attr);
 
         if (function_exists("http_status_code") && $attribute == "") {
-            http_status_code(409);
+            http_status_code(409, "Attribute cannot be empty");
         } else {
             return $attribute;
         }

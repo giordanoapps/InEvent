@@ -1493,7 +1493,6 @@ textarea, input {
 	padding: 0;
 	border-bottom: 1px solid #E6E6E6;
 	position: relative;
-	height: 50px;
 }
 
 #eventContent .realContent ul > li:last-of-type {
@@ -1532,7 +1531,7 @@ textarea, input {
 #eventContent .agendaItem .left {
 	width: 12%;
 	height: 100%;
-	float: left;
+	position: absolute;
 }
 
 #eventContent .agendaItem .left div,
@@ -1542,21 +1541,37 @@ textarea, input {
 	height: 100%;
 }
 
-#eventContent .agendaItem .left .upper,
-#eventContent .agendaItem .left .bottom {
+#eventContent .agendaItem .left .upper {
 	width: 50%;
-	float: left;
+	position: absolute;
 }
 
-#eventContent .agendaItem .right .upper,
+#eventContent .agendaItem .left .bottom {
+	width: 50%;
+	left: 50%;
+	position: absolute;
+}
+
+#eventContent .agendaItem .right .upper {
+	width: 34%;
+	position: absolute;
+	top: 50%;
+	-webkit-transform: translate(0%, -50%);
+}
+
 #eventContent .agendaItem .right .middle {
 	width: 34%;
-	float: left;
+	left: 34%;
+	position: relative;
+	min-height: 60px;
 }
 
 #eventContent .agendaItem .right .bottom {
 	width: 18%;
-	float: left;
+	left: 68%;
+	position: absolute;
+	top: 50%;
+	-webkit-transform: translate(0%, -50%);
 }
 
 #eventContent .agendaItem .right .bottom div {
@@ -1574,7 +1589,10 @@ textarea, input {
 
 #eventContent .agendaItem .right .controls {
 	width: 14%;
-	float: left;
+	left: 86%;
+	position: absolute;
+	top: 50%;
+	-webkit-transform: translate(0%, -50%);
 }
 
 #eventContent.editingMode .agendaItem .right .controls .singleButton {
@@ -1609,9 +1627,9 @@ textarea, input {
 
 #eventContent .agendaItem .right {
 	width: 88%;
+	left: 12%;
 	height: 100%;
-	float: left;
-	overflow: hidden;
+	position: relative;
 }
 
 #eventContent .agendaItem .right .name {
@@ -1622,6 +1640,7 @@ textarea, input {
 #eventContent .agendaItem .right .description {
 	font-size: 85%;
 	color: #6D6D6D;
+	padding: 2%;
 }
 
 #eventContent .agendaItem .smallPadding {
@@ -1647,6 +1666,10 @@ textarea, input {
 
 #eventContent .agendaItem .right .hint {
 	padding: 0;
+	margin: 0;
+	position: absolute;
+	top: 0;
+	right: 0;
 }
 
 #eventContent .agendaItem .right .hint::before,
