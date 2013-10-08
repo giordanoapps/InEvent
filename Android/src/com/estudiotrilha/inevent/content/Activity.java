@@ -59,15 +59,16 @@ public class Activity
 
         public static HttpURLConnection requestEnrollment(String tokenID, long activityID) throws IOException
         {
-            return requestEnrollment(tokenID, activityID, -1);
+            return requestEnrollment(tokenID, activityID, null, null);
         }
-        public static HttpURLConnection requestEnrollment(String tokenID, long activityID, long personID) throws IOException
+        public static HttpURLConnection requestEnrollment(String tokenID, long activityID, String name, String email) throws IOException
         {
             tokenID = URLEncoder.encode(tokenID, ApiRequest.ENCODING);
             String formatString = String.format(Locale.ENGLISH, REQUEST_ENROLLMENT, tokenID, activityID);
-            if (personID != -1)
+            if (name != null && email != null)
             {
-                formatString += "&personID="+personID;
+                formatString += "&name="+URLEncoder.encode(name, ApiRequest.ENCODING)
+                             +  "&email="+URLEncoder.encode(email, ApiRequest.ENCODING);
             }
             URL url = new URL(formatString);
 

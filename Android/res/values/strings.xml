@@ -7,6 +7,7 @@
 
     <!-- Button Actions -->
     <string name="action_about">About</string>
+    <string name="action_addPerson">Add Person</string>
     <string name="action_directions">Directions</string>
     <string name="action_displayOption_all">All activities</string>
     <string name="action_displayOption_schedule_approved">Schedule - Approved</string>
@@ -21,7 +22,6 @@
     <string name="action_myAccount">My Account</string>
     <string name="action_preferences">Preferences</string>
     <string name="action_refresh">Refresh</string>
-    <string name="action_search">Search</string>
     <string name="action_signIn">Sign In</string>
     <string name="action_signOut">Sign Out</string>
     <string name="action_signUp">Register</string>
@@ -32,6 +32,7 @@
 
     <!-- Titles -->
     <string name="title_about">About</string>
+    <string name="title_addPerson">Add Person</string>
     <string name="title_appVersion">Version</string>
     <string name="title_description">Description</string>
     <string name="title_displayOption_all">All activities</string>
@@ -52,6 +53,8 @@
     <string name="title_yourAccount">Your Account</string>
 
     <!-- Hint Messages -->
+    <string name="hint_addPerson_email">E-mail</string>
+    <string name="hint_addPerson_name">Name</string>
     <string name="hint_member_myName">Me</string>
     <string name="hint_login_confirmPassword">Confirm Password</string>
     <string name="hint_login_email">E-mail</string>
@@ -66,6 +69,7 @@
     <string name="hint_event_state">State</string>
     <string name="hint_eventActivity_name">Name</string>
     <string name="hint_eventActivity_time">Time</string>
+    <string name="hint_search">Search</string>
 
     <!-- Messages -->
     <string name="message_about_estudioTrilha">Estúdio Trilha</string>
@@ -92,6 +96,7 @@
     <!-- Preferences Summaries -->
 
     <!-- Descriptions -->
+    <string name="description_attendance_confirm">Confirm presence</string>
     <string name="description_attender_absent">Attender absent</string>
     <string name="description_attender_present">Attender present</string>
     <string name="description_event_approved">Person is approved in the event</string>
@@ -102,6 +107,7 @@
     <string name="description_slidingMenu_open">Open sliding menu</string>
 
     <!-- Error Messages -->
+    <string name="error_conflict">Missing parameters</string>
     <string name="error_connection">Connection error</string>
     <string name="error_connection_internetless">No connection</string>
     <string name="error_connection_timeout">Connection timeout</string>

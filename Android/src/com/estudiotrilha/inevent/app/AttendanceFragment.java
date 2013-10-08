@@ -9,24 +9,26 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.BaseColumns;
-import android.support.v4.app.ListFragment;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.widget.SearchView;
-import android.text.InputType;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.ListView;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
+import android.widget.ViewAnimator;
 
 import com.estudiotrilha.android.widget.ExtensibleCursorAdapter;
 import com.estudiotrilha.inevent.R;
@@ -35,10 +37,9 @@ import com.estudiotrilha.inevent.content.Activity;
 import com.estudiotrilha.inevent.content.ActivityMember;
 import com.estudiotrilha.inevent.content.LoginManager;
 import com.estudiotrilha.inevent.content.Member;
-import com.estudiotrilha.inevent.service.DownloaderService;
 
 
-public class AttendanceFragment extends ListFragment implements LoaderCallbacks<Cursor>, OnItemLongClickListener
+public class AttendanceFragment extends Fragment implements LoaderCallbacks<Cursor>, OnClickListener, OnItemClickListener, OnItemLongClickListener
 {
     private static final int DOUBLE_CLICK_INTERVAL = 600; // in milliseconds
 
@@ -70,7 +71,8 @@ public class AttendanceFragment extends ListFragment implements LoaderCallbacks<
 
     private PeopleAdapter mPeopleAdapter;
     private Filter        mPeopleFilter;
-    private SearchView    mSearchView;
+    private EditText      mSearchView;
+    private ListView      mListView;
 
     private int mIndexId;
     private int mIndexName;
@@ -78,6 +80,7 @@ public class AttendanceFragment extends ListFragment implements LoaderCallbacks<
 
     private int  mDownloadAttempt;
 
+    private int  mQueyItemPosition;
     private long mLastClickId;
     private long mLastClickTime;
 
@@ -86,10 +89,6 @@ public class AttendanceFragment extends ListFragment implements LoaderCallbacks<
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
-
-        // Download new data
-        refresh();
 
         if (savedInstanceState != null)
         {
@@ -129,13 +128,16 @@ public class AttendanceFragment extends ListFragment implements LoaderCallbacks<
             {
                 Cursor c = (Cursor) results.values;
 
-                ListView list = getListView();
-                if (c.moveToFirst() && list != null)
+                if (c.moveToFirst() && mListView != null)
                 {
                     long id = c.getLong(c.getColumnIndex(BaseColumns._ID));
-                    int position = mPeopleAdapter.getPositionForId(id);
+                    mQueyItemPosition = mPeopleAdapter.getPositionForId(id);
 
-                    list.setSelection(position);
+                    mListView.setSelection(mQueyItemPosition);
+                }
+                else
+                {
+                    mQueyItemPosition = -1;
                 }
             }
             @Override
@@ -154,15 +156,22 @@ public class AttendanceFragment extends ListFragment implements LoaderCallbacks<
         };
     }
     @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
+        return inflater.inflate(R.layout.fragment_attendance, container, false);
+    }
+    @Override
     public void onViewCreated(View view, Bundle savedInstanceState)
     {
         super.onViewCreated(view, savedInstanceState);
         view.setBackgroundResource(android.R.color.background_light);
+        mListView = (ListView) view.findViewById(android.R.id.list);
+
         // Add the adapter to the list
-        setListAdapter(mPeopleAdapter);
+        mListView.setAdapter(mPeopleAdapter);
 
         // Setup the click listener
-        getListView().setOnItemLongClickListener(this);
+        mListView.setOnItemLongClickListener(this);
 
         // Set the title
         Cursor c = getActivity().getContentResolver()
@@ -172,6 +181,19 @@ public class AttendanceFragment extends ListFragment implements LoaderCallbacks<
             ((ActionBarActivity) getActivity()).setTitle(c.getString(0));
         }
         c.close();
+
+        // Setup the search
+        mSearchView = (EditText) view.findViewById(R.id.attendance_searchBox);
+        mSearchView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s)
+            {
+                mPeopleFilter.filter(s);
+            }
+            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+        });
+        view.findViewById(R.id.attendance_confirmPresence).setOnClickListener(this);
     }
     @Override
     public void onStart()
@@ -190,40 +212,15 @@ public class AttendanceFragment extends ListFragment implements LoaderCallbacks<
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
+    public void onClick(View v)
     {
-        menu.clear();
-        inflater.inflate(R.menu.fragment_attendance, menu);
-
-        // Setup the search text entry
-        MenuItem searchItem = menu.findItem(R.id.menu_search);
-        mSearchView = (SearchView) MenuItemCompat.getActionView(searchItem);
-        mSearchView.setInputType(InputType.TYPE_CLASS_NUMBER);
-        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override public boolean onQueryTextSubmit(String query) { return false; }
-            @Override
-            public boolean onQueryTextChange(String newText)
-            {
-                mPeopleFilter.filter(newText);
-                return false;
-            }
-        });
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        switch (item.getItemId())
+        if (mListView != null && mQueyItemPosition > 0)
         {
-        case R.id.menu_refresh:
-            refresh();
-            break;
+            setPresence(mPeopleAdapter.getItemId(mQueyItemPosition), !mPeopleAdapter.isPresent(mQueyItemPosition));
         }
-
-        return super.onOptionsItemSelected(item);
     }
-
     @Override
-    public void onListItemClick(ListView l, View v, int position, long id)
+    public void onItemClick(AdapterView<?> adapter, View v, int position, long id)
     {
         long currentTime = System.currentTimeMillis();
         if (id == mLastClickId && mLastClickTime + DOUBLE_CLICK_INTERVAL > currentTime)
@@ -245,7 +242,8 @@ public class AttendanceFragment extends ListFragment implements LoaderCallbacks<
     private void setPresence(final long memberID, boolean present)
     {
         // Clear the query text
-        mSearchView.setQuery("", false);
+        mSearchView.setText("");
+        mQueyItemPosition = -1;
 
         // And add this to the queue to be sent to the server
         LoginManager.getInstance(getActivity())
@@ -255,11 +253,13 @@ public class AttendanceFragment extends ListFragment implements LoaderCallbacks<
         mPeopleAdapter.notifyDataSetChanged();
     }
 
-
-    private void refresh()
+    private void setListShown(boolean shown)
     {
-        // Download the attenders
-        DownloaderService.downloadEventActivityAttenders(getActivity(), getArguments().getLong(ARGS_EVENT_ID), getArguments().getLong(ARGS_ACTIVITY_ID));
+        View view = getView();
+        if (view != null)
+        {
+            ((ViewAnimator) view.findViewById(R.id.viewAnimator)).setDisplayedChild(shown ? Utils.VIEW_ANIMATOR_CONTENT : Utils.VIEW_ANIMATOR_LOADING);
+        }
     }
 
 
@@ -289,7 +289,7 @@ public class AttendanceFragment extends ListFragment implements LoaderCallbacks<
         if (mPeopleAdapter.getCount() < 3 && Utils.checkConnectivity(getActivity()) && mDownloadAttempt < Utils.MAX_DOWNLOAD_ATTEMPTS)
         {
             mDownloadAttempt++;
-            refresh();
+            ((PeopleActivity) getActivity()).refresh();
         }
         else
         {

@@ -97,6 +97,14 @@ public class Utils
             // Time out
             message = R.string.error_connection_timeout;
             break;
+
+        case HttpStatus.SC_CONFLICT:
+            switch (requestCode)
+            {
+            case ApiRequestCode.ACTIVITY_REQUEST_ENROLLMENT:
+                message = R.string.error_conflict;
+                break;
+            }
         }
 
         return message;

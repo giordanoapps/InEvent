@@ -245,10 +245,7 @@ public class EventActivityDetailActivity extends ActionBarActivity implements Lo
 
         case R.id.action_eventActivity_managePeople:
             // Open up the attendance control
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.mainContent, AttendanceFragment.instantiate(getIntent().getLongExtra(EXTRA_ACTIVITY_ID, -1), getIntent().getLongExtra(EXTRA_EVENT_ID, -1)))
-                    .addToBackStack(null)
-                    .commit();
+            startActivity(PeopleActivity.newInstance(this, getIntent().getLongExtra(EXTRA_EVENT_ID, -1), activityID));
             return true;
         }
         return super.onOptionsItemSelected(item);

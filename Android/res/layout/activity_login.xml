@@ -75,22 +75,6 @@
                 android:inputType="textPassword"
                 android:selectAllOnFocus="true" />
 
-            <EditText
-                android:id="@+id/login_university"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/hint_login_university"
-                android:inputType="textCapWords"
-                android:selectAllOnFocus="true" />
-
-            <EditText
-                android:id="@+id/login_university_course"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/hint_login_university_course"
-                android:inputType="textCapWords"
-                android:selectAllOnFocus="true" />
-
             <com.facebook.widget.LoginButton
                 android:id="@+id/login_facebook"
                 android:layout_width="wrap_content"

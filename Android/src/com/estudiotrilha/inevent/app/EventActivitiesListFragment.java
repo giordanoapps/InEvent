@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.SectionIndexer;
@@ -28,7 +29,7 @@ import com.estudiotrilha.inevent.content.Event;
 import com.estudiotrilha.inevent.content.LoginManager;
 
 
-public class EventActivitiesListFragment extends Fragment implements OnItemClickListener
+public class EventActivitiesListFragment extends Fragment implements OnItemClickListener, OnItemLongClickListener
 {
     // Arguments
     private static final String ARGS_EVENT_ID      = "args.EVENT_ID";
@@ -113,6 +114,7 @@ public class EventActivitiesListFragment extends Fragment implements OnItemClick
 
         // Setup callbacks
         list.setOnItemClickListener(this);
+        list.setOnItemLongClickListener(this);
 
         // Add the list content
         list.setAdapter(mActivitiesAdapter);
@@ -128,6 +130,17 @@ public class EventActivitiesListFragment extends Fragment implements OnItemClick
     {
         // Show the Activity details
         mEventActivity.startActivity(EventActivityDetailActivity.newInstance(mEventActivity, id, getArguments().getLong(ARGS_EVENT_ID), mEventActivity.isApproved(), mEventActivity.getRoleId()));
+    }
+    @Override
+    public boolean onItemLongClick(AdapterView<?> adapter, View v, int position, long activityId)
+    {
+        if (mEventActivity.getRoleId() != Event.ROLE_ATTENDEE)
+        {
+            // Open up the attendance control
+            startActivity(PeopleActivity.newInstance(mEventActivity, getArguments().getLong(ARGS_EVENT_ID), activityId));
+            return true;
+        }
+        return false;
     }
 
 

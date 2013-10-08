@@ -55,8 +55,6 @@ public class LoginActivity extends ActionBarActivity implements ApiRequest.Respo
     private EditText    mPassword;
     private EditText    mConfirmPassword;
     private EditText    mName;
-    private EditText    mUniversity;
-    private EditText    mUniversityCourse;
     private LoginButton mFacebooButton;
 
     private ProgressDialogFragment mLoginProgressDialog;
@@ -92,8 +90,6 @@ public class LoginActivity extends ActionBarActivity implements ApiRequest.Respo
         mPassword = (EditText) findViewById(R.id.login_password);
         mConfirmPassword = (EditText) findViewById(R.id.login_confirmPassword);
         mName = (EditText) findViewById(R.id.login_name);
-        mUniversity = (EditText) findViewById(R.id.login_university);
-        mUniversityCourse = (EditText) findViewById(R.id.login_university_course);
         mFacebooButton = (LoginButton) findViewById(R.id.login_facebook);
 
         mFacebooButton.setOnClickListener(new View.OnClickListener() {
@@ -208,8 +204,6 @@ public class LoginActivity extends ActionBarActivity implements ApiRequest.Respo
         }
 
         mName.setVisibility(visibility);
-        mUniversity.setVisibility(visibility);
-        mUniversityCourse.setVisibility(visibility);
         mConfirmPassword.setVisibility(visibility);
         ((TextView) findViewById(R.id.login_title)).setText(title);
         ((Button) findViewById(R.id.login_confirmButton)).setText(title);
@@ -279,7 +273,7 @@ public class LoginActivity extends ActionBarActivity implements ApiRequest.Respo
             if (mConfirmPassword.isShown())
             {
                 connection = Member.Api.enroll();
-                String post = Member.Api.Post.enroll(mName.getText().toString(), password, email, null, null, mUniversity.getText().toString(), mUniversityCourse.getText().toString());
+                String post = Member.Api.Post.enroll(mName.getText().toString(), password, email);
                 ApiRequest.getJsonFromConnection(ApiRequestCode.MEMBER_SIGN_UP, connection, LoginActivity.this, post);
             }
             else
@@ -307,8 +301,6 @@ public class LoginActivity extends ActionBarActivity implements ApiRequest.Respo
         mPassword.setEnabled(enabled);
         mConfirmPassword.setEnabled(enabled);
         mName.setEnabled(enabled);
-        mUniversity.setEnabled(enabled);
-        mUniversityCourse.setEnabled(enabled);
         mFacebooButton.setEnabled(enabled);
 
         // the buttons

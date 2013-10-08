@@ -112,9 +112,12 @@
         <!-- Event -->
         <activity android:name="com.estudiotrilha.inevent.app.EventActivity" />
 
-        <!-- EventActivity Detail -->
+        <!-- Event Activity Detail -->
         <activity android:name="com.estudiotrilha.inevent.app.EventActivityDetailActivity" />
 
+        <!-- People -->
+        <activity android:name="com.estudiotrilha.inevent.app.PeopleActivity" />
+        
         <!-- InEvent Content Provider -->
         <provider
             android:name="com.estudiotrilha.inevent.provider.InEventProvider"

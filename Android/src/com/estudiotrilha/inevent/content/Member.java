@@ -43,11 +43,14 @@ public class Member implements Serializable
              * @param telephone - Some telephone. This can be null
              * @return the prepared post String to send along with the {@link HttpURLConnection} from {@link Person#enroll()}
              */
+            public static String enroll(String name, String password, String email)
+            {
+                return enroll(name, password, email, null, null, null, null);
+            }
             public static String enroll(String name, String password, String email, String cpf, String telephone)
             {
                 return enroll(name, password, email, cpf, telephone, null, null);
             }
-
             public static String enroll(String name, String password, String email, String cpf, String telephone, String university, String course)
             {
                 return String.format(Locale.ENGLISH, ENROLL, name, password, email, cpf, telephone, university, course);

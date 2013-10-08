@@ -7,6 +7,7 @@
 
     <!-- Button Actions -->
     <string name="action_about">Sobre</string>
+    <string name="action_addPerson">Adicionar Pessoa</string>
     <string name="action_directions">Direções</string>
     <string name="action_displayOption_all">Todas</string>
     <string name="action_displayOption_schedule_approved">Agenda - Aprovado</string>
@@ -21,7 +22,6 @@
     <string name="action_myAccount">Minha Conta</string>
     <string name="action_preferences">Preferências</string>
     <string name="action_refresh">Atualizar</string>
-    <string name="action_search">Procurar</string>
     <string name="action_signIn">Entrar</string>
     <string name="action_signOut">Sair</string>
     <string name="action_signUp">Criar Conta</string>
@@ -32,6 +32,7 @@
 
     <!-- Titles -->
     <string name="title_about">Sobre</string>
+    <string name="title_addPerson">Adicionar Pessoa</string>
     <string name="title_appVersion">Versão</string>
     <string name="title_description">Descrição</string>
     <string name="title_displayOption_all">Todas as atividades</string>
@@ -52,6 +53,8 @@
     <string name="title_yourAccount">Sua Conta</string>
 
     <!-- Hint Messages -->
+    <string name="hint_addPerson_email">E-mail</string>
+    <string name="hint_addPerson_name">Nome</string>
     <string name="hint_member_myName">Eu</string>
     <string name="hint_login_confirmPassword">Confirmar Senha</string>
     <string name="hint_login_email">E-mail</string>
@@ -66,6 +69,7 @@
     <string name="hint_event_state">Estado</string>
     <string name="hint_eventActivity_name">Nome</string>
     <string name="hint_eventActivity_time">Horário</string>
+    <string name="hint_search">Procurar</string>
 
     <!-- Messages -->
     <string name="message_about_estudioTrilha">Estúdio Trilha</string>
@@ -92,6 +96,7 @@
     <!-- Preferences Summaries -->
 
     <!-- Descriptions -->
+    <string name="description_attendance_confirm">Confirmar presença</string>
     <string name="description_attender_absent">Participante ausente</string>
     <string name="description_attender_present">Participante presente</string>
     <string name="description_event_approved">Pessoa participa do evento</string>
@@ -102,6 +107,7 @@
     <string name="description_slidingMenu_open">Abrir menu lateral</string>
 
     <!-- Error Messages -->
+    <string name="error_conflict">Faltam parâmetros</string>
     <string name="error_connection">Erro de conexão</string>
     <string name="error_connection_internetless">Sem conexão</string>
     <string name="error_connection_timeout">A conexão expirou</string>
