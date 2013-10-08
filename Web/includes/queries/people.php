@@ -14,7 +14,8 @@
                 `activityMember`.`approved`,
                 `activityMember`.`paid`,
                 `activityMember`.`present`,
-                `activityMember`.`priori`
+                `activityMember`.`priori`,
+                `activityMember`.`rating`
             FROM
                 `member`
             INNER JOIN

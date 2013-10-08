@@ -328,16 +328,17 @@
 
     <div class="documentationFunctionBox">
         <p class="documentFunctionName">
-            <span>activity.sendOpinion(<b>tokenID</b>, <b>activityID</b>, <b>rating</b>)</span>
-            <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=activity.sendOpinion&tokenID=$tokenID&activityID=1" data-post="rating=5">
+            <span>activity.sendOpinion(<b>tokenID</b>, <b>activityID</b>, <b>rating</b>, <b>personID</b> = null)</span>
+            <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=activity.sendOpinion&tokenID=$tokenID&activityID=1&personID=null" data-post="rating=5">
         </p>
 
-        <p class="documentFunctionDescription">Envia a pontuação <i>rating</i> para a atividade <i>activityID</i>.</p>
+        <p class="documentFunctionDescription">Envia a pontuação <i>rating</i> para a atividade <i>activityID</i>. Se a pessoa <i>personID</i> não for especificada ou o <i>tokenID</i> fornecido não tiver permissão para enviar para a pessoa <i>personID</i>, será utilizada a pessoa associada ao <i>tokenID</i>.</p>
 
         <div class="documentationFunctionParametersBox">
             <p><b>tokenID</b><sub>GET</sub> : id de autenticação </p>
             <p><b>activityID</b><sub>GET</sub> : id da atividade </p>
             <p><b>rating</b><sub>POST</sub> : inteiro com a pontuação </p>
+            <p><b>personID</b><sub>GET</sub> : id da pessoa </p>
         </div>
     </div>
     

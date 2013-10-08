@@ -679,7 +679,8 @@
 					"approved" => "DESC",
 					"paid" => "DESC",
 					"present" => "DESC",
-					"priori" => "DESC"
+					"priori" => "DESC",
+					"rating" => "DESC"
 				);
 
 				if (array_key_exists($order, $orderFilter) === TRUE) {
@@ -896,6 +897,16 @@
 
 		$activityID = getTokenForActivity();
 
+		if (isset($_GET['personID']) && $_GET['personID'] != "null") {
+			if ($core->workAtEvent) {
+				$personID = getAttribute($_GET['personID']);
+			} else {
+				http_status_code(401, "personID doesn't work at event");
+			}
+		} else {
+			$personID = $core->memberID;
+		}
+
 		if (isset ($_POST['rating'])) {
 
 			// Get some properties
@@ -913,7 +924,7 @@
 					`activityMember`.`rating` = $rating
 				WHERE 1
 					AND `activityMember`.`activityID` = $activityID
-					AND `activityMember`.`memberID` = $core->memberID
+					AND `activityMember`.`memberID` = $personID
 			");
 
 			if ($update) {

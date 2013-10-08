@@ -384,6 +384,35 @@ define(modules, function($, common, cookie) {$(function() {
 	});
 
 	/**
+	 * Change the rating of an activity
+	 * @return {null}
+	 */
+	$("#peopleContent").on("click", ".starIt", function(event) {
+
+		var $elem = $(this);
+
+		// Get some properties
+		var activityID = $(".placerContent .scheduleItemSelected").val();
+		var personID = $elem.closest(".pickerItem").attr("data-value");
+		var rating = $elem.prevAll().length + 1;
+
+		// We request the information on the server
+		$.post('developer/api/?' + $.param({
+			method: "activity.sendOpinion",
+			activityID: activityID,
+			personID: personID,
+			format: "html"
+		}), {
+			rating: rating
+		}, function(data, textStatus, jqXHR) {
+			// Define the correct UI elements
+			$elem.prevAll().add($elem).attr("src", "images/32-Favorite.png");
+			$elem.nextAll().attr("src", "images/32-Unfavorite.png");
+		}, 'html');
+
+	});
+
+	/**
 	 * Remove a item from the person schedule
 	 * @return {null}
 	 */

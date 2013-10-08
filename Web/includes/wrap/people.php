@@ -13,6 +13,7 @@
                     <td data-order="position">Posição <?php if ($order == "position") echo $imageOrder ?></td>
                     <td data-order="name">Nome <?php if ($order == "name") echo $imageOrder ?></td>
                     <td data-order="email">Email <?php if ($order == "email") echo $imageOrder ?></td>
+                    <td data-order="rating">Nota <?php if ($order == "rating") echo $imageOrder ?></td>
                     <td data-order="approved">Aprovado <?php if ($order == "approved") echo $imageOrder ?></td>
                     <td data-order="paid">Pago <?php if ($order == "paid") echo $imageOrder ?></td>
                     <td data-order="present">Presente <?php if ($order == "present") echo $imageOrder ?></td>
@@ -40,6 +41,17 @@
                     </td>
                     <td>
                         <p class="email"><?php echo $data['email'] ?></p>
+                    </td>
+                    <td>
+                        <p class="rating">
+                            <?php for ($i = 0; $i < 5; $i++) {
+                                if ($i < $data['rating']) {
+                                    ?><img src='images/32-Favorite.png' class='starIt' alt='Favorite'><?php
+                                } else {
+                                    ?><img src='images/32-Unfavorite.png' class='starIt' alt='Unfavorite'><?php
+                                }
+                            } ?>
+                        </p>
                     </td>
                     <td>
                         <?php /* if ($data["approved"] == 1) { ?>
