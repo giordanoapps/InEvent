@@ -241,7 +241,19 @@
                 [_textView setText:[[[answers objectAtIndex:0] objectForKey:@"message"] stringByDecodingHTMLEntities]];
             }
         }
+    } else if ([apiController.method isEqualToString:@"sendOpinion"]) {
+        // Create the object
+        NSArray *opinion;
+        if (_type == FeedbackTypeEvent) {
+            opinion = @[@{@"rating": [NSNumber numberWithInteger:_rating], @"message": _textView.text}];
+        } else {
+            opinion = @[@{@"rating": [NSNumber numberWithInteger:_rating]}];
+        }
+        
+        // Save the current object
+        [[NSDictionary dictionaryWithObject:opinion forKey:@"data"] writeToFile:dataPath atomically:YES];
     }
+
     
     [refreshControl endRefreshing];
 }

@@ -54,7 +54,7 @@
     [_wrapper.layer setMasksToBounds:YES];
     
     // Title
-    [((UIButton *)_name).titleLabel setNumberOfLines:0];
+    [((UIButton *)_name).titleLabel setNumberOfLines:2];
     [(UIButton *)_name setTitleColor:[ColorThemeController tableViewCellTextColor] forState:UIControlStateNormal];
     [(UIButton *)_name setTitleColor:[ColorThemeController tableViewCellTextHighlightedColor] forState:UIControlStateHighlighted];
     

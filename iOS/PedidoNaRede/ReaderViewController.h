@@ -18,4 +18,9 @@
 @property (strong, nonatomic) IBOutlet UIButton *numberButton;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 
+@property (strong, nonatomic) IBOutlet UIView *addPersonView;
+@property (strong, nonatomic) IBOutlet UITextField *nameInput;
+@property (strong, nonatomic) IBOutlet UITextField *emailInput;
+@property (strong, nonatomic) IBOutlet UIButton *addPersonButton;
+
 @end

@@ -1,0 +1,21 @@
+{
+  "name": "InEvent",
+  "description": "Interactions on your event day",
+  "version": "1.2",
+  "manifest_version": 2,
+  "app": {
+    "urls": [
+      "http://www.inevent.us/"
+    ],
+    "launch": {
+      "web_url": "http://www.inevent.us/"
+    }
+  },
+  "icons": {
+    "128": "logo@128.png"
+  },
+  "permissions": [
+    "unlimitedStorage",
+    "notifications"
+  ]
+}

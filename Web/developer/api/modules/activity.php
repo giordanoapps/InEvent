@@ -317,10 +317,25 @@
 
 		if ($personID != 0) {
 
-			// Enroll people at the activity
-			$sucess = processActivityEnrollment($activityID, $personID);
+			// See if the member is enrolled at this activity
+			$result = resourceForQuery(
+				"SELECT
+					`activityMember`.`id`
+				FROM
+					`activityMember`
+				WHERE 1
+					AND `activityMember`.`activityID` = $activityID
+					AND `activityMember`.`memberID` = $personID
+			");
 
-			if ($sucess) {
+			if (mysql_num_rows($result) == 0) {
+				// Enroll people at the activity
+				$success = processActivityEnrollment($activityID, $personID);
+			} else {
+				$success = true;
+			}
+
+			if ($success) {
 				// Return its data
 				if ($format == "json") {
 					$result = getActivitiesForMemberAtActivityQuery($activityID, $personID);

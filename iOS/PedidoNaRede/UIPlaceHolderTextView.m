@@ -19,7 +19,7 @@
     [super awakeFromNib];
     [self setPlaceholder:@""];
     [self setPlaceholderColor:[UIColor lightGrayColor]];
-    [self addObserver:self forKeyPath:@"contentSize" options:(NSKeyValueObservingOptionNew) context:NULL];
+//    [self addObserver:self forKeyPath:@"contentSize" options:(NSKeyValueObservingOptionNew) context:NULL];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textChanged:) name:UITextViewTextDidChangeNotification object:nil];
 }
 
@@ -27,14 +27,14 @@
     if ((self = [super initWithFrame:frame])) {
         [self setPlaceholder:@""];
         [self setPlaceholderColor:[UIColor lightGrayColor]];
-        [self addObserver:self forKeyPath:@"contentSize" options:(NSKeyValueObservingOptionNew) context:NULL];
+//        [self addObserver:self forKeyPath:@"contentSize" options:(NSKeyValueObservingOptionNew) context:NULL];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textChanged:) name:UITextViewTextDidChangeNotification object:nil];
     }
     return self;
 }
 
 - (void)dealloc {
-    [self removeObserver:self forKeyPath:@"contentSize"];
+//    [self removeObserver:self forKeyPath:@"contentSize"];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 #if __has_feature(objc_arc)
 #else
@@ -44,28 +44,6 @@
     [super dealloc];
 #endif
     
-}
-
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    
-    // Top vertical alignment
-    if (self.verticalAlignment == UIPlaceHolderTextViewVerticalAlignmentTop) {
-//        CGFloat topCorrect = ([self bounds].size.height - [self contentSize].height * [self zoomScale])/2.0;
-//        topCorrect = ( topCorrect < 0.0 ? 0.0 : topCorrect );
-//        self.contentOffset = (CGPoint){.x = 0, .y = -topCorrect};
-    
-    // Center vertical alignment
-    } else if (self.verticalAlignment == UIPlaceHolderTextViewVerticalAlignmentCenter) {
-        CGFloat topCorrect = ([self bounds].size.height - [self contentSize].height * [self zoomScale])/2.0;
-        topCorrect = ( topCorrect < 0.0 ? 0.0 : topCorrect );
-        self.contentOffset = (CGPoint){.x = 0, .y = -topCorrect};
-        
-    // Bottom vertical alignment
-    } else if (self.verticalAlignment == UIPlaceHolderTextViewVerticalAlignmentBottom) {
-        CGFloat topCorrect = ([self bounds].size.height - [self contentSize].height);
-        topCorrect = (topCorrect <0.0 ? 0.0 : topCorrect);
-        self.contentOffset = (CGPoint){.x = 0, .y = -topCorrect};
-    }
 }
 
 - (void)textChanged:(NSNotification *)notification {

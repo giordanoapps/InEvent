@@ -13,6 +13,7 @@
 #import "HumanToken.h"
 #import "UtilitiesController.h"
 #import "ODRefreshControl.h"
+#import "CoolBarButtonItem.h"
 
 @interface ReaderViewController () {
     ODRefreshControl *refreshControl;
@@ -50,7 +51,7 @@
     [tapGesture setDelegate:self];
     [self.view addGestureRecognizer:tapGesture];
     
-    // Text field
+    // Number field
     [_numberInput setFrame:CGRectMake(_numberInput.frame.origin.x, _numberInput.frame.origin.y, _numberInput.frame.size.width, _numberInput.frame.size.height * 2.0)];
     [_numberInput setTextColor:[ColorThemeController tableViewCellTextColor]];
     [_numberInput setBackgroundColor:[ColorThemeController tableViewCellBackgroundColor]];
@@ -59,6 +60,12 @@
     [_numberInput.layer setMasksToBounds:NO];
     [_numberInput.layer setBorderWidth:1.0];
     [_numberInput.layer setBorderColor:[[ColorThemeController tableViewCellInternalBorderColor] CGColor]];
+    
+    // Name field
+    [_nameInput setPlaceholder:NSLocalizedString(@"Name", nil)];
+ 
+    // Name field
+    [_emailInput setPlaceholder:NSLocalizedString(@"Email", nil)];
     
     // Message Button
     [_numberButton setBackgroundImage:[[UIImage imageNamed:@"greyButton"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)] forState:UIControlStateNormal];
@@ -77,6 +84,9 @@
     
     // Table View
     [self.tableView setAllowsSelection:NO];
+    
+    // Add People View
+    [self loadAddButton];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -120,6 +130,60 @@
         NSString *tokenID = [[HumanToken sharedInstance] tokenID];
         NSInteger activityID = [[_activityData objectForKey:@"id"] integerValue];
         [[[APIController alloc] initWithDelegate:self forcing:forcing] activityGetPeopleAtActivity:activityID withTokenID:tokenID];
+    }
+}
+
+#pragma mark - Bar Methods
+
+- (void)loadAddButton {
+    // Right Button
+    self.rightBarButton = [[CoolBarButtonItem alloc] initCustomButtonWithImage:[UIImage imageNamed:@"32-Plus-2.png"] frame:CGRectMake(0, 0, 42.0, 30.0) insets:UIEdgeInsetsMake(5.0, 11.0, 5.0, 11.0) target:self action:@selector(loadAddPersonView)];
+    self.navigationItem.rightBarButtonItem = self.rightBarButton;
+}
+
+- (void)loadDoneButton {
+    // Right Button
+    self.rightBarButton = self.navigationItem.rightBarButtonItem;
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(removePersonView)];
+}
+
+#pragma mark - Add People Methods
+
+- (void)loadAddPersonView {
+    // Add the frame
+    [_addPersonView setFrame:CGRectMake(_addPersonView.frame.origin.x, -(_addPersonView.frame.size.height), _addPersonView.frame.size.width, _addPersonView.frame.size.height)];
+    [self.view addSubview:_addPersonView];
+    
+    // Animate the transition
+    [UIView animateWithDuration:1.0f animations:^{
+        [_addPersonView setFrame:CGRectMake(_addPersonView.frame.origin.x, _addPersonView.frame.origin.y + _addPersonView.frame.size.height, _addPersonView.frame.size.width, _addPersonView.frame.size.height)];
+    } completion:^(BOOL completion){
+        [self loadDoneButton];
+    }];
+}
+
+- (void)removePersonView {
+    // Resign the text field responders
+    [_nameInput resignFirstResponder];
+    [_emailInput resignFirstResponder];
+    
+    // Animate the transition
+    [UIView animateWithDuration:1.0f animations:^{
+        [_addPersonView setFrame:CGRectMake(_addPersonView.frame.origin.x, -(_addPersonView.frame.size.height), _addPersonView.frame.size.width, _addPersonView.frame.size.height)];
+    } completion:^(BOOL completion){
+        [_addPersonView removeFromSuperview];
+        [self loadAddButton];
+    }];
+}
+
+- (IBAction)addPerson {
+
+    if ([_nameInput.text length] > 0 && [_emailInput.text length] > 0) {
+        // Send to server
+        [[[APIController alloc] initWithDelegate:self forcing:YES] activityRequestEnrollmentForPersonWithName:_nameInput.text andEmail:_emailInput.text atActivity:[[_activityData objectForKey:@"id"] integerValue] withTokenID:[[HumanToken sharedInstance] tokenID]];
+        
+        // Remove view
+        [self removePersonView];
     }
 }
 
@@ -409,6 +473,9 @@
         [self.tableView reloadData];
         
         [refreshControl endRefreshing];
+        
+    } else if ([apiController.method isEqualToString:@"requestEnrollment"]) {
+        [self reloadData];
     }
 }
 

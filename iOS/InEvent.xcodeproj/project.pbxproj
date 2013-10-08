@@ -27,6 +27,7 @@
 		EB1FEA0117FF9EF7001C2906 /* 32-Create-_-Write.png in Resources */ = {isa = PBXBuildFile; fileRef = EB1FEA0017FF9EF7001C2906 /* 32-Create-_-Write.png */; };
 		EB1FEA031800C8F0001C2906 /* 32-File-Cabinet.png in Resources */ = {isa = PBXBuildFile; fileRef = EB1FEA021800C8F0001C2906 /* 32-File-Cabinet.png */; };
 		EB1FEA051800FBF4001C2906 /* 32-File-Cabinet@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB1FEA041800FBF4001C2906 /* 32-File-Cabinet@2x.png */; };
+		EB1FEA0818032D7D001C2906 /* 32-Plus-2.png in Resources */ = {isa = PBXBuildFile; fileRef = EB1FEA0718032D7D001C2906 /* 32-Plus-2.png */; };
 		EB1FEB8517171FC3009834FC /* LogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1FEB8317171FC3009834FC /* LogViewController.m */; };
 		EB1FEB89171729A6009834FC /* LogItemViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1FEB88171729A6009834FC /* LogItemViewCell.m */; };
 		EB1FEB8B171729C7009834FC /* LogItemViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB1FEB8A171729C7009834FC /* LogItemViewCell.xib */; };
@@ -318,6 +319,7 @@
 		EB1FEA0017FF9EF7001C2906 /* 32-Create-_-Write.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Create-_-Write.png"; sourceTree = "<group>"; };
 		EB1FEA021800C8F0001C2906 /* 32-File-Cabinet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-File-Cabinet.png"; sourceTree = "<group>"; };
 		EB1FEA041800FBF4001C2906 /* 32-File-Cabinet@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-File-Cabinet@2x.png"; sourceTree = "<group>"; };
+		EB1FEA0718032D7D001C2906 /* 32-Plus-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Plus-2.png"; sourceTree = "<group>"; };
 		EB1FEB8217171FC3009834FC /* LogViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LogViewController.h; path = PedidoNaRede/LogViewController.h; sourceTree = "<group>"; };
 		EB1FEB8317171FC3009834FC /* LogViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LogViewController.m; path = PedidoNaRede/LogViewController.m; sourceTree = "<group>"; };
 		EB1FEB87171729A6009834FC /* LogItemViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LogItemViewCell.h; path = PedidoNaRede/LogItemViewCell.h; sourceTree = "<group>"; };
@@ -1409,6 +1411,7 @@
 				EB1FE9F317FF8886001C2906 /* 32-Book-Large@2x.png */,
 				EB1FE9EC17FF5DEA001C2906 /* 32-Check-2.png */,
 				EBDFF55217BE95B200BBFC1D /* 32-Check.png */,
+				EB1FEA0718032D7D001C2906 /* 32-Plus-2.png */,
 				EB1FEA0017FF9EF7001C2906 /* 32-Create-_-Write.png */,
 				EBC59D8817BEC59B00E0FC67 /* 32-Create-_-Write@2x.png */,
 				EBB19398168EA54A0060D282 /* 32-Cross.png */,
@@ -1686,6 +1689,7 @@
 				EB837CBA171AE45400FA1EBC /* 16-User@2x.png in Resources */,
 				EBA1862D172B910100336733 /* stripes.png in Resources */,
 				EBDA918117ACB10100969A08 /* 16-Check.png in Resources */,
+				EB1FEA0818032D7D001C2906 /* 32-Plus-2.png in Resources */,
 				EBDA918217ACB10100969A08 /* 16-Check@2x.png in Resources */,
 				EBDA918517ACB40A00969A08 /* 16-Safari.png in Resources */,
 				EBDA918617ACB40A00969A08 /* 16-Safari@2x.png in Resources */,
