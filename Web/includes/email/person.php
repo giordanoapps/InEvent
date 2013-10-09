@@ -34,4 +34,28 @@
         sendEmail("Senha trocada", $template, $email);
     }
 
+    function sendSubscribedEmail($email) {
+
+	    // Load our template
+	    $template = file_get_contents(__DIR__ . "/personSubscribed.html");
+
+	    // Replace some ocurrences
+	    $template = str_replace('{{email}}', $email, $template);
+
+	    // Send the email
+        sendEmail("Email adicionado", $template, $email);
+    }
+
+    function sendUnsubscribedEmail($email) {
+
+	    // Load our template
+	    $template = file_get_contents(__DIR__ . "/personUnsubscribed.html");
+
+	    // Replace some ocurrences
+	    $template = str_replace('{{email}}', $email, $template);
+
+	    // Send the email
+        sendEmail("Email removido", $template, $email);
+    }
+
 ?>

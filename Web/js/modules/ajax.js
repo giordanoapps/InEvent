@@ -85,6 +85,25 @@ define(["jquery", "common"], function($) {$(function() {
 			hashDidLoad: function(newHash) {
 				// Custom code that may need to be executed onload
 
+				// Create the smart banner
+				$.smartbanner({
+					title: "InEvent", // What the title of the app should be in the banner (defaults to <title>)
+					author: "Estúdio Trilha", // What the author of the app should be in the banner (defaults to <meta name="author"> or hostname)
+					price: 'Gratuito', // Price of the app
+					appStoreLanguage: 'pt-br', // Language code for App Store
+					inAppStore: 'Na App Store', // Text of price for iOS
+					inGooglePlay: 'No Google Play', // Text of price for Android
+					icon: 'images/logo@512.png', // The URL of the icon (defaults to <meta name="apple-touch-icon">)
+					iconGloss: null, // Force gloss effect for iOS even for precomposed
+					button: 'Ver', // Text for the install button
+					scale: 'auto', // Scale based on viewport size (set to 1 to disable)
+					speedIn: 300, // Show animation speed of the banner
+					speedOut: 400, // Close animation speed of the banner
+					daysHidden: 15, // Duration to hide the banner after being closed (0 = always show banner)
+					daysReminder: 90, // Duration to hide the banner after "VIEW" is clicked *separate from when the close button is clicked* (0 = always show banner)
+					force: null // Choose 'ios' or 'android'. Don't do a browser check, just always show this banner
+				});
+
 				// Resize the bar size
 				$(".menuContent").trigger("resizeBar");
 

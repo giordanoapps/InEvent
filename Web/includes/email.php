@@ -6,26 +6,39 @@
 
 function sendEmail($title, $template, $email) {
 
-    // Import Swift parser
-    require_once(__DIR__ . '/../classes/Swift/lib/swift_required.php');
+    // Verify that the email is not blacklisted
+    $result = resourceForQuery(
+        "SELECT
+            `emailBlacklist`.`email`
+        FROM
+            `emailBlacklist`
+        WHERE 1
+            AND `emailBlacklist`.`email` = '$email'
+    ");
 
-    // Create the Transport
-    $transport = new Swift_AWSTransport(
-        'AKIAJJ7U5KNZFVK2AN5Q',
-        'HJ01wFuJTx8Zow32hQpUEv6ibypkmFBt07siuYJ7'
-    );
+    if (mysql_num_rows($result) == 0) {
 
-    // Create the Mailer using your created Transport
-    $mailer = Swift_Mailer::newInstance($transport);
+        // Import Swift parser
+        require_once(__DIR__ . '/../classes/Swift/lib/swift_required.php');
 
-    // Create the message
-    $message = Swift_Message::newInstance()
-        ->setSubject("InEvent - $title")
-        ->setFrom(array("contato@estudiotrilha.com.br" => "Estúdio Trilha"))
-        ->setTo(array($email))
-        ->setBody($template, "text/html");
+        // Create the Transport
+        $transport = new Swift_AWSTransport(
+            'AKIAJJ7U5KNZFVK2AN5Q',
+            'HJ01wFuJTx8Zow32hQpUEv6ibypkmFBt07siuYJ7'
+        );
 
-    $mailer->send($message);
+        // Create the Mailer using your created Transport
+        $mailer = Swift_Mailer::newInstance($transport);
+
+        // Create the message
+        $message = Swift_Message::newInstance()
+            ->setSubject("InEvent - $title")
+            ->setFrom(array("contato@estudiotrilha.com.br" => "Estúdio Trilha"))
+            ->setTo(array($email))
+            ->setBody($template, "text/html");
+
+        $mailer->send($message);
+    }
 }
 
 // Pages

@@ -2624,6 +2624,7 @@ textarea, input {
 	margin-right: 40px;
 }
 
+#forgotContent .conflict,
 #forgotContent .alert {
 	display: none;
 	color: #B61F1F;

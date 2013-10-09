@@ -85,6 +85,32 @@
 
 	<div class="documentationFunctionBox">
 		<p class="documentFunctionName">
+			<span>person.subscribe(<b>email</b>)</span>
+			<img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=person.subscribe&email=">
+		</p>
+
+		<p class="documentFunctionDescription">Adiciona o email <i>email</i> a lista de envio de emails.</p>
+
+		<div class="documentationFunctionParametersBox">
+			<p><b>email</b><sub>GET</sub> : email da pessoa </p>
+		</div>
+	</div>
+
+	<div class="documentationFunctionBox">
+		<p class="documentFunctionName">
+			<span>person.unsubscribe(<b>email</b>)</span>
+			<img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=person.unsubscribe&email=">
+		</p>
+
+		<p class="documentFunctionDescription">Remove a pessoa associada ao email <i>email</i> da lista de envio de emails.</p>
+
+		<div class="documentationFunctionParametersBox">
+			<p><b>email</b><sub>GET</sub> : email da pessoa </p>
+		</div>
+	</div>
+
+	<div class="documentationFunctionBox">
+		<p class="documentFunctionName">
 			<span>person.changePassword(<b>tokenID</b>, <b>oldPassword</b>, <b>newPassword</b>)</span>
 			<img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=person.changePassword&tokenID=$tokenID&oldPassword=123&newPassword=456">
 		</p>

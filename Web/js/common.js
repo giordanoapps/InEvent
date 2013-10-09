@@ -11,6 +11,7 @@ require.config({
 		'jquery.mousewheel': 'jquery.mousewheel.min',
 		'jquery.scrollbar': 'perfect-scrollbar-0.4.5.min',
 		'jquery.fileuploader': 'jquery.fileuploader.min',
+		'jquery.smartbanner': 'jquery.smartbanner.min',
 		'jquery.chosen': 'chosen.jquery.min',
     	'imagesLoaded': 'imagesLoaded.min',
 		'jquery.qtip': 'jquery.qtip.min',
@@ -28,6 +29,7 @@ require.config({
 		'jquery.mousewheel': ['jquery'],
 		'jquery.scrollbar': ['jquery', 'jquery.mousewheel'],
 		'jquery.fileuploader': ['jquery'],
+		'jquery.smartbanner': ['jquery'],
 		'jquery.chosen': ['jquery'],
 
 		// Modules
@@ -61,6 +63,7 @@ basic.push('jquery-ui');
 basic.push('jquery.inview');
 basic.push('jquery.mousewheel');
 basic.push('jquery.scrollbar');
+basic.push('jquery.smartbanner');
 basic.push('google.analytics');
 
 basic.push('modules/np');

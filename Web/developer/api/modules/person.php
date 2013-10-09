@@ -187,6 +187,59 @@
 
 	} else
 
+	if ($method === "subscribe") {
+
+		if (isset($_GET["email"])) {
+
+			// Get some properties
+			$email = getAttribute($_GET["email"]);
+
+			$update = resourceForQuery(
+				"DELETE FROM
+					`emailBlacklist`
+				WHERE 1
+					AND `emailBlacklist`.`email` = '$email'
+			");
+
+			// Send an email if everything went alright
+			if (mysql_affected_rows() > 0) {
+				sendSubscribedEmail($email);
+			} else {
+				http_status_code(500, "Not a single email was found");
+			}
+		} else {
+			http_status_code(400, "email is a required parameter");
+		}
+
+	} else
+
+	if ($method === "unsubscribe") {
+
+		if (isset($_GET["email"])) {
+
+			// Get some properties
+			$email = getAttribute($_GET["email"]);
+
+			$update = resourceForQuery(
+				"INSERT IGNORE INTO
+					`emailBlacklist`
+					(`email`, `date`)
+				VALUES
+					('$email', NOW())
+			");
+
+			// Send an email if everything went alright
+			if (mysql_affected_rows() > 0) {
+				sendUnsubscribedEmail($email);
+			} else {
+				http_status_code(500, "Not a single email was found");
+			}
+		} else {
+			http_status_code(400, "email is a required parameter");
+		}
+
+	} else
+
 	if ($method === "changePassword") {
 
 		$tokenID = getToken();
