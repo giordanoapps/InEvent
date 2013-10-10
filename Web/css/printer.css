@@ -1,0 +1,43 @@
+body, html {
+	background-color: white;
+}
+
+table, tr, td {
+	page-break-inside: avoid;
+	page-break-after: always;
+}
+
+thead, tfoot {
+	display: table-header-group;
+}
+
+#header {
+	display: none;
+}
+
+#content {
+	top: 0px !important;
+}
+
+#wrapper {
+	display: none;
+}
+
+.pageContent .titleContent,
+.pageContent #menuContent {
+	display: none;
+}
+
+.pageContent .boardContent {
+	border-radius: 0;
+	border: none;
+}
+
+.pageContent .placerContent {
+	display: none;
+}
+
+.pageContent .realContent td:first-child {
+	display: none;
+}
+

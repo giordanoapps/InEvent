@@ -22,7 +22,10 @@
 		"bar.js",
 		"data.js",
 		"event.js",
+		"forgot.js",
 		"location.js",
+		"marketplace.js",
+		"people.js",
 		"register.js",
 	);
 

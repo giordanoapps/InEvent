@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>BB9E1018-BBBD-48FD-B0F6-841867529667</string>
+	<key>IDESourceControlProjectName</key>
+	<string>InEvent</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>02CA6EEE-7E02-4E93-93D0-21D2B6C70C8E</key>
+		<string>https://github.com/estudiotrilha/InEvent.git</string>
+		<key>F223AB7E-A5B0-4E99-B522-1AA6A301BBB2</key>
+		<string>https://github.com/facebook/facebook-ios-sdk.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>iOS/InEvent.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>02CA6EEE-7E02-4E93-93D0-21D2B6C70C8E</key>
+		<string>../..</string>
+		<key>F223AB7E-A5B0-4E99-B522-1AA6A301BBB2</key>
+		<string>../../../../Documents/Objective-C/facebook-ios-sdk</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/estudiotrilha/InEvent.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>02CA6EEE-7E02-4E93-93D0-21D2B6C70C8E</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>F223AB7E-A5B0-4E99-B522-1AA6A301BBB2</string>
+			<key>IDESourceControlWCCName</key>
+			<string>facebook-ios-sdk</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>02CA6EEE-7E02-4E93-93D0-21D2B6C70C8E</string>
+			<key>IDESourceControlWCCName</key>
+			<string>InEvent-dev</string>
+		</dict>
+	</array>
+</dict>
+</plist>

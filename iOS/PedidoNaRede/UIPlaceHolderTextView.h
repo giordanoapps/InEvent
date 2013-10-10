@@ -8,6 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
+typedef enum {
+    UIPlaceHolderTextViewVerticalAlignmentTop = -1,
+    UIPlaceHolderTextViewVerticalAlignmentCenter,
+    UIPlaceHolderTextViewVerticalAlignmentBottom
+} UIPlaceHolderTextViewVerticalAlignment;
+
 @interface UIPlaceHolderTextView : UITextView {
     NSString *placeholder;
     UIColor *placeholderColor;
@@ -19,7 +25,8 @@
 @property (nonatomic, retain) UILabel *placeHolderLabel;
 @property (nonatomic, retain) NSString *placeholder;
 @property (nonatomic, retain) UIColor *placeholderColor;
+@property (nonatomic, assign) UIPlaceHolderTextViewVerticalAlignment verticalAlignment;
 
--(void)textChanged:(NSNotification*)notification;
+- (void)textChanged:(NSNotification*)notification;
 
 @end

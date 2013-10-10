@@ -10,10 +10,16 @@
 #import "WrapperViewController.h"
 #import "APIController.h"
 
+typedef enum {
+    FeedbackTypeEvent = 0,
+    FeedbackTypeActivity
+} FeedbackType;
+
 @class UIPlaceHolderTextView;
 
 @interface FeedbackViewController : WrapperViewController <APIControllerDelegate, UITextViewDelegate>
 
+@property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (strong, nonatomic) IBOutlet UIView *box;
 @property (strong, nonatomic) IBOutlet UILabel *titleLabel;
 @property (strong, nonatomic) IBOutlet UIView *messageBox;
@@ -27,7 +33,6 @@
 @property (strong, nonatomic) IBOutlet UIButton *star4;
 @property (strong, nonatomic) IBOutlet UIButton *star5;
 
-- (IBAction)processStarTap:(id)sender;
-- (IBAction)sendForm:(id)sender;
+- (void)setFeedbackType:(FeedbackType)type withReference:(NSInteger)referenceID;
 
 @end

@@ -47,7 +47,7 @@
     
     _headers = @[NSLocalizedString(@"Your Account", nil), NSLocalizedString(@"General", nil), NSLocalizedString(@"About", nil)];
     
-    // Selected the restaurant controller
+    // Selected the localization controller
     [self setSelectedIndex:1];
     
     // Update the menu
@@ -80,24 +80,46 @@
         
         NSString *type = [userInfo objectForKey:@"type"];
         
-        if ([type isEqualToString:@"person"]) {
+        if ([type isEqualToString:@"ad"]) {
+            // Load a single ad
+            [self performSelector:@selector(verifyAd) withObject:nil afterDelay:0.2f];
+            
+        } else if ([type isEqualToString:@"person"]) {
             // Verify if company is already selected
-            [self performSelector:@selector(verifyPerson) withObject:nil afterDelay:0];
+            [self performSelector:@selector(verifyPerson) withObject:nil afterDelay:0.1f];
             
         } else if ([type isEqualToString:@"enterprise"]) {
             // Verify if company is already selected
-            [self performSelector:@selector(verifyEvent) withObject:nil afterDelay:0];
+            [self performSelector:@selector(verifyEvent) withObject:nil afterDelay:0.1f];
             
-        } else if ([type isEqualToString:@"person"]) {
+        } else if ([type isEqualToString:@"feedback"]) {
             // Load the feedback controler
-            [self performSelector:@selector(verifyFeedback) withObject:nil afterDelay:0];
+            [self performSelector:@selector(verifyFeedback) withObject:nil afterDelay:0.1f];
             
         } else if ([type isEqualToString:@"menu"]) {
             // Update the menu
             [self performSelector:@selector(reloadMenu)];
         }
     }
+}
+
+#pragma mark - Private Methods
+
+- (NSInteger)calculateIndex:(NSIndexPath *)indexPath {
     
+    NSInteger index = 0;
+    
+    for (int i = 0; i < [self.menuTableView numberOfSections]; i++) {
+        for (int j = 0; j < [self.menuTableView numberOfRowsInSection:i]; j++) {
+            if (indexPath.section == i && indexPath.row == j) {
+                return index;
+            } else {
+                index++;
+            }
+        }
+    }
+    
+    return index;
 }
 
 #pragma mark - Table View Delegate
@@ -136,7 +158,7 @@
     
     UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(10.0, 12.0, tableView.frame.size.width, 32.0)];
     [title setText:[[_headers objectAtIndex:section] uppercaseString]];
-    [title setFont:[UIFont fontWithName:@"Thonburi-Bold" size:16.0]];
+    [title setFont:[UIFont fontWithName:@"Thonburi-Bold" size:14.0]];
     [title setTextColor:[ColorThemeController navigationBarTextColor]];
     [title setBackgroundColor:[UIColor clearColor]];
     
@@ -171,33 +193,30 @@
         [cell.textLabel setTextColor:[ColorThemeController navigationBarTextColor]];
         [cell.textLabel setHighlightedTextColor:[ColorThemeController navigationBarTextColor]];
         [cell.textLabel setBackgroundColor:[UIColor clearColor]];
-        [cell.textLabel setFont:[UIFont fontWithName:@"Thonburi" size:18.0]];
+        [cell.textLabel setFont:[UIFont fontWithName:@"Thonburi" size:16.0]];
         
         UIView *background = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, tableView.frame.size.width, 36.0)];
         [background setBackgroundColor:[ColorThemeController navigationBarBackgroundColor]];
         [cell setBackgroundView:background];
     }
 
+    // Define the text and the image
     if (indexPath.section == 0) {
         NSString *title = ([[HumanToken sharedInstance] isMemberAuthenticated]) ? [[HumanToken sharedInstance] name] : NSLocalizedString(@"Log In", nil);
         [cell.textLabel setText:title];
         
         UIViewController *viewController = [self.viewControllers objectAtIndex:indexPath.row];
         [cell.imageView setImage:viewController.tabBarItem.image];
-    } else if (indexPath.section == 1) {
-        UIViewController *viewController = [self.viewControllers objectAtIndex:(indexPath.row + 1)];
-        [cell.textLabel setText:viewController.title];
-        [cell.imageView setImage:viewController.tabBarItem.image];
-    } else if (indexPath.section == 2) {
-        UIViewController *viewController = [self.viewControllers objectAtIndex:2];
+    } else {
+        UIViewController *viewController = [self.viewControllers objectAtIndex:[self calculateIndex:indexPath]];
         [cell.textLabel setText:viewController.title];
         [cell.imageView setImage:viewController.tabBarItem.image];
     }
-
+    
+    // Accessory view
     if ((indexPath.section <= 1 && self.selectedIndex == indexPath.row + indexPath.section) ||
-        (indexPath.section == 2 && self.selectedIndex == 2)) {
-        UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"16-Check"]];
-        [cell setAccessoryView:imageView];
+        (indexPath.section == 2 && self.selectedIndex == [tableView numberOfSections])) {
+        [cell setAccessoryView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"16-Check"]]];
     } else {
         [cell setAccessoryView:nil];
     }
@@ -207,19 +226,14 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    if (indexPath.section <= 1) {
+    if (indexPath.section <= 2) {
         // We must transform the current indexPath into something that the library can read
-        NSIndexPath *transformed = [NSIndexPath indexPathForRow:indexPath.row + indexPath.section inSection:0];
-        [super tableView:tableView didSelectRowAtIndexPath:transformed];
-    
-    } else if (indexPath.section == 2) {
-        // We must transform the current indexPath into something that the library can read
-        NSIndexPath *transformed = [NSIndexPath indexPathForRow:2 inSection:0];
+        NSIndexPath *transformed = [NSIndexPath indexPathForRow:[self calculateIndex:indexPath] inSection:0];
         [super tableView:tableView didSelectRowAtIndexPath:transformed];
     }
     
     // Reload all sections
-    [tableView reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 3)] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [tableView reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, [tableView numberOfSections])] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 @end

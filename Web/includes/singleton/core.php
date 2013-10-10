@@ -9,7 +9,7 @@ class Core {
     public $name = "";
     public $memberID = 0;
 
-    // Company
+    // Event
     public $eventID = 0;
     public $workAtEvent = false;
     public $roleID = ROLE_ATTENDEE;

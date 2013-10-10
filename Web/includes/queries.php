@@ -5,6 +5,8 @@
 	 */
     
     // Include query modules
+    include_once("queries/activity.php");
     include_once("queries/event.php");
+    include_once("queries/people.php");
 
 ?>

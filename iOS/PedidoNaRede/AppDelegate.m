@@ -10,20 +10,25 @@
 #import "UIImage+Color.h"
 #import "AboutViewController.h"
 #import "ScheduleViewController.h"
+#import "ScheduleItemViewController.h"
+#import "PhotosViewController.h"
+#import "PhotosDetailViewController.h"
 #import "ColorThemeController.h"
 #import "PushController.h"
 #import "HumanViewController.h"
-#import "ReaderViewController.h"
 #import "LauchImageViewController.h"
 #import "GAI.h"
+#import "IntelligentSplitViewController.h"
 #import <FacebookSDK/FacebookSDK.h>
 #import <Parse/Parse.h>
+#import <GoogleMaps/GoogleMaps.h>
 
 @interface AppDelegate ()
 
-@property (strong, nonatomic) UINavigationController *humanViewController;
-@property (strong, nonatomic) UINavigationController *scheduleViewController;
-@property (strong, nonatomic) UINavigationController *aboutViewController;
+@property (strong, nonatomic) UIViewController *humanViewController;
+@property (strong, nonatomic) UIViewController *scheduleViewController;
+@property (strong, nonatomic) UIViewController *photosViewController;
+@property (strong, nonatomic) UIViewController *aboutViewController;
 
 @end
 
@@ -49,34 +54,64 @@
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
-
     // Deliver a notification to the proper controller
     [PushController deliverPushNotification:userInfo];
-}
-
-- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
-    if ([error code] == 3010) {
-        NSLog(@"Push notifications don't work in the simulator!");
-    } else {
-        NSLog(@"didFailToRegisterForRemoteNotificationsWithError: %@", error);
-    }
 }
 
 #pragma mark - Cycle
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
+    NSDictionary *userInfo = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+    if (userInfo) {
+        [PushController deliverPushNotification:userInfo];
+        application.applicationIconBadgeNumber = 0;
+    }
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackTranslucent];
-
+    
+    // Status Bar
+    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackOpaque];
+    } else {
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    }
+    
     // Each controller
-    // LOGIN
+    // Login View Controller
     _humanViewController = [[UINavigationController alloc] initWithRootViewController:[[HumanViewController alloc] initWithNibName:@"HumanViewController" bundle:nil]];
     
-    // SCHEDULE
-    _scheduleViewController = [[UINavigationController alloc] initWithRootViewController:[[ScheduleViewController alloc] initWithNibName:@"ScheduleViewController" bundle:nil]];
+    // Schedule View Controller
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        _scheduleViewController = [[UINavigationController alloc] initWithRootViewController:[[ScheduleViewController alloc] initWithNibName:@"ScheduleViewController" bundle:nil]];
+    } else {
+        _scheduleViewController = [[IntelligentSplitViewController alloc] init];
+        ScheduleViewController *svc = [[ScheduleViewController alloc] initWithNibName:@"ScheduleViewController" bundle:nil];
+        UINavigationController *nsvc = [[UINavigationController alloc] initWithRootViewController:svc];
+        ScheduleItemViewController *sivc = [[ScheduleItemViewController alloc] initWithNibName:@"ScheduleItemViewController" bundle:nil];
+        UINavigationController *nsivc = [[UINavigationController alloc] initWithRootViewController:sivc];
+        ((UISplitViewController *)_scheduleViewController).title = svc.title;
+        ((UISplitViewController *)_scheduleViewController).tabBarItem.image = svc.tabBarItem.image;
+        ((UISplitViewController *)_scheduleViewController).delegate = sivc;
+        ((UISplitViewController *)_scheduleViewController).viewControllers = @[nsvc, nsivc];
+    }
+
+    // Photos View Controller
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        _photosViewController = [[UINavigationController alloc] initWithRootViewController:[[PhotosViewController alloc] initWithNibName:@"PhotosViewController" bundle:nil]];
+    } else {
+        _photosViewController = [[IntelligentSplitViewController alloc] init];
+        PhotosViewController *pvc = [[PhotosViewController alloc] initWithNibName:@"PhotosViewController" bundle:nil];
+        UINavigationController *npvc = [[UINavigationController alloc] initWithRootViewController:pvc];
+        PhotosDetailViewController *pdvc = [[PhotosDetailViewController alloc] initWithNibName:@"PhotosDetailViewController" bundle:nil];
+        UINavigationController *npdvc = [[UINavigationController alloc] initWithRootViewController:pdvc];
+        ((UISplitViewController *)_photosViewController).title = pvc.title;
+        ((UISplitViewController *)_photosViewController).tabBarItem.image = pvc.tabBarItem.image;
+        ((UISplitViewController *)_photosViewController).delegate = pdvc;
+        ((UISplitViewController *)_photosViewController).viewControllers = @[npvc, npdvc];
+    }
     
-    // ABOUT
+    // About View Controller
     _aboutViewController = [[UINavigationController alloc] initWithRootViewController:[[AboutViewController alloc] initWithNibName:@"AboutViewController" bundle:nil]];
     
     // Global Controller
@@ -90,6 +125,7 @@
     // Create components
     [self createCustomAppearance];
     [self createGoogleAnalyticsTracker];
+    [self createGoogleMapsTracker];
     [self createParseTrackerWithApplication:application withOptions:launchOptions];
     
     // Set the default controller
@@ -120,12 +156,16 @@
 {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     [self loadEssentialData];
+    
+    application.applicationIconBadgeNumber = 0;
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     [self loadEssentialData];
+    
+    application.applicationIconBadgeNumber = 0;
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
@@ -167,11 +207,13 @@
     // ----------------------
     // UIBarButtonItem
     // ----------------------
-    UIImage *backButton = [[UIImage imageNamed:@"barButtonBack.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 14, 0, 5)];
-    UIImage *barButton = [[UIImage imageNamed:@"barButton.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 5, 0, 5)];
-    [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil] setBackButtonBackgroundImage:backButton forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-    [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil] setBackgroundImage:barButton forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-    [[UIBarButtonItem appearance] setBackgroundVerticalPositionAdjustment:0.0 forBarMetrics:UIBarMetricsDefault];
+    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {
+        UIImage *backButton = [[UIImage imageNamed:@"barButtonBack.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 14, 0, 5)];
+        UIImage *barButton = [[UIImage imageNamed:@"barButton.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 5, 0, 5)];
+        [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil] setBackButtonBackgroundImage:backButton forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+        [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil] setBackgroundImage:barButton forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+        [[UIBarButtonItem appearance] setBackgroundVerticalPositionAdjustment:0.0 forBarMetrics:UIBarMetricsDefault];
+    }
     
     // ----------------------
     // UITabBarItem
@@ -184,28 +226,32 @@
     [GAI sharedInstance].trackUncaughtExceptions = YES;
     [GAI sharedInstance].dispatchInterval = 20;
 #ifdef DEBUG
-    [GAI sharedInstance].debug = NO;
+//    [[[GAI sharedInstance] logger] setLogLevel:kGAILogLevelVerbose];
 #endif
     [[GAI sharedInstance] trackerWithTrackingId:@"UA-33888939-6"];
+}
+
+- (void)createGoogleMapsTracker {
+    [GMSServices provideAPIKey:@"AIzaSyAdQ_ARtScsEywqn6vQfYKT8m0QyObDaFQ"];
 }
 
 - (void)createParseTrackerWithApplication:(UIApplication *)application withOptions:(NSDictionary *)launchOptions {
     // Create the Parse tracker
     [Parse setApplicationId:@"GVhc1mnm0Zi2b7RxOZ8jFNbqhYQIE59sYxfKSlyE" clientKey:@"vaCGSz1JXSVkDNTX9oE8bwu15faHHVi3B3ChLgRL"];
     
-    [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
+//    [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
     
     [application registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound];
 }
 
-#pragma mark - Store
+#pragma mark - Data
 
 - (void)storeEssentialData {
     
 }
 
 - (void)loadEssentialData {
-    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"verify" object:nil userInfo:@{@"type": @"ad"}];
 }
 
 @end

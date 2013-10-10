@@ -1,26 +1,22 @@
 <?php
 
-	function getMac(){
+    function eventExists($eventID) {
 
-        $ipAddress = $_SERVER['REMOTE_ADDR'];
-        $macAddress = "33";
-        
-        if ($ipAddress == "::1") { // This is the localhost
-        	return true;
-        }
-        
-        #run the external command, break output into lines
-        $arp = exec("arp $ipAddress");
-        $lines = explode("\n", $arp);
-        
-        #look for the output line describing our IP address
-        foreach($lines as $line) {
-           $cols = preg_split('/\s+/', trim($line));
-           $macAddress = $cols[3];	           
-        }
-        
-     	return (in_array($macAddress, $core->allowedMAC));
-    }
+		$result = resourceForQuery(
+			"SELECT
+				`event`.`id`
+			FROM
+				`event`
+			WHERE 1
+				AND `event`.`id` = $eventID
+		");
+
+		if (mysql_num_rows($result) > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 
     function eventHasMember($eventID, $memberID) {
 
@@ -39,6 +35,116 @@
 		} else {
 			return false;
 		}
+	}
+
+    function getEventForActivity($activityID) {
+
+		$result = resourceForQuery(
+			"SELECT
+				`activity`.`eventID`
+			FROM
+				`activity`
+			WHERE 1
+				AND `activity`.`id` = $activityID
+		");
+
+		if (mysql_num_rows($result) > 0) {
+			return mysql_result($result, 0, "eventID");
+		} else {
+			return 0;
+		}
+	}
+
+    function getActivityName($activityID) {
+
+		$result = resourceForQuery(
+			"SELECT
+				`activity`.`name`
+			FROM
+				`activity`
+			WHERE 1
+				AND `activity`.`id` = $activityID
+		");
+
+		if (mysql_num_rows($result) > 0) {
+			return html_entity_decode(mysql_result($result, 0, "name"), ENT_COMPAT, "UTF-8");
+		} else {
+			return "";
+		}
+	}
+
+    function getEventName($eventID) {
+
+		$result = resourceForQuery(
+			"SELECT
+				`event`.`name`
+			FROM
+				`event`
+			WHERE 1
+				AND `event`.`id` = $eventID
+		");
+
+		if (mysql_num_rows($result) > 0) {
+			return html_entity_decode(mysql_result($result, 0, "name"), ENT_COMPAT, "UTF-8");
+		} else {
+			return "";
+		}
+	}
+
+    function getGroupForActivity($activityID) {
+
+		$result = resourceForQuery(
+			"SELECT
+				`activity`.`groupID`
+			FROM
+				`activity`
+			WHERE
+				`activity`.`id` = $activityID
+		");
+
+		if (mysql_num_rows($result) > 0) {
+			return mysql_result($result, 0, "groupID");
+		} else {
+			return 0;
+		}
+	}
+
+	function getEmailForPerson($personID) {
+
+		$result = resourceForQuery(
+			"SELECT
+				`member`.`email`
+			FROM
+				`member`
+			WHERE
+				`member`.`id` = $personID
+		");
+
+		if (mysql_num_rows($result) > 0) {
+			return mysql_result($result, 0, "email");
+		} else {
+			return "";
+		}
+	}
+
+	function getPersonForEmail($email, $name = "") {
+
+		$result = resourceForQuery(
+			"SELECT
+				`member`.`id`
+			FROM
+				`member`
+			WHERE 1
+				AND BINARY `member`.`email` = '$email'
+		");
+
+		if (mysql_num_rows($result) > 0) {
+			$personID = mysql_result($result, 0, "id");
+		} else {
+			$personID = createMember($name, "123456", $email);
+		}
+
+		return $personID;
 	}
 
 	/**
@@ -162,9 +268,12 @@
 			"SELECT
 				`activity`.`id`,
 				`activity`.`name`,
-				`activity`.`description`
+				`activity`.`description`,
+				`activity`.`location`
 			FROM
 				`activity`
+			WHERE
+				`activity`.`eventID` = 4
 		");
 
 		for ($i = 0; $i < mysql_num_rows($result); $i++) {
@@ -172,18 +281,97 @@
 			$id = mysql_result($result, $i, "id");
 			$name = htmlentities(mysql_result($result, $i, "name"), ENT_COMPAT | ENT_HTML401, "ISO-8859-1");
 			$description = htmlentities(mysql_result($result, $i, "description"), ENT_COMPAT | ENT_HTML401, "ISO-8859-1");
+			$location = htmlentities(mysql_result($result, $i, "location"), ENT_COMPAT | ENT_HTML401, "ISO-8859-1");
 
 			$insert = resourceForQuery(
 				"UPDATE
 					`activity`
 				SET
 					`activity`.`name` = '$name',
-					`activity`.`description` = '$description'
+					`activity`.`description` = '$description',
+					`activity`.`location` = '$location'
 				WHERE 1
 					AND `activity`.`id` = $id
 			");
 		}
+	}
 
+	function writePosition() {
+
+		// Activity
+		$result = resourceForQuery(
+			"SELECT
+				`activityMember`.`id`,
+				`activityMember`.`activityID`
+			FROM
+				`activityMember`
+			WHERE 1
+				AND `activityMember`.`activityID` >= 80
+				AND `activityMember`.`activityID` < 150
+		");
+
+		for ($i = 0; $i < mysql_num_rows($result); $i++) {
+
+			$id = mysql_result($result, $i, "id");
+			$activityID = mysql_result($result, $i, "activityID");
+
+			$resultCount = resourceForQuery(
+				"SELECT
+					COUNT(`activityMember`.`id`) AS `entries`
+				FROM
+					`activityMember`
+				WHERE 1
+					AND `activityMember`.`activityID` = $activityID
+					AND `activityMember`.`id` <= $id
+			");
+
+			$entries = mysql_result($resultCount, 0, "entries");
+
+			$insert = resourceForQuery(
+				"UPDATE
+					`activityMember`
+				SET
+					`activityMember`.`position` = $entries
+				WHERE 1
+					AND `activityMember`.`id` = $id
+			");
+		}
+
+		// Event
+		// $result = resourceForQuery(
+		// 	"SELECT
+		// 		`eventMember`.`id`,
+		// 		`eventMember`.`eventID`
+		// 	FROM
+		// 		`eventMember`
+		// ");
+
+		// for ($i = 0; $i < mysql_num_rows($result); $i++) {
+
+		// 	$id = mysql_result($result, $i, "id");
+		// 	$eventID = mysql_result($result, $i, "eventID");
+
+		// 	$resultCount = resourceForQuery(
+		// 		"SELECT
+		// 			COUNT(`eventMember`.`id`) AS `entries`
+		// 		FROM
+		// 			`eventMember`
+		// 		WHERE 1
+		// 			AND `eventMember`.`eventID` = $eventID
+		// 			AND `eventMember`.`id` <= $id
+		// 	");
+
+		// 	$entries = mysql_result($resultCount, 0, "entries");
+
+		// 	$insert = resourceForQuery(
+		// 		"UPDATE
+		// 			`eventMember`
+		// 		SET
+		// 			`eventMember`.`position` = $entries
+		// 		WHERE 1
+		// 			AND `eventMember`.`id` = $id
+		// 	");
+		// }
 	}
 
 ?>

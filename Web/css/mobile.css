@@ -3,6 +3,11 @@ body {
 	min-width: 100%;
 }
 
+input, textarea {
+	-webkit-appearance: none;
+	-webkit-border-radius: 0;
+}
+
 /* @group Bar */
 
 .bar {
@@ -11,6 +16,25 @@ body {
 
 .bar .first {
 	width: auto;
+	padding: 0 20px;
+}
+
+.bar .facebookBox {
+	display: none;
+}
+
+.bar .middleLine {
+	display: none;
+}
+
+.bar .secondary > div input[type="text"],
+.bar .secondary > div input[type="password"] {
+	width: 25%;
+}
+
+.bar .secondary .memberBox .singleButton {
+	padding: 10px;
+	height: auto;
 }
 
 /* @end */
@@ -27,6 +51,10 @@ body {
 
 #homeContent img {
 	height: 48px;
+}
+
+#homeContent .middlePort {
+	display: none;
 }
 
 #homeContent .deck {
@@ -48,6 +76,15 @@ body {
 
 #wrapper {
 	height: 48px;
+}
+
+#wrapper .leftBar {
+	float: none;
+	text-align: center;
+}
+
+#wrapper .rightBar {
+	display: none;
 }
 
 /* @end */

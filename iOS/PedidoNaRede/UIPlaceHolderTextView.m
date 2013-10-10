@@ -15,8 +15,26 @@
 @synthesize placeholder;
 @synthesize placeholderColor;
 
-- (void)dealloc
-{
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    [self setPlaceholder:@""];
+    [self setPlaceholderColor:[UIColor lightGrayColor]];
+//    [self addObserver:self forKeyPath:@"contentSize" options:(NSKeyValueObservingOptionNew) context:NULL];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textChanged:) name:UITextViewTextDidChangeNotification object:nil];
+}
+
+- (id)initWithFrame:(CGRect)frame {
+    if ((self = [super initWithFrame:frame])) {
+        [self setPlaceholder:@""];
+        [self setPlaceholderColor:[UIColor lightGrayColor]];
+//        [self addObserver:self forKeyPath:@"contentSize" options:(NSKeyValueObservingOptionNew) context:NULL];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textChanged:) name:UITextViewTextDidChangeNotification object:nil];
+    }
+    return self;
+}
+
+- (void)dealloc {
+//    [self removeObserver:self forKeyPath:@"contentSize"];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 #if __has_feature(objc_arc)
 #else
@@ -28,38 +46,14 @@
     
 }
 
-- (void)awakeFromNib
-{
-    [super awakeFromNib];
-    [self setPlaceholder:@""];
-    [self setPlaceholderColor:[UIColor lightGrayColor]];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textChanged:) name:UITextViewTextDidChangeNotification object:nil];
-}
-
-- (id)initWithFrame:(CGRect)frame
-{
-    if( (self = [super initWithFrame:frame]) )
-    {
-        [self setPlaceholder:@""];
-        [self setPlaceholderColor:[UIColor lightGrayColor]];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textChanged:) name:UITextViewTextDidChangeNotification object:nil];
-    }
-    return self;
-}
-
-- (void)textChanged:(NSNotification *)notification
-{
-    if([[self placeholder] length] == 0)
-    {
+- (void)textChanged:(NSNotification *)notification {
+    if ([[self placeholder] length] == 0) {
         return;
     }
     
-    if([[self text] length] == 0)
-    {
+    if ([[self text] length] == 0) {
         [[self viewWithTag:999] setAlpha:1];
-    }
-    else
-    {
+    } else {
         [[self viewWithTag:999] setAlpha:0];
     }
 }
@@ -69,12 +63,9 @@
     [self textChanged:nil];
 }
 
-- (void)drawRect:(CGRect)rect
-{
-    if( [[self placeholder] length] > 0 )
-    {
-        if ( placeHolderLabel == nil )
-        {
+- (void)drawRect:(CGRect)rect {
+    if ([[self placeholder] length] > 0) {
+        if (placeHolderLabel == nil) {
             placeHolderLabel = [[UILabel alloc] initWithFrame:CGRectMake(8,8,self.bounds.size.width - 16,0)];
             placeHolderLabel.lineBreakMode = UILineBreakModeWordWrap;
             placeHolderLabel.numberOfLines = 0;
@@ -91,8 +82,7 @@
         [self sendSubviewToBack:placeHolderLabel];
     }
     
-    if( [[self text] length] == 0 && [[self placeholder] length] > 0 )
-    {
+    if ([[self text] length] == 0 && [[self placeholder] length] > 0) {
         [[self viewWithTag:999] setAlpha:1];
     }
     

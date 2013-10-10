@@ -1,4 +1,9 @@
-$(document).ready(function() {
+var modules = [];
+modules.push('jquery');
+modules.push('common');
+modules.push('modules/validator');
+
+define(modules, function($) {$(function() {
 
 // --------------------------------------- DATA -------------------------------------- //
 
@@ -6,7 +11,7 @@ $(document).ready(function() {
 	 * Page initialization
 	 * @return {null}
 	 */
-	$("#dataContent").live("hashDidLoad", function() {
+	$("#dataContent").on("hashDidLoad", function() {
 
 		var $parent = $(this);
 		var $form = $parent.find(".dataForm");
@@ -33,12 +38,18 @@ $(document).ready(function() {
 	        rules: {
 	            name: {
 					required: true,
-					minlength: 10
+					minlength: 6
 				},
-				cpf: "cpf",
+				cpf: {
+					cpf: true
+				},
 				rg: {
 	                required: true,
 	                minlength: 8
+	            },
+	            usp: {
+	                required: true,
+	                minlength: 7
 	            },
 				telephone: {
 	                required: true, 
@@ -49,8 +60,7 @@ $(document).ready(function() {
 	                email: true
 	            },
 	            university: {
-	                required: true, 
-	                minlength: 3
+	                required: true
 	            },
 	            course: {
 	                required: true, 
@@ -85,12 +95,17 @@ $(document).ready(function() {
 					required: "Insira um RG válido",
 					minlength: jQuery.format("Insira pelo menos {0} caracteres")
 				},
+				usp: {
+					required: "Insira um número USP válido",
+					minlength: jQuery.format("Insira {0} caracteres")
+				},
 				telephone: {
-					required: "Insira um CPF válido",
+					required: "Insira um telefone válido",
 					minlength: jQuery.format("Insira pelo menos {0} caracteres")
 				},
 				email: { 
 	                required: "Insira um email válido", 
+	                email: "Insira um email válido", 
 	                minlength: jQuery.format("Insira pelo menos {0} caracteres")
 	            },
 	            university: { 
@@ -136,19 +151,34 @@ $(document).ready(function() {
 	 * Cancel the default behavior of the form
 	 * @return {null} 
 	 */
-	$("#dataContent .dataForm").live("submit", function() {
+	$("#dataContent").on("submit", ".dataForm", function() {
 		return false;
 	});
+
+	/**
+	 * Change the iframe when the user is typing some info
+	 * @return {null} 
+	 */
+	// $("#dataContent .dataForm input").on("focusout", function() {
+
+	// 	var $content = $(this).closest(".pageContentBox");
+
+	// 	// Define the form url
+	// 	var url = $content.find(".docsFrame").attr("data-src");
+	// 	url = url.replace(/myName/i, $content.find(".name").val());
+	// 	url = url.replace(/myEmail/i, $content.find(".email").val());
+	// 	$content.find(".docsFrame").attr("src", url);
+	// });
 
 	/**
 	 * Trigger the form validator
 	 * @return {null}
 	 */
-	$("#dataContent .navigator li, #dataContent .sequenceContent li").live("click", function() {
+	$("#dataContent").on("click", ".navigator li, .sequenceContent li", function() {
 
 		var $parent = $(this).parents("#dataContent");
 
-		if ($parent.find(".dataForm").valid()) {
+		if ($parent.find(".dataForm").valid() && $(".docsFrame").contents().find("input[type='text']").length == 0) {
 
 			var temp = $parent.find(".dataForm").serializeArray();
 
@@ -167,4 +197,4 @@ $(document).ready(function() {
 		}
 	});
 
-});
+});});

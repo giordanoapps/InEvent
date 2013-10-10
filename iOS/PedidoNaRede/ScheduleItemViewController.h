@@ -7,21 +7,26 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import <MapKit/MapKit.h>
+#import <CoreLocation/CoreLocation.h>
 #import "WrapperViewController.h"
 
-@interface ScheduleItemViewController : WrapperViewController <UITableViewDelegate, UITableViewDataSource, APIControllerDelegate, UIGestureRecognizerDelegate>
+@class GMSMapView;
+
+@interface ScheduleItemViewController : WrapperViewController <APIControllerDelegate, UIGestureRecognizerDelegate, UISplitViewControllerDelegate, CLLocationManagerDelegate>
 
 @property (strong, nonatomic) IBOutlet UIView *wrapper;
-@property (strong, nonatomic) IBOutlet UILabel *hour;
-@property (strong, nonatomic) IBOutlet UILabel *minute;
-@property (strong, nonatomic) IBOutlet UILabel *name;
+@property (strong, nonatomic) IBOutlet UIView *hour; // UILabel
+@property (strong, nonatomic) IBOutlet UIView *minute; // UILabel
+@property (strong, nonatomic) IBOutlet UIView *name; // UILabel
 @property (strong, nonatomic) IBOutlet UIView *line;
-@property (strong, nonatomic) IBOutlet UITextView *description;
-@property (strong, nonatomic) IBOutlet UITableView *tableView;
-@property (strong, nonatomic) IBOutlet UIView *questionWrapper;
-@property (strong, nonatomic) IBOutlet UITextField *questionInput;
-@property (strong, nonatomic) IBOutlet UIButton *questionButton;
+@property (strong, nonatomic) IBOutlet UIView *description; // UITextView
+@property (strong, nonatomic) IBOutlet UIButton *quickFeedback;
+@property (strong, nonatomic) IBOutlet UIButton *quickQuestion;
+@property (strong, nonatomic) IBOutlet UIButton *quickPeople;
+@property (strong, nonatomic) IBOutlet UIButton *quickMaterial;
+@property (strong, nonatomic) IBOutlet MKMapView *map;
+//@property (strong, nonatomic) IBOutlet GMSMapView *map;
 
 @property (strong, nonatomic) NSDictionary *activityData;
 

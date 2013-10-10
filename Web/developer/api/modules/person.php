@@ -3,17 +3,18 @@
 
 	if ($method === "signIn") {
 
-		if (isset($_GET["name"]) && isset($_GET["password"])) {
+		if (isset($_GET["email"]) && isset($_GET["password"])) {
 
 			// Get some properties
-			$name = getAttribute($_GET['name']);
+			$email = getAttribute($_GET['email']);
 			$password = getAttribute($_GET['password']);
 
 			// Return the desired data
-			$data = processLogIn($name, $password);
+			$data = processLogIn($email, $password);
 			echo json_encode($data);
+
 		} else {
-			http_status_code(400);
+			http_status_code(400, "email and password are required parameters");
 		}
 				
 	} else
@@ -42,16 +43,14 @@
 						"SELECT
 							`member`.`id`,
 							`member`.`name`,
-							`memberSessions`.`sessionKey`
+							COALESCE(`memberSessions`.`sessionKey`, '') AS `sessionKey`
 						FROM
 							`member`
-						INNER JOIN
-							`memberDetail` ON `memberDetail`.`id` = `member`.`id`
-						INNER JOIN
+						LEFT JOIN
 							`memberSessions` ON `memberSessions`.`memberID` = `member`.`id`
 						WHERE 0
 							OR BINARY `member`.`name` = '$name'
-							OR BINARY `memberDetail`.`email` = '$email'
+							OR BINARY `member`.`email` = '$email'
 						ORDER BY
 							`memberSessions`.`id` DESC
 					");
@@ -59,28 +58,30 @@
 					// Member already has a profile with us
 					if (mysql_num_rows($result) > 0) {
 
+						$name = mysql_result($result, 0, "name");
 						$memberID = mysql_result($result, 0, "id");
+						$tokenID = mysql_result($result, 0, "sessionKey");
 
-						$companies = getMemberEvents($memberID);
+						$events = getMemberEvents($memberID);
 
 						// Return some information
-						$data["name"] = mysql_result($result, 0, "name");
+						$data["name"] = $name;
 						$data["memberID"] = $memberID;
-						$data["companies"] = $companies["data"];
-						$data["tokenID"] = mysql_result($result, 0, "sessionKey");
+						$data["events"] = $events["data"];
+						$data["tokenID"] = $tokenID;
 
 						echo json_encode($data);
 
 					} else {
 
 						// Create a random password for the newly created member
-						$password = md5((string)rand());
+						$password = "123456";
 						// Create the member
-						$memberID = createMember($name, $password, "", "", $email, 0);
+						$memberID = createMember($name, $password, $email);
 
 						if ($memberID != 0) {
 							// Return the desired data
-							$data = processLogIn($name, $password);
+							$data = processLogIn($email, $password);
 							echo json_encode($data);
 						} else {
 							http_status_code(500);
@@ -91,19 +92,19 @@
 					// user ID even though the access token is invalid.
 					// In this case, we'll get an exception, so we'll
 					// just ask the user to login again here.
-					http_status_code(503);
+					http_status_code(503, "facebook error");
 				}
 			} else {
 				// No user, return a non authenticated code
-				http_status_code(401);
+				http_status_code(401, "personID is not authenticated");
 			}
 		} else {
-			http_status_code(400);
+			http_status_code(400, "facebookToken is a required parameter");
 		}
 				
 	} else
 
-	if ($method === "register") {
+	if ($method === "enroll") {
 
 		if (isset($_POST["name"]) && isset($_POST["password"]) && isset($_POST["email"])) {
 
@@ -117,12 +118,13 @@
 			$email = getAttribute($_POST["email"]);
 
 			// Optional
-			$cpf = getEmptyAttribute($_POST["cpf"]);
-			$rg = getEmptyAttribute($_POST["rg"]);
-			$university = getEmptyAttribute($_POST["university"]);
-			$course = getEmptyAttribute($_POST["course"]);
-			$telephone = getEmptyAttribute($_POST["telephone"]);
-			$usp = getEmptyAttribute($_POST["usp"]);
+			$cpf = (isset($_POST["cpf"])) ? getEmptyAttribute($_POST["cpf"]) : "";
+			$rg = (isset($_POST["rg"])) ? getEmptyAttribute($_POST["rg"]) : "";
+			$city = (isset($_POST["city"])) ? getEmptyAttribute($_POST["city"]) : "";
+			$university = (isset($_POST["university"])) ? getEmptyAttribute($_POST["university"]) : "";
+			$course = (isset($_POST["course"])) ? getEmptyAttribute($_POST["course"]) : "";
+			$telephone = (isset($_POST["telephone"])) ? getEmptyAttribute($_POST["telephone"]) : "";
+			$usp = (isset($_POST["usp"])) ? getEmptyAttribute($_POST["usp"]) : "";
 
 			$result = resourceForQuery(
 				"SELECT
@@ -130,68 +132,171 @@
 				FROM
 					`member`
 				WHERE 0
-					OR `member`.`name` = '$name'
-					OR `member`.`email` = '$email'
+					OR BINARY `member`.`email` = '$email'
 			");
 
 			if (mysql_num_rows($result) == 0) {
 
-				// Insert member details
-				$insert = resourceForQuery(
-					"INSERT INTO
-						`member`
-						(`name`, `password`, `cpf`, `rg`, `usp`, `telephone`, `email`, `university`, `course`)
-					VALUES 
-						('$name', '" . Bcrypt::hash($password) . "', '$cpf', '$rg', '$usp', '$telephone', '$email', '$university', '$course')
-				");
-
-				$memberID = mysql_insert_id();
-
-
-				///// TEMPORARY, SHALL BE REMOVED //////
-				$insert = resourceForQuery(
-					"INSERT INTO
-						`eventMember`
-						(`eventID`, `memberID`, `roleID`, `approved`)
-					VALUES
-						(1, $memberID, 1, 1)
-				");
-				////////////////////////////////////////
-
-
-				// Insert all the activities that are general
-				$insert = resourceForQuery(
-					"INSERT INTO
-						`activityMember`
-						(`activityID`, `memberID`, `approved`, `present`)
-					SELECT
-						`activity`.`id`,
-						$memberID,
-						1,
-						0
-					FROM
-						`activity`
-					WHERE
-						`activity`.`general` = 1
-				");
+				$memberID = createMember($name, $password, $email, $cpf, $rg, $usp, $telephone, $city, $university, $course);
 
 				if ($memberID != 0) {
 					// Return the desired data
-					$data = array("memberID", $memberID);
+					$data = processLogIn($email, $password);
 					echo json_encode($data);
 				} else {
-					http_status_code(500);
+					http_status_code(500, "Couldn't create memberID");
 				}
 			} else {
-				http_status_code(409);
+				http_status_code(303, "Email already exists");
 			}
 		} else {
-			http_status_code(400);
+			http_status_code(400, "name, password and email are required parameters");
 		}
 
 	} else
 
-	if ($method === "getEvents") {
+	if ($method === "sendRecovery") {
+
+		if (isset($_GET["email"])) {
+
+			// Get some properties
+			$email = getAttribute($_GET["email"]);
+
+			// Create a new random password
+			$password = "123456";
+			$hash = Bcrypt::hash($password);
+
+			$update = resourceForQuery(
+				"UPDATE
+					`member`
+				SET
+					`member`.`password` = '$hash'
+				WHERE 1
+					AND BINARY `member`.`email` = '$email'
+			");
+
+			// Send an email if everything went alright
+			if (mysql_affected_rows() > 0) {
+				sendRecoveryEmail($password, $email);
+			} else {
+				http_status_code(500, "Not a single email was found");
+			}
+		} else {
+			http_status_code(400, "email is a required parameter");
+		}
+
+	} else
+
+	if ($method === "subscribe") {
+
+		if (isset($_GET["email"])) {
+
+			// Get some properties
+			$email = getAttribute($_GET["email"]);
+
+			$update = resourceForQuery(
+				"DELETE FROM
+					`emailBlacklist`
+				WHERE 1
+					AND `emailBlacklist`.`email` = '$email'
+			");
+
+			// Send an email if everything went alright
+			if (mysql_affected_rows() > 0) {
+				sendSubscribedEmail($email);
+			} else {
+				http_status_code(500, "Not a single email was found");
+			}
+		} else {
+			http_status_code(400, "email is a required parameter");
+		}
+
+	} else
+
+	if ($method === "unsubscribe") {
+
+		if (isset($_GET["email"])) {
+
+			// Get some properties
+			$email = getAttribute($_GET["email"]);
+
+			$update = resourceForQuery(
+				"INSERT IGNORE INTO
+					`emailBlacklist`
+					(`email`, `date`)
+				VALUES
+					('$email', NOW())
+			");
+
+			// Send an email if everything went alright
+			if (mysql_affected_rows() > 0) {
+				sendUnsubscribedEmail($email);
+			} else {
+				http_status_code(500, "Not a single email was found");
+			}
+		} else {
+			http_status_code(400, "email is a required parameter");
+		}
+
+	} else
+
+	if ($method === "changePassword") {
+
+		$tokenID = getToken();
+
+		if (isset($_GET["oldPassword"]) && isset($_GET["newPassword"])) {
+
+			// Get some properties
+			$oldPassword = getAttribute($_GET["oldPassword"]);
+			$newPassword = getAttribute($_GET["newPassword"]);
+
+			$result = resourceForQuery(
+				"SELECT
+					`member`.`password`,
+					`member`.`email`
+				FROM
+					`member`
+				WHERE 1
+					AND `member`.`id` = $core->memberID
+			");
+
+			if (mysql_num_rows($result) > 0) {
+
+				$oldHash = mysql_result($result, 0, "password");
+				$email = mysql_result($result, 0, "email");
+
+				if (Bcrypt::check($oldPassword, $oldHash)) {
+
+					$newHash = Bcrypt::hash($newPassword);
+
+					$update = resourceForQuery(
+						"UPDATE
+							`member`
+						SET
+							`member`.`password` = '$newHash'
+						WHERE 1
+							AND `member`.`id` = $core->memberID
+					");
+
+					// Send an email if everything went alright
+					if (mysql_affected_rows() > 0) {
+						sendPasswordChangeEmail($email);
+					} else {
+						http_status_code(500, "Not a single email was rewritten");
+					}
+				} else {
+					http_status_code(406, "oldPassword is wrong");
+				}
+			} else {
+				http_status_code(404, "memberID was not found");
+			}
+		} else {
+			http_status_code(400, "oldPassword and newPassword are required parameters");
+		}
+
+	} else
+
+	if ($method === "getWorkingEvents") {
 
 		$tokenID = getToken();
 

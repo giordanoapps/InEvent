@@ -13,9 +13,10 @@
 #import "CoolBarButtonItem.h"
 #import "EventToken.h"
 #import "HumanToken.h"
-#import "UINavigationBar+Height.h"
 
-@interface WrapperViewController ()
+@interface WrapperViewController () {
+    UITapGestureRecognizer *behindRecognizer;
+}
 
 @property (assign, nonatomic) BOOL isUp;
 @property (strong, nonatomic) APIController *apiController;
@@ -41,10 +42,16 @@
 {
     [super viewDidLoad];
     
-    self.trackedViewName = @"Wrapper";
+    self.screenName = @"Wrapper";
     
     // Navigation Bar
-    self.navigationController.navigationBar.tintColor = [ColorThemeController navigationBarBackgroundColor];
+    if ([[[UIDevice currentDevice] systemVersion] isEqualToString:@"7.0"]) {
+        self.navigationController.navigationBar.barTintColor = [ColorThemeController navigationBarBackgroundColor];
+        self.navigationController.navigationBar.translucent = NO;
+        self.navigationController.navigationBar.titleTextAttributes = @{UITextAttributeTextColor : [UIColor whiteColor]};
+    }
+
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -57,7 +64,7 @@
     
     // We check if the back button is already set, so we have to preserve it
     // The navigationBar items is an array that counts how many controllers we already have on the stack
-    if ([self.navigationController.viewControllers count] == 1 && self.presentingViewController == nil && ![[[self.splitViewController viewControllers] objectAtIndex:0] isEqual:self.navigationController]) {
+    if ([self.navigationController.viewControllers count] == 1 && self.presentingViewController == nil && ![[[self.splitViewController viewControllers] objectAtIndex:1] isEqual:self.navigationController]) {
         
         // Left Button
         _leftBarButton = [[CoolBarButtonItem alloc] initCustomButtonWithImage:[UIImage imageNamed:@"20-Hamburguer-White"] frame:CGRectMake(0, 0, 42.0, 30.0) insets:UIEdgeInsetsMake(7.0, 10.0, 7.0, 10.0) target:self action:@selector(showSlidingMenu)];
@@ -118,7 +125,7 @@
 
 #pragma mark - Keyboard Notifications
 
-- (CGRect) calculateKeyboardFrame:(NSNotification*)notification {
+- (CGRect)calculateKeyboardFrame:(NSNotification*)notification {
     CGRect keyboardFrame = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
     UIWindow *window = [[[UIApplication sharedApplication] windows]objectAtIndex:0];
     UIView *mainSubviewOfWindow = window.rootViewController.view;
@@ -158,7 +165,6 @@
     }
 }
 
-
 - (void)moveViewUp:(BOOL)moveUp withNotification:(NSNotification*)notification {
     // Move the view up/down whenever the keyboard is shown/dismissed
 
@@ -186,40 +192,6 @@
     }];
 }
 
-#pragma mark - APIController Delegate
-
-- (void)apiController:(APIController *)apiController didFailWithError:(NSError *)error {
-    // Implement a method that allows every failing requisition to be reloaded
-    
-    AlertView *alertView;
-    
-    if ((int)(error.code / 100) == 5) {
-        // We have a server error
-        alertView = [[AlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"Oh oh.. It appears that our server is having some trouble. Do you want to try again?", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"No", nil) otherButtonTitle:NSLocalizedString(@"Yes", nil)];
-        
-        [self setApiController:apiController];
-    } else if (error.code == 401 || error.code == 204) {
-        // We have a server error
-        alertView = [[AlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"It appears that your credentials expired! Can you log again?", nil) delegate:self cancelButtonTitle:nil otherButtonTitle:NSLocalizedString(@"Ok!", nil)];
-        
-        // We check which permission we should remove
-        if ([[HumanToken sharedInstance] isMemberAuthenticated]) {
-            [[HumanToken sharedInstance] removeMember];
-        }
-        
-        // Update the current state of the schedule controller
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"scheduleCurrentState" object:nil userInfo:nil];
-        
-    } else {
-        alertView = [[AlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"Hum, it appears that the connectivity is unstable.. Do you want to try again?", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"No", nil) otherButtonTitle:NSLocalizedString(@"Yes", nil)];
-        
-        [self setApiController:apiController];
-    }
-    
-    [alertView setErrorCode:error.code];
-    [alertView show];
-}
-
 #pragma mark - Alert View Delegate
 
 - (void)alertView:(AlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
@@ -233,26 +205,35 @@
     }
 }
 
-#pragma mark - MG Split View Controller Delegate
+#pragma mark - Tap Behind methods
 
-//- (void)splitViewController:(MGSplitViewController*)svc
-//	 willHideViewController:(UIViewController *)aViewController
-//		  withBarButtonItem:(UIBarButtonItem*)barButtonItem
-//	   forPopoverController: (UIPopoverController*)pc {
-//	
-//    self.barButtonItem = barButtonItem;
-//    [self showRootPopoverButtonItem];
-//}
-//
-//
-//// Called when the view is shown again in the split view, invalidating the button and popover controller.
-//- (void)splitViewController:(MGSplitViewController*)svc
-//	 willShowViewController:(UIViewController *)aViewController
-//  invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem
-//{
-//    self.barButtonItem = nil;
-//    [self invalidateRootPopoverButtonItem];
-//}
+- (void)allocTapBehind {
+    // Add the gesture recognizer
+    behindRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapBehind:)];
+    [behindRecognizer setNumberOfTapsRequired:1];
+    [behindRecognizer setCancelsTouchesInView:YES]; // So the user can still interact with controls in the modal view
+    [self.view.window addGestureRecognizer:behindRecognizer];
+}
+
+- (void)deallocTapBehind {
+    // Remove the gesture recognizer
+    [self.view.window removeGestureRecognizer:behindRecognizer];
+}
+
+- (void)handleTapBehind:(UITapGestureRecognizer *)sender {
+    
+    if (sender.state == UIGestureRecognizerStateEnded) {
+        CGPoint location = [sender locationInView:nil]; //Passing nil gives us coordinates in the window
+        
+        // Then we convert the tap's location into the local view's coordinate system, and test to see if it's in or outside.
+        // If outside, dismiss the view.
+        if (![self.view pointInside:[self.view convertPoint:location fromView:self.view.window] withEvent:nil]) {
+            // Remove the recognizer first so it's view.window is valid.
+            [self.view.window removeGestureRecognizer:sender];
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }
+    }
+}
 
 #pragma mark - Split View Controller Delegate
 
@@ -275,12 +256,6 @@
 #pragma mark - Split View Controller Rotation Methods
 
 - (void)showRootPopoverButtonItem {
-    // See if we can get the title of the navigation controller
-//    if ([viewController isKindOfClass:[UINavigationController class]]) {
-//        _barButtonItem.title = [[((UINavigationController *)viewController).viewControllers objectAtIndex:0] title];
-//    } else {
-//        _barButtonItem.title = self.title;
-//    }
     // Append the button into the ones that we already have
     NSMutableArray *barButtons = [NSMutableArray arrayWithArray:self.navigationItem.leftBarButtonItems];
     if (_barButtonItem && ![barButtons containsObject:_barButtonItem]) [barButtons addObject:_barButtonItem];
@@ -293,13 +268,68 @@
     [barButtons removeObject:_barButtonItem];
     [self.navigationItem setLeftBarButtonItems:barButtons animated:YES];
 }
-//
-//- (void)viewWillLayoutSubviews {
-//    if (UIInterfaceOrientationIsPortrait([UIApplication sharedApplication].statusBarOrientation)) {
-//        [self showRootPopoverButtonItem];
-//    } else {
-//        [self invalidateRootPopoverButtonItem];
-//    }
-//}
+
+#pragma mark - APIController Delegate
+
+- (void)apiController:(APIController *)apiController didFailWithError:(NSError *)error {
+    // Implement a method that allows every failing requisition to be reloaded
+    
+    AlertView *alertView;
+    
+    if ((int)(error.code / 100) == 5) {
+        // We have a server error
+        alertView = [[AlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"Oh oh.. It appears that our server is having some trouble. Do you want to try again?", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"No", nil) otherButtonTitle:NSLocalizedString(@"Yes", nil)];
+        
+        [self setApiController:apiController];
+        
+    } else if (error.code == 401 || error.code == 204) {
+        // We have a server error
+        alertView = [[AlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"It appears that your credentials expired! Can you log again?", nil) delegate:self cancelButtonTitle:nil otherButtonTitle:NSLocalizedString(@"Ok!", nil)];
+        
+        // We check which permission we should remove
+        if ([[HumanToken sharedInstance] isMemberAuthenticated]) {
+            [[HumanToken sharedInstance] removeMember];
+        }
+        
+        // Update the current state of the schedule controller
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"scheduleCurrentState" object:nil userInfo:nil];
+        
+        [self setApiController:nil];
+        
+    } else {
+        alertView = [[AlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"Hum, it appears that the connectivity is unstable.. Do you want to try again?", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"No", nil) otherButtonTitle:NSLocalizedString(@"Yes", nil)];
+        
+        [self setApiController:apiController];
+    }
+    
+    [alertView setErrorCode:error.code];
+    [alertView show];
+}
+
+- (void)apiController:(APIController *)apiController didSaveForLaterWithError:(NSError *)error {
+    
+    CGRect rect = CGRectMake((self.view.frame.size.width - 100.0f) / 2.0f, -100.0f, 100.0f, 100.0f);
+    UIView *view = [[UIView alloc] initWithFrame:rect];
+    [view setBackgroundColor:[ColorThemeController tableViewBackgroundColor]];
+    [view setAlpha:0.95f];
+    [view.layer setCornerRadius:4.0f];
+    [view.layer setBorderColor:[[ColorThemeController tableViewCellBorderColor] CGColor]];
+
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"32-File-Cabinet"]];
+    [imageView setFrame:CGRectMake((view.frame.size.width - imageView.frame.size.width) / 2.0f, (view.frame.size.height - imageView.frame.size.height) / 2.0f, imageView.frame.size.width, imageView.frame.size.height)];
+    [view addSubview:imageView];
+    
+    [self.view addSubview:view];
+    
+    [UIView animateWithDuration:0.2 animations:^{
+        view.frame = CGRectMake(rect.origin.x, 0.0f, rect.size.width, rect.size.height);
+    } completion:^(BOOL completion){
+        [UIView animateWithDuration:0.2 delay:2.0 options:0 animations:^{
+            view.frame = CGRectMake(rect.origin.x, -120.0f, rect.size.width, rect.size.height);
+        } completion:^(BOOL completion){
+            [view removeFromSuperview];
+        }];
+    }];
+}
 
 @end

@@ -1,5 +1,5 @@
 //
-//  OrderItemViewCell.h
+//  ScheduleItemViewCell.h
 //  PedidoNaRede
 //
 //  Created by Pedro Góes on 08/10/12.
@@ -17,7 +17,7 @@
 @property (strong, nonatomic) IBOutlet UIView *line;
 @property (strong, nonatomic) IBOutlet UITextView *description;
 
-@property (strong, nonatomic) NSString *approved;
+@property (assign, nonatomic) NSInteger approved;
 
 - (void)configureCell;
 

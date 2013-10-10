@@ -6,105 +6,89 @@
 		<div class="bar top">
 			<ul class="leftBar">
 				<a href="home.php"><li>Home</li></a>
-				<a href="event.php"><li>Eventos</li></a>
-				<!-- <a href="members.php"><li>Membros</li></a> -->
+				<a href="front.php"><li>Evento</li></a>
+				<a href="event.php"><li>Atividades</li></a>
+				<?php if ($core->workAtEvent) { ?>
+					<a href="people.php"><li>Pessoas</li></a>
+				<?php } ?>
 			</ul>
 			
 			<ul class="rightBar">
 				
-				<li onclick="" class="notificationsInfo"><span class="notificationsInfoCount">0</span> <img class="downArrow" src="images/16-br-down.png" alt="Down arrow" /></li>
-				
-				<li onclick="" class="notifications barContainer">
-					<div class="notificationsHeader"></div>
-				
-					<div class="notificationsContent">
-						<ul></ul>
+				<li class="locationInfo anchorInfo collectionBox interactive">
+					<div class="anchorInnerHock">
+						<div class="dynamicInput">
+							<a class="iconWrapper" href=	"marketplace.php" title="Descubra todos os eventos organizados pelo InEvent">
+								<img src="images/64-Map.png" alt="Map Icon" class="mapIcon">
+								<img src="images/64-Magnifying-Glass-2.png" alt="Search Icon" class="searchIcon">
+							</a>
+							<?php
+								$result = resourceForQuery(
+									"SELECT
+										`event`.`id`,
+										`event`.`name`
+									FROM
+										`event`
+									WHERE
+										`event`.`id` = $core->eventID
+								");
+							?>
+							<input 
+								value="<?php if (mysql_num_rows($result) > 0) { echo mysql_result($result, 0, "name"); } ?>"
+								data-table="event"
+								data-value="<?php if (mysql_num_rows($result) > 0) { echo mysql_result($result, 0, "id"); } ?>"
+								type="text"
+								class="collectionSelectedInput"
+								name="collectionSelectedInput"
+								autocomplete="off"
+								placeholder="Onde ir?">
+						</div>
 					</div>
-					
-					<div class="notificationsBottom">
-						<ul><li class="notificationLoadExtra">Carregar mais notificações ...</li></ul>
-					</div>
+					<ul class="locationBox anchorBox popover">
+						<li class="header">PESQUISA</li>
+						<div class="collectionOptions">
+							<ul></ul>
+						</div>
+						
+						<?php
+							$result = resourceForQuery(
+								"SELECT
+									`event`.`id`,
+									`event`.`name`,
+									`event`.`nickname`
+								FROM
+									`eventMember`
+								INNER JOIN
+									`event` ON `eventMember`.`eventID` = `event`.`id`
+								WHERE 1
+									AND `eventMember`.`memberID` = $core->memberID
+									AND `eventMember`.`roleID` != @(ROLE_ATTENDEE)
+							");
+
+							if (mysql_num_rows($result) > 0) {
+								// Print the header
+								?><li class="header">TRABALHO</li><?php
+
+								// And then each one of the restaurants
+								for ($i = 0; $i < mysql_num_rows($result); $i++) {
+									?>
+									<li
+										class="locationItem"
+										value="<?php echo mysql_result($result, $i, "id") ?>"
+										data-nick="<?php echo mysql_result($result, $i, "nickname") ?>">
+										<?php echo mysql_result($result, $i, "name") ?>
+									</li>
+									<?php
+								}
+							}
+						?>
+					</ul>
 				</li>
-			
-				<li onclick="" class="userSettingsInfo"><?php echo truncateName($core->name, 15) ?> <img class="downArrow" src="images/16-br-down.png" alt="Down arrow" /></li>
-				
-				<li onclick="" class="userSettingsMenu barContainer">
-					<ul>
-						<!-- SUPER USERS -->
-						<li class="powerUsersItem firstItem">
-							<span class="firstItemText">Usuários com poderes</span>
-							<ul>
-							
-							<?php if ($core->permission >= 10) { ?>
-
-								<li class="powerUsersList firstAnchor barContainer collectionBox">
-									<ul>
-										<li class="powerUsersListAnchor secondItem">
-											<span class="secondItemText">Adicionar usuário</span>
-											<ul>
-												<li class="powerUsersAddList secondAnchor barContainer collectionSelected">
-													<ul>
-														<li class="powerUsersSearch">
-															<input
-																type="text"
-																name="powerUsersSearchInput"
-																class="powerUsersSearchInput collectionSelectedInput"
-																value=""
-																placeholder="Quem?"
-																data-table="member"
-															/>
-														</li>
-													</ul>
-													<ul class="collectionOptions barContainer">
-						
-													</ul>
-												</li>
-												<li class="powerUsersActiveUsers collectionSelectedList">
-													<ul>
-														<?php // $core->printPowerUsers() ?>
-													</ul>
-												</li>
-											</ul>
-										</li>
-									</ul>
-								</li>
-						
-							<?php } else { ?>
-							
-								<li class="powerUsersList firstAnchor powerUsersActiveUsers barContainer"></li>
-							
-							<?php } ?>
-						
-							</ul>
-						</li>
-
-						<!-- USER SETTINGS -->
-						<li class="userSettingsItem firstItem">
-							<span class="firstItemText">Preferências do usuário</span>
-							<ul>
-								<li class="firstAnchor barContainer">
-									<ul>
-										<li class="secondItem">
-											<span class="secondItemText">Trocar senha</span>
-											<ul>
-												<li class="secondAnchor barContainer">
-													<ul>
-														<form method="post" action="#">
-															<li><input type="password" name="oldPassword" class="oldPassword" placeholder="Senha atual" tabindex="1"/></li>
-															<li><input type="password" name="newPassword" class="newPassword" placeholder="Nova senha" tabindex="2"/></li>
-															<li class="saveButton">Trocar</li>
-														</form>
-													</ul>
-												</li>
-											</ul>
-										</li>
-									</ul>
-								</li>
-							</ul>
-						</li>
-						
-						<a href="logout.php"><li class="logoutButton">Logout</li></a>
-						
+				<li class="loginInfo anchorInfo">
+					<div class="anchorInnerHock"><p><?php echo truncateName($core->name, 15) ?></p></div>
+					<ul class="loginBox anchorBox popover">
+						<a href="reinstate.php"><li>Trocar senha</li></a>
+						<a href="logout.php"><li>Sair da conta</li></a>
 					</ul>
 				</li>
 			</ul>
@@ -119,9 +103,9 @@
 			
 			<ul class="rightBar">
 
-				<a href="data.php"><li class="first">Registrar!</li></a>
+				<a href="data.php"><li class="first">Registrar</li></a>
 				
-				<li onclick="" class="userLoginLeading first">Entrar!</li>
+				<li onclick="" class="userLoginLeading first">Entrar</li>
 				<li onclick="" class="userLoginBox secondary">
 					<div class="facebookBox">
 						<img src="images/facebookButton.png" name="" id="" />
@@ -131,10 +115,19 @@
 					<div class="middleLine">OU</div>
 					
 					<div class="memberBox">
-						<form method="post" action="home.php">
-							<input type="text" placeholder="Nome"  name="name"/>
+						<form method="post" action="">
+							<input type="text" placeholder="Email" name="email"/>
 							<input type="password" placeholder="Senha" name="password"/>
-							<input type="submit" class="singleButton" value="Entrar!" />
+							<input type="submit" class="singleButton" value="Entrar" />
+							<?php if (isset($_POST["login_error"])) { ?>
+								<p class="errorMessage"><?php echo $_POST["login_error"] ?></p>
+								<?php if (isset($_POST["login_count"])) { ?>
+									<p class="errorHint">Esta foi sua tentativa número <?php echo $_POST["login_count"] ?> de no máximo 3. Após isso sua conta será bloqueada e uma nova senha será enviada para seu email.</p>
+								<?php } else { ?>
+									<p class="errorHint">Sua conta foi bloqueada por 10 minutos e uma nova senha foi enviada para seu email.</p>
+								<?php } ?>
+							<?php } ?>
+							<a class	="forgot" href="forgot.php">Esqueci a senha</a>
 						</form>
 					</div>
 				</li>

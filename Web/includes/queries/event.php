@@ -1,100 +1,118 @@
 <?php
     
-    function getActivitiesForMemberQuery($eventID, $memberID) {
+    function getEventsForMemberQuery($memberID, $exclusive = false) {
+
+        $filter = ($exclusive == true) ? "AND `eventMember`.`memberID` = $memberID" : "";
 
         $result = resourceForQuery(
         // echo (
             "SELECT
-                `activity`.`id`,
-                `activity`.`name`,
-                `activity`.`capacity`,
-                `activity`.`description`,
-                `activity`.`highlight`,
-                DAYOFYEAR(`activity`.`dateBegin`) AS `day`,
-                UNIX_TIMESTAMP(`activity`.`dateBegin`) AS `dateBegin`,
-                UNIX_TIMESTAMP(`activity`.`dateEnd`) AS `dateEnd`,
-                IF(`activityMember`.`memberID` = $memberID, $memberID, 0) AS `memberID`,
-                IF(`activityMember`.`memberID` = $memberID, `activityMember`.`approved`, 0) AS `approved`,
-                COALESCE(`activityGroup`.`id`, 0) AS `groupID`
+                `event`.`id`,
+                `event`.`name`,
+                `event`.`nickname`,
+                `event`.`description`,
+                `event`.`cover`,
+                UNIX_TIMESTAMP(`event`.`dateBegin`) AS `dateBegin`,
+                UNIX_TIMESTAMP(`event`.`dateEnd`) AS `dateEnd`,
+                UNIX_TIMESTAMP(`event`.`enrollmentBegin`) AS `enrollmentBegin`,
+                UNIX_TIMESTAMP(`event`.`enrollmentEnd`) AS `enrollmentEnd`,
+                `event`.`latitude`,
+                `event`.`longitude`,
+                `event`.`address`,
+                `event`.`city`,
+                `event`.`state`,
+                `event`.`fugleman`,
+                `eventMember`.`roleID`,
+                IF(`eventMember`.`memberID` = $memberID, `eventMember`.`approved`, -1) AS `approved`
             FROM
-                `activity`
-            INNER JOIN
-                `event` ON `event`.`id` = `activity`.`eventID`
+                `event`
             LEFT JOIN
-                `activityMember` ON `activity`.`id` = `activityMember`.`activityID` AND `activityMember`.`memberID` = $memberID
+                `eventMember` ON `event`.`id` = `eventMember`.`eventID` AND `eventMember`.`memberID` = $memberID
+            WHERE 1
+                AND (`event`.`dateEnd` > NOW() OR `eventMember`.`approved` = 1)
+                $filter
+            GROUP BY
+                `event`.`id`
+            ORDER BY
+                `event`.`dateBegin` ASC,
+                `event`.`dateEnd` ASC
+        ");
+
+        return $result;
+    }
+
+    function getEventForEventQuery($eventID) {
+
+        $result = resourceForQuery(
+            "SELECT
+                `event`.`id`,
+                `event`.`name`,
+                `event`.`nickname`,
+                `event`.`description`,
+                `event`.`cover`,
+                UNIX_TIMESTAMP(`event`.`dateBegin`) AS `dateBegin`,
+                UNIX_TIMESTAMP(`event`.`dateEnd`) AS `dateEnd`,
+                UNIX_TIMESTAMP(`event`.`enrollmentBegin`) AS `enrollmentBegin`,
+                UNIX_TIMESTAMP(`event`.`enrollmentEnd`) AS `enrollmentEnd`,
+                `event`.`latitude`,
+                `event`.`longitude`,
+                `event`.`address`,
+                `event`.`city`,
+                `event`.`state`,
+                `event`.`fugleman`,
+                COUNT(`eventMember`.`memberID`) AS `entries`
+            FROM
+                `event`
             LEFT JOIN
-                `activityGroup` ON `activity`.`groupID` = `activityGroup`.`id`
+                `eventMember` ON `event`.`id` = `eventMember`.`eventID`
             WHERE 1
                 AND `event`.`id` = $eventID
-                AND (`activityMember`.`memberID` = $memberID OR ISNULL(`activityMember`.`memberID`))
             GROUP BY
-                `activity`.`id`
+                `event`.`id`
             ORDER BY
-                `activity`.`dateBegin` ASC,
-                `activity`.`dateEnd` ASC
+                `event`.`dateBegin` ASC,
+                `event`.`dateEnd` ASC
         ");
 
         return $result;
     }
 
-    
-    function getActivityForMemberQuery($activityID, $memberID) {
+    function getEventForMemberQuery($eventID, $memberID) {
 
         $result = resourceForQuery(
-        // echo (
             "SELECT
-                `activity`.`id`,
-                `activity`.`name`,
-                `activity`.`capacity`,
-                `activity`.`description`,
-                `activity`.`highlight`,
-                DAYOFYEAR(`activity`.`dateBegin`) AS `day`,
-                UNIX_TIMESTAMP(`activity`.`dateBegin`) AS `dateBegin`,
-                UNIX_TIMESTAMP(`activity`.`dateEnd`) AS `dateEnd`,
-                IF(`activityMember`.`memberID` = $memberID, $memberID, 0) AS `memberID`,
-                IF(`activityMember`.`memberID` = $memberID, `activityMember`.`approved`, 0) AS `approved`,
-                COALESCE(`activityGroup`.`id`, 0) AS `groupID`
+                `event`.`id`,
+                `event`.`name`,
+                `event`.`nickname`,
+                `event`.`description`,
+                `event`.`cover`,
+                UNIX_TIMESTAMP(`event`.`dateBegin`) AS `dateBegin`,
+                UNIX_TIMESTAMP(`event`.`dateEnd`) AS `dateEnd`,
+                UNIX_TIMESTAMP(`event`.`enrollmentBegin`) AS `enrollmentBegin`,
+                UNIX_TIMESTAMP(`event`.`enrollmentEnd`) AS `enrollmentEnd`,
+                `event`.`latitude`,
+                `event`.`longitude`,
+                `event`.`address`,
+                `event`.`city`,
+                `event`.`state`,
+                `event`.`fugleman`,
+                IF(`eventMember`.`memberID` = $memberID, `eventMember`.`position`, 0) AS `enrollmentID`,
+                IF(`eventMember`.`memberID` = $memberID, $memberID, 0) AS `memberID`,
+                IF(`eventMember`.`memberID` = $memberID, `eventMember`.`approved`, -1) AS `approved`
             FROM
-                `activity`
+                `event`
             LEFT JOIN
-                `activityMember` ON `activity`.`id` = `activityMember`.`activityID` AND `activityMember`.`memberID` = $memberID
-            LEFT JOIN
-                `activityGroup` ON `activity`.`groupID` = `activityGroup`.`id`
-            WHERE 1
-                AND `activity`.`id` = $activityID
-                AND (`activityMember`.`memberID` = $memberID OR ISNULL(`activityMember`.`memberID`))
-            GROUP BY
-                `activity`.`id`
-            ORDER BY
-                `activity`.`dateBegin` ASC,
-                `activity`.`dateEnd` ASC
-        ");
-
-        return $result;
-    }
-
-    function getActivitiesForEventQuery($eventID) {
-
-        $result = resourceForQuery(
-        // echo (
-            "SELECT
-                `activity`.`id`,
-                `activity`.`name`,
-                `activity`.`description`,
-                DAYOFYEAR(`activity`.`dateBegin`) AS `day`,
-                UNIX_TIMESTAMP(`activity`.`dateBegin`) AS `dateBegin`,
-                UNIX_TIMESTAMP(`activity`.`dateEnd`) AS `dateEnd`
-            FROM
-                `activity`
-            INNER JOIN
-                `event` ON `event`.`id` =  `activity`.`eventID`
+                `eventMember` ON `event`.`id` = `eventMember`.`eventID` AND `eventMember`.`memberID` = $memberID
             WHERE 1
                 AND `event`.`id` = $eventID
+            GROUP BY
+                `event`.`id`
             ORDER BY
-                `activity`.`dateBegin` ASC,
-                `activity`.`dateEnd` ASC
+                `event`.`dateBegin` ASC,
+                `event`.`dateEnd` ASC
         ");
 
         return $result;
     }
+
 ?>

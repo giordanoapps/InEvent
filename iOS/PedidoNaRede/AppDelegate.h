@@ -10,9 +10,6 @@
 
 #import "MenuViewController.h"
 
-@class RestaurantViewController;
-@class ReservationViewController;
-
 @interface AppDelegate : UIResponder <UIApplicationDelegate, UITabBarControllerDelegate, UINavigationControllerDelegate, PaperFoldMenuControllerDelegate>
 
 @property (strong, nonatomic) UIWindow *window;

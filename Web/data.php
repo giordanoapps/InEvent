@@ -25,7 +25,9 @@
 										`member`.`password`,
 										`member`.`cpf`,
 										`member`.`rg`,
+										`member`.`usp`,
 										`member`.`telephone`,
+										`member`.`city`,
 										`member`.`email`,
 										`member`.`university`,
 										`member`.`course`
@@ -37,6 +39,8 @@
 								$data = mysql_fetch_assoc($result);
 							?>
 							
+							<!-- <p class="inputHeadline">Informe seus dados para o InEvent, a plataforma oficial da Semana SusIE!</p> -->
+
 							<p class="inputHeader">Pessoa</p>
 							
 							<p class="fullWidth">
@@ -52,44 +56,7 @@
 								/>
 							</p>
 
-							<p class="halfWidth">
-								<span class="inputTitle">CPF:</span>
-								<input
-									type="text"
-									name="cpf"
-									id="cpf"
-									class="cpf"
-									<?php if ($core->auth) { ?> readonly="readonly" <?php } ?>
-									value="<?php if ($core->auth) { echo $data["cpf"]; } ?>"
-									placeholder="CPF"
-								/>
-							</p>
-							<p class="halfWidth">
-								<span class="inputTitle">RG:</span>
-								<input
-									type="text"
-									name="rg"
-									id="rg"
-									class="rg"
-									<?php if ($core->auth) { ?> readonly="readonly" <?php } ?>
-									value="<?php if ($core->auth) { echo $data["rg"]; } ?>"
-									placeholder="RG"
-								/>
-							</p>
-							
-							<p class="halfWidth">
-								<span class="inputTitle">Telefone:</span>
-								<input
-									type="text"
-									name="telephone"
-									id="telephone"
-									class="telephone"
-									<?php if ($core->auth) { ?> readonly="readonly" <?php } ?>
-									value="<?php if ($core->auth) { echo $data["telephone"]; } ?>"
-									placeholder="Telefone"
-								/>
-							</p>
-							<p class="halfWidth">
+							<p class="fullWidth">
 								<span class="inputTitle">Email:</span>
 								<input
 									type="text"
@@ -102,6 +69,36 @@
 								/>
 							</p>
 
+							<?php if ($core->eventID == 4) { ?>
+							<p class="halfWidth">
+								<span class="inputTitle">CPF:</span>
+								<input
+									type="text"
+									name="cpf"
+									id="cpf"
+									class="cpf"
+									<?php if ($core->auth) { ?> readonly="readonly" <?php } ?>
+									value="<?php if ($core->auth) { echo $data["cpf"]; } ?>"
+									placeholder="CPF"
+								/>
+							</p>
+							<?php } ?>
+
+							<?php if ($core->eventID == 4) { ?>
+							<p class="halfWidth">
+								<span class="inputTitle">RG:</span>
+								<input
+									type="text"
+									name="rg"
+									id="rg"
+									class="rg"
+									value="<?php if ($core->auth) { echo $data["rg"]; } ?>"
+									placeholder="RG"
+								/>
+							</p>
+							<?php } ?>
+
+							<?php if ($core->eventID == 4) { ?>
 							<p class="halfWidth">
 								<span class="inputTitle">Universidade:</span>
 								<input
@@ -109,22 +106,28 @@
 									name="university"
 									id="university"
 									class="university"
-									value=""
+									value="<?php if ($core->auth) { echo $data["university"]; } ?>"
 									placeholder="Universidade"
 								/>
 							</p>
+							<?php } ?>
+
+							<?php if ($core->eventID == 4) { ?>
 							<p class="halfWidth">
-								<span class="inputTitle">Curso:</span>
+								<span class="inputTitle">USP:</span>
 								<input
 									type="text"
-									name="course"
-									id="course"
-									class="course"
-									value=""
-									placeholder="Curso"
+									name="usp"
+									id="usp"
+									class="usp"
+									<?php if ($core->auth) { ?> readonly="readonly" <?php } ?>
+									value="<?php if ($core->auth) { echo $data["usp"]; } ?>"
+									placeholder="Número USP"
 								/>
 							</p>
+							<?php } ?>
 							
+							<?php if (!$core->auth) { ?>
 							<p class="halfWidth">
 								<span class="inputTitle">Senha:</span>
 								<input
@@ -147,22 +150,7 @@
 									placeholder="Senha"
 								/>
 							</p>
-
-							<p class	="miniIntro">Caso seja aluno da USP, </p>
-
-							<p class="halfWidth">
-								<input
-									type="usp"
-									name="usp"
-									id="usp"
-									class="usp"
-									value=""
-									placeholder="Número USP"
-								/>
-							</p>
-
-							<p>Caso seja aluno da USP e também curse Engenharia Aeronáutica, preencha o formulário complementar disponível em <a href="https://docs.google.com/forms/d/16EwOvoq24_b8P4LG9Pz7bgr5gVL9y9m3SoTekTxXYYw/viewform" target="_blank">https://docs.google.com/forms/d/16EwOvoq24_b8P4LG9Pz7bgr5gVL9y9m3SoTekTxXYYw/viewform</a>.</p>
-							
+							<?php } ?>
 							
 							<div class="checkBoxWrapper">
 								<p>
@@ -177,27 +165,24 @@
 										Li e estou de acordo com os <a href="terms.php" target="_blank">Termos de Uso do InEvent</a>.
 									</span>
 								</p>
-								<p>
-									<input
-										type="checkbox"
-										name="newsletter"
-										id="newsletter"
-										class="newsletter"
-										<?php if ($core->auth) { ?> disabled="disabled" <?php } ?>
-										checked="true"
-									/>
-									<span class="newsletterTitle">
-										Desejo receber informações sobre novidades na plataforma (1 email por mês).
-									</span>
-								</p>
 							</div>
 						</form>
-						
+
+						<!-- <div class="docsForm">
+							<p class="inputHeadline">Finalize seu cadastro enviando o formulário abaixo:</p>
+
+							<iframe
+								class="docsFrame"
+								src="https://docs.google.com/forms/d/1D8MmZ8va92XF6AqqsNRvzI-Rdv7xsg-3PQeHIsit90o/viewform?embedded=true&entry.1562333277=myName&entry.268295612&entry.1839222973=myEmail" 
+								data-src="https://docs.google.com/forms/d/1D8MmZ8va92XF6AqqsNRvzI-Rdv7xsg-3PQeHIsit90o/viewform?embedded=true&entry.1562333277=myName&entry.268295612&entry.1839222973=myEmail" 
+								width="760" height="500" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
+						</div> -->
+					
 					</div>
 					
 					<?php if (!$core->auth) { ?>
 					<ul class="navigator">
-						<a href="register.php" data-lock	="yes"><li>Registro <span class="navigatorHint navigatorHintRight">Próxima</span></li></a>
+						<a href="register.php" data-lock	="yes"><li><span class="navigatorHint navigatorHintRight">Próxima</span></li></a>
 					</ul>
 					<?php } ?>
 					

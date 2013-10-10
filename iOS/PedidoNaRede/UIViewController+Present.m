@@ -9,6 +9,7 @@
 #import "UIViewController+Present.h"
 #import "AppDelegate.h"
 #import "MapViewController.h"
+#import "MarketplaceViewController.h"
 #import "DemoViewController.h"
 #import "FeedbackViewController.h"
 #import "HumanLoginViewController.h"
@@ -38,7 +39,7 @@
             viewController.modalPresentationStyle = UIModalPresentationFormSheet;
         }
         
-        [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:viewController animated:YES completion:nil];
+        [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:viewController animated:YES completion:nil];
         
         return YES;
     } else {
@@ -53,7 +54,7 @@
     
     if (![[EventToken sharedInstance] isEventSelected]) {
 
-        UINavigationController *viewController = [[UINavigationController alloc] initWithRootViewController:[[MapViewController alloc] initWithNibName:nil bundle:nil]];
+        UINavigationController *viewController = [[UINavigationController alloc] initWithRootViewController:[[MarketplaceViewController alloc] initWithNibName:nil bundle:nil]];
               
         // iOS 6 bug
         [viewController setWantsFullScreenLayout:YES];
@@ -68,7 +69,7 @@
             viewController.modalPresentationStyle = UIModalPresentationFormSheet;
         }
         
-        [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:viewController animated:YES completion:nil];
+        [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:viewController animated:YES completion:nil];
         
         return NO;
     } else {
@@ -92,11 +93,36 @@
             viewController.modalPresentationStyle = UIModalPresentationFormSheet;
         }
         
-        [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:viewController animated:YES completion:nil];
+        [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:viewController animated:YES completion:nil];
         
         return NO;
     } else {
         return YES;
+    }
+}
+
+- (BOOL)verifyAd {
+    
+    AdViewController *avc = [[AdViewController alloc] initWithNibName:@"AdViewController" bundle:nil];
+    [avc setDelegate:self];
+    
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        avc.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+        avc.modalPresentationStyle = UIModalPresentationCurrentContext;
+    } else {
+        avc.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+        avc.modalPresentationStyle = UIModalPresentationFullScreen;
+    }
+        
+    return YES;
+}
+
+#pragma mark - Ad Delegate
+
+- (void)adController:(AdViewController *)adController shouldLoadController:(BOOL)shouldLoad {
+    // Only load the ad if there is any
+    if (shouldLoad) {
+        [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:adController animated:YES completion:nil];
     }
 }
 

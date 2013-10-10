@@ -43,24 +43,18 @@
 
 - (void)defineStateForApproved:(NSInteger)approved withView:(UIView *)view {
     
-    // Remove all alpha and border views
+    // Remove all triangle sublayers
     if (view.layer != nil) {
-        for (CALayer *layer in view.layer.sublayers) {
+        NSMutableArray *sublayers = [NSMutableArray arrayWithArray:view.layer.sublayers];
+        for (int i = 0; i < [sublayers count]; i++) {
+            CALayer *layer = [sublayers objectAtIndex:i];
             if ([layer isKindOfClass:[CAShapeLayer class]]) {
                 [layer removeFromSuperlayer];
             }
         }
     }
     
-    if ([[HumanToken sharedInstance] isMemberAuthenticated]) {
-        if (approved == 1) {
-            [self createUpperTriangleAtView:view withState:ScheduleStateApproved];
-        } else {
-            [self createUpperTriangleAtView:view withState:ScheduleStateDenied];
-        }
-    } else {
-        [self createUpperTriangleAtView:view withState:ScheduleStateUnknown];
-    }
+    [self createUpperTriangleAtView:view withState:approved];
 }
 
 @end

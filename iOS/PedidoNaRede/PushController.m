@@ -7,6 +7,8 @@
 //
 
 #import "PushController.h"
+#import "AlertView.h"
+#import <Parse/Parse.h>
 
 @implementation PushController
 
@@ -26,6 +28,7 @@
 + (void)deliverPushNotification:(NSDictionary *)userInfo {
     
     if (userInfo != nil) {
+        // Get some properties
         NSString *uri = [userInfo objectForKey:@"uri"];
         NSString *value = [userInfo objectForKey:@"value"];
         
@@ -33,16 +36,20 @@
         NSString *type = [uri substringToIndex:range.location];
         NSString *action = [uri substringFromIndex:range.location];
         
+        // Handle UI interaction
+        AlertView *alertView = [[AlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:[[[userInfo objectForKey:@"aps"] objectForKey:@"alert"] objectForKey:@"body"] delegate:nil cancelButtonTitle:nil otherButtonTitle:NSLocalizedString(@"Ok!", nil)];
+        [alertView show];
+        
+        // Propagate push
         NSString *notificationName = nil;
         
-        if ([type isEqualToString:@"table"]) {
-            notificationName = @"tableNotification";
-        } else if ([type isEqualToString:@"order"]) {
-            notificationName = @"orderNotification";
-        } else if ([type isEqualToString:@"carte"]) {
-            notificationName = @"carteNotification";
+        if ([type isEqualToString:@"activity"]) {
+            notificationName = @"activityNotification";
+        } else if ([type isEqualToString:@"event"]) {
+            notificationName = @"eventNotification";
+        } else if ([type isEqualToString:@"person"]) {
+            notificationName = @"personNotification";
         }
-        
         // Send the notification
         [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:@{@"action": action, @"value": value}];
     }

@@ -8,16 +8,12 @@ include_once(__DIR__ . "/security.php");
 // LOGIN
 ////////////////////////////////////////
 
-if (isset($_POST["name"]) && isset($_POST["password"])) {
+if (isset($_POST["email"]) && isset($_POST["password"])) {
 
-	$filename = basename($_SERVER['PHP_SELF']);
-	$path = str_replace($filename, '', $_SERVER['PHP_SELF']);
-
-	$name = getEmptyAttribute($_POST["name"]);
+	$email = getEmptyAttribute($_POST["email"]);
 	$password = getEmptyAttribute($_POST["password"]);
 
 	$result = resourceForQuery(
-	// echo (
 		"SELECT
 			`member`.`id`,
 			`member`.`name`,
@@ -28,7 +24,7 @@ if (isset($_POST["name"]) && isset($_POST["password"])) {
 		LEFT JOIN
 			`memberSessions` ON `memberSessions`.`memberID` = `member`.`id`
 		WHERE 1
-			AND BINARY `member`.`name` = '$name'
+			AND BINARY `member`.`email` = '$email'
 		GROUP BY
 			`memberSessions`.`memberID`
 	");
@@ -94,15 +90,13 @@ if (isset($_POST["name"]) && isset($_POST["password"])) {
 						`loginAttempts`.`remote` = INET_ATON('$security->remote')
 				");
 
-				// Validate the event
-				validateEvent();
-
-				setcookie($security->key, $sessionKey, time() + 60*60*24*30, $path);
+				$path = substr($_SERVER['REQUEST_URI'], 0, strrpos($_SERVER['REQUEST_URI'], "/") + 1);
+				setcookie($security->key, $sessionKey, time() + 60*60*24*30, "/");
 				header("Location: $path");
 				exit;
 			}
 		} else {
-			$_POST["login_error"] = "Senha inválida!";
+			$_POST["login_error"] = "Senha inválida";
 			$_POST["login_count"] = $security->attempts+1;
 			$insert = resourceForQuery(
 				"UPDATE
@@ -115,7 +109,7 @@ if (isset($_POST["name"]) && isset($_POST["password"])) {
 			");
 		}
 	} else {
-		$_POST["login_error"] = "Usuário não encontrado!";
+		$_POST["login_error"] = "Pessoa não encontrada";
 		$_POST["login_count"] = $security->attempts+1;
 		$insert = resourceForQuery(
 			"UPDATE
@@ -161,13 +155,17 @@ if (isset($_POST["name"]) && isset($_POST["password"])) {
 				`loginAttempts`.`remote` = INET_ATON('$security->remote')
 		");
 	} else {
-		$filename = basename($_SERVER['PHP_SELF']);
-		$path = str_replace($filename, '', $_SERVER['PHP_SELF']);
-
-		setcookie($security->key, '', 0, $path);
+		$path = substr($_SERVER['REQUEST_URI'], 0, strrpos($_SERVER['REQUEST_URI'], "/") + 1);
+		setcookie($security->key, '', 0, "/");
 		header("Location: $path");	
 		exit();
 	}
 }
+
+////////////////////////////////////////
+// EVENT
+////////////////////////////////////////
+
+	validateEvent();
 
 ?>

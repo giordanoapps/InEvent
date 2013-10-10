@@ -7,12 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
-typedef enum {
-    ScheduleStateUnknown = 0,
-    ScheduleStateApproved,
-    ScheduleStateDenied
-} ScheduleState;
+#import "Schedule.h"
 
 @interface NSObject (Triangle)
 

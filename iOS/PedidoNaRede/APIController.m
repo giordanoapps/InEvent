@@ -20,18 +20,44 @@
 
 @implementation APIController
 
+#pragma mark - Coding
+
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    if (self = [super init]) {
+        self.force = [[aDecoder decodeObjectForKey:@"force"] boolValue];
+        self.saveForLater = [[aDecoder decodeObjectForKey:@"saveForLater"] boolValue];
+        self.maxAge = [[aDecoder decodeObjectForKey:@"maxAge"] doubleValue];
+        self.userInfo = [aDecoder decodeObjectForKey:@"userInfo"];
+        self.namespace = [aDecoder decodeObjectForKey:@"namespace"];
+        self.method = [aDecoder decodeObjectForKey:@"method"];
+        self.attributes = [aDecoder decodeObjectForKey:@"attributes"];
+    }
+    
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+    [aCoder encodeObject:[NSNumber numberWithBool:self.force] forKey:@"force"];
+    [aCoder encodeObject:[NSNumber numberWithBool:self.saveForLater] forKey:@"saveForLater"];
+    [aCoder encodeObject:[NSNumber numberWithDouble:self.maxAge] forKey:@"maxAge"];
+    [aCoder encodeObject:self.userInfo forKey:@"userInfo"];
+    [aCoder encodeObject:self.namespace forKey:@"namespace"];
+    [aCoder encodeObject:self.method forKey:@"method"];
+    [aCoder encodeObject:self.attributes forKey:@"attributes"];
+}
+
 #pragma mark - Initializers
 
 - (id)initWithDelegate:(id<APIControllerDelegate>)aDelegate {
-    return [self initWithDelegate:aDelegate forcing:NO withMaxAge:3600.0 withUserInfo:nil];
+    return [self initWithDelegate:aDelegate forcing:NO withMaxAge:604800.0 withUserInfo:nil];
 }
 
 - (id)initWithDelegate:(id<APIControllerDelegate>)aDelegate forcing:(BOOL)aForce {
-    return [self initWithDelegate:aDelegate forcing:aForce withMaxAge:3600.0 withUserInfo:nil];
+    return [self initWithDelegate:aDelegate forcing:aForce withMaxAge:604800.0 withUserInfo:nil];
 }
 
 - (id)initWithDelegate:(id<APIControllerDelegate>)aDelegate forcing:(BOOL)aForce withUserInfo:(NSDictionary *)aUserInfo {
-    return [self initWithDelegate:aDelegate forcing:aForce withMaxAge:3600.0 withUserInfo:aUserInfo];
+    return [self initWithDelegate:aDelegate forcing:aForce withMaxAge:604800.0 withUserInfo:aUserInfo];
 }
 
 - (id)initWithDelegate:(id<APIControllerDelegate>)aDelegate forcing:(BOOL)aForce withMaxAge:(NSTimeInterval)aMaxAge withUserInfo:(NSDictionary *)aUserInfo {
@@ -41,13 +67,56 @@
         // Set our properties
         self.delegate = aDelegate;
         self.force = aForce;
+        self.saveForLater = YES;
         self.maxAge = aMaxAge;
         self.userInfo = aUserInfo;
     }
     return self;
 }
 
+#pragma mark - Ad
+- (void)adGetAdsAtEvent:(NSInteger)eventID {
+    
+    NSDictionary *attributes = @{@"GET" : @{@"eventID" : [NSString stringWithFormat:@"%d", eventID]}};
+    
+    [self JSONObjectWithNamespace:@"ad" method:@"getAds" attributes:attributes];
+}
+
+- (void)adSeenAd:(NSInteger)adID {
+
+    NSDictionary *attributes = @{@"GET" : @{@"adID" : [NSString stringWithFormat:@"%d", adID]}};
+    
+    [self JSONObjectWithNamespace:@"ad" method:@"seenAd" attributes:attributes];
+}
+
 #pragma mark - Activity
+
+- (void)activityCreateActivityAtEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID {
+    
+    if (tokenID != nil) {
+        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID, @"eventID" : [NSString stringWithFormat:@"%d", eventID]}};
+        
+        [self JSONObjectWithNamespace:@"activity" method:@"create" attributes:attributes];
+    }
+}
+
+- (void)activityEditField:(NSString *)name withValue:(NSString *)value atActivity:(NSInteger)activityID withTokenID:(NSString *)tokenID {
+    
+    if (tokenID != nil && name != nil) {
+        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID, @"name" : name, @"activityID" : [NSString stringWithFormat:@"%d", activityID]}, @"POST": @{@"value" : value}};
+        
+        [self JSONObjectWithNamespace:@"activity" method:@"edit" attributes:attributes];
+    }
+}
+
+- (void)activityRemoveActivity:(NSInteger)activityID withTokenID:(NSString *)tokenID {
+    
+    if (tokenID != nil) {
+        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID, @"activityID" : [NSString stringWithFormat:@"%d", activityID]}};
+        
+        [self JSONObjectWithNamespace:@"activity" method:@"remove" attributes:attributes];
+    }
+}
 
 - (void)activityRequestEnrollmentAtActivity:(NSInteger)activityID withTokenID:(NSString *)tokenID {
 
@@ -58,10 +127,10 @@
     }
 }
 
-- (void)activityRequestEnrollmentForPerson:(NSInteger)personID atActivity:(NSInteger)activityID withTokenID:(NSString *)tokenID {
+- (void)activityRequestEnrollmentForPersonWithName:(NSString *)name andEmail:(NSString *)email atActivity:(NSInteger)activityID withTokenID:(NSString *)tokenID {
 
     if (tokenID != nil) {
-        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID, @"activityID" : [NSString stringWithFormat:@"%d", activityID], @"personID" : [NSString stringWithFormat:@"%d", personID]}};
+        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID, @"activityID" : [NSString stringWithFormat:@"%d", activityID], @"name" : name, @"email" : email}};
         
         [self JSONObjectWithNamespace:@"activity" method:@"requestEnrollment" attributes:attributes];
     }
@@ -94,6 +163,24 @@
     }
 }
 
+- (void)activityRevokeEntranceForPerson:(NSInteger)personID atActivity:(NSInteger)activityID withTokenID:(NSString *)tokenID {
+    
+    if (tokenID != nil) {
+        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID, @"activityID" : [NSString stringWithFormat:@"%d", activityID], @"personID" : [NSString stringWithFormat:@"%d", personID]}};
+        
+        [self JSONObjectWithNamespace:@"activity" method:@"revokeEntrance" attributes:attributes];
+    }
+}
+
+- (void)activityConfirmPaymentForPerson:(NSInteger)personID atActivity:(NSInteger)activityID withTokenID:(NSString *)tokenID {
+    
+    if (tokenID != nil) {
+        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID, @"activityID" : [NSString stringWithFormat:@"%d", activityID], @"personID" : [NSString stringWithFormat:@"%d", personID]}};
+        
+        [self JSONObjectWithNamespace:@"activity" method:@"confirmPayment" attributes:attributes];
+    }
+}
+
 - (void)activityGetPeopleAtActivity:(NSInteger)activityID withTokenID:(NSString *)tokenID {
 
     if (tokenID != nil) {
@@ -121,6 +208,15 @@
     }
 }
 
+- (void)activityRemoveQuestion:(NSInteger)questionID withTokenID:(NSString *)tokenID {
+   
+    if (tokenID != nil) {
+        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID, @"questionID" : [NSString stringWithFormat:@"%d", questionID]}};
+        
+        [self JSONObjectWithNamespace:@"activity" method:@"removeQuestion" attributes:attributes];
+    }
+}
+
 - (void)activityUpvoteQuestion:(NSInteger)questionID withTokenID:(NSString *)tokenID {
 
     if (tokenID != nil) {
@@ -130,7 +226,135 @@
     }
 }
 
+- (void)activityGetOpinionFromActivity:(NSInteger)activityID withToken:(NSString *)tokenID {
+    
+    if (tokenID != nil) {
+        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID, @"activityID" : [NSString stringWithFormat:@"%d", activityID]}};
+        
+        [self JSONObjectWithNamespace:@"activity" method:@"getOpinion" attributes:attributes];
+    }
+}
+
+- (void)activitySendOpinionWithRating:(NSInteger)rating toActivity:(NSInteger)activityID withToken:(NSString *)tokenID {
+    
+    if (tokenID != nil) {
+        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID, @"activityID" : [NSString stringWithFormat:@"%d", activityID]}, @"POST" : @{@"rating" : [NSString stringWithFormat:@"%d", rating]}};
+        
+        [self JSONObjectWithNamespace:@"activity" method:@"sendOpinion" attributes:attributes];
+    }
+}
+
 #pragma mark - Event
+
+- (void)eventEditField:(NSString *)name withValue:(NSString *)value atEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID {
+    
+    if (tokenID != nil && name != nil) {
+        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID, @"name" : name, @"eventID" : [NSString stringWithFormat:@"%d", eventID]}, @"POST": @{@"value" : value}};
+        
+        [self JSONObjectWithNamespace:@"event" method:@"edit" attributes:attributes];
+    }
+}
+
+- (void)eventGetEvents {
+    [self JSONObjectWithNamespace:@"event" method:@"getEvents" attributes:@{}];
+}
+
+- (void)eventGetEventsWithTokenID:(NSString *)tokenID {
+    
+    if (tokenID != nil) {
+        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID}};
+        
+        [self JSONObjectWithNamespace:@"event" method:@"getEvents" attributes:attributes];
+    }
+}
+
+- (void)eventGetSingleEvent:(NSInteger)eventID {
+    
+    NSDictionary *attributes = @{@"GET" : @{@"eventID" : [NSString stringWithFormat:@"%d", eventID]}};
+    
+    [self JSONObjectWithNamespace:@"event" method:@"getSingle" attributes:attributes];
+}
+
+- (void)eventGetSingleEvent:(NSInteger)eventID WithTokenID:(NSString *)tokenID {
+
+    if (tokenID != nil) {
+        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID, @"eventID" : [NSString stringWithFormat:@"%d", eventID]}};
+        
+        [self JSONObjectWithNamespace:@"event" method:@"getSingle" attributes:attributes];
+    }
+}
+
+- (void)eventRequestEnrollmentAtEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID {
+
+    if (tokenID != nil) {
+        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID, @"eventID" : [NSString stringWithFormat:@"%d", eventID]}};
+        
+        [self JSONObjectWithNamespace:@"event" method:@"requestEnrollment" attributes:attributes];
+    }
+}
+
+- (void)eventRequestEnrollmentForPerson:(NSInteger)personID atEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID {
+
+    if (tokenID != nil) {
+        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID, @"eventID" : [NSString stringWithFormat:@"%d", eventID], @"personID" : [NSString stringWithFormat:@"%d", personID]}};
+        
+        [self JSONObjectWithNamespace:@"event" method:@"requestEnrollment" attributes:attributes];
+    }
+}
+
+- (void)eventDismissEnrollmentAtEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID {
+ 
+    if (tokenID != nil) {
+        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID, @"eventID" : [NSString stringWithFormat:@"%d", eventID]}};
+        
+        [self JSONObjectWithNamespace:@"event" method:@"dismissEnrollment" attributes:attributes];
+    }
+}
+
+- (void)eventDismissEnrollmentForPerson:(NSInteger)personID atEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID {
+  
+    if (tokenID != nil) {
+        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID, @"eventID" : [NSString stringWithFormat:@"%d", eventID], @"personID" : [NSString stringWithFormat:@"%d", personID]}};
+        
+        [self JSONObjectWithNamespace:@"event" method:@"dismissEnrollment" attributes:attributes];
+    }
+}
+
+- (void)eventApproveEnrollmentAtEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID {
+    
+    if (tokenID != nil) {
+        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID, @"eventID" : [NSString stringWithFormat:@"%d", eventID]}};
+        
+        [self JSONObjectWithNamespace:@"event" method:@"approveEnrollment" attributes:attributes];
+    }
+}
+
+- (void)eventApproveEnrollmentForPerson:(NSInteger)personID atEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID {
+    
+    if (tokenID != nil) {
+        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID, @"eventID" : [NSString stringWithFormat:@"%d", eventID], @"personID" : [NSString stringWithFormat:@"%d", personID]}};
+        
+        [self JSONObjectWithNamespace:@"event" method:@"approveEnrollment" attributes:attributes];
+    }
+}
+
+- (void)eventGrantPermissionForPerson:(NSInteger)personID atEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID {
+    
+    if (tokenID != nil) {
+        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID, @"eventID" : [NSString stringWithFormat:@"%d", eventID], @"personID" : [NSString stringWithFormat:@"%d", personID]}};
+        
+        [self JSONObjectWithNamespace:@"event" method:@"grantPermission" attributes:attributes];
+    }
+}
+
+- (void)eventRevokePermissionForPerson:(NSInteger)personID atEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID {
+    
+    if (tokenID != nil) {
+        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID, @"eventID" : [NSString stringWithFormat:@"%d", eventID], @"personID" : [NSString stringWithFormat:@"%d", personID]}};
+        
+        [self JSONObjectWithNamespace:@"event" method:@"revokePermission" attributes:attributes];
+    }
+}
 
 - (void)eventGetPeopleAtEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID {
 
@@ -148,12 +372,30 @@
     [self JSONObjectWithNamespace:@"event" method:@"getActivities" attributes:attributes];
 }
 
-- (void)eventGetScheduleAtEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID {
+- (void)eventGetActivitiesAtEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID {
 
     if (tokenID != nil) {
         NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID, @"eventID" : [NSString stringWithFormat:@"%d", eventID]}};
         
-        [self JSONObjectWithNamespace:@"event" method:@"getSchedule" attributes:attributes];
+        [self JSONObjectWithNamespace:@"event" method:@"getActivities" attributes:attributes];
+    }
+}
+
+- (void)eventGetOpinionFromEvent:(NSInteger)eventID withToken:(NSString *)tokenID {
+    
+    if (tokenID != nil) {
+        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID, @"eventID" : [NSString stringWithFormat:@"%d", eventID]}};
+        
+        [self JSONObjectWithNamespace:@"event" method:@"getOpinion" attributes:attributes];
+    }
+}
+
+- (void)eventSendOpinionWithRating:(NSInteger)rating withMessage:(NSString *)message toEvent:(NSInteger)eventID withToken:(NSString *)tokenID {
+    
+    if (tokenID != nil && message != nil) {
+        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID, @"eventID" : [NSString stringWithFormat:@"%d", eventID]}, @"POST" : @{@"message" : message, @"rating" : [NSString stringWithFormat:@"%d", rating]}};
+        
+        [self JSONObjectWithNamespace:@"event" method:@"sendOpinion" attributes:attributes];
     }
 }
 
@@ -225,10 +467,10 @@
 }
 
 #pragma mark - Person
-- (void)personSignIn:(NSString *)name withPassword:(NSString *)password {
+- (void)personSignIn:(NSString *)email withPassword:(NSString *)password {
     
-    if (name != nil && password != nil) {
-        NSDictionary *attributes = @{@"GET" : @{@"name" : name, @"password" : password}};
+    if (email != nil && password != nil) {
+        NSDictionary *attributes = @{@"GET" : @{@"email" : email, @"password" : password}};
         
         [self JSONObjectWithNamespace:@"person" method:@"signIn" attributes:attributes];
     }
@@ -243,22 +485,28 @@
     }
 }
 
-- (void)personRegister:(NSString *)name withPassword:(NSString *)password withEmail:(NSString *)email {
+- (void)personEnroll:(NSString *)name withPassword:(NSString *)password withEmail:(NSString *)email {
 
     if (name != nil && password != nil && email != nil) {
         NSDictionary *attributes = @{@"GET" : @{@"name" : name, @"password" : password, @"email" : email}};
         
-        [self JSONObjectWithNamespace:@"person" method:@"register" attributes:attributes];
+        [self JSONObjectWithNamespace:@"person" method:@"enroll" attributes:attributes];
     }
 }
 
-- (void)personGetEventsWithToken:(NSString *)tokenID {
+- (void)personGetWorkingEventsWithToken:(NSString *)tokenID {
     
     if (tokenID != nil) {
         NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID}};
         
-        [self JSONObjectWithNamespace:@"person" method:@"getEvents" attributes:attributes];
+        [self JSONObjectWithNamespace:@"person" method:@"getWorkingEvents" attributes:attributes];
     }
+}
+
+#pragma mark - Setters
+
+- (NSString *)path {
+    return [self generatePath];
 }
 
 #pragma mark - Setup Methods
@@ -273,11 +521,40 @@
     [self start];
 }
 
+- (NSString *)generatePath {
+    
+    NSString *description = [[[_attributes description] stringByReplacingOccurrencesOfString:@"\n" withString:@""] stringByReplacingOccurrencesOfString:@" " withString:@""];
+    
+    NSString *filename = [NSString stringWithFormat:@"%@_%@_%@.json", _namespace, _method, description];
+    
+    NSCharacterSet *illegalFileNameCharacters = [NSCharacterSet characterSetWithCharactersInString:@"/\\?%*|\"<>"];
+    NSString *cleanFilename = [[filename componentsSeparatedByCharactersInSet:illegalFileNameCharacters] componentsJoinedByString:@""];
+    
+    NSString *path = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:cleanFilename];
+    
+    return path;
+}
+
+- (BOOL)cacheFileForLaterSync {
+    NSString *filename = [NSString stringWithFormat:@"%f.bin", [[NSDate date] timeIntervalSince1970]];
+    
+    NSString *directory = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:@"queue"];
+    
+    // Create directory if necessary
+    BOOL isDir;
+    [[NSFileManager defaultManager] fileExistsAtPath:directory isDirectory:&isDir];
+    if (!isDir) [[NSFileManager defaultManager] createDirectoryAtPath:directory withIntermediateDirectories:NO attributes:nil error:nil];
+    
+    NSString *path = [directory stringByAppendingPathComponent:filename];
+    
+    return [NSKeyedArchiver archiveRootObject:self toFile:path];
+}
+
 #pragma mark - Connection Support
 
 - (void)start {
     
-    NSString *path = [[NSHomeDirectory() stringByAppendingPathComponent:  @"Documents"] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_%@.json", _namespace, _method]];
+    NSString *path = [self generatePath];
     
     NSFileManager *fileManager = [NSFileManager defaultManager];
     
@@ -347,7 +624,7 @@
         // Kill the connection
         [connection cancel];
         
-        // Notify the delegate about the error
+        // Send a notification to the delegate
         if ([self.delegate respondsToSelector:@selector(apiController:didFailWithError:)]) {
             NSError *error = [NSError errorWithDomain:@"HTTP Code Error" code:[((NSHTTPURLResponse *)response) statusCode] userInfo:nil];
             [self.delegate apiController:self didFailWithError:error];
@@ -361,8 +638,14 @@
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
+    // Save the file for later
+    if (self.saveForLater) [self cacheFileForLaterSync];
+    
     // Notify the delegate about the error
-    if ([self.delegate respondsToSelector:@selector(apiController:didFailWithError:)]) {
+    if ([self.delegate respondsToSelector:@selector(apiController:didSaveForLaterWithError:)]) {
+        [self.delegate apiController:self didSaveForLaterWithError:error];
+        
+    } else if ([self.delegate respondsToSelector:@selector(apiController:didFailWithError:)]) {
         [self.delegate apiController:self didFailWithError:error];
     }
 }
@@ -396,13 +679,31 @@
     } else {
         
         // Let's also save our JSON object inside a file
-        NSString *path = [[NSHomeDirectory() stringByAppendingPathComponent: @"Documents"]
-                          stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_%@.json", _namespace, _method]];
-        [JSON writeToFile:path atomically:YES];
+        [JSON writeToFile:[self generatePath] atomically:YES];
         
         // Return our parsed object
         if ([self.delegate respondsToSelector:@selector(apiController:didLoadDictionaryFromServer:)]) {
             [self.delegate apiController:self didLoadDictionaryFromServer:JSON];
+        }
+    }
+    
+    // Try to send older cached files still on the queue
+    NSString *directory = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:@"queue"];
+    
+    NSDirectoryEnumerator *queueFiles = [[NSFileManager defaultManager] enumeratorAtPath:directory];
+    
+    NSString *path;
+    while (path = [queueFiles nextObject]) {
+        if ([[path pathExtension] isEqualToString:@"bin"]) {
+            // Load the object from the file system
+            APIController *apiController = [NSKeyedUnarchiver unarchiveObjectWithFile:[directory stringByAppendingPathComponent:path]];
+            // Remove the reference
+            [[NSFileManager defaultManager] removeItemAtPath:[directory stringByAppendingPathComponent:path] error:nil];
+            // Define a new delegate and launch it
+            [apiController setDelegate:nil];
+            [apiController start];
+            // Finish loop
+            break;
         }
     }
 }

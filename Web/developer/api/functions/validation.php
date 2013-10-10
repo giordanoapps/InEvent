@@ -10,8 +10,9 @@
 		$core = Core::singleton();
 
 		// We make sure the user has provided it, otherwise we can already deny the request
-		if (isset($_REQUEST['tokenID'])) {
-			$hash = isset($_GET["tokenID"]) ? getAttribute($_GET["tokenID"]) : getAttribute($_REQUEST["tokenID"]);
+		if (isset($_GET['tokenID']) || isset($_COOKIE['tokenID'])) {
+
+			$hash = isset($_GET["tokenID"]) ? getAttribute($_GET["tokenID"]) : getAttribute($_COOKIE["tokenID"]);
 			$remote = $_SERVER['REMOTE_ADDR'];
 
 			$result = resourceForQuery(
@@ -68,6 +69,26 @@
      * Get activityID and suggest a company to be set
      * @return activityID  id of person
      */
+	function getTokenForEvent() {
+
+		if (isset ($_GET['eventID'])) {
+			$eventID = getAttribute($_GET['eventID']);
+
+			// Load the token
+			getToken($eventID);
+
+			// Return the table
+			return $eventID;
+
+		} else {
+			http_status_code(400, "Couldn't find the eventID");
+		}
+	}
+
+	/**
+     * Get activityID and suggest a company to be set
+     * @return activityID  id of person
+     */
 	function getTokenForActivity() {
 
 		if (isset ($_GET['activityID'])) {
@@ -91,20 +112,20 @@
 				return $activityID;
 
 			} else {
-				http_status_code(303);
+				http_status_code(303, "Couldn't find the activityID");
 			}
 		} else {
-			http_status_code(400);
+			http_status_code(400, "Couldn't find the activityID");
 		}
 	}
 
 	/**
 	 * Process the log in using the $_GET and $_POST
-	 * @param  [string] $name     name of the person
+	 * @param  [string] $email     email of the person
 	 * @param  [string] $password password of the person
 	 * @return object  json encoded object
 	 */
-	function processLogIn($name, $password) {
+	function processLogIn($email, $password) {
 
 		// Get the singleton
 		$core = Core::singleton();
@@ -126,7 +147,7 @@
 			LEFT JOIN
 				`memberSessions` ON `memberSessions`.`memberID` = `member`.`id`
 			WHERE 1
-				AND BINARY `member`.`name` = '$name'
+				AND BINARY `member`.`email` = '$email'
 			GROUP BY
 				`memberSessions`.`memberID`
 		");

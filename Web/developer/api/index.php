@@ -8,6 +8,10 @@
 
 	// Modules
 	switch ($namespace) {
+		case "ad":
+			include_once("modules/ad.php");
+			break;
+
 		case "activity":
 			include_once("modules/activity.php");
 			break;

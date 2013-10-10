@@ -11,10 +11,10 @@
 #import "AppDelegate.h"
 #import "NSString+HTML.h"
 #import "MKPointExpandedAnnotation.h"
-#import "InformationViewController.h"
 #import "ODRefreshControl.h"
 #import "EventToken.h"
 #import "GAI.h"
+#import "GAIDictionaryBuilder.h"
 #import <Parse/Parse.h>
 
 @interface MapViewController () {
@@ -174,7 +174,7 @@
     
     // Notify our tracker about the new event
     id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-    [tracker sendEventWithCategory:@"event" withAction:@"getEvent" withLabel:@"iOS" withValue:[NSNumber numberWithInteger:eventID]];
+    [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"event" action:@"getEvent" label:@"iOS" value:[NSNumber numberWithInteger:eventID]] build]];
     
     // Notify our tracker about the new event
     PFInstallation *currentInstallation = [PFInstallation currentInstallation];
@@ -183,11 +183,6 @@
 
     // Notify about the new company to our views
     [[NSNotificationCenter defaultCenter] postNotificationName:@"verify" object:nil userInfo:@{@"type": @"menu"}];
-    
-    // Push the controller with the restaurant information
-    InformationViewController *ivc = [[InformationViewController alloc] initWithNibName:@"InformationViewController" bundle:nil];
-    [ivc setCompanyData:dictionary];
-    [self.navigationController pushViewController:ivc animated:YES];
 }
 
 - (void)reloadMap {

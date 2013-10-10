@@ -23,7 +23,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Title
-        self.title = NSLocalizedString(@"About", nil);
+        self.title = NSLocalizedString(@"Our Company", nil);
         self.tabBarItem.image = [UIImage imageNamed:@"16-Footprints"];
     }
     return self;
@@ -36,10 +36,8 @@
     // View
     [self.view setBackgroundColor:[ColorThemeController tableViewBackgroundColor]];
     
-    
     // Arrows
-//    _upArrow.transform = CGAffineTransformMakeRotation(0.75f);
-    _leftArrow.transform = CGAffineTransformMakeRotation(0.2f);
+//    _leftArrow.transform = CGAffineTransformMakeRotation(0.2f);
     
     // About
     NSString *html = @"<p style='font-family: TrebuchetMS; font-size: 160%; text-align: center;'><b>InEvent</b> é um produto do <b>Estúdio Trilha</b>.</p>";
@@ -57,9 +55,13 @@
 
 #pragma mark - Private Methods
 
-- (IBAction)openLink:(id)sender {
+- (IBAction)openProductPage:(id)sender {
     // Open Facebook Page
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://www.facebook.com/estudiotrilha"]];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://facebook.com/pages/In-Event/150798025113523"]];
+}
+
+- (IBAction)openCompanyPage:(id)sender {
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://facebook.com/estudiotrilha"]];
 }
 
 @end

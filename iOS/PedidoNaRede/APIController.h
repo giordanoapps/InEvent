@@ -10,11 +10,12 @@
 
 #ifdef DEBUG
     #if TARGET_IPHONE_SIMULATOR
-        #define URL @"http://localhost:8888/InEvent/Web/"
+        #define URL @"http://inevent:8888/"
         //#define URL @"http://agarca.com.br/"
     #else
-        #define URL @"http://192.168.0.106:8888/InEvent/Web/"
+        //#define URL @"http://192.168.0.106:8888/InEvent-dev/Web/"
         //#define URL @"http://pedrogoes.info/InEvent/Web/"
+        #define URL @"http://inevent.us/"
     #endif
 #else
     #define URL @"http://inevent.us/"
@@ -26,14 +27,17 @@
 @optional
 - (void)apiController:(APIController *)apiController didLoadDictionaryFromServer:(NSDictionary *)dictionary;
 - (void)apiController:(APIController *)apiController didFailWithError:(NSError *)error;
+- (void)apiController:(APIController *)apiController didSaveForLaterWithError:(NSError *)error;
 
 @end
 
-@interface APIController : NSObject <NSURLConnectionDelegate>
+@interface APIController : NSObject <NSURLConnectionDelegate, NSCoding>
 
 @property (strong, nonatomic) id<APIControllerDelegate> delegate;
 // Override the maxAge checkpoint
 @property (assign, nonatomic) BOOL force;
+// Save controller for later syncing
+@property (assign, nonatomic) BOOL saveForLater;
 // Maximum allowed age of the cache
 @property (assign, nonatomic) NSTimeInterval maxAge;
 // Dictionary as a reference point
@@ -42,6 +46,8 @@
 @property (nonatomic, strong) NSString *namespace;
 // The given method for the requisition
 @property (nonatomic, strong) NSString *method;
+// Path for the current json file
+@property (nonatomic, strong, readonly) NSString *path;
 
 #pragma mark - Initializers
 - (id)initWithDelegate:(id<APIControllerDelegate>)aDelegate;
@@ -49,21 +55,48 @@
 - (id)initWithDelegate:(id<APIControllerDelegate>)aDelegate forcing:(BOOL)aForce withUserInfo:(NSDictionary *)aUserInfo;
 - (id)initWithDelegate:(id<APIControllerDelegate>)aDelegate forcing:(BOOL)aForce withMaxAge:(NSTimeInterval)aMaxAge withUserInfo:(NSDictionary *)aUserInfo;
 
+#pragma mark - Ad
+- (void)adGetAdsAtEvent:(NSInteger)eventID;
+- (void)adSeenAd:(NSInteger)adID;
+
 #pragma mark - Activity
+- (void)activityCreateActivityAtEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID;
+- (void)activityEditField:(NSString *)name withValue:(NSString *)value atActivity:(NSInteger)activityID withTokenID:(NSString *)tokenID;
+- (void)activityRemoveActivity:(NSInteger)activityID withTokenID:(NSString *)tokenID;
 - (void)activityRequestEnrollmentAtActivity:(NSInteger)activityID withTokenID:(NSString *)tokenID;
-- (void)activityRequestEnrollmentForPerson:(NSInteger)personID atActivity:(NSInteger)activityID withTokenID:(NSString *)tokenID;
+- (void)activityRequestEnrollmentForPersonWithName:(NSString *)name andEmail:(NSString *)email atActivity:(NSInteger)activityID withTokenID:(NSString *)tokenID;
 - (void)activityDismissEnrollmentAtActivity:(NSInteger)activityID withTokenID:(NSString *)tokenID;
 - (void)activityDismissEnrollmentForPerson:(NSInteger)personID atActivity:(NSInteger)activityID withTokenID:(NSString *)tokenID;
 - (void)activityConfirmEntranceForPerson:(NSInteger)personID atActivity:(NSInteger)activityID withTokenID:(NSString *)tokenID;
+- (void)activityRevokeEntranceForPerson:(NSInteger)personID atActivity:(NSInteger)activityID withTokenID:(NSString *)tokenID;
+- (void)activityConfirmPaymentForPerson:(NSInteger)personID atActivity:(NSInteger)activityID withTokenID:(NSString *)tokenID;
 - (void)activityGetPeopleAtActivity:(NSInteger)activityID withTokenID:(NSString *)tokenID;
 - (void)activityGetQuestionsAtActivity:(NSInteger)activityID withTokenID:(NSString *)tokenID;
 - (void)activitySendQuestion:(NSString *)question toActivity:(NSInteger)activityID withTokenID:(NSString *)tokenID;
+- (void)activityRemoveQuestion:(NSInteger)questionID withTokenID:(NSString *)tokenID;
 - (void)activityUpvoteQuestion:(NSInteger)questionID withTokenID:(NSString *)tokenID;
+- (void)activityGetOpinionFromActivity:(NSInteger)activityID withToken:(NSString *)tokenID;
+- (void)activitySendOpinionWithRating:(NSInteger)rating toActivity:(NSInteger)activityID withToken:(NSString *)tokenID;
 
 #pragma mark - Event
+- (void)eventEditField:(NSString *)name withValue:(NSString *)value atEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID;
+- (void)eventGetEvents;
+- (void)eventGetEventsWithTokenID:(NSString *)tokenID;
+- (void)eventGetSingleEvent:(NSInteger)eventID;
+- (void)eventGetSingleEvent:(NSInteger)eventID WithTokenID:(NSString *)tokenID;
+- (void)eventRequestEnrollmentAtEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID;
+- (void)eventRequestEnrollmentForPerson:(NSInteger)personID atEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID;
+- (void)eventDismissEnrollmentAtEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID;
+- (void)eventDismissEnrollmentForPerson:(NSInteger)personID atEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID;
+- (void)eventApproveEnrollmentAtEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID;
+- (void)eventApproveEnrollmentForPerson:(NSInteger)personID atEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID;
+- (void)eventGrantPermissionForPerson:(NSInteger)personID atEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID;
+- (void)eventRevokePermissionForPerson:(NSInteger)personID atEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID;
 - (void)eventGetPeopleAtEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID;
 - (void)eventGetActivitiesAtEvent:(NSInteger)eventID;
-- (void)eventGetScheduleAtEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID;
+- (void)eventGetActivitiesAtEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID;
+- (void)eventGetOpinionFromEvent:(NSInteger)eventID withToken:(NSString *)tokenID;
+- (void)eventSendOpinionWithRating:(NSInteger)rating withMessage:(NSString *)message toEvent:(NSInteger)eventID withToken:(NSString *)tokenID;
 
 #pragma mark - Notifications
 - (void)notificationGetNumberOfNotificationsWithTokenID:(NSString *)tokenID;
@@ -74,10 +107,10 @@
 - (void)notificationGetSingleNotification:(NSInteger)notificationID withTokenID:(NSString *)tokenID;
 
 #pragma mark - Person
-- (void)personSignIn:(NSString *)name withPassword:(NSString *)password;
+- (void)personSignIn:(NSString *)email withPassword:(NSString *)password;
 - (void)personSignInWithFacebookToken:(NSString *)facebookToken;
-- (void)personRegister:(NSString *)name withPassword:(NSString *)password withEmail:(NSString *)email;
-- (void)personGetEventsWithToken:(NSString *)tokenID;
+- (void)personEnroll:(NSString *)name withPassword:(NSString *)password withEmail:(NSString *)email;
+- (void)personGetWorkingEventsWithToken:(NSString *)tokenID;
 
 #pragma mark - Setup
 - (void)JSONObjectWithNamespace:(NSString *)namespace method:(NSString *)method attributes:(NSDictionary *)attributes;

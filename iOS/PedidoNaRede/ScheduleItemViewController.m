@@ -6,9 +6,13 @@
 //  Copyright (c) 2013 Pedro Góes. All rights reserved.
 //
 
+#import <QuartzCore/QuartzCore.h>
+#import <GoogleMaps/GoogleMaps.h>
 #import "ScheduleItemViewController.h"
 #import "ReaderViewController.h"
-#import <QuartzCore/QuartzCore.h>
+#import "QuestionViewController.h"
+#import "FeedbackViewController.h"
+#import "MaterialViewController.h"
 #import "ColorThemeController.h"
 #import "HumanToken.h"
 #import "EventToken.h"
@@ -17,13 +21,13 @@
 #import "NSString+HTML.h"
 #import "ODRefreshControl.h"
 #import "NSObject+Triangle.h"
+#import "NSObject+Field.h"
+#import "UIPlaceHolderTextView.h"
 
 @interface ScheduleItemViewController () {
     ODRefreshControl *refreshControl;
+    CLLocationManager *locationManager;
 }
-
-
-@property (strong, nonatomic) NSMutableArray *questionData;
 
 @end
 
@@ -33,8 +37,8 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
-        self.questionData = [NSMutableArray array];
+        // Add notification observer for new orders
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cleanData) name:@"scheduleCurrentState" object:nil];
     }
     return self;
 }
@@ -43,18 +47,6 @@
 {
     [super viewDidLoad];
     
-    if ([[HumanToken sharedInstance] isMemberWorking]) {
-        self.rightBarButton = [[CoolBarButtonItem alloc] initCustomButtonWithImage:[UIImage imageNamed:@"64-Cog"] frame:CGRectMake(0, 0, 42.0, 30.0) insets:UIEdgeInsetsMake(5.0, 11.0, 5.0, 11.0) target:self action:@selector(alertActionSheet)];
-        self.rightBarButton.accessibilityLabel = NSLocalizedString(@"Actions", nil);
-        self.rightBarButton.accessibilityTraits = UIAccessibilityTraitSummaryElement;
-        self.navigationItem.rightBarButtonItem = self.rightBarButton;
-    }
-    
-    // View
-    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTap)];
-    [tapGesture setDelegate:self];
-    [self.view addGestureRecognizer:tapGesture];
-    
     // Wrapper
     [_wrapper.layer setBorderColor:[[ColorThemeController tableViewCellInternalBorderColor] CGColor]];
     [_wrapper.layer setBorderWidth:0.4f];
@@ -62,59 +54,49 @@
     [_wrapper.layer setMasksToBounds:YES];
     
     // Title
-    [_name setTextColor:[ColorThemeController tableViewCellTextColor]];
-    [_name setHighlightedTextColor:[ColorThemeController tableViewCellTextHighlightedColor]];
+    [((UIButton *)_name).titleLabel setNumberOfLines:2];
+    [(UIButton *)_name setTitleColor:[ColorThemeController tableViewCellTextColor] forState:UIControlStateNormal];
+    [(UIButton *)_name setTitleColor:[ColorThemeController tableViewCellTextHighlightedColor] forState:UIControlStateHighlighted];
     
     // Description
-    [_description setBackgroundColor:[ColorThemeController tableViewCellBackgroundColor]];
+    [((UIButton *)_description).titleLabel setNumberOfLines:0];
+    [(UIButton *)_description setBackgroundColor:[ColorThemeController tableViewCellBackgroundColor]];
     
     // Line
     [_line setBackgroundColor:[ColorThemeController tableViewCellInternalBorderColor]];
     [self createBottomIdentation];
     
-    if ([[HumanToken sharedInstance] isMemberAuthenticated]) {
-        // Refresh Control
-        refreshControl = [[ODRefreshControl alloc] initInScrollView:self.tableView];
-        [refreshControl addTarget:self action:@selector(loadQuestions) forControlEvents:UIControlEventValueChanged];
-        
-        // Question Wrapper
-        [_questionWrapper setBackgroundColor:[ColorThemeController tableViewCellBackgroundColor]];
-        
-        // Create the view for the search field
-        UIView *leftView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 40.0, 30.0)];
-        UIImageView *searchTool = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"64-Speech-Bubbles"]];
-        [searchTool setFrame:CGRectMake(10.0, 3.0, 24.0, 24.0)];
-        [leftView addSubview:searchTool];
-
-        // Text field
-        [_questionInput setPlaceholder:NSLocalizedString(@"What's the question?", nil)];
-        [_questionInput setTextColor:[ColorThemeController tableViewCellTextColor]];
-        [_questionInput setBackgroundColor:[ColorThemeController tableViewCellBackgroundColor]];
-        [_questionInput setLeftView:leftView];
-        [_questionInput setLeftViewMode:UITextFieldViewModeAlways];
-        [_questionInput.layer setCornerRadius:0.0];
-        [_questionInput.layer setMasksToBounds:NO];
-        [_questionInput.layer setBorderWidth:0.0];
-        [_questionInput.layer setBorderColor:[[ColorThemeController tableViewCellInternalBorderColor] CGColor]];
-        
-        // Message Button
-        [_questionButton setTitle:NSLocalizedString(@"Send", @"Send message from chat") forState:UIControlStateNormal];
-        [_questionButton setTitleColor:[ColorThemeController textColor] forState:UIControlStateNormal];
-        [_questionButton setTitleColor:[ColorThemeController textColor] forState:UIControlStateHighlighted];
-        [_questionButton setBackgroundImage:[[UIImage imageNamed:@"greyButton"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)] forState:UIControlStateNormal];
-        [_questionButton setBackgroundImage:[[UIImage imageNamed:@"greyButtonHighlight"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)] forState:UIControlStateHighlighted];
-        [_questionButton addTarget:self action:@selector(sendMessage) forControlEvents:UIControlEventTouchUpInside];
-        [_questionButton.layer setMasksToBounds:YES];
-        [_questionButton.layer setCornerRadius:4.0];
-        [_questionButton.layer setBorderWidth:0.6];
-        [_questionButton.layer setBorderColor:[[ColorThemeController tableViewCellInternalBorderColor] CGColor]];
-        
-    } else {
-        [_tableView setHidden:YES];
-        [_questionWrapper setHidden:YES];
-    }
+    // Map
+    [_map setShowsUserLocation:YES];
+//    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:-33.86 longitude:151.20 zoom:6];
+//    _map = [GMSMapView mapWithFrame:CGRectZero camera:camera];
+//    _map.myLocationEnabled = YES;
+//    _map.settings.myLocationButton = YES;
     
-    [self loadData];
+    // Location Manager
+    locationManager = [[CLLocationManager alloc] init];
+    locationManager.delegate = self;
+    locationManager.distanceFilter = kCLDistanceFilterNone;
+    locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    [locationManager startUpdatingLocation];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        [self cleanData];
+        [self loadData];
+    }
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+        [self cleanData];
+        [self loadData];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -134,58 +116,203 @@
     _activityData = activityData;
     
     [self loadData];
-    [self loadQuestions];
 }
 
 #pragma mark - Private Methods
 
 - (void)loadData {
-    NSDate *date = [NSDate dateWithTimeIntervalSince1970:[[_activityData objectForKey:@"dateBegin"] integerValue]];
-    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    NSDateComponents *components = [gregorian components:(NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:date];
     
-    _hour.text = [NSString stringWithFormat:@"%.2d", [components hour]];
-    _minute.text = [NSString stringWithFormat:@"%.2d", [components minute]];
-    _name.text = [[_activityData objectForKey:@"name"] stringByDecodingHTMLEntities];
-    _description.text = [[_activityData objectForKey:@"description"] stringByDecodingHTMLEntities];
-    
-    // Upper triangle
-    [self defineStateForApproved:[[_activityData objectForKey:@"approved"] integerValue] withView:_wrapper];
+    if (_activityData) {
+
+        // Actions
+        if ([[HumanToken sharedInstance] isMemberAuthenticated]) [self loadMenuButton];
+        
+        NSDate *date = [NSDate dateWithTimeIntervalSince1970:[[_activityData objectForKey:@"dateBegin"] integerValue]];
+        NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+        NSDateComponents *components = [gregorian components:(NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:date];
+        
+        [self defineStateForApproved:[[_activityData objectForKey:@"approved"] integerValue] withView:_wrapper];
+        
+        [((UIButton *)_hour) setTitle:[NSString stringWithFormat:@"%.2d", [components hour]] forState:UIControlStateNormal];
+        [((UIButton *)_minute) setTitle:[NSString stringWithFormat:@"%.2d", [components minute]] forState:UIControlStateNormal];
+        [((UIButton *)_name) setTitle:[[_activityData objectForKey:@"name"] stringByDecodingHTMLEntities] forState:UIControlStateNormal];
+        [((UIButton *)_description) setTitle:[[_activityData objectForKey:@"description"] stringByDecodingHTMLEntities] forState:UIControlStateNormal];
+        
+        if ([[HumanToken sharedInstance] isMemberWorking]) {
+            if ([[_activityData objectForKey:@"approved"] integerValue] == ScheduleStateApproved) {
+                _quickFeedback.hidden = NO;
+                _quickQuestion.hidden = NO;
+                _quickPeople.hidden = NO;
+                
+            } else {
+                _quickFeedback.hidden = YES;
+                _quickQuestion.hidden = NO;
+                _quickPeople.hidden = NO;
+            }
+        } else if ([[HumanToken sharedInstance] isMemberAuthenticated]) {
+            if ([[_activityData objectForKey:@"approved"] integerValue] == ScheduleStateApproved) {
+                _quickFeedback.hidden = NO;
+                _quickQuestion.hidden = NO;
+                _quickPeople.hidden = YES;
+            } else {
+                _quickFeedback.hidden = YES;
+                _quickQuestion.hidden = NO;
+                _quickPeople.hidden = YES;
+            }
+        } else {
+            _quickFeedback.hidden = YES;
+            _quickQuestion.hidden = YES;
+            _quickPeople.hidden = YES;
+        }
+        
+        [self reloadMap];
+    }
 }
 
-- (void)loadQuestions {
+- (void)cleanData {
+    self.navigationItem.rightBarButtonItem = nil;
+    [self defineStateForApproved:ScheduleStateUnknown withView:_wrapper];
+    [((UIButton *)_hour) setTitle:@"00" forState:UIControlStateNormal];
+    [((UIButton *)_minute) setTitle:@"00" forState:UIControlStateNormal];
+    [((UIButton *)_name) setTitle:NSLocalizedString(@"Activity", nil) forState:UIControlStateNormal];
+    [((UIButton *)_description) setTitle:@"" forState:UIControlStateNormal];
+}
+
+- (void)loadMenuButton {
+    self.rightBarButton = [[CoolBarButtonItem alloc] initCustomButtonWithImage:[UIImage imageNamed:@"32-Cog"] frame:CGRectMake(0, 0, 42.0, 30.0) insets:UIEdgeInsetsMake(5.0, 11.0, 5.0, 11.0) target:self action:@selector(alertActionSheet)];
+    self.rightBarButton.accessibilityLabel = NSLocalizedString(@"Actions", nil);
+    self.rightBarButton.accessibilityTraits = UIAccessibilityTraitSummaryElement;
+    self.navigationItem.rightBarButtonItem = self.rightBarButton;
+}
+
+- (void)loadDoneButton {
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(endEditing)];
+}
+
+#pragma mark - Editing
+
+- (void)startEditing {
+    _hour = [self createField:_hour withAttributes:@[@"trimPadding"]];
+    _minute = [self createField:_minute withAttributes:@[@"trimPadding"]];
+    _name = [self createField:_name];
+    _description = [self createField:_description];
+    
+    [self loadDoneButton];
+}
+
+- (void)endEditing {
+    
+    // Save the fields
     NSString *tokenID = [[HumanToken sharedInstance] tokenID];
-    NSInteger activityID = [[_activityData objectForKey:@"id"] integerValue];
-    [[[APIController alloc] initWithDelegate:self forcing:YES] activityGetQuestionsAtActivity:activityID withTokenID:tokenID];
+    
+    if (![((UIPlaceHolderTextView *)_hour).placeholder isEqualToString:((UIPlaceHolderTextView *)_hour).text]) {
+        [[[APIController alloc] initWithDelegate:self forcing:YES] activityEditField:@"hourBegin" withValue:((UIPlaceHolderTextView *)_hour).text atActivity:[[_activityData objectForKey:@"id"] integerValue] withTokenID:tokenID];
+    }
+    
+    if (![((UIPlaceHolderTextView *)_minute).placeholder isEqualToString:((UIPlaceHolderTextView *)_minute).text]) {
+        [[[APIController alloc] initWithDelegate:self forcing:YES] activityEditField:@"minuteBegin" withValue:((UIPlaceHolderTextView *)_minute).text atActivity:[[_activityData objectForKey:@"id"] integerValue] withTokenID:tokenID];
+    }
+    
+    if (![((UIPlaceHolderTextView *)_name).placeholder isEqualToString:((UIPlaceHolderTextView *)_name).text]) {
+        [[[APIController alloc] initWithDelegate:self forcing:YES] activityEditField:@"name" withValue:((UIPlaceHolderTextView *)_name).text atActivity:[[_activityData objectForKey:@"id"] integerValue] withTokenID:tokenID];
+    }
+    
+    if (![((UIPlaceHolderTextView *)_description).placeholder isEqualToString:((UIPlaceHolderTextView *)_description).text]) {
+        [[[APIController alloc] initWithDelegate:self forcing:YES] activityEditField:@"description" withValue:((UIPlaceHolderTextView *)_description).text atActivity:[[_activityData objectForKey:@"id"] integerValue] withTokenID:tokenID];
+    }
+    
+    // Remove them
+    _hour = [self removeField:_hour];
+    _minute = [self removeField:_minute];
+    _name = [self removeField:_name];
+    _description = [self removeField:_description belowView:_quickFeedback];
+    
+    [self loadMenuButton];
 }
 
-- (void)didTap {
-    // Remove the keyboard
-    [_questionInput resignFirstResponder];
+#pragma mark - Location
+
+- (void)updateLocation:(CLLocation *)location {
+//    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:location.coordinate.latitude longitude:location.coordinate.longitude zoom:6];
+//    [_map setCamera:camera];
+    [_map setRegion:MKCoordinateRegionMake(location.coordinate, MKCoordinateSpanMake(0.011, 0.011))];
 }
 
-#pragma - User Methods
 
-- (void)sendMessage {
+#pragma mark - Map
 
-    // Check if input is not empty
-    if (![[_questionInput.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] isEqualToString:@""]) {
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation {
+    // If it's the user location, just return nil.
+    if ([annotation isKindOfClass:[MKUserLocation class]]) {
+        return nil;
+    }
+    
+    // Handle any custom annotations.
+    // Try to dequeue an existing pin view first.
+    MKPinAnnotationView *pinView = (MKPinAnnotationView*)[mapView dequeueReusableAnnotationViewWithIdentifier:@"CustomPinAnnotationView"];
+    
+    if (pinView) {
+        // Add a pin
+        pinView.annotation = annotation;
         
-        // Send the message to our servers
-        NSString *tokenID = [[HumanToken sharedInstance] tokenID];
-        NSInteger activityID = [[_activityData objectForKey:@"id"] integerValue];
-        [[[APIController alloc] initWithDelegate:self forcing:YES] activitySendQuestion:_questionInput.text toActivity:activityID withTokenID:tokenID];
+    } else {
+        // If an existing pin view was not available, create one.
+        pinView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"CustomPinAnnotation"];
+        pinView.pinColor = MKPinAnnotationColorPurple;
+        pinView.animatesDrop = YES;
+        pinView.canShowCallout = YES;
+        pinView.draggable = NO;
+        pinView.enabled = YES;
+        pinView.annotation = annotation;
         
-        [self loadQuestions];
+        // Add a detail disclosure button to the callout
+        UIButton* rightButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+        pinView.rightCalloutAccessoryView = rightButton;
+    }
+    
+    return pinView;
+}
+
+- (void)reloadMap {
+    
+    // Remove all annotations
+    [_map removeAnnotations:_map.annotations];
+//    [_map clear];
+    
+    // Then load the new ones
+    CGFloat latitude = [[_activityData objectForKey:@"latitude"] floatValue];
+    CGFloat longitude = [[_activityData objectForKey:@"longitude"] floatValue];
+    
+    if (latitude == 0 && longitude == 0) {
+        // Search using Apple API
+        MKLocalSearchRequest *request = [[MKLocalSearchRequest alloc] init];
+        request.naturalLanguageQuery = [[_activityData objectForKey:@"location"] stringByDecodingHTMLEntities];
+        request.region = _map.region;
         
-        // Add the object to the stack and reload it
-//        [_questionData addObject:_questionInput.text];
-//        [_tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:([_questionData count] - 1) inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
-//        [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:([_questionData count] - 1) inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-        
-        
-        
-        [_questionInput setText:@""];
+        MKLocalSearch *localSearch = [[MKLocalSearch alloc] initWithRequest:request];
+        [localSearch startWithCompletionHandler:^(MKLocalSearchResponse *response, NSError *error) {
+            
+            NSMutableArray *annotations = [NSMutableArray array];
+            
+            [response.mapItems enumerateObjectsUsingBlock:^(MKMapItem *item, NSUInteger idx, BOOL *stop) {
+                MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
+                annotation.title = [[_activityData objectForKey:@"name"] stringByDecodingHTMLEntities];
+                [annotations addObject:annotation];
+            }];
+            
+            [_map addAnnotations:annotations];
+        }];
+    } else {
+        // Place using InEvent API
+        MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
+        annotation.coordinate = CLLocationCoordinate2DMake(latitude, longitude);
+        annotation.title = [[_activityData objectForKey:@"location"] stringByDecodingHTMLEntities];
+        [_map addAnnotation:annotation];
+//        GMSMarker *marker = [[GMSMarker alloc] init];
+//        marker.position = CLLocationCoordinate2DMake(latitude, longitude);
+//        marker.title = [[_activityData objectForKey:@"location"] stringByDecodingHTMLEntities];
+//        marker.snippet = [[_activityData objectForKey:@"location"] stringByDecodingHTMLEntities];
+//        marker.map = _map;
     }
 }
 
@@ -211,12 +338,7 @@
 #pragma mark - Gesture Recognizer Methods
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
-    
-    if (touch.view != _questionButton) {
-        return YES;
-    } else {
-        return NO;
-    }
+    return YES;
 }
 
 #pragma mark - ActionSheet Methods
@@ -225,7 +347,20 @@
     
     UIActionSheet *actionSheet;
     
-    actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Actions", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"See people", nil), nil];
+    if ([[HumanToken sharedInstance] isMemberWorking]) {
+        if ([[_activityData objectForKey:@"approved"] integerValue] == ScheduleStateApproved) {
+            actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Actions", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"Edit fields", nil), NSLocalizedString(@"See people", nil), NSLocalizedString(@"See questions", nil), NSLocalizedString(@"Send feedback", nil), nil];
+            
+        } else {
+            actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Actions", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"Edit fields", nil), NSLocalizedString(@"See people", nil), NSLocalizedString(@"See questions", nil), nil];
+        }
+    } else if ([[HumanToken sharedInstance] isMemberAuthenticated]) {
+        if ([[_activityData objectForKey:@"approved"] integerValue] == ScheduleStateApproved) {
+            actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Actions", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"See questions", nil), NSLocalizedString(@"Send feedback", nil), nil];
+        } else {
+            actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Actions", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"See questions", nil), nil];
+        }
+    }
     
     [actionSheet showFromBarButtonItem:self.rightBarButton animated:YES];
 }
@@ -235,71 +370,113 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     
     NSString *title = [actionSheet buttonTitleAtIndex:buttonIndex];
-    
-    if ([title isEqualToString:NSLocalizedString(@"See people", nil)]) {
+
+    if ([title isEqualToString:NSLocalizedString(@"Edit fields", nil)]) {
+        [self startEditing];
+        
+    } else if ([title isEqualToString:NSLocalizedString(@"See people", nil)]) {
         // Load our reader
-        ReaderViewController *rvc;
+        [self loadReaderController];
         
-        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-            rvc = [[ReaderViewController alloc] initWithNibName:@"ReaderViewController" bundle:nil];
-        } else {
-            // Find the sibling navigation controller first child and send the appropriate data
-            rvc = (ReaderViewController *)[[[self.splitViewController.viewControllers lastObject] viewControllers] objectAtIndex:0];
-        }
+    } else if ([title isEqualToString:NSLocalizedString(@"See questions", nil)]) {
+        // Load questions
+        [self loadQuestionController];
+
+    } else if ([title isEqualToString:NSLocalizedString(@"Send feedback", nil)]) {
+        // Load feedback
+        [self loadFeedbackController];
+
+    } else if ([title isEqualToString:NSLocalizedString(@"Exit event", nil)]) {
+        // Remove the tokenID and enterprise
+        [[EventToken sharedInstance] removeEvent];
         
-        [rvc setMoveKeyboardRatio:0.0];
-//        [rvc setTitle:[[_activityData objectForKey:@"name"] stringByDecodingHTMLEntities]];
-        [rvc setActivityData:_activityData];
+        // Check for it again
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"verify" object:nil userInfo:@{@"type": @"enterprise"}];
         
-        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-            [self.navigationController pushViewController:rvc animated:YES];
-        }
+    }
+}
+
+- (IBAction)loadReaderController {
+    ReaderViewController *rvc = [[ReaderViewController alloc] initWithNibName:@"ReaderViewController" bundle:nil];
+    
+    [rvc setMoveKeyboardRatio:0.0];
+    [rvc setActivityData:_activityData];
+    
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        [self.navigationController pushViewController:rvc animated:YES];
+    } else {
+        rvc.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+        rvc.modalPresentationStyle = UIModalPresentationFormSheet;
+        
+        [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:rvc animated:YES completion:nil];
+    }
+}
+
+- (IBAction)loadQuestionController {
+    QuestionViewController *qvc = [[QuestionViewController alloc] initWithNibName:@"QuestionViewController" bundle:nil];
+    
+    [qvc setMoveKeyboardRatio:([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad && [UIScreen mainScreen].scale == 1.0) ? 0.65 : 2.0];
+    [qvc setActivityData:_activityData];
+    
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        [self.navigationController pushViewController:qvc animated:YES];
+    } else {
+        qvc.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+        qvc.modalPresentationStyle = UIModalPresentationFormSheet;
+        
+        [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:qvc animated:YES completion:nil];
+    }
+}
+
+- (IBAction)loadFeedbackController {
+    FeedbackViewController *fvc = [[FeedbackViewController alloc] initWithNibName:@"FeedbackViewController" bundle:nil];
+    UINavigationController *nfvc = [[UINavigationController alloc] initWithRootViewController:fvc];
+    
+    [fvc setMoveKeyboardRatio:0.7];
+    [fvc setFeedbackType:FeedbackTypeActivity withReference:[[_activityData objectForKey:@"id"] integerValue]];
+    
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        nfvc.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+        nfvc.modalPresentationStyle = UIModalPresentationCurrentContext;
+    } else {
+        nfvc.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+        nfvc.modalPresentationStyle = UIModalPresentationFormSheet;
     }
     
+    [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:nfvc animated:YES completion:nil];
 }
 
-#pragma mark - Table View Data Source
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)aTableView {
-    return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)aTableView numberOfRowsInSection:(NSInteger)section {
-    return [self.questionData count];
-}
-
-- (UITableViewCell *)tableView:(UITableView *)aTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (IBAction)loadMaterialController {
+    MaterialViewController *mvc = [[MaterialViewController alloc] initWithNibName:@"MaterialViewController" bundle:nil];
+    UINavigationController *nmvc = [[UINavigationController alloc] initWithRootViewController:mvc];
     
-    static NSString *CustomCellIdentifier = @"CustomCellIdentifier";
-    UITableViewCell *cell = [aTableView dequeueReusableCellWithIdentifier: CustomCellIdentifier];
-    
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CustomCellIdentifier];
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        nmvc.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+        nmvc.modalPresentationStyle = UIModalPresentationCurrentContext;
+    } else {
+        nmvc.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+        nmvc.modalPresentationStyle = UIModalPresentationFormSheet;
     }
     
-    NSDictionary *dictionary = [self.questionData objectAtIndex:indexPath.row];
-    
-    cell.textLabel.text = [[dictionary objectForKey:@"text"] stringByDecodingHTMLEntities];
-//    cell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@""]];
-    
-    return cell;
+    [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:nmvc animated:YES completion:nil];
 }
 
-- (void)tableView:(UITableView *)aTableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+#pragma mark - Location Manager Delegate iOS5
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
     
+    [self updateLocation:newLocation];
+    
+    [manager stopUpdatingLocation];
 }
 
-#pragma mark - APIController Delegate
+#pragma mark - Location Manager Delegate iOS6
 
-- (void)apiController:(APIController *)apiController didLoadDictionaryFromServer:(NSDictionary *)dictionary {
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
     
-    // Assign the data object to the companies
-    self.questionData = [NSMutableArray arrayWithArray:[dictionary objectForKey:@"data"]];
+    [self updateLocation:[locations lastObject]];
     
-    // Reload all table data
-    [self.tableView reloadData];
-    
-    [refreshControl endRefreshing];
+    [manager stopUpdatingLocation];
 }
 
 @end
