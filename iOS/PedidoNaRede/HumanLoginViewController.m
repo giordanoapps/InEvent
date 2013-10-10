@@ -248,8 +248,6 @@
     } else {
         [self enroll];
     }
-    
-    [self toggleFieldBoxWithDuration:0.5 andHideIt:NO];
 }
 
 - (void)signIn {
@@ -288,6 +286,9 @@
 
 - (void)apiController:(APIController *)apiController didFailWithError:(NSError *)error {
     // Implement a method that allows every failing requisition to be reloaded
+    
+    // Reset password
+    [_personPassword setText:@""];
     
     if (error.code == 401) {
         [_personAction setTitle:NSLocalizedString(@"Try Again :(", nil) forState:UIControlStateNormal];
@@ -335,6 +336,9 @@
             // Update the current state of the schedule controller
             [[NSNotificationCenter defaultCenter] postNotificationName:@"scheduleCurrentState" object:nil userInfo:nil];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"verify" object:nil userInfo:@{@"type": @"menu"}];
+            
+            // Hide box
+            [self toggleFieldBoxWithDuration:0.5 andHideIt:NO];
             
             // Go back to the other screen
             [self dismissViewControllerAnimated:YES completion:^{

@@ -103,6 +103,25 @@
     }
 }
 
+#pragma mark - Private Methods
+
+- (NSInteger)calculateIndex:(NSIndexPath *)indexPath {
+    
+    NSInteger index = 0;
+    
+    for (int i = 0; i < [self.menuTableView numberOfSections]; i++) {
+        for (int j = 0; j < [self.menuTableView numberOfRowsInSection:i]; j++) {
+            if (indexPath.section == i && indexPath.row == j) {
+                return index;
+            } else {
+                index++;
+            }
+        }
+    }
+    
+    return index;
+}
+
 #pragma mark - Table View Delegate
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -181,6 +200,7 @@
         [cell setBackgroundView:background];
     }
 
+    // Define the text and the image
     if (indexPath.section == 0) {
         NSString *title = ([[HumanToken sharedInstance] isMemberAuthenticated]) ? [[HumanToken sharedInstance] name] : NSLocalizedString(@"Log In", nil);
         [cell.textLabel setText:title];
@@ -188,15 +208,15 @@
         UIViewController *viewController = [self.viewControllers objectAtIndex:indexPath.row];
         [cell.imageView setImage:viewController.tabBarItem.image];
     } else {
-        UIViewController *viewController = [self.viewControllers objectAtIndex:indexPath.section];
+        UIViewController *viewController = [self.viewControllers objectAtIndex:[self calculateIndex:indexPath]];
         [cell.textLabel setText:viewController.title];
         [cell.imageView setImage:viewController.tabBarItem.image];
     }
-
+    
+    // Accessory view
     if ((indexPath.section <= 1 && self.selectedIndex == indexPath.row + indexPath.section) ||
-        (indexPath.section == 2 && self.selectedIndex == 2)) {
-        UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"16-Check"]];
-        [cell setAccessoryView:imageView];
+        (indexPath.section == 2 && self.selectedIndex == [tableView numberOfSections])) {
+        [cell setAccessoryView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"16-Check"]]];
     } else {
         [cell setAccessoryView:nil];
     }
@@ -208,12 +228,12 @@
     
     if (indexPath.section <= 2) {
         // We must transform the current indexPath into something that the library can read
-        NSIndexPath *transformed = [NSIndexPath indexPathForRow:indexPath.row + indexPath.section inSection:0];
+        NSIndexPath *transformed = [NSIndexPath indexPathForRow:[self calculateIndex:indexPath] inSection:0];
         [super tableView:tableView didSelectRowAtIndexPath:transformed];
     }
     
     // Reload all sections
-    [tableView reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 3)] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [tableView reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, [tableView numberOfSections])] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 @end

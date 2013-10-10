@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 Pedro Góes. All rights reserved.
 //
 
-#import "ScheduleViewController.h"
+#import "PhotosViewController.h"
 #import "ScheduleViewCell.h"
 #import "ScheduleItemViewController.h"
 #import "FrontViewController.h"
@@ -24,7 +24,7 @@
 #import "CoolBarButtonItem.h"
 #import "Schedule.h"
 
-@interface ScheduleViewController () {
+@interface PhotosViewController () {
     ODRefreshControl *refreshControl;
     NSArray *activities;
     ScheduleSelection selection;
@@ -32,14 +32,14 @@
 
 @end
 
-@implementation ScheduleViewController
+@implementation PhotosViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.title = NSLocalizedString(@"Schedule", nil);
-        self.tabBarItem.image = [UIImage imageNamed:@"16-Map"];
+        self.title = NSLocalizedString(@"Photos", nil);
+        self.tabBarItem.image = [UIImage imageNamed:@"16-Image-2"];
         activities = [NSArray array];
         selection = ([[HumanToken sharedInstance] isMemberAuthenticated] && [[HumanToken sharedInstance] isMemberApproved]) ? ScheduleSubscribed : ScheduleAll;
         
@@ -71,8 +71,8 @@
     [refreshControl addTarget:self action:@selector(reloadData) forControlEvents:UIControlEventValueChanged];
     
     // Right Button
-    self.rightBarButton = [[CoolBarButtonItem alloc] initCustomButtonWithImage:[UIImage imageNamed:@"32-Cog"] frame:CGRectMake(0, 0, 42.0, 30.0) insets:UIEdgeInsetsMake(5.0, 11.0, 5.0, 11.0) target:self action:@selector(alertActionSheet)];
-    self.rightBarButton.accessibilityLabel = NSLocalizedString(@"Event Actions", nil);
+    self.rightBarButton = [[CoolBarButtonItem alloc] initCustomButtonWithImage:[UIImage imageNamed:@"32-Image"] frame:CGRectMake(0, 0, 42.0, 30.0) insets:UIEdgeInsetsMake(5.0, 11.0, 5.0, 11.0) target:self action:@selector(alertActionSheet)];
+    self.rightBarButton.accessibilityLabel = NSLocalizedString(@"Send photo", nil);
     self.rightBarButton.accessibilityTraits = UIAccessibilityTraitSummaryElement;
     self.navigationItem.rightBarButtonItem = self.rightBarButton;
 }
@@ -114,7 +114,7 @@
 
 - (void)alertActionSheet {
     
-//    NSString *title = (selection == ScheduleSubscribed) ? NSLocalizedString(@"All activities", nil) : NSLocalizedString(@"My activities", nil);
+    //    NSString *title = (selection == ScheduleSubscribed) ? NSLocalizedString(@"All activities", nil) : NSLocalizedString(@"My activities", nil);
     
     UIActionSheet *actionSheet;
     
@@ -147,10 +147,7 @@
         
     } else if ([title isEqualToString:NSLocalizedString(@"Event details", nil)]) {
         // Load our reader
-        FrontViewController *fvc = [[FrontViewController alloc] initWithNibName:@"FrontViewController" bundle:nil];
-        UINavigationController *nfvc = [[UINavigationController alloc] initWithRootViewController:fvc];
-        
-        [fvc setMoveKeyboardRatio:0.4];
+        UINavigationController *nfvc = [[UINavigationController alloc] initWithRootViewController:[[FrontViewController alloc] initWithNibName:@"FrontViewController" bundle:nil]];
         
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
             nfvc.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
@@ -271,7 +268,7 @@
     } else {
         // Find the sibling navigation controller first child and send the appropriate data
         sivc = (ScheduleItemViewController *)[[[self.splitViewController.viewControllers lastObject] viewControllers] objectAtIndex:0];
-        [sivc setMoveKeyboardRatio:0.0f];
+        [sivc setMoveKeyboardRatio:0.5f];
     }
     
     NSDictionary *dictionary = [[activities objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
@@ -297,38 +294,11 @@
 
 - (void)apiController:(APIController *)apiController didLoadDictionaryFromServer:(NSDictionary *)dictionary {
     
-    // Assign the data object to the companies
-    activities = [dictionary objectForKey:@"data"];
-    
-    // Reload all table data
-    [self.tableView reloadData];
-    
-    [refreshControl endRefreshing];
-    
-    // Scroll to the current moment
-    NSTimeInterval timestamp = [[NSDate date] timeIntervalSince1970];
-    
-    for (int i = 0; i < [activities count]; i++) {
-        for (int j = 0; j < [[activities objectAtIndex:i] count]; j++) {
-            // Get the current dictionary
-            NSDictionary *activity = [[activities objectAtIndex:i] objectAtIndex:j];
-            
-            // See if it matches
-            if (timestamp < [[activity objectForKey:@"dateEnd"] integerValue]) {
-                
-                // Scroll to the moment before the next activity finishes
-                [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:((j > 0) ? (j - 1) : j) inSection:i] atScrollPosition:UITableViewScrollPositionTop animated:YES];
-                
-                // Break the current loop
-                return;
-            }
-        }
-    }
 }
 
 - (void)apiController:(APIController *)apiController didFailWithError:(NSError *)error {
     [super apiController:apiController didFailWithError:error];
-
+    
     [refreshControl endRefreshing];
 }
 

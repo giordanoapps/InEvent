@@ -57,9 +57,6 @@
     refreshControl = [[ODRefreshControl alloc] initInScrollView:self.scrollView];
     [refreshControl addTarget:self action:@selector(reloadData) forControlEvents:UIControlEventValueChanged];
     
-    // Scroll view
-    [_scrollView setContentSize:CGSizeMake(_scrollView.frame.size.width, _scrollView.frame.size.height * 1.01)];
-    
     // Wrapper
     _wrapper.layer.cornerRadius = 4.0f;
     
@@ -76,8 +73,13 @@
 - (void) viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
+    // Scroll view
+    [_scrollView setContentSize:CGSizeMake(_scrollView.frame.size.width, _scrollView.frame.size.height * 1.01)];
+    
     // Window
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) [self allocTapBehind];
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+        [self allocTapBehind];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {

@@ -1,5 +1,5 @@
 //
-//  OrderItemViewCell.h
+//  ScheduleItemViewCell.h
 //  PedidoNaRede
 //
 //  Created by Pedro Góes on 08/10/12.

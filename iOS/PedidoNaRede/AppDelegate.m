@@ -11,10 +11,11 @@
 #import "AboutViewController.h"
 #import "ScheduleViewController.h"
 #import "ScheduleItemViewController.h"
+#import "PhotosViewController.h"
+#import "PhotosDetailViewController.h"
 #import "ColorThemeController.h"
 #import "PushController.h"
 #import "HumanViewController.h"
-#import "ReaderViewController.h"
 #import "LauchImageViewController.h"
 #import "GAI.h"
 #import "IntelligentSplitViewController.h"
@@ -26,6 +27,7 @@
 
 @property (strong, nonatomic) UIViewController *humanViewController;
 @property (strong, nonatomic) UIViewController *scheduleViewController;
+@property (strong, nonatomic) UIViewController *photosViewController;
 @property (strong, nonatomic) UIViewController *aboutViewController;
 
 @end
@@ -76,10 +78,10 @@
     }
     
     // Each controller
-    // LOGIN
+    // Login View Controller
     _humanViewController = [[UINavigationController alloc] initWithRootViewController:[[HumanViewController alloc] initWithNibName:@"HumanViewController" bundle:nil]];
     
-    // SCHEDULE
+    // Schedule View Controller
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
         _scheduleViewController = [[UINavigationController alloc] initWithRootViewController:[[ScheduleViewController alloc] initWithNibName:@"ScheduleViewController" bundle:nil]];
     } else {
@@ -93,8 +95,23 @@
         ((UISplitViewController *)_scheduleViewController).delegate = sivc;
         ((UISplitViewController *)_scheduleViewController).viewControllers = @[nsvc, nsivc];
     }
+
+    // Photos View Controller
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        _photosViewController = [[UINavigationController alloc] initWithRootViewController:[[PhotosViewController alloc] initWithNibName:@"PhotosViewController" bundle:nil]];
+    } else {
+        _photosViewController = [[IntelligentSplitViewController alloc] init];
+        PhotosViewController *pvc = [[PhotosViewController alloc] initWithNibName:@"PhotosViewController" bundle:nil];
+        UINavigationController *npvc = [[UINavigationController alloc] initWithRootViewController:pvc];
+        PhotosDetailViewController *pdvc = [[PhotosDetailViewController alloc] initWithNibName:@"PhotosDetailViewController" bundle:nil];
+        UINavigationController *npdvc = [[UINavigationController alloc] initWithRootViewController:pdvc];
+        ((UISplitViewController *)_photosViewController).title = pvc.title;
+        ((UISplitViewController *)_photosViewController).tabBarItem.image = pvc.tabBarItem.image;
+        ((UISplitViewController *)_photosViewController).delegate = pdvc;
+        ((UISplitViewController *)_photosViewController).viewControllers = @[npvc, npdvc];
+    }
     
-    // ABOUT
+    // About View Controller
     _aboutViewController = [[UINavigationController alloc] initWithRootViewController:[[AboutViewController alloc] initWithNibName:@"AboutViewController" bundle:nil]];
     
     // Global Controller

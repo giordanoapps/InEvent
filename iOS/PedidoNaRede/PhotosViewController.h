@@ -1,5 +1,5 @@
 //
-//  ScheduleViewController.h
+//  PhotosViewController.h
 //  PedidoNaRede
 //
 //  Created by Pedro Góes on 05/10/12.
@@ -10,7 +10,7 @@
 #import "WrapperViewController.h"
 #import "APIController.h"
 
-@interface ScheduleViewController : WrapperViewController <UITableViewDelegate, UITableViewDataSource, UINavigationControllerDelegate, APIControllerDelegate>
+@interface PhotosViewController : WrapperViewController <UITableViewDelegate, UITableViewDataSource, UINavigationControllerDelegate, APIControllerDelegate>
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 

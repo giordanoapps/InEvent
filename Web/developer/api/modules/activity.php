@@ -85,58 +85,82 @@
 					// Month
 					if ($name == "monthBegin" || $name == "monthEnd") {
 
-						$name = str_replace("month", "date", $name);
+						if ($value > 0 && $value <= 12) {
 
-						$update = resourceForQuery(
-							"UPDATE
-								`activity` 
-							SET
-								`$name` = ((`$name` - INTERVAL MONTH(`$name`) MONTH) + INTERVAL $value MONTH)
-							WHERE
-								`activity`.`id` = $activityID
-						");
+							$name = str_replace("month", "date", $name);
+
+							$update = resourceForQuery(
+								"UPDATE
+									`activity` 
+								SET
+									`$name` = ((`$name` - INTERVAL MONTH(`$name`) MONTH) + INTERVAL $value MONTH)
+								WHERE
+									`activity`.`id` = $activityID
+							");
+
+						} else {
+							http_status_code(406, "month must be valid");
+						}
 
 					// Day
 					} elseif ($name == "dayBegin" || $name == "dayEnd") {
 
-						$name = str_replace("day", "date", $name);
+						if ($value > 0 && $value <= 31) {
 
-						$update = resourceForQuery(
-							"UPDATE
-								`activity` 
-							SET
-								`$name` = ((`$name` - INTERVAL DAY(`$name`) DAY) + INTERVAL $value DAY)
-							WHERE
-								`activity`.`id` = $activityID
-						");
+							$name = str_replace("day", "date", $name);
+
+							$update = resourceForQuery(
+								"UPDATE
+									`activity` 
+								SET
+									`$name` = ((`$name` - INTERVAL DAY(`$name`) DAY) + INTERVAL $value DAY)
+								WHERE
+									`activity`.`id` = $activityID
+							");
+
+						} else {
+							http_status_code(406, "day must be valid");
+						}
 
 					// Hour
 					} elseif ($name == "hourBegin" || $name == "hourEnd") {
 
-						$name = str_replace("hour", "date", $name);
+						if ($value >= 0 && $value < 24) {
 
-						$update = resourceForQuery(
-							"UPDATE
-								`activity` 
-							SET
-								`$name` = CONVERT_TZ(((`$name` - INTERVAL HOUR(`$name`) HOUR) + INTERVAL $value HOUR), '-03:00','+00:00')
-							WHERE
-								`activity`.`id` = $activityID
-						");
+							$name = str_replace("hour", "date", $name);
+
+							$update = resourceForQuery(
+								"UPDATE
+									`activity` 
+								SET
+									`$name` = CONVERT_TZ(((`$name` - INTERVAL HOUR(`$name`) HOUR) + INTERVAL $value HOUR), '-03:00','+00:00')
+								WHERE
+									`activity`.`id` = $activityID
+							");
+
+						} else {
+							http_status_code(406, "hour must be valid");
+						}
 
 					// Minute
 					} elseif ($name == "minuteBegin" || $name == "minuteEnd") {
 
-						$name = str_replace("minute", "date", $name);
+						if ($value >= 0 && $value < 60) {
 
-						$update = resourceForQuery(
-							"UPDATE
-								`activity` 
-							SET
-								`$name` = ((`$name` - INTERVAL MINUTE(`$name`) MINUTE) + INTERVAL $value MINUTE)
-							WHERE
-								`activity`.`id` = $activityID
-						");
+							$name = str_replace("minute", "date", $name);
+
+							$update = resourceForQuery(
+								"UPDATE
+									`activity` 
+								SET
+									`$name` = ((`$name` - INTERVAL MINUTE(`$name`) MINUTE) + INTERVAL $value MINUTE)
+								WHERE
+									`activity`.`id` = $activityID
+							");
+
+						} else {
+							http_status_code(406, "minute must be valid");
+						}
 
 					// Capacity
 					} elseif ($name == "capacity") {

@@ -433,7 +433,7 @@ define(modules, function($, common, cookie) {$(function() {
 		
 		var hour = parseInt($(this).val(), 10);
 
-		if (hour < 24) {
+		if (hour >= 0 && hour < 24) {
 			$(this).removeClass("badTime");
 
 			var mins = parseInt($(this).siblings(".minute").val(), 10) || 0;
@@ -460,7 +460,7 @@ define(modules, function($, common, cookie) {$(function() {
 
 		var mins = parseInt($(this).val(), 10) || 0;
 
-		if (mins < 60) {
+		if (mins >= 0 && mins < 60) {
 			$(this).removeClass("badTime");
 
 			var mdegree = mins * 6;

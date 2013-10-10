@@ -138,6 +138,33 @@
         [((UIButton *)_name) setTitle:[[_activityData objectForKey:@"name"] stringByDecodingHTMLEntities] forState:UIControlStateNormal];
         [((UIButton *)_description) setTitle:[[_activityData objectForKey:@"description"] stringByDecodingHTMLEntities] forState:UIControlStateNormal];
         
+        if ([[HumanToken sharedInstance] isMemberWorking]) {
+            if ([[_activityData objectForKey:@"approved"] integerValue] == ScheduleStateApproved) {
+                _quickFeedback.hidden = NO;
+                _quickQuestion.hidden = NO;
+                _quickPeople.hidden = NO;
+                
+            } else {
+                _quickFeedback.hidden = YES;
+                _quickQuestion.hidden = NO;
+                _quickPeople.hidden = NO;
+            }
+        } else if ([[HumanToken sharedInstance] isMemberAuthenticated]) {
+            if ([[_activityData objectForKey:@"approved"] integerValue] == ScheduleStateApproved) {
+                _quickFeedback.hidden = NO;
+                _quickQuestion.hidden = NO;
+                _quickPeople.hidden = YES;
+            } else {
+                _quickFeedback.hidden = YES;
+                _quickQuestion.hidden = NO;
+                _quickPeople.hidden = YES;
+            }
+        } else {
+            _quickFeedback.hidden = YES;
+            _quickQuestion.hidden = YES;
+            _quickPeople.hidden = YES;
+        }
+        
         [self reloadMap];
     }
 }
@@ -152,7 +179,7 @@
 }
 
 - (void)loadMenuButton {
-    self.rightBarButton = [[CoolBarButtonItem alloc] initCustomButtonWithImage:[UIImage imageNamed:@"64-Cog"] frame:CGRectMake(0, 0, 42.0, 30.0) insets:UIEdgeInsetsMake(5.0, 11.0, 5.0, 11.0) target:self action:@selector(alertActionSheet)];
+    self.rightBarButton = [[CoolBarButtonItem alloc] initCustomButtonWithImage:[UIImage imageNamed:@"32-Cog"] frame:CGRectMake(0, 0, 42.0, 30.0) insets:UIEdgeInsetsMake(5.0, 11.0, 5.0, 11.0) target:self action:@selector(alertActionSheet)];
     self.rightBarButton.accessibilityLabel = NSLocalizedString(@"Actions", nil);
     self.rightBarButton.accessibilityTraits = UIAccessibilityTraitSummaryElement;
     self.navigationItem.rightBarButtonItem = self.rightBarButton;
@@ -323,6 +350,7 @@
     if ([[HumanToken sharedInstance] isMemberWorking]) {
         if ([[_activityData objectForKey:@"approved"] integerValue] == ScheduleStateApproved) {
             actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Actions", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"Edit fields", nil), NSLocalizedString(@"See people", nil), NSLocalizedString(@"See questions", nil), NSLocalizedString(@"Send feedback", nil), nil];
+            
         } else {
             actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Actions", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"Edit fields", nil), NSLocalizedString(@"See people", nil), NSLocalizedString(@"See questions", nil), nil];
         }

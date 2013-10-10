@@ -125,7 +125,7 @@
 
 #pragma mark - Keyboard Notifications
 
-- (CGRect) calculateKeyboardFrame:(NSNotification*)notification {
+- (CGRect)calculateKeyboardFrame:(NSNotification*)notification {
     CGRect keyboardFrame = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
     UIWindow *window = [[[UIApplication sharedApplication] windows]objectAtIndex:0];
     UIView *mainSubviewOfWindow = window.rootViewController.view;
@@ -211,7 +211,7 @@
     // Add the gesture recognizer
     behindRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapBehind:)];
     [behindRecognizer setNumberOfTapsRequired:1];
-    [behindRecognizer setCancelsTouchesInView:NO]; // So the user can still interact with controls in the modal view
+    [behindRecognizer setCancelsTouchesInView:YES]; // So the user can still interact with controls in the modal view
     [self.view.window addGestureRecognizer:behindRecognizer];
 }
 

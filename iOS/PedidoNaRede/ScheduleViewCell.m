@@ -1,5 +1,5 @@
 //
-//  OrderItemViewCell.m
+//  ScheduleItemViewCell.m
 //  PedidoNaRede
 //
 //  Created by Pedro Góes on 08/10/12.
@@ -29,7 +29,7 @@
     // We can define the background view and its color
     [self setBackgroundView:[[UIView alloc] initWithFrame:CGRectZero]];
     [self.backgroundView setBackgroundColor:[ColorThemeController tableViewCellBackgroundColor]];
-    [self setSelectionStyle:UITableViewCellEditingStyleNone];
+    [self.selectedBackgroundView setBackgroundColor:[ColorThemeController tableViewCellSelectedBackgroundColor]];
     
     // Then we do the same with it's selected
     [self setSelectedBackgroundView:[[UIView alloc] initWithFrame:CGRectZero]];
@@ -40,6 +40,14 @@
     [_wrapper.layer setBorderWidth:0.4f];
     [_wrapper.layer setCornerRadius:4.0f];
     [_wrapper.layer setMasksToBounds:YES];
+
+    // Hour
+    [_hour setTextColor:[ColorThemeController tableViewCellTextColor]];
+    [_hour setHighlightedTextColor:[ColorThemeController tableViewCellTextHighlightedColor]];
+    
+    // Minute
+    [_minute setTextColor:[ColorThemeController tableViewCellTextColor]];
+    [_minute setHighlightedTextColor:[ColorThemeController tableViewCellTextHighlightedColor]];
     
     // Title
     [_name setTextColor:[ColorThemeController tableViewCellTextColor]];

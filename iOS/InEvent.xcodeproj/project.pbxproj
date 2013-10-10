@@ -146,9 +146,8 @@
 		EB8C7D9116D17AEB00F3C721 /* cb_mono_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB8C7D7816D17AEB00F3C721 /* cb_mono_on@2x.png */; };
 		EB8C7D9216D17AEB00F3C721 /* UIHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = EB8C7D7B16D17AEB00F3C721 /* UIHelpers.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		EB8C7D9316D17AEB00F3C721 /* SSCheckBoxView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB8C7D7D16D17AEB00F3C721 /* SSCheckBoxView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		EB95436B17ACBC2D00229EE2 /* 64-Cog-3.png in Resources */ = {isa = PBXBuildFile; fileRef = EB95436A17ACBC2D00229EE2 /* 64-Cog-3.png */; };
 		EB95436D17ACBC4800229EE2 /* 30-Action@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB95436C17ACBC4800229EE2 /* 30-Action@2x.png */; };
-		EB95437317ACBE7300229EE2 /* 64-Cog.png in Resources */ = {isa = PBXBuildFile; fileRef = EB95437217ACBE7300229EE2 /* 64-Cog.png */; };
+		EB95437317ACBE7300229EE2 /* 32-Cog@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB95437217ACBE7300229EE2 /* 32-Cog@2x.png */; };
 		EB95437617ACCB2000229EE2 /* 16-Map.png in Resources */ = {isa = PBXBuildFile; fileRef = EB95437417ACCB2000229EE2 /* 16-Map.png */; };
 		EB95437717ACCB2000229EE2 /* 16-Map@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB95437517ACCB2000229EE2 /* 16-Map@2x.png */; };
 		EB97144217F2B306009260AE /* 128-user.png in Resources */ = {isa = PBXBuildFile; fileRef = EB97144117F2B306009260AE /* 128-user.png */; };
@@ -233,6 +232,15 @@
 		EBD6627417FE401400B190E2 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = EBD6627317FE401400B190E2 /* libicucore.dylib */; };
 		EBD6627617FE401F00B190E2 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = EBD6627517FE401F00B190E2 /* libz.dylib */; };
 		EBD6627817FE402900B190E2 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBD6627717FE402900B190E2 /* OpenGLES.framework */; };
+		EBD6FE3D180645A6006D0E73 /* PhotosViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD6FE3B180645A6006D0E73 /* PhotosViewController.m */; };
+		EBD6FE3E180645A6006D0E73 /* PhotosViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBD6FE3C180645A6006D0E73 /* PhotosViewController.xib */; };
+		EBD6FE44180646B6006D0E73 /* PhotosDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD6FE42180646B6006D0E73 /* PhotosDetailViewController.m */; };
+		EBD6FE45180646B6006D0E73 /* PhotosDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBD6FE43180646B6006D0E73 /* PhotosDetailViewController.xib */; };
+		EBD6FE4718064B24006D0E73 /* 16-Image-2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBD6FE4618064B24006D0E73 /* 16-Image-2@2x.png */; };
+		EBD6FE4918064B51006D0E73 /* 16-Image-2.png in Resources */ = {isa = PBXBuildFile; fileRef = EBD6FE4818064B51006D0E73 /* 16-Image-2.png */; };
+		EBD6FE4B180654AC006D0E73 /* 32-Image@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBD6FE4A180654AC006D0E73 /* 32-Image@2x.png */; };
+		EBD6FE4D18065501006D0E73 /* 32-Image.png in Resources */ = {isa = PBXBuildFile; fileRef = EBD6FE4C18065501006D0E73 /* 32-Image.png */; };
+		EBD6FE4F18065528006D0E73 /* 32-Cog.png in Resources */ = {isa = PBXBuildFile; fileRef = EBD6FE4E18065528006D0E73 /* 32-Cog.png */; };
 		EBD8E4E917AF557A00D0F30C /* 32-Minus.png in Resources */ = {isa = PBXBuildFile; fileRef = EBD8E4E817AF557A00D0F30C /* 32-Minus.png */; };
 		EBDA918117ACB10100969A08 /* 16-Check.png in Resources */ = {isa = PBXBuildFile; fileRef = EBDA917F17ACB10100969A08 /* 16-Check.png */; };
 		EBDA918217ACB10100969A08 /* 16-Check@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBDA918017ACB10100969A08 /* 16-Check@2x.png */; };
@@ -500,9 +508,8 @@
 		EB8C7D7B16D17AEB00F3C721 /* UIHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIHelpers.m; sourceTree = "<group>"; };
 		EB8C7D7C16D17AEB00F3C721 /* SSCheckBoxView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSCheckBoxView.h; sourceTree = "<group>"; };
 		EB8C7D7D16D17AEB00F3C721 /* SSCheckBoxView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSCheckBoxView.m; sourceTree = "<group>"; };
-		EB95436A17ACBC2D00229EE2 /* 64-Cog-3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "64-Cog-3.png"; sourceTree = "<group>"; };
 		EB95436C17ACBC4800229EE2 /* 30-Action@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "30-Action@2x.png"; sourceTree = "<group>"; };
-		EB95437217ACBE7300229EE2 /* 64-Cog.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "64-Cog.png"; sourceTree = "<group>"; };
+		EB95437217ACBE7300229EE2 /* 32-Cog@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Cog@2x.png"; sourceTree = "<group>"; };
 		EB95437417ACCB2000229EE2 /* 16-Map.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "16-Map.png"; sourceTree = "<group>"; };
 		EB95437517ACCB2000229EE2 /* 16-Map@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "16-Map@2x.png"; sourceTree = "<group>"; };
 		EB97144117F2B306009260AE /* 128-user.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "128-user.png"; sourceTree = "<group>"; };
@@ -610,6 +617,17 @@
 		EBD6627317FE401400B190E2 /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
 		EBD6627517FE401F00B190E2 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		EBD6627717FE402900B190E2 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		EBD6FE3A180645A6006D0E73 /* PhotosViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotosViewController.h; path = PedidoNaRede/PhotosViewController.h; sourceTree = "<group>"; };
+		EBD6FE3B180645A6006D0E73 /* PhotosViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotosViewController.m; path = PedidoNaRede/PhotosViewController.m; sourceTree = "<group>"; };
+		EBD6FE3C180645A6006D0E73 /* PhotosViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PhotosViewController.xib; path = PedidoNaRede/PhotosViewController.xib; sourceTree = "<group>"; };
+		EBD6FE41180646B6006D0E73 /* PhotosDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotosDetailViewController.h; path = PedidoNaRede/PhotosDetailViewController.h; sourceTree = "<group>"; };
+		EBD6FE42180646B6006D0E73 /* PhotosDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotosDetailViewController.m; path = PedidoNaRede/PhotosDetailViewController.m; sourceTree = "<group>"; };
+		EBD6FE43180646B6006D0E73 /* PhotosDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PhotosDetailViewController.xib; path = PedidoNaRede/PhotosDetailViewController.xib; sourceTree = "<group>"; };
+		EBD6FE4618064B24006D0E73 /* 16-Image-2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "16-Image-2@2x.png"; sourceTree = "<group>"; };
+		EBD6FE4818064B51006D0E73 /* 16-Image-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "16-Image-2.png"; sourceTree = "<group>"; };
+		EBD6FE4A180654AC006D0E73 /* 32-Image@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "32-Image@2x.png"; path = "../32-Image@2x.png"; sourceTree = "<group>"; };
+		EBD6FE4C18065501006D0E73 /* 32-Image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Image.png"; sourceTree = "<group>"; };
+		EBD6FE4E18065528006D0E73 /* 32-Cog.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Cog.png"; sourceTree = "<group>"; };
 		EBD8E4E817AF557A00D0F30C /* 32-Minus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Minus.png"; sourceTree = "<group>"; };
 		EBDA917F17ACB10100969A08 /* 16-Check.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "16-Check.png"; sourceTree = "<group>"; };
 		EBDA918017ACB10100969A08 /* 16-Check@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "16-Check@2x.png"; sourceTree = "<group>"; };
@@ -1156,6 +1174,7 @@
 			children = (
 				EB97144917F2DD11009260AE /* Images.xcassets */,
 				EBA186501731DAEB00336733 /* Allocation */,
+				EBD6FE401806464B006D0E73 /* Clients */,
 				EBAAFD1F161FCF020007637B /* Frameworks */,
 				EB53F6451709141300715E2D /* Libraries */,
 				EB39392B16654B4400580A4E /* General */,
@@ -1167,6 +1186,7 @@
 				EBFCCF4A16987F3700A5AE73 /* Map */,
 				EB59020417D5D7D60032143C /* Marketplace */,
 				EB1FE9FB17FF9CF6001C2906 /* Material */,
+				EBD6FE3F180645B1006D0E73 /* Photos */,
 				EB79CC4517EB82C100C16CF5 /* Question */,
 				EBFCCF571698B47D00A5AE73 /* Timeline */,
 				EB3BD91417B8C47F008D066D /* Reader */,
@@ -1290,6 +1310,8 @@
 				EB25BA8F16FE6D21003F142F /* 16-Flag-2.png */,
 				EB837CB7171AE44300FA1EBC /* 16-Flag-2@2x.png */,
 				EBD055AA17AF919C008355E8 /* 16-Footprints.png */,
+				EBD6FE4618064B24006D0E73 /* 16-Image-2@2x.png */,
+				EBD6FE4818064B51006D0E73 /* 16-Image-2.png */,
 				EBD055AB17AF919C008355E8 /* 16-Footprints@2x.png */,
 				EB95437417ACCB2000229EE2 /* 16-Map.png */,
 				EB95437517ACCB2000229EE2 /* 16-Map@2x.png */,
@@ -1319,16 +1341,38 @@
 			path = PedidoNaRede;
 			sourceTree = "<group>";
 		};
+		EBD6FE3F180645B1006D0E73 /* Photos */ = {
+			isa = PBXGroup;
+			children = (
+				EBD6FE3A180645A6006D0E73 /* PhotosViewController.h */,
+				EBD6FE3B180645A6006D0E73 /* PhotosViewController.m */,
+				EBD6FE3C180645A6006D0E73 /* PhotosViewController.xib */,
+				EBD6FE41180646B6006D0E73 /* PhotosDetailViewController.h */,
+				EBD6FE42180646B6006D0E73 /* PhotosDetailViewController.m */,
+				EBD6FE43180646B6006D0E73 /* PhotosDetailViewController.xib */,
+			);
+			name = Photos;
+			sourceTree = "<group>";
+		};
+		EBD6FE401806464B006D0E73 /* Clients */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Clients;
+			sourceTree = "<group>";
+		};
 		EBDA918F17ACBA5000969A08 /* Bar Buttons Icons */ = {
 			isa = PBXGroup;
 			children = (
-				EBDA918717ACBA4000969A08 /* 20-Hamburguer-White@2x.png */,
-				EBDA918817ACBA4000969A08 /* 20-Hamburguer-White.png */,
-				EBDA918917ACBA4000969A08 /* 20-Hamburguer-Black@2x.png */,
 				EBDA918A17ACBA4000969A08 /* 20-Hamburguer-Black.png */,
+				EBDA918917ACBA4000969A08 /* 20-Hamburguer-Black@2x.png */,
+				EBDA918817ACBA4000969A08 /* 20-Hamburguer-White.png */,
+				EBDA918717ACBA4000969A08 /* 20-Hamburguer-White@2x.png */,
 				EB95436C17ACBC4800229EE2 /* 30-Action@2x.png */,
-				EB95436A17ACBC2D00229EE2 /* 64-Cog-3.png */,
-				EB95437217ACBE7300229EE2 /* 64-Cog.png */,
+				EBD6FE4E18065528006D0E73 /* 32-Cog.png */,
+				EB95437217ACBE7300229EE2 /* 32-Cog@2x.png */,
+				EBD6FE4C18065501006D0E73 /* 32-Image.png */,
+				EBD6FE4A180654AC006D0E73 /* 32-Image@2x.png */,
 			);
 			name = "Bar Buttons Icons";
 			sourceTree = "<group>";
@@ -1609,6 +1653,7 @@
 				EBE8D21416A88ED8003A196A /* whiteButtonHighlight@2x.png in Resources */,
 				EB39398D16654B4400580A4E /* MapViewController.xib in Resources */,
 				EB39399816654B4400580A4E /* ScheduleViewCell.xib in Resources */,
+				EBD6FE4918064B51006D0E73 /* 16-Image-2.png in Resources */,
 				EB39399B16654B4400580A4E /* ScheduleViewController.xib in Resources */,
 				EB3939CC16654BE300580A4E /* PaperFoldResources.bundle in Resources */,
 				EB3939DB1666D3AF00580A4E /* cellBg@2x.png in Resources */,
@@ -1662,6 +1707,7 @@
 				EB8C7D8E16D17AEB00F3C721 /* cb_mono_off.png in Resources */,
 				EB8C7D8F16D17AEB00F3C721 /* cb_mono_off@2x.png in Resources */,
 				EB8C7D9016D17AEB00F3C721 /* cb_mono_on.png in Resources */,
+				EBD6FE45180646B6006D0E73 /* PhotosDetailViewController.xib in Resources */,
 				EB97145B17F2DDDB009260AE /* logo@76.png in Resources */,
 				EB1FE9F417FF8886001C2906 /* 32-Book-Large.png in Resources */,
 				EB97144217F2B306009260AE /* 128-user.png in Resources */,
@@ -1674,17 +1720,20 @@
 				EB25BA9016FE6D21003F142F /* 16-Flag-2.png in Resources */,
 				EB25BA9216FE6EC9003F142F /* 16-User.png in Resources */,
 				EB25BA9F16FE73F2003F142F /* HumanViewController~iphone.xib in Resources */,
+				EBD6FE4F18065528006D0E73 /* 32-Cog.png in Resources */,
 				EB25BAA516FE84D6003F142F /* HumanLoginViewController.xib in Resources */,
 				EB25BAAA170280F1003F142F /* LauchImageViewController.xib in Resources */,
 				EB25BAB017028CC9003F142F /* Default-Portrait~ipad.png in Resources */,
 				EB25BAB217028CD6003F142F /* Default-Landscape~ipad.png in Resources */,
 				EB25BAB417028CDF003F142F /* Default-Portrait@2x~ipad.png in Resources */,
 				EB1FE9ED17FF5DEA001C2906 /* 32-Check-2.png in Resources */,
+				EBD6FE4D18065501006D0E73 /* 32-Image.png in Resources */,
 				EB97145D17F2DDDB009260AE /* logo@120.png in Resources */,
 				EB25BAB617028CE5003F142F /* Default-Landscape@2x~ipad.png in Resources */,
 				EB25BAB817028CF2003F142F /* Default.png in Resources */,
 				EB25BABA17028CFE003F142F /* Default@2x.png in Resources */,
 				EB25BABC17028D0A003F142F /* Default-568h@2x.png in Resources */,
+				EBD6FE4718064B24006D0E73 /* 16-Image-2@2x.png in Resources */,
 				EB4FC57A171061AF00CA43EC /* 32-Facebook-F.png in Resources */,
 				EB4FC57B171061AF00CA43EC /* facebookButton.png in Resources */,
 				EB1FEB8B171729C7009834FC /* LogItemViewCell.xib in Resources */,
@@ -1711,9 +1760,8 @@
 				EBDA919817ACBAD200969A08 /* 32-Book.png in Resources */,
 				EB97146C17F2DEF8009260AE /* logo@58.png in Resources */,
 				EBDA919917ACBAD200969A08 /* 32-Book@2x.png in Resources */,
-				EB95436B17ACBC2D00229EE2 /* 64-Cog-3.png in Resources */,
 				EB95436D17ACBC4800229EE2 /* 30-Action@2x.png in Resources */,
-				EB95437317ACBE7300229EE2 /* 64-Cog.png in Resources */,
+				EB95437317ACBE7300229EE2 /* 32-Cog@2x.png in Resources */,
 				EB95437617ACCB2000229EE2 /* 16-Map.png in Resources */,
 				EB95437717ACCB2000229EE2 /* 16-Map@2x.png in Resources */,
 				EBD8E4E917AF557A00D0F30C /* 32-Minus.png in Resources */,
@@ -1729,6 +1777,7 @@
 				EBDFF53D17BBF63700BBFC1D /* logo.png in Resources */,
 				EBDFF54217BC057100BBFC1D /* ScheduleItemViewController.xib in Resources */,
 				EBDFF55117BE15A900BBFC1D /* 64-Speech-Bubbles.png in Resources */,
+				EBD6FE3E180645A6006D0E73 /* PhotosViewController.xib in Resources */,
 				EB97145617F2DDDB009260AE /* logo@16.png in Resources */,
 				EBDFF55317BE95B200BBFC1D /* 32-Check.png in Resources */,
 				EBC59D8117BEC48600E0FC67 /* 64-Marker.png in Resources */,
@@ -1736,6 +1785,7 @@
 				EBC59D8517BEC4DD00E0FC67 /* 64-Map.png in Resources */,
 				EBC59D8717BEC58100E0FC67 /* 64-Balloons.png in Resources */,
 				EBC59D8917BEC59B00E0FC67 /* 32-Create-_-Write@2x.png in Resources */,
+				EBD6FE4B180654AC006D0E73 /* 32-Image@2x.png in Resources */,
 				EB97144A17F2DD11009260AE /* Images.xcassets in Resources */,
 				EBC59D8D17BEC5C300E0FC67 /* 64-Cloud-Download.png in Resources */,
 				EBEACD7517C2F65200C65F3F /* AboutViewController~ipad.xib in Resources */,
@@ -1818,6 +1868,7 @@
 				EB39397816654B4400580A4E /* AppDelegate.m in Sources */,
 				EB39398B16654B4400580A4E /* MapViewController.m in Sources */,
 				EB39399716654B4400580A4E /* ScheduleViewCell.m in Sources */,
+				EBD6FE44180646B6006D0E73 /* PhotosDetailViewController.m in Sources */,
 				EB39399916654B4400580A4E /* ScheduleViewController.m in Sources */,
 				EB3939A716654BB900580A4E /* main.m in Sources */,
 				EB3939C616654BE300580A4E /* GTMNSString+HTML.m in Sources */,
@@ -1848,6 +1899,7 @@
 				EB7FC68216DC4225007C006D /* MKAnnotationView+WebCache.m in Sources */,
 				EB7FC68316DC4225007C006D /* SDImageCache.m in Sources */,
 				EB7FC68416DC4225007C006D /* SDWebImageCompat.m in Sources */,
+				EBD6FE3D180645A6006D0E73 /* PhotosViewController.m in Sources */,
 				EB7FC68516DC4225007C006D /* SDWebImageDecoder.m in Sources */,
 				EB7FC68616DC4225007C006D /* SDWebImageDownloader.m in Sources */,
 				EB7FC68716DC4225007C006D /* SDWebImageDownloaderOperation.m in Sources */,

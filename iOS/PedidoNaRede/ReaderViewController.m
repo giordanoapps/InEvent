@@ -59,8 +59,11 @@
     [_numberInput addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     [_numberInput.layer setCornerRadius:6.0];
     [_numberInput.layer setMasksToBounds:NO];
-    [_numberInput.layer setBorderWidth:1.0];
-    [_numberInput.layer setBorderColor:[[ColorThemeController tableViewCellInternalBorderColor] CGColor]];
+    
+    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {
+        [_numberInput.layer setBorderWidth:1.0];
+        [_numberInput.layer setBorderColor:[[ColorThemeController tableViewCellInternalBorderColor] CGColor]];
+    }
     
     // Name field
     [_nameInput setPlaceholder:NSLocalizedString(@"Name", nil)];
@@ -69,15 +72,15 @@
     [_emailInput setPlaceholder:NSLocalizedString(@"Email", nil)];
     
     // Message Button
-    [_numberButton setBackgroundImage:[[UIImage imageNamed:@"greyButton"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)] forState:UIControlStateNormal];
-    [_numberButton setBackgroundImage:[[UIImage imageNamed:@"greyButtonHighlight"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)] forState:UIControlStateHighlighted];
-    [_numberButton addTarget:self action:@selector(didTouch) forControlEvents:UIControlEventTouchUpInside];
-    // Defining the border radius of the image
-    [_numberButton.layer setMasksToBounds:YES];
-    [_numberButton.layer setCornerRadius:4.0];
-    // Adding a border
-    [_numberButton.layer setBorderWidth:0.6];
-    [_numberButton.layer setBorderColor:[[ColorThemeController tableViewCellInternalBorderColor] CGColor]];
+    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {
+        [_numberButton setBackgroundImage:[[UIImage imageNamed:@"greyButton"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)] forState:UIControlStateNormal];
+        [_numberButton setBackgroundImage:[[UIImage imageNamed:@"greyButtonHighlight"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)] forState:UIControlStateHighlighted];
+        [_numberButton addTarget:self action:@selector(didTouch) forControlEvents:UIControlEventTouchUpInside];
+        [_numberButton.layer setMasksToBounds:YES];
+        [_numberButton.layer setCornerRadius:4.0];
+        [_numberButton.layer setBorderWidth:0.6];
+        [_numberButton.layer setBorderColor:[[ColorThemeController tableViewCellInternalBorderColor] CGColor]];
+    }
     
     // Refresh Control
     refreshControl = [[ODRefreshControl alloc] initInScrollView:self.tableView];
@@ -152,7 +155,7 @@
 
 - (void)loadAddPersonView {
     // Add the frame
-    [_addPersonView setFrame:CGRectMake(_addPersonView.frame.origin.x, -(_addPersonView.frame.size.height), _addPersonView.frame.size.width, _addPersonView.frame.size.height)];
+    [_addPersonView setFrame:CGRectMake(_addPersonView.frame.origin.x, -(_addPersonView.frame.size.height), self.view.frame.size.width, _addPersonView.frame.size.height)];
     [self.view addSubview:_addPersonView];
     
     // Animate the transition

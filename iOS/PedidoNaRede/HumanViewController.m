@@ -50,9 +50,6 @@
     refreshControl = [[ODRefreshControl alloc] initInScrollView:self.scrollView];
     [refreshControl addTarget:self action:@selector(reloadData) forControlEvents:UIControlEventValueChanged];
     
-    // Scroll view
-    [_scrollView setContentSize:CGSizeMake(_scrollView.frame.size.width, _scrollView.frame.size.height * 1.01)];
-    
     // Photo Wrapper
     [_photoWrapper.layer setCornerRadius:10.0];
     
@@ -76,7 +73,11 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    
+    // Scroll view
+    [_scrollView setContentSize:CGSizeMake(_scrollView.frame.size.width, _scrollView.frame.size.height * 1.01)];
 
+    // Session
     [self checkSession];
 }
 

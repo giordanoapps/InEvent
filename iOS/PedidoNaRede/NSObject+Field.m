@@ -40,11 +40,10 @@
 }
 
 - (UIView *)createField:(UIView *)field withAttributes:(NSArray *)attributes {
-    UIPlaceHolderTextView *textView = [[UIPlaceHolderTextView alloc] initWithFrame:CGRectMake(field.frame.origin.x, field.frame.origin.y, field.frame.size.width + 4.0f, field.frame.size.height)];
+    UIPlaceHolderTextView *textView = [[UIPlaceHolderTextView alloc] initWithFrame:CGRectMake(field.frame.origin.x, field.frame.origin.y, field.frame.size.width + 8.0f, field.frame.size.height + 4.0f)];
     [textView setBackgroundColor:field.backgroundColor];
-//    [textView.layer setBorderColor:[[ColorThemeController tableViewCellInternalBorderColor] CGColor]];
-    [textView.layer setBorderColor:[[UIColor redColor] CGColor]];
-    [textView.layer setBorderWidth:0.4f];
+//    [textView.layer setBorderColor:[[UIColor redColor] CGColor]];
+//    [textView.layer setBorderWidth:0.4f];
     
     if (textView.frame.size.height < 30.0f) {
         [textView setScrollEnabled:NO];
@@ -56,6 +55,7 @@
         [textView setTextColor:((UILabel *)field).textColor];
         [textView setFont:((UILabel *)field).font];
         [textView setContentSize:CGSizeMake(field.frame.size.width, [((UILabel *)field).text sizeWithFont:((UILabel *)field).font].height + 2.0f)];
+        [self calculateVerticalAlignment:textView];
         [textView setTextAlignment:((UILabel *)field).textAlignment];
     } else if ([field isKindOfClass:[UIButton class]]) {
         [textView setPlaceholder:((UIButton *)field).titleLabel.text];
@@ -65,7 +65,7 @@
         [textView setContentSize:CGSizeMake(field.frame.size.width, [((UIButton *)field).titleLabel.text sizeWithFont:((UIButton *)field).titleLabel.font].height + 2.0f)];
         [self calculateVerticalAlignment:textView];
         UIEdgeInsets edgeInsets = ((UIButton *)field).contentEdgeInsets;
-        [textView setContentInset:UIEdgeInsetsMake(edgeInsets.top - 8, edgeInsets.left, edgeInsets.bottom, edgeInsets.right)];
+        [textView setContentInset:UIEdgeInsetsMake(edgeInsets.top - 6.5f, edgeInsets.left - 4.5f, edgeInsets.bottom, edgeInsets.right)];
         
         // Horizontal
         switch (((UIButton *)field).contentHorizontalAlignment) {
@@ -123,13 +123,15 @@
 
 - (UIView *)removeField:(UIView *)field belowView:(UIView *)awningView {
     UIButton *label = [UIButton buttonWithType:UIButtonTypeCustom];
-    [label setFrame:CGRectMake(field.frame.origin.x, field.frame.origin.y, field.frame.size.width - 4.0f, field.frame.size.height)];
+    [label setFrame:CGRectMake(field.frame.origin.x, field.frame.origin.y, field.frame.size.width - 8.0f, field.frame.size.height - 4.0f)];
     [label setBackgroundColor:field.backgroundColor];
+//    [label.layer setBorderColor:[[UIColor redColor] CGColor]];
+//    [label.layer setBorderWidth:0.4f];
     [label setTitle:((UIPlaceHolderTextView *)field).text forState:UIControlStateNormal];
     [label setTitleColor:((UIPlaceHolderTextView *)field).textColor forState:UIControlStateNormal];
     [label.titleLabel setFont:((UIPlaceHolderTextView *)field).font];
+    [label.titleLabel setLineBreakMode:NSLineBreakByTruncatingTail];
     [label.titleLabel setNumberOfLines:2];
-    [label.titleLabel setLineBreakMode:UILineBreakModeWordWrap];
 
     if ([field isKindOfClass:[UIPlaceHolderTextView class]]) {
         
@@ -167,7 +169,7 @@
         }
         
         UIEdgeInsets edgeInsets = ((UIPlaceHolderTextView *)field).contentInset;
-        [label setContentEdgeInsets:UIEdgeInsetsMake(edgeInsets.top + 8, edgeInsets.left, edgeInsets.bottom, edgeInsets.right)];
+        [label setContentEdgeInsets:UIEdgeInsetsMake(edgeInsets.top + 6.5f, edgeInsets.left + 4.5f, edgeInsets.bottom, edgeInsets.right)];
 
     } else if ([field isKindOfClass:[UITextField class]]) {
         [label setContentHorizontalAlignment:((UIButton *)field).contentHorizontalAlignment];
@@ -179,6 +181,8 @@
     } else {
         [[field superview] addSubview:label];
     }
+    
+//    [label setNeedsDisplay];
     
     [field removeFromSuperview];
     
