@@ -37,7 +37,7 @@
         NSString *action = [uri substringFromIndex:range.location];
         
         // Handle UI interaction
-        AlertView *alertView = [[AlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:[[[userInfo objectForKey:@"aps"] objectForKey:@"alert"] objectForKey:@"body"] delegate:nil cancelButtonTitle:nil otherButtonTitle:NSLocalizedString(@"Ok!", nil)];
+        AlertView *alertView = [[AlertView alloc] initWithTitle:NSLocalizedString(@"Update", nil) message:[[[userInfo objectForKey:@"aps"] objectForKey:@"alert"] objectForKey:@"body"] delegate:nil cancelButtonTitle:nil otherButtonTitle:NSLocalizedString(@"Ok!", nil)];
         [alertView show];
         
         // Propagate push
@@ -53,7 +53,6 @@
         // Send the notification
         [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:@{@"action": action, @"value": value}];
     }
-    
 }
 
 @end

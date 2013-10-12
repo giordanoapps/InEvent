@@ -136,7 +136,7 @@
             break;
             
         case 1:
-            return 1;
+            return 2;
             break;
             
         case 2:
@@ -233,7 +233,7 @@
     }
     
     // Reload all sections
-    [tableView reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, [tableView numberOfSections])] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [tableView reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, [tableView numberOfSections] - 1)] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 @end

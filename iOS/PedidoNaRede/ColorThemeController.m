@@ -1,6 +1,6 @@
 //
 //  ColorThemeController.m
-//  PedidoNaRede
+//  InEvent
 //
 //  Created by Pedro Góes on 22/02/13.
 //  Copyright (c) 2013 Pedro Góes. All rights reserved.

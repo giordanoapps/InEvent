@@ -1,6 +1,6 @@
 //
 //  AppDelegate.m
-//  PedidoNaRede
+//  InEvent
 //
 //  Created by Pedro Góes on 05/10/12.
 //  Copyright (c) 2012 Pedro Góes. All rights reserved.
@@ -11,8 +11,8 @@
 #import "AboutViewController.h"
 #import "ScheduleViewController.h"
 #import "ScheduleItemViewController.h"
-#import "PhotosViewController.h"
-#import "PhotosDetailViewController.h"
+#import "StreamViewController.h"
+#import "StreamDetailViewController.h"
 #import "ColorThemeController.h"
 #import "PushController.h"
 #import "HumanViewController.h"
@@ -98,12 +98,12 @@
 
     // Photos View Controller
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        _photosViewController = [[UINavigationController alloc] initWithRootViewController:[[PhotosViewController alloc] initWithNibName:@"PhotosViewController" bundle:nil]];
+        _photosViewController = [[UINavigationController alloc] initWithRootViewController:[[StreamViewController alloc] initWithNibName:@"PhotosViewController" bundle:nil]];
     } else {
         _photosViewController = [[IntelligentSplitViewController alloc] init];
-        PhotosViewController *pvc = [[PhotosViewController alloc] initWithNibName:@"PhotosViewController" bundle:nil];
+        StreamViewController *pvc = [[StreamViewController alloc] initWithNibName:@"PhotosViewController" bundle:nil];
         UINavigationController *npvc = [[UINavigationController alloc] initWithRootViewController:pvc];
-        PhotosDetailViewController *pdvc = [[PhotosDetailViewController alloc] initWithNibName:@"PhotosDetailViewController" bundle:nil];
+        StreamDetailViewController *pdvc = [[StreamDetailViewController alloc] initWithNibName:@"PhotosDetailViewController" bundle:nil];
         UINavigationController *npdvc = [[UINavigationController alloc] initWithRootViewController:pdvc];
         ((UISplitViewController *)_photosViewController).title = pvc.title;
         ((UISplitViewController *)_photosViewController).tabBarItem.image = pvc.tabBarItem.image;
@@ -117,7 +117,7 @@
     // Global Controller
     _menuController = [[MenuViewController alloc] initWithMenuWidth:180.0 numberOfFolds:3];
     [_menuController setDelegate:self];
-    [_menuController setViewControllers:[NSMutableArray arrayWithObjects:_humanViewController, _scheduleViewController, _aboutViewController, nil]];
+    [_menuController setViewControllers:[NSMutableArray arrayWithObjects:_humanViewController, _scheduleViewController, _photosViewController, _aboutViewController, nil]];
     
     // Set the default theme color
     [[ColorThemeController sharedInstance] setTheme:ColorThemePetoskeyStone];

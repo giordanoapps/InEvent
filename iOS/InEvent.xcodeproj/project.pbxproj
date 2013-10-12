@@ -232,10 +232,10 @@
 		EBD6627417FE401400B190E2 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = EBD6627317FE401400B190E2 /* libicucore.dylib */; };
 		EBD6627617FE401F00B190E2 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = EBD6627517FE401F00B190E2 /* libz.dylib */; };
 		EBD6627817FE402900B190E2 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBD6627717FE402900B190E2 /* OpenGLES.framework */; };
-		EBD6FE3D180645A6006D0E73 /* PhotosViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD6FE3B180645A6006D0E73 /* PhotosViewController.m */; };
-		EBD6FE3E180645A6006D0E73 /* PhotosViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBD6FE3C180645A6006D0E73 /* PhotosViewController.xib */; };
-		EBD6FE44180646B6006D0E73 /* PhotosDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD6FE42180646B6006D0E73 /* PhotosDetailViewController.m */; };
-		EBD6FE45180646B6006D0E73 /* PhotosDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBD6FE43180646B6006D0E73 /* PhotosDetailViewController.xib */; };
+		EBD6FE3D180645A6006D0E73 /* StreamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD6FE3B180645A6006D0E73 /* StreamViewController.m */; };
+		EBD6FE3E180645A6006D0E73 /* StreamViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBD6FE3C180645A6006D0E73 /* StreamViewController.xib */; };
+		EBD6FE44180646B6006D0E73 /* StreamDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD6FE42180646B6006D0E73 /* StreamDetailViewController.m */; };
+		EBD6FE45180646B6006D0E73 /* StreamDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBD6FE43180646B6006D0E73 /* StreamDetailViewController.xib */; };
 		EBD6FE4718064B24006D0E73 /* 16-Image-2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBD6FE4618064B24006D0E73 /* 16-Image-2@2x.png */; };
 		EBD6FE4918064B51006D0E73 /* 16-Image-2.png in Resources */ = {isa = PBXBuildFile; fileRef = EBD6FE4818064B51006D0E73 /* 16-Image-2.png */; };
 		EBD6FE4B180654AC006D0E73 /* 32-Image@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBD6FE4A180654AC006D0E73 /* 32-Image@2x.png */; };
@@ -617,12 +617,12 @@
 		EBD6627317FE401400B190E2 /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
 		EBD6627517FE401F00B190E2 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		EBD6627717FE402900B190E2 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
-		EBD6FE3A180645A6006D0E73 /* PhotosViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotosViewController.h; path = PedidoNaRede/PhotosViewController.h; sourceTree = "<group>"; };
-		EBD6FE3B180645A6006D0E73 /* PhotosViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotosViewController.m; path = PedidoNaRede/PhotosViewController.m; sourceTree = "<group>"; };
-		EBD6FE3C180645A6006D0E73 /* PhotosViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PhotosViewController.xib; path = PedidoNaRede/PhotosViewController.xib; sourceTree = "<group>"; };
-		EBD6FE41180646B6006D0E73 /* PhotosDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotosDetailViewController.h; path = PedidoNaRede/PhotosDetailViewController.h; sourceTree = "<group>"; };
-		EBD6FE42180646B6006D0E73 /* PhotosDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotosDetailViewController.m; path = PedidoNaRede/PhotosDetailViewController.m; sourceTree = "<group>"; };
-		EBD6FE43180646B6006D0E73 /* PhotosDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PhotosDetailViewController.xib; path = PedidoNaRede/PhotosDetailViewController.xib; sourceTree = "<group>"; };
+		EBD6FE3A180645A6006D0E73 /* StreamViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StreamViewController.h; path = PedidoNaRede/StreamViewController.h; sourceTree = "<group>"; };
+		EBD6FE3B180645A6006D0E73 /* StreamViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StreamViewController.m; path = PedidoNaRede/StreamViewController.m; sourceTree = "<group>"; };
+		EBD6FE3C180645A6006D0E73 /* StreamViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = StreamViewController.xib; path = PedidoNaRede/StreamViewController.xib; sourceTree = "<group>"; };
+		EBD6FE41180646B6006D0E73 /* StreamDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StreamDetailViewController.h; path = PedidoNaRede/StreamDetailViewController.h; sourceTree = "<group>"; };
+		EBD6FE42180646B6006D0E73 /* StreamDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StreamDetailViewController.m; path = PedidoNaRede/StreamDetailViewController.m; sourceTree = "<group>"; };
+		EBD6FE43180646B6006D0E73 /* StreamDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = StreamDetailViewController.xib; path = PedidoNaRede/StreamDetailViewController.xib; sourceTree = "<group>"; };
 		EBD6FE4618064B24006D0E73 /* 16-Image-2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "16-Image-2@2x.png"; sourceTree = "<group>"; };
 		EBD6FE4818064B51006D0E73 /* 16-Image-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "16-Image-2.png"; sourceTree = "<group>"; };
 		EBD6FE4A180654AC006D0E73 /* 32-Image@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "32-Image@2x.png"; path = "../32-Image@2x.png"; sourceTree = "<group>"; };
@@ -1344,12 +1344,12 @@
 		EBD6FE3F180645B1006D0E73 /* Photos */ = {
 			isa = PBXGroup;
 			children = (
-				EBD6FE3A180645A6006D0E73 /* PhotosViewController.h */,
-				EBD6FE3B180645A6006D0E73 /* PhotosViewController.m */,
-				EBD6FE3C180645A6006D0E73 /* PhotosViewController.xib */,
-				EBD6FE41180646B6006D0E73 /* PhotosDetailViewController.h */,
-				EBD6FE42180646B6006D0E73 /* PhotosDetailViewController.m */,
-				EBD6FE43180646B6006D0E73 /* PhotosDetailViewController.xib */,
+				EBD6FE3A180645A6006D0E73 /* StreamViewController.h */,
+				EBD6FE3B180645A6006D0E73 /* StreamViewController.m */,
+				EBD6FE3C180645A6006D0E73 /* StreamViewController.xib */,
+				EBD6FE41180646B6006D0E73 /* StreamDetailViewController.h */,
+				EBD6FE42180646B6006D0E73 /* StreamDetailViewController.m */,
+				EBD6FE43180646B6006D0E73 /* StreamDetailViewController.xib */,
 			);
 			name = Photos;
 			sourceTree = "<group>";
@@ -1707,7 +1707,7 @@
 				EB8C7D8E16D17AEB00F3C721 /* cb_mono_off.png in Resources */,
 				EB8C7D8F16D17AEB00F3C721 /* cb_mono_off@2x.png in Resources */,
 				EB8C7D9016D17AEB00F3C721 /* cb_mono_on.png in Resources */,
-				EBD6FE45180646B6006D0E73 /* PhotosDetailViewController.xib in Resources */,
+				EBD6FE45180646B6006D0E73 /* StreamDetailViewController.xib in Resources */,
 				EB97145B17F2DDDB009260AE /* logo@76.png in Resources */,
 				EB1FE9F417FF8886001C2906 /* 32-Book-Large.png in Resources */,
 				EB97144217F2B306009260AE /* 128-user.png in Resources */,
@@ -1777,7 +1777,7 @@
 				EBDFF53D17BBF63700BBFC1D /* logo.png in Resources */,
 				EBDFF54217BC057100BBFC1D /* ScheduleItemViewController.xib in Resources */,
 				EBDFF55117BE15A900BBFC1D /* 64-Speech-Bubbles.png in Resources */,
-				EBD6FE3E180645A6006D0E73 /* PhotosViewController.xib in Resources */,
+				EBD6FE3E180645A6006D0E73 /* StreamViewController.xib in Resources */,
 				EB97145617F2DDDB009260AE /* logo@16.png in Resources */,
 				EBDFF55317BE95B200BBFC1D /* 32-Check.png in Resources */,
 				EBC59D8117BEC48600E0FC67 /* 64-Marker.png in Resources */,
@@ -1868,7 +1868,7 @@
 				EB39397816654B4400580A4E /* AppDelegate.m in Sources */,
 				EB39398B16654B4400580A4E /* MapViewController.m in Sources */,
 				EB39399716654B4400580A4E /* ScheduleViewCell.m in Sources */,
-				EBD6FE44180646B6006D0E73 /* PhotosDetailViewController.m in Sources */,
+				EBD6FE44180646B6006D0E73 /* StreamDetailViewController.m in Sources */,
 				EB39399916654B4400580A4E /* ScheduleViewController.m in Sources */,
 				EB3939A716654BB900580A4E /* main.m in Sources */,
 				EB3939C616654BE300580A4E /* GTMNSString+HTML.m in Sources */,
@@ -1899,7 +1899,7 @@
 				EB7FC68216DC4225007C006D /* MKAnnotationView+WebCache.m in Sources */,
 				EB7FC68316DC4225007C006D /* SDImageCache.m in Sources */,
 				EB7FC68416DC4225007C006D /* SDWebImageCompat.m in Sources */,
-				EBD6FE3D180645A6006D0E73 /* PhotosViewController.m in Sources */,
+				EBD6FE3D180645A6006D0E73 /* StreamViewController.m in Sources */,
 				EB7FC68516DC4225007C006D /* SDWebImageDecoder.m in Sources */,
 				EB7FC68616DC4225007C006D /* SDWebImageDownloader.m in Sources */,
 				EB7FC68716DC4225007C006D /* SDWebImageDownloaderOperation.m in Sources */,

@@ -1,5 +1,5 @@
 //
-//  PhotosDetailViewController.h
+//  StreamDetailViewController.h
 //  InEvent
 //
 //  Created by Pedro Góes on 09/10/13.
@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "WrapperViewController.h"
 
-@interface PhotosDetailViewController : WrapperViewController <APIControllerDelegate, UIGestureRecognizerDelegate, UISplitViewControllerDelegate>
+@interface StreamDetailViewController : WrapperViewController <APIControllerDelegate, UIGestureRecognizerDelegate, UISplitViewControllerDelegate>
 
 @end

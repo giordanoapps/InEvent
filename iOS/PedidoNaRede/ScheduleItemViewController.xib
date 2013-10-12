@@ -75,13 +75,13 @@
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <fontDescription key="fontDescription" name="Thonburi" family="Thonburi" pointSize="16"/>
                             <inset key="contentEdgeInsets" minX="4" minY="4" maxX="4" maxY="4"/>
-                            <state key="normal" title="11">
+                            <state key="normal" title="Descrição da atividade">
                                 <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="6nq-IY-kkl" userLabel="Feedback">
-                            <rect key="frame" x="192" y="159" width="28" height="28"/>
+                            <rect key="frame" x="192" y="154" width="28" height="28"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                             <state key="normal" image="32-Create-_-Write.png">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -91,7 +91,7 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="9ao-1x-zC1" userLabel="Question">
-                            <rect key="frame" x="228" y="159" width="28" height="28"/>
+                            <rect key="frame" x="228" y="154" width="28" height="28"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                             <state key="normal" image="32-Speech-Bubble.png">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -101,7 +101,7 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Www-of-qrO" userLabel="People">
-                            <rect key="frame" x="264" y="159" width="28" height="28"/>
+                            <rect key="frame" x="264" y="154" width="28" height="28"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                             <state key="normal" image="32-Users.png">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -111,7 +111,7 @@
                             </connections>
                         </button>
                         <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="KXH-ze-bnt" userLabel="Material">
-                            <rect key="frame" x="156" y="159" width="28" height="28"/>
+                            <rect key="frame" x="156" y="154" width="28" height="28"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                             <state key="normal" image="32-Book-Large.png">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>

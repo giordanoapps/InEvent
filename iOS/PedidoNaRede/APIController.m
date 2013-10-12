@@ -1,6 +1,6 @@
 //
 //  APIController.m
-//  PedidoNaRede
+//  InEvent
 //
 //  Created by Pedro Góes on 14/10/12.
 //  Copyright (c) 2012 Pedro Góes. All rights reserved.

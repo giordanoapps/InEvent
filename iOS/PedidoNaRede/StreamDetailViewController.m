@@ -6,13 +6,13 @@
 //  Copyright (c) 2013 Pedro Góes. All rights reserved.
 //
 
-#import "PhotosDetailViewController.h"
+#import "StreamDetailViewController.h"
 
-@interface PhotosDetailViewController ()
+@interface StreamDetailViewController ()
 
 @end
 
-@implementation PhotosDetailViewController
+@implementation StreamDetailViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {

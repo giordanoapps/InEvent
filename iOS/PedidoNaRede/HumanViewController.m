@@ -69,6 +69,9 @@
     [_name.titleLabel setTextAlignment:NSTextAlignmentCenter];
     [_name setTitleColor:[ColorThemeController tableViewCellTextColor] forState: UIControlStateNormal];
     [_name setTitleColor:[ColorThemeController tableViewCellTextColor] forState:UIControlStateHighlighted];
+    
+    // Restart Facebook connection
+    [self connectWithFacebook];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -151,9 +154,14 @@
 }
 
 - (void)logoutButtonWasPressed:(id)sender {
+    
+    // Remove Facebook Login
     if (FBSession.activeSession.isOpen) {
         [FBSession.activeSession closeAndClearTokenInformation];
-    } else if ([[HumanToken sharedInstance] isMemberAuthenticated]) {
+    }
+    
+    // Remove InEvent Login
+    if ([[HumanToken sharedInstance] isMemberAuthenticated]) {
         [[HumanToken sharedInstance] removeMember];
     }
     
@@ -162,6 +170,17 @@
     
     // Load the login form
     [self checkSession];
+}
+
+#pragma mark - Facebook Methods
+
+- (void)connectWithFacebook {
+    if (!FBSession.activeSession.isOpen) {
+        [FBSession openActiveSessionWithReadPermissions:@[@"basic_info", @"email"]
+                                           allowLoginUI:YES
+                                      completionHandler:
+         ^(FBSession *session, FBSessionState state, NSError *error) {}];
+    }
 }
 
 #pragma mark - APIController Delegate

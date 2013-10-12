@@ -1,6 +1,6 @@
 //
 //  NSObject+Components.m
-//  PedidoNaRede
+//  InEvent
 //
 //  Created by Pedro Góes on 23/02/13.
 //  Copyright (c) 2013 Pedro Góes. All rights reserved.

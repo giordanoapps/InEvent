@@ -177,6 +177,7 @@
     
     [[EventToken sharedInstance] setEventID:eventID];
     [[EventToken sharedInstance] setName:[[dictionary objectForKey:@"name"] stringByDecodingHTMLEntities]];
+    [[EventToken sharedInstance] setNick:[[dictionary objectForKey:@"nickname"] stringByDecodingHTMLEntities]];
     [[HumanToken sharedInstance] setApproved:[[dictionary objectForKey:@"approved"] integerValue]];
     
     // Notify our tracker about the new event

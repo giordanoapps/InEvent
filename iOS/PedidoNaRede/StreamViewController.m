@@ -6,7 +6,8 @@
 //  Copyright (c) 2012 Pedro Góes. All rights reserved.
 //
 
-#import "PhotosViewController.h"
+#import "StreamViewController.h"
+#import <FacebookSDK/FacebookSDK.h>
 #import "ScheduleViewCell.h"
 #import "ScheduleItemViewController.h"
 #import "FrontViewController.h"
@@ -24,15 +25,15 @@
 #import "CoolBarButtonItem.h"
 #import "Schedule.h"
 
-@interface PhotosViewController () {
+@interface StreamViewController () {
     ODRefreshControl *refreshControl;
-    NSArray *activities;
-    ScheduleSelection selection;
+    NSArray *posts;
+    FBRequestConnection *requestConnection;
 }
 
 @end
 
-@implementation PhotosViewController
+@implementation StreamViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -40,8 +41,6 @@
     if (self) {
         self.title = NSLocalizedString(@"Photos", nil);
         self.tabBarItem.image = [UIImage imageNamed:@"16-Image-2"];
-        activities = [NSArray array];
-        selection = ([[HumanToken sharedInstance] isMemberAuthenticated] && [[HumanToken sharedInstance] isMemberApproved]) ? ScheduleSubscribed : ScheduleAll;
         
         // Add notification observer for updates
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadData) name:@"scheduleCurrentState" object:nil];
@@ -62,6 +61,7 @@
     
     // Schedule details
     [self loadData];
+    [self sendRequests];
     
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _tableView.backgroundColor = [ColorThemeController tableViewBackgroundColor];
@@ -108,7 +108,46 @@
     }
 }
 
-#pragma mark -
+#pragma mark - Facebook Methods
+
+- (void)sendRequests {
+    FBRequestConnection *newConnection = [[FBRequestConnection alloc] init];
+    
+    FBRequestHandler handler =
+    ^(FBRequestConnection *connection, id result, NSError *error) {
+        // output the results of the request
+        [self requestCompleted:connection result:result error:error];
+    };
+
+    // Make the API request that uses FQL
+    FBRequest *request = [[FBRequest alloc] initWithSession:FBSession.activeSession graphPath:[NSString stringWithFormat:@"/search?q=%@&type=post", [[EventToken sharedInstance] nick]] parameters:nil HTTPMethod:@"GET"];
+    
+    [newConnection addRequest:request completionHandler:handler];
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    
+    [requestConnection cancel];
+    requestConnection = newConnection;
+    [newConnection start];
+}
+
+- (void)requestCompleted:(FBRequestConnection *)connection result:(id)result error:(NSError *)error {
+    
+    if (requestConnection && connection != requestConnection) return;
+    
+    requestConnection = nil;
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    
+    if (error) {
+        // error contains details about why the request failed
+        NSLog(@"%@", error.localizedDescription);
+    } else {
+        // Assign all the results
+        posts = [(NSDictionary *)result objectForKey:@"data"];
+        
+        // Reload the table
+        [self.tableView reloadData];
+    }
+}
 
 #pragma mark - ActionSheet Methods
 
@@ -133,19 +172,7 @@
     
     NSString *title = [actionSheet buttonTitleAtIndex:buttonIndex];
     
-    if ([title isEqualToString:NSLocalizedString(@"All activities", nil)]) {
-        // Get all the activities
-        selection = ScheduleAll;
-        
-        [self loadData];
-        
-    } else if ([title isEqualToString:NSLocalizedString(@"My activities", nil)]) {
-        // Get only the activities that we are enrolled to
-        selection = ScheduleSubscribed;
-        
-        [self loadData];
-        
-    } else if ([title isEqualToString:NSLocalizedString(@"Event details", nil)]) {
+    if ([title isEqualToString:NSLocalizedString(@"Event details", nil)]) {
         // Load our reader
         UINavigationController *nfvc = [[UINavigationController alloc] initWithRootViewController:[[FrontViewController alloc] initWithNibName:@"FrontViewController" bundle:nil]];
         
@@ -189,11 +216,11 @@
 #pragma mark - Table View Data Source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return [activities count];
+    return [posts count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [[activities objectAtIndex:section] count];
+    return [[posts objectAtIndex:section] count];
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
@@ -204,7 +231,7 @@
     [background setBackgroundColor:[ColorThemeController tableViewCellBackgroundColor]];
     [background setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
     
-    NSDictionary *dictionary = [[activities objectAtIndex:section] objectAtIndex:0];
+    NSDictionary *dictionary = [[posts objectAtIndex:section] objectAtIndex:0];
     
     NSDate *date = [NSDate dateWithTimeIntervalSince1970:[[dictionary objectForKey:@"dateBegin"] integerValue]];
     NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
@@ -243,7 +270,7 @@
     
     [cell configureCell];
     
-    NSDictionary *dictionary = [[activities objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+    NSDictionary *dictionary = [[posts objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
     
     NSDate *date = [NSDate dateWithTimeIntervalSince1970:[[dictionary objectForKey:@"dateBegin"] integerValue]];
     NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
@@ -271,7 +298,7 @@
         [sivc setMoveKeyboardRatio:0.5f];
     }
     
-    NSDictionary *dictionary = [[activities objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+    NSDictionary *dictionary = [[posts objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
     
     [sivc setTitle:[[dictionary objectForKey:@"name"] stringByDecodingHTMLEntities]];
     [sivc setActivityData:dictionary];

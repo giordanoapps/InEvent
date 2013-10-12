@@ -13,6 +13,7 @@
 
 @property (assign, nonatomic) NSInteger eventID;
 @property (strong, nonatomic) NSString *name;
+@property (strong, nonatomic) NSString *nick;
 
 + (EventToken *)sharedInstance;
 

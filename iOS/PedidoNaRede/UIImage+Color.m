@@ -1,6 +1,6 @@
 //
 //  UIImage+Color.m
-//  PedidoNaRede
+//  InEvent
 //
 //  Created by Pedro Góes on 13/01/13.
 //  Copyright (c) 2013 Pedro Góes. All rights reserved.

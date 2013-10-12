@@ -1,6 +1,6 @@
 //
 //  UIPlaceHolderTextView.h
-//  PedidoNaRede
+//  InEvent
 //
 //  Created by Pedro Góes on 24/02/13.
 //  Copyright (c) 2013 Pedro Góes. All rights reserved.

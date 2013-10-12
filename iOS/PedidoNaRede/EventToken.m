@@ -38,6 +38,12 @@
     [self storeEssentialData];
 }
 
+- (void)setNick:(NSString *)nick {
+    _nick = nick;
+    
+    [self storeEssentialData];
+}
+
 #pragma mark - User Methods
 
 - (BOOL)isEventSelected {

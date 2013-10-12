@@ -1,6 +1,6 @@
 //
 //  UIViewController+Present.m
-//  PedidoNaRede
+//  InEvent
 //
 //  Created by Pedro Góes on 23/01/13.
 //  Copyright (c) 2013 Pedro Góes. All rights reserved.
