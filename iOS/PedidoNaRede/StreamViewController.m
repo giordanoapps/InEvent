@@ -8,27 +8,23 @@
 
 #import "StreamViewController.h"
 #import <FacebookSDK/FacebookSDK.h>
-#import "ScheduleViewCell.h"
-#import "ScheduleItemViewController.h"
-#import "FrontViewController.h"
-#import "FeedbackViewController.h"
+#import "StreamViewCell.h"
 #import "AppDelegate.h"
 #import "UtilitiesController.h"
 #import "UIViewController+Present.h"
 #import "UIImageView+WebCache.h"
 #import "ODRefreshControl.h"
-#import "UIViewController+AKTabBarController.h"
 #import "NSString+HTML.h"
 #import "HumanToken.h"
 #import "EventToken.h"
 #import "GAI.h"
 #import "CoolBarButtonItem.h"
-#import "Schedule.h"
 
 @interface StreamViewController () {
     ODRefreshControl *refreshControl;
     NSArray *posts;
     FBRequestConnection *requestConnection;
+    NSCache *imagesCache;
 }
 
 @end
@@ -41,6 +37,9 @@
     if (self) {
         self.title = NSLocalizedString(@"Photos", nil);
         self.tabBarItem.image = [UIImage imageNamed:@"16-Image-2"];
+        
+        // Alloc variables
+        imagesCache = [[NSCache alloc] init];
         
         // Add notification observer for updates
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadData) name:@"scheduleCurrentState" object:nil];
@@ -68,7 +67,7 @@
     
     // Refresh Control
     refreshControl = [[ODRefreshControl alloc] initInScrollView:self.tableView];
-    [refreshControl addTarget:self action:@selector(reloadData) forControlEvents:UIControlEventValueChanged];
+    [refreshControl addTarget:self action:@selector(sendRequests) forControlEvents:UIControlEventValueChanged];
     
     // Right Button
     self.rightBarButton = [[CoolBarButtonItem alloc] initCustomButtonWithImage:[UIImage imageNamed:@"32-Image"] frame:CGRectMake(0, 0, 42.0, 30.0) insets:UIEdgeInsetsMake(5.0, 11.0, 5.0, 11.0) target:self action:@selector(alertActionSheet)];
@@ -120,8 +119,10 @@
     };
 
     // Make the API request that uses FQL
-    FBRequest *request = [[FBRequest alloc] initWithSession:FBSession.activeSession graphPath:[NSString stringWithFormat:@"/search?q=%@&type=post", [[EventToken sharedInstance] nick]] parameters:nil HTTPMethod:@"GET"];
+    FBRequest *request = [[FBRequest alloc] initWithSession:FBSession.activeSession graphPath:[NSString stringWithFormat:@"/search?q=%@&type=post", @"party"] parameters:nil HTTPMethod:@"GET"];
     
+//                          [[EventToken sharedInstance] nick]]
+                          
     [newConnection addRequest:request completionHandler:handler];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     
@@ -146,6 +147,9 @@
         
         // Reload the table
         [self.tableView reloadData];
+        
+        // Stop refreshing
+        [refreshControl endRefreshing];
     }
 }
 
@@ -173,141 +177,91 @@
     NSString *title = [actionSheet buttonTitleAtIndex:buttonIndex];
     
     if ([title isEqualToString:NSLocalizedString(@"Event details", nil)]) {
-        // Load our reader
-        UINavigationController *nfvc = [[UINavigationController alloc] initWithRootViewController:[[FrontViewController alloc] initWithNibName:@"FrontViewController" bundle:nil]];
-        
-        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-            nfvc.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-            nfvc.modalPresentationStyle = UIModalPresentationCurrentContext;
-        } else {
-            nfvc.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-            nfvc.modalPresentationStyle = UIModalPresentationFormSheet;
-        }
-        
-        [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:nfvc animated:YES completion:nil];
-        
-    } else if ([title isEqualToString:NSLocalizedString(@"Send feedback", nil)]) {
-        // Load our reader
-        FeedbackViewController *fvc = [[FeedbackViewController alloc] initWithNibName:@"FeedbackViewController" bundle:nil];
-        UINavigationController *nfvc = [[UINavigationController alloc] initWithRootViewController:fvc];
-        
-        [fvc setMoveKeyboardRatio:0.7];
-        [fvc setFeedbackType:FeedbackTypeEvent withReference:[[EventToken sharedInstance] eventID]];
-        
-        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-            nfvc.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-            nfvc.modalPresentationStyle = UIModalPresentationCurrentContext;
-        } else {
-            nfvc.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-            nfvc.modalPresentationStyle = UIModalPresentationFormSheet;
-        }
-        
-        [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:nfvc animated:YES completion:nil];
-        
-    } else if ([title isEqualToString:NSLocalizedString(@"Exit event", nil)]) {
-        // Remove the tokenID and enterprise
-        [[EventToken sharedInstance] removeEvent];
-        
-        // Check for it again
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"verify" object:nil userInfo:@{@"type": @"enterprise"}];
+    
     }
+    
 }
 
 #pragma mark - Table View Data Source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return [posts count];
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [[posts objectAtIndex:section] count];
-}
-
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, tableView.frame.size.width, 44.0)];
-    
-    UIView *background = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, tableView.frame.size.width, 44.0)];
-    [background setBackgroundColor:[ColorThemeController tableViewCellBackgroundColor]];
-    [background setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
-    
-    NSDictionary *dictionary = [[posts objectAtIndex:section] objectAtIndex:0];
-    
-    NSDate *date = [NSDate dateWithTimeIntervalSince1970:[[dictionary objectForKey:@"dateBegin"] integerValue]];
-    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    NSDateComponents *components = [gregorian components:(NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit) fromDate:date];
-    
-    UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(21.0, 6.0, tableView.frame.size.width, 32.0)];
-    [title setText:[NSString stringWithFormat:@"%.2d/%.2d - %@", [components day], [components month], [UtilitiesController weekNameFromIndex:[components weekday]]]];
-    [title setTextAlignment:NSTextAlignmentLeft];
-    [title setFont:[UIFont fontWithName:@"Thonburi-Bold" size:18.0]];
-    [title setTextColor:[ColorThemeController textColor]];
-    [title setBackgroundColor:[UIColor clearColor]];
-    
-    [headerView addSubview:background];
-    [headerView addSubview:title];
-    
-    return headerView;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 44.0;
+    return [posts count];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 74.0;
+ 
+//    NSDictionary *dictionary = [[posts objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+//
+//    SDWebImageManager *manager = [SDWebImageManager sharedManager];
+//    [manager downloadWithURL:[UtilitiesController urlWithFile:[dictionary objectForKey:@"image"]] options:0 progress:NULL completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished) {
+//
+//        if (image != nil) {
+//            return image.size.height;
+//        }
+//    }];
+    
+
+    if ([imagesCache objectForKey:indexPath] != NULL) {
+        CGSize size = ((UIImage *)[imagesCache objectForKey:indexPath]).size;
+        return (self.view.frame.size.width / size.width) * size.height;
+    } else {
+        return 0.0f;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)aTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     static NSString * CustomCellIdentifier = @"CustomCellIdentifier";
-    ScheduleViewCell * cell = (ScheduleViewCell *)[aTableView dequeueReusableCellWithIdentifier: CustomCellIdentifier];
+    StreamViewCell * cell = (StreamViewCell *)[aTableView dequeueReusableCellWithIdentifier:CustomCellIdentifier];
     
     if (cell == nil) {
-        [aTableView registerNib:[UINib nibWithNibName:@"ScheduleViewCell" bundle:nil] forCellReuseIdentifier:CustomCellIdentifier];
-        cell =  (ScheduleViewCell *)[aTableView dequeueReusableCellWithIdentifier: CustomCellIdentifier];
+        [aTableView registerNib:[UINib nibWithNibName:@"StreamViewCell" bundle:nil] forCellReuseIdentifier:CustomCellIdentifier];
+        cell =  (StreamViewCell *)[aTableView dequeueReusableCellWithIdentifier:CustomCellIdentifier];
     }
     
     [cell configureCell];
     
-    NSDictionary *dictionary = [[posts objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
-    
-    NSDate *date = [NSDate dateWithTimeIntervalSince1970:[[dictionary objectForKey:@"dateBegin"] integerValue]];
-    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    NSDateComponents *components = [gregorian components:(NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:date];
-    
-    cell.hour.text = [NSString stringWithFormat:@"%.2d", [components hour]];
-    cell.minute.text = [NSString stringWithFormat:@"%.2d", [components minute]];
-    cell.name.text = [[dictionary objectForKey:@"name"] stringByDecodingHTMLEntities];
-    cell.description.text = [[dictionary objectForKey:@"description"] stringByDecodingHTMLEntities];
-    cell.approved = [[dictionary objectForKey:@"approved"] integerValue];
+    NSDictionary *dictionary = [posts objectAtIndex:indexPath.row];
+    [cell.picture setImageWithURL:[NSURL URLWithString:[[dictionary objectForKey:@"picture"] stringByReplacingOccurrencesOfString:@"_s." withString:@"_n."]] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
+        
+        // Save the image
+        [imagesCache setObject:image forKey:indexPath];
+        
+        // Reload it
+        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        
+    }];
     
     return cell;
 }
 
-- (void)tableView:(UITableView *)aTableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    ScheduleItemViewController *sivc;
-    
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        sivc = [[ScheduleItemViewController alloc] initWithNibName:@"ScheduleItemViewController" bundle:nil];
-        [sivc setMoveKeyboardRatio:0.0f];
-    } else {
-        // Find the sibling navigation controller first child and send the appropriate data
-        sivc = (ScheduleItemViewController *)[[[self.splitViewController.viewControllers lastObject] viewControllers] objectAtIndex:0];
-        [sivc setMoveKeyboardRatio:0.5f];
-    }
-    
-    NSDictionary *dictionary = [[posts objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
-    
-    [sivc setTitle:[[dictionary objectForKey:@"name"] stringByDecodingHTMLEntities]];
-    [sivc setActivityData:dictionary];
-    
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        [self.navigationController pushViewController:sivc animated:YES];
-        [aTableView deselectRowAtIndexPath:indexPath animated:YES];
-    }
-}
+//- (void)tableView:(UITableView *)aTableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+//    
+//    ScheduleItemViewController *sivc;
+//    
+//    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+//        sivc = [[ScheduleItemViewController alloc] initWithNibName:@"ScheduleItemViewController" bundle:nil];
+//        [sivc setMoveKeyboardRatio:0.0f];
+//    } else {
+//        // Find the sibling navigation controller first child and send the appropriate data
+//        sivc = (ScheduleItemViewController *)[[[self.splitViewController.viewControllers lastObject] viewControllers] objectAtIndex:0];
+//        [sivc setMoveKeyboardRatio:0.5f];
+//    }
+//    
+//    NSDictionary *dictionary = [[posts objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+//    
+//    [sivc setTitle:[[dictionary objectForKey:@"name"] stringByDecodingHTMLEntities]];
+//    [sivc setActivityData:dictionary];
+//    
+//    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+//        [self.navigationController pushViewController:sivc animated:YES];
+//        [aTableView deselectRowAtIndexPath:indexPath animated:YES];
+//    }
+//}
 
 #pragma mark - Navigation Controller Delegate
 
@@ -321,6 +275,7 @@
 
 - (void)apiController:(APIController *)apiController didLoadDictionaryFromServer:(NSDictionary *)dictionary {
     
+    [refreshControl endRefreshing];
 }
 
 - (void)apiController:(APIController *)apiController didFailWithError:(NSError *)error {

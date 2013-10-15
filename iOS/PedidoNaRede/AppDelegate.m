@@ -11,6 +11,8 @@
 #import "AboutViewController.h"
 #import "ScheduleViewController.h"
 #import "ScheduleItemViewController.h"
+#import "PeopleViewController.h"
+#import "PersonViewController.h"
 #import "StreamViewController.h"
 #import "StreamDetailViewController.h"
 #import "ColorThemeController.h"
@@ -28,6 +30,7 @@
 @property (strong, nonatomic) UIViewController *humanViewController;
 @property (strong, nonatomic) UIViewController *scheduleViewController;
 @property (strong, nonatomic) UIViewController *photosViewController;
+@property (strong, nonatomic) UIViewController *peopleViewController;
 @property (strong, nonatomic) UIViewController *aboutViewController;
 
 @end
@@ -78,46 +81,16 @@
     }
     
     // Each controller
-    // Login View Controller
-    _humanViewController = [[UINavigationController alloc] initWithRootViewController:[[HumanViewController alloc] initWithNibName:@"HumanViewController" bundle:nil]];
-    
-    // Schedule View Controller
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        _scheduleViewController = [[UINavigationController alloc] initWithRootViewController:[[ScheduleViewController alloc] initWithNibName:@"ScheduleViewController" bundle:nil]];
-    } else {
-        _scheduleViewController = [[IntelligentSplitViewController alloc] init];
-        ScheduleViewController *svc = [[ScheduleViewController alloc] initWithNibName:@"ScheduleViewController" bundle:nil];
-        UINavigationController *nsvc = [[UINavigationController alloc] initWithRootViewController:svc];
-        ScheduleItemViewController *sivc = [[ScheduleItemViewController alloc] initWithNibName:@"ScheduleItemViewController" bundle:nil];
-        UINavigationController *nsivc = [[UINavigationController alloc] initWithRootViewController:sivc];
-        ((UISplitViewController *)_scheduleViewController).title = svc.title;
-        ((UISplitViewController *)_scheduleViewController).tabBarItem.image = svc.tabBarItem.image;
-        ((UISplitViewController *)_scheduleViewController).delegate = sivc;
-        ((UISplitViewController *)_scheduleViewController).viewControllers = @[nsvc, nsivc];
-    }
-
-    // Photos View Controller
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        _photosViewController = [[UINavigationController alloc] initWithRootViewController:[[StreamViewController alloc] initWithNibName:@"PhotosViewController" bundle:nil]];
-    } else {
-        _photosViewController = [[IntelligentSplitViewController alloc] init];
-        StreamViewController *pvc = [[StreamViewController alloc] initWithNibName:@"PhotosViewController" bundle:nil];
-        UINavigationController *npvc = [[UINavigationController alloc] initWithRootViewController:pvc];
-        StreamDetailViewController *pdvc = [[StreamDetailViewController alloc] initWithNibName:@"PhotosDetailViewController" bundle:nil];
-        UINavigationController *npdvc = [[UINavigationController alloc] initWithRootViewController:pdvc];
-        ((UISplitViewController *)_photosViewController).title = pvc.title;
-        ((UISplitViewController *)_photosViewController).tabBarItem.image = pvc.tabBarItem.image;
-        ((UISplitViewController *)_photosViewController).delegate = pdvc;
-        ((UISplitViewController *)_photosViewController).viewControllers = @[npvc, npdvc];
-    }
-    
-    // About View Controller
-    _aboutViewController = [[UINavigationController alloc] initWithRootViewController:[[AboutViewController alloc] initWithNibName:@"AboutViewController" bundle:nil]];
+    [self loadHumanController];
+    [self loadScheduleController];
+    [self loadPhotosController];
+    [self loadPeopleController];
+    [self loadAboutController];
     
     // Global Controller
     _menuController = [[MenuViewController alloc] initWithMenuWidth:180.0 numberOfFolds:3];
     [_menuController setDelegate:self];
-    [_menuController setViewControllers:[NSMutableArray arrayWithObjects:_humanViewController, _scheduleViewController, _photosViewController, _aboutViewController, nil]];
+    [_menuController setViewControllers:[NSMutableArray arrayWithObjects:_humanViewController, _scheduleViewController, _photosViewController, _peopleViewController, _aboutViewController, nil]];
     
     // Set the default theme color
     [[ColorThemeController sharedInstance] setTheme:ColorThemePetoskeyStone];
@@ -180,6 +153,70 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     [self storeEssentialData];
 }
+
+#pragma mark - Controllers
+
+- (void)loadAboutController {
+    
+    _aboutViewController = [[UINavigationController alloc] initWithRootViewController:[[AboutViewController alloc] initWithNibName:@"AboutViewController" bundle:nil]];
+}
+
+- (void)loadHumanController {
+    
+    _humanViewController = [[UINavigationController alloc] initWithRootViewController:[[HumanViewController alloc] initWithNibName:@"HumanViewController" bundle:nil]];
+}
+
+- (void)loadPeopleController {
+    
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        _peopleViewController = [[UINavigationController alloc] initWithRootViewController:[[PeopleViewController alloc] initWithNibName:@"PeopleViewController" bundle:nil]];
+    } else {
+        _peopleViewController = [[IntelligentSplitViewController alloc] init];
+        PeopleViewController *pvc = [[PeopleViewController alloc] initWithNibName:@"PeopleViewController" bundle:nil];
+        UINavigationController *npvc = [[UINavigationController alloc] initWithRootViewController:pvc];
+        PersonViewController *pivc = [[PersonViewController alloc] initWithNibName:@"PersonViewController" bundle:nil];
+        UINavigationController *npivc = [[UINavigationController alloc] initWithRootViewController:pivc];
+        ((UISplitViewController *)_peopleViewController).title = pvc.title;
+        ((UISplitViewController *)_peopleViewController).tabBarItem.image = pvc.tabBarItem.image;
+        ((UISplitViewController *)_peopleViewController).delegate = pivc;
+        ((UISplitViewController *)_peopleViewController).viewControllers = @[npvc, npivc];
+    }
+}
+
+- (void)loadPhotosController {
+    
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        _photosViewController = [[UINavigationController alloc] initWithRootViewController:[[StreamViewController alloc] initWithNibName:@"StreamViewController" bundle:nil]];
+    } else {
+        _photosViewController = [[IntelligentSplitViewController alloc] init];
+        StreamViewController *pvc = [[StreamViewController alloc] initWithNibName:@"StreamViewController" bundle:nil];
+        UINavigationController *npvc = [[UINavigationController alloc] initWithRootViewController:pvc];
+        StreamDetailViewController *pdvc = [[StreamDetailViewController alloc] initWithNibName:@"StreamDetailViewController" bundle:nil];
+        UINavigationController *npdvc = [[UINavigationController alloc] initWithRootViewController:pdvc];
+        ((UISplitViewController *)_photosViewController).title = pvc.title;
+        ((UISplitViewController *)_photosViewController).tabBarItem.image = pvc.tabBarItem.image;
+        ((UISplitViewController *)_photosViewController).delegate = pdvc;
+        ((UISplitViewController *)_photosViewController).viewControllers = @[npvc, npdvc];
+    }
+}
+
+- (void)loadScheduleController {
+
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        _scheduleViewController = [[UINavigationController alloc] initWithRootViewController:[[ScheduleViewController alloc] initWithNibName:@"ScheduleViewController" bundle:nil]];
+    } else {
+        _scheduleViewController = [[IntelligentSplitViewController alloc] init];
+        ScheduleViewController *svc = [[ScheduleViewController alloc] initWithNibName:@"ScheduleViewController" bundle:nil];
+        UINavigationController *nsvc = [[UINavigationController alloc] initWithRootViewController:svc];
+        ScheduleItemViewController *sivc = [[ScheduleItemViewController alloc] initWithNibName:@"ScheduleItemViewController" bundle:nil];
+        UINavigationController *nsivc = [[UINavigationController alloc] initWithRootViewController:sivc];
+        ((UISplitViewController *)_scheduleViewController).title = svc.title;
+        ((UISplitViewController *)_scheduleViewController).tabBarItem.image = svc.tabBarItem.image;
+        ((UISplitViewController *)_scheduleViewController).delegate = sivc;
+        ((UISplitViewController *)_scheduleViewController).viewControllers = @[nsvc, nsivc];
+    }
+}
+
 
 #pragma mark - Creators
 
@@ -251,7 +288,7 @@
 }
 
 - (void)loadEssentialData {
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"verify" object:nil userInfo:@{@"type": @"ad"}];
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"verify" object:nil userInfo:@{@"type": @"ad"}];
 }
 
 @end

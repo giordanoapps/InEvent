@@ -1557,6 +1557,7 @@ textarea, input {
 	position: absolute;
 	top: 50%;
 	-webkit-transform: translate(0%, -50%);
+	min-height: 60px;
 }
 
 #eventContent .agendaItem .right .middle {
@@ -1635,6 +1636,7 @@ textarea, input {
 #eventContent .agendaItem .right .name {
 	font-size: 100%;
 	font-weight: bold;
+	padding: 1%;
 }
 
 #eventContent .agendaItem .right .description {

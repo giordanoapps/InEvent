@@ -39,7 +39,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.title = NSLocalizedString(@"Schedule", nil);
-        self.tabBarItem.image = [UIImage imageNamed:@"16-Map"];
+        self.tabBarItem.image = [UIImage imageNamed:@"16-Day-Calendar"];
         activities = [NSArray array];
         selection = ([[HumanToken sharedInstance] isMemberAuthenticated] && [[HumanToken sharedInstance] isMemberApproved]) ? ScheduleSubscribed : ScheduleAll;
         

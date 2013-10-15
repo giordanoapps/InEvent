@@ -136,7 +136,7 @@
             break;
             
         case 1:
-            return 2;
+            return 3;
             break;
             
         case 2:

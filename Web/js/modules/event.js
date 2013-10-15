@@ -316,7 +316,7 @@ define(modules, function($, common, cookie) {$(function() {
 
 	$("#eventContent").on("focusin", ".agendaItem .titleInput", function(event) {
 		var $elem = $(this);
-		$elem.on("focusout", function() {
+		$elem.one("focusout", function() {
 			$elem.trigger("saveField");
 		})
 	});
@@ -330,7 +330,7 @@ define(modules, function($, common, cookie) {$(function() {
 		var value = $elem.val();
 		var name = $elem.attr("name");
 		
-		$elem = $elem.field("removeField", {"class": "name"});
+		$elem = $elem.field("removeField", {"class": $elem.attr("class").replace(/titleInput/g, "")});
 
 		// We request the information on the server
 		$.post('developer/api/?' + $.param({
@@ -345,7 +345,7 @@ define(modules, function($, common, cookie) {$(function() {
 
 			if (jqXHR.status == 200) {
 				// Replace the entry
-				$agendaItem.replaceWith(data);
+				// $agendaItem.replaceWith(data);
 			}
 
 		}, 'html').fail(function(jqXHR, textStatus, errorThrown) {});
