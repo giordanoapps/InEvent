@@ -220,6 +220,10 @@
     }
 
     function printAgendaItem($data, $enrolledAtEvent) {
+
+        // Get the singleton
+        $core = Core::singleton();
+        
         ?>
         <li
             value="<?php echo $data['id'] ?>"
@@ -260,7 +264,12 @@
                         <span class="smallPadding limited location" name="location"><?php echo $data['location'] ?></span>
                     </a>
                     <div>
+                        <?php if ($core->workAtEvent) { ?>
                         <img id="options" src="images/32-Cog.png" alt="Ajustes" title="Opções da atividade">
+                        <?php } else { ?>
+                        <img src="images/32-Users.png" alt="Local" title="Número de vagas na atividade">
+                        <span class="smallPadding capacity" name="capacity"><?php if ($data['capacity'] != 0) { echo $data['capacity']; } else { ?>&infin;<?php } ?></span>
+                        <?php } ?>
                     </div>
                     <span class="suckyVerticalAlign"></span>
                 </div>

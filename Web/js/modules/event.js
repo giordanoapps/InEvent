@@ -291,7 +291,7 @@ define(modules, function($, common, cookie) {$(function() {
 	 * Start a text inline edition
 	 * @return {null}
 	 */
-	$("#eventContent").on("click", ".agendaItem .name, .agendaItem .description, .agendaItem .location, .agendaItem .capacity", function(event) {
+	$("#eventContent").on("click", ".name, .description, .location, .capacity", function(event) {
 
 		// Make sure that we are on editing mode
 		if (!$("#eventContent").hasClass("editingMode")) return true;
@@ -320,24 +320,25 @@ define(modules, function($, common, cookie) {$(function() {
 	 * Conclude a text inline edition
 	 * @return {null}
 	 */
-	$("#eventContent").on("keyup", ".agendaItem .titleInput", function(event) {
+	$("#eventContent").on("keyup", ".titleInput", function(event) {
 
 		// Remove the focus from the current field
 		var code = (event.keyCode ? event.keyCode : event.which);
 		if (code == 13) $(this).blur();
 	});
 
-	$("#eventContent").on("focusin", ".agendaItem .titleInput", function(event) {
+	$("#eventContent").on("focusin", ".titleInput", function(event) {
 		var $elem = $(this);
 		$elem.one("focusout", function() {
 			$elem.trigger("saveField");
 		})
 	});
 
-	$("#eventContent").on("saveField", ".agendaItem .titleInput", function(event) {
+	$("#eventContent").on("saveField", ".titleInput", function(event) {
 
 		var $elem = $(this);
 		var $agendaItem = $elem.closest(".agendaItem");
+		if ($agendaItem.length == 0) $agendaItem = $elem.closest(".toolBonus").prev(".agendaItem");
 
 		var activityID = $agendaItem.val();
 		var value = $elem.val();
@@ -357,8 +358,7 @@ define(modules, function($, common, cookie) {$(function() {
 		function(data, textStatus, jqXHR) {
 
 			if (jqXHR.status == 200) {
-				// Replace the entry
-				// $agendaItem.replaceWith(data);
+				if (name == "capacity") $agendaItem.attr("data-" + name, value);
 			}
 
 		}, 'html').fail(function(jqXHR, textStatus, errorThrown) {});

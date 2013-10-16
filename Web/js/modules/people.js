@@ -361,7 +361,13 @@ define(modules, function($, common, cookie) {$(function() {
 	 */
 	$("#peopleContent").on("click", ".head", function(event) {
 
+		// Make sure that we are on editing mode
+		if (!$("#peopleContent").hasClass("editingMode")) return true;
+
+		// Current element
 		var $elem = $(this);
+
+		// Get some properties
 		var method = ($elem.hasClass("staff")) ? "revokePermission" : "grantPermission";
 		var eventID = cookie.read("eventID");
 		var personID = $elem.closest(".pickerItem").attr("data-value");
@@ -389,6 +395,10 @@ define(modules, function($, common, cookie) {$(function() {
 	 */
 	$("#peopleContent").on("click", ".starIt", function(event) {
 
+		// Make sure that we are on editing mode
+		if (!$("#peopleContent").hasClass("editingMode")) return true;
+
+		// Current element
 		var $elem = $(this);
 
 		// Get some properties
@@ -418,6 +428,10 @@ define(modules, function($, common, cookie) {$(function() {
 	 */
 	$("#peopleContent").on("instantSave", ".checkbox.approved, .checkbox.paid, .checkbox.present", function(event) {
 
+		// Make sure that we are on editing mode
+		if (!$("#peopleContent").hasClass("editingMode")) return true;
+
+		// Current element
 		var $elem = $(this);
 
 		// Assemble url
