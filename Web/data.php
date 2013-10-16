@@ -50,7 +50,6 @@
 									name="name"
 									id="name"
 									class="name"
-									<?php if ($core->auth) { ?> readonly="readonly" <?php } ?>
 									value="<?php if ($core->auth) { echo $data["name"]; } ?>"
 									placeholder="Nome Completo"
 								/>
@@ -63,13 +62,12 @@
 									name="email"
 									id="email"
 									class="email"
-									<?php if ($core->auth) { ?> readonly="readonly" <?php } ?>
 									value="<?php if ($core->auth) { echo $data["email"]; } ?>"
 									placeholder="Email"
 								/>
 							</p>
 
-							<?php if ($core->eventID == 4) { ?>
+							<?php if ($core->auth) { ?>
 							<p class="halfWidth">
 								<span class="inputTitle">CPF:</span>
 								<input
@@ -77,14 +75,13 @@
 									name="cpf"
 									id="cpf"
 									class="cpf"
-									<?php if ($core->auth) { ?> readonly="readonly" <?php } ?>
 									value="<?php if ($core->auth) { echo $data["cpf"]; } ?>"
 									placeholder="CPF"
 								/>
 							</p>
 							<?php } ?>
 
-							<?php if ($core->eventID == 4) { ?>
+							<?php if ($core->auth) { ?>
 							<p class="halfWidth">
 								<span class="inputTitle">RG:</span>
 								<input
@@ -98,7 +95,7 @@
 							</p>
 							<?php } ?>
 
-							<?php if ($core->eventID == 4) { ?>
+							<?php if ($core->auth) { ?>
 							<p class="halfWidth">
 								<span class="inputTitle">Universidade:</span>
 								<input
@@ -112,7 +109,7 @@
 							</p>
 							<?php } ?>
 
-							<?php if ($core->eventID == 4) { ?>
+							<?php if ($core->auth) { ?>
 							<p class="halfWidth">
 								<span class="inputTitle">USP:</span>
 								<input
@@ -120,7 +117,6 @@
 									name="usp"
 									id="usp"
 									class="usp"
-									<?php if ($core->auth) { ?> readonly="readonly" <?php } ?>
 									value="<?php if ($core->auth) { echo $data["usp"]; } ?>"
 									placeholder="Número USP"
 								/>
@@ -180,9 +176,13 @@
 					
 					</div>
 					
-					<?php if (!$core->auth) { ?>
+					<?php if ($core->auth) { ?>
 					<ul class="navigator">
-						<a href="register.php" data-lock	="yes"><li><span class="navigatorHint navigatorHintRight">Próxima</span></li></a>
+						<a href="event.php" data-lock="yes"><li><span class="navigatorHint navigatorHintSave">Salvar</span></li></a>
+					</ul>	
+					<?php } else { ?>
+					<ul class="navigator">
+						<a href="register.php" data-lock="yes"><li><span class="navigatorHint navigatorHintRight">Próxima</span></li></a>
 					</ul>
 					<?php } ?>
 					

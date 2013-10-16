@@ -119,57 +119,70 @@ define(modules, function($, common, cookie) {$(function() {
 	 */
 	$("#eventContent").on("click", ".toolEnroll", function() {
 
+		// Current element
 		var $elem = $(this);
-		var $agendaItem = $elem.closest(".agendaItem");
 
-		if ($agendaItem.length > 0) {
-			var namespace = "activity";
-			var eventID = undefined;
-			var activityID = $agendaItem.val();
-			var groupID = parseInt($agendaItem.attr("data-group"), 10);
-		} else {
-			var namespace = "event";
-			var eventID = cookie.read("eventID");
-			var activityID = undefined;
-		}
+		// See if the person is authenticated
+		if (cookie.read("tokenID") != null) {
 
-		// Hide the current button
-		$elem.hide(200);
+			var $agendaItem = $elem.closest(".agendaItem");
 
-		// We request the information on the server
-		$.post('developer/api/?' + $.param({
-			method: namespace + ".requestEnrollment",
-			activityID: activityID,
-			eventID: eventID,
-			format: "html"
-		}), {},
-		function(data, textStatus, jqXHR) {
-
-			if (jqXHR.status == 200) {
-
-				if ($agendaItem.length > 0) {
-
-					// Change the properties of the element
-					$elem.closest(".agendaItem").replaceWith(data);
-
-					// var $scheduleItem = $(data).addClass("scheduleItemInvisible");
-
-					// Find and replace the new element
-					// $(".scheduleItem[value = \"" + activityID + "\"]").replaceWith($scheduleItem);
-					// $scheduleItem.slideDown(300);
-
-					// Hide all activities that belong to the same group
-					// if (groupID != 0) $(".agendaItem[data-group = \"" + groupID + "\"]").find(".toolEnroll").hide(200);
-
-				} else {
-					// Reload page
-					window.location.reload();
-				}
+			if ($agendaItem.length > 0) {
+				var namespace = "activity";
+				var eventID = undefined;
+				var activityID = $agendaItem.val();
+				var groupID = parseInt($agendaItem.attr("data-group"), 10);
+			} else {
+				var namespace = "event";
+				var eventID = cookie.read("eventID");
+				var activityID = undefined;
 			}
 
-		}, 'html').fail(function(jqXHR, textStatus, errorThrown) {
-			$elem.fadeIn(300);
-		});
+			// Hide the current button
+			$elem.hide(200);
+
+			// We request the information on the server
+			$.post('developer/api/?' + $.param({
+				method: namespace + ".requestEnrollment",
+				activityID: activityID,
+				eventID: eventID,
+				format: "html"
+			}), {},
+			function(data, textStatus, jqXHR) {
+
+				if (jqXHR.status == 200) {
+
+					if ($agendaItem.length > 0) {
+
+						// Change the properties of the element
+						$elem.closest(".agendaItem").replaceWith(data);
+
+						// var $scheduleItem = $(data).addClass("scheduleItemInvisible");
+
+						// Find and replace the new element
+						// $(".scheduleItem[value = \"" + activityID + "\"]").replaceWith($scheduleItem);
+						// $scheduleItem.slideDown(300);
+
+						// Hide all activities that belong to the same group
+						// if (groupID != 0) $(".agendaItem[data-group = \"" + groupID + "\"]").find(".toolEnroll").hide(200);
+
+					} else {
+						// Reload page
+						window.location.reload();
+					}
+				}
+
+			}, 'html').fail(function(jqXHR, textStatus, errorThrown) {
+				$elem.fadeIn(300);
+			});
+
+		} else {
+			// Save it for later
+			localStorage.setItem("enrollAtEvent", eventID);
+
+			// Move to the event page
+			window.location.hash = "data";
+		}
 
 	});
 
@@ -494,7 +507,7 @@ define(modules, function($, common, cookie) {$(function() {
 			$(this).val(("0" + parseInt($(this).val())).slice(-2));
 
 			// Get some properties
-			var $agendaItem = $(this).closest(".toolBonusCalendar").prev();
+			var $agendaItem = $(this).closest(".toolBonus").prev(".agendaItem");
 			var activityID = $agendaItem.val();
 			var name = $(this).attr("name");
 			var value = $(this).val();
@@ -630,6 +643,81 @@ define(modules, function($, common, cookie) {$(function() {
     	// Prevent the anchor from propagating
     	event.preventDefault();
 	    return false;
+	});
+
+	/**
+	  * OPTIONS BOX
+	  */
+
+	/**
+	 * Load the options
+	 * @return {null}
+	 */
+	$("#eventContent").on("click", "#options", function(event) {
+
+		// Make sure that we are on editing mode
+		if (!$("#eventContent").hasClass("editingMode")) return true;
+		
+		// Some variables
+		var $agendaItem = $(this).closest(".agendaItem");
+		var $toolBonusOptions = $("#eventContent .toolBonusOptions");
+
+		// Move or hide the tool
+		if ($toolBonusOptions.prev().is($agendaItem)) {
+			$toolBonusOptions.slideToggle(200);
+		} else {
+			$toolBonusOptions.insertAfter($agendaItem).slideDown(200);
+		}
+
+		// Get some properties
+		var activityID = $agendaItem.val();
+		var capacity = $agendaItem.attr("data-capacity");
+		var general = $agendaItem.attr("data-general");
+		var highlight = $agendaItem.attr("data-highlight");
+
+		// And some components
+		var $general = $toolBonusOptions.find(".general");
+		var $highlight = $toolBonusOptions.find(".highlight");
+
+		// Set the values
+		$toolBonusOptions.find(".capacity").html((capacity == 0) ? "&infin;" : capacity);
+		if (parseInt(general, 10) != parseInt($general.attr("data-value"), 10)) $general.trigger("click", [true]);
+		if (parseInt(highlight, 10) != parseInt($highlight.attr("data-value"), 10)) $highlight.trigger("click", [true]);
+		
+	});
+
+	/**
+	 * Change the property of the activity
+	 * @return {null}
+	 */
+	$("#eventContent").on("instantSave", ".checkbox.general, .checkbox.highlight", function(event) {
+
+		var $elem = $(this);
+		var $agendaItem = $(this).closest(".toolBonus").prev(".agendaItem");
+
+		// Get some properties
+		var activityID = $agendaItem.val();
+		var value = $elem.attr("data-value");
+		var name = $elem.attr("name");
+
+		// We request the information on the server
+		$.post('developer/api/?' + $.param({
+			method: "activity.edit",
+			activityID: activityID,
+			name: name,
+			format: "html"
+		}), {
+			value: value
+		},
+		function(data, textStatus, jqXHR) {
+			// Update the backend
+			$agendaItem.attr("data-" + name, value);
+			
+			// Replace with an updated element
+			$agendaItem.replaceWith(data);
+
+		}, 'html');
+
 	});
 
 });});

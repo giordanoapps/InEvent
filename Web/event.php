@@ -1,7 +1,7 @@
 <?php
 	include_once("includes/check/login.php");
 	
-	if (!$core->auth) logout();
+	// if (!$core->auth) logout();
 ?>
 
 <?php include_once("includes/html/header.php") ?>
@@ -11,7 +11,8 @@
 
 		<div id="eventContent" class="pageContent fullPageContent">
 			<div class="boardContent">
-
+	
+				<?php if ($core->auth) { ?>
 				<div class="menuContent">
 					
 					<!-- Tool Triggers -->
@@ -35,6 +36,7 @@
 						</div>
 					</div>
 				</div>
+				<?php } ?>
 
 				<div class="realContent">
 					<?php printAgenda($core->eventID, $core->memberID); ?>
@@ -90,6 +92,27 @@
 					<!-- ToolBonus Map -->
 					<li class="toolBonus toolBonusMap">
 						<div id="mapCanvas"></div>
+					</li>
+
+					<!-- ToolBonus Options -->
+					<li class="toolBonus toolBonusOptions">
+						<div>
+							<span class="title">Número de vagas</span>
+	                    	<span class="description">Indica até quantas pessoas deverão ser aprovadas por padrão, com consequente aprovação manual para as seguintes.</span>
+	                        <img src="images/32-Users.png" alt="Local" title="Número de vagas na atividade">
+	                        <span class="capacity" name="capacity">&infin;</span>
+	                    </div>
+	                    <div>
+	                    	<span class="title">Inscrição automática</span>
+	                    	<span class="description">Todos os participantes serão automaticamente inscritos nesta atividade quando se registrarem.</span>
+		                    <img src="images/44-checkOn.png" alt="checkBox" name="general" class="checkbox general active" data-value="1">
+						</div>
+
+						<div>
+							<span class="title">Posição destacada</span>
+							<span class="description">Será mostrada em destaque entre as outras atividades, com cor de fundo e altura diferenciadas.</span>
+							<img src="images/44-checkOn.png" alt="checkBox" name="highlight" class="checkbox highlight active" data-value="1">
+                        </div>
 					</li>
 
 				</div>

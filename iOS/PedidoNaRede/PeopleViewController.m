@@ -154,30 +154,45 @@
 }
 
 - (void)buildSelectedPeopleViewCell:(PeopleViewCell *)cell withDictionary:(NSDictionary *)dictionary {
+    
     // Label
     cell.initial.font = [UIFont fontWithName:@"Thonburi-Bold" size:30.0f];
-    cell.initial.frame = CGRectMake(50.0f, 50.0f, 60.0f, 60.0f);
     cell.initial.text = [[[dictionary objectForKey:@"name"] stringByDecodingHTMLEntities] substringToIndex:1];
-    [cell.initial.layer setCornerRadius:cell.initial.frame.size.width / 2.0f];
-    
-    // Collection View
-    cell.collectionView.userInteractionEnabled = YES;
-    cell.collectionView.delegate = self;
-    cell.collectionView.dataSource = self;
-    [cell.collectionView registerNib:[UINib nibWithNibName:@"PeopleGroupViewCell" bundle:nil] forCellWithReuseIdentifier:@"PeopleGroupViewCell"];
-    
-    [cell.collectionView reloadData];
+
+    [UIView animateWithDuration:0.2f animations:^{
+        [cell.initial.layer setCornerRadius:30.0f];
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration:0.2f animations:^{
+//            cell.initial.center = CGPointMake(80.0f, 80.0f);
+//            cell.initial.bounds = CGRectMake(50.0f, 50.0f, 60.0f, 60.0f);
+            cell.initial.frame = CGRectMake(50.0f, 50.0f, 60.0f, 60.0f);
+        } completion:^(BOOL finished) {
+            // Collection View
+            cell.collectionView.userInteractionEnabled = YES;
+            cell.collectionView.delegate = self;
+            cell.collectionView.dataSource = self;
+            [cell.collectionView registerNib:[UINib nibWithNibName:@"PeopleGroupViewCell" bundle:nil] forCellWithReuseIdentifier:@"PeopleGroupViewCell"];
+            [cell.collectionView reloadData];
+        }];
+    }];
 }
 
 - (void)buildPeopleViewCell:(PeopleViewCell *)cell withDictionary:(NSDictionary *)dictionary {
+    
     // Label
     cell.initial.font = [UIFont fontWithName:@"Thonburi" size:20.0f];
-    cell.initial.frame = CGRectMake(20.0f, 20.0f, 120.0f, 120.0f);
     cell.initial.text = [[dictionary objectForKey:@"name"] stringByDecodingHTMLEntities];
-    [cell.initial.layer setCornerRadius:cell.initial.frame.size.width / 10.0f];
     
-    // Collection View
-    cell.collectionView.userInteractionEnabled = NO;
+    [UIView animateWithDuration:0.2f animations:^{
+        [cell.initial.layer setCornerRadius:12.0f];
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration:0.2f animations:^{
+            cell.initial.frame = CGRectMake(20.0f, 20.0f, 120.0f, 120.0f);
+        } completion:^(BOOL finished) {
+            // Collection View
+            cell.collectionView.userInteractionEnabled = NO;
+        }];
+    }];
 }
 
 #pragma mark - Collection View Delegate
@@ -188,9 +203,7 @@
     if (selectedPath != nil) {
         NSIndexPath *oldSelectedPath = selectedPath;
         selectedPath = indexPath;
-        [UIView animateWithDuration:0.2f animations:^{
-            [self buildPeopleViewCell:(PeopleViewCell *)[self.collectionView cellForItemAtIndexPath:oldSelectedPath] withDictionary:[groups objectAtIndex:oldSelectedPath.row]];
-        } completion:nil];
+        [self buildPeopleViewCell:(PeopleViewCell *)[self.collectionView cellForItemAtIndexPath:oldSelectedPath] withDictionary:[groups objectAtIndex:oldSelectedPath.row]];
         
     } else {
         // Save the indexPath
@@ -247,9 +260,7 @@
         [peopleCache setObject:[dictionary objectForKey:@"data"] forKey:[apiController.userInfo objectForKey:@"key"]];
         
         // Reload some specific rows
-        [UIView animateWithDuration:0.2f animations:^{
-            [self buildSelectedPeopleViewCell:(PeopleViewCell *)[self.collectionView cellForItemAtIndexPath:selectedPath] withDictionary:[groups objectAtIndex:selectedPath.row]];
-        } completion:nil];
+        [self buildSelectedPeopleViewCell:(PeopleViewCell *)[self.collectionView cellForItemAtIndexPath:selectedPath] withDictionary:[groups objectAtIndex:selectedPath.row]];
         
     } else if ([apiController.method isEqualToString:@"requestEnrollment"]) {
         [self reloadData];

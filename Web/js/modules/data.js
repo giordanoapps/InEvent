@@ -197,4 +197,77 @@ define(modules, function($) {$(function() {
 		}
 	});
 
+	/**
+	 * Trigger the form validator
+	 * @return {null}
+	 */
+	$("#dataContent").on("click", ".navigator li, .sequenceContent li", function() {
+
+		var $parent = $(this).closest("#dataContent");
+
+		if ($parent.find(".dataForm").valid()) {
+
+			var temp = $parent.find(".dataForm").serializeArray();
+
+			var registrationData = JSON.parse(localStorage.getItem("registrationData")) || {};
+
+			for (var i = 0; i < temp.length; i++) {
+				if (temp[i].name != "") {
+					registrationData[temp[i].name] = temp[i].value;
+				}
+			}
+
+			localStorage.setItem("registrationData", JSON.stringify(registrationData));
+
+			if ($(this).find("span").hasClass("navigatorHintSave")) {
+				// Save our profile
+				$parent.trigger("saveProfile");
+			} else {
+				// Release the anchor and load the new page
+				$(this).closest("a").attr("data-lock", "no").trigger("click");
+			}
+		}
+	});
+
+	/**
+	 * Save fields on the spot
+	 * @return {null}
+	 */
+	$("#dataContent").on("saveProfile", function() {
+
+		var $parent = $(this);
+
+		if ($parent.find(".dataForm").valid()) {
+
+			// Current element
+			var $elem = $(this);
+
+			// Get the saved information
+			var details = JSON.parse(localStorage.getItem("registrationData")) || {};
+
+			// We send the details to the server
+			$.post('developer/api/?' + $.param({
+				method: "person.edit",
+				format: "html"
+			}), {
+				name: details.name,
+				email: details.email,
+				cpf: details.cpf,
+				rg: details.rg,
+				telephone: details.telephone,
+				city: details.city,
+				university: details.university,
+				course: details.course,
+				usp: details.usp
+			},
+			function(data, textStatus, jqXHR) {
+				// Remove the registration data
+				localStorage.removeItem("registrationData");
+
+				// Redirect to the webpage
+				$elem.closest("a").attr("data-lock", "no").trigger("click");
+			});
+		}
+	});
+
 });});

@@ -67,12 +67,16 @@ define(["jquery", "common", "modules/cookie"], function($, common, cookie) {$(fu
 	 * Tool to change the state of a checkbox
 	 * @return {null}
 	 */
-	$(document).on("click", ".checkbox", function (event, isPropagating) {
+	$(document).on("click", ".checkbox", function (event, propagateSave, isPropagating) {
 
 		if ($(this).attr("readonly") == "readonly") return;
+
+		// Define the default state of the variable
+		if (typeof propagateSave === "undefined") propagateSave = true;
+
 		// Toggle the state of the propagation save
-		propagateSave = true;
 		if (isPropagating == false && ($image.attr("data-shouldsavepropagation") == "no")) propagateSave = false;
+
 		// Update the state of the propagation itself
 		if (typeof isPropagating === "undefined") isPropagating = true;
 		
@@ -101,7 +105,7 @@ define(["jquery", "common", "modules/cookie"], function($, common, cookie) {$(fu
 				if ($image.attr("data-exclusive") == "yes" && isPropagating) {
 					// Exclusive parent means that, from all the checkboxs below this parent, only one can be selected
 					// The only expection is if you are an indie, which is autonomous and independent
-				    $image.parents("[data-exclusiveparent='yes']").not("[data-indie!='yes']").find(".checkbox.active:visible").not($image).trigger("click", [false]);
+				    $image.parents("[data-exclusiveparent='yes']").not("[data-indie!='yes']").find(".checkbox.active:visible").not($image).trigger("click", [true, false]);
 				}
 			});
 

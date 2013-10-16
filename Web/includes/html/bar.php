@@ -87,6 +87,7 @@
 				<li class="loginInfo anchorInfo">
 					<div class="anchorInnerHock"><p><?php echo truncateName($core->name, 15) ?></p></div>
 					<ul class="loginBox anchorBox popover">
+						<a href="data.php"><li>Editar perfil</li></a>
 						<a href="reinstate.php"><li>Trocar senha</li></a>
 						<a href="logout.php"><li>Sair da conta</li></a>
 					</ul>
@@ -99,6 +100,8 @@
 		<div class="bar top loginBar">
 			<ul class="leftBar">
 				<a href="home.php"><li>InEvent</li></a>
+				<a href="front.php"><li>Evento</li></a>
+				<a href="event.php"><li>Atividades</li></a>
 			</ul>
 			
 			<ul class="rightBar">

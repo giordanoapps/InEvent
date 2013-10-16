@@ -298,7 +298,7 @@ textarea, input {
 
 .loginBar .rightBar {
 	padding: 0;
-	width: 100%;
+	width: 60%;
 }
 
 .bar .rightBar p {
@@ -337,6 +337,8 @@ textarea, input {
 	line-height: normal;
 	height: auto;
 	font-size: 100%;
+	width: 166.67%;
+	left: -66.67%;
 }
 
 .bar .secondary {
@@ -1453,7 +1455,7 @@ textarea, input {
 	overflow: hidden;
 }
 
-#eventContent .realContent {
+#eventContent .menuContent ~ .realContent {
 	padding-top: 44px;
 }
 
@@ -1651,7 +1653,7 @@ textarea, input {
 }
 
 #eventContent .agendaItem .limited {
-	width: 100px;
+	width: 130px;
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	display: inline-block;
@@ -1775,6 +1777,40 @@ textarea, input {
 #eventContent .toolBonusMap,
 #eventContent .toolBonusMap #mapCanvas {
 	height: 350px;
+}
+
+/* @end */
+
+/* @group Options */
+
+#eventContent .toolBonusOptions {
+	padding: 5px 0;
+}
+
+#eventContent .toolBonusOptions div 	{
+	display: inline-block;
+	vertical-align: bottom;
+	width: 33%;
+}
+
+#eventContent .toolBonusOptions img {
+	width: 32px;
+}
+
+#eventContent .toolBonusOptions .title {
+	font-size: 100%;
+	margin: 0 auto;
+	padding-top: 5px;
+	text-align: center;
+	font-weight: bold;
+	display: block;
+}
+
+#eventContent .toolBonusOptions .description {
+	padding-bottom: 10px;
+	font-size: 85%;
+	display: block;
+	color: #A5A5A5;
 }
 
 /* @end */

@@ -1,4 +1,7 @@
-<?php include_once("includes/check/login.php") ?>
+<?php
+	include_once("includes/check/login.php")
+?>
+
 <?php include_once("includes/html/header.php") ?>
 <body>
 	<?php include_once("includes/html/bar.php") ?>

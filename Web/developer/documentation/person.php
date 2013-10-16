@@ -49,6 +49,26 @@
 			<p><b>facebookToken</b><sub>GET</sub> : token de autenticação fornecido pelo Facebook </p>
 		</div>
 	</div>
+
+	<div class="documentationFunctionBox">
+		<p class="documentFunctionName">
+			<span>person.edit(<b>tokenID</b>, <b>name</b>, <b>email</b>, <b>cpf</b> = null, <b>rg</b> = null, <b>telephone</b> = null, <b>university</b> = null, <b>course</b> = null)</span>
+			<img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=person.edit&tokenID=$tokenID" data-post="member=">
+		</p>
+
+		<p class="documentFunctionDescription">Edita a conta com nome <i>name</i>, email <i>email</i>, CPF <i>cpf</i>, RG <i>rg</i>, telefone <i>telephone</i>, universidade <i>university</i> e curso <i>course</i>.</p>
+
+		<div class="documentationFunctionParametersBox">
+			<p><b>tokenID</b><sub>GET</sub> : id de autenticação </p>
+			<p><b>name</b><sub>POST</sub> : nome da pessoa </p>
+			<p><b>email</b><sub>POST</sub> : email da pessoa </p>
+			<p><b>cpf</b><sub>POST</sub> : CPF da pessoa </p>
+			<p><b>rg</b><sub>POST</sub> : RG da pessoa </p>
+			<p><b>telephone</b><sub>POST</sub> : telefone da pessoa </p>
+			<p><b>university</b><sub>POST</sub> : universidade da pessoa </p>
+			<p><b>course</b><sub>POST</sub> : curso da pessoa </p>
+		</div>
+	</div>
 	
 	<div class="documentationFunctionBox">
 		<p class="documentFunctionName">

@@ -104,9 +104,9 @@
 				
 	} else
 
-	if ($method === "enroll") {
+	if ($method === "edit" || $method === "enroll") {
 
-		if (isset($_POST["name"]) && isset($_POST["password"]) && isset($_POST["email"])) {
+		if (isset($_POST["name"]) && isset($_POST["email"])) {
 
 			// Make sure that the user is not creating multiple accounts
 			// include_once("../../includes/registrationCheck.php");
@@ -114,7 +114,7 @@
 			// Get the provided data
 			// Required
 			$name = getAttribute($_POST["name"]);
-			$password = getAttribute($_POST["password"]);
+			$password = ($method === "enroll") ? getAttribute($_POST["password"]) : "";
 			$email = getAttribute($_POST["email"]);
 
 			// Optional
@@ -126,28 +126,60 @@
 			$telephone = (isset($_POST["telephone"])) ? getEmptyAttribute($_POST["telephone"]) : "";
 			$usp = (isset($_POST["usp"])) ? getEmptyAttribute($_POST["usp"]) : "";
 
-			$result = resourceForQuery(
-				"SELECT
-					`member`.`name`
-				FROM
-					`member`
-				WHERE 0
-					OR BINARY `member`.`email` = '$email'
-			");
+			if ($method === "edit") {
 
-			if (mysql_num_rows($result) == 0) {
+				$tokenID = getToken();
 
-				$memberID = createMember($name, $password, $email, $cpf, $rg, $usp, $telephone, $city, $university, $course);
+				$update = resourceForQuery(
+					"UPDATE
+						`member`
+					SET
+						`name` = '$name',
+						`cpf` = '$cpf',
+						`rg` = '$rg',
+						`usp` = '$usp',
+						`telephone` = '$telephone',
+						`city` = '$city',
+						`email` = '$email',
+						`university` = '$university',
+						`course` = '$course'
+					WHERE
+						`member`.`id` = $core->memberID
+				");
 
-				if ($memberID != 0) {
-					// Return the desired data
-					$data = processLogIn($email, $password);
+				if ($update) {
+					$data["memberID"] = $core->memberID;
 					echo json_encode($data);
+				}
+
+			} elseif ($method === "enroll") {
+
+				// See if the person exists
+				$result = resourceForQuery(
+					"SELECT
+						`member`.`name`
+					FROM
+						`member`
+					WHERE 0
+						OR BINARY `member`.`email` = '$email'
+				");
+
+				if (mysql_num_rows($result) == 0) {
+
+					$memberID = createMember($name, $password, $email, $cpf, $rg, $usp, $telephone, $city, $university, $course);
+
+					if ($memberID != 0) {
+						// Return the desired data
+						$data = processLogIn($email, $password);
+						echo json_encode($data);
+					} else {
+						http_status_code(500, "Couldn't create memberID");
+					}
 				} else {
-					http_status_code(500, "Couldn't create memberID");
+					http_status_code(303, "Email already exists");
 				}
 			} else {
-				http_status_code(303, "Email already exists");
+				http_status_code(501);
 			}
 		} else {
 			http_status_code(400, "name, password and email are required parameters");

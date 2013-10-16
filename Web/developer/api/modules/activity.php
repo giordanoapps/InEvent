@@ -78,7 +78,7 @@
 			if ($core->workAtEvent) {
 			
 				// We list all the fields that can be edited by the activity platform
-				$validFields = array("name", "description", "latitude", "longitude", "location", "dayBegin", "monthBegin", "hourBegin", "minuteBegin", "dayEnd", "monthEnd", "hourEnd", "minuteEnd", "capacity");
+				$validFields = array("name", "description", "latitude", "longitude", "location", "dayBegin", "monthBegin", "hourBegin", "minuteBegin", "dayEnd", "monthEnd", "hourEnd", "minuteEnd", "capacity", "general", "highlight");
 
 				if (in_array($name, $validFields) == TRUE) {
 
@@ -230,6 +230,19 @@
 								`activity`
 							SET
 								`$name` = '$value'
+							WHERE
+								`activity`.`id` = $activityID
+						");
+
+					} elseif ($name == "general" || $name == "highlight") {
+
+						if ($value < 0 || $value > 1) $value = 0;
+
+						$update = resourceForQuery(
+							"UPDATE
+								`activity`
+							SET
+								`$name` = $value
 							WHERE
 								`activity`.`id` = $activityID
 						");
