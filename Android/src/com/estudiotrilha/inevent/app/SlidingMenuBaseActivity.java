@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
@@ -23,6 +24,7 @@ import com.estudiotrilha.android.widget.ViewToastManager;
 import com.estudiotrilha.inevent.InEvent;
 import com.estudiotrilha.inevent.R;
 import com.estudiotrilha.inevent.Utils;
+import com.estudiotrilha.inevent.app.EventActivitiesPagesFragment.DisplayOption;
 import com.estudiotrilha.inevent.content.LoginManager;
 import com.estudiotrilha.inevent.content.Member;
 import com.estudiotrilha.inevent.content.SyncBroadcastManager;
@@ -279,6 +281,13 @@ public abstract class SlidingMenuBaseActivity extends ActionBarActivity
         // Closes the current Activity
         finish();
         overridePendingTransition(0, 0);
+
+        // Unselect the event
+        PreferenceManager.getDefaultSharedPreferences(this)
+            .edit()
+            .putLong(PreferencesActivity.EVENT_SELECTED, -1)
+            .putInt(PreferencesActivity.DISPLAY_OPTION_ACTIVITIES, DisplayOption.ALL.ordinal())
+            .commit();
 
         // Opens the Event Marketplace
         startActivity(new Intent(this, EventMarketplaceActivity.class));

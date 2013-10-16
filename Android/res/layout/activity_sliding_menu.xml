@@ -17,10 +17,9 @@
 
         <FrameLayout
             android:id="@+id/main_toastMessage"
-            android:layout_width="@dimen/toast_layout_width"
+            android:layout_width="match_parent"
             android:layout_height="@dimen/toast_layout_height"
-            android:layout_gravity="bottom|right"
-            android:layout_marginBottom="@dimen/toast_layout_marginBottom" />
+            android:layout_gravity="bottom" />
     </FrameLayout>
 
     <ScrollView

@@ -29,6 +29,6 @@
     <color name="slidingMenu_background">@color/light_gray</color>
 
     <!-- Custom Toast -->
-    <color name="toast_background">#2243c5f5</color>
+    <color name="toast_background">#6643c5f5</color>
 
 </resources>

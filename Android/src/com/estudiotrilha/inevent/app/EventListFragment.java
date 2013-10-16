@@ -14,6 +14,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.CursorLoader;
@@ -140,9 +141,18 @@ public class EventListFragment extends ListFragment implements LoaderCallbacks<C
     @Override
     public void onListItemClick(ListView l, View v, int position, long id)
     {
+        // Close the marketplace
+        getActivity().finish();
+
         // Open the event
         Intent event = EventActivity.openEvent(getActivity(), id);
         getActivity().startActivity(event);
+
+        // Saves the selected event
+        PreferenceManager.getDefaultSharedPreferences(getActivity())
+            .edit()
+            .putLong(PreferencesActivity.EVENT_SELECTED, id)
+            .commit();
     }
     @Override
     public boolean onItemLongClick(AdapterView<?> adapter, View v, int position, final long eventId)

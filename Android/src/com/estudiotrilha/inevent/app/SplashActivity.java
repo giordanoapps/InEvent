@@ -24,7 +24,9 @@ public class SplashActivity extends Activity implements Runnable
     private static int SPLASH_DURATION           = 800; // in milliseconds
     private static int SPLASH_REDISPLAY_INTERVAL = 7; // in days
 
+
     private final Handler mHandler = new Handler();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -99,17 +101,35 @@ public class SplashActivity extends Activity implements Runnable
         mHandler.removeCallbacks(this);
     }
 
+    @Override
+    protected void onPause()
+    {
+        super.onPause();
+        // XXX testing
+        // set the transition animation
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+    }
 
     private void onSplashFinish()
     {
         // finish the splash activity
         finish();
 
-        // set the transition animation
-        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        // Obtain the sharedPreference
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        long selectedEvent = preferences.getLong(PreferencesActivity.EVENT_SELECTED, -1);
 
-        // Open the Event Marketplace
-        startActivity(new Intent(this, EventMarketplaceActivity.class));
+        if (selectedEvent != -1)
+        {
+            // Open the event
+            Intent event = EventActivity.openEvent(this, selectedEvent);
+            startActivity(event);
+        }
+        else
+        {
+            // Open the Event Marketplace
+            startActivity(new Intent(this, EventMarketplaceActivity.class));            
+        }
     }
 
 

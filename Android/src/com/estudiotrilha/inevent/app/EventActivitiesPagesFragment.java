@@ -1,5 +1,7 @@
 package com.estudiotrilha.inevent.app;
 
+import static com.estudiotrilha.inevent.app.PreferencesActivity.DISPLAY_OPTION_ACTIVITIES;
+
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -8,10 +10,12 @@ import java.util.TimeZone;
 import android.annotation.TargetApi;
 import android.content.ContentUris;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
@@ -76,7 +80,6 @@ public class EventActivitiesPagesFragment extends Fragment implements LoaderCall
     }
 
     // Instance State
-    private static final String STATE_DISPLAY_OPTION   = "state.DISPLAY_OPTION";
     private static final String STATE_CURRENT_PAGE     = "state.CURRENT_PAGE";
     private static final String STATE_DOWNLOAD_ATTEMPT = "state.DOWNLOAD_ATTEMPT";
 
@@ -101,12 +104,13 @@ public class EventActivitiesPagesFragment extends Fragment implements LoaderCall
     private EventActivityPagerAdapter mActivitiesAdapter;
 
 
-    private DisplayOption mDisplayOption = DisplayOption.ALL;
-    private LoginManager  mLoginManager;
-    private EventActivity mEventActivity;
-    private int           mDownloadAttempt;
-    private ViewPager     mViewPager;
-    private int           mPagePosition = -1;
+    private DisplayOption     mDisplayOption = DisplayOption.ALL;
+    private LoginManager      mLoginManager;
+    private EventActivity     mEventActivity;
+    private int               mDownloadAttempt;
+    private ViewPager         mViewPager;
+    private int               mPagePosition = -1;
+    private SharedPreferences mPreferences;
 
 
     @Override
@@ -120,19 +124,21 @@ public class EventActivitiesPagesFragment extends Fragment implements LoaderCall
     {
         super.onCreate(savedInstanceState);
         mLoginManager = LoginManager.getInstance(mEventActivity);
+        mPreferences = PreferenceManager.getDefaultSharedPreferences(mEventActivity);
         setHasOptionsMenu(true);
+
+        int display = mPreferences.getInt(DISPLAY_OPTION_ACTIVITIES, DisplayOption.ALL.ordinal());
+        mDisplayOption = DisplayOption.values()[display];
 
         if (savedInstanceState != null)
         {
             // Display the correct set of data
-            mDisplayOption = DisplayOption.values()[savedInstanceState.getInt(STATE_DISPLAY_OPTION)];
             mPagePosition = savedInstanceState.getInt(STATE_CURRENT_PAGE, -1);
 
             mDownloadAttempt = savedInstanceState.getInt(STATE_DOWNLOAD_ATTEMPT);
         }
         else
         {
-            mDisplayOption = DisplayOption.ALL;
             refresh();
         }
 
@@ -173,6 +179,7 @@ public class EventActivitiesPagesFragment extends Fragment implements LoaderCall
             }
             else
             {
+                mDisplayOption = DisplayOption.ALL;
                 actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
                 mEventActivity.getSupportActionBar().setTitle(mDisplayOption.getTitle());
             }
@@ -181,21 +188,15 @@ public class EventActivitiesPagesFragment extends Fragment implements LoaderCall
         mViewPager = (ViewPager) view.findViewById(R.id.eventActivity_viewPager);
         mViewPager.setAdapter(mActivitiesAdapter);
         mViewPager.setPageMargin((int) ViewUtils.dipToPixels(mEventActivity, 16));
-
-        if (savedInstanceState == null)
-        {
-            if (mPagePosition != -1)
+        mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageSelected(int position)
             {
-                // Move to the selected page
-                mViewPager.setCurrentItem(mPagePosition);
+                mPagePosition = position;
             }
-            else
-            {
-                // Move to the preferred page, which may be today's activities list
-                mPagePosition = mActivitiesAdapter.getPreferredPage();
-                mViewPager.setCurrentItem(mPagePosition);
-            }
-        }
+            @Override public void onPageScrolled(int arg0, float arg1, int arg2) {}
+            @Override public void onPageScrollStateChanged(int arg0) {}
+        });
     }
     @Override
     public void onStart()
@@ -213,7 +214,6 @@ public class EventActivitiesPagesFragment extends Fragment implements LoaderCall
     public void onSaveInstanceState(Bundle outState)
     {
         super.onSaveInstanceState(outState);
-        outState.putInt(STATE_DISPLAY_OPTION, mDisplayOption.ordinal());
         outState.putInt(STATE_DOWNLOAD_ATTEMPT, mDownloadAttempt);
         outState.putInt(STATE_CURRENT_PAGE, mPagePosition);
     }
@@ -241,7 +241,14 @@ public class EventActivitiesPagesFragment extends Fragment implements LoaderCall
     public boolean onNavigationItemSelected(int itemPosition, long itemId)
     {
         if (itemPosition == mDisplayOption.ordinal()) return false;
-        
+
+        // Saves the selected type of display
+        mPreferences
+            .edit()
+            .putInt(DISPLAY_OPTION_ACTIVITIES, itemPosition)
+            .commit();
+
+        // Update the displayed info
         mDisplayOption = DisplayOption.values()[itemPosition];
         getLoaderManager().restartLoader(LOAD_ACTIVITY, null, this);
 
@@ -252,6 +259,17 @@ public class EventActivitiesPagesFragment extends Fragment implements LoaderCall
     public EventActivityInfo[] getItemData(int position)
     {
         return mActivitiesAdapter.getItemData(position);
+    }
+    public CharSequence getPageTitle(int position)
+    {
+        if (position < mActivitiesAdapter.getCount())
+        {
+            return mActivitiesAdapter.getPageTitle(position);
+        }
+        else
+        {
+            return "";
+        }
     }
 
     private void refresh()
@@ -307,6 +325,16 @@ public class EventActivitiesPagesFragment extends Fragment implements LoaderCall
                     mDownloadAttempt++;
                     refresh();
                 }
+            }
+            else
+            {
+                if (mPagePosition == -1)
+                {
+                    // Move to the preferred page, which may be today's activities list
+                    mPagePosition = mActivitiesAdapter.getPreferredPage();
+                }
+                // Move to the selected page
+                mViewPager.setCurrentItem(mPagePosition);
             }
             break;
         }

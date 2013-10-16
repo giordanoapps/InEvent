@@ -63,7 +63,13 @@ public class EventActivitiesListFragment extends Fragment implements OnItemClick
         public void onChange(boolean selfChange)
         {
             super.onChange(selfChange);
-            mActivitiesAdapter.setData(mPageContainer.getItemData(getArguments().getInt(ARGS_LIST_POSITION)));
+            // Gather some info
+            int position = getArguments().getInt(ARGS_LIST_POSITION);
+            String header = mPageContainer.getPageTitle(position).toString();
+            // Adjust the fragment data
+            mActivitiesAdapter.setData(mPageContainer.getItemData(position));
+            getArguments().putString(ARGS_LIST_HEADER, header);
+            // Resetup the views
             View view = getView();
             if (view != null)
             {
@@ -72,6 +78,7 @@ public class EventActivitiesListFragment extends Fragment implements OnItemClick
                     .setVisibility(View.GONE);
                 view.findViewById(!empty ? android.R.id.content : android.R.id.empty)
                     .setVisibility(View.VISIBLE);
+                ((TextView) view.findViewById(R.id.activity_sectionHeader)).setText(header);
             }
         }
     };

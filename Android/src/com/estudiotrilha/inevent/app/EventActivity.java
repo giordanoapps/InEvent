@@ -134,13 +134,6 @@ public class EventActivity extends SlidingMenuBaseActivity
         // Go back to the marketplace
         finish();
     }
-    
-    @Override
-    public void events(View v)
-    {
-        finish();
-    }
-
 
     public int getRoleId()
     {

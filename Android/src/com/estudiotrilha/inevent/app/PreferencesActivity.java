@@ -14,12 +14,16 @@ import com.google.analytics.tracking.android.EasyTracker;
 @SuppressWarnings("deprecation")
 public class PreferencesActivity extends PreferenceActivity implements OnSharedPreferenceChangeListener
 {
-    public static final String SLIDING_MENU_SHOWN      = InEvent.class.getPackage().getName() + ".preferences.SLIDING_MENU_SHOWN";
-    public static final int    SLIDING_MENU_SHOWN_MAX  = 3;
+    public static final String SLIDING_MENU_SHOWN        = InEvent.class.getPackage().getName() + ".preferences.SLIDING_MENU_SHOWN";
+    public static final int    SLIDING_MENU_SHOWN_MAX    = 3;
 
-    public static final String SPLASH_LAST_SHOWN       = InEvent.class.getPackage().getName() + ".preferences.SPLASH_LAST_SHOWN";
+    public static final String EVENT_SELECTED            = InEvent.class.getPackage().getName() + ".preferences.EVENT_SELECTED";
 
-    public static final String USE_MOBILE_CONNECTION   = InEvent.class.getPackage().getName() + ".preferences.USE_MOBILE_CONNECTION";
+    public static final String DISPLAY_OPTION_ACTIVITIES = InEvent.class.getPackage().getName() + ".preferences.DISPLAY_OPTION_ACTIVITIES";
+
+    public static final String SPLASH_LAST_SHOWN         = InEvent.class.getPackage().getName() + ".preferences.SPLASH_LAST_SHOWN";
+
+    public static final String USE_MOBILE_CONNECTION     = InEvent.class.getPackage().getName() + ".preferences.USE_MOBILE_CONNECTION";
 
 
     @Override

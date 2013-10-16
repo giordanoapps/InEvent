@@ -25,8 +25,6 @@
     <dimen name="spinner_subtitle_textSize">14dp</dimen>
 
     <!-- Custom Toast Message Configs -->
-   	<dimen name="toast_layout_width">180dp</dimen>
    	<dimen name="toast_layout_height">60dp</dimen>
-   	<dimen name="toast_layout_marginBottom">20dp</dimen>
 
 </resources>
