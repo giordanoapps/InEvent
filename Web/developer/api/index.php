@@ -20,6 +20,10 @@
 			include_once("modules/event.php");
 			break;
 
+		case "group":
+			include_once("modules/group.php");
+			break;
+
 		case "notification":
 			include_once("modules/notification.php");
 			break;

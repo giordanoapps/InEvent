@@ -95,8 +95,22 @@
 - (void)eventGetPeopleAtEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID;
 - (void)eventGetActivitiesAtEvent:(NSInteger)eventID;
 - (void)eventGetActivitiesAtEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID;
+- (void)eventGetGroupsAtEvent:(NSInteger)eventID;
+- (void)eventGetGroupsAtEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID;
 - (void)eventGetOpinionFromEvent:(NSInteger)eventID withToken:(NSString *)tokenID;
 - (void)eventSendOpinionWithRating:(NSInteger)rating withMessage:(NSString *)message toEvent:(NSInteger)eventID withToken:(NSString *)tokenID;
+
+#pragma mark - Group
+- (void)groupCreateGroupAtEvent:(NSInteger)eventID withTokenID:(NSString *)tokenID;
+- (void)groupEditField:(NSString *)name withValue:(NSString *)value atGroup:(NSInteger)groupID withTokenID:(NSString *)tokenID;
+- (void)groupRemoveGroup:(NSInteger)groupID withTokenID:(NSString *)tokenID;
+- (void)groupRequestEnrollmentAtGroup:(NSInteger)groupID withTokenID:(NSString *)tokenID;
+- (void)groupRequestEnrollmentForPersonWithName:(NSString *)name andEmail:(NSString *)email atGroup:(NSInteger)groupID withTokenID:(NSString *)tokenID;
+- (void)groupDismissEnrollmentAtGroup:(NSInteger)groupID withTokenID:(NSString *)tokenID;
+- (void)groupDismissEnrollmentForPerson:(NSInteger)personID atGroup:(NSInteger)groupID withTokenID:(NSString *)tokenID;
+- (void)groupConfirmEntranceForPerson:(NSInteger)personID atGroup:(NSInteger)groupID withTokenID:(NSString *)tokenID;
+- (void)groupRevokeEntranceForPerson:(NSInteger)personID atGroup:(NSInteger)groupID withTokenID:(NSString *)tokenID;
+- (void)groupGetPeopleAtGroup:(NSInteger)groupID withTokenID:(NSString *)tokenID;
 
 #pragma mark - Notifications
 - (void)notificationGetNumberOfNotificationsWithTokenID:(NSString *)tokenID;

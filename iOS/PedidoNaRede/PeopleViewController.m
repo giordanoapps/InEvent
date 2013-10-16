@@ -13,17 +13,17 @@
 #import "HumanToken.h"
 #import "EventToken.h"
 #import "UtilitiesController.h"
-#import "ODRefreshControl.h"
 #import "CoolBarButtonItem.h"
 #import "PeopleViewCell.h"
 #import "PeopleGroupViewCell.h"
 
 @interface PeopleViewController () {
-    ODRefreshControl *refreshControl;
+    UIRefreshControl *refreshControl;
+    NSIndexPath *selectedPath;
     NSString *dataPath;
+    NSMutableArray *groups;
+    NSCache *peopleCache;
 }
-
-@property (nonatomic, strong) NSMutableArray *people;
 
 @end
 
@@ -35,6 +35,7 @@
     if (self) {
         self.title = NSLocalizedString(@"People", nil);
         self.tabBarItem.image = [UIImage imageNamed:@"16-Group"];
+        peopleCache = [[NSCache alloc] init];
     }
     return self;
 }
@@ -47,9 +48,13 @@
     [self loadData];
     
     // Refresh Control
-    refreshControl = [[ODRefreshControl alloc] initInScrollView:self.collectionView];
+    refreshControl = [[UIRefreshControl alloc] init];
+    refreshControl.tintColor = [UIColor grayColor];
     [refreshControl addTarget:self action:@selector(reloadData) forControlEvents:UIControlEventValueChanged];
+    [self.collectionView addSubview:refreshControl];
     
+    // Collection View
+    self.collectionView.alwaysBounceVertical = YES;
     self.collectionView.backgroundColor = [ColorThemeController tableViewBackgroundColor];
     [self.collectionView registerNib:[UINib nibWithNibName:@"PeopleViewCell" bundle:nil] forCellWithReuseIdentifier:@"PeopleViewCell"];
 }
@@ -81,7 +86,9 @@
 - (void)forceDataReload:(BOOL)forcing {
     
     if ([[HumanToken sharedInstance] isMemberAuthenticated]) {
-        [[[APIController alloc] initWithDelegate:self forcing:forcing] eventGetPeopleAtEvent:[[EventToken sharedInstance] eventID] withTokenID:[[HumanToken sharedInstance] tokenID]];
+        [[[APIController alloc] initWithDelegate:self forcing:forcing] eventGetGroupsAtEvent:[[EventToken sharedInstance] eventID] withTokenID:[[HumanToken sharedInstance] tokenID]];
+    } else {
+        [[[APIController alloc] initWithDelegate:self forcing:forcing] eventGetGroupsAtEvent:[[EventToken sharedInstance] eventID]];
     }
 }
 
@@ -113,9 +120,9 @@
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     
     if ([collectionView isEqual:_collectionView]) {
-        return [self.people count];
+        return [groups count];
     } else {
-        return 5;
+        return [[peopleCache objectForKey:collectionView] count];
     }
 }
 
@@ -125,13 +132,13 @@
 
         PeopleViewCell *cell = (PeopleViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"PeopleViewCell" forIndexPath:indexPath];
         
-        NSDictionary *dictionary = [self.people objectAtIndex:indexPath.row];
-        cell.initial.text = [[[dictionary objectForKey:@"name"] stringByDecodingHTMLEntities] substringToIndex:1];
-        cell.collectionView.delegate = self;
-        cell.collectionView.dataSource = self;
-        [cell.collectionView registerNib:[UINib nibWithNibName:@"PeopleGroupViewCell" bundle:nil] forCellWithReuseIdentifier:@"PeopleGroupViewCell"];
+        NSDictionary *dictionary = [groups objectAtIndex:indexPath.row];
         
-        [cell.collectionView reloadData];
+        if (selectedPath && [selectedPath compare:indexPath] == NSOrderedSame) {
+            [self buildSelectedPeopleViewCell:cell withDictionary:dictionary];
+        } else {
+            [self buildPeopleViewCell:cell withDictionary:dictionary];
+        }
         
         return cell;
 
@@ -139,11 +146,66 @@
         
         PeopleGroupViewCell *cell = (PeopleGroupViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier: @"PeopleGroupViewCell" forIndexPath:indexPath];
         
-        NSDictionary *dictionary = [self.people objectAtIndex:indexPath.row];
+        NSDictionary *dictionary = [[peopleCache objectForKey:collectionView] objectAtIndex:indexPath.row];
         cell.initial.text = [[[dictionary objectForKey:@"name"] stringByDecodingHTMLEntities] substringToIndex:1];
         
         return cell;
     }
+}
+
+- (void)buildSelectedPeopleViewCell:(PeopleViewCell *)cell withDictionary:(NSDictionary *)dictionary {
+    // Label
+    cell.initial.font = [UIFont fontWithName:@"Thonburi-Bold" size:30.0f];
+    cell.initial.frame = CGRectMake(50.0f, 50.0f, 60.0f, 60.0f);
+    cell.initial.text = [[[dictionary objectForKey:@"name"] stringByDecodingHTMLEntities] substringToIndex:1];
+    [cell.initial.layer setCornerRadius:cell.initial.frame.size.width / 2.0f];
+    
+    // Collection View
+    cell.collectionView.userInteractionEnabled = YES;
+    cell.collectionView.delegate = self;
+    cell.collectionView.dataSource = self;
+    [cell.collectionView registerNib:[UINib nibWithNibName:@"PeopleGroupViewCell" bundle:nil] forCellWithReuseIdentifier:@"PeopleGroupViewCell"];
+    
+    [cell.collectionView reloadData];
+}
+
+- (void)buildPeopleViewCell:(PeopleViewCell *)cell withDictionary:(NSDictionary *)dictionary {
+    // Label
+    cell.initial.font = [UIFont fontWithName:@"Thonburi" size:20.0f];
+    cell.initial.frame = CGRectMake(20.0f, 20.0f, 120.0f, 120.0f);
+    cell.initial.text = [[dictionary objectForKey:@"name"] stringByDecodingHTMLEntities];
+    [cell.initial.layer setCornerRadius:cell.initial.frame.size.width / 10.0f];
+    
+    // Collection View
+    cell.collectionView.userInteractionEnabled = NO;
+}
+
+#pragma mark - Collection View Delegate
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+    // Reload the old index path
+    if (selectedPath != nil) {
+        NSIndexPath *oldSelectedPath = selectedPath;
+        selectedPath = indexPath;
+        [UIView animateWithDuration:0.2f animations:^{
+            [self buildPeopleViewCell:(PeopleViewCell *)[self.collectionView cellForItemAtIndexPath:oldSelectedPath] withDictionary:[groups objectAtIndex:oldSelectedPath.row]];
+        } completion:nil];
+        
+    } else {
+        // Save the indexPath
+        selectedPath = indexPath;
+    }
+    
+    // Load some data
+    NSInteger groupID = [[[groups objectAtIndex:indexPath.row] objectForKey:@"id"] integerValue];
+    UICollectionView *cellView = [(PeopleViewCell *)[collectionView cellForItemAtIndexPath:indexPath] collectionView];
+    [[[APIController alloc] initWithDelegate:self forcing:YES withUserInfo:@{@"key": cellView}] groupGetPeopleAtGroup:groupID withTokenID:[[HumanToken sharedInstance] tokenID]];
+    
+//    [self.collectionView performBatchUpdates:^{
+//        [self.collectionView reloadItemsAtIndexPaths:@[selectedPath]];
+//        [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
+//    } completion:nil];
 }
 
 #pragma mark – UICollectionViewDelegateFlowLayout
@@ -170,9 +232,9 @@
 
 - (void)apiController:(APIController *)apiController didLoadDictionaryFromServer:(NSDictionary *)dictionary {
     
-    if ([apiController.method isEqualToString:@"getPeople"]) {
-        // Assign the data object to the companies
-        self.people = [NSMutableArray arrayWithArray:[dictionary objectForKey:@"data"]];
+    if ([apiController.method isEqualToString:@"getGroups"]) {
+        // Assign the data object to the groups
+        groups = [NSMutableArray arrayWithArray:[dictionary objectForKey:@"data"]];
         
         // Save the path of the current file object
         dataPath = apiController.path;
@@ -180,11 +242,20 @@
         // Reload all table data
         [self.collectionView reloadData];
         
-        [refreshControl endRefreshing];
+    } else if ([apiController.method isEqualToString:@"getPeople"]) {
+        // Assign the data to the people
+        [peopleCache setObject:[dictionary objectForKey:@"data"] forKey:[apiController.userInfo objectForKey:@"key"]];
+        
+        // Reload some specific rows
+        [UIView animateWithDuration:0.2f animations:^{
+            [self buildSelectedPeopleViewCell:(PeopleViewCell *)[self.collectionView cellForItemAtIndexPath:selectedPath] withDictionary:[groups objectAtIndex:selectedPath.row]];
+        } completion:nil];
         
     } else if ([apiController.method isEqualToString:@"requestEnrollment"]) {
         [self reloadData];
     }
+
+    [refreshControl endRefreshing];
 }
 
 - (void)apiController:(APIController *)apiController didFailWithError:(NSError *)error {
@@ -200,7 +271,7 @@
         dataPath = apiController.path;
     } else {
         // Save the current object
-        [[NSDictionary dictionaryWithObject:self.people forKey:@"data"] writeToFile:dataPath atomically:YES];
+        [[NSDictionary dictionaryWithObject:groups forKey:@"data"] writeToFile:dataPath atomically:YES];
         
         // Load the UI controls
         [super apiController:apiController didSaveForLaterWithError:error];

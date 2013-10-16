@@ -119,7 +119,7 @@
     };
 
     // Make the API request that uses FQL
-    FBRequest *request = [[FBRequest alloc] initWithSession:FBSession.activeSession graphPath:[NSString stringWithFormat:@"/search?q=%@&type=post", @"party"] parameters:nil HTTPMethod:@"GET"];
+    FBRequest *request = [[FBRequest alloc] initWithSession:FBSession.activeSession graphPath:[NSString stringWithFormat:@"/search?q=%@&type=post", @"brazil"] parameters:nil HTTPMethod:@"GET"];
     
 //                          [[EventToken sharedInstance] nick]]
                           

@@ -276,47 +276,52 @@
 			// Get some properties
 			$personID = getAttribute($_GET['personID']);
 
-			if ($core->workAtEvent) {
+			if ($core->memberID != $personID) {
 
-				// See which field we want to update
-				$attribute = ($method === "grantPermission") ? ROLE_COORDINATOR : ROLE_ATTENDEE;
+				if ($core->workAtEvent) {
 
-				// Update based on the attribute
-				$update = resourceForQuery(
-					"UPDATE
-						`eventMember`
-					SET
-						`eventMember`.`roleID` = $attribute
-					WHERE 1
-						AND `eventMember`.`eventID` = $eventID
-						AND `eventMember`.`memberID` = $personID
-				");
+					// See which field we want to update
+					$attribute = ($method === "grantPermission") ? ROLE_COORDINATOR : ROLE_ATTENDEE;
 
-				// Send a push notification
-				if ($globalDev == 0) {
-					if ($method === "grantPermission") {
-						pushPersonPromotion($eventID, $personID);
-					} elseif ($method === "revokePermission") {
-						pushPersonDemote($eventID, $personID);
+					// Update based on the attribute
+					$update = resourceForQuery(
+						"UPDATE
+							`eventMember`
+						SET
+							`eventMember`.`roleID` = $attribute
+						WHERE 1
+							AND `eventMember`.`eventID` = $eventID
+							AND `eventMember`.`memberID` = $personID
+					");
+
+					// Send a push notification
+					if ($globalDev == 0) {
+						if ($method === "grantPermission") {
+							pushPersonPromotion($eventID, $personID);
+						} elseif ($method === "revokePermission") {
+							pushPersonDemote($eventID, $personID);
+						}
 					}
-				}
 
-				if (mysql_affected_rows() > 0) {
-					// Return its data
-					if ($format == "json") {
-						$data["eventID"] = $eventID;
-						echo json_encode($data);
-					} elseif ($format == "html") {
-						$data["eventID"] = $eventID;
-						echo json_encode($data);
+					if (mysql_affected_rows() > 0) {
+						// Return its data
+						if ($format == "json") {
+							$data["eventID"] = $eventID;
+							echo json_encode($data);
+						} elseif ($format == "html") {
+							$data["eventID"] = $eventID;
+							echo json_encode($data);
+						} else {
+							http_status_code(405, "this format is not available");
+						}
 					} else {
-						http_status_code(405, "this format is not available");
+						http_status_code(500, "row insertion has failed");
 					}
 				} else {
-					http_status_code(500, "row insertion has failed");
+					http_status_code(401, "Person doesn't work at event");
 				}
 			} else {
-				http_status_code(401, "Person doesn't work at event");
+				http_status_code(401, "Person cannot be yourself");
 			}
 		} else {
 			http_status_code(400, "personID is a required parameter");
@@ -436,6 +441,29 @@
 
 			$data = printInformation("event", $result, true, 'object');
 			echo json_encode(groupActivitiesInDays($data));
+
+		} else {
+			http_status_code(400, "eventID is a required parameter");
+		}
+		
+	} else
+
+	if ($method === "getGroups") {
+
+		if (isset($_GET["eventID"])) {
+
+			if (isset($_GET['tokenID']) && $_GET['tokenID'] != "null") {
+				// Get some properties
+				$eventID = getTokenForEvent();
+				$result = getGroupsForMemberAtEventQuery($eventID, $core->memberID);
+
+			} else {
+				// Get some properties
+				$eventID = getAttribute($_GET['eventID']);
+				$result = getGroupsForMemberAtEventQuery($eventID, 0);
+			}
+
+			echo printInformation("event", $result, true, 'json');
 
 		} else {
 			http_status_code(400, "eventID is a required parameter");

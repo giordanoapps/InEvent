@@ -33,6 +33,29 @@
         return $result;
     }
 
+    function getPeopleAtGroupQuery($groupID, $complement = "", $order = "`groupMember`.`id` ASC") {
+
+        $result = resourceForQuery(
+            "SELECT
+                `member`.`id` AS `memberID`,
+                `member`.`name`,
+                `member`.`email`,
+                `groupMember`.`approved`,
+                `groupMember`.`present`
+            FROM
+                `member`
+            INNER JOIN
+                `groupMember` ON `member`.`id` = `groupMember`.`memberID`
+            WHERE 1
+                AND `groupMember`.`groupID` = $groupID
+                $complement
+            ORDER BY
+                $order
+        ");
+
+        return $result;
+    }
+
     function getPeopleAtEventQuery($eventID, $complement = "", $order = "`member`.`name` ASC") {
 
         $result = resourceForQuery(

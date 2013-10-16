@@ -33,21 +33,8 @@
 - (void)configureCell {
     // Collection
     self.backgroundColor = [ColorThemeController tableViewBackgroundColor];
-    [self changeLayout];
-    [self addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(changeLayout)]];
+    self.collectionViewLayout = [[PeopleGroupViewLayout alloc] init];
 }
-
-#pragma mark - Private Methods
-
-- (void)changeLayout {
-    
-    if (arc4random() % 2 == 0) {
-        [self setCollectionViewLayout:[[UICollectionViewFlowLayout alloc] init] animated:YES];
-    } else {
-        [self setCollectionViewLayout:[[PeopleGroupViewLayout alloc] init] animated:YES];
-    }
-}
-
 
 
 @end

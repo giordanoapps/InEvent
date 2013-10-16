@@ -41,10 +41,10 @@
     [_leftButton addTarget:self.coolTarget action:self.coolSelector forControlEvents:UIControlEventTouchUpInside];
     
     // iOS 6
-    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {
-        UIImage *barButton = [[UIImage imageNamed:@"barButton.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 5, 0, 5)];
-        [_leftButton setBackgroundImage:barButton forState:UIControlStateNormal];
-    }
+//    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {
+//        UIImage *barButton = [[UIImage imageNamed:@"barButton.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 5, 0, 5)];
+//        [_leftButton setBackgroundImage:barButton forState:UIControlStateNormal];
+//    }
     
     return [self initWithCustomView:_leftButton];
 }

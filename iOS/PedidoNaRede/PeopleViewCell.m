@@ -40,7 +40,7 @@
     
     // Label
     [self.initial setBackgroundColor:[ColorThemeController tableViewCellBackgroundColor]];
-    [self.initial.layer setCornerRadius:self.initial.frame.size.width / 2.0f];
+    [self.initial setUserInteractionEnabled:NO];
 }
 
 @end
