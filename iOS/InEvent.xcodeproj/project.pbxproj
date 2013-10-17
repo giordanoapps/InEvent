@@ -143,6 +143,7 @@
 		EB89750D180D147600DB2486 /* PeopleGroupViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = EB89750C180D147600DB2486 /* PeopleGroupViewLayout.m */; };
 		EB897510180D166900DB2486 /* PeopleGroupViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EB89750F180D166900DB2486 /* PeopleGroupViewCell.m */; };
 		EB897512180D20B100DB2486 /* PeopleGroupViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB897511180D20B100DB2486 /* PeopleGroupViewCell.xib */; };
+		EB897515181056D800DB2486 /* SebraeColorThemeController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB897514181056D800DB2486 /* SebraeColorThemeController.m */; };
 		EB8C7D7E16D17AEB00F3C721 /* cb_box_off.png in Resources */ = {isa = PBXBuildFile; fileRef = EB8C7D6516D17AEB00F3C721 /* cb_box_off.png */; };
 		EB8C7D7F16D17AEB00F3C721 /* cb_box_off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB8C7D6616D17AEB00F3C721 /* cb_box_off@2x.png */; };
 		EB8C7D8016D17AEB00F3C721 /* cb_box_on.png in Resources */ = {isa = PBXBuildFile; fileRef = EB8C7D6716D17AEB00F3C721 /* cb_box_on.png */; };
@@ -530,6 +531,8 @@
 		EB89750E180D166900DB2486 /* PeopleGroupViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PeopleGroupViewCell.h; path = PedidoNaRede/PeopleGroupViewCell.h; sourceTree = "<group>"; };
 		EB89750F180D166900DB2486 /* PeopleGroupViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PeopleGroupViewCell.m; path = PedidoNaRede/PeopleGroupViewCell.m; sourceTree = "<group>"; };
 		EB897511180D20B100DB2486 /* PeopleGroupViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PeopleGroupViewCell.xib; path = PedidoNaRede/PeopleGroupViewCell.xib; sourceTree = "<group>"; };
+		EB897513181056D800DB2486 /* SebraeColorThemeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SebraeColorThemeController.h; path = PedidoNaRede/SebraeColorThemeController.h; sourceTree = "<group>"; };
+		EB897514181056D800DB2486 /* SebraeColorThemeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SebraeColorThemeController.m; path = PedidoNaRede/SebraeColorThemeController.m; sourceTree = "<group>"; };
 		EB8C7D6516D17AEB00F3C721 /* cb_box_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cb_box_off.png; sourceTree = "<group>"; };
 		EB8C7D6616D17AEB00F3C721 /* cb_box_off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cb_box_off@2x.png"; sourceTree = "<group>"; };
 		EB8C7D6716D17AEB00F3C721 /* cb_box_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cb_box_on.png; sourceTree = "<group>"; };
@@ -1461,6 +1464,8 @@
 		EBD6FE401806464B006D0E73 /* Clients */ = {
 			isa = PBXGroup;
 			children = (
+				EB897513181056D800DB2486 /* SebraeColorThemeController.h */,
+				EB897514181056D800DB2486 /* SebraeColorThemeController.m */,
 			);
 			name = Clients;
 			sourceTree = "<group>";
@@ -1988,6 +1993,7 @@
 				EBD6FE44180646B6006D0E73 /* StreamDetailViewController.m in Sources */,
 				EB39399916654B4400580A4E /* ScheduleViewController.m in Sources */,
 				EB3939A716654BB900580A4E /* main.m in Sources */,
+				EB897515181056D800DB2486 /* SebraeColorThemeController.m in Sources */,
 				EB3939C616654BE300580A4E /* GTMNSString+HTML.m in Sources */,
 				EB3939C716654BE300580A4E /* NSString+HTML.m in Sources */,
 				EB3939C816654BE300580A4E /* FacingView.m in Sources */,

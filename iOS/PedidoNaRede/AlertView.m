@@ -79,7 +79,7 @@
     [_messageBox.layer setMasksToBounds:NO];
     
     // Message
-    [_message.titleLabel setTextAlignment: UITextAlignmentCenter];
+    [_message.titleLabel setTextAlignment:NSTextAlignmentCenter];
     [_message setTitleColor:[ColorThemeController textColor]  forState:UIControlStateHighlighted];
 
     // Yes Button

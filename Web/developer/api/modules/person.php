@@ -32,24 +32,23 @@
 				// We have a user ID, so probably a logged in user.
 				// If not, we'll get an exception, which we handle below.
 				try {
-					$userProfile = $facebook->api('/me?fields=email,name', 'GET');
-
-					$name = $userProfile['name'];
+					$userProfile = $facebook->api('/me?fields=email', 'GET');
+					$facebookID = $userProfile['id'];
 					$email = $userProfile['email'];
 
 					// We now see if the current member has a profile with us
 					$result = resourceForQuery(
-					// echo (
 						"SELECT
 							`member`.`id`,
 							`member`.`name`,
+							`member`.`facebookID`,
 							COALESCE(`memberSessions`.`sessionKey`, '') AS `sessionKey`
 						FROM
 							`member`
 						LEFT JOIN
 							`memberSessions` ON `memberSessions`.`memberID` = `member`.`id`
 						WHERE 0
-							OR BINARY `member`.`name` = '$name'
+							OR `member`.`facebookID` = $facebookID
 							OR BINARY `member`.`email` = '$email'
 						ORDER BY
 							`memberSessions`.`id` DESC
@@ -58,10 +57,23 @@
 					// Member already has a profile with us
 					if (mysql_num_rows($result) > 0) {
 
-						$name = mysql_result($result, 0, "name");
 						$memberID = mysql_result($result, 0, "id");
+						$name = mysql_result($result, 0, "name");
 						$tokenID = mysql_result($result, 0, "sessionKey");
 
+						// Update the facebook token if necessary
+						if (mysql_result($result, 0, "facebookID") == 0) {
+							$update = resourceForQuery(
+								"UPDATE
+									`member`
+								SET
+									`member`.`facebookID` = $facebookID
+								WHERE 1
+									AND `member`.`id` = $memberID
+							");
+						}
+
+						// Get the member events
 						$events = getMemberEvents($memberID);
 
 						// Return some information
@@ -77,7 +89,7 @@
 						// Create a random password for the newly created member
 						$password = "123456";
 						// Create the member
-						$memberID = createMember($name, $password, $email);
+						$memberID = createMember($name, $password, $email, "", "", "", "", "", "", "", $facebookID);
 
 						if ($memberID != 0) {
 							// Return the desired data

@@ -98,19 +98,19 @@
 					<li class="toolBonus toolBonusOptions">
 						<div>
 							<span class="title">Número de vagas</span>
-	                    	<span class="description">Indica até quantas pessoas deverão ser aprovadas por padrão, com consequente aprovação manual para as seguintes.</span>
+	                    	<span class="explanation">Indica até quantas pessoas deverão ser aprovadas por padrão, com consequente aprovação manual para as seguintes.</span>
 	                        <img src="images/32-Users.png" alt="Local" title="Número de vagas na atividade">
 	                        <span class="capacity" name="capacity">&infin;</span>
 	                    </div>
 	                    <div>
 	                    	<span class="title">Inscrição automática</span>
-	                    	<span class="description">Todos os participantes serão automaticamente inscritos nesta atividade quando se registrarem.</span>
+	                    	<span class="explanation">Todos os participantes serão automaticamente inscritos nesta atividade quando se registrarem.</span>
 		                    <img src="images/44-checkOn.png" alt="checkBox" name="general" class="checkbox general active" data-value="1">
 						</div>
 
 						<div>
 							<span class="title">Posição destacada</span>
-							<span class="description">Será mostrada em destaque entre as outras atividades, com cor de fundo e altura diferenciadas.</span>
+							<span class="explanation">Será mostrada em destaque entre as outras atividades, com cor de fundo e altura diferenciadas.</span>
 							<img src="images/44-checkOn.png" alt="checkBox" name="highlight" class="checkbox highlight active" data-value="1">
                         </div>
 					</li>

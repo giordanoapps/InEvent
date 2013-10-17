@@ -1576,7 +1576,7 @@ textarea, input {
 }
 
 #eventContent .agendaItem .right .bottom {
-	width: 18%;
+	width: 20%;
 	left: 68%;
 	position: absolute;
 	top: 50%;
@@ -1599,8 +1599,8 @@ textarea, input {
 }
 
 #eventContent .agendaItem .right .controls {
-	width: 14%;
-	left: 86%;
+	width: 12%;
+	left: 88%;
 	position: absolute;
 	top: 50%;
 	-webkit-transform: translate(0%, -50%);
@@ -1817,11 +1817,15 @@ textarea, input {
 	display: block;
 }
 
-#eventContent .toolBonusOptions .description {
+#eventContent .toolBonusOptions .explanation {
 	padding-bottom: 10px;
 	font-size: 85%;
 	display: block;
 	color: #A5A5A5;
+}
+
+#eventContent .toolBonusOptions .capacity {
+	font-weight: bold;
 }
 
 #eventContent .toolBonusOptions .checkbox {
