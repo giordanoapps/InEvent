@@ -82,7 +82,6 @@
     if (![[HumanToken sharedInstance] isMemberAuthenticated]) {
         
         HumanLoginViewController *hlvc = [[HumanLoginViewController alloc] initWithNibName:@"HumanLoginViewController" bundle:nil];
-        [hlvc setMoveKeyboardRatio:0.7];
         UINavigationController *viewController = [[UINavigationController alloc] initWithRootViewController:hlvc];
     
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {

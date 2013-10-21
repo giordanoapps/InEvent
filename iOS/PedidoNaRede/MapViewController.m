@@ -40,12 +40,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    self.shouldMoveKeyboardUp = NO;
+    
     self.view.backgroundColor = [ColorThemeController navigationBarBackgroundColor];
     
     // The searchField will only be available on the master map class
-    if (_searchField) {
+    if (_searchField != nil) {
         
         // APIController
         [self loadData];

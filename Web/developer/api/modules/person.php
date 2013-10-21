@@ -118,16 +118,16 @@
 
 	if ($method === "edit" || $method === "enroll") {
 
-		if (isset($_POST["name"]) && isset($_POST["email"])) {
+		if (isset($_REQUEST["name"]) && isset($_REQUEST["email"])) {
 
 			// Make sure that the user is not creating multiple accounts
 			// include_once("../../includes/registrationCheck.php");
 
 			// Get the provided data
 			// Required
-			$name = getAttribute($_POST["name"]);
-			$password = ($method === "enroll") ? getAttribute($_POST["password"]) : "";
-			$email = getAttribute($_POST["email"]);
+			$name = getAttribute($_REQUEST["name"]);
+			$password = ($method === "enroll") ? getAttribute($_REQUEST["password"]) : "";
+			$email = getAttribute($_REQUEST["email"]);
 
 			// Optional
 			$cpf = (isset($_POST["cpf"])) ? getEmptyAttribute($_POST["cpf"]) : "";

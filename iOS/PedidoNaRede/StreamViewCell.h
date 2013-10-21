@@ -12,6 +12,4 @@
 
 @property (strong, nonatomic) IBOutlet UIImageView *picture;
 
-- (void)configureCell;
-
 @end

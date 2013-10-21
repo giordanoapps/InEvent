@@ -12,7 +12,7 @@
 #import "HumanToken.h"
 #import "APIController.h"
 #import "NSObject+Triangle.h"
-#import "NSObject+Components.h"
+#import "UIButton+Components.h"
 #import "Enrollment.h"
 
 @implementation MarketplaceViewCell
@@ -54,7 +54,7 @@
     [_line setBackgroundColor:[ColorThemeController tableViewCellInternalBorderColor]];
     
     // Button
-    [self setUpButtonComponent:_status];
+    [_status setUpButtonComponent];
 }
 
 

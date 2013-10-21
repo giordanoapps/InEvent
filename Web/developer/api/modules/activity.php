@@ -46,7 +46,7 @@
 			$activityID = mysql_insert_id();
 
 			// Send a push notification
-			if ($globalDev == 0) pushActivityCreation($eventID, $activityID);
+			// if ($globalDev == 0) pushActivityCreation($eventID, $activityID);
 
 			// Return its data
 			if ($format == "json") {
@@ -260,7 +260,11 @@
 					}
 
 					// Send a push notification
-					if ($globalDev == 0) pushActivityUpdate(getEventForActivity($activityID), $activityID);
+					if ($globalDev == 0) {
+						if ($name == "hourBegin") {
+							pushActivityUpdate(getEventForActivity($activityID), $activityID);
+						}
+					}
 
 					// Return its data
 					if ($format == "json") {

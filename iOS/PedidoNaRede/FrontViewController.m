@@ -6,8 +6,8 @@
 //  Copyright (c) 2012 Pedro Góes. All rights reserved.
 //
 
-#import "FrontViewController.h"
 #import <QuartzCore/QuartzCore.h>
+#import "FrontViewController.h"
 #import "UtilitiesController.h"
 #import "UIImageView+WebCache.h"
 #import "NSString+HTML.h"
@@ -15,14 +15,13 @@
 #import "HumanToken.h"
 #import "EventToken.h"
 #import "GAI.h"
-#import "NSObject+Field.h"
 #import "UIPlaceHolderTextView.h"
 #import "CoolBarButtonItem.h"
 
 @interface FrontViewController () {
     ODRefreshControl *refreshControl;
     NSDictionary *eventData;
-    BOOL isEditing;
+    BOOL editingMode;
 }
 
 @property (nonatomic, strong) NSArray *activities;
@@ -54,9 +53,13 @@
     [self loadDismissButton];
     
     // Refresh Control
-    refreshControl = [[ODRefreshControl alloc] initInScrollView:self.scrollView];
+    refreshControl = [[ODRefreshControl alloc] initInScrollView:self.view];
     [refreshControl addTarget:self action:@selector(reloadData) forControlEvents:UIControlEventValueChanged];
     
+    // Scroll View
+    self.view.contentSize = CGSizeMake(self.view.frame.size.width, 842.0f);
+	[self.view flashScrollIndicators];
+
     // Wrapper
     _wrapper.layer.cornerRadius = 4.0f;
     
@@ -70,11 +73,8 @@
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) [self loadData];
 }
 
-- (void) viewDidAppear:(BOOL)animated {
+- (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    
-    // Scroll view
-    [_scrollView setContentSize:CGSizeMake(_scrollView.frame.size.width, _scrollView.frame.size.height * 1.01)];
     
     // Window
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
@@ -120,38 +120,38 @@
     if (eventData) {
         
         // Cover
-        [_cover setImageWithURL:[UtilitiesController urlWithFile:[eventData objectForKey:@"cover"]]];
+        [self.cover setImageWithURL:[UtilitiesController urlWithFile:[eventData objectForKey:@"cover"]]];
         
         // Name
-        ((UILabel *)_name).text = [[eventData objectForKey:@"name"] stringByDecodingHTMLEntities];
+        self.name.text = [[eventData objectForKey:@"name"] stringByDecodingHTMLEntities];
         
         NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
         
         // Date begin
         NSDate *date = [NSDate dateWithTimeIntervalSince1970:[[eventData objectForKey:@"dateBegin"] integerValue]];
         NSDateComponents *components = [gregorian components:(NSMonthCalendarUnit | NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:date];
-        ((UILabel *)_dateBegin).text = [NSString stringWithFormat:@"%.2d/%.2d %.2d:%.2d", [components month], [components day], [components hour], [components minute]];
+        self.dateBegin.text = [NSString stringWithFormat:@"%.2d/%.2d %.2d:%.2d", [components month], [components day], [components hour], [components minute]];
         
         // Date end
         date = [NSDate dateWithTimeIntervalSince1970:[[eventData objectForKey:@"dateEnd"] integerValue]];
         components = [gregorian components:(NSMonthCalendarUnit | NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:date];
-        ((UILabel *)_dateEnd).text = [NSString stringWithFormat:@"%.2d/%.2d %.2d:%.2d", [components month], [components day], [components hour], [components minute]];
+        self.dateEnd.text = [NSString stringWithFormat:@"%.2d/%.2d %.2d:%.2d", [components month], [components day], [components hour], [components minute]];
         
         // Location
-        ((UILabel *)_location).text = [[NSString stringWithFormat:@"%@ %@", [eventData objectForKey:@"address"], [eventData objectForKey:@"city"]] stringByDecodingHTMLEntities];
+        self.location.text = [[NSString stringWithFormat:@"%@ %@", [eventData objectForKey:@"address"], [eventData objectForKey:@"city"]] stringByDecodingHTMLEntities];
         
         // Fugleman
-        ((UILabel *)_fugleman).text = [[eventData objectForKey:@"fugleman"] stringByDecodingHTMLEntities];
+        self.fugleman.text = [[eventData objectForKey:@"fugleman"] stringByDecodingHTMLEntities];
 
         // Fugleman
-        ((UILabel *)_enrollmentID).text = [NSString stringWithFormat:@"%.4d", [[eventData objectForKey:@"enrollmentID"] integerValue]];
+        self.enrollmentID.text = [NSString stringWithFormat:@"%.4d", [[eventData objectForKey:@"enrollmentID"] integerValue]];
     }
 }
 
 #pragma mark - Private Methods
 
 - (void)dismiss {
-    if (isEditing) [self endEditing];
+    if (editingMode) [self endEditing];
     
     // Dismiss the controller
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -178,52 +178,63 @@
 #pragma mark - Editing
 
 - (void)startEditing {
-    _name = [self createField:_name withAttributes:@[@"trimPadding"]];
-    _dateBegin = [self createField:_dateBegin withAttributes:@[@"trimPadding"]];
-    _dateEnd = [self createField:_dateEnd];
-    _location = [self createField:_location];
-    _fugleman = [self createField:_fugleman];
     
-    isEditing = YES;
+    // Set the placeholders
+    [self.name setPlaceholder:self.name.text];
+    [self.dateBegin setPlaceholder:self.dateBegin.text];
+    [self.dateEnd setPlaceholder:self.dateEnd.text];
+    [self.location setPlaceholder:self.location.text];
+    [self.fugleman setPlaceholder:self.fugleman.text];
+    [self.description setPlaceholder:self.description.text];
+
+    // Start editing
+    [self.name setEditable:YES];
+    [self.description setEditable:YES];
+    editingMode = YES;
     
     [self loadDoneButton];
+}
+
+- (void)saveEditing:(UIView *)field forName:(NSString *)name {
+    
+    // Save the fields
+    NSString *tokenID = [[HumanToken sharedInstance] tokenID];
+    NSInteger eventID = [[eventData objectForKey:@"id"] integerValue];
+    
+    // Field will always have a placeholder, so we can cast it as a UITextField
+    if (![((UITextField *)field).placeholder isEqualToString:((UITextField *)field).text]) {
+        [[[APIController alloc] initWithDelegate:self forcing:YES] eventEditField:name withValue:((UITextField *)field).text atEvent:eventID withTokenID:tokenID];
+    }
 }
 
 - (void)endEditing {
     
     // Save the fields
-    NSString *tokenID = [[HumanToken sharedInstance] tokenID];
+    [self saveEditing:self.name forName:@"name"];
+    [self saveEditing:self.dateBegin forName:@"dateBegin"];
+    [self saveEditing:self.dateEnd forName:@"dateEnd"];
+    [self saveEditing:self.location forName:@"location"];
+    [self saveEditing:self.fugleman forName:@"fugleman"];
+    [self saveEditing:self.description forName:@"description"];
     
-    if (![((UIPlaceHolderTextView *)_name).placeholder isEqualToString:((UIPlaceHolderTextView *)_name).text]) {
-        [[[APIController alloc] initWithDelegate:self forcing:YES] eventEditField:@"name" withValue:((UIPlaceHolderTextView *)_name).text atEvent:[[eventData objectForKey:@"id"] integerValue] withTokenID:tokenID];
-    }
-    
-    if (![((UIPlaceHolderTextView *)_dateBegin).placeholder isEqualToString:((UIPlaceHolderTextView *)_dateBegin).text]) {
-        [[[APIController alloc] initWithDelegate:self forcing:YES] eventEditField:@"dateBegin" withValue:((UIPlaceHolderTextView *)_dateBegin).text atEvent:[[eventData objectForKey:@"id"] integerValue] withTokenID:tokenID];
-    }
-    
-    if (![((UIPlaceHolderTextView *)_dateEnd).placeholder isEqualToString:((UIPlaceHolderTextView *)_dateEnd).text]) {
-        [[[APIController alloc] initWithDelegate:self forcing:YES] eventEditField:@"dateEnd" withValue:((UIPlaceHolderTextView *)_dateEnd).text atEvent:[[eventData objectForKey:@"id"] integerValue] withTokenID:tokenID];
-    }
-    
-    if (![((UIPlaceHolderTextView *)_location).placeholder isEqualToString:((UIPlaceHolderTextView *)_location).text]) {
-        [[[APIController alloc] initWithDelegate:self forcing:YES] eventEditField:@"location" withValue:((UIPlaceHolderTextView *)_location).text atEvent:[[eventData objectForKey:@"id"] integerValue] withTokenID:tokenID];
-    }
-    
-    if (![((UIPlaceHolderTextView *)_fugleman).placeholder isEqualToString:((UIPlaceHolderTextView *)_fugleman).text]) {
-        [[[APIController alloc] initWithDelegate:self forcing:YES] eventEditField:@"fugleman" withValue:((UIPlaceHolderTextView *)_fugleman).text atEvent:[[eventData objectForKey:@"id"] integerValue] withTokenID:tokenID];
-    }
-    
-    // Remove them
-    _name = [self removeField:_name];
-    _dateBegin = [self removeField:_dateBegin];
-    _dateEnd = [self removeField:_dateEnd];
-    _location = [self removeField:_location];
-    _fugleman = [self removeField:_fugleman];
-    
-    isEditing = NO;
+    // End editing
+    [self.name setEditable:NO];
+    [self.description setEditable:NO];
+    [self.view endEditing:YES];
+    editingMode = NO;
     
     [self loadMenuButton];
+}
+
+#pragma mark - Text Field Delegate
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    
+    if (editingMode) {
+        return [super textFieldShouldBeginEditing:textField];
+    } else {
+        return NO;
+    }
 }
 
 #pragma mark - APIController Delegate

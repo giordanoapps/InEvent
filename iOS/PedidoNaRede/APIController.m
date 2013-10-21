@@ -595,7 +595,7 @@
 - (void)personEnroll:(NSString *)name withPassword:(NSString *)password withEmail:(NSString *)email {
 
     if (name != nil && password != nil && email != nil) {
-        NSDictionary *attributes = @{@"GET" : @{@"name" : name, @"password" : password, @"email" : email}};
+        NSDictionary *attributes = @{@"POST" : @{@"name" : name, @"password" : password, @"email" : email}};
         
         [self JSONObjectWithNamespace:@"person" method:@"enroll" attributes:attributes];
     }

@@ -40,10 +40,6 @@
         
         // Alloc variables
         imagesCache = [[NSCache alloc] init];
-        
-        // Add notification observer for updates
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadData) name:@"scheduleCurrentState" object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadData) name:@"activityNotification" object:nil];
     }
     return self;
 }
@@ -55,13 +51,19 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    // Navigation delegate
+    // Navigation Delegate
     self.navigationController.delegate = self;
     
-    // Schedule details
-    [self loadData];
-    [self sendRequests];
+    // Hash View
+    _hashView.textColor = [ColorThemeController tableViewCellTextHighlightedColor];
     
+    // Text Field
+    _searchField.leftView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 14.0, 30.0)];
+    _searchField.leftViewMode = UITextFieldViewModeAlways;
+    [_searchField addObserver:self forKeyPath:@"text" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:NULL];
+    [_searchField setText:[[EventToken sharedInstance] nick]];
+    
+    // Table View
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _tableView.backgroundColor = [ColorThemeController tableViewBackgroundColor];
     
@@ -82,28 +84,14 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
-    // Reload data to calculate the right frame
-    [self.tableView reloadData];
-}
+#pragma mark - Text Field Methods
 
-#pragma mark - Loader
-
-- (void)loadData {
-    [self forceDataReload:NO];
-}
-
-- (void)reloadData {
-    [self forceDataReload:YES];
-}
-
-- (void)forceDataReload:(BOOL)forcing {
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     
-    if ([[HumanToken sharedInstance] isMemberAuthenticated]) {
-        NSString *tokenID = [[HumanToken sharedInstance] tokenID];
-        [[[APIController alloc] initWithDelegate:self forcing:forcing] eventGetActivitiesAtEvent:[[EventToken sharedInstance] eventID] withTokenID:tokenID];
+    if (object == _searchField) {
+        [self sendRequests];
     } else {
-        [[[APIController alloc] initWithDelegate:self forcing:forcing] eventGetActivitiesAtEvent:[[EventToken sharedInstance] eventID]];
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
     }
 }
 
@@ -119,9 +107,7 @@
     };
 
     // Make the API request that uses FQL
-    FBRequest *request = [[FBRequest alloc] initWithSession:FBSession.activeSession graphPath:[NSString stringWithFormat:@"/search?q=%@&type=post", @"brazil"] parameters:nil HTTPMethod:@"GET"];
-    
-//                          [[EventToken sharedInstance] nick]]
+    FBRequest *request = [[FBRequest alloc] initWithSession:FBSession.activeSession graphPath:[NSString stringWithFormat:@"/search?q=%@&type=post", _searchField.text] parameters:nil HTTPMethod:@"GET"];
                           
     [newConnection addRequest:request completionHandler:handler];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
@@ -222,8 +208,6 @@
         [aTableView registerNib:[UINib nibWithNibName:@"StreamViewCell" bundle:nil] forCellReuseIdentifier:CustomCellIdentifier];
         cell =  (StreamViewCell *)[aTableView dequeueReusableCellWithIdentifier:CustomCellIdentifier];
     }
-    
-    [cell configureCell];
     
     NSDictionary *dictionary = [posts objectAtIndex:indexPath.row];
     [cell.picture setImageWithURL:[NSURL URLWithString:[[dictionary objectForKey:@"picture"] stringByReplacingOccurrencesOfString:@"_s." withString:@"_n."]] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {

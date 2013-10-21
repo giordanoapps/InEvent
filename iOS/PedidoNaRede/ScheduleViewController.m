@@ -150,8 +150,6 @@
         FrontViewController *fvc = [[FrontViewController alloc] initWithNibName:@"FrontViewController" bundle:nil];
         UINavigationController *nfvc = [[UINavigationController alloc] initWithRootViewController:fvc];
         
-        [fvc setMoveKeyboardRatio:0.4];
-        
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
             nfvc.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
             nfvc.modalPresentationStyle = UIModalPresentationCurrentContext;
@@ -167,7 +165,6 @@
         FeedbackViewController *fvc = [[FeedbackViewController alloc] initWithNibName:@"FeedbackViewController" bundle:nil];
         UINavigationController *nfvc = [[UINavigationController alloc] initWithRootViewController:fvc];
         
-        [fvc setMoveKeyboardRatio:0.7];
         [fvc setFeedbackType:FeedbackTypeEvent withReference:[[EventToken sharedInstance] eventID]];
         
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
@@ -267,11 +264,9 @@
     
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
         sivc = [[ScheduleItemViewController alloc] initWithNibName:@"ScheduleItemViewController" bundle:nil];
-        [sivc setMoveKeyboardRatio:0.0f];
     } else {
         // Find the sibling navigation controller first child and send the appropriate data
         sivc = (ScheduleItemViewController *)[[[self.splitViewController.viewControllers lastObject] viewControllers] objectAtIndex:0];
-        [sivc setMoveKeyboardRatio:0.0f];
     }
     
     NSDictionary *dictionary = [[activities objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];

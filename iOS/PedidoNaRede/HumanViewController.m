@@ -18,8 +18,6 @@
     ODRefreshControl *refreshControl;
 }
 
-@property (nonatomic, strong) HumanLoginViewController *hlvc;
-
 @end
 
 @implementation HumanViewController
@@ -118,10 +116,9 @@
         [self.defaultPhoto setHidden:NO];
     } else {
         // Alloc login controller
-        _hlvc = [[HumanLoginViewController alloc] initWithNibName:@"HumanLoginViewController" bundle:nil];
-        [_hlvc setMoveKeyboardRatio:0.7];
-        [_hlvc setDelegate:self];
-        UINavigationController *nhlvc = [[UINavigationController alloc] initWithRootViewController:_hlvc];
+        HumanLoginViewController *hlvc = [[HumanLoginViewController alloc] initWithNibName:@"HumanLoginViewController" bundle:nil];
+        [hlvc setDelegate:self];
+        UINavigationController *nhlvc = [[UINavigationController alloc] initWithRootViewController:hlvc];
         
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
             nhlvc.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
@@ -176,7 +173,7 @@
 - (void)connectWithFacebook {
     if (!FBSession.activeSession.isOpen) {
         [FBSession openActiveSessionWithReadPermissions:@[@"basic_info", @"email"]
-                                           allowLoginUI:YES
+                                           allowLoginUI:NO
                                       completionHandler:
          ^(FBSession *session, FBSessionState state, NSError *error) {}];
     }

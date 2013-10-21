@@ -116,33 +116,27 @@
 
 #pragma mark - Navigator Bar
 
-+ (ColorThemeController *)findChild {
-    return (SebraeColorThemeController *)self;
-}
-
 + (UIColor *)navigationBarBackgroundColor {
-    
-    return [[self findChild] naviga]
 
 	// Init and switch
-//	switch ([[self sharedInstance] theme]) {
-//		case ColorThemeOceanWater:
-//			return [UIColor colorWithRed:54.0/255.0 green:86.0/255.0 blue:142.0/255.0 alpha:1.0];
-//			break;
-//
-//		case ColorThemePetoskeyStone:
-////            return [UIColor colorWithPatternImage:[UIImage imageNamed:@"AKTabBarController.bundle/noise-pattern"]];
-//			return [UIColor colorWithRed:51.0/255.0 green:51.0/255.0 blue:51.0/255.0 alpha:1.0];
-//			break;
-//
-//		case ColorThemeForestLeaf:
-//			return [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:1.0];
-//			break;
-//
-//		case ColorThemeRosePetal:
-//			return [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:1.0];
-//			break;
-//	}
+	switch ([[self sharedInstance] theme]) {
+		case ColorThemeOceanWater:
+			return [UIColor colorWithRed:54.0/255.0 green:86.0/255.0 blue:142.0/255.0 alpha:1.0];
+			break;
+
+		case ColorThemePetoskeyStone:
+//            return [UIColor colorWithPatternImage:[UIImage imageNamed:@"AKTabBarController.bundle/noise-pattern"]];
+			return [UIColor colorWithRed:51.0/255.0 green:51.0/255.0 blue:51.0/255.0 alpha:1.0];
+			break;
+
+		case ColorThemeForestLeaf:
+			return [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:1.0];
+			break;
+
+		case ColorThemeRosePetal:
+			return [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:1.0];
+			break;
+	}
 }
 
 + (UIColor *)navigationBarTextColor {

@@ -7,19 +7,25 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MapKit/MapKit.h>
+#import <CoreLocation/CoreLocation.h>
 #import "WrapperViewController.h"
 #import "APIController.h"
 
+@class UIPlaceHolderTextView;
+
 @interface FrontViewController : WrapperViewController <APIControllerDelegate, UIGestureRecognizerDelegate>
 
-@property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (strong, nonatomic) IBOutlet UIScrollView *view;
 @property (strong, nonatomic) IBOutlet UIImageView *cover;
 @property (strong, nonatomic) IBOutlet UIView *wrapper;
-@property (strong, nonatomic) IBOutlet UIView *name; // UILabel
-@property (strong, nonatomic) IBOutlet UIView *dateBegin; // UILabel
-@property (strong, nonatomic) IBOutlet UIView *dateEnd; // UILabel
-@property (strong, nonatomic) IBOutlet UIView *location; // UILabel
-@property (strong, nonatomic) IBOutlet UIView *fugleman; // UILabel
+@property (strong, nonatomic) IBOutlet UIPlaceHolderTextView *name;
 @property (strong, nonatomic) IBOutlet UILabel *enrollmentID;
+@property (strong, nonatomic) IBOutlet UITextField *dateBegin;
+@property (strong, nonatomic) IBOutlet UITextField *dateEnd;
+@property (strong, nonatomic) IBOutlet UITextField *location;
+@property (strong, nonatomic) IBOutlet UITextField *fugleman;
+@property (strong, nonatomic) IBOutlet UIPlaceHolderTextView *description;
+@property (strong, nonatomic) IBOutlet MKMapView *map;
 
 @end

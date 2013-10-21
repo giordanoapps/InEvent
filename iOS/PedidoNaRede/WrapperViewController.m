@@ -14,11 +14,19 @@
 #import "EventToken.h"
 #import "HumanToken.h"
 
+typedef enum {
+    UIKeyboardPositionUp = 0,
+    UIKeyboardPositionDown,
+} UIKeyboardPosition;
+
 @interface WrapperViewController () {
+    BOOL shouldCancelKeyboardAnimation;
+    CGRect keyboardFrame;
+    CGRect componentFrame;
+    UIKeyboardPosition keyboardPosition;
     UITapGestureRecognizer *behindRecognizer;
 }
 
-@property (assign, nonatomic) BOOL isUp;
 @property (strong, nonatomic) APIController *apiController;
 @property (strong, nonatomic) UIBarButtonItem *barButtonItem;
 
@@ -31,9 +39,9 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        _shouldMoveKeyboardUp = YES;
-        _moveKeyboardRatio = 1.0;
-        _isUp = NO;
+        keyboardFrame = CGRectZero;
+        componentFrame = CGRectZero;
+        keyboardPosition = UIKeyboardPositionDown;
     }
     return self;
 }
@@ -59,8 +67,8 @@
     [super viewWillAppear:animated];
     
     // Register for keyboard notifications
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(saveKeyboardSize:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(saveKeyboardSize:) name:UIKeyboardWillHideNotification object:nil];
     
     // We check if the back button is already set, so we have to preserve it
     // The navigationBar items is an array that counts how many controllers we already have on the stack
@@ -125,15 +133,18 @@
 
 #pragma mark - Keyboard Notifications
 
-- (CGRect)calculateKeyboardFrame:(NSNotification*)notification {
-    CGRect keyboardFrame = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+- (void)saveKeyboardSize:(NSNotification*)notification {
+    CGRect keyboardFrameOriginal = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
     UIWindow *window = [[[UIApplication sharedApplication] windows]objectAtIndex:0];
     UIView *mainSubviewOfWindow = window.rootViewController.view;
-    CGRect keyboardFrameConverted = [mainSubviewOfWindow convertRect:keyboardFrame fromView:window];
+    keyboardFrame = [mainSubviewOfWindow convertRect:keyboardFrameOriginal fromView:window];
     
-    return keyboardFrameConverted;
+    if (!CGRectEqualToRect(componentFrame, CGRectZero)) {
+        [self checkKeyboardForPreponentParentView:nil];
+        componentFrame = CGRectZero;
+    }
     
-    // keyboard frame is in window coordinates
+    // Keyboard frame is in window coordinates
 //	NSDictionary *userInfo = [notification userInfo];
 //	CGRect keyboardFrame = [[userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
     
@@ -145,51 +156,53 @@
 //    
 //	// now this might be rotated, so convert it back
 //	coveredFrame = [self.view.window convertRect:coveredFrame toView:self.view.superview];
-    
-    return keyboardFrame;
+//    
+//    return keyboardFrame;
 }
 
-- (void)keyboardWillShow:(NSNotification*)notification {
-
-    // Only go up if the view is still DOWN and we should move the keyboard up
-    if (!_isUp && _shouldMoveKeyboardUp) {
-        [self moveViewUp:YES withNotification:notification];
+- (void)checkKeyboardForPreponentParentView:(UIView *)component {
+    
+    // Wait until the next cycle to hide the keyboard
+    shouldCancelKeyboardAnimation = NO;
+    
+    // Process the keyboard state
+    if (component) {
+        CGRect correctFrame = [self.view convertRect:component.frame fromView:component];
+        if (self.navigationController) correctFrame.origin.y -= self.navigationController.navigationBar.frame.size.height;
+        if (self.tabBarController) correctFrame.origin.y -= self.tabBarController.tabBar.frame.size.height;
+        
+        if (keyboardFrame.size.height == 0.0) {
+            componentFrame = correctFrame;
+        } else if (correctFrame.origin.y > (keyboardFrame.size.height / [[UIScreen mainScreen] scale])) {
+            [self moveParentViewToPosition:UIKeyboardPositionUp];
+        }
+    } else if (componentFrame.origin.y > (keyboardFrame.size.height / [[UIScreen mainScreen] scale])) {
+        [self moveParentViewToPosition:UIKeyboardPositionUp];
     }
 }
 
-- (void)keyboardWillHide:(NSNotification*)notification {
+- (void)moveParentViewToPosition:(UIKeyboardPosition)moveDirection {
 
-    // Only go down if the view is UP
-    if (_isUp) {
-        [self moveViewUp:NO withNotification:notification];
-    }
-}
+    // Move the view up/down whenever the keyboard is shown/dismissed, only if necessary
+    if (keyboardPosition != moveDirection) {
 
-- (void)moveViewUp:(BOOL)moveUp withNotification:(NSNotification*)notification {
-    // Move the view up/down whenever the keyboard is shown/dismissed
-
-    // Set our property
-    self.isUp = moveUp;
-    
-    CGRect keyboardFrame = [self calculateKeyboardFrame:notification];
-    
-    // We apply the transformation bound to the screen pixel density
-    CGFloat offset = keyboardFrame.size.height * (_moveKeyboardRatio / [[UIScreen mainScreen] scale]);
-    CGRect rect = self.view.frame;
-    
-    if (self.tabBarController) {
-        offset -= self.tabBarController.tabBar.frame.size.height;
+        // Set our property
+        keyboardPosition = moveDirection;
+        
+        // We apply the transformation bound to the screen pixel density
+        CGFloat offset = keyboardFrame.size.height / [[UIScreen mainScreen] scale];
+        CGRect rect = self.view.frame;
+        
+        if (keyboardPosition == UIKeyboardPositionUp) {
+            rect.origin.y -= offset;
+        } else {
+            rect.origin.y += offset;
+        }
+        
+        [UIView animateWithDuration:0.23 animations:^{
+            self.view.frame = rect;
+        }];
     }
-    
-    if (moveUp) {
-        rect.origin.y -= offset;
-    } else {
-        rect.origin.y += offset;
-    }
-    
-    [UIView animateWithDuration:0.2 animations:^{
-        self.view.frame = rect;
-    }];
 }
 
 #pragma mark - Alert View Delegate
@@ -235,6 +248,16 @@
     }
 }
 
+#pragma mark - View Controller Delegate
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    // Resign all view's first responders
+    [self.view endEditing:YES];
+    
+    // Clean the keyboard size
+    keyboardFrame = CGRectZero;
+}
+
 #pragma mark - Split View Controller Delegate
 
 - (void)splitViewController:(UISplitViewController *)splitController willHideViewController:(UIViewController *)viewController withBarButtonItem:(UIBarButtonItem *)barButtonItem forPopoverController:(UIPopoverController *)popoverController
@@ -269,7 +292,52 @@
     [self.navigationItem setLeftBarButtonItems:barButtons animated:YES];
 }
 
+#pragma mark - Text Field Delegate
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    
+    // Move view if necessary
+    if (keyboardPosition == UIKeyboardPositionUp) {
+        [self performSelector:@selector(checkKeyboardForPreponentParentView:) withObject:textField afterDelay:0.4f];
+        shouldCancelKeyboardAnimation = YES;
+    } else {
+        [self checkKeyboardForPreponentParentView:textField];
+    }
+    
+    return YES;
+}
+
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField {
+    
+    // Move view down if necessary
+    if (keyboardPosition == UIKeyboardPositionUp && shouldCancelKeyboardAnimation == NO) {
+//        [self performSelector:@selector(moveParentViewToPosition:) withObject:nil afterDelay:0.4f];
+        [self moveParentViewToPosition:UIKeyboardPositionDown];
+    }
+    
+    return YES;
+}
+
+#pragma mark - Text View Delegate
+
+- (BOOL)textViewShouldBeginEditing:(UITextView *)textView {
+    
+    // Move view if necessary
+    [self checkKeyboardForPreponentParentView:textView];
+    
+    return YES;
+}
+
+- (BOOL)textViewShouldEndEditing:(UITextView *)textView {
+    
+    // Move view down if necessary
+    if (keyboardPosition == UIKeyboardPositionUp) [self moveParentViewToPosition:UIKeyboardPositionDown];
+    
+    return YES;
+}
+
 #pragma mark - APIController Delegate
+
 
 - (void)apiController:(APIController *)apiController didFailWithError:(NSError *)error {
     // Implement a method that allows every failing requisition to be reloaded

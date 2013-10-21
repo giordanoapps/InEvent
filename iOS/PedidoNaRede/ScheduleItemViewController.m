@@ -21,10 +21,10 @@
 #import "NSString+HTML.h"
 #import "ODRefreshControl.h"
 #import "NSObject+Triangle.h"
-#import "NSObject+Field.h"
 #import "UIPlaceHolderTextView.h"
 
 @interface ScheduleItemViewController () {
+    BOOL editingMode;
     ODRefreshControl *refreshControl;
     CLLocationManager *locationManager;
 }
@@ -54,13 +54,12 @@
     [_wrapper.layer setMasksToBounds:YES];
     
     // Title
-    [((UIButton *)_name).titleLabel setNumberOfLines:2];
-    [(UIButton *)_name setTitleColor:[ColorThemeController tableViewCellTextColor] forState:UIControlStateNormal];
-    [(UIButton *)_name setTitleColor:[ColorThemeController tableViewCellTextHighlightedColor] forState:UIControlStateHighlighted];
+//    [((UIButton *)_name).titleLabel setNumberOfLines:2];
+    [_name setTextColor:[ColorThemeController tableViewCellTextColor]];
     
     // Description
-    [((UIButton *)_description).titleLabel setNumberOfLines:0];
-    [(UIButton *)_description setBackgroundColor:[ColorThemeController tableViewCellBackgroundColor]];
+//    [((UIButton *)_description).titleLabel setNumberOfLines:0];
+    [_description setBackgroundColor:[ColorThemeController tableViewCellBackgroundColor]];
     
     // Line
     [_line setBackgroundColor:[ColorThemeController tableViewCellInternalBorderColor]];
@@ -133,10 +132,10 @@
         
         [self defineStateForApproved:[[_activityData objectForKey:@"approved"] integerValue] withView:_wrapper];
         
-        [((UIButton *)_hour) setTitle:[NSString stringWithFormat:@"%.2d", [components hour]] forState:UIControlStateNormal];
-        [((UIButton *)_minute) setTitle:[NSString stringWithFormat:@"%.2d", [components minute]] forState:UIControlStateNormal];
-        [((UIButton *)_name) setTitle:[[_activityData objectForKey:@"name"] stringByDecodingHTMLEntities] forState:UIControlStateNormal];
-        [((UIButton *)_description) setTitle:[[_activityData objectForKey:@"description"] stringByDecodingHTMLEntities] forState:UIControlStateNormal];
+        [_hour setText:[NSString stringWithFormat:@"%.2d", [components hour]]];
+        [_minute setText:[NSString stringWithFormat:@"%.2d", [components minute]]];
+        [_name setText:[[_activityData objectForKey:@"name"] stringByDecodingHTMLEntities]];
+        [_description setText:[[_activityData objectForKey:@"description"] stringByDecodingHTMLEntities]];
         
         if ([[HumanToken sharedInstance] isMemberWorking]) {
             if ([[_activityData objectForKey:@"approved"] integerValue] == ScheduleStateApproved) {
@@ -172,10 +171,10 @@
 - (void)cleanData {
     self.navigationItem.rightBarButtonItem = nil;
     [self defineStateForApproved:ScheduleStateUnknown withView:_wrapper];
-    [((UIButton *)_hour) setTitle:@"00" forState:UIControlStateNormal];
-    [((UIButton *)_minute) setTitle:@"00" forState:UIControlStateNormal];
-    [((UIButton *)_name) setTitle:NSLocalizedString(@"Activity", nil) forState:UIControlStateNormal];
-    [((UIButton *)_description) setTitle:@"" forState:UIControlStateNormal];
+    [_hour setText:@"00"];
+    [_minute setText:@"00"];
+    [_name setText:NSLocalizedString(@"Activity", nil)];
+    [_description setText:@""];
 }
 
 - (void)loadMenuButton {
@@ -192,40 +191,49 @@
 #pragma mark - Editing
 
 - (void)startEditing {
-    _hour = [self createField:_hour withAttributes:@[@"trimPadding"]];
-    _minute = [self createField:_minute withAttributes:@[@"trimPadding"]];
-    _name = [self createField:_name];
-    _description = [self createField:_description];
+    
+    // Set the placeholders
+    [_hour setPlaceholder:_hour.text];
+    [_minute setPlaceholder:_minute.text];
+    [_name setPlaceholder:_name.text];
+    [_description setPlaceholder:_description.text];
+    
+    // Start editing
+    [_description setEditable:YES];
+    editingMode = YES;
     
     [self loadDoneButton];
+}
+
+- (void)saveEditing:(UIView *)field forName:(NSString *)name {
+    
+    // Save the fields
+    NSString *tokenID = [[HumanToken sharedInstance] tokenID];
+    NSInteger activityID = [[_activityData objectForKey:@"id"] integerValue];
+    
+    // Field will always have a placeholder, so we can cast it as a UITextField
+    if (![((UITextField *)field).placeholder isEqualToString:((UITextField *)field).text]) {
+        [[[APIController alloc] initWithDelegate:self forcing:YES] activityEditField:name withValue:((UITextField *)field).text atActivity:activityID withTokenID:tokenID];
+    }
+    
+    // Change text view editable mode
+    if ([field isKindOfClass:[UIPlaceHolderTextView class]]) {
+        [((UIPlaceHolderTextView *)field) setEditable:NO];
+    }
 }
 
 - (void)endEditing {
     
     // Save the fields
-    NSString *tokenID = [[HumanToken sharedInstance] tokenID];
+    [self saveEditing:_hour forName:@"hourBegin"];
+    [self saveEditing:_minute forName:@"minuteBegin"];
+    [self saveEditing:_name forName:@"name"];
+    [self saveEditing:_description forName:@"description"];
     
-    if (![((UIPlaceHolderTextView *)_hour).placeholder isEqualToString:((UIPlaceHolderTextView *)_hour).text]) {
-        [[[APIController alloc] initWithDelegate:self forcing:YES] activityEditField:@"hourBegin" withValue:((UIPlaceHolderTextView *)_hour).text atActivity:[[_activityData objectForKey:@"id"] integerValue] withTokenID:tokenID];
-    }
-    
-    if (![((UIPlaceHolderTextView *)_minute).placeholder isEqualToString:((UIPlaceHolderTextView *)_minute).text]) {
-        [[[APIController alloc] initWithDelegate:self forcing:YES] activityEditField:@"minuteBegin" withValue:((UIPlaceHolderTextView *)_minute).text atActivity:[[_activityData objectForKey:@"id"] integerValue] withTokenID:tokenID];
-    }
-    
-    if (![((UIPlaceHolderTextView *)_name).placeholder isEqualToString:((UIPlaceHolderTextView *)_name).text]) {
-        [[[APIController alloc] initWithDelegate:self forcing:YES] activityEditField:@"name" withValue:((UIPlaceHolderTextView *)_name).text atActivity:[[_activityData objectForKey:@"id"] integerValue] withTokenID:tokenID];
-    }
-    
-    if (![((UIPlaceHolderTextView *)_description).placeholder isEqualToString:((UIPlaceHolderTextView *)_description).text]) {
-        [[[APIController alloc] initWithDelegate:self forcing:YES] activityEditField:@"description" withValue:((UIPlaceHolderTextView *)_description).text atActivity:[[_activityData objectForKey:@"id"] integerValue] withTokenID:tokenID];
-    }
-    
-    // Remove them
-    _hour = [self removeField:_hour];
-    _minute = [self removeField:_minute];
-    _name = [self removeField:_name];
-    _description = [self removeField:_description belowView:_quickFeedback];
+    // End editing
+    [self.description setEditable:NO];
+    [self.view endEditing:YES];
+    editingMode = NO;
     
     [self loadMenuButton];
 }
@@ -392,14 +400,12 @@
         
         // Check for it again
         [[NSNotificationCenter defaultCenter] postNotificationName:@"verify" object:nil userInfo:@{@"type": @"enterprise"}];
-        
     }
 }
 
 - (IBAction)loadReaderController {
     ReaderViewController *rvc = [[ReaderViewController alloc] initWithNibName:@"ReaderViewController" bundle:nil];
     
-    [rvc setMoveKeyboardRatio:0.0];
     [rvc setActivityData:_activityData];
     
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
@@ -415,7 +421,6 @@
 - (IBAction)loadQuestionController {
     QuestionViewController *qvc = [[QuestionViewController alloc] initWithNibName:@"QuestionViewController" bundle:nil];
     
-    [qvc setMoveKeyboardRatio:([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad && [UIScreen mainScreen].scale == 1.0) ? 0.65 : 2.0];
     [qvc setActivityData:_activityData];
     
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
@@ -432,7 +437,6 @@
     FeedbackViewController *fvc = [[FeedbackViewController alloc] initWithNibName:@"FeedbackViewController" bundle:nil];
     UINavigationController *nfvc = [[UINavigationController alloc] initWithRootViewController:fvc];
     
-    [fvc setMoveKeyboardRatio:0.7];
     [fvc setFeedbackType:FeedbackTypeActivity withReference:[[_activityData objectForKey:@"id"] integerValue]];
     
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
@@ -461,6 +465,17 @@
     [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:nmvc animated:YES completion:nil];
 }
 
+#pragma mark - Text Field Delegate
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    
+    if (editingMode) {
+        return [super textFieldShouldBeginEditing:textField];
+    } else {
+        return NO;
+    }
+}
+
 #pragma mark - Location Manager Delegate iOS5
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
@@ -477,6 +492,15 @@
     [self updateLocation:[locations lastObject]];
     
     [manager stopUpdatingLocation];
+}
+
+#pragma mark - APIController Delegate
+
+- (void)apiController:(APIController *)apiController didLoadDictionaryFromServer:(NSDictionary *)dictionary {
+    
+    if ([apiController.method isEqualToString:@"edit"]) {
+            
+    }
 }
 
 @end

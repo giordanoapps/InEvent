@@ -12,17 +12,11 @@
 #import "AlertView.h"
 #import "GAITrackedViewController.h"
 
-@interface WrapperViewController : GAITrackedViewController <UIActionSheetDelegate, UITextFieldDelegate, APIControllerDelegate, UISplitViewControllerDelegate, AlertViewDelegate>
+@interface WrapperViewController : GAITrackedViewController <UIActionSheetDelegate, UITextFieldDelegate, UITextViewDelegate, APIControllerDelegate, UISplitViewControllerDelegate, AlertViewDelegate>
 
 @property (strong, nonatomic) UIBarButtonItem *rightBarButton;
 @property (strong, nonatomic) UIBarButtonItem *leftBarButton;
-@property (assign, nonatomic) BOOL shouldMoveKeyboardUp;
-@property (assign, nonatomic) CGFloat moveKeyboardRatio;
 @property (assign, nonatomic) WrapperViewController *decentPresentingViewController;
-
-// Keyboard
-- (void)keyboardWillShow:(NSNotification*)notification;
-- (void)keyboardWillHide:(NSNotification*)notification;
 
 // Tap Behind
 - (void)allocTapBehind;

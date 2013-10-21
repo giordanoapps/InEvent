@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4510" systemVersion="12F37" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
-        <deployment defaultVersion="1280" identifier="iOS"/>
+        <deployment defaultVersion="1536" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ScheduleItemViewController">
             <connections>
-                <outlet property="description" destination="g38-fU-FyJ" id="NxE-Ar-XXQ"/>
-                <outlet property="hour" destination="jz0-gg-86M" id="WK1-63-3ZR"/>
+                <outlet property="description" destination="yEQ-kV-Tux" id="AY4-Ho-hiy"/>
+                <outlet property="hour" destination="P2S-DY-3Nl" id="p8M-HL-iSA"/>
                 <outlet property="line" destination="40" id="46"/>
                 <outlet property="map" destination="6eH-HM-1ru" id="pZN-Ev-tgf"/>
-                <outlet property="minute" destination="dem-BD-Ejp" id="MRN-zZ-RTu"/>
-                <outlet property="name" destination="XSB-qB-3qM" id="0cf-aU-18K"/>
+                <outlet property="minute" destination="pXH-sl-eMN" id="HH6-dM-Il7"/>
+                <outlet property="name" destination="QIK-K1-URg" id="HPw-jn-dZc"/>
                 <outlet property="quickFeedback" destination="6nq-IY-kkl" id="MOA-Do-vgE"/>
                 <outlet property="quickMaterial" destination="KXH-ze-bnt" id="pCl-ui-o0q"/>
                 <outlet property="quickPeople" destination="Www-of-qrO" id="DQg-er-Sgd"/>
@@ -34,52 +34,48 @@
                             <rect key="frame" x="12" y="0.0" width="64" height="64"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         </imageView>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="jz0-gg-86M" userLabel="Hour">
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="11" textAlignment="center" minimumFontSize="17" id="P2S-DY-3Nl" userLabel="Hour">
                             <rect key="frame" x="16" y="26" width="26" height="23"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <fontDescription key="fontDescription" name="Thonburi" family="Thonburi" pointSize="14"/>
-                            <state key="normal" title="11">
-                                <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                            </state>
-                        </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="tailTruncation" id="dem-BD-Ejp" userLabel="Minute">
+                            <textInputTraits key="textInputTraits"/>
+                            <connections>
+                                <outlet property="delegate" destination="-1" id="YAH-Up-OsC"/>
+                            </connections>
+                        </textField>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="13" textAlignment="center" minimumFontSize="17" id="pXH-sl-eMN" userLabel="Minute">
                             <rect key="frame" x="46" y="26" width="26" height="23"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <fontDescription key="fontDescription" name="Thonburi" family="Thonburi" pointSize="14"/>
-                            <state key="normal" title="13">
-                                <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                            </state>
-                        </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="tailTruncation" id="XSB-qB-3qM" userLabel="Name">
+                            <textInputTraits key="textInputTraits"/>
+                            <connections>
+                                <outlet property="delegate" destination="-1" id="ijn-aD-PyB"/>
+                            </connections>
+                        </textField>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Nome do item, podendo ter várias " textAlignment="center" minimumFontSize="17" id="QIK-K1-URg" userLabel="Name">
                             <rect key="frame" x="105" y="0.0" width="175" height="64"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" name="Thonburi" family="Thonburi" pointSize="18"/>
-                            <state key="normal" title="Nome do item, podendo ter várias ">
-                                <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                            </state>
-                        </button>
+                            <textInputTraits key="textInputTraits"/>
+                            <connections>
+                                <outlet property="delegate" destination="-1" id="5BL-9D-H9e"/>
+                            </connections>
+                        </textField>
                         <view contentMode="scaleToFill" id="40" userLabel="Line">
                             <rect key="frame" x="0.0" y="63" width="300" height="1"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         </view>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" lineBreakMode="tailTruncation" id="g38-fU-FyJ" userLabel="Description">
+                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Descrição da atividade" id="yEQ-kV-Tux" userLabel="Description" customClass="UIPlaceHolderTextView">
                             <rect key="frame" x="0.0" y="64" width="300" height="132"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <fontDescription key="fontDescription" name="Thonburi" family="Thonburi" pointSize="16"/>
-                            <inset key="contentEdgeInsets" minX="4" minY="4" maxX="4" maxY="4"/>
-                            <state key="normal" title="Descrição da atividade">
-                                <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                            </state>
-                        </button>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            <connections>
+                                <outlet property="delegate" destination="-1" id="cVD-Xp-2Or"/>
+                            </connections>
+                        </textView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="6nq-IY-kkl" userLabel="Feedback">
                             <rect key="frame" x="192" y="154" width="28" height="28"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>

@@ -9,7 +9,7 @@
         <table>
             <thead>
                 <tr>
-                    <td data-order="memberID">Inscrição <?php if ($order == "memberID") echo $imageOrder ?></td>
+                    <td data-order="enrollmentID">Inscrição <?php if ($order == "enrollmentID") echo $imageOrder ?></td>
                     <td data-order="position">Posição <?php if ($order == "position") echo $imageOrder ?></td>
                     <td data-order="name">Nome <?php if ($order == "name") echo $imageOrder ?></td>
                     <td data-order="email">Email <?php if ($order == "email") echo $imageOrder ?></td>
@@ -31,7 +31,7 @@
                 ?>
                 <tr class="pickerItem" data-value="<?php echo $data['memberID'] ?>">
                     <td>
-                        <p class="memberID"><b><?php echo str_pad($data['memberID'], 4, "0", STR_PAD_LEFT) ?></b></p>
+                        <p class="enrollmentID"><b><?php echo str_pad($data['enrollmentID'], 3, "0", STR_PAD_LEFT) ?></b></p>
                     </td>
                     <td>
                         <p class="position"><b><?php echo $data['position'] ?></b></p>
@@ -111,7 +111,7 @@
             <thead>
                 <tr>
                     <td data-order="roleID"><i>Staff</i> <?php if ($order == "roleID") echo $imageOrder ?></td>
-                    <td data-order="memberID">Inscrição <?php if ($order == "memberID") echo $imageOrder ?></td>
+                    <td data-order="enrollmentID">Inscrição <?php if ($order == "enrollmentID") echo $imageOrder ?></td>
                     <td data-order="name">Nome <?php if ($order == "name") echo $imageOrder ?></td>
                     <td data-order="email">Email <?php if ($order == "email") echo $imageOrder ?></td>
                     <td data-order="present">Presença <?php if ($order == "present") echo $imageOrder ?></td>
@@ -135,7 +135,7 @@
                         <?php } ?>
                     </td>
                     <td>
-                        <p class="memberID"><b><?php echo str_pad($data['memberID'], 4, "0", STR_PAD_LEFT) ?></b></p>
+                        <p class="enrollmentID"><b><?php echo str_pad($data['enrollmentID'], 3, "0", STR_PAD_LEFT) ?></b></p>
                     </td>
                     <td>
                         <p class="name"><?php echo ucwords(strtolower($data['name'])) ?></p>

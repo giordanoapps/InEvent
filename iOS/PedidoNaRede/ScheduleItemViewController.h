@@ -12,15 +12,16 @@
 #import "WrapperViewController.h"
 
 @class GMSMapView;
+@class UIPlaceHolderTextView;
 
 @interface ScheduleItemViewController : WrapperViewController <APIControllerDelegate, UIGestureRecognizerDelegate, UISplitViewControllerDelegate, CLLocationManagerDelegate>
 
 @property (strong, nonatomic) IBOutlet UIView *wrapper;
-@property (strong, nonatomic) IBOutlet UIView *hour; // UILabel
-@property (strong, nonatomic) IBOutlet UIView *minute; // UILabel
-@property (strong, nonatomic) IBOutlet UIView *name; // UILabel
+@property (strong, nonatomic) IBOutlet UITextField *hour;
+@property (strong, nonatomic) IBOutlet UITextField *minute;
+@property (strong, nonatomic) IBOutlet UITextField *name;
 @property (strong, nonatomic) IBOutlet UIView *line;
-@property (strong, nonatomic) IBOutlet UIView *description; // UITextView
+@property (strong, nonatomic) IBOutlet UIPlaceHolderTextView *description;
 @property (strong, nonatomic) IBOutlet UIButton *quickFeedback;
 @property (strong, nonatomic) IBOutlet UIButton *quickQuestion;
 @property (strong, nonatomic) IBOutlet UIButton *quickPeople;

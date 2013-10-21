@@ -215,7 +215,6 @@
         // Load our reader
         ReaderViewController *rvc = [[ReaderViewController alloc] initWithNibName:@"ReaderViewController" bundle:nil];
         
-        [rvc setMoveKeyboardRatio:0.0];
         [rvc setActivityData:_activityData];
         
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {

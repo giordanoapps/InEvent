@@ -16,8 +16,15 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         // Initialization code
+        [self configureCell];
     }
     return self;
+}
+
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    
+    [self configureCell];
 }
 
 - (void)configureCell {
