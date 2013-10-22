@@ -126,10 +126,10 @@
 			// Get the provided data
 			// Required
 			$name = getAttribute($_REQUEST["name"]);
-			$password = ($method === "enroll") ? getAttribute($_REQUEST["password"]) : "";
 			$email = getAttribute($_REQUEST["email"]);
 
 			// Optional
+			$password = (isset($_POST["password"])) ? getAttribute($_REQUEST["password"]) : "123456";
 			$cpf = (isset($_POST["cpf"])) ? getEmptyAttribute($_POST["cpf"]) : "";
 			$rg = (isset($_POST["rg"])) ? getEmptyAttribute($_POST["rg"]) : "";
 			$city = (isset($_POST["city"])) ? getEmptyAttribute($_POST["city"]) : "";

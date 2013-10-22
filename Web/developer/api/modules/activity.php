@@ -128,12 +128,13 @@
 						if ($value >= 0 && $value < 24) {
 
 							$name = str_replace("hour", "date", $name);
+							$timezone = date("P");
 
 							$update = resourceForQuery(
 								"UPDATE
 									`activity` 
 								SET
-									`$name` = CONVERT_TZ(((`$name` - INTERVAL HOUR(`$name`) HOUR) + INTERVAL $value HOUR), '-03:00','+00:00')
+									`$name` = CONVERT_TZ(((`$name` - INTERVAL HOUR(`$name`) HOUR) + INTERVAL $value HOUR), '$timezone','+00:00')
 								WHERE
 									`activity`.`id` = $activityID
 							");

@@ -247,6 +247,16 @@
 //    }
 //}
 
+#pragma mark - Text Field Delegate
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    
+    [self sendRequests];
+    
+    return YES;
+}
+
 #pragma mark - Navigation Controller Delegate
 
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {

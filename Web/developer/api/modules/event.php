@@ -50,12 +50,13 @@
 					} elseif ($name == "hourBegin" || $name == "hourEnd") {
 
 						$name = str_replace("hour", "date", $name);
+						$timezone = date("P");
 
 						$update = resourceForQuery(
 							"UPDATE
 								`event` 
 							SET
-								`$name` = CONVERT_TZ(((`$name` - INTERVAL HOUR(`$name`) HOUR) + INTERVAL $value HOUR), '-03:00','+00:00')
+								`$name` = CONVERT_TZ(((`$name` - INTERVAL HOUR(`$name`) HOUR) + INTERVAL $value HOUR), '$timezone','+00:00')
 							WHERE
 								`event`.`id` = $eventID
 						");

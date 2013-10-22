@@ -437,14 +437,16 @@
 
 - (void)apiController:(APIController *)apiController didLoadDictionaryFromServer:(NSDictionary *)dictionary {
     
-    // Assign the data object to the companies
-    eventData = [[dictionary objectForKey:@"data"] objectAtIndex:0];
+    if ([[dictionary objectForKey:@"data"] count] > 0) {
+        // Assign the data object to the companies
+        eventData = [[dictionary objectForKey:@"data"] objectAtIndex:0];
+        
+        // Paint the UI
+        [self paint];
+    }
     
     // Stop refreshing
     [refreshControl endRefreshing];
-    
-    // Paint the UI
-    [self paint];
 }
 
 - (void)apiController:(APIController *)apiController didFailWithError:(NSError *)error {
