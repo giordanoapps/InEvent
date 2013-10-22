@@ -22,6 +22,7 @@
     ODRefreshControl *refreshControl;
     NSDictionary *eventData;
     BOOL editingMode;
+    CLLocationManager *locationManager;
 }
 
 @property (nonatomic, strong) NSArray *activities;
@@ -57,11 +58,33 @@
     [refreshControl addTarget:self action:@selector(reloadData) forControlEvents:UIControlEventValueChanged];
     
     // Scroll View
-    self.view.contentSize = CGSizeMake(self.view.frame.size.width, 842.0f);
+    self.view.contentSize = CGSizeMake(self.view.frame.size.width, 794.0f);
 	[self.view flashScrollIndicators];
 
+    // Image
+    _cover.layer.masksToBounds = YES;
+    _cover.layer.cornerRadius = 2.0f;
+//    _cover.layer.borderWidth = 0.4f;
+//    _cover.layer.borderColor = [[ColorThemeController borderColor] CGColor];
+//    _cover.layer.shadowOffset = CGSizeMake(1.0f, 1.0f);
+//    _cover.layer.shadowColor = [[ColorThemeController shadowColor] CGColor];
+    
     // Wrapper
+    _wrapper.backgroundColor = [ColorThemeController tableViewCellBackgroundColor];
     _wrapper.layer.cornerRadius = 4.0f;
+    
+    // Name
+    [_name addObserver:self forKeyPath:@"text" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:NULL];
+
+    // Name
+    [_description addObserver:self forKeyPath:@"text" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:NULL];
+    
+    // Location Manager
+    locationManager = [[CLLocationManager alloc] init];
+    locationManager.delegate = self;
+    locationManager.distanceFilter = kCLDistanceFilterNone;
+    locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    [locationManager startUpdatingLocation];
     
     // Schedule details
     [self loadData];
@@ -85,6 +108,9 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
+    [_name removeObserver:self forKeyPath:@"text"];
+    [_description removeObserver:self forKeyPath:@"text"];
+    
     // Window
     [self deallocTapBehind];
 }
@@ -93,6 +119,71 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - Text Field Methods
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    
+    CGRect frame;
+    CGSize size;
+    
+    if (object == _name) {
+        // View
+        size = self.view.contentSize;
+        size.height += _name.contentSize.height - _name.frame.size.height;
+        self.view.contentSize = size;
+        
+        // Wrapper
+        frame = _wrapper.frame;
+        frame.origin.y += _name.contentSize.height - _name.frame.size.height ;
+        _wrapper.frame = frame;
+        
+        // Enrollment
+        frame = _enrollment.frame;
+        frame.origin.y += _name.contentSize.height - _name.frame.size.height ;
+        _enrollment.frame = frame;
+        
+        // EnrollmentID
+        frame = _enrollmentID.frame;
+        frame.origin.y += _name.contentSize.height - _name.frame.size.height ;
+        _enrollmentID.frame = frame;
+        
+        // Map
+        frame = _map.frame;
+        frame.origin.y += _name.contentSize.height - _name.frame.size.height ;
+        _map.frame = frame;
+        
+        // Details
+        frame = _details.frame;
+        frame.size.height += _name.contentSize.height - _name.frame.size.height ;
+        _details.frame = frame;
+        
+        // Name
+        frame = _name.frame;
+        frame.size.height = _name.contentSize.height;
+        _name.frame = frame;
+        
+    } else if (object == _description) {
+
+        // View
+        size = self.view.contentSize;
+        size.height += _description.contentSize.height - _description.frame.size.height;
+        self.view.contentSize = size;
+        
+        // Wrapper
+        frame = _wrapper.frame;
+        frame.size.height += _description.contentSize.height - _description.frame.size.height ;
+        _wrapper.frame = frame;
+        
+        // Description
+        frame = _description.frame;
+        frame.size.height = _description.contentSize.height;
+        _description.frame = frame;
+    
+    } else {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
 }
 
 #pragma mark - Loader Methods
@@ -120,10 +211,20 @@
     if (eventData) {
         
         // Cover
-        [self.cover setImageWithURL:[UtilitiesController urlWithFile:[eventData objectForKey:@"cover"]]];
+        __weak typeof(self) weakSelf = self;
+        [self.cover setImageWithURL:[UtilitiesController urlWithFile:[eventData objectForKey:@"cover"]] completed:
+         ^(UIImage *image, NSError *error, SDImageCacheType cacheType ) {
+             
+             CGFloat newWidth = (weakSelf.cover.frame.size.height / image.size.height) * image.size.width;
+             
+             [weakSelf.cover setFrame: CGRectMake((weakSelf.cover.frame.size.width - newWidth) / 2.0f, weakSelf.cover.frame.origin.y, newWidth, weakSelf.cover.frame.size.height)];
+        }];
         
         // Name
         self.name.text = [[eventData objectForKey:@"name"] stringByDecodingHTMLEntities];
+        
+        // Enrollment ID
+        self.enrollmentID.text = [NSString stringWithFormat:@"%.3d", [[eventData objectForKey:@"enrollmentID"] integerValue]];
         
         NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
         
@@ -140,11 +241,14 @@
         // Location
         self.location.text = [[NSString stringWithFormat:@"%@ %@", [eventData objectForKey:@"address"], [eventData objectForKey:@"city"]] stringByDecodingHTMLEntities];
         
+        // Map
+        [self reloadMap];
+        
         // Fugleman
         self.fugleman.text = [[eventData objectForKey:@"fugleman"] stringByDecodingHTMLEntities];
-
-        // Fugleman
-        self.enrollmentID.text = [NSString stringWithFormat:@"%.4d", [[eventData objectForKey:@"enrollmentID"] integerValue]];
+        
+        // Description
+        self.description.text = [[eventData objectForKey:@"description"] stringByDecodingHTMLEntities];
     }
 }
 
@@ -226,6 +330,88 @@
     [self loadMenuButton];
 }
 
+#pragma mark - Location
+
+- (void)updateLocation:(CLLocation *)location {
+    [_map setRegion:MKCoordinateRegionMake(location.coordinate, MKCoordinateSpanMake(0.011, 0.011))];
+}
+
+#pragma mark - Map
+
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation {
+    // If it's the user location, just return nil.
+    if ([annotation isKindOfClass:[MKUserLocation class]]) {
+        return nil;
+    }
+    
+    // Handle any custom annotations.
+    // Try to dequeue an existing pin view first.
+    MKPinAnnotationView *pinView = (MKPinAnnotationView*)[mapView dequeueReusableAnnotationViewWithIdentifier:@"CustomPinAnnotationView"];
+    
+    if (pinView) {
+        // Add a pin
+        pinView.annotation = annotation;
+        
+    } else {
+        // If an existing pin view was not available, create one.
+        pinView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"CustomPinAnnotation"];
+        pinView.pinColor = MKPinAnnotationColorPurple;
+        pinView.animatesDrop = YES;
+        pinView.canShowCallout = YES;
+        pinView.draggable = NO;
+        pinView.enabled = YES;
+        pinView.annotation = annotation;
+        
+        // Add a detail disclosure button to the callout
+        UIButton* rightButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+        pinView.rightCalloutAccessoryView = rightButton;
+    }
+    
+    return pinView;
+}
+
+- (void)reloadMap {
+    
+    // Remove all annotations
+    [_map removeAnnotations:_map.annotations];
+    
+    // Then load the new ones
+    CGFloat latitude = [[eventData objectForKey:@"latitude"] floatValue];
+    CGFloat longitude = [[eventData objectForKey:@"longitude"] floatValue];
+    
+    if (latitude == 0 && longitude == 0) {
+        // Search using Apple API
+        MKLocalSearchRequest *request = [[MKLocalSearchRequest alloc] init];
+        request.naturalLanguageQuery = [[eventData objectForKey:@"location"] stringByDecodingHTMLEntities];
+        request.region = _map.region;
+        
+        MKLocalSearch *localSearch = [[MKLocalSearch alloc] initWithRequest:request];
+        [localSearch startWithCompletionHandler:^(MKLocalSearchResponse *response, NSError *error) {
+            
+            NSMutableArray *annotations = [NSMutableArray array];
+            
+            [response.mapItems enumerateObjectsUsingBlock:^(MKMapItem *item, NSUInteger idx, BOOL *stop) {
+                MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
+                annotation.title = [[eventData objectForKey:@"name"] stringByDecodingHTMLEntities];
+                [annotations addObject:annotation];
+            }];
+            
+            [_map addAnnotations:annotations];
+        }];
+    } else {
+        // Place using InEvent API
+        MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
+        annotation.coordinate = CLLocationCoordinate2DMake(latitude, longitude);
+        annotation.title = [[eventData objectForKey:@"location"] stringByDecodingHTMLEntities];
+        [_map addAnnotation:annotation];
+        //        GMSMarker *marker = [[GMSMarker alloc] init];
+        //        marker.position = CLLocationCoordinate2DMake(latitude, longitude);
+        //        marker.title = [[_activityData objectForKey:@"location"] stringByDecodingHTMLEntities];
+        //        marker.snippet = [[_activityData objectForKey:@"location"] stringByDecodingHTMLEntities];
+        //        marker.map = _map;
+    }
+}
+
 #pragma mark - Text Field Delegate
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
@@ -236,6 +422,16 @@
         return NO;
     }
 }
+
+#pragma mark - Location Manager Delegate iOS6
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
+    
+    [self updateLocation:[locations lastObject]];
+    
+    [manager stopUpdatingLocation];
+}
+
 
 #pragma mark - APIController Delegate
 

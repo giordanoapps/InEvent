@@ -14,12 +14,14 @@
 
 @class UIPlaceHolderTextView;
 
-@interface FrontViewController : WrapperViewController <APIControllerDelegate, UIGestureRecognizerDelegate>
+@interface FrontViewController : WrapperViewController <APIControllerDelegate, UIGestureRecognizerDelegate, CLLocationManagerDelegate>
 
 @property (strong, nonatomic) IBOutlet UIScrollView *view;
 @property (strong, nonatomic) IBOutlet UIImageView *cover;
+@property (strong, nonatomic) IBOutlet UIView *details;
 @property (strong, nonatomic) IBOutlet UIView *wrapper;
 @property (strong, nonatomic) IBOutlet UIPlaceHolderTextView *name;
+@property (strong, nonatomic) IBOutlet UILabel *enrollment;
 @property (strong, nonatomic) IBOutlet UILabel *enrollmentID;
 @property (strong, nonatomic) IBOutlet UITextField *dateBegin;
 @property (strong, nonatomic) IBOutlet UITextField *dateEnd;

@@ -223,7 +223,7 @@
 
         // Get the singleton
         $core = Core::singleton();
-        
+
         ?>
         <li
             value="<?php echo $data['id'] ?>"
@@ -232,7 +232,15 @@
             data-latitude="<?php echo $data['latitude'] ?>"
             data-longitude="<?php echo $data['longitude'] ?>"
             data-dateBegin="<?php echo $data['dateBegin'] ?>"
+            data-monthBegin="<?php echo date("m", $data['dateBegin']) ?>"
+            data-dayBegin="<?php echo date("d", $data['dateBegin']) ?>"
+            data-hourBegin="<?php echo date("G", $data['dateBegin']) ?>"
+            data-minuteBegin="<?php echo date("i", $data['dateBegin']) ?>"
             data-dateEnd="<?php echo $data['dateEnd'] ?>"
+            data-monthEnd="<?php echo date("m", $data['dateEnd']) ?>"
+            data-dayEnd="<?php echo date("d", $data['dateEnd']) ?>"
+            data-hourEnd="<?php echo date("G", $data['dateEnd']) ?>"
+            data-minuteEnd="<?php echo date("i", $data['dateEnd']) ?>"
             data-capacity="<?php echo $data['capacity'] ?>"
             data-general="<?php echo $data['general'] ?>"
             data-highlight="<?php echo $data['highlight'] ?>">

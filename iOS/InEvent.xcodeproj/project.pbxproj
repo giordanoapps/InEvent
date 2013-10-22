@@ -325,6 +325,7 @@
 		EBEA9FD6179587A800C6FEEC /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBEA9FD5179587A800C6FEEC /* Security.framework */; };
 		EBEA9FD8179587B100C6FEEC /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBEA9FD7179587B100C6FEEC /* StoreKit.framework */; };
 		EBEACD7517C2F65200C65F3F /* AboutViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBEACD7417C2F65200C65F3F /* AboutViewController~ipad.xib */; };
+		EBF210B41815E2FE00D39789 /* NSString+TruncateToWidth.m in Sources */ = {isa = PBXBuildFile; fileRef = EBF210B31815E2FE00D39789 /* NSString+TruncateToWidth.m */; };
 		EBFD3A3516DA8CDE00AD33C5 /* UIPlaceHolderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBFD3A3416DA8CDE00AD33C5 /* UIPlaceHolderTextView.m */; };
 		EBFD3A3916DA96D000AD33C5 /* FeedbackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBFD3A3716DA96D000AD33C5 /* FeedbackViewController.m */; };
 		EBFD3A3A16DA96D000AD33C5 /* FeedbackViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBFD3A3816DA96D000AD33C5 /* FeedbackViewController.xib */; };
@@ -754,6 +755,8 @@
 		EBEA9FD5179587A800C6FEEC /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		EBEA9FD7179587B100C6FEEC /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		EBEACD7417C2F65200C65F3F /* AboutViewController~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "AboutViewController~ipad.xib"; sourceTree = "<group>"; };
+		EBF210B21815E2FE00D39789 /* NSString+TruncateToWidth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+TruncateToWidth.h"; sourceTree = "<group>"; };
+		EBF210B31815E2FE00D39789 /* NSString+TruncateToWidth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+TruncateToWidth.m"; sourceTree = "<group>"; };
 		EBFD3A3316DA8CDE00AD33C5 /* UIPlaceHolderTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPlaceHolderTextView.h; sourceTree = "<group>"; };
 		EBFD3A3416DA8CDE00AD33C5 /* UIPlaceHolderTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIPlaceHolderTextView.m; sourceTree = "<group>"; };
 		EBFD3A3616DA96D000AD33C5 /* FeedbackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedbackViewController.h; sourceTree = "<group>"; };
@@ -840,16 +843,18 @@
 			children = (
 				EBB28D5816E3D6BC0090AB40 /* NSCache+Assertions.h */,
 				EBB28D5916E3D6BC0090AB40 /* NSCache+Assertions.m */,
+				EBF210B21815E2FE00D39789 /* NSString+TruncateToWidth.h */,
+				EBF210B31815E2FE00D39789 /* NSString+TruncateToWidth.m */,
 				EB4FC578171061AF00CA43EC /* NSString+URLEncoding.h */,
 				EB4FC579171061AF00CA43EC /* NSString+URLEncoding.m */,
+				EB30CAEF17D6D09E00584FB8 /* UIButton+Components.h */,
+				EB30CAF017D6D09E00584FB8 /* UIButton+Components.m */,
 				EBAD3CB216A27BFB003735AD /* UIImage+Color.h */,
 				EBAD3CB316A27BFB003735AD /* UIImage+Color.m */,
 				EB78EF6A17559B0C0016B527 /* UIImage+ResizeAndCrop.h */,
 				EB78EF6B17559B0C0016B527 /* UIImage+ResizeAndCrop.m */,
 				EBE8A4FF1712EA9C00A8A2BD /* UITabBarController+ShowHideBar.h */,
 				EBE8A5001712EA9C00A8A2BD /* UITabBarController+ShowHideBar.m */,
-				EB30CAEF17D6D09E00584FB8 /* UIButton+Components.h */,
-				EB30CAF017D6D09E00584FB8 /* UIButton+Components.m */,
 				EBD0DB5416AF953B00F78F93 /* UIViewController+Present.h */,
 				EBD0DB5516AF953B00F78F93 /* UIViewController+Present.m */,
 			);
@@ -2085,6 +2090,7 @@
 				EB78EF6C17559B0C0016B527 /* UIImage+ResizeAndCrop.m in Sources */,
 				EBD055A717AF8CF3008355E8 /* AboutViewController.m in Sources */,
 				EBA89EB217AFEAFA00D9CD6B /* PushController.m in Sources */,
+				EBF210B41815E2FE00D39789 /* NSString+TruncateToWidth.m in Sources */,
 				EB3BD91217B8C47A008D066D /* ReaderViewController.m in Sources */,
 				EBDFF54117BC057100BBFC1D /* ScheduleItemViewController.m in Sources */,
 				EBDFF54E17BE0C4500BBFC1D /* NSObject+Triangle.m in Sources */,

@@ -389,20 +389,16 @@ define(modules, function($, common, cookie) {$(function() {
 			$toolBonusCalendar.insertAfter($agendaItem).slideDown(200);
 		}
 
-		// Create both date objects
-		var dateBegin = new Date(parseInt($agendaItem.attr("data-dateBegin"), 10) * 1000);
-		var dateEnd = new Date(parseInt($agendaItem.attr("data-dateEnd"), 10) * 1000);
-
 		// Write the components
 		// ("0" + (this.getMonth() + 1)).slice(-2)
-		$toolBonusCalendar.find(".monthBegin").val(("0" + (dateBegin.getMonth() + 1)).slice(-2));
-		$toolBonusCalendar.find(".dayBegin").val(("0" + dateBegin.getDate()).slice(-2));
-		$toolBonusCalendar.find(".hourBegin").val(("0" + dateBegin.getHours()).slice(-2));
-		$toolBonusCalendar.find(".minuteBegin").val(("0" + dateBegin.getMinutes()).slice(-2));
-		$toolBonusCalendar.find(".monthEnd").val(("0" + (dateEnd.getMonth() + 1)).slice(-2));
-		$toolBonusCalendar.find(".dayEnd").val(("0" + dateEnd.getDate()).slice(-2));
-		$toolBonusCalendar.find(".hourEnd").val(("0" + dateEnd.getHours()).slice(-2));
-		$toolBonusCalendar.find(".minuteEnd").val(("0" + dateEnd.getMinutes()).slice(-2));
+		$toolBonusCalendar.find(".monthBegin").val($agendaItem.attr("data-monthBegin"));
+		$toolBonusCalendar.find(".dayBegin").val($agendaItem.attr("data-dayBegin"));
+		$toolBonusCalendar.find(".hourBegin").val($agendaItem.attr("data-hourBegin"));
+		$toolBonusCalendar.find(".minuteBegin").val($agendaItem.attr("data-minuteBegin"));
+		$toolBonusCalendar.find(".monthEnd").val($agendaItem.attr("data-monthEnd"));
+		$toolBonusCalendar.find(".dayEnd").val($agendaItem.attr("data-dayEnd"));
+		$toolBonusCalendar.find(".hourEnd").val($agendaItem.attr("data-hourEnd"));
+		$toolBonusCalendar.find(".minuteEnd").val($agendaItem.attr("data-minuteEnd"));
 
 		// Update the clocks onscreen
 		$toolBonusCalendar.find("input").trigger("keyup");
