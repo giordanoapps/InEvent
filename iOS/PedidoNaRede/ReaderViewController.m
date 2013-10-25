@@ -12,12 +12,11 @@
 #import "NSString+HTML.h"
 #import "HumanToken.h"
 #import "UtilitiesController.h"
-#import "ODRefreshControl.h"
 #import "CoolBarButtonItem.h"
 #import "ReaderViewCell.h"
 
 @interface ReaderViewController () {
-    ODRefreshControl *refreshControl;
+    UIRefreshControl *refreshControl;
     NSIndexPath *hightlightedIndexPath;
     NSIndexPath *panIndexPath;
     CGPoint panStartLocation;
@@ -83,8 +82,10 @@
     }
     
     // Refresh Control
-    refreshControl = [[ODRefreshControl alloc] initInScrollView:self.tableView];
+    refreshControl = [[UIRefreshControl alloc] init];
+    refreshControl.tintColor = [UIColor grayColor];
     [refreshControl addTarget:self action:@selector(reloadData) forControlEvents:UIControlEventValueChanged];
+    [self.tableView addSubview:refreshControl];
     
     // Table View
     [self.tableView setAllowsSelection:NO];

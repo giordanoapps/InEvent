@@ -222,7 +222,6 @@
 		EBB1939A168EA54A0060D282 /* 32-Cross.png in Resources */ = {isa = PBXBuildFile; fileRef = EBB19398168EA54A0060D282 /* 32-Cross.png */; };
 		EBB1939B168EA54A0060D282 /* 32-Plus.png in Resources */ = {isa = PBXBuildFile; fileRef = EBB19399168EA54A0060D282 /* 32-Plus.png */; };
 		EBB1E7AA1717B93700B73DDF /* PopoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBB1E7A81717B93700B73DDF /* PopoverView.m */; };
-		EBB1E7AE1717B95100B73DDF /* ODRefreshControl.m in Sources */ = {isa = PBXBuildFile; fileRef = EBB1E7AD1717B95100B73DDF /* ODRefreshControl.m */; };
 		EBB1E7B21719923100B73DDF /* 32-Speech-Bubbles@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBB1E7B11719923100B73DDF /* 32-Speech-Bubbles@2x.png */; };
 		EBB1E7CA1719F66300B73DDF /* 32-Speech-Bubbles.png in Resources */ = {isa = PBXBuildFile; fileRef = EBB1E7C91719F66300B73DDF /* 32-Speech-Bubbles.png */; };
 		EBB1E7D01719F7CE00B73DDF /* 32-Shopping-Basket.png in Resources */ = {isa = PBXBuildFile; fileRef = EBB1E7CF1719F7CE00B73DDF /* 32-Shopping-Basket.png */; };
@@ -636,8 +635,6 @@
 		EBB1E7A71717B93700B73DDF /* PopoverView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopoverView.h; sourceTree = "<group>"; };
 		EBB1E7A81717B93700B73DDF /* PopoverView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PopoverView.m; sourceTree = "<group>"; };
 		EBB1E7A91717B93700B73DDF /* PopoverView_Configuration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopoverView_Configuration.h; sourceTree = "<group>"; };
-		EBB1E7AC1717B95100B73DDF /* ODRefreshControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ODRefreshControl.h; sourceTree = "<group>"; };
-		EBB1E7AD1717B95100B73DDF /* ODRefreshControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ODRefreshControl.m; sourceTree = "<group>"; };
 		EBB1E7B11719923100B73DDF /* 32-Speech-Bubbles@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Speech-Bubbles@2x.png"; sourceTree = "<group>"; };
 		EBB1E7C91719F66300B73DDF /* 32-Speech-Bubbles.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Speech-Bubbles.png"; sourceTree = "<group>"; };
 		EBB1E7CF1719F7CE00B73DDF /* 32-Shopping-Basket.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Shopping-Basket.png"; sourceTree = "<group>"; };
@@ -1045,7 +1042,6 @@
 				EB53F6441709140500715E2D /* GoogleAnalytics */,
 				EB5FD425171EE94A00B76552 /* IntelligentSplitViewController */,
 				EB3939A816654BE300580A4E /* NSString+HTML */,
-				EBB1E7AB1717B95100B73DDF /* ODRefreshControl */,
 				EB3939AD16654BE300580A4E /* PaperFoldMenuController */,
 				EBB1E7A61717B93700B73DDF /* PopoverView */,
 				EB7FC66C16DC4225007C006D /* SDWebImage */,
@@ -1377,16 +1373,6 @@
 			);
 			name = PopoverView;
 			path = PedidoNaRede/PopoverView;
-			sourceTree = "<group>";
-		};
-		EBB1E7AB1717B95100B73DDF /* ODRefreshControl */ = {
-			isa = PBXGroup;
-			children = (
-				EBB1E7AC1717B95100B73DDF /* ODRefreshControl.h */,
-				EBB1E7AD1717B95100B73DDF /* ODRefreshControl.m */,
-			);
-			name = ODRefreshControl;
-			path = PedidoNaRede/PopoverView/ODRefreshControl;
 			sourceTree = "<group>";
 		};
 		EBB1E7C81719F61400B73DDF /* Misc */ = {
@@ -2084,7 +2070,6 @@
 				EB1FEB8517171FC3009834FC /* LogViewController.m in Sources */,
 				EB1FEB89171729A6009834FC /* LogItemViewCell.m in Sources */,
 				EBB1E7AA1717B93700B73DDF /* PopoverView.m in Sources */,
-				EBB1E7AE1717B95100B73DDF /* ODRefreshControl.m in Sources */,
 				EB5FD40B171ED1EB00B76552 /* CustomPopoverBackgroundView.m in Sources */,
 				EB6749FC1749A5F200748549 /* IntelligentSplitViewController.m in Sources */,
 				EB78EF6C17559B0C0016B527 /* UIImage+ResizeAndCrop.m in Sources */,

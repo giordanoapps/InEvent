@@ -154,6 +154,7 @@
 
 				$name = getAttribute($_GET['name']);
 				$email = getAttribute($_GET['email']);
+				$password = "123456";
 
 				$result = resourceForQuery(
 					"SELECT
@@ -167,7 +168,8 @@
 				if (mysql_num_rows($result) > 0) {
 					$personID = mysql_result($result, 0, "id");
 				} else {
-					$personID = createMember($name, "123456", $email);
+					$personID = createMember($name, $password, $email);
+					$data = processLogIn($email, $password);
 				}
 
 			} else {

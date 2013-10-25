@@ -20,6 +20,8 @@
 #import "HumanViewController.h"
 #import "LauchImageViewController.h"
 #import "GAI.h"
+#import "HumanToken.h"
+#import "EventToken.h"
 #import "IntelligentSplitViewController.h"
 #import <FacebookSDK/FacebookSDK.h>
 #import <Parse/Parse.h>
@@ -40,11 +42,46 @@
 #pragma mark - Facebook Methods
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-    return [FBSession.activeSession handleOpenURL:url];
+    
+    if ([url.scheme isEqualToString:@"inevent"]) {
+        return [self parseQueryString:[url query]];
+    } else {
+        return [FBSession.activeSession handleOpenURL:url];
+    }
 }
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
-    return [FBSession.activeSession handleOpenURL:url];
+    
+    if ([url.scheme isEqualToString:@"inevent"]) {
+        return [self parseQueryString:[url query]];
+    } else {
+        return [FBSession.activeSession handleOpenURL:url];
+    }
+}
+
+- (BOOL)parseQueryString:(NSString *)query {
+
+    NSArray *pairs = [query componentsSeparatedByString:@"&"];
+    
+    for (NSString *pair in pairs) {
+        NSArray *elements = [pair componentsSeparatedByString:@"="];
+        if ([elements count] >= 2) {
+            NSString *key = [[elements objectAtIndex:0] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+            NSString *val = [[elements objectAtIndex:1] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+            
+            if ([key isEqualToString:@"tokenID"]) {
+                [[HumanToken sharedInstance] setTokenID:val];
+            } else if ([key isEqualToString:@"eventID"]) {
+                [[EventToken sharedInstance] setEventID:[val integerValue]];
+            } else if ([key isEqualToString:@"name"]) {
+                [[HumanToken sharedInstance] setName:val];
+            } else if ([key isEqualToString:@"memberID"]) {
+                [[HumanToken sharedInstance] setMemberID:[val integerValue]];
+            }
+        }
+    }
+
+    return YES;
 }
 
 #pragma mark - Parse Methods
@@ -61,14 +98,22 @@
     [PushController deliverPushNotification:userInfo];
 }
 
+
 #pragma mark - Cycle
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    NSDictionary *userInfo = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+    NSDictionary *userInfo;
+    
+    userInfo = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
     if (userInfo) {
         [PushController deliverPushNotification:userInfo];
         application.applicationIconBadgeNumber = 0;
+    }
+    
+    userInfo = [launchOptions objectForKey:UIApplicationLaunchOptionsURLKey];
+    if (userInfo) {
+        
     }
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];

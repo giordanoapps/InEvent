@@ -15,11 +15,10 @@
 #import "APIController.h"
 #import "CoolBarButtonItem.h"
 #import "NSString+HTML.h"
-#import "ODRefreshControl.h"
 #import "NSObject+Triangle.h"
 
 @interface QuestionViewController () {
-    ODRefreshControl *refreshControl;
+    UIRefreshControl *refreshControl;
     NSString *dataPath;
 }
 
@@ -62,8 +61,10 @@
     [_wrapper.layer setMasksToBounds:YES];
     
     // Refresh Control
-    refreshControl = [[ODRefreshControl alloc] initInScrollView:self.tableView];
-    [refreshControl addTarget:self action:@selector(loadQuestions) forControlEvents:UIControlEventValueChanged];
+    refreshControl = [[UIRefreshControl alloc] init];
+    refreshControl.tintColor = [UIColor grayColor];
+    [refreshControl addTarget:self action:@selector(reloadData) forControlEvents:UIControlEventValueChanged];
+    [self.tableView addSubview:refreshControl];
 
     // Question Wrapper
     [_questionWrapper setBackgroundColor:[ColorThemeController tableViewCellBackgroundColor]];

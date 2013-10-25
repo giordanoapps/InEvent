@@ -49,73 +49,52 @@
 
 			if (mysql_affected_rows() > 0) {
 
+				// Get some properties and send an email
+				sendEventEnrollmentEmail($eventID, $personID);
+
+				// Get all the activities
 				$result = resourceForQuery(
 					"SELECT
-						`event`.`name`,
-						`event`.`nickname`
+						`activity`.`id`
 					FROM
-						`event`
+						`activity`
 					WHERE 1
-						AND `event`.`id` = $eventID
-					LIMIT 1
+						AND `activity`.`general` = 1
+						AND `activity`.`eventID` = $eventID
 				");
 
-				if (mysql_num_rows($result) > 0) {
+				for ($i = 0; $i < mysql_num_rows($result); $i++) {
 
-					// Get some properties from the event
-					$name = mysql_result($result, 0, "name");
-					$nick = mysql_result($result, 0, "nickname");
-					$email = getEmailForPerson($personID);
+					// Get some properties
+					$activityID = mysql_result($result, $i, "id");
 
-					// Get some properties and send an email
-					sendEventEnrollmentEmail($name, $nick, $email);
-
-					// Get all the activities
-					$result = resourceForQuery(
+					// Find how many people are already enrolled at this activity
+					$resultPosition = resourceForQuery(
 						"SELECT
-							`activity`.`id`
+							`activityMember`.`position`
 						FROM
-							`activity`
+							`activityMember`
 						WHERE 1
-							AND `activity`.`general` = 1
-							AND `activity`.`eventID` = $eventID
+							AND `activityMember`.`activityID` = $activityID
+						ORDER BY
+							`activityMember`.`id` DESC
+						LIMIT 1
 					");
 
-					for ($i = 0; $i < mysql_num_rows($result); $i++) {
+					$position = (mysql_num_rows($resultPosition) > 0) ? mysql_result($resultPosition, 0, "position") + 1 : 1;
 
-						// Get some properties
-						$activityID = mysql_result($result, $i, "id");
-
-						// Find how many people are already enrolled at this activity
-						$resultPosition = resourceForQuery(
-							"SELECT
-								`activityMember`.`position`
-							FROM
-								`activityMember`
-							WHERE 1
-								AND `activityMember`.`activityID` = $activityID
-							ORDER BY
-								`activityMember`.`id` DESC
-							LIMIT 1
-						");
-
-						$position = (mysql_num_rows($resultPosition) > 0) ? mysql_result($resultPosition, 0, "position") + 1 : 1;
-
-						// Insert all the activities that are general
-						$insert = resourceForQuery(
-							"INSERT INTO
-								`activityMember`
-								(`activityID`, `memberID`, `position`, `approved`, `present`)
-							VALUES
-								($activityID, $personID, $position, 1, 0)
-						");
-					}
-
-					return $insert;
-
-				} else {
-					http_status_code(404, "eventID does not exist!");
+					// Insert all the activities that are general
+					$insert = resourceForQuery(
+						"INSERT INTO
+							`activityMember`
+							(`activityID`, `memberID`, `position`, `approved`, `present`)
+						VALUES
+							($activityID, $personID, $position, 1, 0)
+					");
 				}
+
+				return $insert;
+
 			} else {
 				http_status_code(406, "not a single row was inserted");
 			}

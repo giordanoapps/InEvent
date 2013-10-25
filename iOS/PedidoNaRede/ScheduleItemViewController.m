@@ -19,13 +19,11 @@
 #import "APIController.h"
 #import "CoolBarButtonItem.h"
 #import "NSString+HTML.h"
-#import "ODRefreshControl.h"
 #import "NSObject+Triangle.h"
 #import "UIPlaceHolderTextView.h"
 
 @interface ScheduleItemViewController () {
     BOOL editingMode;
-    ODRefreshControl *refreshControl;
     CLLocationManager *locationManager;
 }
 

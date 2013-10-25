@@ -10,13 +10,12 @@
 #import "FeedbackViewController.h"
 #import "ColorThemeController.h"
 #import "UIPlaceHolderTextView.h"
-#import "ODRefreshControl.h"
 #import "HumanToken.h"
 #import "EventToken.h"
 #import "NSString+HTML.h"
 
 @interface FeedbackViewController () {
-    ODRefreshControl *refreshControl;
+    UIRefreshControl *refreshControl;
     BOOL hideCommentBox;
     NSString *dataPath;
 }
@@ -55,9 +54,11 @@
     [((UIControl *)self.view) addTarget:self action:@selector(dismissKeyboard) forControlEvents:UIControlEventTouchUpInside];
     
     // Refresh Control
-    refreshControl = [[ODRefreshControl alloc] initInScrollView:self.scrollView];
+    refreshControl = [[UIRefreshControl alloc] init];
+    refreshControl.tintColor = [UIColor grayColor];
     [refreshControl addTarget:self action:@selector(reloadData) forControlEvents:UIControlEventValueChanged];
-       
+    [self.scrollView addSubview:refreshControl];
+    
     // Box
     CGRect frame = self.view.frame;
     _box.frame = CGRectMake((frame.size.width - _box.frame.size.width) / 2.0f, (frame.size.height - _box.frame.size.height) / 2.0, _box.frame.size.width, _box.frame.size.height);

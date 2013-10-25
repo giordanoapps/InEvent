@@ -12,7 +12,6 @@
 #import "UtilitiesController.h"
 #import "UIViewController+Present.h"
 #import "UIImageView+WebCache.h"
-#import "ODRefreshControl.h"
 #import "UIViewController+AKTabBarController.h"
 #import "NSString+HTML.h"
 #import "HumanToken.h"
@@ -23,7 +22,7 @@
 #import <Parse/Parse.h>
 
 @interface MarketplaceViewController () {
-    ODRefreshControl *refreshControl;
+    UIRefreshControl *refreshControl;
 }
 
 @property (nonatomic, strong) NSArray *events;
@@ -56,8 +55,10 @@
     _tableView.backgroundColor = [ColorThemeController tableViewBackgroundColor];
     
     // Refresh Control
-    refreshControl = [[ODRefreshControl alloc] initInScrollView:self.tableView];
+    refreshControl = [[UIRefreshControl alloc] init];
+    refreshControl.tintColor = [UIColor grayColor];
     [refreshControl addTarget:self action:@selector(reloadData) forControlEvents:UIControlEventValueChanged];
+    [self.tableView addSubview:refreshControl];
 }
 
 - (void)viewDidAppear:(BOOL)animated {

@@ -14,16 +14,11 @@
 #import "EventToken.h"
 #import "HumanToken.h"
 
-typedef enum {
-    UIKeyboardPositionUp = 0,
-    UIKeyboardPositionDown,
-} UIKeyboardPosition;
-
 @interface WrapperViewController () {
     BOOL shouldCancelKeyboardAnimation;
     CGRect keyboardFrame;
     CGRect componentFrame;
-    UIKeyboardPosition keyboardPosition;
+    CGFloat currentViewShift;
     UITapGestureRecognizer *behindRecognizer;
 }
 
@@ -41,7 +36,7 @@ typedef enum {
         // Custom initialization
         keyboardFrame = CGRectZero;
         componentFrame = CGRectZero;
-        keyboardPosition = UIKeyboardPositionDown;
+        currentViewShift = 0.0f;
     }
     return self;
 }
@@ -52,11 +47,14 @@ typedef enum {
     
     self.screenName = @"Wrapper";
     
-    // Navigation Bar
-    if ([[[UIDevice currentDevice] systemVersion] isEqualToString:@"7.0"]) {
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7) {
+        // Navigation Bar
         self.navigationController.navigationBar.barTintColor = [ColorThemeController navigationBarBackgroundColor];
         self.navigationController.navigationBar.translucent = NO;
         self.navigationController.navigationBar.titleTextAttributes = @{UITextAttributeTextColor : [UIColor whiteColor]};
+        // View Controller
+        self.edgesForExtendedLayout = UIRectEdgeNone;
+        self.extendedLayoutIncludesOpaqueBars = YES;
     }
 
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
@@ -167,42 +165,37 @@ typedef enum {
     
     // Process the keyboard state
     if (component) {
-        CGRect correctFrame = [self.view convertRect:component.frame fromView:component];
-        if (self.navigationController) correctFrame.origin.y -= self.navigationController.navigationBar.frame.size.height;
+        CGRect correctFrame = [component convertRect:component.bounds toView:nil];
+        correctFrame.origin.y -= currentViewShift;
+//        NSLog(@"frame = %@\n", NSStringFromCGRect(correctFrame));
         if (self.tabBarController) correctFrame.origin.y -= self.tabBarController.tabBar.frame.size.height;
         
         if (keyboardFrame.size.height == 0.0) {
             componentFrame = correctFrame;
-        } else if (correctFrame.origin.y > (keyboardFrame.size.height / [[UIScreen mainScreen] scale])) {
-            [self moveParentViewToPosition:UIKeyboardPositionUp];
+        } else {
+            [self calculateViewShift:correctFrame];
         }
-    } else if (componentFrame.origin.y > (keyboardFrame.size.height / [[UIScreen mainScreen] scale])) {
-        [self moveParentViewToPosition:UIKeyboardPositionUp];
+    } else {
+        [self calculateViewShift:componentFrame];
     }
 }
 
-- (void)moveParentViewToPosition:(UIKeyboardPosition)moveDirection {
+- (void)calculateViewShift:(CGRect)frame {
+    CGFloat keyboardHeight = (keyboardFrame.size.height / [[UIScreen mainScreen] scale]);
+    CGFloat viewAbsolutePosition = (self.view.frame.size.height - keyboardHeight) / 2.0f;
+    [self shiftParentView:viewAbsolutePosition - (currentViewShift + frame.origin.y)];
+}
 
-    // Move the view up/down whenever the keyboard is shown/dismissed, only if necessary
-    if (keyboardPosition != moveDirection) {
+- (void)shiftParentView:(CGFloat)shift {
+    
+    CGRect rect = self.view.frame;
 
-        // Set our property
-        keyboardPosition = moveDirection;
-        
-        // We apply the transformation bound to the screen pixel density
-        CGFloat offset = keyboardFrame.size.height / [[UIScreen mainScreen] scale];
-        CGRect rect = self.view.frame;
-        
-        if (keyboardPosition == UIKeyboardPositionUp) {
-            rect.origin.y -= offset;
-        } else {
-            rect.origin.y += offset;
-        }
-        
-        [UIView animateWithDuration:0.23 animations:^{
-            self.view.frame = rect;
-        }];
-    }
+    currentViewShift += shift;
+    rect.origin.y += shift;
+    
+    [UIView animateWithDuration:0.23 animations:^{
+        self.view.frame = rect;
+    }];
 }
 
 #pragma mark - Alert View Delegate
@@ -297,7 +290,7 @@ typedef enum {
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
     
     // Move view if necessary
-    if (keyboardPosition == UIKeyboardPositionUp) {
+    if (currentViewShift != 0.0f) {
         [self performSelector:@selector(checkKeyboardForPreponentParentView:) withObject:textField afterDelay:0.4f];
         shouldCancelKeyboardAnimation = YES;
     } else {
@@ -310,9 +303,9 @@ typedef enum {
 - (BOOL)textFieldShouldEndEditing:(UITextField *)textField {
     
     // Move view down if necessary
-    if (keyboardPosition == UIKeyboardPositionUp && shouldCancelKeyboardAnimation == NO) {
+    if (shouldCancelKeyboardAnimation == NO) {
 //        [self performSelector:@selector(moveParentViewToPosition:) withObject:nil afterDelay:0.4f];
-        [self moveParentViewToPosition:UIKeyboardPositionDown];
+        [self shiftParentView:-(currentViewShift)];
     }
     
     return YES;
@@ -323,7 +316,7 @@ typedef enum {
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView {
     
     // Move view if necessary
-    [self checkKeyboardForPreponentParentView:textView];
+//    [self checkKeyboardForPreponentParentView:textView];
     
     return YES;
 }
@@ -331,7 +324,7 @@ typedef enum {
 - (BOOL)textViewShouldEndEditing:(UITextView *)textView {
     
     // Move view down if necessary
-    if (keyboardPosition == UIKeyboardPositionUp) [self moveParentViewToPosition:UIKeyboardPositionDown];
+//    if (keyboardPosition == UIKeyboardPositionUp) [self moveParentViewToPosition:UIKeyboardPositionDown];
     
     return YES;
 }

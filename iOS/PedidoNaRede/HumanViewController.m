@@ -10,12 +10,11 @@
 #import "HumanLoginViewController.h"
 #import <FacebookSDK/FacebookSDK.h>
 #import <QuartzCore/QuartzCore.h>
-#import "ODRefreshControl.h"
 #import "HumanToken.h"
 #import "NSString+HTML.h"
 
 @interface HumanViewController () {
-    ODRefreshControl *refreshControl;
+    UIRefreshControl *refreshControl;
 }
 
 @end
@@ -44,8 +43,10 @@
     [self.view setBackgroundColor:[ColorThemeController tableViewCellBackgroundColor]];
     
     // Refresh Control
-    refreshControl = [[ODRefreshControl alloc] initInScrollView:self.scrollView];
+    refreshControl = [[UIRefreshControl alloc] init];
+    refreshControl.tintColor = [UIColor grayColor];
     [refreshControl addTarget:self action:@selector(reloadData) forControlEvents:UIControlEventValueChanged];
+    [self.scrollView addSubview:refreshControl];
     
     // Photo Wrapper
     [_photoWrapper.layer setCornerRadius:10.0];

@@ -15,7 +15,6 @@
 #import "UtilitiesController.h"
 #import "UIViewController+Present.h"
 #import "UIImageView+WebCache.h"
-#import "ODRefreshControl.h"
 #import "UIViewController+AKTabBarController.h"
 #import "NSString+HTML.h"
 #import "HumanToken.h"
@@ -25,7 +24,7 @@
 #import "Schedule.h"
 
 @interface ScheduleViewController () {
-    ODRefreshControl *refreshControl;
+    UIRefreshControl *refreshControl;
     NSArray *activities;
     ScheduleSelection selection;
 }
@@ -67,8 +66,10 @@
     _tableView.backgroundColor = [ColorThemeController tableViewBackgroundColor];
     
     // Refresh Control
-    refreshControl = [[ODRefreshControl alloc] initInScrollView:self.tableView];
+    refreshControl = [[UIRefreshControl alloc] init];
+    refreshControl.tintColor = [UIColor grayColor];
     [refreshControl addTarget:self action:@selector(reloadData) forControlEvents:UIControlEventValueChanged];
+    [self.tableView addSubview:refreshControl];
     
     // Right Button
     self.rightBarButton = [[CoolBarButtonItem alloc] initCustomButtonWithImage:[UIImage imageNamed:@"32-Cog"] frame:CGRectMake(0, 0, 42.0, 30.0) insets:UIEdgeInsetsMake(5.0, 11.0, 5.0, 11.0) target:self action:@selector(alertActionSheet)];

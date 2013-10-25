@@ -11,14 +11,13 @@
 #import "AppDelegate.h"
 #import "NSString+HTML.h"
 #import "MKPointExpandedAnnotation.h"
-#import "ODRefreshControl.h"
 #import "EventToken.h"
 #import "GAI.h"
 #import "GAIDictionaryBuilder.h"
 #import <Parse/Parse.h>
 
 @interface MapViewController () {
-    ODRefreshControl *refreshControl;
+    UIRefreshControl *refreshControl;
 }
 
 @property (nonatomic, strong) NSArray *companies;
@@ -75,8 +74,10 @@
         _tableView.backgroundColor = [ColorThemeController tableViewBackgroundColor];
         
         // Refresh Control
-        refreshControl = [[ODRefreshControl alloc] initInScrollView:self.tableView];
-        [refreshControl addTarget:self action:@selector(loadData) forControlEvents:UIControlEventValueChanged];
+        refreshControl = [[UIRefreshControl alloc] init];
+        refreshControl.tintColor = [UIColor grayColor];
+        [refreshControl addTarget:self action:@selector(reloadData) forControlEvents:UIControlEventValueChanged];
+        [self.tableView addSubview:refreshControl];
     }
     
     if (_mapView) {

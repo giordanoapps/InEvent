@@ -11,7 +11,6 @@
 #import "UtilitiesController.h"
 #import "UIImageView+WebCache.h"
 #import "NSString+HTML.h"
-#import "ODRefreshControl.h"
 #import "HumanToken.h"
 #import "EventToken.h"
 #import "GAI.h"
@@ -19,7 +18,7 @@
 #import "CoolBarButtonItem.h"
 
 @interface FrontViewController () {
-    ODRefreshControl *refreshControl;
+    UIRefreshControl *refreshControl;
     NSDictionary *eventData;
     BOOL editingMode;
     CLLocationManager *locationManager;
@@ -54,8 +53,10 @@
     [self loadDismissButton];
     
     // Refresh Control
-    refreshControl = [[ODRefreshControl alloc] initInScrollView:self.view];
+    refreshControl = [[UIRefreshControl alloc] init];
+    refreshControl.tintColor = [UIColor grayColor];
     [refreshControl addTarget:self action:@selector(reloadData) forControlEvents:UIControlEventValueChanged];
+    [self.view addSubview:refreshControl];
     
     // Scroll View
     self.view.contentSize = CGSizeMake(self.view.frame.size.width, 794.0f);
