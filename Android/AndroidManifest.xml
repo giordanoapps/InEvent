@@ -51,7 +51,8 @@
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_appId" />
-        <activity android:name="com.facebook.LoginActivity" />
+
+        <activity android:name="com.facebook.LoginActivity" />
 
         <!-- Parse (Push Notifications) -->
         <service android:name="com.parse.PushService" />
@@ -117,7 +118,7 @@
 
         <!-- People -->
         <activity android:name="com.estudiotrilha.inevent.app.PeopleActivity" />
-        
+
         <!-- InEvent Content Provider -->
         <provider
             android:name="com.estudiotrilha.inevent.provider.InEventProvider"
@@ -128,6 +129,13 @@
         <!-- Services -->
         <service android:name="com.estudiotrilha.inevent.service.UploaderService" />
         <service android:name="com.estudiotrilha.inevent.service.DownloaderService" />
+
+        <!-- Receivers -->
+        <receiver android:name="com.estudiotrilha.inevent.receiver.ConnectivityStatusReceiver" >
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

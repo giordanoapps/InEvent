@@ -12,7 +12,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
 import android.util.Log;
 
 import com.estudiotrilha.inevent.InEvent;
@@ -166,7 +165,7 @@ public class UploaderService extends IntentService implements ApiRequest.Respons
             int indexPresent = c.getColumnIndex(Presence.Columns.PRESENT);
 
             String tokenID = LoginManager.getInstance(this).getTokenId();
-DatabaseUtils.dumpCursor(c); // XXX
+
             while(c.moveToNext())
             {
                 // Send the request
