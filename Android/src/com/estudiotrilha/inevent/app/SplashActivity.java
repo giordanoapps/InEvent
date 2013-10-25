@@ -105,15 +105,15 @@ public class SplashActivity extends Activity implements Runnable
     protected void onPause()
     {
         super.onPause();
-        // XXX testing
-        // set the transition animation
-        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 
     private void onSplashFinish()
     {
         // finish the splash activity
         finish();
+
+        // set the transition animation
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
         // Obtain the sharedPreference
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);

@@ -3,6 +3,11 @@
     xmlns:trilha="http://schemas.android.com/apk/res-auto" >
 
     <item
+        android:id="@+id/menu_eventDetails"
+        android:orderInCategory="10"
+        android:title="@string/action_event_details"
+        trilha:showAsAction="never"/>
+    <item
         android:id="@+id/menu_preferences"
         android:orderInCategory="100"
         android:title="@string/action_preferences"

@@ -13,6 +13,7 @@
     <string name="action_displayOption_schedule_approved">Schedule - Approved</string>
     <string name="action_displayOption_schedule_full">Schedule</string>
     <string name="action_displayOption_schedule_waitList">Schedule - Wait List</string>
+    <string name="action_event_details">Event Details</string>
     <string name="action_event_enroll">Enroll</string>
     <string name="action_eventActivity_enroll">Enroll</string>
     <string name="action_eventActivity_managePeople">Manage People</string>

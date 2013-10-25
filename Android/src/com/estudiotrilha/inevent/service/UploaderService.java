@@ -12,17 +12,20 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.util.Log;
 
 import com.estudiotrilha.inevent.InEvent;
 import com.estudiotrilha.inevent.R;
 import com.estudiotrilha.inevent.Utils;
 import com.estudiotrilha.inevent.content.Activity;
+import com.estudiotrilha.inevent.content.ActivityMember;
 import com.estudiotrilha.inevent.content.ApiRequest;
 import com.estudiotrilha.inevent.content.ApiRequestCode;
 import com.estudiotrilha.inevent.content.Event;
 import com.estudiotrilha.inevent.content.Feedback;
 import com.estudiotrilha.inevent.content.LoginManager;
+import com.estudiotrilha.inevent.content.Presence;
 
 
 public class UploaderService extends IntentService implements ApiRequest.ResponseHandler
@@ -46,6 +49,19 @@ public class UploaderService extends IntentService implements ApiRequest.Respons
     {
         // Insert it in the database
         context.getContentResolver().insert(Feedback.CONTENT_URI, Feedback.newEventOpinion(activityID, rating, message));
+        sync(context);
+    }
+    public static void markPresenceForActivity(Context context, long activityID, long memberID, boolean present)
+    {
+        // Insert it in the database
+        context.getContentResolver().insert(Presence.CONTENT_URI, Presence.newActivityPresence(activityID, memberID, present));
+        // Update the values
+        final String selection = ActivityMember.Columns.MEMBER_ID_FULL+"="+memberID+
+                " AND "+ActivityMember.Columns.ACTIVITY_ID_FULL+"="+activityID;
+        final ContentValues values = new ContentValues();
+        values.put(ActivityMember.Columns.PRESENT, present);
+        context.getContentResolver().update(ActivityMember.CONTENT_URI, values, selection, null);
+
         sync(context);
     }
 
@@ -140,7 +156,48 @@ public class UploaderService extends IntentService implements ApiRequest.Respons
                 }
             }
             c.close();
+
+            // Query the unsynchronized presence
+            c = getContentResolver().query(Presence.CONTENT_URI, Presence.Columns.PROJECTION_SYNC, null, null, null);
+            // Get the indexes
+            indexActivityID = c.getColumnIndex(Presence.Columns.ACTIVITY_ID);
+            int indexPersonID = c.getColumnIndex(Presence.Columns.PERSON_ID);
+            indexID = c.getColumnIndex(Presence.Columns._ID);
+            int indexPresent = c.getColumnIndex(Presence.Columns.PRESENT);
+
+            String tokenID = LoginManager.getInstance(this).getTokenId();
+DatabaseUtils.dumpCursor(c); // XXX
+            while(c.moveToNext())
+            {
+                // Send the request
+                boolean present = c.getInt(indexPresent) == 1;
+                try
+                {
+                    // Get some info
+                    mId = c.getLong(indexID);
+                    long activityID = c.getLong(indexActivityID);
+                    long personID = c.getLong(indexPersonID);
+
+                    // Prepare the connection
+                    HttpURLConnection connection = 
+                            present ?
+                                    Activity.Api.confirmEntrance(tokenID, activityID, personID) :
+                                    Activity.Api.revokeEntrance(tokenID, activityID, personID);
+                    ApiRequest.getJsonFromConnection(
+                            present ? 
+                                    ApiRequestCode.ACTIVITY_CONFIRM_ENTRANCE :
+                                    ApiRequestCode.ACTIVITY_REVOKE_ENTRANCE,
+                            connection, this, false);
+                }
+                catch (IOException e)
+                {
+                    Log.e(InEvent.NAME, "Couldn't create connection for activity."+
+                           (present ? "confirm" : "revoke") +"Entrance(tokenID, activityID, personID)", e);
+                }
+            }
+            c.close();
         }
+        
     }
 
 
@@ -157,6 +214,12 @@ public class UploaderService extends IntentService implements ApiRequest.Respons
                 ContentValues values = new ContentValues();
                 values.put(Feedback.Columns.SYNCHRONIZED, 1);
                 getContentResolver().update(ContentUris.withAppendedId(Feedback.CONTENT_URI, mId), values, null, null);
+                break;
+
+            case ApiRequestCode.ACTIVITY_CONFIRM_ENTRANCE:
+            case ApiRequestCode.ACTIVITY_REVOKE_ENTRANCE:
+                // Remove it from the list!
+                getContentResolver().delete(ContentUris.withAppendedId(Presence.CONTENT_URI, mId), null, null);
                 break;
             }
         }

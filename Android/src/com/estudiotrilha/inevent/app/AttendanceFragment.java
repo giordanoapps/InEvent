@@ -16,10 +16,12 @@ import android.support.v4.content.Loader;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
@@ -35,8 +37,8 @@ import com.estudiotrilha.inevent.R;
 import com.estudiotrilha.inevent.Utils;
 import com.estudiotrilha.inevent.content.Activity;
 import com.estudiotrilha.inevent.content.ActivityMember;
-import com.estudiotrilha.inevent.content.LoginManager;
 import com.estudiotrilha.inevent.content.Member;
+import com.estudiotrilha.inevent.service.UploaderService;
 
 
 public class AttendanceFragment extends Fragment implements LoaderCallbacks<Cursor>, OnClickListener, OnItemClickListener, OnItemLongClickListener
@@ -184,6 +186,19 @@ public class AttendanceFragment extends Fragment implements LoaderCallbacks<Curs
 
         // Setup the search
         mSearchView = (EditText) view.findViewById(R.id.attendance_searchBox);
+        mSearchView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
+            {
+                if (actionId == EditorInfo.IME_ACTION_GO)
+                {
+                    // Behave as if the confirm presence button was pressed
+                    onClick(v);
+                    return true;
+                }
+                return false;
+            }
+        });
         mSearchView.addTextChangedListener(new TextWatcher() {
             @Override
             public void afterTextChanged(Editable s)
@@ -245,11 +260,10 @@ public class AttendanceFragment extends Fragment implements LoaderCallbacks<Curs
         mSearchView.setText("");
         mQueyItemPosition = -1;
 
-        // And add this to the queue to be sent to the server
-        LoginManager.getInstance(getActivity())
-                .setPresence(getArguments().getLong(ARGS_ACTIVITY_ID), memberID, present);
+        // Mark the presence
+        UploaderService.markPresenceForActivity(getActivity(), getArguments().getLong(ARGS_ACTIVITY_ID), memberID, present);
 
-        // Notify the change content
+        // Update the list
         mPeopleAdapter.notifyDataSetChanged();
     }
 
@@ -330,7 +344,9 @@ public class AttendanceFragment extends Fragment implements LoaderCallbacks<Curs
                 c.moveToPosition(-1);
                 while(c.moveToNext())
                 {
-                    char firstLetter = c.getString(mIndexName).toUpperCase(Locale.getDefault()).charAt(0);
+                    char firstLetter = c.getString(mIndexName)
+                            .toUpperCase(Locale.getDefault())
+                            .charAt(0);
 
                     if (firstLetter < mSections[position])
                     {
@@ -383,6 +399,9 @@ public class AttendanceFragment extends Fragment implements LoaderCallbacks<Curs
         public int getPositionForId(long id)
         {
             Cursor c = getCursor();
+            // Null check
+            if (c == null) return -1;
+
             c.moveToPosition(-1);
             while (c.moveToNext())
             {

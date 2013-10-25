@@ -13,8 +13,9 @@
     <string name="action_displayOption_schedule_approved">Agenda - Aprovado</string>
     <string name="action_displayOption_schedule_full">Agenda - Tudo</string>
     <string name="action_displayOption_schedule_waitList">Agenda - Espera</string>
-    <string name="action_event_enroll">Se inscrever</string>
-    <string name="action_eventActivity_enroll">Se inscrever</string>
+    <string name="action_event_details">Detalhes do Evento</string>
+    <string name="action_event_enroll">Se Inscrever</string>
+    <string name="action_eventActivity_enroll">Se Inscrever</string>
     <string name="action_eventActivity_managePeople">Gerenciar Pessoas</string>
     <string name="action_eventActivity_unenroll">Sair da atividade</string>
     <string name="action_location">Local</string>

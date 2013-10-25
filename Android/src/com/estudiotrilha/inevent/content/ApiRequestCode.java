@@ -14,6 +14,8 @@ public interface ApiRequestCode
 
     public static final int ACTIVITY_REQUEST_ENROLLMENT  = 20;
     public static final int ACTIVITY_DISMISS_ENROLLMENT  = 21;
-    public static final int ACTIVITY_SEND_OPINION        = 22;
-    public static final int ACTIVITY_GET_OPINION         = 23;
+    public static final int ACTIVITY_CONFIRM_ENTRANCE    = 22;
+    public static final int ACTIVITY_REVOKE_ENTRANCE     = 23;
+    public static final int ACTIVITY_SEND_OPINION        = 24;
+    public static final int ACTIVITY_GET_OPINION         = 25;
 }

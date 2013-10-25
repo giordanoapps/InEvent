@@ -29,11 +29,12 @@ import com.estudiotrilha.inevent.content.EventMember;
 import com.estudiotrilha.inevent.content.LoginManager;
 import com.estudiotrilha.inevent.content.Member;
 import com.estudiotrilha.inevent.content.Feedback;
+import com.estudiotrilha.inevent.content.Presence;
 
 
 public class InEventProvider extends ContentProvider
 {
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 5;
 
     public final static UriMatcher uriMatcher;
 
@@ -41,15 +42,17 @@ public class InEventProvider extends ContentProvider
     public static final Uri    CONTENT_URI = Uri.parse("content://" + AUTHORITY);
 
     // URI CODES //
-    public static final int URI_EVENT                = 101;
-    public static final int URI_EVENT_SINGLE         = 102;
-    public static final int URI_EVENT_ATTENDERS      = 103;
-    public static final int URI_ACTIVITY             = 201;
-    public static final int URI_ACTIVITY_SINGLE      = 202;
-    public static final int URI_ACTIVITY_ATTENDERS   = 204;
-    public static final int URI_MEMBER               = 301;
-    public static final int URI_RATING               = 401;
-    public static final int URI_RATING_SINGLE        = 402;
+    public static final int URI_EVENT              = 101;
+    public static final int URI_EVENT_SINGLE       = 102;
+    public static final int URI_EVENT_ATTENDERS    = 103;
+    public static final int URI_ACTIVITY           = 201;
+    public static final int URI_ACTIVITY_SINGLE    = 202;
+    public static final int URI_ACTIVITY_ATTENDERS = 204;
+    public static final int URI_MEMBER             = 301;
+    public static final int URI_RATING             = 401;
+    public static final int URI_RATING_SINGLE      = 402;
+    public static final int URI_PRESENCE           = 501;
+    public static final int URI_PRESENCE_SINGLE    = 502;
 
     static
     {
@@ -65,6 +68,8 @@ public class InEventProvider extends ContentProvider
         uriMatcher.addURI(AUTHORITY, Member.PATH,                   URI_MEMBER);
         uriMatcher.addURI(AUTHORITY, Feedback.PATH,                 URI_RATING);
         uriMatcher.addURI(AUTHORITY, Feedback.PATH + "/#",          URI_RATING_SINGLE);
+        uriMatcher.addURI(AUTHORITY, Presence.PATH,                 URI_PRESENCE);
+        uriMatcher.addURI(AUTHORITY, Presence.PATH + "/#",          URI_PRESENCE_SINGLE);
     }
 
     private DatabaseOpenHelper mDatabaseOpenHelper;
@@ -117,6 +122,12 @@ public class InEventProvider extends ContentProvider
 
         case URI_RATING_SINGLE:
             return ContentResolver.CURSOR_ITEM_BASE_TYPE+ IN_EVENT + Feedback.PATH;
+
+        case URI_PRESENCE:
+            return ContentResolver.CURSOR_DIR_BASE_TYPE + IN_EVENT + Presence.PATH;
+
+        case URI_PRESENCE_SINGLE:
+            return ContentResolver.CURSOR_ITEM_BASE_TYPE+ IN_EVENT + Presence.PATH;
         }
 
         return null;
@@ -239,6 +250,19 @@ public class InEventProvider extends ContentProvider
             c = mDatabase.query(Feedback.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
             break;
 
+        case URI_PRESENCE_SINGLE:
+        {
+            // obtain the id
+            Long id = ContentUris.parseId(uri);
+    
+            // set the selection
+            selection = Presence.Columns._ID+"=?";
+            selectionArgs = new String[] {id.toString()};
+        }
+        case URI_PRESENCE:
+            c = mDatabase.query(Presence.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
+        break;
+
         default:
             throw new IllegalArgumentException("Unsupported uri: "+uri);
         }
@@ -284,6 +308,10 @@ public class InEventProvider extends ContentProvider
             answer = mDatabase.insertWithOnConflict(Feedback.TABLE_NAME, null, values, SQLiteDatabase.CONFLICT_REPLACE);
             break;
 
+        case URI_PRESENCE:
+            answer = mDatabase.insertWithOnConflict(Presence.TABLE_NAME, null, values, SQLiteDatabase.CONFLICT_REPLACE);
+            break;
+            
         default:
             throw new IllegalArgumentException("Unsupported uri: " + uri);
         }
@@ -415,6 +443,19 @@ public class InEventProvider extends ContentProvider
             result = mDatabase.delete(Member.TABLE_NAME, selection, selectionArgs);
             break;
 
+        case URI_PRESENCE_SINGLE:
+        {
+            // obtain the id
+            Long id = ContentUris.parseId(uri);
+    
+            // set the selection
+            selection = Presence.Columns._ID+"=?";
+            selectionArgs = new String[] {id.toString()};
+        }
+        case URI_PRESENCE:
+            result = mDatabase.delete(Presence.TABLE_NAME, selection, selectionArgs);
+        break;
+
         default:
             throw new IllegalArgumentException("Unsupported uri: " + uri);
         }
@@ -479,6 +520,7 @@ public class InEventProvider extends ContentProvider
                 createActivityTable(db);
                 createMemberTable(db);
                 createRatingTable(db);
+                createPresenceTable(db);
 
                 db.setTransactionSuccessful();
                 Log.i(InEvent.NAME, "Database created successfully!");
@@ -527,6 +569,11 @@ public class InEventProvider extends ContentProvider
                 // do the updates for the version 4
                 createRatingTable(db);
                 Log.i(InEvent.NAME, "Updated database to version 4");
+
+            case 4:
+                // do the updates for the version 5
+                createPresenceTable(db);
+                Log.i(InEvent.NAME, "Updated database to version 5");
             }
         }
 
@@ -615,6 +662,23 @@ public class InEventProvider extends ContentProvider
             		    " ("+Feedback.Columns.EVENT_ID+
             		    ", "+Feedback.Columns.ACTIVITY_ID+")"
     		);
+        }
+
+        private void createPresenceTable(SQLiteDatabase db)
+        {
+            Log.i(InEvent.NAME, "Creating " + Presence.TABLE_NAME + " table");
+
+            db.execSQL("CREATE TABLE " + Presence.TABLE_NAME + "(" +
+                    Presence.Columns._ID + SQLiteUtils.PRIMARY_KEY+", "+
+                    Presence.Columns.ACTIVITY_ID + " INTEGER NOT NULL, " +
+                    Presence.Columns.PERSON_ID + " INTEGER NOT NULL, " +
+                    Presence.Columns.PRESENT + SQLiteUtils.BOOLEAN +")"
+            );
+            db.execSQL("CREATE UNIQUE INDEX " + Presence.TABLE_NAME+"_index" +
+                    " ON "+Presence.TABLE_NAME+
+                        " ("+Presence.Columns.PERSON_ID+
+                        ", "+Presence.Columns.ACTIVITY_ID+")"
+            );
         }
     }
 }

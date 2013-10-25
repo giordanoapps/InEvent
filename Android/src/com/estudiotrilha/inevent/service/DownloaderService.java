@@ -447,7 +447,7 @@ public class DownloaderService extends IntentService implements ApiRequest.Respo
                             .withSelection(ActivityMember.Columns.ACTIVITY_ID_FULL+"="+activityID, null)
                             .build()
                     );
-                    
+
                     // Get the new ones
                     JSONArray peopleArray = json.getJSONArray(JsonUtils.DATA);
                     for (int i = 0; i < peopleArray.length(); i++)
