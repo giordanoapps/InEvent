@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4510" systemVersion="12F37" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4510" systemVersion="12F45" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
         <deployment defaultVersion="1536" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
@@ -37,7 +37,7 @@
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="11" textAlignment="center" minimumFontSize="17" id="P2S-DY-3Nl" userLabel="Hour">
                             <rect key="frame" x="16" y="26" width="26" height="23"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" name="Thonburi" family="Thonburi" pointSize="14"/>
+                            <fontDescription key="fontDescription" name="Thonburi" family="Thonburi" pointSize="13"/>
                             <textInputTraits key="textInputTraits"/>
                             <connections>
                                 <outlet property="delegate" destination="-1" id="YAH-Up-OsC"/>
@@ -46,7 +46,7 @@
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="13" textAlignment="center" minimumFontSize="17" id="pXH-sl-eMN" userLabel="Minute">
                             <rect key="frame" x="46" y="26" width="26" height="23"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" name="Thonburi" family="Thonburi" pointSize="14"/>
+                            <fontDescription key="fontDescription" name="Thonburi" family="Thonburi" pointSize="13"/>
                             <textInputTraits key="textInputTraits"/>
                             <connections>
                                 <outlet property="delegate" destination="-1" id="ijn-aD-PyB"/>
@@ -70,6 +70,7 @@
                             <rect key="frame" x="0.0" y="64" width="300" height="132"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <inset key="contentInset" minX="0.0" minY="0.0" maxX="0.0" maxY="40"/>
                             <fontDescription key="fontDescription" name="Thonburi" family="Thonburi" pointSize="16"/>
                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             <connections>
@@ -84,6 +85,26 @@
                             </state>
                             <connections>
                                 <action selector="loadFeedbackController" destination="-1" eventType="touchUpInside" id="kT7-gx-70P"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Q0d-dd-cf4" userLabel="Feedback">
+                            <rect key="frame" x="12" y="154" width="28" height="28"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" image="32-Facebook-2.png">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="postTimeline:" destination="-1" eventType="touchUpInside" id="aG5-Uw-YkQ"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="ho7-R8-LgI" userLabel="Feedback">
+                            <rect key="frame" x="48" y="154" width="28" height="28"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" image="32-Twitter.png">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="sendTweet:" destination="-1" eventType="touchUpInside" id="lSQ-r5-09C"/>
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="9ao-1x-zC1" userLabel="Question">
@@ -136,7 +157,9 @@
     <resources>
         <image name="32-Book-Large.png" width="32" height="32"/>
         <image name="32-Create-_-Write.png" width="32" height="32"/>
+        <image name="32-Facebook-2.png" width="32" height="32"/>
         <image name="32-Speech-Bubble.png" width="32" height="32"/>
+        <image name="32-Twitter.png" width="32" height="32"/>
         <image name="32-Users.png" width="32" height="32"/>
         <image name="64-Flip-Clock.png" width="64" height="64"/>
     </resources>

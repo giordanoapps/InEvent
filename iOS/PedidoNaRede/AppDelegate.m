@@ -80,6 +80,10 @@
             }
         }
     }
+    
+    // Update the current state of the schedule controller
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"scheduleCurrentState" object:nil userInfo:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"verify" object:nil userInfo:@{@"type": @"menu"}];
 
     return YES;
 }

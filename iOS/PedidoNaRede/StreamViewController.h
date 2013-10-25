@@ -10,7 +10,7 @@
 #import "WrapperViewController.h"
 #import "APIController.h"
 
-@interface StreamViewController : WrapperViewController <UITableViewDelegate, UITableViewDataSource, UINavigationControllerDelegate, UITextFieldDelegate, APIControllerDelegate>
+@interface StreamViewController : WrapperViewController <UITableViewDelegate, UITableViewDataSource, UINavigationControllerDelegate, UITextFieldDelegate, APIControllerDelegate, UIImagePickerControllerDelegate>
 
 @property (strong, nonatomic) IBOutlet UITextField *searchField;
 @property (strong, nonatomic) IBOutlet UILabel *hashView;

@@ -38,32 +38,17 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]
-                                              initWithTitle:NSLocalizedString(@"Cancel", nil)
-                                              style:UIBarButtonItemStyleBordered
-                                              target:self
-                                              action:@selector(cancelButtonWasPressed)];
+    // Navigation bar
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Cancel", nil) style:UIBarButtonItemStyleBordered target:self action:@selector(cancelButtonWasPressed)];
     
+    // View
     [self.view setBackgroundColor:[ColorThemeController tableViewCellBackgroundColor]];
     
+    // Labels
+    [_accountLabel setText:NSLocalizedString(@"Already enrolled?", nil)];
     
-    // ---------------------
-    // Top Wrapper
-    // ---------------------
-    [_topBox setBackgroundColor:[ColorThemeController backgroundColor]];
-    [_topBox addTarget:self action:@selector(hideFieldBox) forControlEvents:UIControlEventTouchUpInside];
-    
-    [_facebook setBackgroundImage:[UIImage imageNamed:@"facebookButton"] forState:UIControlStateNormal];
-    [_facebook setTitle:@"" forState:UIControlStateNormal];
-    [_facebook addTarget:self action:@selector(loginFacebook) forControlEvents:UIControlEventTouchUpInside];
-    
-    [_separator1 setBackgroundColor:[ColorThemeController tableViewCellInternalBorderColor]];
-    
-    // ---------------------
-    // Bottom Wrapper
-    // ---------------------
+    // Box
     [_bottomBox setBackgroundColor:[ColorThemeController backgroundColor]];
     [_bottomBox addTarget:self action:@selector(hideFieldBox) forControlEvents:UIControlEventTouchUpInside];
     [_bottomBox.layer setMasksToBounds:YES];

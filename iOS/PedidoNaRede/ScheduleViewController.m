@@ -109,7 +109,25 @@
     }
 }
 
-#pragma mark -
+#pragma mark - Red Line
+
+- (void)createRedLineAtPosition:(CGRect)frame {
+    UIView *redLine = [[UIView alloc] initWithFrame:CGRectMake(0.0f, frame.origin.y, frame.size.width, 2.5f)];
+    [redLine setBackgroundColor:[UIColor redColor]];
+    [redLine setAlpha:0.75f];
+    [self.tableView addSubview:redLine];
+    
+    // Remove red line
+    [self performSelector:@selector(removeRedLine:) withObject:redLine afterDelay:2.0f];
+}
+
+- (void)removeRedLine:(UIView *)redLine {
+    [UIView animateWithDuration:1.2f animations:^{
+        [redLine setAlpha:0.0f];
+    } completion:^(BOOL finished){
+        [redLine removeFromSuperview];
+    }];
+}
 
 #pragma mark - ActionSheet Methods
 
@@ -214,7 +232,7 @@
     UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(21.0, 6.0, tableView.frame.size.width, 32.0)];
     [title setText:[NSString stringWithFormat:@"%.2d/%.2d - %@", [components day], [components month], [UtilitiesController weekNameFromIndex:[components weekday]]]];
     [title setTextAlignment:NSTextAlignmentLeft];
-    [title setFont:[UIFont fontWithName:@"Thonburi-Bold" size:18.0]];
+    [title setFont:[UIFont fontWithName:@"Thonburi-Bold" size:17.0]];
     [title setTextColor:[ColorThemeController textColor]];
     [title setBackgroundColor:[UIColor clearColor]];
     
@@ -312,8 +330,14 @@
             // See if it matches
             if (timestamp < [[activity objectForKey:@"dateEnd"] integerValue]) {
                 
+                // Current index path
+                NSIndexPath *currentPath = [NSIndexPath indexPathForRow:((j > 0) ? (j - 1) : j) inSection:i];
+                
+                // Create a temporary red line
+                [self createRedLineAtPosition:[self.tableView rectForRowAtIndexPath:currentPath]];
+                
                 // Scroll to the moment before the next activity finishes
-                [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:((j > 0) ? (j - 1) : j) inSection:i] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+                [self.tableView scrollToRowAtIndexPath:currentPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
                 
                 // Break the current loop
                 return;

@@ -6,8 +6,9 @@
 //  Copyright (c) 2012 Pedro Góes. All rights reserved.
 //
 
-#import "StreamViewController.h"
 #import <FacebookSDK/FacebookSDK.h>
+#import <Social/Social.h>
+#import "StreamViewController.h"
 #import "StreamViewCell.h"
 #import "AppDelegate.h"
 #import "UtilitiesController.h"
@@ -144,14 +145,21 @@
 
 - (void)alertActionSheet {
     
-    //    NSString *title = (selection == ScheduleSubscribed) ? NSLocalizedString(@"All activities", nil) : NSLocalizedString(@"My activities", nil);
-    
     UIActionSheet *actionSheet;
     
-    if ([[HumanToken sharedInstance] isMemberAuthenticated]) {
-        actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Actions", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"Event details", nil), NSLocalizedString(@"Send feedback", nil), NSLocalizedString(@"Exit event", nil), nil];
-    } else {
-        actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Actions", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"Event details", nil), NSLocalizedString(@"Exit event", nil), nil];
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera] && [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
+        
+        // Both
+        actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Photo", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"Pick from camera roll", nil), NSLocalizedString(@"Take picture", nil), nil];
+
+    } else if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        
+        // Camera
+        actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Photo", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"Take picture", nil), nil];
+    } else if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
+        
+        // Library
+        actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Photo", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"Pick from camera roll", nil), nil];
     }
     
     [actionSheet showFromBarButtonItem:self.rightBarButton animated:YES];
@@ -161,12 +169,19 @@
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     
+    UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+    
     NSString *title = [actionSheet buttonTitleAtIndex:buttonIndex];
     
-    if ([title isEqualToString:NSLocalizedString(@"Event details", nil)]) {
-    
+    if ([title isEqualToString:NSLocalizedString(@"Pick from camera roll", nil)]) {
+        [imagePicker setSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
+    } else if ([title isEqualToString:NSLocalizedString(@"Take picture", nil)]) {
+        [imagePicker setSourceType:UIImagePickerControllerSourceTypeCamera];
     }
     
+    [imagePicker setDelegate:self];
+    
+    [self presentViewController:imagePicker animated:YES completion:NULL];
 }
 
 #pragma mark - Table View Data Source
@@ -190,7 +205,6 @@
 //            return image.size.height;
 //        }
 //    }];
-    
 
     if ([imagesCache objectForKey:indexPath] != NULL) {
         CGSize size = ((UIImage *)[imagesCache objectForKey:indexPath]).size;
@@ -265,6 +279,25 @@
     // Reload all table data
     [self.tableView reloadData];
 }
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    
+    UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
+    [self dismissViewControllerAnimated:YES completion:^{
+        if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]) {
+            SLComposeViewController *facebookPost = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
+            [facebookPost setInitialText:[NSString stringWithFormat:@"#InEvent #%@", [[EventToken sharedInstance] nick]]];
+            [facebookPost addImage:image];
+            [self presentViewController:facebookPost animated:YES completion:nil];
+        } else if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter]) {
+            SLComposeViewController *tweetSheet = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
+            [tweetSheet setInitialText:[NSString stringWithFormat:@"#InEvent #%@", [[EventToken sharedInstance] nick]]];
+            [tweetSheet addImage:image];
+            [self presentViewController:tweetSheet animated:YES completion:nil];
+        }
+    }];
+}
+
 
 #pragma mark - APIController Delegate
 

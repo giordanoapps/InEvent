@@ -84,7 +84,6 @@
 		EB3BD91317B8C47A008D066D /* ReaderViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB3BD91117B8C47A008D066D /* ReaderViewController.xib */; };
 		EB3F1A0D16F90F4F005052E7 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB3F1A0C16F90F4F005052E7 /* AudioToolbox.framework */; };
 		EB4FC57A171061AF00CA43EC /* 32-Facebook-F.png in Resources */ = {isa = PBXBuildFile; fileRef = EB4FC576171061AF00CA43EC /* 32-Facebook-F.png */; };
-		EB4FC57B171061AF00CA43EC /* facebookButton.png in Resources */ = {isa = PBXBuildFile; fileRef = EB4FC577171061AF00CA43EC /* facebookButton.png */; };
 		EB4FC57C171061AF00CA43EC /* NSString+URLEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = EB4FC579171061AF00CA43EC /* NSString+URLEncoding.m */; };
 		EB4FC5851710644000CA43EC /* HumanToken.m in Sources */ = {isa = PBXBuildFile; fileRef = EB4FC5841710644000CA43EC /* HumanToken.m */; };
 		EB4FC58F1710DFE000CA43EC /* EventToken.m in Sources */ = {isa = PBXBuildFile; fileRef = EB4FC58E1710DFE000CA43EC /* EventToken.m */; };
@@ -238,9 +237,6 @@
 		EBC59D8917BEC59B00E0FC67 /* 32-Create-_-Write@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBC59D8817BEC59B00E0FC67 /* 32-Create-_-Write@2x.png */; };
 		EBC59D8D17BEC5C300E0FC67 /* 64-Cloud-Download.png in Resources */ = {isa = PBXBuildFile; fileRef = EBC59D8C17BEC5C300E0FC67 /* 64-Cloud-Download.png */; };
 		EBC7AF4D1813331100D8DB6A /* 32-facebook.png in Resources */ = {isa = PBXBuildFile; fileRef = EBC7AF4C1813331100D8DB6A /* 32-facebook.png */; };
-		EBC7AF541813A6CF00D8DB6A /* 100-facebook.png in Resources */ = {isa = PBXBuildFile; fileRef = EBC7AF511813A6CF00D8DB6A /* 100-facebook.png */; };
-		EBC7AF551813A6CF00D8DB6A /* 100-linkedin.png in Resources */ = {isa = PBXBuildFile; fileRef = EBC7AF521813A6CF00D8DB6A /* 100-linkedin.png */; };
-		EBC7AF561813A6CF00D8DB6A /* 100-twitter.png in Resources */ = {isa = PBXBuildFile; fileRef = EBC7AF531813A6CF00D8DB6A /* 100-twitter.png */; };
 		EBD055A717AF8CF3008355E8 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD055A517AF8CF3008355E8 /* AboutViewController.m */; };
 		EBD055A817AF8CF3008355E8 /* AboutViewController~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBD055A617AF8CF3008355E8 /* AboutViewController~iphone.xib */; };
 		EBD055AC17AF919C008355E8 /* 16-Footprints.png in Resources */ = {isa = PBXBuildFile; fileRef = EBD055AA17AF919C008355E8 /* 16-Footprints.png */; };
@@ -287,6 +283,16 @@
 		EBDFF55117BE15A900BBFC1D /* 64-Speech-Bubbles.png in Resources */ = {isa = PBXBuildFile; fileRef = EBDFF55017BE15A900BBFC1D /* 64-Speech-Bubbles.png */; };
 		EBDFF55317BE95B200BBFC1D /* 32-Check.png in Resources */ = {isa = PBXBuildFile; fileRef = EBDFF55217BE95B200BBFC1D /* 32-Check.png */; };
 		EBE15D4D169B7D2000E46A15 /* AlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBE15D4C169B7D2000E46A15 /* AlertView.xib */; };
+		EBE72F92181AE0CD00A3A02D /* in_active.png in Resources */ = {isa = PBXBuildFile; fileRef = EBE72F90181AE0CD00A3A02D /* in_active.png */; };
+		EBE72F93181AE0CD00A3A02D /* in_dark.png in Resources */ = {isa = PBXBuildFile; fileRef = EBE72F91181AE0CD00A3A02D /* in_dark.png */; };
+		EBE72F97181AE11C00A3A02D /* SocialLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBE72F95181AE11C00A3A02D /* SocialLoginViewController.m */; };
+		EBE72F98181AE11C00A3A02D /* SocialLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBE72F96181AE11C00A3A02D /* SocialLoginViewController.xib */; };
+		EBE72F9B181AE1A200A3A02D /* facebook_active.png in Resources */ = {isa = PBXBuildFile; fileRef = EBE72F99181AE1A200A3A02D /* facebook_active.png */; };
+		EBE72F9C181AE1A200A3A02D /* facebook_dark.png in Resources */ = {isa = PBXBuildFile; fileRef = EBE72F9A181AE1A200A3A02D /* facebook_dark.png */; };
+		EBE72F9F181AE55200A3A02D /* twitter02_active.png in Resources */ = {isa = PBXBuildFile; fileRef = EBE72F9D181AE55200A3A02D /* twitter02_active.png */; };
+		EBE72FA0181AE55200A3A02D /* twitter02_dark.png in Resources */ = {isa = PBXBuildFile; fileRef = EBE72F9E181AE55200A3A02D /* twitter02_dark.png */; };
+		EBE72FA2181AF25A00A3A02D /* 32-Twitter.png in Resources */ = {isa = PBXBuildFile; fileRef = EBE72FA1181AF25A00A3A02D /* 32-Twitter.png */; };
+		EBE72FA4181AF26600A3A02D /* 32-Facebook-2.png in Resources */ = {isa = PBXBuildFile; fileRef = EBE72FA3181AF26600A3A02D /* 32-Facebook-2.png */; };
 		EBE8A5011712EA9C00A8A2BD /* UITabBarController+ShowHideBar.m in Sources */ = {isa = PBXBuildFile; fileRef = EBE8A5001712EA9C00A8A2BD /* UITabBarController+ShowHideBar.m */; };
 		EBE8D1F816A88ED8003A196A /* blackButton.png in Resources */ = {isa = PBXBuildFile; fileRef = EBE8D1DA16A88D16003A196A /* blackButton.png */; };
 		EBE8D1F916A88ED8003A196A /* blackButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBE8D1DB16A88D16003A196A /* blackButton@2x.png */; };
@@ -442,7 +448,6 @@
 		EB3BD91117B8C47A008D066D /* ReaderViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReaderViewController.xib; sourceTree = "<group>"; };
 		EB3F1A0C16F90F4F005052E7 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		EB4FC576171061AF00CA43EC /* 32-Facebook-F.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Facebook-F.png"; sourceTree = "<group>"; };
-		EB4FC577171061AF00CA43EC /* facebookButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = facebookButton.png; sourceTree = "<group>"; };
 		EB4FC578171061AF00CA43EC /* NSString+URLEncoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+URLEncoding.h"; sourceTree = "<group>"; };
 		EB4FC579171061AF00CA43EC /* NSString+URLEncoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+URLEncoding.m"; sourceTree = "<group>"; };
 		EB4FC5831710644000CA43EC /* HumanToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HumanToken.h; sourceTree = "<group>"; };
@@ -653,9 +658,6 @@
 		EBC59D8817BEC59B00E0FC67 /* 32-Create-_-Write@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Create-_-Write@2x.png"; sourceTree = "<group>"; };
 		EBC59D8C17BEC5C300E0FC67 /* 64-Cloud-Download.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "64-Cloud-Download.png"; sourceTree = "<group>"; };
 		EBC7AF4C1813331100D8DB6A /* 32-facebook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-facebook.png"; sourceTree = "<group>"; };
-		EBC7AF511813A6CF00D8DB6A /* 100-facebook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "100-facebook.png"; sourceTree = "<group>"; };
-		EBC7AF521813A6CF00D8DB6A /* 100-linkedin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "100-linkedin.png"; sourceTree = "<group>"; };
-		EBC7AF531813A6CF00D8DB6A /* 100-twitter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "100-twitter.png"; sourceTree = "<group>"; };
 		EBD055A417AF8CF3008355E8 /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
 		EBD055A517AF8CF3008355E8 /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
 		EBD055A617AF8CF3008355E8 /* AboutViewController~iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "AboutViewController~iphone.xib"; sourceTree = "<group>"; };
@@ -714,6 +716,17 @@
 		EBDFF55017BE15A900BBFC1D /* 64-Speech-Bubbles.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "64-Speech-Bubbles.png"; sourceTree = "<group>"; };
 		EBDFF55217BE95B200BBFC1D /* 32-Check.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Check.png"; sourceTree = "<group>"; };
 		EBE15D4C169B7D2000E46A15 /* AlertView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlertView.xib; sourceTree = "<group>"; };
+		EBE72F90181AE0CD00A3A02D /* in_active.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = in_active.png; sourceTree = "<group>"; };
+		EBE72F91181AE0CD00A3A02D /* in_dark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = in_dark.png; sourceTree = "<group>"; };
+		EBE72F94181AE11C00A3A02D /* SocialLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SocialLoginViewController.h; path = PedidoNaRede/SocialLoginViewController.h; sourceTree = "<group>"; };
+		EBE72F95181AE11C00A3A02D /* SocialLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SocialLoginViewController.m; path = PedidoNaRede/SocialLoginViewController.m; sourceTree = "<group>"; };
+		EBE72F96181AE11C00A3A02D /* SocialLoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SocialLoginViewController.xib; path = PedidoNaRede/SocialLoginViewController.xib; sourceTree = "<group>"; };
+		EBE72F99181AE1A200A3A02D /* facebook_active.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = facebook_active.png; sourceTree = "<group>"; };
+		EBE72F9A181AE1A200A3A02D /* facebook_dark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = facebook_dark.png; sourceTree = "<group>"; };
+		EBE72F9D181AE55200A3A02D /* twitter02_active.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = twitter02_active.png; sourceTree = "<group>"; };
+		EBE72F9E181AE55200A3A02D /* twitter02_dark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = twitter02_dark.png; sourceTree = "<group>"; };
+		EBE72FA1181AF25A00A3A02D /* 32-Twitter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Twitter.png"; sourceTree = "<group>"; };
+		EBE72FA3181AF26600A3A02D /* 32-Facebook-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Facebook-2.png"; sourceTree = "<group>"; };
 		EBE8A4FF1712EA9C00A8A2BD /* UITabBarController+ShowHideBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITabBarController+ShowHideBar.h"; sourceTree = "<group>"; };
 		EBE8A5001712EA9C00A8A2BD /* UITabBarController+ShowHideBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITabBarController+ShowHideBar.m"; sourceTree = "<group>"; };
 		EBE8D1DA16A88D16003A196A /* blackButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blackButton.png; sourceTree = "<group>"; };
@@ -908,6 +921,9 @@
 				EB25BAA116FE84D5003F142F /* HumanLoginViewController.h */,
 				EB25BAA216FE84D5003F142F /* HumanLoginViewController.m */,
 				EB25BAA316FE84D6003F142F /* HumanLoginViewController.xib */,
+				EBE72F94181AE11C00A3A02D /* SocialLoginViewController.h */,
+				EBE72F95181AE11C00A3A02D /* SocialLoginViewController.m */,
+				EBE72F96181AE11C00A3A02D /* SocialLoginViewController.xib */,
 				EB25BA9B16FE73F2003F142F /* HumanViewController.h */,
 				EB25BA9C16FE73F2003F142F /* HumanViewController.m */,
 				EB25BA9D16FE73F2003F142F /* HumanViewController~iphone.xib */,
@@ -1524,7 +1540,12 @@
 		EBE8D1D916A88CFF003A196A /* Buttons */ = {
 			isa = PBXGroup;
 			children = (
-				EB4FC577171061AF00CA43EC /* facebookButton.png */,
+				EBE72F99181AE1A200A3A02D /* facebook_active.png */,
+				EBE72F9A181AE1A200A3A02D /* facebook_dark.png */,
+				EBE72F90181AE0CD00A3A02D /* in_active.png */,
+				EBE72F91181AE0CD00A3A02D /* in_dark.png */,
+				EBE72F9D181AE55200A3A02D /* twitter02_active.png */,
+				EBE72F9E181AE55200A3A02D /* twitter02_dark.png */,
 				EBE8D1DA16A88D16003A196A /* blackButton.png */,
 				EBE8D1DB16A88D16003A196A /* blackButton@2x.png */,
 				EBE8D1DC16A88D16003A196A /* blackButtonHighlight.png */,
@@ -1574,13 +1595,12 @@
 		EBE8D21716A89740003A196A /* Icons */ = {
 			isa = PBXGroup;
 			children = (
-				EBC7AF511813A6CF00D8DB6A /* 100-facebook.png */,
-				EBC7AF521813A6CF00D8DB6A /* 100-linkedin.png */,
-				EBC7AF531813A6CF00D8DB6A /* 100-twitter.png */,
 				EB97144117F2B306009260AE /* 128-user.png */,
 				EB1FE9F217FF8886001C2906 /* 32-Book-Large.png */,
 				EB1FE9F317FF8886001C2906 /* 32-Book-Large@2x.png */,
 				EB1FE9EC17FF5DEA001C2906 /* 32-Check-2.png */,
+				EBE72FA3181AF26600A3A02D /* 32-Facebook-2.png */,
+				EBE72FA1181AF25A00A3A02D /* 32-Twitter.png */,
 				EBDFF55217BE95B200BBFC1D /* 32-Check.png */,
 				EB1FEA0017FF9EF7001C2906 /* 32-Create-_-Write.png */,
 				EBC59D8817BEC59B00E0FC67 /* 32-Create-_-Write@2x.png */,
@@ -1787,11 +1807,12 @@
 				EBB1939A168EA54A0060D282 /* 32-Cross.png in Resources */,
 				EBB1939B168EA54A0060D282 /* 32-Plus.png in Resources */,
 				EBE15D4D169B7D2000E46A15 /* AlertView.xib in Resources */,
+				EBE72FA0181AE55200A3A02D /* twitter02_dark.png in Resources */,
+				EBE72F98181AE11C00A3A02D /* SocialLoginViewController.xib in Resources */,
 				EB1FE9F117FF884E001C2906 /* 32-Users@2x.png in Resources */,
 				EB9AB77316A0921A005D4CAA /* DemoViewController.xib in Resources */,
 				EB1FE9EF17FF87D2001C2906 /* 32-Users.png in Resources */,
 				EB9AB78616A125B3005D4CAA /* barButton.png in Resources */,
-				EBC7AF561813A6CF00D8DB6A /* 100-twitter.png in Resources */,
 				EB9AB78716A125B3005D4CAA /* barButton@2x.png in Resources */,
 				EB7FF95817EEDDE00017E599 /* 32-Facebook-Like-2.png in Resources */,
 				EB9AB78816A125B3005D4CAA /* barButtonBack.png in Resources */,
@@ -1803,12 +1824,13 @@
 				EB9AB78C16A125B3005D4CAA /* barButtonBackPressed.png in Resources */,
 				EB9AB78D16A125B3005D4CAA /* barButtonBackPressed@2x.png in Resources */,
 				EB617C301808D107004F39D2 /* StreamViewCell.xib in Resources */,
+				EBE72F9B181AE1A200A3A02D /* facebook_active.png in Resources */,
 				EB9AB78E16A125B3005D4CAA /* barButtonDisabled.png in Resources */,
 				EB8974F5180CC85200DB2486 /* 32-Group.png in Resources */,
 				EB9AB78F16A125B3005D4CAA /* barButtonDisabled@2x.png in Resources */,
 				EB897512180D20B100DB2486 /* PeopleGroupViewCell.xib in Resources */,
 				EB9AB79016A125B3005D4CAA /* barButtonPressed.png in Resources */,
-				EBC7AF541813A6CF00D8DB6A /* 100-facebook.png in Resources */,
+				EBE72FA4181AF26600A3A02D /* 32-Facebook-2.png in Resources */,
 				EB97146417F2DE30009260AE /* logo@80.png in Resources */,
 				EB9AB79116A125B3005D4CAA /* barButtonPressed@2x.png in Resources */,
 				EB28747B16A71F1700A06781 /* StepperView.xib in Resources */,
@@ -1834,6 +1856,7 @@
 				EB8C7D8916D17AEB00F3C721 /* cb_glossy_on@2x.png in Resources */,
 				EB8C7D8A16D17AEB00F3C721 /* cb_green_off.png in Resources */,
 				EB8C7D8B16D17AEB00F3C721 /* cb_green_off@2x.png in Resources */,
+				EBE72F93181AE0CD00A3A02D /* in_dark.png in Resources */,
 				EB8C7D8C16D17AEB00F3C721 /* cb_green_on.png in Resources */,
 				EB97145917F2DDDB009260AE /* logo@72.png in Resources */,
 				EB8C7D8D16D17AEB00F3C721 /* cb_green_on@2x.png in Resources */,
@@ -1855,22 +1878,23 @@
 				EB25BA9216FE6EC9003F142F /* 16-User.png in Resources */,
 				EB25BA9F16FE73F2003F142F /* HumanViewController~iphone.xib in Resources */,
 				EBD6FE4F18065528006D0E73 /* 32-Cog.png in Resources */,
-				EBC7AF551813A6CF00D8DB6A /* 100-linkedin.png in Resources */,
 				EB25BAA516FE84D6003F142F /* HumanLoginViewController.xib in Resources */,
 				EB25BAAA170280F1003F142F /* LauchImageViewController.xib in Resources */,
 				EB25BAB017028CC9003F142F /* Default-Portrait~ipad.png in Resources */,
+				EBE72F9C181AE1A200A3A02D /* facebook_dark.png in Resources */,
 				EB25BAB217028CD6003F142F /* Default-Landscape~ipad.png in Resources */,
 				EB25BAB417028CDF003F142F /* Default-Portrait@2x~ipad.png in Resources */,
 				EB1FE9ED17FF5DEA001C2906 /* 32-Check-2.png in Resources */,
 				EBD6FE4D18065501006D0E73 /* 32-Image.png in Resources */,
 				EB97145D17F2DDDB009260AE /* logo@120.png in Resources */,
 				EB25BAB617028CE5003F142F /* Default-Landscape@2x~ipad.png in Resources */,
+				EBE72FA2181AF25A00A3A02D /* 32-Twitter.png in Resources */,
 				EB25BAB817028CF2003F142F /* Default.png in Resources */,
 				EB25BABA17028CFE003F142F /* Default@2x.png in Resources */,
 				EB25BABC17028D0A003F142F /* Default-568h@2x.png in Resources */,
 				EBD6FE4718064B24006D0E73 /* 16-Image-2@2x.png in Resources */,
 				EB4FC57A171061AF00CA43EC /* 32-Facebook-F.png in Resources */,
-				EB4FC57B171061AF00CA43EC /* facebookButton.png in Resources */,
+				EBE72F92181AE0CD00A3A02D /* in_active.png in Resources */,
 				EB1FEB8B171729C7009834FC /* LogItemViewCell.xib in Resources */,
 				EBB1E7B21719923100B73DDF /* 32-Speech-Bubbles@2x.png in Resources */,
 				EB97145F17F2DDDB009260AE /* logo@152.png in Resources */,
@@ -1936,6 +1960,7 @@
 				EB79CC5317ED813D00C16CF5 /* FrontViewController.xib in Resources */,
 				EB79CC5817ED833700C16CF5 /* 64-Clock-2.png in Resources */,
 				EB897500180CDF2D00DB2486 /* 16-Day-Calendar@2x.png in Resources */,
+				EBE72F9F181AE55200A3A02D /* twitter02_active.png in Resources */,
 				EB79CC5917ED833700C16CF5 /* 64-Clock.png in Resources */,
 				EB79CC5A17ED833700C16CF5 /* 64-Shades.png in Resources */,
 			);
@@ -2061,6 +2086,7 @@
 				EB25BAA9170280F1003F142F /* LauchImageViewController.m in Sources */,
 				EB1FE9E717FF2B85001C2906 /* AdViewController.m in Sources */,
 				EB1FEA0D1803CB56001C2906 /* ReaderViewCell.m in Sources */,
+				EBE72F97181AE11C00A3A02D /* SocialLoginViewController.m in Sources */,
 				EB4FC57C171061AF00CA43EC /* NSString+URLEncoding.m in Sources */,
 				EB897507180CE35E00DB2486 /* PeopleViewCell.m in Sources */,
 				EB4FC5851710644000CA43EC /* HumanToken.m in Sources */,

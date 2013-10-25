@@ -7,7 +7,7 @@
 //
 
 #import "HumanViewController.h"
-#import "HumanLoginViewController.h"
+#import "SocialLoginViewController.h"
 #import <FacebookSDK/FacebookSDK.h>
 #import <QuartzCore/QuartzCore.h>
 #import "HumanToken.h"
@@ -117,19 +117,19 @@
         [self.defaultPhoto setHidden:NO];
     } else {
         // Alloc login controller
-        HumanLoginViewController *hlvc = [[HumanLoginViewController alloc] initWithNibName:@"HumanLoginViewController" bundle:nil];
-        [hlvc setDelegate:self];
-        UINavigationController *nhlvc = [[UINavigationController alloc] initWithRootViewController:hlvc];
+        SocialLoginViewController *lvc = [[SocialLoginViewController alloc] initWithNibName:@"SocialLoginViewController" bundle:nil];
+        [lvc setDelegate:self];
+        UINavigationController *nlvc = [[UINavigationController alloc] initWithRootViewController:lvc];
         
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-            nhlvc.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-            nhlvc.modalPresentationStyle = UIModalPresentationCurrentContext;
+            nlvc.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+            nlvc.modalPresentationStyle = UIModalPresentationCurrentContext;
         } else {
-            nhlvc.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-            nhlvc.modalPresentationStyle = UIModalPresentationFormSheet;
+            nlvc.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+            nlvc.modalPresentationStyle = UIModalPresentationFormSheet;
         }
         
-        [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:nhlvc animated:YES completion:nil];
+        [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:nlvc animated:YES completion:nil];
     }
 }
 

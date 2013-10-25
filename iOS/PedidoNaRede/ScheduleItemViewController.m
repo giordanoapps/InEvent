@@ -8,6 +8,7 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import <GoogleMaps/GoogleMaps.h>
+#import <Social/Social.h>
 #import "ScheduleItemViewController.h"
 #import "ReaderViewController.h"
 #import "QuestionViewController.h"
@@ -184,6 +185,28 @@
 
 - (void)loadDoneButton {
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(endEditing)];
+}
+
+#pragma mark - Twitter
+
+- (IBAction)sendTweet:(id)sender {
+
+    if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter]) {
+        SLComposeViewController *tweetSheet = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
+        [tweetSheet setInitialText:[NSString stringWithFormat:@"%@ %@!", NSLocalizedString(@"Attending", nil), [[EventToken sharedInstance] name]]];
+        [self presentViewController:tweetSheet animated:YES completion:nil];
+    }
+}
+
+#pragma mark - Facebook
+
+- (IBAction)postTimeline:(id)sender {
+    
+    if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]) {
+        SLComposeViewController *facebookPost = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
+        [facebookPost setInitialText:[NSString stringWithFormat:@"%@ %@!", NSLocalizedString(@"Attending", nil), [[EventToken sharedInstance] name]]];
+        [self presentViewController:facebookPost animated:YES completion:nil];
+    }
 }
 
 #pragma mark - Editing
@@ -399,6 +422,8 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:@"verify" object:nil userInfo:@{@"type": @"enterprise"}];
     }
 }
+
+#pragma mark - Quick Controllers
 
 - (IBAction)loadReaderController {
     ReaderViewController *rvc = [[ReaderViewController alloc] initWithNibName:@"ReaderViewController" bundle:nil];
