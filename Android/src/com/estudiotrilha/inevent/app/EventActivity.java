@@ -114,6 +114,19 @@ public class EventActivity extends SlidingMenuBaseActivity
             }
             break;
 
+        case R.id.menu_eventDetails:
+            // Open the details of the event
+            startActivity(
+                EventInfoActivity.newInstance(this,
+                        getIntent().getLongExtra(EXTRA_EVENT_ID, -1),
+                        mApproved,
+                        mRoleId
+                )
+            );
+            // set the transition animation
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+            return true;
+
         case R.id.menu_preferences:
             // Open the PreferencesActivity
             startActivity(new Intent(this, PreferencesActivity.class));

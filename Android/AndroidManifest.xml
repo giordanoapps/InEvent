@@ -113,6 +113,9 @@
         <!-- Event -->
         <activity android:name="com.estudiotrilha.inevent.app.EventActivity" />
 
+        <!-- Event Info -->
+        <activity android:name="com.estudiotrilha.inevent.app.EventInfoActivity" />
+
         <!-- Event Activity Detail -->
         <activity android:name="com.estudiotrilha.inevent.app.EventActivityDetailActivity" />
 

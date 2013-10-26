@@ -3,8 +3,11 @@ package com.estudiotrilha.inevent.app;
 import static com.estudiotrilha.inevent.app.PreferencesActivity.DISPLAY_OPTION_ACTIVITIES;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 import java.util.TimeZone;
 
 import android.annotation.TargetApi;
@@ -376,6 +379,7 @@ public class EventActivitiesPagesFragment extends Fragment implements LoaderCall
         private ArrayList<EventSectionHolder> mSections;
         private Cursor                        mCursor;
         private DateFormat                    mDateFormat;
+        private DateFormat                    mWeekFormat;
         // Indexes
         private int mIndexId;
         private int mIndexName;
@@ -391,6 +395,7 @@ public class EventActivitiesPagesFragment extends Fragment implements LoaderCall
             mSections = new ArrayList<EventSectionHolder>();
             // Get the user preferred date format
             mDateFormat = android.text.format.DateFormat.getLongDateFormat(mEventActivity);
+            mWeekFormat = new SimpleDateFormat("EEEE", Locale.getDefault());
         }
 
         public int getPreferredPage()
@@ -525,7 +530,8 @@ public class EventActivitiesPagesFragment extends Fragment implements LoaderCall
         @Override
         public CharSequence getPageTitle(int position)
         {
-            return mDateFormat.format(mSections.get(position).date.getTime());
+            Date date = mSections.get(position).date.getTime();
+            return mWeekFormat.format(date)+", "+mDateFormat.format(date);
         }
     }
 

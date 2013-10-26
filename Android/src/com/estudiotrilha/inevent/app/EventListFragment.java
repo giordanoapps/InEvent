@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -167,21 +168,42 @@ public class EventListFragment extends ListFragment implements LoaderCallbacks<C
             // Get the view position
             int position = (Integer) v.getTag();
             // Get the event id
-            long id = getListAdapter().getItemId(position);
+            long eventID = getListAdapter().getItemId(position);
+            int roleID = Event.ROLE_ATTENDEE;
+            boolean approved = false;
 
-            // Open up a dialog to show extra info about the event
-            EventDetailDialogFragment fragment = EventDetailDialogFragment.instantiate(id);
-//            if (getResources().getBoolean(R.bool.useDialogs))
-//            {
-//                fragment.show(getFragmentManager(), null);
-//            }
-//            else
-//            {
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.mainContent, fragment)
-                        .addToBackStack(null)
-                        .commit();
-//            }
+            LoginManager manager = LoginManager.getInstance(getActivity());
+
+            if (manager.isSignedIn())
+            {
+                // Check the user role for this event
+                String selection = EventMember.Columns.EVENT_ID_FULL+"="+eventID+" AND "+EventMember.Columns.MEMBER_ID_FULL+"="+manager.getMember().memberId;
+                Cursor c = getActivity().getContentResolver().query(EventMember.CONTENT_URI, new String[] { EventMember.Columns.ROLE_ID }, selection, null, null);
+                if (c.moveToFirst())
+                {
+                    roleID = c.getInt(0);
+                }
+                else
+                {
+                    roleID = Event.ROLE_ATTENDEE;
+                }
+                c.close();
+    
+                 // Check if the user is approved for this event
+                c = getActivity().getContentResolver().query(ContentUris.withAppendedId(Event.CONTENT_URI, eventID), new String[]{ EventMember.Columns.APPROVED_FULL }, null, null, null);
+                if (c.moveToFirst())
+                {
+                    approved = (c.getInt(0) == 1);
+                }
+                c.close();
+            }
+
+            // Open the details of the event
+            getActivity().startActivity(
+                EventInfoActivity.newInstance(getActivity(), eventID, approved, roleID)
+            );
+            // set the transition animation
+            getActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         }
     };
 

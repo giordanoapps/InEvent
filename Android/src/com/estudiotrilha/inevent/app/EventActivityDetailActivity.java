@@ -61,6 +61,10 @@ public class EventActivityDetailActivity extends ActionBarActivity implements Lo
     private static final int APPROVED_WAIT_LIST =  0;
     private static final int APPROVED_NOT       = -1;
 
+    private static final int ACTION_LOADING = 0;
+    private static final int ACTION_ENROLL  = 1;
+    private static final int ACTION_RATE    = 2;
+
 
     // Extras
     private static final String EXTRA_EVENT_ID       = "extra.EVENT_ID";
@@ -127,6 +131,27 @@ public class EventActivityDetailActivity extends ActionBarActivity implements Lo
             {
                 DialogFragment dialog = ActivityRatingFragmentDialog.instantiate();
                 dialog.show(getSupportFragmentManager(), null);
+            }
+        });
+        findViewById(R.id.action_eventActivity_enroll).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                if (mLoginManager.isSignedIn())
+                {
+                    if(getIntent().getBooleanExtra(EXTRA_EVENT_APPROVED, false))
+                    {
+                        if (enroll(getIntent().getLongExtra(EXTRA_ACTIVITY_ID, -1)))
+                        {
+                            // Show loading status
+                            ((ViewAnimator) findViewById(R.id.userActions)).setDisplayedChild(ACTION_LOADING);
+                        }
+                    }
+                }
+                else
+                {
+                    // TODO
+                }
             }
         });
 
@@ -217,16 +242,7 @@ public class EventActivityDetailActivity extends ActionBarActivity implements Lo
 
         case R.id.action_eventActivity_enroll:
             item.setVisible(false);
-            try
-            {
-                HttpURLConnection connection = Activity.Api.requestEnrollment(mLoginManager.getTokenId(), activityID);
-                ApiRequest.getJsonFromConnection(ApiRequestCode.ACTIVITY_REQUEST_ENROLLMENT, connection, this);
-                SyncBroadcastManager.setSyncState(this, "Enrolling...");
-            }
-            catch (IOException e)
-            {
-                Log.e(InEvent.NAME, "Could not create connection for activity.requestEnrollment(tokenId, activityID="+activityID+")", e);
-            }
+            enroll(activityID);
             return true;
 
         case R.id.action_eventActivity_unenroll:
@@ -249,6 +265,24 @@ public class EventActivityDetailActivity extends ActionBarActivity implements Lo
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+
+    private boolean enroll(long activityID)
+    {
+        try
+        {
+            HttpURLConnection connection = Activity.Api.requestEnrollment(mLoginManager.getTokenId(), activityID);
+            ApiRequest.getJsonFromConnection(ApiRequestCode.ACTIVITY_REQUEST_ENROLLMENT, connection, this);
+            SyncBroadcastManager.setSyncState(this, "Enrolling...");
+        }
+        catch (IOException e)
+        {
+            Log.e(InEvent.NAME, "Could not create connection for activity.requestEnrollment(tokenId, activityID="+activityID+")", e);
+            return false;
+        }
+
+        return true;
     }
 
 
@@ -304,23 +338,26 @@ public class EventActivityDetailActivity extends ActionBarActivity implements Lo
         ((TextView) findViewById(R.id.activity_location)).setText(dateLocation);
 
         ((RatingBar) findViewById(R.id.activity_rating)).setRating(mInfo.rating);
-        View ratingContainer = findViewById(R.id.activity_ratingContainer);
-        ratingContainer.setVisibility(View.GONE);
+        ViewAnimator userActions = (ViewAnimator) findViewById(R.id.userActions);
 
         int color = 0;
         switch (mInfo.approved)
         {
         case APPROVED_NOT:
             color = getResources().getColor(R.color.light_gray);
+            userActions.setDisplayedChild(ACTION_ENROLL);
+            userActions.setVisibility(View.VISIBLE);
             break;
 
         case APPROVED_WAIT_LIST:
             color = getResources().getColor(R.color.holo_red_dark);
+            userActions.setVisibility(View.GONE);
             break;
 
         case APPROVED_OK:
             color = getResources().getColor(R.color.holo_green_dark);
-            ratingContainer.setVisibility(View.VISIBLE);
+            userActions.setDisplayedChild(ACTION_RATE);
+            userActions.setVisibility(View.VISIBLE);
             break;
         }
         ((TriangleView) findViewById(R.id.activity_approved)).setFillColor(color);
@@ -357,14 +394,13 @@ public class EventActivityDetailActivity extends ActionBarActivity implements Lo
             {
                 Log.w(InEvent.NAME, "Error parsing json="+json);
             }
-
-            getSupportLoaderManager().restartLoader(LOAD_ACTIVITY, null, this);
         }
         else
         {
             Toast.makeText(this, Utils.getBadResponseMessage(requestCode, responseCode), Toast.LENGTH_SHORT).show();
         }
 
+        getSupportLoaderManager().restartLoader(LOAD_ACTIVITY, null, this);
         SyncBroadcastManager.setSyncState(this, false);
     }
 

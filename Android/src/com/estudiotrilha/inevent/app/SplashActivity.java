@@ -58,9 +58,6 @@ public class SplashActivity extends Activity implements Runnable
             EasyTracker.getInstance().activityStart(this);
         }
 
-        // set the transition animation
-        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-
         // Obtain the sharedPreference
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
 

@@ -87,19 +87,11 @@ public class EventDetailDialogFragment extends DialogFragment implements LoaderC
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
     {
         super.onCreateOptionsMenu(menu, inflater);
-        // Clean the action bar
-        menu.clear();
+        // XXX add the edit option
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        switch (item.getItemId())
-        {
-        case android.R.id.home:
-            getFragmentManager().popBackStackImmediate();
-            return true;
-        }
-
         return super.onOptionsItemSelected(item);
     }
 
