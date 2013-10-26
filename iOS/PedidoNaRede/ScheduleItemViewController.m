@@ -193,7 +193,7 @@
 
     if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter]) {
         SLComposeViewController *tweetSheet = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
-        [tweetSheet setInitialText:[NSString stringWithFormat:@"%@ %@!", NSLocalizedString(@"Attending", nil), [[EventToken sharedInstance] name]]];
+        [tweetSheet setInitialText:[NSString stringWithFormat:@"%@ %@ - %@!", NSLocalizedString(@"Attending", nil), [[_activityData objectForKey:@"name"] stringByDecodingHTMLEntities], [[EventToken sharedInstance] name]]];
         [self presentViewController:tweetSheet animated:YES completion:nil];
     }
 }
@@ -204,7 +204,7 @@
     
     if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]) {
         SLComposeViewController *facebookPost = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
-        [facebookPost setInitialText:[NSString stringWithFormat:@"%@ %@!", NSLocalizedString(@"Attending", nil), [[EventToken sharedInstance] name]]];
+        [facebookPost setInitialText:[NSString stringWithFormat:@"%@ %@ - %@!", NSLocalizedString(@"Attending", nil), [[_activityData objectForKey:@"name"] stringByDecodingHTMLEntities], [[EventToken sharedInstance] name]]];
         [self presentViewController:facebookPost animated:YES completion:nil];
     }
 }

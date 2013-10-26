@@ -115,11 +115,6 @@
         application.applicationIconBadgeNumber = 0;
     }
     
-    userInfo = [launchOptions objectForKey:UIApplicationLaunchOptionsURLKey];
-    if (userInfo) {
-        
-    }
-    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
     // Status Bar
@@ -127,6 +122,7 @@
         [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackOpaque];
     } else {
         [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:YES];
     }
     
     // Each controller

@@ -362,30 +362,4 @@
     return YES;
 }
 
-#pragma mark - Facebook Methods
-
-- (void)loginFacebook {
-    if (!FBSession.activeSession.isOpen) {
-        [FBSession openActiveSessionWithReadPermissions:@[@"basic_info", @"email"]
-                                           allowLoginUI:YES
-                                      completionHandler:
-         ^(FBSession *session, FBSessionState state, NSError *error) {
-             if ([session isOpen]) {
-                 // Session is open
-                 [self cancelButtonWasPressed];
-                 
-                 // Notify our servers about the access token
-                 [[[APIController alloc] initWithDelegate:self forcing:YES] personSignInWithFacebookToken:FBSession.activeSession.accessTokenData.accessToken];
-                 
-             } else if (session.state == FBSessionStateClosedLoginFailed) {
-                 // Session is closed
-                 AlertView *alertView = [[AlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"Facebook couldn't log you in! Try again?", nil) delegate:self cancelButtonTitle:nil otherButtonTitle:NSLocalizedString(@"Ok", nil)];
-                 [alertView show];
-             }
-             
-         }];
-    }
-}
-
-
 @end

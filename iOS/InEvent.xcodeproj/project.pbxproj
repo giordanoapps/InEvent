@@ -8,6 +8,19 @@
 
 /* Begin PBXBuildFile section */
 		39C737AEF4534B47ACEF33AA /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A6A516917D844488748DC44 /* libPods.a */; };
+		EB01FF82181B349B00089915 /* LIALinkedInApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = EB01FF7B181B349B00089915 /* LIALinkedInApplication.m */; };
+		EB01FF83181B349B00089915 /* LIALinkedInAuthorizationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB01FF7D181B349B00089915 /* LIALinkedInAuthorizationViewController.m */; };
+		EB01FF84181B349B00089915 /* LIALinkedInHttpClient.m in Sources */ = {isa = PBXBuildFile; fileRef = EB01FF7F181B349B00089915 /* LIALinkedInHttpClient.m */; };
+		EB01FF85181B349B00089915 /* NSString+LIAEncode.m in Sources */ = {isa = PBXBuildFile; fileRef = EB01FF81181B349B00089915 /* NSString+LIAEncode.m */; };
+		EB01FFCE181B3AFA00089915 /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = EB01FFBC181B3AFA00089915 /* AFHTTPClient.m */; };
+		EB01FFCF181B3AFA00089915 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = EB01FFBE181B3AFA00089915 /* AFHTTPRequestOperation.m */; };
+		EB01FFD0181B3AFA00089915 /* AFImageRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = EB01FFC0181B3AFA00089915 /* AFImageRequestOperation.m */; };
+		EB01FFD1181B3AFA00089915 /* AFJSONRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = EB01FFC2181B3AFA00089915 /* AFJSONRequestOperation.m */; };
+		EB01FFD2181B3AFA00089915 /* AFNetworkActivityIndicatorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EB01FFC4181B3AFA00089915 /* AFNetworkActivityIndicatorManager.m */; };
+		EB01FFD3181B3AFA00089915 /* AFPropertyListRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = EB01FFC7181B3AFA00089915 /* AFPropertyListRequestOperation.m */; };
+		EB01FFD4181B3AFA00089915 /* AFURLConnectionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = EB01FFC9181B3AFA00089915 /* AFURLConnectionOperation.m */; };
+		EB01FFD5181B3AFA00089915 /* AFXMLRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = EB01FFCB181B3AFA00089915 /* AFXMLRequestOperation.m */; };
+		EB01FFD6181B3AFA00089915 /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = EB01FFCD181B3AFA00089915 /* UIImageView+AFNetworking.m */; };
 		EB1FE9DC17FE4123001C2906 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB1FE9DB17FE4123001C2906 /* FacebookSDK.framework */; };
 		EB1FE9DE17FE841D001C2906 /* GoogleMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = EB1FE9DD17FE841D001C2906 /* GoogleMaps.bundle */; };
 		EB1FE9E017FE8582001C2906 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB1FE9DF17FE8582001C2906 /* CoreFoundation.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -339,6 +352,33 @@
 /* Begin PBXFileReference section */
 		01A9A353CC7D4F35B9275C85 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		5A6A516917D844488748DC44 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		EB01FF7A181B349B00089915 /* LIALinkedInApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LIALinkedInApplication.h; sourceTree = "<group>"; };
+		EB01FF7B181B349B00089915 /* LIALinkedInApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LIALinkedInApplication.m; sourceTree = "<group>"; };
+		EB01FF7C181B349B00089915 /* LIALinkedInAuthorizationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LIALinkedInAuthorizationViewController.h; sourceTree = "<group>"; };
+		EB01FF7D181B349B00089915 /* LIALinkedInAuthorizationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LIALinkedInAuthorizationViewController.m; sourceTree = "<group>"; };
+		EB01FF7E181B349B00089915 /* LIALinkedInHttpClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LIALinkedInHttpClient.h; sourceTree = "<group>"; };
+		EB01FF7F181B349B00089915 /* LIALinkedInHttpClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LIALinkedInHttpClient.m; sourceTree = "<group>"; };
+		EB01FF80181B349B00089915 /* NSString+LIAEncode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+LIAEncode.h"; sourceTree = "<group>"; };
+		EB01FF81181B349B00089915 /* NSString+LIAEncode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+LIAEncode.m"; sourceTree = "<group>"; };
+		EB01FFBB181B3AFA00089915 /* AFHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPClient.h; sourceTree = "<group>"; };
+		EB01FFBC181B3AFA00089915 /* AFHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPClient.m; sourceTree = "<group>"; };
+		EB01FFBD181B3AFA00089915 /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
+		EB01FFBE181B3AFA00089915 /* AFHTTPRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPRequestOperation.m; sourceTree = "<group>"; };
+		EB01FFBF181B3AFA00089915 /* AFImageRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFImageRequestOperation.h; sourceTree = "<group>"; };
+		EB01FFC0181B3AFA00089915 /* AFImageRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFImageRequestOperation.m; sourceTree = "<group>"; };
+		EB01FFC1181B3AFA00089915 /* AFJSONRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFJSONRequestOperation.h; sourceTree = "<group>"; };
+		EB01FFC2181B3AFA00089915 /* AFJSONRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFJSONRequestOperation.m; sourceTree = "<group>"; };
+		EB01FFC3181B3AFA00089915 /* AFNetworkActivityIndicatorManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworkActivityIndicatorManager.h; sourceTree = "<group>"; };
+		EB01FFC4181B3AFA00089915 /* AFNetworkActivityIndicatorManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFNetworkActivityIndicatorManager.m; sourceTree = "<group>"; };
+		EB01FFC5181B3AFA00089915 /* AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworking.h; sourceTree = "<group>"; };
+		EB01FFC6181B3AFA00089915 /* AFPropertyListRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFPropertyListRequestOperation.h; sourceTree = "<group>"; };
+		EB01FFC7181B3AFA00089915 /* AFPropertyListRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFPropertyListRequestOperation.m; sourceTree = "<group>"; };
+		EB01FFC8181B3AFA00089915 /* AFURLConnectionOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLConnectionOperation.h; sourceTree = "<group>"; };
+		EB01FFC9181B3AFA00089915 /* AFURLConnectionOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLConnectionOperation.m; sourceTree = "<group>"; };
+		EB01FFCA181B3AFA00089915 /* AFXMLRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFXMLRequestOperation.h; sourceTree = "<group>"; };
+		EB01FFCB181B3AFA00089915 /* AFXMLRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFXMLRequestOperation.m; sourceTree = "<group>"; };
+		EB01FFCC181B3AFA00089915 /* UIImageView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+AFNetworking.h"; sourceTree = "<group>"; };
+		EB01FFCD181B3AFA00089915 /* UIImageView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+AFNetworking.m"; sourceTree = "<group>"; };
 		EB1FE9DB17FE4123001C2906 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = "../../../Documents/Objective-C/facebook-ios-sdk/build/FacebookSDK.framework"; sourceTree = "<group>"; };
 		EB1FE9DD17FE841D001C2906 /* GoogleMaps.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = GoogleMaps.bundle; path = GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle; sourceTree = "<group>"; };
 		EB1FE9DF17FE8582001C2906 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
@@ -789,6 +829,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EB53F643170913BC00715E2D /* SystemConfiguration.framework in Frameworks */,
+				EBEA9FD41795879300C6FEEC /* MobileCoreServices.framework in Frameworks */,
 				EB1FE9E017FE8582001C2906 /* CoreFoundation.framework in Frameworks */,
 				EBD6627817FE402900B190E2 /* OpenGLES.framework in Frameworks */,
 				EBD6627617FE401F00B190E2 /* libz.dylib in Frameworks */,
@@ -809,14 +851,12 @@
 				EB7FC68F16DC4623007C006D /* ImageIO.framework in Frameworks */,
 				EBAAFD23161FCF020007637B /* Foundation.framework in Frameworks */,
 				EBBDCB8B1623D3E700C32523 /* MapKit.framework in Frameworks */,
-				EBEA9FD41795879300C6FEEC /* MobileCoreServices.framework in Frameworks */,
 				EB1FE9DC17FE4123001C2906 /* FacebookSDK.framework in Frameworks */,
 				EBEA9FCE179586B100C6FEEC /* Parse.framework in Frameworks */,
 				EBBDCB5916223A9E00C32523 /* QuartzCore.framework in Frameworks */,
 				EBEA9FD6179587A800C6FEEC /* Security.framework in Frameworks */,
 				EB25BA8C16FE636B003F142F /* Social.framework in Frameworks */,
 				EBEA9FD8179587B100C6FEEC /* StoreKit.framework in Frameworks */,
-				EB53F643170913BC00715E2D /* SystemConfiguration.framework in Frameworks */,
 				EBAAFD21161FCF020007637B /* UIKit.framework in Frameworks */,
 				EB97147417F35785009260AE /* libGoogleAnalyticsServices.a in Frameworks */,
 				EBEA9FD21795877C00C6FEEC /* libz.1.1.3.dylib in Frameworks */,
@@ -827,6 +867,47 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		EB01FF79181B349B00089915 /* IOSLinkedInAPI */ = {
+			isa = PBXGroup;
+			children = (
+				EB01FF7A181B349B00089915 /* LIALinkedInApplication.h */,
+				EB01FF7B181B349B00089915 /* LIALinkedInApplication.m */,
+				EB01FF7C181B349B00089915 /* LIALinkedInAuthorizationViewController.h */,
+				EB01FF7D181B349B00089915 /* LIALinkedInAuthorizationViewController.m */,
+				EB01FF7E181B349B00089915 /* LIALinkedInHttpClient.h */,
+				EB01FF7F181B349B00089915 /* LIALinkedInHttpClient.m */,
+				EB01FF80181B349B00089915 /* NSString+LIAEncode.h */,
+				EB01FF81181B349B00089915 /* NSString+LIAEncode.m */,
+			);
+			path = IOSLinkedInAPI;
+			sourceTree = "<group>";
+		};
+		EB01FFBA181B3AFA00089915 /* AFNetworking */ = {
+			isa = PBXGroup;
+			children = (
+				EB01FFBB181B3AFA00089915 /* AFHTTPClient.h */,
+				EB01FFBC181B3AFA00089915 /* AFHTTPClient.m */,
+				EB01FFBD181B3AFA00089915 /* AFHTTPRequestOperation.h */,
+				EB01FFBE181B3AFA00089915 /* AFHTTPRequestOperation.m */,
+				EB01FFBF181B3AFA00089915 /* AFImageRequestOperation.h */,
+				EB01FFC0181B3AFA00089915 /* AFImageRequestOperation.m */,
+				EB01FFC1181B3AFA00089915 /* AFJSONRequestOperation.h */,
+				EB01FFC2181B3AFA00089915 /* AFJSONRequestOperation.m */,
+				EB01FFC3181B3AFA00089915 /* AFNetworkActivityIndicatorManager.h */,
+				EB01FFC4181B3AFA00089915 /* AFNetworkActivityIndicatorManager.m */,
+				EB01FFC5181B3AFA00089915 /* AFNetworking.h */,
+				EB01FFC6181B3AFA00089915 /* AFPropertyListRequestOperation.h */,
+				EB01FFC7181B3AFA00089915 /* AFPropertyListRequestOperation.m */,
+				EB01FFC8181B3AFA00089915 /* AFURLConnectionOperation.h */,
+				EB01FFC9181B3AFA00089915 /* AFURLConnectionOperation.m */,
+				EB01FFCA181B3AFA00089915 /* AFXMLRequestOperation.h */,
+				EB01FFCB181B3AFA00089915 /* AFXMLRequestOperation.m */,
+				EB01FFCC181B3AFA00089915 /* UIImageView+AFNetworking.h */,
+				EB01FFCD181B3AFA00089915 /* UIImageView+AFNetworking.m */,
+			);
+			path = AFNetworking;
+			sourceTree = "<group>";
+		};
 		EB1B76C616A3DF350055A757 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -1054,9 +1135,11 @@
 		EB53F6451709141300715E2D /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				EB01FFBA181B3AFA00089915 /* AFNetworking */,
 				EBA89EB317AFED5E00D9CD6B /* CustomTabBar */,
 				EB53F6441709140500715E2D /* GoogleAnalytics */,
 				EB5FD425171EE94A00B76552 /* IntelligentSplitViewController */,
+				EB01FF79181B349B00089915 /* IOSLinkedInAPI */,
 				EB3939A816654BE300580A4E /* NSString+HTML */,
 				EB3939AD16654BE300580A4E /* PaperFoldMenuController */,
 				EBB1E7A61717B93700B73DDF /* PopoverView */,
@@ -1722,6 +1805,11 @@
 				TargetAttributes = {
 					EBAAFD1B161FCF020007637B = {
 						DevelopmentTeam = X85KB267D9;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -2028,6 +2116,7 @@
 				EB89751818132E2A00DB2486 /* QuizOptionViewCell.m in Sources */,
 				EB3939D51666CF9F00580A4E /* MenuViewController.m in Sources */,
 				EB39397616654B4400580A4E /* AlertView.m in Sources */,
+				EB01FF82181B349B00089915 /* LIALinkedInApplication.m in Sources */,
 				EB39397716654B4400580A4E /* APIController.m in Sources */,
 				EB39397816654B4400580A4E /* AppDelegate.m in Sources */,
 				EB39398B16654B4400580A4E /* MapViewController.m in Sources */,
@@ -2036,8 +2125,11 @@
 				EB39399916654B4400580A4E /* ScheduleViewController.m in Sources */,
 				EB3939A716654BB900580A4E /* main.m in Sources */,
 				EB897515181056D800DB2486 /* SebraeColorThemeController.m in Sources */,
+				EB01FFD0181B3AFA00089915 /* AFImageRequestOperation.m in Sources */,
 				EB3939C616654BE300580A4E /* GTMNSString+HTML.m in Sources */,
+				EB01FFCF181B3AFA00089915 /* AFHTTPRequestOperation.m in Sources */,
 				EB3939C716654BE300580A4E /* NSString+HTML.m in Sources */,
+				EB01FFD4181B3AFA00089915 /* AFURLConnectionOperation.m in Sources */,
 				EB3939C816654BE300580A4E /* FacingView.m in Sources */,
 				EB3939C916654BE300580A4E /* FoldView.m in Sources */,
 				EB897510180D166900DB2486 /* PeopleGroupViewCell.m in Sources */,
@@ -2046,6 +2138,7 @@
 				EB8974E5180CC02C00DB2486 /* QuizViewController.m in Sources */,
 				EB3939CB16654BE300580A4E /* PaperFoldNavigationController.m in Sources */,
 				EB8974FD180CCDB000DB2486 /* PersonViewController.m in Sources */,
+				EB01FFD2181B3AFA00089915 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				EB3939CD16654BE300580A4E /* PaperFoldSwipeHintView.m in Sources */,
 				EB3939CE16654BE300580A4E /* PaperFoldView.m in Sources */,
 				EB3939CF16654BE300580A4E /* ShadowView.m in Sources */,
@@ -2053,6 +2146,8 @@
 				EB3939D116654BE300580A4E /* UIView+Screenshot.m in Sources */,
 				EB3939D216654BE300580A4E /* PaperFoldMenuController.m in Sources */,
 				EBB7EAEE16801393005DA44C /* WrapperViewController.m in Sources */,
+				EB01FFD6181B3AFA00089915 /* UIImageView+AFNetworking.m in Sources */,
+				EB01FF84181B349B00089915 /* LIALinkedInHttpClient.m in Sources */,
 				EBA0C6EB1697C754005904AE /* MKPointExpandedAnnotation.m in Sources */,
 				EB9AB77216A0921A005D4CAA /* DemoViewController.m in Sources */,
 				EBAD3CB416A27BFB003735AD /* UIImage+Color.m in Sources */,
@@ -2083,11 +2178,13 @@
 				EB25BA9E16FE73F2003F142F /* HumanViewController.m in Sources */,
 				EB8974EB180CC52000DB2486 /* PeopleViewController.m in Sources */,
 				EB25BAA416FE84D6003F142F /* HumanLoginViewController.m in Sources */,
+				EB01FFD3181B3AFA00089915 /* AFPropertyListRequestOperation.m in Sources */,
 				EB25BAA9170280F1003F142F /* LauchImageViewController.m in Sources */,
 				EB1FE9E717FF2B85001C2906 /* AdViewController.m in Sources */,
 				EB1FEA0D1803CB56001C2906 /* ReaderViewCell.m in Sources */,
 				EBE72F97181AE11C00A3A02D /* SocialLoginViewController.m in Sources */,
 				EB4FC57C171061AF00CA43EC /* NSString+URLEncoding.m in Sources */,
+				EB01FFCE181B3AFA00089915 /* AFHTTPClient.m in Sources */,
 				EB897507180CE35E00DB2486 /* PeopleViewCell.m in Sources */,
 				EB4FC5851710644000CA43EC /* HumanToken.m in Sources */,
 				EB4FC58F1710DFE000CA43EC /* EventToken.m in Sources */,
@@ -2100,13 +2197,17 @@
 				EB6749FC1749A5F200748549 /* IntelligentSplitViewController.m in Sources */,
 				EB78EF6C17559B0C0016B527 /* UIImage+ResizeAndCrop.m in Sources */,
 				EBD055A717AF8CF3008355E8 /* AboutViewController.m in Sources */,
+				EB01FFD1181B3AFA00089915 /* AFJSONRequestOperation.m in Sources */,
 				EBA89EB217AFEAFA00D9CD6B /* PushController.m in Sources */,
+				EB01FF83181B349B00089915 /* LIALinkedInAuthorizationViewController.m in Sources */,
 				EBF210B41815E2FE00D39789 /* NSString+TruncateToWidth.m in Sources */,
 				EB3BD91217B8C47A008D066D /* ReaderViewController.m in Sources */,
+				EB01FF85181B349B00089915 /* NSString+LIAEncode.m in Sources */,
 				EBDFF54117BC057100BBFC1D /* ScheduleItemViewController.m in Sources */,
 				EBDFF54E17BE0C4500BBFC1D /* NSObject+Triangle.m in Sources */,
 				EB59020217D5D7D20032143C /* MarketplaceViewController.m in Sources */,
 				EB59020817D5D83A0032143C /* MarketplaceViewCell.m in Sources */,
+				EB01FFD5181B3AFA00089915 /* AFXMLRequestOperation.m in Sources */,
 				EB30CAF117D6D09E00584FB8 /* UIButton+Components.m in Sources */,
 				EB79CC4917EB82D500C16CF5 /* QuestionViewController.m in Sources */,
 				EB79CC5217ED813D00C16CF5 /* FrontViewController.m in Sources */,
@@ -2239,7 +2340,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
@@ -2259,7 +2361,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = InEvent;
-				PROVISIONING_PROFILE = "F6E8E87B-87CE-4520-A046-D9BFA61F1910";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
@@ -2271,7 +2373,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
@@ -2291,7 +2394,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = InEvent;
-				PROVISIONING_PROFILE = "F6E8E87B-87CE-4520-A046-D9BFA61F1910";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};

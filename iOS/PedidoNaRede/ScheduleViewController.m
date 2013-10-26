@@ -114,7 +114,7 @@
 - (void)createRedLineAtPosition:(CGRect)frame {
     UIView *redLine = [[UIView alloc] initWithFrame:CGRectMake(0.0f, frame.origin.y, frame.size.width, 2.5f)];
     [redLine setBackgroundColor:[UIColor redColor]];
-    [redLine setAlpha:0.75f];
+    [redLine setAlpha:0.2f];
     [self.tableView addSubview:redLine];
     
     // Remove red line

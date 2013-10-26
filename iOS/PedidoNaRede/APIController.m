@@ -583,12 +583,30 @@
     }
 }
 
+- (void)personSignInWithLinkedInToken:(NSString *)linkedInToken {
+    
+    if (linkedInToken != nil) {
+        NSDictionary *attributes = @{@"GET" : @{@"linkedInToken" : linkedInToken}};
+        
+        [self JSONObjectWithNamespace:@"person" method:@"signInWithLinkedIn" attributes:attributes];
+    }
+}
+
 - (void)personSignInWithFacebookToken:(NSString *)facebookToken {
     
     if (facebookToken != nil) {
         NSDictionary *attributes = @{@"GET" : @{@"facebookToken" : facebookToken}};
         
         [self JSONObjectWithNamespace:@"person" method:@"signInWithFacebook" attributes:attributes];
+    }
+}
+
+- (void)personSignInWithTwitterToken:(NSString *)twitterToken {
+    
+    if (twitterToken != nil) {
+        NSDictionary *attributes = @{@"GET" : @{@"twitterToken" : twitterToken}};
+        
+        [self JSONObjectWithNamespace:@"person" method:@"signInWithTwitter" attributes:attributes];
     }
 }
 

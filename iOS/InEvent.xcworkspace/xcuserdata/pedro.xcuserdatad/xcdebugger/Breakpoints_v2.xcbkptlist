@@ -90,11 +90,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PedidoNaRede/FrontViewController.m"
-            timestampString = "404372859.597738"
+            timestampString = "404423856.66283"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "198"
-            endingLineNumber = "198"
+            startingLineNumber = "199"
+            endingLineNumber = "199"
             landmarkName = "-reloadData"
             landmarkType = "5">
          </BreakpointContent>
@@ -106,11 +106,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PedidoNaRede/FrontViewController.m"
-            timestampString = "404372859.597738"
+            timestampString = "404423856.66283"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "205"
-            endingLineNumber = "205"
+            startingLineNumber = "206"
+            endingLineNumber = "206"
             landmarkName = "-forceDataReload:"
             landmarkType = "5">
          </BreakpointContent>
@@ -138,7 +138,7 @@
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "-[NSObject(NSObject) doesNotRecognizeSelector:]"
+                  symbolName = "-[NSObject doesNotRecognizeSelector:]"
                   moduleName = "CoreFoundation"
                   offsetFromSymbolStart = "0">
                </Location>
@@ -288,11 +288,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PedidoNaRede/FrontViewController.m"
-            timestampString = "404372859.597738"
+            timestampString = "404423856.66283"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "198"
-            endingLineNumber = "198"
+            startingLineNumber = "199"
+            endingLineNumber = "199"
             landmarkName = "-reloadData"
             landmarkType = "5">
          </BreakpointContent>
@@ -414,11 +414,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PedidoNaRede/APIController.m"
-            timestampString = "403555824.67829"
+            timestampString = "404442216.856244"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "699"
-            endingLineNumber = "699"
+            startingLineNumber = "717"
+            endingLineNumber = "717"
             landmarkName = "-start"
             landmarkType = "5">
          </BreakpointContent>
@@ -796,11 +796,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PedidoNaRede/APIController.m"
-            timestampString = "403555824.67829"
+            timestampString = "404442216.856244"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "635"
-            endingLineNumber = "635"
+            startingLineNumber = "653"
+            endingLineNumber = "653"
             landmarkName = "-generatePath"
             landmarkType = "5">
          </BreakpointContent>
@@ -812,11 +812,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PedidoNaRede/APIController.m"
-            timestampString = "403555824.67829"
+            timestampString = "404442216.856244"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "660"
-            endingLineNumber = "660"
+            startingLineNumber = "678"
+            endingLineNumber = "678"
             landmarkName = "@implementation APIController"
             landmarkType = "3">
          </BreakpointContent>
@@ -828,11 +828,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PedidoNaRede/APIController.m"
-            timestampString = "403555824.67829"
+            timestampString = "404442216.856244"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "707"
-            endingLineNumber = "707"
+            startingLineNumber = "725"
+            endingLineNumber = "725"
             landmarkName = "-start"
             landmarkType = "5">
          </BreakpointContent>
@@ -906,11 +906,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PedidoNaRede/APIController.m"
-            timestampString = "403555824.67829"
+            timestampString = "404442216.856244"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "709"
-            endingLineNumber = "709"
+            startingLineNumber = "727"
+            endingLineNumber = "727"
             landmarkName = "-start"
             landmarkType = "5">
          </BreakpointContent>
@@ -922,11 +922,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PedidoNaRede/APIController.m"
-            timestampString = "403555824.67829"
+            timestampString = "404442216.856244"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "714"
-            endingLineNumber = "714"
+            startingLineNumber = "732"
+            endingLineNumber = "732"
             landmarkName = "-start"
             landmarkType = "5">
          </BreakpointContent>
@@ -1018,11 +1018,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PedidoNaRede/AppDelegate.m"
-            timestampString = "404418713.569017"
+            timestampString = "404426822.850961"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "339"
-            endingLineNumber = "339"
+            startingLineNumber = "335"
+            endingLineNumber = "335"
             landmarkName = "-loadEssentialData"
             landmarkType = "5">
          </BreakpointContent>
@@ -1252,28 +1252,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PedidoNaRede/FrontViewController.m"
-            timestampString = "404372859.597738"
+            timestampString = "404431313.817974"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "289"
-            endingLineNumber = "289"
+            startingLineNumber = "314"
+            endingLineNumber = "314"
             landmarkName = "-startEditing"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "PedidoNaRede/HumanLoginViewController.m"
-            timestampString = "404418638.518225"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "373"
-            endingLineNumber = "373"
-            landmarkName = "-loginFacebook"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1460,11 +1444,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PedidoNaRede/StreamViewController.m"
-            timestampString = "404421574.709588"
+            timestampString = "404431466.789673"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "218"
-            endingLineNumber = "218"
+            startingLineNumber = "226"
+            endingLineNumber = "226"
             landmarkName = "-tableView:cellForRowAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1762,11 +1746,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PedidoNaRede/FrontViewController.m"
-            timestampString = "404372859.597738"
+            timestampString = "404423856.66283"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "47"
-            endingLineNumber = "47"
+            startingLineNumber = "48"
+            endingLineNumber = "48"
             landmarkName = "-viewDidLoad"
             landmarkType = "5">
          </BreakpointContent>
@@ -1778,11 +1762,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PedidoNaRede/FrontViewController.m"
-            timestampString = "404372859.597738"
+            timestampString = "404423856.66283"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "98"
-            endingLineNumber = "98"
+            startingLineNumber = "99"
+            endingLineNumber = "99"
             landmarkName = "-viewWillAppear:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1826,11 +1810,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PedidoNaRede/FrontViewController.m"
-            timestampString = "404372859.597738"
+            timestampString = "404423856.66283"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "62"
-            endingLineNumber = "62"
+            startingLineNumber = "63"
+            endingLineNumber = "63"
             landmarkName = "-viewDidLoad"
             landmarkType = "5">
          </BreakpointContent>
@@ -1938,11 +1922,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PedidoNaRede/FrontViewController.m"
-            timestampString = "404372859.597738"
+            timestampString = "404423856.66283"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "95"
-            endingLineNumber = "95"
+            startingLineNumber = "96"
+            endingLineNumber = "96"
             landmarkName = "-viewWillAppear:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1954,11 +1938,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PedidoNaRede/FrontViewController.m"
-            timestampString = "404372859.597738"
+            timestampString = "404423856.66283"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "101"
-            endingLineNumber = "101"
+            startingLineNumber = "102"
+            endingLineNumber = "102"
             landmarkName = "-viewDidAppear:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1970,11 +1954,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PedidoNaRede/FrontViewController.m"
-            timestampString = "404372859.597738"
+            timestampString = "404431313.817974"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "419"
-            endingLineNumber = "419"
+            startingLineNumber = "444"
+            endingLineNumber = "444"
             landmarkName = "-textFieldShouldBeginEditing:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1986,11 +1970,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PedidoNaRede/FrontViewController.m"
-            timestampString = "404372859.597738"
+            timestampString = "404431313.817974"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "219"
-            endingLineNumber = "219"
+            startingLineNumber = "221"
+            endingLineNumber = "221"
             landmarkName = "-paint"
             landmarkType = "5">
          </BreakpointContent>
@@ -2002,11 +1986,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PedidoNaRede/FrontViewController.m"
-            timestampString = "404372859.597738"
+            timestampString = "404431313.817974"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "375"
-            endingLineNumber = "375"
+            startingLineNumber = "400"
+            endingLineNumber = "400"
             landmarkName = "-reloadMap"
             landmarkType = "5">
          </BreakpointContent>
@@ -2018,39 +2002,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PedidoNaRede/FrontViewController.m"
-            timestampString = "404372859.597738"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "127"
-            endingLineNumber = "127"
-            landmarkName = "-observeValueForKeyPath:ofObject:change:context:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "PedidoNaRede/FrontViewController.m"
-            timestampString = "404372859.597738"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "225"
-            endingLineNumber = "225"
-            landmarkName = "-paint"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "PedidoNaRede/FrontViewController.m"
-            timestampString = "404372859.597738"
+            timestampString = "404423856.66283"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "128"
@@ -2066,11 +2018,27 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PedidoNaRede/FrontViewController.m"
-            timestampString = "404372859.597738"
+            timestampString = "404431313.817974"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "162"
-            endingLineNumber = "162"
+            startingLineNumber = "228"
+            endingLineNumber = "228"
+            landmarkName = "-paint"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PedidoNaRede/FrontViewController.m"
+            timestampString = "404423856.66283"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "129"
+            endingLineNumber = "129"
             landmarkName = "-observeValueForKeyPath:ofObject:change:context:"
             landmarkType = "5">
          </BreakpointContent>
@@ -2082,11 +2050,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PedidoNaRede/FrontViewController.m"
-            timestampString = "404372859.597738"
+            timestampString = "404423856.66283"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "169"
-            endingLineNumber = "169"
+            startingLineNumber = "163"
+            endingLineNumber = "163"
             landmarkName = "-observeValueForKeyPath:ofObject:change:context:"
             landmarkType = "5">
          </BreakpointContent>
@@ -2097,29 +2065,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "PedidoNaRede/AppDelegate.m"
-            timestampString = "404418713.569017"
+            filePath = "PedidoNaRede/FrontViewController.m"
+            timestampString = "404423856.66283"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "119"
-            endingLineNumber = "119"
-            landmarkName = "-application:didFinishLaunchingWithOptions:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "PedidoNaRede/AppDelegate.m"
-            timestampString = "404418713.569017"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "120"
-            endingLineNumber = "120"
-            landmarkName = "-application:didFinishLaunchingWithOptions:"
+            startingLineNumber = "170"
+            endingLineNumber = "170"
+            landmarkName = "-observeValueForKeyPath:ofObject:change:context:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2178,11 +2130,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PedidoNaRede/SocialLoginViewController.m"
-            timestampString = "404418638.518225"
+            timestampString = "404437776.753299"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "74"
-            endingLineNumber = "74"
+            startingLineNumber = "76"
+            endingLineNumber = "76"
             landmarkName = "-loadAccountLogin:"
             landmarkType = "5">
          </BreakpointContent>
@@ -2200,6 +2152,272 @@
             startingLineNumber = "193"
             endingLineNumber = "193"
             landmarkName = "-sendTweet:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PedidoNaRede/FrontViewController.m"
+            timestampString = "404431313.817974"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "222"
+            endingLineNumber = "222"
+            landmarkName = "-paint"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PedidoNaRede/SocialLoginViewController.m"
+            timestampString = "404442464.417398"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "157"
+            endingLineNumber = "157"
+            landmarkName = "-linkedinLogin:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PedidoNaRede/SocialLoginViewController.m"
+            timestampString = "404442464.417398"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "150"
+            endingLineNumber = "150"
+            landmarkName = "-linkedinLogin:"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[SocialLoginViewController linkedinLogin:]"
+                  moduleName = "InEvent"
+                  urlString = "file://localhost/Users/pedro/Sites/InEvent-dev/iOS/PedidoNaRede/SocialLoginViewController.m"
+                  timestampString = "404437887.046573"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "149"
+                  endingLineNumber = "149"
+                  offsetFromSymbolStart = "335">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__43-[SocialLoginViewController linkedinLogin:]_block_invoke"
+                  moduleName = "InEvent"
+                  urlString = "file://localhost/Users/pedro/Sites/InEvent-dev/iOS/PedidoNaRede/SocialLoginViewController.m"
+                  timestampString = "404437887.046883"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "149"
+                  endingLineNumber = "149"
+                  offsetFromSymbolStart = "75">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PedidoNaRede/SocialLoginViewController.m"
+            timestampString = "404442464.417398"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "152"
+            endingLineNumber = "152"
+            landmarkName = "-linkedinLogin:"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__43-[SocialLoginViewController linkedinLogin:]_block_invoke"
+                  moduleName = "InEvent"
+                  urlString = "file://localhost/Users/pedro/Sites/InEvent-dev/iOS/PedidoNaRede/SocialLoginViewController.m"
+                  timestampString = "404437898.968877"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "150"
+                  endingLineNumber = "150"
+                  offsetFromSymbolStart = "81">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__43-[SocialLoginViewController linkedinLogin:]_block_invoke_2"
+                  moduleName = "InEvent"
+                  urlString = "file://localhost/Users/pedro/Sites/InEvent-dev/iOS/PedidoNaRede/SocialLoginViewController.m"
+                  timestampString = "404437898.969558"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "150"
+                  endingLineNumber = "150"
+                  offsetFromSymbolStart = "59">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PedidoNaRede/SocialLoginViewController.m"
+            timestampString = "404442464.417398"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "151"
+            endingLineNumber = "151"
+            landmarkName = "-linkedinLogin:"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[SocialLoginViewController linkedinLogin:]"
+                  moduleName = "InEvent"
+                  urlString = "file://localhost/Users/pedro/Sites/InEvent-dev/iOS/PedidoNaRede/SocialLoginViewController.m"
+                  timestampString = "404437905.753212"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "149"
+                  endingLineNumber = "149"
+                  offsetFromSymbolStart = "335">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__43-[SocialLoginViewController linkedinLogin:]_block_invoke"
+                  moduleName = "InEvent"
+                  urlString = "file://localhost/Users/pedro/Sites/InEvent-dev/iOS/PedidoNaRede/SocialLoginViewController.m"
+                  timestampString = "404437905.753692"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "149"
+                  endingLineNumber = "149"
+                  offsetFromSymbolStart = "75">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "IOSLinkedInAPI/LIALinkedInHttpClient.m"
+            timestampString = "404438097.363211"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "69"
+            endingLineNumber = "69"
+            landmarkName = "-getAuthorizationCode:cancel:failure:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "IOSLinkedInAPI/LIALinkedInHttpClient.m"
+            timestampString = "404438108.317731"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "95"
+            endingLineNumber = "95"
+            landmarkName = "-showAuthorizationView:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PedidoNaRede/SocialLoginViewController.m"
+            timestampString = "404442464.417398"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "154"
+            endingLineNumber = "154"
+            landmarkName = "-linkedinLogin:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PedidoNaRede/SocialLoginViewController.m"
+            timestampString = "404442374.166701"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "82"
+            endingLineNumber = "82"
+            landmarkName = "-apiController:didLoadDictionaryFromServer:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PedidoNaRede/SocialLoginViewController.m"
+            timestampString = "404442375.474814"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "83"
+            endingLineNumber = "83"
+            landmarkName = "-apiController:didLoadDictionaryFromServer:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PedidoNaRede/SocialLoginViewController.m"
+            timestampString = "404442464.417398"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "155"
+            endingLineNumber = "155"
+            landmarkName = "-linkedinLogin:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

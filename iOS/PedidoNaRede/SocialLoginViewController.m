@@ -6,11 +6,12 @@
 //  Copyright (c) 2013 Pedro Góes. All rights reserved.
 //
 
+#import <FacebookSDK/FacebookSDK.h>
+#import <QuartzCore/QuartzCore.h>
+#import <Parse/Parse.h>
 #import "SocialLoginViewController.h"
 #import "HumanLoginViewController.h"
 #import "HumanViewController.h"
-#import <FacebookSDK/FacebookSDK.h>
-#import <QuartzCore/QuartzCore.h>
 #import "ColorThemeController.h"
 #import "AppDelegate.h"
 #import "APIController.h"
@@ -19,7 +20,8 @@
 #import "EventToken.h"
 #import "GAI.h"
 #import "GAIDictionaryBuilder.h"
-#import <Parse/Parse.h>
+#import "LIALinkedInHttpClient.h"
+#import "LIALinkedInApplication.h"
 
 @interface SocialLoginViewController ()
 
@@ -81,7 +83,9 @@
     
     if ([apiController.method isEqualToString:@"signIn"] ||
         [apiController.method isEqualToString:@"enroll"] ||
-        [apiController.method isEqualToString:@"signInWithFacebook"]) {
+        [apiController.method isEqualToString:@"signInWithLinkedIn"] ||
+        [apiController.method isEqualToString:@"signInWithFacebook"] ||
+        [apiController.method isEqualToString:@"signInWithTwitter"]) {
         // Get some properties
         NSArray *events = [dictionary objectForKey:@"events"];
         NSString *tokenID = [dictionary objectForKey:@"tokenID"];
@@ -141,7 +145,31 @@
 #pragma mark - LinkedIn Methods
 
 - (IBAction)linkedinLogin:(id)sender {
+    LIALinkedInApplication *application = [LIALinkedInApplication applicationWithRedirectURL:@"http://www.inevent.us/developer/" clientId:@"7obxzmefk9eu" clientSecret:@"rPsCyb8npka6jJHk" state:@"5453sdfggeDCEEFWF4f424" grantedAccess:@[@"r_basicprofile", @"r_fullprofile", @"r_network", @"r_emailaddress"]];
+    LIALinkedInHttpClient *client = [LIALinkedInHttpClient clientForApplication:application presentingViewController:self];
     
+    [client getAuthorizationCode:^(NSString *code) {
+        [client getAccessToken:code success:^(NSDictionary *accessTokenData) {
+            // Get accessToken
+            NSString *accessToken = [accessTokenData objectForKey:@"access_token"];
+            
+            // Notify our servers about the access token
+            [[[APIController alloc] initWithDelegate:self forcing:YES] personSignInWithLinkedInToken:accessToken];
+            
+        } failure:^(NSError *error) {
+            // Session is closed
+            AlertView *alertView = [[AlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"LinkedIn couldn't log you in! Try again?", nil) delegate:self cancelButtonTitle:nil otherButtonTitle:NSLocalizedString(@"Ok", nil)];
+            [alertView show];
+        }];
+    } cancel:^{
+        // Session is closed
+        AlertView *alertView = [[AlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"LinkedIn couldn't log you in! Try again?", nil) delegate:self cancelButtonTitle:nil otherButtonTitle:NSLocalizedString(@"Ok", nil)];
+        [alertView show];
+    } failure:^(NSError *error) {
+        // Session is closed
+        AlertView *alertView = [[AlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"LinkedIn couldn't log you in! Try again?", nil) delegate:self cancelButtonTitle:nil otherButtonTitle:NSLocalizedString(@"Ok", nil)];
+        [alertView show];
+    }];
 }
 
 #pragma mark - Facebook Methods

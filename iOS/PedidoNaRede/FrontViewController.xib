@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4510" systemVersion="12F37" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4510" systemVersion="12F45" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
         <deployment defaultVersion="1536" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
@@ -29,7 +29,7 @@
             <subviews>
                 <view contentMode="scaleToFill" id="n5S-hZ-Jim">
                     <rect key="frame" x="20" y="256" width="280" height="518"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="64-Clock.png" id="hJv-FE-52G" userLabel="Date Begin">
                             <rect key="frame" x="20" y="11" width="30" height="30"/>
@@ -37,7 +37,7 @@
                         </imageView>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="9/09 19:00" minimumFontSize="17" id="dK3-lD-adx" userLabel="Date Begin">
                             <rect key="frame" x="58" y="9" width="222" height="34"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" name="Thonburi" family="Thonburi" pointSize="18"/>
                             <textInputTraits key="textInputTraits"/>
                             <connections>
@@ -50,7 +50,7 @@
                         </imageView>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="9/09 21:00" minimumFontSize="17" id="dji-uM-Wx2" userLabel="Date End">
                             <rect key="frame" x="58" y="61" width="222" height="34"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" name="Thonburi" family="Thonburi" pointSize="18"/>
                             <textInputTraits key="textInputTraits"/>
                             <connections>
@@ -63,7 +63,7 @@
                         </imageView>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Universidade" minimumFontSize="17" id="FXc-oH-LXv" userLabel="Location">
                             <rect key="frame" x="58" y="113" width="222" height="34"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" name="Thonburi" family="Thonburi" pointSize="18"/>
                             <textInputTraits key="textInputTraits"/>
                             <connections>
@@ -76,7 +76,7 @@
                         </imageView>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Organização" minimumFontSize="17" id="UJe-FM-Krv" userLabel="Fugleman">
                             <rect key="frame" x="72" y="342" width="208" height="34"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" name="Thonburi" family="Thonburi" pointSize="18"/>
                             <textInputTraits key="textInputTraits"/>
                             <connections>
@@ -85,7 +85,7 @@
                         </textField>
                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Descrição do evento" id="ZBm-wo-PI6" userLabel="Description" customClass="UIPlaceHolderTextView">
                             <rect key="frame" x="14" y="382" width="266" height="116"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <inset key="contentInset" minX="-6" minY="0.0" maxX="0.0" maxY="0.0"/>
                             <fontDescription key="fontDescription" name="Thonburi" family="Thonburi" pointSize="16"/>
@@ -99,11 +99,11 @@
                 </view>
                 <view contentMode="scaleToFill" id="2fI-vL-RFu">
                     <rect key="frame" x="0.0" y="134" width="320" height="123"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Semana da Engenharia Civil" id="ORl-xQ-hN2" userLabel="Name" customClass="UIPlaceHolderTextView">
                             <rect key="frame" x="37" y="8" width="246" height="64"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <inset key="contentInset" minX="-6" minY="0.0" maxX="0.0" maxY="0.0"/>
                             <fontDescription key="fontDescription" name="Thonburi-Bold" family="Thonburi" pointSize="20"/>
@@ -121,7 +121,7 @@
                         </label>
                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="4567" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="6fg-PD-r1c">
                             <rect key="frame" x="184" y="72" width="99" height="45"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" name="Thonburi-Bold" family="Thonburi" pointSize="26"/>
                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                             <nil key="highlightedColor"/>
@@ -131,11 +131,31 @@
                 </view>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="ehH-7J-HxQ">
                     <rect key="frame" x="0.0" y="4" width="320" height="138"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </imageView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="uGO-GW-y9g" userLabel="Twitter">
+                    <rect key="frame" x="248" y="104" width="28" height="28"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" image="32-Twitter.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="sendTweet:" destination="-1" eventType="touchUpInside" id="cng-aM-hme"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Vbh-zf-sAT" userLabel="Facebook">
+                    <rect key="frame" x="284" y="104" width="28" height="28"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" image="32-Facebook-2.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="postTimeline:" destination="-1" eventType="touchUpInside" id="uAI-UD-OrA"/>
+                    </connections>
+                </button>
                 <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" zoomEnabled="NO" scrollEnabled="NO" rotateEnabled="NO" pitchEnabled="NO" showsUserLocation="YES" id="71D-wj-eN9">
                     <rect key="frame" x="8" y="412" width="304" height="176"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                     <connections>
                         <outlet property="delegate" destination="-1" id="mbD-Ex-Bdc"/>
                     </connections>
@@ -145,6 +165,8 @@
         </scrollView>
     </objects>
     <resources>
+        <image name="32-Facebook-2.png" width="32" height="32"/>
+        <image name="32-Twitter.png" width="32" height="32"/>
         <image name="64-Clock-2.png" width="64" height="64"/>
         <image name="64-Clock.png" width="64" height="64"/>
         <image name="64-Map.png" width="64" height="64"/>

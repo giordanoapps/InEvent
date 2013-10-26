@@ -7,7 +7,7 @@
 	 * @param  string $email     email of the person
 	 * @return integer           memberID
 	 */
-	function createMember($name, $password, $email, $cpf = "", $rg = "", $usp = "", $telephone = "", $city = "", $university = "", $course = "", $facebookID = 0) {
+	function createMember($name, $password, $email, $cpf = "", $rg = "", $usp = "", $telephone = "", $city = "", $university = "", $course = "", $linkedInID = "", $facebookID = 0, $twitterID = 0) {
 
 		$hash = Bcrypt::hash($password);
 
@@ -26,7 +26,9 @@
 					`email`,
 					`university`,
 					`course`,
-					`facebookID`
+					`facebookID`,
+					`twitterID`,
+					`linkedInID`
 				)
 			VALUES 
 				(
@@ -40,7 +42,9 @@
 					'$email',
 					'$university',
 					'$course',
-					$facebookID
+					$facebookID,
+					$twitterID,
+					'$linkedInID'
 				)
 		");
 

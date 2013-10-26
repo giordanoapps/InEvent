@@ -169,19 +169,27 @@
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     
-    UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+    UIImagePickerController *viewController = [[UIImagePickerController alloc] init];
     
     NSString *title = [actionSheet buttonTitleAtIndex:buttonIndex];
     
     if ([title isEqualToString:NSLocalizedString(@"Pick from camera roll", nil)]) {
-        [imagePicker setSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
+        [viewController setSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
     } else if ([title isEqualToString:NSLocalizedString(@"Take picture", nil)]) {
-        [imagePicker setSourceType:UIImagePickerControllerSourceTypeCamera];
+        [viewController setSourceType:UIImagePickerControllerSourceTypeCamera];
     }
     
-    [imagePicker setDelegate:self];
+    [viewController setDelegate:self];
     
-    [self presentViewController:imagePicker animated:YES completion:NULL];
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        viewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+        viewController.modalPresentationStyle = UIModalPresentationCurrentContext;
+    } else {
+        viewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+        viewController.modalPresentationStyle = UIModalPresentationFormSheet;
+    }
+    
+    [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:viewController animated:YES completion:nil];
 }
 
 #pragma mark - Table View Data Source

@@ -7,6 +7,7 @@
 //
 
 #import <QuartzCore/QuartzCore.h>
+#import <Social/Social.h>
 #import "FrontViewController.h"
 #import "UtilitiesController.h"
 #import "UIImageView+WebCache.h"
@@ -75,10 +76,10 @@
     _wrapper.layer.cornerRadius = 4.0f;
     
     // Name
-    [_name addObserver:self forKeyPath:@"text" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:NULL];
+    [_name addObserver:self forKeyPath:@"contentSize" options:NSKeyValueObservingOptionNew context:NULL];
 
     // Name
-    [_description addObserver:self forKeyPath:@"text" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:NULL];
+    [_description addObserver:self forKeyPath:@"contentSize" options:NSKeyValueObservingOptionNew context:NULL];
     
     // Location Manager
     locationManager = [[CLLocationManager alloc] init];
@@ -109,8 +110,8 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
-    [_name removeObserver:self forKeyPath:@"text"];
-    [_description removeObserver:self forKeyPath:@"text"];
+    [_name removeObserver:self forKeyPath:@"contentSize"];
+    [_description removeObserver:self forKeyPath:@"contentSize"];
     
     // Window
     [self deallocTapBehind];
@@ -216,9 +217,11 @@
         [self.cover setImageWithURL:[UtilitiesController urlWithFile:[eventData objectForKey:@"cover"]] completed:
          ^(UIImage *image, NSError *error, SDImageCacheType cacheType ) {
              
+            // We crop the view to the its maximum height and adjust its width proportionally
              CGFloat newWidth = (weakSelf.cover.frame.size.height / image.size.height) * image.size.width;
              
-             [weakSelf.cover setFrame: CGRectMake((weakSelf.cover.frame.size.width - newWidth) / 2.0f, weakSelf.cover.frame.origin.y, newWidth, weakSelf.cover.frame.size.height)];
+             // Pay attention that we get the size of the view to calculate the width so we don't need to wait the view to autoresize
+             [weakSelf.cover setFrame: CGRectMake((weakSelf.view.frame.size.width - newWidth) / 2.0f, weakSelf.cover.frame.origin.y, newWidth, weakSelf.cover.frame.size.height)];
         }];
         
         // Name
@@ -250,6 +253,28 @@
         
         // Description
         self.description.text = [[eventData objectForKey:@"description"] stringByDecodingHTMLEntities];
+    }
+}
+
+#pragma mark - Twitter
+
+- (IBAction)sendTweet:(id)sender {
+    
+    if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter]) {
+        SLComposeViewController *tweetSheet = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
+        [tweetSheet setInitialText:[NSString stringWithFormat:@"%@ %@!", NSLocalizedString(@"Attending", nil), [[EventToken sharedInstance] name]]];
+        [self presentViewController:tweetSheet animated:YES completion:nil];
+    }
+}
+
+#pragma mark - Facebook
+
+- (IBAction)postTimeline:(id)sender {
+    
+    if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]) {
+        SLComposeViewController *facebookPost = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
+        [facebookPost setInitialText:[NSString stringWithFormat:@"%@ %@!", NSLocalizedString(@"Attending", nil), [[EventToken sharedInstance] name]]];
+        [self presentViewController:facebookPost animated:YES completion:nil];
     }
 }
 

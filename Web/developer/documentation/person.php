@@ -36,6 +36,19 @@
 			<p><b>password</b><sub>GET</sub> : senha do membro </p>
 		</div>
 	</div>
+
+	<div class="documentationFunctionBox">
+		<p class="documentFunctionName">
+			<span>person.signInWithLinkedIn(<b>linkedInToken</b>)</span>
+			<img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=person.signInWithLinkedIn&linkedInToken=token">
+		</p>
+
+		<p class="documentFunctionDescription">Inicia a sessão de uma pessoa baseada no <i>linkedInToken</i> e retorna o <b>tokenID</b> (60 caracteres) caso a operação tenha sido bem sucedida.</p>
+
+		<div class="documentationFunctionParametersBox">
+			<p><b>linkedInToken</b><sub>GET</sub> : token de autenticação fornecido pelo LinkedIn </p>
+		</div>
+	</div>
 	
 	<div class="documentationFunctionBox">
 		<p class="documentFunctionName">
@@ -47,6 +60,19 @@
 
 		<div class="documentationFunctionParametersBox">
 			<p><b>facebookToken</b><sub>GET</sub> : token de autenticação fornecido pelo Facebook </p>
+		</div>
+	</div>
+
+	<div class="documentationFunctionBox">
+		<p class="documentFunctionName">
+			<span>person.signInWithTwitter(<b>twitterToken</b>)</span>
+			<img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=person.signInWithTwitter&twitterToken=token">
+		</p>
+
+		<p class="documentFunctionDescription">Inicia a sessão de uma pessoa baseada no <i>twitterToken</i> e retorna o <b>tokenID</b> (60 caracteres) caso a operação tenha sido bem sucedida.</p>
+
+		<div class="documentationFunctionParametersBox">
+			<p><b>twitterToken</b><sub>GET</sub> : token de autenticação fornecido pelo Twitter </p>
 		</div>
 	</div>
 

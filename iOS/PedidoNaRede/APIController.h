@@ -122,7 +122,9 @@
 
 #pragma mark - Person
 - (void)personSignIn:(NSString *)email withPassword:(NSString *)password;
+- (void)personSignInWithLinkedInToken:(NSString *)linkedInToken;
 - (void)personSignInWithFacebookToken:(NSString *)facebookToken;
+- (void)personSignInWithTwitterToken:(NSString *)twitterToken;
 - (void)personEnroll:(NSString *)name withPassword:(NSString *)password withEmail:(NSString *)email;
 - (void)personGetWorkingEventsWithToken:(NSString *)tokenID;
 
