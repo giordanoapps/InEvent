@@ -14,12 +14,26 @@
 			if ($core->workAtEvent) {
 			
 				// We list all the fields that can be edited by the event platform
-				$validFields = array("name", "nickname", "description", "latitude", "longitude", "address", "city", "state", "dayBegin", "monthBegin", "hourBegin", "minuteBegin", "dayEnd", "monthEnd", "hourEnd", "minuteEnd", "fugleman");
+				$validFields = array("name", "nickname", "description", "latitude", "longitude", "address", "city", "state", "dateBegin", "dayBegin", "monthBegin", "hourBegin", "minuteBegin", "dateEnd", "dayEnd", "monthEnd", "hourEnd", "minuteEnd", "fugleman");
 
 				if (in_array($name, $validFields) == TRUE) {
 
+					// Date
+					if ($name == "dateBegin" || $name == "dateEnd") {
+
+						$timezone = date("P");
+
+						$update = resourceForQuery(
+							"UPDATE
+								`event` 
+							SET
+								`$name` = CONVERT_TZ(STR_TO_DATE('$value', '%d/%m/%y %k:%i'), '$timezone', '+00:00')
+							WHERE
+								`event`.`id` = $eventID
+						");
+
 					// Month
-					if ($name == "monthBegin" || $name == "monthEnd") {
+					} elseif ($name == "monthBegin" || $name == "monthEnd") {
 
 						$name = str_replace("month", "date", $name);
 
@@ -56,7 +70,7 @@
 							"UPDATE
 								`event` 
 							SET
-								`$name` = CONVERT_TZ(((`$name` - INTERVAL HOUR(`$name`) HOUR) + INTERVAL $value HOUR), '$timezone','+00:00')
+								`$name` = CONVERT_TZ(((`$name` - INTERVAL HOUR(`$name`) HOUR) + INTERVAL $value HOUR), '$timezone', '+00:00')
 							WHERE
 								`event`.`id` = $eventID
 						");

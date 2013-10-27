@@ -65,19 +65,6 @@
 
 	<div class="documentationFunctionBox">
 		<p class="documentFunctionName">
-			<span>person.signInWithTwitter(<b>twitterToken</b>)</span>
-			<img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=person.signInWithTwitter&twitterToken=token">
-		</p>
-
-		<p class="documentFunctionDescription">Inicia a sessão de uma pessoa baseada no <i>twitterToken</i> e retorna o <b>tokenID</b> (60 caracteres) caso a operação tenha sido bem sucedida.</p>
-
-		<div class="documentationFunctionParametersBox">
-			<p><b>twitterToken</b><sub>GET</sub> : token de autenticação fornecido pelo Twitter </p>
-		</div>
-	</div>
-
-	<div class="documentationFunctionBox">
-		<p class="documentFunctionName">
 			<span>person.edit(<b>tokenID</b>, <b>name</b> = null, <b>email</b> = null, <b>cpf</b> = null, <b>rg</b> = null, <b>telephone</b> = null, <b>university</b> = null, <b>course</b> = null)</span>
 			<img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=person.edit&tokenID=$tokenID" data-post="member=">
 		</p>

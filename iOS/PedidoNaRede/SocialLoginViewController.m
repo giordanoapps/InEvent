@@ -49,7 +49,7 @@
     [self.view setBackgroundColor:[ColorThemeController tableViewCellBackgroundColor]];
 
     // Labels
-    [_socialLabel setText:NSLocalizedString(@"To login at InEvent, choose your preferred social network", nil)];
+    [_socialLabel setText:NSLocalizedString(@"To login at InEvent, choose your preferred social network.", nil)];
     [_accountLabel setTitle:NSLocalizedString(@"Or you want to enter manually?", nil) forState:UIControlStateNormal];
     
     [_separator1 setBackgroundColor:[ColorThemeController tableViewCellInternalBorderColor]];

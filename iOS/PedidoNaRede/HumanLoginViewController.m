@@ -44,6 +44,7 @@
     
     // View
     [self.view setBackgroundColor:[ColorThemeController tableViewCellBackgroundColor]];
+    [self.view addTarget:self action:@selector(hideFieldBox) forControlEvents:UIControlEventTouchUpInside];
     
     // Labels
     [_accountLabel setText:NSLocalizedString(@"Already enrolled?", nil)];

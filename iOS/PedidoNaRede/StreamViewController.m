@@ -288,24 +288,56 @@
     [self.tableView reloadData];
 }
 
+#pragma mark - Image Picker Controller Delegate
+
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     
     UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
     [self dismissViewControllerAnimated:YES completion:^{
-        if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]) {
-            SLComposeViewController *facebookPost = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
-            [facebookPost setInitialText:[NSString stringWithFormat:@"#InEvent #%@", [[EventToken sharedInstance] nick]]];
-            [facebookPost addImage:image];
-            [self presentViewController:facebookPost animated:YES completion:nil];
-        } else if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter]) {
-            SLComposeViewController *tweetSheet = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
-            [tweetSheet setInitialText:[NSString stringWithFormat:@"#InEvent #%@", [[EventToken sharedInstance] nick]]];
-            [tweetSheet addImage:image];
-            [self presentViewController:tweetSheet animated:YES completion:nil];
-        }
+        
+        REComposeViewController *composeViewController = [[REComposeViewController alloc] init];
+        composeViewController.title = @"Facebook";
+        composeViewController.text = [NSString stringWithFormat:@"#InEvent #%@", [[EventToken sharedInstance] nick]];
+        composeViewController.hasAttachment = YES;
+        composeViewController.attachmentImage = image;
+        composeViewController.delegate = self;
+        [composeViewController presentFromRootViewController];
     }];
 }
 
+#pragma mark - Compose View Controller Delegate
+
+- (void)composeViewController:(REComposeViewController *)composeViewController didFinishWithResult:(REComposeResult)result {
+    
+    NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
+    [params setObject:composeViewController.text forKey:@"message"];
+    [params setObject:UIImagePNGRepresentation(composeViewController.attachmentImage) forKey:@"picture"];
+    NSDictionary *privacy = [NSDictionary dictionaryWithObjectsAndKeys:@"EVERYONE", @"value", nil];
+    NSData *dataOptions = [NSJSONSerialization dataWithJSONObject:privacy options:0 error:nil];
+    [params setObject:[[NSString alloc] initWithData:dataOptions encoding:NSUTF8StringEncoding] forKey:@"privacy"];
+    
+    FBRequestHandler requestHandler = ^(FBRequestConnection *connection, id result, NSError *error) {
+        if (error) {
+            //showing an alert for failure
+            //             [self alertWithTitle:@"Facebook" message:@"Unable to share the photo please try later."];
+        } else {
+            //showing an alert for success
+            //             [UIUtils alertWithTitle:@"Facebook" message:@"Shared the photo successfully"];
+        }
+    };
+    
+    [FBRequestConnection startWithGraphPath:@"me/photos" parameters:params HTTPMethod:@"POST" completionHandler:requestHandler];
+    
+    [composeViewController dismissViewControllerAnimated:YES completion:nil];
+    
+    if (result == REComposeResultCancelled) {
+        NSLog(@"Cancelled");
+    }
+    
+    if (result == REComposeResultPosted) {
+        NSLog(@"Text: %@", composeViewController.text);
+    }
+}
 
 #pragma mark - APIController Delegate
 

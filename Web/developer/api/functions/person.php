@@ -57,6 +57,37 @@
 	}
 
 	/**
+	 * Get all the details about a member
+	 * @param  int  	$memberID 	id of the member
+	 * @return array           		companies
+	 */
+	function getMemberDetails($memberID) {
+
+		$result = resourceForQuery(
+			"SELECT
+				`member`.`id`,
+				`member`.`name`,
+				`member`.`description`,
+				`member`.`cpf`,
+				`member`.`rg`,
+				`member`.`usp`,
+				`member`.`telephone`,
+				`member`.`city`,
+				`member`.`email`,
+				`member`.`university`,
+				`member`.`course`,
+				`member`.`facebookID`,
+				`member`.`linkedInID`
+			FROM
+				`member`
+			WHERE 1
+				AND `member`.`id` = $memberID
+		");
+
+		return printInformation("member", $result, true, 'object');
+	}
+
+	/**
 	 * Get all the events inside as an array
 	 * @param  int  	$memberID 	id of the member
 	 * @return array           		companies

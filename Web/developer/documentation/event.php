@@ -25,7 +25,7 @@
 
         <div class="documentationFunctionParametersBox">
             <p><b>tokenID</b><sub>GET</sub> : id de autenticação </p>
-            <p><b>eventID</b><sub>GET</sub> : id da atividade </p>
+            <p><b>eventID</b><sub>GET</sub> : id do evento </p>
             <p><b>name</b><sub>GET</sub> : nome do campo </p>
             <p><b>value</b><sub>POST</sub> : valor do campo </p>
         </div>

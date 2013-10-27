@@ -69,6 +69,7 @@
 							<li>Anúncio</li>
 							<li>Atividade</li>
 							<li>Evento</li>
+							<li>Foto</li>
 							<li>Grupo</li>
 							<li>Notificação</li>
 							<li>Pessoa</li>
@@ -81,6 +82,7 @@
 							include_once("documentation/ad.php");
 							include_once("documentation/activity.php");
 							include_once("documentation/event.php");
+							include_once("documentation/photo.php");
 							include_once("documentation/group.php");
 							include_once("documentation/notification.php");
 							include_once("documentation/person.php");

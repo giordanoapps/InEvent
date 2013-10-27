@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+    <dependencies>
+        <deployment defaultVersion="1536" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3746"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HumanViewController">
+            <connections>
+                <outlet property="cpf" destination="sEE-ga-m5k" id="p1k-MP-Nxc"/>
+                <outlet property="description" destination="RII-YQ-gAw" id="XmP-0r-gEA"/>
+                <outlet property="email" destination="HfC-1r-HcT" id="7MJ-hE-Pmk"/>
+                <outlet property="location" destination="qwK-P9-9vm" id="1Qc-yc-MuI"/>
+                <outlet property="map" destination="KgU-Q0-neI" id="pf1-yd-LSl"/>
+                <outlet property="name" destination="aGy-n7-NZy" id="iKM-1Q-g9x"/>
+                <outlet property="photo" destination="Ud4-Z9-xI6" id="Bow-yK-jDg"/>
+                <outlet property="rg" destination="wLH-ke-tUe" id="izs-fB-pgG"/>
+                <outlet property="telephone" destination="LSd-T4-fs7" id="UD2-dT-T0P"/>
+                <outlet property="view" destination="9aG-YV-icH" id="vHu-yz-IaV"/>
+                <outlet property="wrapper" destination="oo1-fJ-R2b" id="cZE-gC-w5z"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="9aG-YV-icH">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="550"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" id="oo1-fJ-R2b">
+                    <rect key="frame" x="40" y="73" width="240" height="457"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Pedro Góes" minimumFontSize="17" id="aGy-n7-NZy" userLabel="Name">
+                            <rect key="frame" x="112" y="9" width="128" height="24"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" name="Thonburi" family="Thonburi" pointSize="20"/>
+                            <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="numbersAndPunctuation"/>
+                            <connections>
+                                <outlet property="delegate" destination="-1" id="9Lb-Kt-uxw"/>
+                            </connections>
+                        </textField>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="CEO @ Trilha" minimumFontSize="17" id="RII-YQ-gAw" userLabel="Description">
+                            <rect key="frame" x="112" y="41" width="128" height="24"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" name="Thonburi" family="Thonburi" pointSize="20"/>
+                            <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="numbersAndPunctuation"/>
+                            <connections>
+                                <outlet property="delegate" destination="-1" id="Ewc-yR-jNg"/>
+                            </connections>
+                        </textField>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="32-Phone-Hook.png" id="8fV-Mi-YXs" userLabel="Telephone">
+                            <rect key="frame" x="10" y="73" width="30" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        </imageView>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="(16) 65774-9867" minimumFontSize="17" id="LSd-T4-fs7" userLabel="Telephone">
+                            <rect key="frame" x="48" y="73" width="192" height="30"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" name="Thonburi" family="Thonburi" pointSize="18"/>
+                            <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="numbersAndPunctuation"/>
+                            <connections>
+                                <outlet property="delegate" destination="-1" id="3SF-NA-Cvn"/>
+                            </connections>
+                        </textField>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="32-Mail.png" id="PbI-Nv-Pzz" userLabel="Mail">
+                            <rect key="frame" x="10" y="118" width="30" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        </imageView>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="pedro.goes@usp.br" minimumFontSize="17" id="HfC-1r-HcT" userLabel="Mail">
+                            <rect key="frame" x="48" y="118" width="192" height="30"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" name="Thonburi" family="Thonburi" pointSize="18"/>
+                            <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="numbersAndPunctuation"/>
+                            <connections>
+                                <outlet property="delegate" destination="-1" id="2Or-hG-Ahk"/>
+                            </connections>
+                        </textField>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="32-Map.png" id="3y8-MJ-4It" userLabel="Location">
+                            <rect key="frame" x="10" y="163" width="30" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        </imageView>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Universidade" minimumFontSize="17" id="qwK-P9-9vm" userLabel="Location">
+                            <rect key="frame" x="48" y="163" width="192" height="30"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" name="Thonburi" family="Thonburi" pointSize="18"/>
+                            <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="numbersAndPunctuation"/>
+                            <connections>
+                                <outlet property="delegate" destination="-1" id="80W-hS-AbO"/>
+                            </connections>
+                        </textField>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="aQx-oT-WQA">
+                            <rect key="frame" x="10" y="362" width="30" height="33"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" name="Thonburi-Bold" family="Thonburi" pointSize="20"/>
+                            <state key="normal" title="CPF">
+                                <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <state key="highlighted">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                        </button>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="887.876.897-42" minimumFontSize="17" id="sEE-ga-m5k" userLabel="CPF">
+                            <rect key="frame" x="48" y="362" width="192" height="30"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" name="Thonburi" family="Thonburi" pointSize="18"/>
+                            <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="numbersAndPunctuation"/>
+                            <connections>
+                                <outlet property="delegate" destination="-1" id="biX-wM-qrs"/>
+                            </connections>
+                        </textField>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Chb-sv-g3s">
+                            <rect key="frame" x="10" y="407" width="30" height="33"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" name="Thonburi-Bold" family="Thonburi" pointSize="20"/>
+                            <state key="normal" title="RG">
+                                <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <state key="highlighted">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                        </button>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="11982721-20" minimumFontSize="17" id="wLH-ke-tUe" userLabel="RG">
+                            <rect key="frame" x="48" y="407" width="192" height="30"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" name="Thonburi" family="Thonburi" pointSize="18"/>
+                            <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="numbersAndPunctuation"/>
+                            <connections>
+                                <outlet property="delegate" destination="-1" id="oDL-wQ-K4H"/>
+                            </connections>
+                        </textField>
+                    </subviews>
+                    <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
+                </view>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="128-user.png" id="Ud4-Z9-xI6">
+                    <rect key="frame" x="10" y="20" width="126" height="126"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </imageView>
+                <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" zoomEnabled="NO" scrollEnabled="NO" rotateEnabled="NO" pitchEnabled="NO" showsUserLocation="YES" id="KgU-Q0-neI">
+                    <rect key="frame" x="20" y="281" width="280" height="141"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </mapView>
+            </subviews>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+        </scrollView>
+    </objects>
+    <resources>
+        <image name="128-user.png" width="128" height="128"/>
+        <image name="32-Mail.png" width="32" height="32"/>
+        <image name="32-Map.png" width="32" height="32"/>
+        <image name="32-Phone-Hook.png" width="32" height="32"/>
+    </resources>
+</document>

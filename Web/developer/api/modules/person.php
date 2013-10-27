@@ -75,16 +75,16 @@
 						");
 					}
 
-					// Get the member events
+					// Get the member details and events
+					$details = getMemberDetails($memberID);
+					$details = $details["data"][0];
 					$events = getMemberEvents($memberID);
 
 					// Return some information
-					$data["name"] = $name;
-					$data["memberID"] = $memberID;
-					$data["events"] = $events["data"];
-					$data["tokenID"] = $tokenID;
+					$details["events"] = $events["data"];
+					$details["tokenID"] = $tokenID;
 
-					echo json_encode($data);
+					echo json_encode($details);
 
 				} else {
 
@@ -167,113 +167,16 @@
 							");
 						}
 
-						// Get the member events
+						// Get the member details and events
+						$details = getMemberDetails($memberID);
+						$details = $details["data"][0];
 						$events = getMemberEvents($memberID);
 
 						// Return some information
-						$data["name"] = $name;
-						$data["memberID"] = $memberID;
-						$data["events"] = $events["data"];
-						$data["tokenID"] = $tokenID;
+						$details["events"] = $events["data"];
+						$details["tokenID"] = $tokenID;
 
-						echo json_encode($data);
-
-					} else {
-
-						// Create a random password for the newly created member
-						$password = "123456";
-						// Create the member
-						$memberID = createMember($name, $password, $email, "", "", "", "", "", "", "", $facebookID);
-
-						if ($memberID != 0) {
-							// Return the desired data
-							$data = processLogIn($email, $password);
-							echo json_encode($data);
-						} else {
-							http_status_code(500);
-						}
-					}
-				} catch(FacebookApiException $e) {
-					// If the user is logged out, you can have a 
-					// user ID even though the access token is invalid.
-					// In this case, we'll get an exception, so we'll
-					// just ask the user to login again here.
-					http_status_code(503, "facebook error");
-				}
-			} else {
-				// No user, return a non authenticated code
-				http_status_code(401, "personID is not authenticated");
-			}
-		} else {
-			http_status_code(400, "facebookToken is a required parameter");
-		}
-				
-	} else
-
-	if ($method === "signInWithTwitter") {
-
-		if (isset($_GET["twitterToken"])) {
-
-			$twitterToken = getAttribute($_GET["twitterToken"]);
-
-			$facebook->setAccessToken($twitterToken);
-			$userID = $facebook->getUser();
-
-			if ($userID) {
-				// We have a user ID, so probably a logged in user.
-				// If not, we'll get an exception, which we handle below.
-				try {
-					$userProfile = $facebook->api('/me?fields=email', 'GET');
-					$facebookID = $userProfile['id'];
-					$email = $userProfile['email'];
-
-					// We now see if the current member has a profile with us
-					$result = resourceForQuery(
-						"SELECT
-							`member`.`id`,
-							`member`.`name`,
-							`member`.`facebookID`,
-							COALESCE(`memberSessions`.`sessionKey`, '') AS `sessionKey`
-						FROM
-							`member`
-						LEFT JOIN
-							`memberSessions` ON `memberSessions`.`memberID` = `member`.`id`
-						WHERE 0
-							OR `member`.`facebookID` = $facebookID
-							OR BINARY `member`.`email` = '$email'
-						ORDER BY
-							`memberSessions`.`id` DESC
-					");
-
-					// Member already has a profile with us
-					if (mysql_num_rows($result) > 0) {
-
-						$memberID = mysql_result($result, 0, "id");
-						$name = mysql_result($result, 0, "name");
-						$tokenID = mysql_result($result, 0, "sessionKey");
-
-						// Update the facebook token if necessary
-						if (mysql_result($result, 0, "facebookID") == 0) {
-							$update = resourceForQuery(
-								"UPDATE
-									`member`
-								SET
-									`member`.`facebookID` = $facebookID
-								WHERE 1
-									AND `member`.`id` = $memberID
-							");
-						}
-
-						// Get the member events
-						$events = getMemberEvents($memberID);
-
-						// Return some information
-						$data["name"] = $name;
-						$data["memberID"] = $memberID;
-						$data["events"] = $events["data"];
-						$data["tokenID"] = $tokenID;
-
-						echo json_encode($data);
+						echo json_encode($details);
 
 					} else {
 

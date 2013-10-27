@@ -247,15 +247,15 @@
 							`loginAttempts`.`remote` = INET_ATON('$security->remote')
 					");
 
+					$details = getMemberDetails($core->memberID);
+					$details = $details["data"][0];
 					$events = getMemberEvents($core->memberID);
 
 					// Return some information
-					$data["name"] = $core->name;
-					$data["memberID"] = $core->memberID;
-					$data["events"] = $events["data"];
-					$data["tokenID"] = $sessionKey;
+					$details["events"] = $events["data"];
+					$details["tokenID"] = $sessionKey;
 					
-					return $data;
+					return $details;
 				} else {
 					http_status_code(500);
 				}

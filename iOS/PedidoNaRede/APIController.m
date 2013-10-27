@@ -628,6 +628,34 @@
     }
 }
 
+#pragma mark - Photo
+- (void)photoPostPhoto:(NSString *)url AtEvent:(NSInteger)eventID WithTokenID:(NSString *)tokenID {
+    
+    if (tokenID != nil) {
+        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID, @"eventID" : [NSString stringWithFormat:@"%d", eventID]}, @"POST" : @{@"url" : url}};
+        
+        [self JSONObjectWithNamespace:@"photo" method:@"post" attributes:attributes];
+    }
+}
+
+- (void)photoGetPhotosAtEvent:(NSInteger)eventID WithTokenID:(NSString *)tokenID {
+    
+    if (tokenID != nil) {
+        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID, @"eventID" : [NSString stringWithFormat:@"%d", eventID]}};
+        
+        [self JSONObjectWithNamespace:@"photo" method:@"getPhotos" attributes:attributes];
+    }
+}
+
+- (void)photoGetSinglePhoto:(NSInteger)photoID WithTokenID:(NSString *)tokenID {
+    
+    if (tokenID != nil) {
+        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID, @"photoID" : [NSString stringWithFormat:@"%d", photoID]}};
+        
+        [self JSONObjectWithNamespace:@"photo" method:@"getSingle" attributes:attributes];
+    }
+}
+
 #pragma mark - Setters
 
 - (NSString *)path {

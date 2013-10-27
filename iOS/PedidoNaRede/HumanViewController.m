@@ -46,27 +46,21 @@
     refreshControl = [[UIRefreshControl alloc] init];
     refreshControl.tintColor = [UIColor grayColor];
     [refreshControl addTarget:self action:@selector(reloadData) forControlEvents:UIControlEventValueChanged];
-    [self.scrollView addSubview:refreshControl];
+    [self.view addSubview:refreshControl];
     
-    // Photo Wrapper
-    [_photoWrapper.layer setCornerRadius:10.0];
+    // Scroll View
+    self.view.contentSize = CGSizeMake(self.view.frame.size.width, 550.0f);
+	[self.view flashScrollIndicators];
     
     // Photo
-    [_photo.layer setMasksToBounds:YES];
     [_photo.layer setCornerRadius:10.0];
-    [_photo.layer setBorderWidth:0.4];
-    [_photo.layer setBorderColor:[[ColorThemeController tableViewCellInternalBorderColor] CGColor]];
     
-    // Introduction
-    [_introduction setText:NSLocalizedString(@"Welcome to InEvent", nil)];
-    [_introduction setTextColor:[ColorThemeController tableViewCellTextHighlightedColor]];
-    
-    // Title
-    [_name.titleLabel setNumberOfLines:0];
-    [_name setTitle:@"" forState:UIControlStateNormal];
-    [_name.titleLabel setTextAlignment:NSTextAlignmentCenter];
-    [_name setTitleColor:[ColorThemeController tableViewCellTextColor] forState: UIControlStateNormal];
-    [_name setTitleColor:[ColorThemeController tableViewCellTextColor] forState:UIControlStateHighlighted];
+    // Text fields
+    _name.textColor = [ColorThemeController tableViewCellTextColor];
+    _description.textColor = [ColorThemeController tableViewCellTextColor];
+    _telephone.textColor = [ColorThemeController tableViewCellTextColor];
+    _email.textColor = [ColorThemeController tableViewCellTextColor];
+    _location.textColor = [ColorThemeController tableViewCellTextColor];
     
     // Restart Facebook connection
     [self connectWithFacebook];
@@ -74,9 +68,6 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    
-    // Scroll view
-    [_scrollView setContentSize:CGSizeMake(_scrollView.frame.size.width, _scrollView.frame.size.height * 1.01)];
 
     // Session
     [self checkSession];
@@ -107,14 +98,8 @@
 #pragma mark - Public Methods
 
 - (void)checkSession {
-    if (FBSession.activeSession.isOpen) {
-        [self populateUserDetails];
-        [self.photo setHidden:NO];
-        [self.defaultPhoto setHidden:YES];
-    } else if ([[HumanToken sharedInstance] isMemberAuthenticated]) {
-        [self.name setTitle:[[HumanToken sharedInstance] name] forState:UIControlStateNormal];
-        [self.photo setHidden:YES];
-        [self.defaultPhoto setHidden:NO];
+    if ([[HumanToken sharedInstance] isMemberAuthenticated]) {
+        _name.text = [[HumanToken sharedInstance] name];
     } else {
         // Alloc login controller
         SocialLoginViewController *lvc = [[SocialLoginViewController alloc] initWithNibName:@"SocialLoginViewController" bundle:nil];
@@ -135,20 +120,20 @@
 
 #pragma mark - Facebook Methods
 
-- (void)populateUserDetails
-{
-    if (FBSession.activeSession.isOpen) {
-        [[FBRequest requestForMe] startWithCompletionHandler:
-         ^(FBRequestConnection *connection,
-           NSDictionary<FBGraphUser> *user,
-           NSError *error) {
-             if (!error) {
-                 [self.name setTitle:[user.name stringByDecodingHTMLEntities] forState:UIControlStateNormal];
-                 [self.photo setProfileID:[user objectForKey:@"id"]];
-             }
-         }];
-    }
-}
+//- (void)populateUserDetails
+//{
+//    if (FBSession.activeSession.isOpen) {
+//        [[FBRequest requestForMe] startWithCompletionHandler:
+//         ^(FBRequestConnection *connection,
+//           NSDictionary<FBGraphUser> *user,
+//           NSError *error) {
+//             if (!error) {
+//                 [self.name setTitle:[user.name stringByDecodingHTMLEntities] forState:UIControlStateNormal];
+//                 [self.photo setProfileID:[user objectForKey:@"id"]];
+//             }
+//         }];
+//    }
+//}
 
 - (void)logoutButtonWasPressed:(id)sender {
     
@@ -168,8 +153,6 @@
     // Load the login form
     [self checkSession];
 }
-
-#pragma mark - Facebook Methods
 
 - (void)connectWithFacebook {
     if (!FBSession.activeSession.isOpen) {

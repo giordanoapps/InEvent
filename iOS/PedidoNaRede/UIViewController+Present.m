@@ -12,7 +12,7 @@
 #import "MarketplaceViewController.h"
 #import "DemoViewController.h"
 #import "FeedbackViewController.h"
-#import "HumanLoginViewController.h"
+#import "SocialLoginViewController.h"
 #import "HumanToken.h"
 #import "EventToken.h"
 #import "AKTabBarController.h"
@@ -81,7 +81,7 @@
     
     if (![[HumanToken sharedInstance] isMemberAuthenticated]) {
         
-        HumanLoginViewController *hlvc = [[HumanLoginViewController alloc] initWithNibName:@"HumanLoginViewController" bundle:nil];
+        SocialLoginViewController *hlvc = [[SocialLoginViewController alloc] initWithNibName:@"SocialLoginViewController" bundle:nil];
         UINavigationController *viewController = [[UINavigationController alloc] initWithRootViewController:hlvc];
     
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {

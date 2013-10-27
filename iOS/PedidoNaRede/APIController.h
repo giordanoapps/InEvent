@@ -128,6 +128,11 @@
 - (void)personEnroll:(NSString *)name withPassword:(NSString *)password withEmail:(NSString *)email;
 - (void)personGetWorkingEventsWithToken:(NSString *)tokenID;
 
+#pragma mark - Photo
+- (void)photoPostPhoto:(NSString *)url AtEvent:(NSInteger)eventID WithTokenID:(NSString *)tokenID;
+- (void)photoGetPhotosAtEvent:(NSInteger)eventID WithTokenID:(NSString *)tokenID;
+- (void)photoGetSinglePhoto:(NSInteger)photoID WithTokenID:(NSString *)tokenID;
+
 #pragma mark - Setup
 - (void)JSONObjectWithNamespace:(NSString *)namespace method:(NSString *)method attributes:(NSDictionary *)attributes;
 

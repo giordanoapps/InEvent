@@ -7,19 +7,24 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MapKit/MapKit.h>
+#import <CoreLocation/CoreLocation.h>
 #import "WrapperViewController.h"
 #import "APIController.h"
 
-@class FBProfilePictureView;
-
 @interface HumanViewController : WrapperViewController <APIControllerDelegate>
 
-@property (nonatomic, strong) IBOutlet UIScrollView *scrollView;
-@property (nonatomic, strong) IBOutlet UIView *photoWrapper;
-@property (nonatomic, strong) IBOutlet FBProfilePictureView *photo;
-@property (nonatomic, strong) IBOutlet UIImageView *defaultPhoto;
-@property (nonatomic, strong) IBOutlet UILabel *introduction;
-@property (nonatomic, strong) IBOutlet UIButton *name;
+@property (nonatomic, strong) IBOutlet UIScrollView *view;
+@property (nonatomic, strong) IBOutlet UIView *wrapper;
+@property (nonatomic, strong) IBOutlet UIImageView *photo;
+@property (nonatomic, strong) IBOutlet UITextField *name;
+@property (nonatomic, strong) IBOutlet UITextField *description;
+@property (nonatomic, strong) IBOutlet UITextField *email;
+@property (nonatomic, strong) IBOutlet UITextField *telephone;
+@property (nonatomic, strong) IBOutlet UITextField *location;
+@property (nonatomic, strong) IBOutlet UITextField *cpf;
+@property (nonatomic, strong) IBOutlet UITextField *rg;
+@property (nonatomic, strong) IBOutlet MKMapView *map;
 
 - (void)checkSession;
 

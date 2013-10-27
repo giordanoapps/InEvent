@@ -78,7 +78,7 @@ BOOL handlingRedirectURL;
     self.authenticationWebView.hidden = YES;
     [self.view addSubview:self.authenticationWebView];
 
-    self.navigationController.navigationBarHidden = YES;
+    self.navigationController.navigationBarHidden = NO;
 }
 
 - (void)viewDidAppear:(BOOL)animated {

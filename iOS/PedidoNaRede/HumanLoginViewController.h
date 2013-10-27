@@ -13,6 +13,7 @@
 
 @interface HumanLoginViewController : WrapperViewController
 
+@property (nonatomic, strong) IBOutlet UIControl *view;
 @property (nonatomic, strong) IBOutlet UILabel *accountLabel;
 @property (nonatomic, strong) IBOutlet UIControl *bottomBox;
 @property (nonatomic, strong) IBOutlet UIControl *bottomInternalBox;

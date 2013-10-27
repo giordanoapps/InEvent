@@ -21,6 +21,8 @@
 		EB01FFD4181B3AFA00089915 /* AFURLConnectionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = EB01FFC9181B3AFA00089915 /* AFURLConnectionOperation.m */; };
 		EB01FFD5181B3AFA00089915 /* AFXMLRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = EB01FFCB181B3AFA00089915 /* AFXMLRequestOperation.m */; };
 		EB01FFD6181B3AFA00089915 /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = EB01FFCD181B3AFA00089915 /* UIImageView+AFNetworking.m */; };
+		EB01FFD9181BA56C00089915 /* google_active.png in Resources */ = {isa = PBXBuildFile; fileRef = EB01FFD7181BA56C00089915 /* google_active.png */; };
+		EB01FFDA181BA56C00089915 /* google_dark.png in Resources */ = {isa = PBXBuildFile; fileRef = EB01FFD8181BA56C00089915 /* google_dark.png */; };
 		EB1FE9DC17FE4123001C2906 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB1FE9DB17FE4123001C2906 /* FacebookSDK.framework */; };
 		EB1FE9DE17FE841D001C2906 /* GoogleMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = EB1FE9DD17FE841D001C2906 /* GoogleMaps.bundle */; };
 		EB1FE9E017FE8582001C2906 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB1FE9DF17FE8582001C2906 /* CoreFoundation.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -52,7 +54,7 @@
 		EB25BA9016FE6D21003F142F /* 16-Flag-2.png in Resources */ = {isa = PBXBuildFile; fileRef = EB25BA8F16FE6D21003F142F /* 16-Flag-2.png */; };
 		EB25BA9216FE6EC9003F142F /* 16-User.png in Resources */ = {isa = PBXBuildFile; fileRef = EB25BA9116FE6EC9003F142F /* 16-User.png */; };
 		EB25BA9E16FE73F2003F142F /* HumanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB25BA9C16FE73F2003F142F /* HumanViewController.m */; };
-		EB25BA9F16FE73F2003F142F /* HumanViewController~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB25BA9D16FE73F2003F142F /* HumanViewController~iphone.xib */; };
+		EB25BA9F16FE73F2003F142F /* HumanViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB25BA9D16FE73F2003F142F /* HumanViewController.xib */; };
 		EB25BAA416FE84D6003F142F /* HumanLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB25BAA216FE84D5003F142F /* HumanLoginViewController.m */; };
 		EB25BAA516FE84D6003F142F /* HumanLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB25BAA316FE84D6003F142F /* HumanLoginViewController.xib */; };
 		EB25BAA9170280F1003F142F /* LauchImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB25BAA7170280EF003F142F /* LauchImageViewController.m */; };
@@ -100,6 +102,13 @@
 		EB4FC57C171061AF00CA43EC /* NSString+URLEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = EB4FC579171061AF00CA43EC /* NSString+URLEncoding.m */; };
 		EB4FC5851710644000CA43EC /* HumanToken.m in Sources */ = {isa = PBXBuildFile; fileRef = EB4FC5841710644000CA43EC /* HumanToken.m */; };
 		EB4FC58F1710DFE000CA43EC /* EventToken.m in Sources */ = {isa = PBXBuildFile; fileRef = EB4FC58E1710DFE000CA43EC /* EventToken.m */; };
+		EB50B91F181D98F40023A185 /* DEComposeRuledView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB50B913181D98F40023A185 /* DEComposeRuledView.m */; };
+		EB50B920181D98F40023A185 /* DEComposeTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB50B915181D98F40023A185 /* DEComposeTextView.m */; };
+		EB50B921181D98F40023A185 /* RECommonFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = EB50B917181D98F40023A185 /* RECommonFunctions.m */; };
+		EB50B922181D98F40023A185 /* REComposeBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB50B919181D98F40023A185 /* REComposeBackgroundView.m */; };
+		EB50B923181D98F40023A185 /* REComposeSheetView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB50B91B181D98F40023A185 /* REComposeSheetView.m */; };
+		EB50B924181D98F40023A185 /* REComposeViewController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = EB50B91C181D98F40023A185 /* REComposeViewController.bundle */; };
+		EB50B925181D98F40023A185 /* REComposeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB50B91E181D98F40023A185 /* REComposeViewController.m */; };
 		EB53F63A1709136A00715E2D /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB53F6391709136A00715E2D /* CoreData.framework */; };
 		EB53F643170913BC00715E2D /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB53F642170913BC00715E2D /* SystemConfiguration.framework */; };
 		EB59020217D5D7D20032143C /* MarketplaceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB59020017D5D7D20032143C /* MarketplaceViewController.m */; };
@@ -185,7 +194,6 @@
 		EB95437617ACCB2000229EE2 /* 16-Map.png in Resources */ = {isa = PBXBuildFile; fileRef = EB95437417ACCB2000229EE2 /* 16-Map.png */; };
 		EB95437717ACCB2000229EE2 /* 16-Map@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB95437517ACCB2000229EE2 /* 16-Map@2x.png */; };
 		EB97144217F2B306009260AE /* 128-user.png in Resources */ = {isa = PBXBuildFile; fileRef = EB97144117F2B306009260AE /* 128-user.png */; };
-		EB97144817F2D79B009260AE /* HumanViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB97144717F2D79B009260AE /* HumanViewController~ipad.xib */; };
 		EB97144A17F2DD11009260AE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EB97144917F2DD11009260AE /* Images.xcassets */; };
 		EB97145617F2DDDB009260AE /* logo@16.png in Resources */ = {isa = PBXBuildFile; fileRef = EB97144B17F2DDDB009260AE /* logo@16.png */; };
 		EB97145717F2DDDB009260AE /* logo@57.png in Resources */ = {isa = PBXBuildFile; fileRef = EB97144C17F2DDDB009260AE /* logo@57.png */; };
@@ -245,11 +253,16 @@
 		EBBDCB8D1623E51E00C32523 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBBDCB8C1623E51D00C32523 /* CoreLocation.framework */; };
 		EBC59D8117BEC48600E0FC67 /* 64-Marker.png in Resources */ = {isa = PBXBuildFile; fileRef = EBC59D8017BEC48600E0FC67 /* 64-Marker.png */; };
 		EBC59D8317BEC49E00E0FC67 /* 64-Footprints.png in Resources */ = {isa = PBXBuildFile; fileRef = EBC59D8217BEC49E00E0FC67 /* 64-Footprints.png */; };
-		EBC59D8517BEC4DD00E0FC67 /* 64-Map.png in Resources */ = {isa = PBXBuildFile; fileRef = EBC59D8417BEC4DD00E0FC67 /* 64-Map.png */; };
+		EBC59D8517BEC4DD00E0FC67 /* 32-Map@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBC59D8417BEC4DD00E0FC67 /* 32-Map@2x.png */; };
 		EBC59D8717BEC58100E0FC67 /* 64-Balloons.png in Resources */ = {isa = PBXBuildFile; fileRef = EBC59D8617BEC58100E0FC67 /* 64-Balloons.png */; };
 		EBC59D8917BEC59B00E0FC67 /* 32-Create-_-Write@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBC59D8817BEC59B00E0FC67 /* 32-Create-_-Write@2x.png */; };
 		EBC59D8D17BEC5C300E0FC67 /* 64-Cloud-Download.png in Resources */ = {isa = PBXBuildFile; fileRef = EBC59D8C17BEC5C300E0FC67 /* 64-Cloud-Download.png */; };
 		EBC7AF4D1813331100D8DB6A /* 32-facebook.png in Resources */ = {isa = PBXBuildFile; fileRef = EBC7AF4C1813331100D8DB6A /* 32-facebook.png */; };
+		EBCD0EE2181DBB0700CE225C /* 32-Phone-Hook@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBCD0EE1181DBB0700CE225C /* 32-Phone-Hook@2x.png */; };
+		EBCD0EE4181DBB1C00CE225C /* 32-Phone-Hook.png in Resources */ = {isa = PBXBuildFile; fileRef = EBCD0EE3181DBB1C00CE225C /* 32-Phone-Hook.png */; };
+		EBCD0EE6181DBC6000CE225C /* 32-Map.png in Resources */ = {isa = PBXBuildFile; fileRef = EBCD0EE5181DBC6000CE225C /* 32-Map.png */; };
+		EBCD0EE8181DBCB900CE225C /* 32-Mail.png in Resources */ = {isa = PBXBuildFile; fileRef = EBCD0EE7181DBCB900CE225C /* 32-Mail.png */; };
+		EBCD0EEA181DBCCA00CE225C /* 32-Mail@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBCD0EE9181DBCCA00CE225C /* 32-Mail@2x.png */; };
 		EBD055A717AF8CF3008355E8 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD055A517AF8CF3008355E8 /* AboutViewController.m */; };
 		EBD055A817AF8CF3008355E8 /* AboutViewController~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBD055A617AF8CF3008355E8 /* AboutViewController~iphone.xib */; };
 		EBD055AC17AF919C008355E8 /* 16-Footprints.png in Resources */ = {isa = PBXBuildFile; fileRef = EBD055AA17AF919C008355E8 /* 16-Footprints.png */; };
@@ -302,8 +315,6 @@
 		EBE72F98181AE11C00A3A02D /* SocialLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBE72F96181AE11C00A3A02D /* SocialLoginViewController.xib */; };
 		EBE72F9B181AE1A200A3A02D /* facebook_active.png in Resources */ = {isa = PBXBuildFile; fileRef = EBE72F99181AE1A200A3A02D /* facebook_active.png */; };
 		EBE72F9C181AE1A200A3A02D /* facebook_dark.png in Resources */ = {isa = PBXBuildFile; fileRef = EBE72F9A181AE1A200A3A02D /* facebook_dark.png */; };
-		EBE72F9F181AE55200A3A02D /* twitter02_active.png in Resources */ = {isa = PBXBuildFile; fileRef = EBE72F9D181AE55200A3A02D /* twitter02_active.png */; };
-		EBE72FA0181AE55200A3A02D /* twitter02_dark.png in Resources */ = {isa = PBXBuildFile; fileRef = EBE72F9E181AE55200A3A02D /* twitter02_dark.png */; };
 		EBE72FA2181AF25A00A3A02D /* 32-Twitter.png in Resources */ = {isa = PBXBuildFile; fileRef = EBE72FA1181AF25A00A3A02D /* 32-Twitter.png */; };
 		EBE72FA4181AF26600A3A02D /* 32-Facebook-2.png in Resources */ = {isa = PBXBuildFile; fileRef = EBE72FA3181AF26600A3A02D /* 32-Facebook-2.png */; };
 		EBE8A5011712EA9C00A8A2BD /* UITabBarController+ShowHideBar.m in Sources */ = {isa = PBXBuildFile; fileRef = EBE8A5001712EA9C00A8A2BD /* UITabBarController+ShowHideBar.m */; };
@@ -379,6 +390,8 @@
 		EB01FFCB181B3AFA00089915 /* AFXMLRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFXMLRequestOperation.m; sourceTree = "<group>"; };
 		EB01FFCC181B3AFA00089915 /* UIImageView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+AFNetworking.h"; sourceTree = "<group>"; };
 		EB01FFCD181B3AFA00089915 /* UIImageView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+AFNetworking.m"; sourceTree = "<group>"; };
+		EB01FFD7181BA56C00089915 /* google_active.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = google_active.png; sourceTree = "<group>"; };
+		EB01FFD8181BA56C00089915 /* google_dark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = google_dark.png; sourceTree = "<group>"; };
 		EB1FE9DB17FE4123001C2906 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = "../../../Documents/Objective-C/facebook-ios-sdk/build/FacebookSDK.framework"; sourceTree = "<group>"; };
 		EB1FE9DD17FE841D001C2906 /* GoogleMaps.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = GoogleMaps.bundle; path = GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle; sourceTree = "<group>"; };
 		EB1FE9DF17FE8582001C2906 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
@@ -417,7 +430,7 @@
 		EB25BA9116FE6EC9003F142F /* 16-User.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "16-User.png"; sourceTree = "<group>"; };
 		EB25BA9B16FE73F2003F142F /* HumanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HumanViewController.h; path = PedidoNaRede/HumanViewController.h; sourceTree = "<group>"; };
 		EB25BA9C16FE73F2003F142F /* HumanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HumanViewController.m; path = PedidoNaRede/HumanViewController.m; sourceTree = "<group>"; };
-		EB25BA9D16FE73F2003F142F /* HumanViewController~iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = "HumanViewController~iphone.xib"; path = "PedidoNaRede/HumanViewController~iphone.xib"; sourceTree = "<group>"; };
+		EB25BA9D16FE73F2003F142F /* HumanViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = HumanViewController.xib; path = PedidoNaRede/HumanViewController.xib; sourceTree = "<group>"; };
 		EB25BAA116FE84D5003F142F /* HumanLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HumanLoginViewController.h; path = PedidoNaRede/HumanLoginViewController.h; sourceTree = "<group>"; };
 		EB25BAA216FE84D5003F142F /* HumanLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HumanLoginViewController.m; path = PedidoNaRede/HumanLoginViewController.m; sourceTree = "<group>"; };
 		EB25BAA316FE84D6003F142F /* HumanLoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = HumanLoginViewController.xib; path = PedidoNaRede/HumanLoginViewController.xib; sourceTree = "<group>"; };
@@ -494,6 +507,19 @@
 		EB4FC5841710644000CA43EC /* HumanToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HumanToken.m; sourceTree = "<group>"; };
 		EB4FC58D1710DFE000CA43EC /* EventToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventToken.h; sourceTree = "<group>"; };
 		EB4FC58E1710DFE000CA43EC /* EventToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventToken.m; sourceTree = "<group>"; };
+		EB50B912181D98F40023A185 /* DEComposeRuledView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DEComposeRuledView.h; sourceTree = "<group>"; };
+		EB50B913181D98F40023A185 /* DEComposeRuledView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DEComposeRuledView.m; sourceTree = "<group>"; };
+		EB50B914181D98F40023A185 /* DEComposeTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DEComposeTextView.h; sourceTree = "<group>"; };
+		EB50B915181D98F40023A185 /* DEComposeTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DEComposeTextView.m; sourceTree = "<group>"; };
+		EB50B916181D98F40023A185 /* RECommonFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RECommonFunctions.h; sourceTree = "<group>"; };
+		EB50B917181D98F40023A185 /* RECommonFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RECommonFunctions.m; sourceTree = "<group>"; };
+		EB50B918181D98F40023A185 /* REComposeBackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REComposeBackgroundView.h; sourceTree = "<group>"; };
+		EB50B919181D98F40023A185 /* REComposeBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REComposeBackgroundView.m; sourceTree = "<group>"; };
+		EB50B91A181D98F40023A185 /* REComposeSheetView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REComposeSheetView.h; sourceTree = "<group>"; };
+		EB50B91B181D98F40023A185 /* REComposeSheetView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REComposeSheetView.m; sourceTree = "<group>"; };
+		EB50B91C181D98F40023A185 /* REComposeViewController.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = REComposeViewController.bundle; sourceTree = "<group>"; };
+		EB50B91D181D98F40023A185 /* REComposeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REComposeViewController.h; sourceTree = "<group>"; };
+		EB50B91E181D98F40023A185 /* REComposeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REComposeViewController.m; sourceTree = "<group>"; };
 		EB53F6391709136A00715E2D /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		EB53F642170913BC00715E2D /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		EB5901FF17D5D7D20032143C /* MarketplaceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MarketplaceViewController.h; path = PedidoNaRede/MarketplaceViewController.h; sourceTree = "<group>"; };
@@ -622,7 +648,6 @@
 		EB95437417ACCB2000229EE2 /* 16-Map.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "16-Map.png"; sourceTree = "<group>"; };
 		EB95437517ACCB2000229EE2 /* 16-Map@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "16-Map@2x.png"; sourceTree = "<group>"; };
 		EB97144117F2B306009260AE /* 128-user.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "128-user.png"; sourceTree = "<group>"; };
-		EB97144717F2D79B009260AE /* HumanViewController~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = "HumanViewController~ipad.xib"; path = "PedidoNaRede/HumanViewController~ipad.xib"; sourceTree = "<group>"; };
 		EB97144917F2DD11009260AE /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = InEvent/Images.xcassets; sourceTree = "<group>"; };
 		EB97144B17F2DDDB009260AE /* logo@16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo@16.png"; sourceTree = "<group>"; };
 		EB97144C17F2DDDB009260AE /* logo@57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo@57.png"; sourceTree = "<group>"; };
@@ -693,11 +718,16 @@
 		EBBDCB8C1623E51D00C32523 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		EBC59D8017BEC48600E0FC67 /* 64-Marker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "64-Marker.png"; sourceTree = "<group>"; };
 		EBC59D8217BEC49E00E0FC67 /* 64-Footprints.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "64-Footprints.png"; sourceTree = "<group>"; };
-		EBC59D8417BEC4DD00E0FC67 /* 64-Map.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "64-Map.png"; sourceTree = "<group>"; };
+		EBC59D8417BEC4DD00E0FC67 /* 32-Map@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Map@2x.png"; sourceTree = "<group>"; };
 		EBC59D8617BEC58100E0FC67 /* 64-Balloons.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "64-Balloons.png"; sourceTree = "<group>"; };
 		EBC59D8817BEC59B00E0FC67 /* 32-Create-_-Write@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Create-_-Write@2x.png"; sourceTree = "<group>"; };
 		EBC59D8C17BEC5C300E0FC67 /* 64-Cloud-Download.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "64-Cloud-Download.png"; sourceTree = "<group>"; };
 		EBC7AF4C1813331100D8DB6A /* 32-facebook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-facebook.png"; sourceTree = "<group>"; };
+		EBCD0EE1181DBB0700CE225C /* 32-Phone-Hook@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Phone-Hook@2x.png"; sourceTree = "<group>"; };
+		EBCD0EE3181DBB1C00CE225C /* 32-Phone-Hook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Phone-Hook.png"; sourceTree = "<group>"; };
+		EBCD0EE5181DBC6000CE225C /* 32-Map.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Map.png"; sourceTree = "<group>"; };
+		EBCD0EE7181DBCB900CE225C /* 32-Mail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Mail.png"; sourceTree = "<group>"; };
+		EBCD0EE9181DBCCA00CE225C /* 32-Mail@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Mail@2x.png"; sourceTree = "<group>"; };
 		EBD055A417AF8CF3008355E8 /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
 		EBD055A517AF8CF3008355E8 /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
 		EBD055A617AF8CF3008355E8 /* AboutViewController~iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "AboutViewController~iphone.xib"; sourceTree = "<group>"; };
@@ -763,8 +793,6 @@
 		EBE72F96181AE11C00A3A02D /* SocialLoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SocialLoginViewController.xib; path = PedidoNaRede/SocialLoginViewController.xib; sourceTree = "<group>"; };
 		EBE72F99181AE1A200A3A02D /* facebook_active.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = facebook_active.png; sourceTree = "<group>"; };
 		EBE72F9A181AE1A200A3A02D /* facebook_dark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = facebook_dark.png; sourceTree = "<group>"; };
-		EBE72F9D181AE55200A3A02D /* twitter02_active.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = twitter02_active.png; sourceTree = "<group>"; };
-		EBE72F9E181AE55200A3A02D /* twitter02_dark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = twitter02_dark.png; sourceTree = "<group>"; };
 		EBE72FA1181AF25A00A3A02D /* 32-Twitter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Twitter.png"; sourceTree = "<group>"; };
 		EBE72FA3181AF26600A3A02D /* 32-Facebook-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Facebook-2.png"; sourceTree = "<group>"; };
 		EBE8A4FF1712EA9C00A8A2BD /* UITabBarController+ShowHideBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITabBarController+ShowHideBar.h"; sourceTree = "<group>"; };
@@ -1007,8 +1035,7 @@
 				EBE72F96181AE11C00A3A02D /* SocialLoginViewController.xib */,
 				EB25BA9B16FE73F2003F142F /* HumanViewController.h */,
 				EB25BA9C16FE73F2003F142F /* HumanViewController.m */,
-				EB25BA9D16FE73F2003F142F /* HumanViewController~iphone.xib */,
-				EB97144717F2D79B009260AE /* HumanViewController~ipad.xib */,
+				EB25BA9D16FE73F2003F142F /* HumanViewController.xib */,
 			);
 			name = Human;
 			sourceTree = "<group>";
@@ -1119,6 +1146,26 @@
 			name = "Token Singleton";
 			sourceTree = "<group>";
 		};
+		EB50B911181D98F40023A185 /* REComposeViewController */ = {
+			isa = PBXGroup;
+			children = (
+				EB50B912181D98F40023A185 /* DEComposeRuledView.h */,
+				EB50B913181D98F40023A185 /* DEComposeRuledView.m */,
+				EB50B914181D98F40023A185 /* DEComposeTextView.h */,
+				EB50B915181D98F40023A185 /* DEComposeTextView.m */,
+				EB50B916181D98F40023A185 /* RECommonFunctions.h */,
+				EB50B917181D98F40023A185 /* RECommonFunctions.m */,
+				EB50B918181D98F40023A185 /* REComposeBackgroundView.h */,
+				EB50B919181D98F40023A185 /* REComposeBackgroundView.m */,
+				EB50B91A181D98F40023A185 /* REComposeSheetView.h */,
+				EB50B91B181D98F40023A185 /* REComposeSheetView.m */,
+				EB50B91C181D98F40023A185 /* REComposeViewController.bundle */,
+				EB50B91D181D98F40023A185 /* REComposeViewController.h */,
+				EB50B91E181D98F40023A185 /* REComposeViewController.m */,
+			);
+			path = REComposeViewController;
+			sourceTree = "<group>";
+		};
 		EB53F6441709140500715E2D /* GoogleAnalytics */ = {
 			isa = PBXGroup;
 			children = (
@@ -1143,6 +1190,7 @@
 				EB3939A816654BE300580A4E /* NSString+HTML */,
 				EB3939AD16654BE300580A4E /* PaperFoldMenuController */,
 				EBB1E7A61717B93700B73DDF /* PopoverView */,
+				EB50B911181D98F40023A185 /* REComposeViewController */,
 				EB7FC66C16DC4225007C006D /* SDWebImage */,
 				EB8C7D6316D17AEB00F3C721 /* SSCheckBoxView */,
 			);
@@ -1625,10 +1673,10 @@
 			children = (
 				EBE72F99181AE1A200A3A02D /* facebook_active.png */,
 				EBE72F9A181AE1A200A3A02D /* facebook_dark.png */,
+				EB01FFD7181BA56C00089915 /* google_active.png */,
+				EB01FFD8181BA56C00089915 /* google_dark.png */,
 				EBE72F90181AE0CD00A3A02D /* in_active.png */,
 				EBE72F91181AE0CD00A3A02D /* in_dark.png */,
-				EBE72F9D181AE55200A3A02D /* twitter02_active.png */,
-				EBE72F9E181AE55200A3A02D /* twitter02_dark.png */,
 				EBE8D1DA16A88D16003A196A /* blackButton.png */,
 				EBE8D1DB16A88D16003A196A /* blackButton@2x.png */,
 				EBE8D1DC16A88D16003A196A /* blackButtonHighlight.png */,
@@ -1682,12 +1730,11 @@
 				EB1FE9F217FF8886001C2906 /* 32-Book-Large.png */,
 				EB1FE9F317FF8886001C2906 /* 32-Book-Large@2x.png */,
 				EB1FE9EC17FF5DEA001C2906 /* 32-Check-2.png */,
-				EBE72FA3181AF26600A3A02D /* 32-Facebook-2.png */,
-				EBE72FA1181AF25A00A3A02D /* 32-Twitter.png */,
 				EBDFF55217BE95B200BBFC1D /* 32-Check.png */,
 				EB1FEA0017FF9EF7001C2906 /* 32-Create-_-Write.png */,
 				EBC59D8817BEC59B00E0FC67 /* 32-Create-_-Write@2x.png */,
 				EBB19398168EA54A0060D282 /* 32-Cross.png */,
+				EBE72FA3181AF26600A3A02D /* 32-Facebook-2.png */,
 				EB4FC576171061AF00CA43EC /* 32-Facebook-F.png */,
 				EB7FF95717EEDDE00017E599 /* 32-Facebook-Like-2.png */,
 				EB7FF95517EEDB300017E599 /* 32-Facebook-Like-2@2x.png */,
@@ -1698,12 +1745,19 @@
 				EB8974F4180CC85200DB2486 /* 32-Group.png */,
 				EB8974F6180CC86700DB2486 /* 32-Group@2x.png */,
 				EBD27B6516D8604200DA6ACE /* 32-Looking-Glass.png */,
+				EBCD0EE7181DBCB900CE225C /* 32-Mail.png */,
+				EBCD0EE9181DBCCA00CE225C /* 32-Mail@2x.png */,
+				EBCD0EE5181DBC6000CE225C /* 32-Map.png */,
+				EBC59D8417BEC4DD00E0FC67 /* 32-Map@2x.png */,
 				EBD8E4E817AF557A00D0F30C /* 32-Minus.png */,
 				EB1FE9EA17FF5A5C001C2906 /* 32-Pencil-_-Edit.png */,
+				EBCD0EE3181DBB1C00CE225C /* 32-Phone-Hook.png */,
+				EBCD0EE1181DBB0700CE225C /* 32-Phone-Hook@2x.png */,
 				EB1FEA0718032D7D001C2906 /* 32-Plus-2.png */,
 				EBB19399168EA54A0060D282 /* 32-Plus.png */,
 				EB1FE9FE17FF9DBE001C2906 /* 32-Speech-Bubble.png */,
 				EB1FE9FC17FF9DA2001C2906 /* 32-Speech-Bubble@2x.png */,
+				EBE72FA1181AF25A00A3A02D /* 32-Twitter.png */,
 				EB79CC4D17ED803F00C16CF5 /* 32-Unfavorite.png */,
 				EB1FE9EE17FF87D2001C2906 /* 32-Users.png */,
 				EB1FE9F017FF884E001C2906 /* 32-Users@2x.png */,
@@ -1715,7 +1769,6 @@
 				EBC59D8C17BEC5C300E0FC67 /* 64-Cloud-Download.png */,
 				EB60420A17B8B6A300D95012 /* 64-Flip-Clock.png */,
 				EBC59D8217BEC49E00E0FC67 /* 64-Footprints.png */,
-				EBC59D8417BEC4DD00E0FC67 /* 64-Map.png */,
 				EBC59D8017BEC48600E0FC67 /* 64-Marker.png */,
 				EB79CC5717ED833700C16CF5 /* 64-Shades.png */,
 				EBDFF55017BE15A900BBFC1D /* 64-Speech-Bubbles.png */,
@@ -1876,6 +1929,8 @@
 				EBE8D20B16A88ED8003A196A /* orangeButtonHighlight.png in Resources */,
 				EBE8D20C16A88ED8003A196A /* orangeButtonHighlight@2x.png in Resources */,
 				EBE8D20D16A88ED8003A196A /* tanButton.png in Resources */,
+				EBCD0EE4181DBB1C00CE225C /* 32-Phone-Hook.png in Resources */,
+				EBCD0EEA181DBCCA00CE225C /* 32-Mail@2x.png in Resources */,
 				EBE8D20E16A88ED8003A196A /* tanButton@2x.png in Resources */,
 				EBE8D20F16A88ED8003A196A /* tanButtonHighlight.png in Resources */,
 				EBE8D21016A88ED8003A196A /* tanButtonHighlight@2x.png in Resources */,
@@ -1888,6 +1943,7 @@
 				EB39399816654B4400580A4E /* ScheduleViewCell.xib in Resources */,
 				EBD6FE4918064B51006D0E73 /* 16-Image-2.png in Resources */,
 				EB39399B16654B4400580A4E /* ScheduleViewController.xib in Resources */,
+				EBCD0EE2181DBB0700CE225C /* 32-Phone-Hook@2x.png in Resources */,
 				EB3939CC16654BE300580A4E /* PaperFoldResources.bundle in Resources */,
 				EB3939DB1666D3AF00580A4E /* cellBg@2x.png in Resources */,
 				EB1FE9E817FF2B85001C2906 /* AdViewController.xib in Resources */,
@@ -1895,7 +1951,6 @@
 				EBB1939A168EA54A0060D282 /* 32-Cross.png in Resources */,
 				EBB1939B168EA54A0060D282 /* 32-Plus.png in Resources */,
 				EBE15D4D169B7D2000E46A15 /* AlertView.xib in Resources */,
-				EBE72FA0181AE55200A3A02D /* twitter02_dark.png in Resources */,
 				EBE72F98181AE11C00A3A02D /* SocialLoginViewController.xib in Resources */,
 				EB1FE9F117FF884E001C2906 /* 32-Users@2x.png in Resources */,
 				EB9AB77316A0921A005D4CAA /* DemoViewController.xib in Resources */,
@@ -1934,6 +1989,7 @@
 				EB8C7D8216D17AEB00F3C721 /* cb_dark_off.png in Resources */,
 				EB8C7D8316D17AEB00F3C721 /* cb_dark_off@2x.png in Resources */,
 				EB8C7D8416D17AEB00F3C721 /* cb_dark_on.png in Resources */,
+				EB01FFD9181BA56C00089915 /* google_active.png in Resources */,
 				EB8C7D8516D17AEB00F3C721 /* cb_dark_on@2x.png in Resources */,
 				EB89751A18132E3A00DB2486 /* View.xib in Resources */,
 				EB8C7D8616D17AEB00F3C721 /* cb_glossy_off.png in Resources */,
@@ -1964,7 +2020,7 @@
 				EB97146017F2DDDB009260AE /* logo@512.png in Resources */,
 				EB25BA9016FE6D21003F142F /* 16-Flag-2.png in Resources */,
 				EB25BA9216FE6EC9003F142F /* 16-User.png in Resources */,
-				EB25BA9F16FE73F2003F142F /* HumanViewController~iphone.xib in Resources */,
+				EB25BA9F16FE73F2003F142F /* HumanViewController.xib in Resources */,
 				EBD6FE4F18065528006D0E73 /* 32-Cog.png in Resources */,
 				EB25BAA516FE84D6003F142F /* HumanLoginViewController.xib in Resources */,
 				EB25BAAA170280F1003F142F /* LauchImageViewController.xib in Resources */,
@@ -1981,6 +2037,7 @@
 				EB25BABA17028CFE003F142F /* Default@2x.png in Resources */,
 				EB25BABC17028D0A003F142F /* Default-568h@2x.png in Resources */,
 				EBD6FE4718064B24006D0E73 /* 16-Image-2@2x.png in Resources */,
+				EBCD0EE8181DBCB900CE225C /* 32-Mail.png in Resources */,
 				EB4FC57A171061AF00CA43EC /* 32-Facebook-F.png in Resources */,
 				EBE72F92181AE0CD00A3A02D /* in_active.png in Resources */,
 				EB1FEB8B171729C7009834FC /* LogItemViewCell.xib in Resources */,
@@ -2012,6 +2069,7 @@
 				EB95437617ACCB2000229EE2 /* 16-Map.png in Resources */,
 				EB95437717ACCB2000229EE2 /* 16-Map@2x.png in Resources */,
 				EBD8E4E917AF557A00D0F30C /* 32-Minus.png in Resources */,
+				EBCD0EE6181DBC6000CE225C /* 32-Map.png in Resources */,
 				EBD055A817AF8CF3008355E8 /* AboutViewController~iphone.xib in Resources */,
 				EBD055AC17AF919C008355E8 /* 16-Footprints.png in Resources */,
 				EBD055AD17AF919C008355E8 /* 16-Footprints@2x.png in Resources */,
@@ -2030,7 +2088,7 @@
 				EBDFF55317BE95B200BBFC1D /* 32-Check.png in Resources */,
 				EBC59D8117BEC48600E0FC67 /* 64-Marker.png in Resources */,
 				EBC59D8317BEC49E00E0FC67 /* 64-Footprints.png in Resources */,
-				EBC59D8517BEC4DD00E0FC67 /* 64-Map.png in Resources */,
+				EBC59D8517BEC4DD00E0FC67 /* 32-Map@2x.png in Resources */,
 				EB8974EC180CC52000DB2486 /* PeopleViewController.xib in Resources */,
 				EBC59D8717BEC58100E0FC67 /* 64-Balloons.png in Resources */,
 				EBC59D8917BEC59B00E0FC67 /* 32-Create-_-Write@2x.png in Resources */,
@@ -2039,16 +2097,16 @@
 				EBC59D8D17BEC5C300E0FC67 /* 64-Cloud-Download.png in Resources */,
 				EBEACD7517C2F65200C65F3F /* AboutViewController~ipad.xib in Resources */,
 				EB59020317D5D7D20032143C /* MarketplaceViewController.xib in Resources */,
-				EB97144817F2D79B009260AE /* HumanViewController~ipad.xib in Resources */,
+				EB50B924181D98F40023A185 /* REComposeViewController.bundle in Resources */,
 				EB97145E17F2DDDB009260AE /* logo@144.png in Resources */,
 				EB59020917D5D83A0032143C /* MarketplaceViewCell.xib in Resources */,
 				EB79CC4A17EB82D500C16CF5 /* QuestionViewController.xib in Resources */,
+				EB01FFDA181BA56C00089915 /* google_dark.png in Resources */,
 				EB79CC4C17ED803600C16CF5 /* 32-Favorite.png in Resources */,
 				EB79CC4E17ED803F00C16CF5 /* 32-Unfavorite.png in Resources */,
 				EB79CC5317ED813D00C16CF5 /* FrontViewController.xib in Resources */,
 				EB79CC5817ED833700C16CF5 /* 64-Clock-2.png in Resources */,
 				EB897500180CDF2D00DB2486 /* 16-Day-Calendar@2x.png in Resources */,
-				EBE72F9F181AE55200A3A02D /* twitter02_active.png in Resources */,
 				EB79CC5917ED833700C16CF5 /* 64-Clock.png in Resources */,
 				EB79CC5A17ED833700C16CF5 /* 64-Shades.png in Resources */,
 			);
@@ -2117,11 +2175,14 @@
 				EB3939D51666CF9F00580A4E /* MenuViewController.m in Sources */,
 				EB39397616654B4400580A4E /* AlertView.m in Sources */,
 				EB01FF82181B349B00089915 /* LIALinkedInApplication.m in Sources */,
+				EB50B922181D98F40023A185 /* REComposeBackgroundView.m in Sources */,
 				EB39397716654B4400580A4E /* APIController.m in Sources */,
 				EB39397816654B4400580A4E /* AppDelegate.m in Sources */,
 				EB39398B16654B4400580A4E /* MapViewController.m in Sources */,
+				EB50B925181D98F40023A185 /* REComposeViewController.m in Sources */,
 				EB39399716654B4400580A4E /* ScheduleViewCell.m in Sources */,
 				EBD6FE44180646B6006D0E73 /* StreamDetailViewController.m in Sources */,
+				EB50B920181D98F40023A185 /* DEComposeTextView.m in Sources */,
 				EB39399916654B4400580A4E /* ScheduleViewController.m in Sources */,
 				EB3939A716654BB900580A4E /* main.m in Sources */,
 				EB897515181056D800DB2486 /* SebraeColorThemeController.m in Sources */,
@@ -2138,6 +2199,7 @@
 				EB8974E5180CC02C00DB2486 /* QuizViewController.m in Sources */,
 				EB3939CB16654BE300580A4E /* PaperFoldNavigationController.m in Sources */,
 				EB8974FD180CCDB000DB2486 /* PersonViewController.m in Sources */,
+				EB50B91F181D98F40023A185 /* DEComposeRuledView.m in Sources */,
 				EB01FFD2181B3AFA00089915 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				EB3939CD16654BE300580A4E /* PaperFoldSwipeHintView.m in Sources */,
 				EB3939CE16654BE300580A4E /* PaperFoldView.m in Sources */,
@@ -2159,7 +2221,9 @@
 				EB8C7D9316D17AEB00F3C721 /* SSCheckBoxView.m in Sources */,
 				EB89750D180D147600DB2486 /* PeopleGroupViewLayout.m in Sources */,
 				EBD27B6316D827C300DA6ACE /* ColorThemeController.m in Sources */,
+				EB50B921181D98F40023A185 /* RECommonFunctions.m in Sources */,
 				EBFD3A3516DA8CDE00AD33C5 /* UIPlaceHolderTextView.m in Sources */,
+				EB50B923181D98F40023A185 /* REComposeSheetView.m in Sources */,
 				EBFD3A3916DA96D000AD33C5 /* FeedbackViewController.m in Sources */,
 				EB7FC68216DC4225007C006D /* MKAnnotationView+WebCache.m in Sources */,
 				EB7FC68316DC4225007C006D /* SDImageCache.m in Sources */,

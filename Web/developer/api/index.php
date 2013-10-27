@@ -32,6 +32,10 @@
 			include_once("modules/person.php");
 			break;
 
+		case "photo":
+			include_once("modules/photo.php");
+			break;
+
 		default:
 			http_status_code(501);
 			break;
