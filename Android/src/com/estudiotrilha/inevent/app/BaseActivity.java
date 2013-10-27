@@ -54,8 +54,8 @@ public abstract class BaseActivity extends ActionBarActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        originalSetContentView(R.layout.activity_base);
         supportRequestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+        originalSetContentView(R.layout.activity_base);
 
         // start ImageLoader
         Utils.initImageLoader(this);

@@ -37,11 +37,17 @@ public class Activity
     {
         public static final class Post
         {
-            private static final String SEND_OPINION = "rating=%d";
+            private static final String SEND_OPINION  = "rating=%d";
+            private static final String SEND_QUESTION = "question=%s";
 
             public static String sendOpinion(int rating)
             {
                 return String.format(Locale.ENGLISH, SEND_OPINION, rating);
+            }
+
+            public static String sendOpinion(String question)
+            {
+                return String.format(Locale.ENGLISH, SEND_QUESTION, question);
             }
         }
 
@@ -56,6 +62,10 @@ public class Activity
         private static final String GET_PEOPLE         = ApiRequest.BASE_URL + NAMESPACE + ".getPeople&tokenID=%s&activityID=%d&selection=%s";
         private static final String GET_OPINION        = ApiRequest.BASE_URL + NAMESPACE + ".getOpinion&tokenID=%s&activityID=%d";
         private static final String SEND_OPINION       = ApiRequest.BASE_URL + NAMESPACE + ".sendOpinion&tokenID=%s&activityID=%d";
+        private static final String GET_QUESTIONS      = ApiRequest.BASE_URL + NAMESPACE + ".getQuestions&tokenID=%s&activityID=%d";
+        private static final String SEND_QUESTION      = ApiRequest.BASE_URL + NAMESPACE + ".sendQuestion&tokenID=%s&activityID=%d";
+        private static final String REMOVE_QUESTION    = ApiRequest.BASE_URL + NAMESPACE + ".removeQuestion&tokenID=%s&questionID=%d";
+        private static final String UPVOTE_QUESTION    = ApiRequest.BASE_URL + NAMESPACE + ".upvoteQuestion&tokenID=%s&questionID=%d";
 
         public static HttpURLConnection requestEnrollment(String tokenID, long activityID) throws IOException
         {
@@ -148,6 +158,37 @@ public class Activity
             return ConnectionHelper.getURLPostConnection(url);
         }
 
+        public static HttpURLConnection getQuestions(String tokenID, long activityID) throws IOException
+        {
+            tokenID = URLEncoder.encode(tokenID, ApiRequest.ENCODING);
+            URL url = new URL(String.format(GET_QUESTIONS, tokenID, activityID));
+
+            return ConnectionHelper.getURLGetConnection(url);
+        }
+
+        public static HttpURLConnection sendQuestion(String tokenID, long activityID) throws IOException
+        {
+            tokenID = URLEncoder.encode(tokenID, ApiRequest.ENCODING);
+            URL url = new URL(String.format(SEND_QUESTION, tokenID, activityID));
+
+            return ConnectionHelper.getURLPostConnection(url);
+        }
+
+        public static HttpURLConnection removeQuestion(String tokenID, long questionID) throws IOException
+        {
+            tokenID = URLEncoder.encode(tokenID, ApiRequest.ENCODING);
+            URL url = new URL(String.format(REMOVE_QUESTION, tokenID, questionID));
+
+            return ConnectionHelper.getURLGetConnection(url);
+        }
+
+        public static HttpURLConnection upvoteQuestion(String tokenID, long questionID) throws IOException
+        {
+            tokenID = URLEncoder.encode(tokenID, ApiRequest.ENCODING);
+            URL url = new URL(String.format(UPVOTE_QUESTION, tokenID, questionID));
+
+            return ConnectionHelper.getURLGetConnection(url);
+        }
 
         public static enum PeopleSelection
         {

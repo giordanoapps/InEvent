@@ -6,9 +6,12 @@ import java.net.HttpURLConnection;
 import org.apache.http.HttpStatus;
 import org.json.JSONObject;
 
+import android.R.color;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.util.Log;
@@ -51,8 +54,15 @@ public class AddPersonDialogFragment extends DialogFragment implements DialogInt
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {
         View view = getActivity().getLayoutInflater().inflate(R.layout.fragment_add_person_dialog, null);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB)
+        {
+            // Work out the display bug in devices who have black background
+            view.setBackgroundColor(Color.WHITE);
+        }
+
         mEmail = (TextView) view.findViewById(R.id.addPerson_email);
         mName = (TextView) view.findViewById(R.id.addPerson_name);
+
         Dialog dialog = new AlertDialog.Builder(getActivity())
                 .setTitle(R.string.title_addPerson)
                 .setView(view)
