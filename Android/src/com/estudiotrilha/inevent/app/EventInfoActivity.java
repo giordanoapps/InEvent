@@ -1,16 +1,15 @@
 package com.estudiotrilha.inevent.app;
 
-import com.estudiotrilha.inevent.R;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
 
+import com.estudiotrilha.inevent.R;
 
-public class EventInfoActivity extends ActionBarActivity
+
+public class EventInfoActivity extends BaseActivity
 {
     // Extras
     private static final String EXTRA_EVENT_ID       = "extra.EVENT_ID";
@@ -65,4 +64,7 @@ public class EventInfoActivity extends ActionBarActivity
 
         return super.onOptionsItemSelected(item);
     }
+
+
+    @Override protected void refreshLoginState() {}
 }

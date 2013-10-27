@@ -6,15 +6,6 @@ import java.net.HttpURLConnection;
 import org.apache.http.HttpStatus;
 import org.json.JSONObject;
 
-import com.estudiotrilha.android.content.ApiRequest;
-import com.estudiotrilha.inevent.InEvent;
-import com.estudiotrilha.inevent.R;
-import com.estudiotrilha.inevent.Utils;
-import com.estudiotrilha.inevent.content.Activity;
-import com.estudiotrilha.inevent.content.ApiRequestCode;
-import com.estudiotrilha.inevent.content.LoginManager;
-import com.estudiotrilha.inevent.content.SyncBroadcastManager;
-
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -23,7 +14,15 @@ import android.support.v4.app.DialogFragment;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.estudiotrilha.android.content.ApiRequest;
+import com.estudiotrilha.inevent.InEvent;
+import com.estudiotrilha.inevent.R;
+import com.estudiotrilha.inevent.Utils;
+import com.estudiotrilha.inevent.content.Activity;
+import com.estudiotrilha.inevent.content.ApiRequestCode;
+import com.estudiotrilha.inevent.content.LoginManager;
+import com.estudiotrilha.inevent.content.SyncBroadcastManager;
 
 
 public class AddPersonDialogFragment extends DialogFragment implements DialogInterface.OnClickListener
@@ -88,7 +87,7 @@ public class AddPersonDialogFragment extends DialogFragment implements DialogInt
                         }
                         else
                         {
-                            Toast.makeText(activity, Utils.getBadResponseMessage(requestCode, responseCode), Toast.LENGTH_SHORT).show();
+                            activity.showToast(Utils.getBadResponseMessage(requestCode, responseCode));
                         }
 
                         SyncBroadcastManager.setSyncState(activity, false);

@@ -1,9 +1,6 @@
 package com.estudiotrilha.inevent.app;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -11,59 +8,21 @@ import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewStub;
-import android.view.Window;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.estudiotrilha.android.widget.ViewToastManager;
-import com.estudiotrilha.inevent.InEvent;
 import com.estudiotrilha.inevent.R;
-import com.estudiotrilha.inevent.Utils;
 import com.estudiotrilha.inevent.app.EventActivitiesPagesFragment.DisplayOption;
 import com.estudiotrilha.inevent.content.LoginManager;
 import com.estudiotrilha.inevent.content.Member;
-import com.estudiotrilha.inevent.content.SyncBroadcastManager;
-import com.google.analytics.tracking.android.EasyTracker;
 
 
-public abstract class SlidingMenuBaseActivity extends ActionBarActivity
+public abstract class SlidingMenuBaseActivity extends BaseActivity
 {
-    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent)
-        {
-            String action = intent.getAction();
-            if (action.equals(SyncBroadcastManager.ACTION_SYNC))
-            {
-                setSupportProgressBarIndeterminateVisibility(SyncBroadcastManager.isSyncing());
-            }
-            else if (action.equals(LoginManager.ACTION_LOGIN_STATE_CHANGED))
-            {
-                setupLoginInfo();
-                refreshLoginState();
-            }
-            else if (action.equals(InEvent.ACTION_TOAST_NOTIFICATION))
-            {
-                // get the message
-                int message = intent.getIntExtra(InEvent.EXTRA_TOAST_MESSAGE, 0);
-                if (message <= 0) return;
-
-                // display the notification toast
-                showToast(message);
-            }
-        }
-    };
-
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout          mDrawerLayout;
     private View                  mSlidingMenu;
-
-    private ViewToastManager mToastManager;
 
 
     @Override
@@ -71,13 +30,9 @@ public abstract class SlidingMenuBaseActivity extends ActionBarActivity
     {
         // prepare the content view
         super.onCreate(savedInstanceState);
-        supportRequestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-
-        // start ImageLoader
-        Utils.initImageLoader(this);
 
         // Prepare the sliding menu
-        super.setContentView(R.layout.activity_sliding_menu);
+        originalSetContentView(R.layout.activity_sliding_menu);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
         // ActionBarDrawerToggle ties together the the proper interactions
@@ -114,12 +69,6 @@ public abstract class SlidingMenuBaseActivity extends ActionBarActivity
                     mDrawerToggle.setDrawerIndicatorEnabled(getSupportFragmentManager().getBackStackEntryCount() == 0);
                 }
         });
-
-        // creates and setups the toast manager
-        mToastManager = new ViewToastManager(this, (ViewGroup) findViewById(R.id.main_toastMessage));
-        // Set the enter and leave animations for the custom toast
-        mToastManager.setEnterAnimationResource(R.anim.toast_enter);
-        mToastManager.setLeaveAnimationResource(R.anim.toast_leave);
     }
     @Override
     protected void onPostCreate(Bundle savedInstanceState)
@@ -131,41 +80,7 @@ public abstract class SlidingMenuBaseActivity extends ActionBarActivity
     protected void onStart()
     {
         super.onStart();
-        if (!InEvent.DEBUG)
-        {
-            EasyTracker.getInstance().activityStart(this);
-        }
-
         setupLoginInfo();
-    }
-    @Override
-    protected void onResume()
-    {
-        super.onResume();
-        // register a broadcast
-        IntentFilter filter = new IntentFilter(SyncBroadcastManager.ACTION_SYNC);
-        filter.addAction(LoginManager.ACTION_LOGIN_STATE_CHANGED);
-        filter.addAction(InEvent.ACTION_TOAST_NOTIFICATION);
-        registerReceiver(mReceiver, filter);
-
-        // set the sync status
-        setSupportProgressBarIndeterminateVisibility(SyncBroadcastManager.isSyncing());
-    }
-    @Override
-    protected void onPause()
-    {
-        super.onPause();
-        // unregister listeners
-        unregisterReceiver(mReceiver);
-    }
-    @Override
-    protected void onStop()
-    {
-        super.onStop();
-        if (!InEvent.DEBUG)
-        {
-            EasyTracker.getInstance().activityStop(this);
-        }
     }
 
     @Override
@@ -194,14 +109,6 @@ public abstract class SlidingMenuBaseActivity extends ActionBarActivity
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
-    @Override
-    public void setContentView(int layoutResId)
-    {
-        ViewStub viewStub = (ViewStub) findViewById(R.id.contentStub);
-        viewStub.setLayoutResource(layoutResId);
-        viewStub.inflate();
-    }
-
     protected boolean isSlidingMenuOpen()
     {
         return mDrawerLayout.isDrawerOpen(mSlidingMenu);
@@ -213,29 +120,6 @@ public abstract class SlidingMenuBaseActivity extends ActionBarActivity
     protected void closeSlidingMenu()
     {
         mDrawerLayout.closeDrawer(mSlidingMenu);
-    }
-
-
-    // Custom toast
-    public void showToast(CharSequence text, int duration)
-    {
-        showToast(text, -1, duration);
-    }
-    public void showToast(int text, int duration)
-    {
-        showToast(getText(text), duration);
-    }
-    public void showToast(int text)
-    {
-        showToast(text, ViewToastManager.LENGHT_SHORT);
-    }
-    public void showToast(CharSequence text, int image, int duration)
-    {
-        View v = getLayoutInflater().inflate(R.layout.toast_notification, null);
-        ((TextView) v.findViewById(R.id.notificatoin_text)).setText(text);
-        if (image > 0) ((ImageView) v.findViewById(R.id.notificatoin_image)).setImageResource(image);
-
-        mToastManager.newMessage(v, duration);
     }
 
 
@@ -294,6 +178,9 @@ public abstract class SlidingMenuBaseActivity extends ActionBarActivity
     }
 
 
-    /** Refresh the activity state according to a new login state */
-    protected abstract void refreshLoginState();
+    @Override
+    protected void refreshLoginState()
+    {
+        setupLoginInfo();
+    }
 }

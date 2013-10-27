@@ -1,21 +1,16 @@
 package com.estudiotrilha.inevent.app;
 
-import com.estudiotrilha.inevent.R;
-import com.estudiotrilha.inevent.content.SyncBroadcastManager;
-import com.estudiotrilha.inevent.service.DownloaderService;
-
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Window;
+
+import com.estudiotrilha.inevent.R;
+import com.estudiotrilha.inevent.service.DownloaderService;
 
 
-public class PeopleActivity extends ActionBarActivity
+public class PeopleActivity extends BaseActivity
 {
     // Extra
     private static final String EXTRA_ACTIVITY_ID = "extra.ACTIVITY_ID";
@@ -31,23 +26,10 @@ public class PeopleActivity extends ActionBarActivity
     }
 
 
-    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent)
-        {
-            if (SyncBroadcastManager.ACTION_SYNC.equals(intent.getAction()))
-            {
-                setSupportProgressBarIndeterminateVisibility(SyncBroadcastManager.isSyncing());
-            }
-        }
-    };
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        supportRequestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.activity_people);
 
         // Download new data
@@ -62,27 +44,6 @@ public class PeopleActivity extends ActionBarActivity
 
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    }
-    @Override
-    protected void onStart()
-    {
-        super.onStart();
-        // register a broadcast
-        registerReceiver(mReceiver, new IntentFilter(SyncBroadcastManager.ACTION_SYNC));
-    }
-    @Override
-    protected void onStop()
-    {
-        super.onStop();
-        // unregister listeners
-        unregisterReceiver(mReceiver);
-    }
-    @Override
-    protected void onResume()
-    {
-        super.onResume();
-        // Setup the loading status
-        setSupportProgressBarIndeterminateVisibility(SyncBroadcastManager.isSyncing());
     }
 
     @Override
@@ -119,5 +80,10 @@ public class PeopleActivity extends ActionBarActivity
     {
         // Download the attenders
         DownloaderService.downloadEventActivityAttenders(this, getIntent().getLongExtra(EXTRA_EVENT_ID, -1), getIntent().getLongExtra(EXTRA_ACTIVITY_ID, -1));
+    }
+    @Override
+    protected void refreshLoginState()
+    {
+        finish();
     }
 }

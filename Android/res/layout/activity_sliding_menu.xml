@@ -5,22 +5,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <FrameLayout
+    <include
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-
-        <ViewStub
-            android:id="@+id/contentStub"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:inflatedId="@id/mainContent" />
-
-        <FrameLayout
-            android:id="@+id/main_toastMessage"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/toast_layout_height"
-            android:layout_gravity="bottom" />
-    </FrameLayout>
+        android:layout_height="match_parent"
+        layout="@layout/activity_base" />
 
     <ScrollView
         android:id="@+id/slidingMenu"

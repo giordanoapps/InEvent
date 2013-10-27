@@ -9,12 +9,10 @@ import org.apache.http.HttpStatus;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.content.BroadcastReceiver;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.database.ContentObserver;
 import android.database.Cursor;
 import android.net.Uri;
@@ -24,15 +22,12 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ViewAnimator;
 
 import com.estudiotrilha.android.content.ApiRequest.ResponseHandler;
@@ -52,10 +47,9 @@ import com.estudiotrilha.inevent.content.LoginManager;
 import com.estudiotrilha.inevent.content.SyncBroadcastManager;
 import com.estudiotrilha.inevent.service.DownloaderService;
 import com.estudiotrilha.inevent.service.UploaderService;
-import com.google.analytics.tracking.android.EasyTracker;
 
 
-public class EventActivityDetailActivity extends ActionBarActivity implements LoaderCallbacks<Cursor>, ResponseHandler
+public class EventActivityDetailActivity extends BaseActivity implements LoaderCallbacks<Cursor>, ResponseHandler
 {
     private static final int APPROVED_OK        =  1;
     private static final int APPROVED_WAIT_LIST =  0;
@@ -87,17 +81,7 @@ public class EventActivityDetailActivity extends ActionBarActivity implements Lo
     private static final int LOAD_ACTIVITY = 0;
 
 
-    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent)
-        {
-            if (SyncBroadcastManager.ACTION_SYNC.equals(intent.getAction()))
-            {
-                setSupportProgressBarIndeterminateVisibility(SyncBroadcastManager.isSyncing());
-            }
-        }
-    };
-    private final ContentObserver   mContentObserver = new ContentObserver(new Handler()) {
+    private final ContentObserver mContentObserver = new ContentObserver(new Handler()) {
         @Override
         public void onChange(boolean selfChange)
         {
@@ -115,7 +99,6 @@ public class EventActivityDetailActivity extends ActionBarActivity implements Lo
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        supportRequestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.activity_event_activity_detail);
         mLoginManager = LoginManager.getInstance(this);
         if (savedInstanceState == null)
@@ -162,37 +145,16 @@ public class EventActivityDetailActivity extends ActionBarActivity implements Lo
     {
         super.onStart();
         getSupportLoaderManager().initLoader(LOAD_ACTIVITY, null, this);
-        // register a broadcast
-        registerReceiver(mReceiver, new IntentFilter(SyncBroadcastManager.ACTION_SYNC));
-        // and an observer
+        // Register an observer for the user data
         getContentResolver().registerContentObserver(Feedback.CONTENT_URI, true, mContentObserver);
         getContentResolver().registerContentObserver(ActivityMember.CONTENT_URI, true, mContentObserver);
-        // Analytics stuff
-        if (!InEvent.DEBUG)
-        {
-            EasyTracker.getInstance().activityStart(this);
-        }
     }
     @Override
     protected void onStop()
     {
         super.onStop();
-        // unregister listeners
-        unregisterReceiver(mReceiver);
-        // and the observer
+        // Unregister the observer
         getContentResolver().unregisterContentObserver(mContentObserver);
-        // Analytics stuff
-        if (!InEvent.DEBUG)
-        {
-            EasyTracker.getInstance().activityStop(this);
-        }
-    }
-    @Override
-    protected void onResume()
-    {
-        super.onResume();
-        // Setup the loading status
-        setSupportProgressBarIndeterminateVisibility(SyncBroadcastManager.isSyncing());
     }
 
     @Override
@@ -232,6 +194,7 @@ public class EventActivityDetailActivity extends ActionBarActivity implements Lo
             return true;
 
         case R.id.action_location:
+        {
             // Show the map
             LocationMapFragment fragment = LocationMapFragment.instantiate(mInfo.location, mInfo.latitude, mInfo.longitude);
             getSupportFragmentManager().beginTransaction()
@@ -239,6 +202,7 @@ public class EventActivityDetailActivity extends ActionBarActivity implements Lo
                 .addToBackStack(null)
                 .commit();
             return true;
+        }
 
         case R.id.action_eventActivity_enroll:
             item.setVisible(false);
@@ -292,6 +256,13 @@ public class EventActivityDetailActivity extends ActionBarActivity implements Lo
         {
             DownloaderService.downloadEventActivityRating(this, getIntent().getLongExtra(EXTRA_ACTIVITY_ID, -1));
         }
+    }
+
+    @Override
+    protected void refreshLoginState()
+    {
+        // Reload the content
+        getSupportLoaderManager().restartLoader(LOAD_ACTIVITY, null, this);
     }
 
 
@@ -397,7 +368,7 @@ public class EventActivityDetailActivity extends ActionBarActivity implements Lo
         }
         else
         {
-            Toast.makeText(this, Utils.getBadResponseMessage(requestCode, responseCode), Toast.LENGTH_SHORT).show();
+            showToast(Utils.getBadResponseMessage(requestCode, responseCode));
         }
 
         getSupportLoaderManager().restartLoader(LOAD_ACTIVITY, null, this);
