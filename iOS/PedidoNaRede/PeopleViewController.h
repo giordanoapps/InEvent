@@ -15,4 +15,8 @@
 
 @property (strong, nonatomic) IBOutlet UICollectionView *collectionView;
 
+@property (strong, nonatomic) IBOutlet UIView *addGroupView;
+@property (strong, nonatomic) IBOutlet UITextField *nameInput;
+@property (strong, nonatomic) IBOutlet UIButton *addGroupButton;
+
 @end

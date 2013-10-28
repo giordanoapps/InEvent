@@ -77,14 +77,13 @@
 
 					// Get the member details and events
 					$details = getMemberDetails($memberID);
-					$details = $details["data"][0];
 					$events = getMemberEvents($memberID);
 
 					// Return some information
-					$details["events"] = $events["data"];
-					$details["tokenID"] = $tokenID;
+					$details["data"][0]["events"] = $events["data"];
+					$details["data"][0]["tokenID"] = $tokenID;
 
-					echo json_encode($details);
+					echo json_encode($details["data"][0]);
 
 				} else {
 
@@ -169,14 +168,13 @@
 
 						// Get the member details and events
 						$details = getMemberDetails($memberID);
-						$details = $details["data"][0];
 						$events = getMemberEvents($memberID);
 
 						// Return some information
-						$details["events"] = $events["data"];
-						$details["tokenID"] = $tokenID;
+						$details["data"][0]["events"] = $events["data"];
+						$details["data"][0]["tokenID"] = $tokenID;
 
-						echo json_encode($details);
+						echo json_encode($details["data"][0]);
 
 					} else {
 
@@ -210,7 +208,62 @@
 				
 	} else
 
-	if ($method === "edit" || $method === "enroll") {
+	if ($method === "getDetails") {
+
+		$tokenID = getToken();
+
+		// Get the member details and events
+		$details = getMemberDetails($core->memberID);
+		$events = getMemberEvents($core->memberID);
+
+		// Return some information
+		$details["data"][0]["events"] = $events["data"];
+
+		echo json_encode($details["data"][0]);
+
+	} else
+
+	if ($method === "edit") {
+
+		$tokenID = getToken();
+
+		if (isset($_GET['name']) && isset($_POST['value'])) {
+
+			$name = getAttribute($_GET['name']);
+			$value = getEmptyAttribute($_POST['value']);
+			
+			// We list all the fields that can be edited by the activity platform
+			$validFields = array("name", "description", "cpf", "rg", "usp", "telephone", "city", "email", "university", "course", "facebookID", "linkedInID");
+
+			if (in_array($name, $validFields) == TRUE) {
+
+				$update = resourceForQuery(
+					"UPDATE
+						`member`
+					SET
+						`$name` = '$value'
+					WHERE
+						`member`.`id` = $core->memberID
+				");
+
+				// Return its data
+				if ($format == "json") {
+					$data["memberID"] = $core->memberID;
+					echo json_encode($data);
+				} else {
+					http_status_code(405, "this format is not available");
+				}
+
+			} else {
+				http_status_code(406, "name field doesn't exist");
+			}
+	    } else {
+	    	http_status_code(404, "name and value are required parameters");
+	    }
+
+	} else
+
+	if ($method === "enroll") {
 
 		if (isset($_REQUEST["name"]) && isset($_REQUEST["email"])) {
 
@@ -232,60 +285,29 @@
 			$telephone = (isset($_POST["telephone"])) ? getEmptyAttribute($_POST["telephone"]) : "";
 			$usp = (isset($_POST["usp"])) ? getEmptyAttribute($_POST["usp"]) : "";
 
-			if ($method === "edit") {
+			// See if the person exists
+			$result = resourceForQuery(
+				"SELECT
+					`member`.`name`
+				FROM
+					`member`
+				WHERE 0
+					OR BINARY `member`.`email` = '$email'
+			");
 
-				$tokenID = getToken();
+			if (mysql_num_rows($result) == 0) {
 
-				$update = resourceForQuery(
-					"UPDATE
-						`member`
-					SET
-						`name` = '$name',
-						`cpf` = '$cpf',
-						`rg` = '$rg',
-						`usp` = '$usp',
-						`telephone` = '$telephone',
-						`city` = '$city',
-						`email` = '$email',
-						`university` = '$university',
-						`course` = '$course'
-					WHERE
-						`member`.`id` = $core->memberID
-				");
+				$memberID = createMember($name, $password, $email, $cpf, $rg, $usp, $telephone, $city, $university, $course);
 
-				if ($update) {
-					$data["memberID"] = $core->memberID;
+				if ($memberID != 0) {
+					// Return the desired data
+					$data = processLogIn($email, $password);
 					echo json_encode($data);
-				}
-
-			} elseif ($method === "enroll") {
-
-				// See if the person exists
-				$result = resourceForQuery(
-					"SELECT
-						`member`.`name`
-					FROM
-						`member`
-					WHERE 0
-						OR BINARY `member`.`email` = '$email'
-				");
-
-				if (mysql_num_rows($result) == 0) {
-
-					$memberID = createMember($name, $password, $email, $cpf, $rg, $usp, $telephone, $city, $university, $course);
-
-					if ($memberID != 0) {
-						// Return the desired data
-						$data = processLogIn($email, $password);
-						echo json_encode($data);
-					} else {
-						http_status_code(500, "Couldn't create memberID");
-					}
 				} else {
-					http_status_code(303, "Email already exists");
+					http_status_code(500, "Couldn't create memberID");
 				}
 			} else {
-				http_status_code(501);
+				http_status_code(303, "Email already exists");
 			}
 		} else {
 			http_status_code(400, "name, password and email are required parameters");

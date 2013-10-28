@@ -601,30 +601,30 @@
     }
 }
 
-- (void)personSignInWithTwitterToken:(NSString *)twitterToken {
-    
-    if (twitterToken != nil) {
-        NSDictionary *attributes = @{@"GET" : @{@"twitterToken" : twitterToken}};
-        
-        [self JSONObjectWithNamespace:@"person" method:@"signInWithTwitter" attributes:attributes];
-    }
-}
-
-- (void)personEnroll:(NSString *)name withPassword:(NSString *)password withEmail:(NSString *)email {
-
-    if (name != nil && password != nil && email != nil) {
-        NSDictionary *attributes = @{@"POST" : @{@"name" : name, @"password" : password, @"email" : email}};
-        
-        [self JSONObjectWithNamespace:@"person" method:@"enroll" attributes:attributes];
-    }
-}
-
-- (void)personGetWorkingEventsWithToken:(NSString *)tokenID {
+- (void)personGetDetailsWithToken:(NSString *)tokenID {
     
     if (tokenID != nil) {
         NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID}};
         
-        [self JSONObjectWithNamespace:@"person" method:@"getWorkingEvents" attributes:attributes];
+        [self JSONObjectWithNamespace:@"person" method:@"getDetails" attributes:attributes];
+    }
+}
+
+- (void)personEditField:(NSString *)name withValue:(NSString *)value withTokenID:(NSString *)tokenID {
+    
+    if (tokenID != nil && name != nil && value != nil) {
+        NSDictionary *attributes = @{@"GET" : @{@"tokenID" : tokenID, @"name" : name}, @"POST" : @{@"value" : value}};
+        
+        [self JSONObjectWithNamespace:@"person" method:@"edit" attributes:attributes];
+    }
+}
+
+- (void)personEnroll:(NSString *)name withPassword:(NSString *)password withEmail:(NSString *)email {
+    
+    if (name != nil && password != nil && email != nil) {
+        NSDictionary *attributes = @{@"POST" : @{@"name" : name, @"password" : password, @"email" : email}};
+        
+        [self JSONObjectWithNamespace:@"person" method:@"enroll" attributes:attributes];
     }
 }
 

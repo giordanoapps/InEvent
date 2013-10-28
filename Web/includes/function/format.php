@@ -15,7 +15,7 @@
 	function printInformation($table, $result, $data, $format = "json") {
 		$notificationText["count"] = mysql_num_rows($result);
 		
-		$secretFields = array("password", "permission", "companyName", "cnpj", "cpf", "sessionKey", "sessionAmount", "notificationTypeID", "delivered");
+		$secretFields = array("password", "permission", "companyName", "sessionKey", "sessionAmount", "notificationTypeID", "delivered");
 
 		if ($data == true) {
 			$notificationText["data"] = array();

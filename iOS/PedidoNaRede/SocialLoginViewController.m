@@ -176,7 +176,13 @@
 
 - (IBAction)facebookLogin:(id)sender {
     if (!FBSession.activeSession.isOpen) {
+        
         [FBSession openActiveSessionWithReadPermissions:@[@"basic_info", @"email"]
+                                           allowLoginUI:YES
+                                      completionHandler:^(FBSession *session, FBSessionState state, NSError *error) {}];
+        
+        [FBSession openActiveSessionWithPublishPermissions:@[@"publish_stream"]
+                                           defaultAudience:FBSessionDefaultAudienceEveryone
                                            allowLoginUI:YES
                                       completionHandler:
          ^(FBSession *session, FBSessionState state, NSError *error) {
@@ -192,16 +198,8 @@
                  AlertView *alertView = [[AlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"Facebook couldn't log you in! Try again?", nil) delegate:self cancelButtonTitle:nil otherButtonTitle:NSLocalizedString(@"Ok", nil)];
                  [alertView show];
              }
-             
          }];
     }
 }
-
-#pragma mark - Twitter Methods
-
-- (IBAction)twitterLogin:(id)sender {
-    
-}
-
 
 @end

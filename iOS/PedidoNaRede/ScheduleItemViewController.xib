@@ -37,7 +37,7 @@
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="11" textAlignment="center" minimumFontSize="17" id="P2S-DY-3Nl" userLabel="Hour">
                             <rect key="frame" x="16" y="26" width="26" height="23"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" name="Thonburi" family="Thonburi" pointSize="14"/>
+                            <fontDescription key="fontDescription" name="Thonburi" family="Thonburi" pointSize="15"/>
                             <textInputTraits key="textInputTraits"/>
                             <connections>
                                 <outlet property="delegate" destination="-1" id="YAH-Up-OsC"/>
@@ -46,7 +46,7 @@
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="13" textAlignment="center" minimumFontSize="17" id="pXH-sl-eMN" userLabel="Minute">
                             <rect key="frame" x="46" y="26" width="26" height="23"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" name="Thonburi" family="Thonburi" pointSize="14"/>
+                            <fontDescription key="fontDescription" name="Thonburi" family="Thonburi" pointSize="15"/>
                             <textInputTraits key="textInputTraits"/>
                             <connections>
                                 <outlet property="delegate" destination="-1" id="ijn-aD-PyB"/>

@@ -43,13 +43,18 @@
 {
     [super viewDidLoad];
     
-    // Load people
-    [self loadData];
+    // Add People View
+    [self loadAddButton];
     
     // View
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTap)];
     [tapGesture setDelegate:self];
     [self.view addGestureRecognizer:tapGesture];
+    
+    // Add person
+    [_nameInput setPlaceholder:NSLocalizedString(@"Name", nil)];
+    [_emailInput setPlaceholder:NSLocalizedString(@"Email", nil)];
+    [_addPersonButton setTitle:NSLocalizedString(@"Add person", nil) forState:UIControlStateNormal];
     
     // Number field
     [_numberInput setFrame:CGRectMake(_numberInput.frame.origin.x, _numberInput.frame.origin.y, _numberInput.frame.size.width, _numberInput.frame.size.height * 2.0)];
@@ -63,12 +68,6 @@
         [_numberInput.layer setBorderWidth:1.0];
         [_numberInput.layer setBorderColor:[[ColorThemeController tableViewCellInternalBorderColor] CGColor]];
     }
-    
-    // Name field
-    [_nameInput setPlaceholder:NSLocalizedString(@"Name", nil)];
- 
-    // Name field
-    [_emailInput setPlaceholder:NSLocalizedString(@"Email", nil)];
     
     // Message Button
     if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {
@@ -90,8 +89,8 @@
     // Table View
     [self.tableView setAllowsSelection:NO];
     
-    // Add People View
-    [self loadAddButton];
+    // Load people
+    [self loadData];
 }
 
 - (void)viewDidAppear:(BOOL)animated {

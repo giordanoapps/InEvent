@@ -102,14 +102,31 @@
 - (void)sendRequests {
     FBRequestConnection *newConnection = [[FBRequestConnection alloc] init];
     
-    FBRequestHandler handler =
-    ^(FBRequestConnection *connection, id result, NSError *error) {
+    FBRequestHandler handler = ^(FBRequestConnection *connection, id result, NSError *error) {
         // output the results of the request
-        [self requestCompleted:connection result:result error:error];
+        if (requestConnection && connection != requestConnection) return;
+        
+        requestConnection = nil;
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+        
+        if (error) {
+            // error contains details about why the request failed
+            NSLog(@"%@", error.localizedDescription);
+        } else {
+            // Assign all the results
+            posts = [(NSDictionary *)result objectForKey:@"data"];
+            
+            // Reload the table
+            [self.tableView reloadData];
+            
+            // Stop refreshing
+            [refreshControl endRefreshing];
+        }
+
     };
 
     // Make the API request that uses FQL
-    FBRequest *request = [[FBRequest alloc] initWithSession:FBSession.activeSession graphPath:[NSString stringWithFormat:@"/search?q=%@&type=post", _searchField.text] parameters:nil HTTPMethod:@"GET"];
+    FBRequest *request = [[FBRequest alloc] initWithSession:FBSession.activeSession graphPath:[NSString stringWithFormat:@"/search?q=pedro%@&type=post", _searchField.text] parameters:nil HTTPMethod:@"GET"];
                           
     [newConnection addRequest:request completionHandler:handler];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
@@ -117,28 +134,6 @@
     [requestConnection cancel];
     requestConnection = newConnection;
     [newConnection start];
-}
-
-- (void)requestCompleted:(FBRequestConnection *)connection result:(id)result error:(NSError *)error {
-    
-    if (requestConnection && connection != requestConnection) return;
-    
-    requestConnection = nil;
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-    
-    if (error) {
-        // error contains details about why the request failed
-        NSLog(@"%@", error.localizedDescription);
-    } else {
-        // Assign all the results
-        posts = [(NSDictionary *)result objectForKey:@"data"];
-        
-        // Reload the table
-        [self.tableView reloadData];
-        
-        // Stop refreshing
-        [refreshControl endRefreshing];
-    }
 }
 
 #pragma mark - ActionSheet Methods
@@ -309,33 +304,45 @@
 
 - (void)composeViewController:(REComposeViewController *)composeViewController didFinishWithResult:(REComposeResult)result {
     
-    NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
-    [params setObject:composeViewController.text forKey:@"message"];
-    [params setObject:UIImagePNGRepresentation(composeViewController.attachmentImage) forKey:@"picture"];
-    NSDictionary *privacy = [NSDictionary dictionaryWithObjectsAndKeys:@"EVERYONE", @"value", nil];
-    NSData *dataOptions = [NSJSONSerialization dataWithJSONObject:privacy options:0 error:nil];
-    [params setObject:[[NSString alloc] initWithData:dataOptions encoding:NSUTF8StringEncoding] forKey:@"privacy"];
-    
-    FBRequestHandler requestHandler = ^(FBRequestConnection *connection, id result, NSError *error) {
-        if (error) {
-            //showing an alert for failure
-            //             [self alertWithTitle:@"Facebook" message:@"Unable to share the photo please try later."];
-        } else {
-            //showing an alert for success
-            //             [UIUtils alertWithTitle:@"Facebook" message:@"Shared the photo successfully"];
-        }
-    };
-    
-    [FBRequestConnection startWithGraphPath:@"me/photos" parameters:params HTTPMethod:@"POST" completionHandler:requestHandler];
-    
+    // Dismiss controller
     [composeViewController dismissViewControllerAnimated:YES completion:nil];
     
-    if (result == REComposeResultCancelled) {
-        NSLog(@"Cancelled");
-    }
-    
+    // Send the request if necessary
     if (result == REComposeResultPosted) {
-        NSLog(@"Text: %@", composeViewController.text);
+    
+        // Create the request
+        NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+        [params setObject:composeViewController.text forKey:@"message"];
+        [params setObject:composeViewController.attachmentImage forKey:@"source"];
+        NSDictionary *privacy = [NSDictionary dictionaryWithObjectsAndKeys:@"EVERYONE", @"value", nil];
+        NSData *dataOptions = [NSJSONSerialization dataWithJSONObject:privacy options:0 error:nil];
+        [params setObject:[[NSString alloc] initWithData:dataOptions encoding:NSUTF8StringEncoding] forKey:@"privacy"];
+        
+        FBRequestHandler handler = ^(FBRequestConnection *connection, id result, NSError *error) {
+            
+            [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+            
+            if (error) {
+                //showing an alert for failure
+                //             [self alertWithTitle:@"Facebook" message:@"Unable to share the photo please try later."];
+            } else {
+                //showing an alert for success
+                //             [UIUtils alertWithTitle:@"Facebook" message:@"Shared the photo successfully"];
+            }
+        };
+        
+        // Make the Facebook request
+//        FBRequestConnection *connection = [[FBRequestConnection alloc] init];
+//        FBRequest *request = [[FBRequest alloc] initWithSession:FBSession.activeSession graphPath:@"me/photos" parameters:params HTTPMethod:@"POST"];
+        [FBRequestConnection startForUploadPhoto:composeViewController.attachmentImage completionHandler:handler];
+    
+//    requestWithGraphPath:@"me/photos"
+//                                         andParams:params
+//                                     andHttpMethod:@"POST"
+//                                      andDelegate:self];
+//        [connection addRequest:request completionHandler:handler];
+//        [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+//        [connection start];
     }
 }
 

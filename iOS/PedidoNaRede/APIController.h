@@ -124,9 +124,9 @@
 - (void)personSignIn:(NSString *)email withPassword:(NSString *)password;
 - (void)personSignInWithLinkedInToken:(NSString *)linkedInToken;
 - (void)personSignInWithFacebookToken:(NSString *)facebookToken;
-- (void)personSignInWithTwitterToken:(NSString *)twitterToken;
+- (void)personGetDetailsWithToken:(NSString *)tokenID;
+- (void)personEditField:(NSString *)name withValue:(NSString *)value withTokenID:(NSString *)tokenID;
 - (void)personEnroll:(NSString *)name withPassword:(NSString *)password withEmail:(NSString *)email;
-- (void)personGetWorkingEventsWithToken:(NSString *)tokenID;
 
 #pragma mark - Photo
 - (void)photoPostPhoto:(NSString *)url AtEvent:(NSInteger)eventID WithTokenID:(NSString *)tokenID;

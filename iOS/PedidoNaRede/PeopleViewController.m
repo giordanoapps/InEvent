@@ -44,8 +44,7 @@
 {
     [super viewDidLoad];
     
-    // Load people
-    [self loadData];
+    [self loadAddButton];
     
     // Refresh Control
     refreshControl = [[UIRefreshControl alloc] init];
@@ -57,6 +56,13 @@
     self.collectionView.alwaysBounceVertical = YES;
     self.collectionView.backgroundColor = [ColorThemeController tableViewBackgroundColor];
     [self.collectionView registerNib:[UINib nibWithNibName:@"PeopleViewCell" bundle:nil] forCellWithReuseIdentifier:@"PeopleViewCell"];
+    
+    // Add Group
+    [_nameInput setPlaceholder:NSLocalizedString(@"Name", nil)];
+    [_addGroupButton setTitle:NSLocalizedString(@"Add group", nil) forState:UIControlStateNormal];
+    
+    // Load people
+    [self loadData];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -96,14 +102,53 @@
 
 - (void)loadAddButton {
     // Right Button
-    self.rightBarButton = [[CoolBarButtonItem alloc] initCustomButtonWithImage:[UIImage imageNamed:@"32-Plus-2.png"] frame:CGRectMake(0, 0, 42.0, 30.0) insets:UIEdgeInsetsMake(5.0, 11.0, 5.0, 11.0) target:self action:@selector(loadAddPersonView)];
+    self.rightBarButton = [[CoolBarButtonItem alloc] initCustomButtonWithImage:[UIImage imageNamed:@"32-Plus-2.png"] frame:CGRectMake(0, 0, 42.0, 30.0) insets:UIEdgeInsetsMake(5.0, 11.0, 5.0, 11.0) target:self action:@selector(loadAddGroupView)];
     self.navigationItem.rightBarButtonItem = self.rightBarButton;
 }
 
 - (void)loadDoneButton {
     // Right Button
-    self.rightBarButton = self.navigationItem.rightBarButtonItem;
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(removePersonView)];
+    self.rightBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(removeGroupView)];
+    self.navigationItem.rightBarButtonItem = self.rightBarButton;
+}
+
+#pragma mark - Add People Methods
+
+- (void)loadAddGroupView {
+    // Add the frame
+    [_addGroupView setFrame:CGRectMake(_addGroupView.frame.origin.x, -(_addGroupView.frame.size.height), self.view.frame.size.width, _addGroupView.frame.size.height)];
+    [self.view addSubview:_addGroupView];
+    
+    // Animate the transition
+    [UIView animateWithDuration:1.0f animations:^{
+        [_addGroupView setFrame:CGRectMake(_addGroupView.frame.origin.x, _addGroupView.frame.origin.y + _addGroupView.frame.size.height, _addGroupView.frame.size.width, _addGroupView.frame.size.height)];
+    } completion:^(BOOL completion){
+        [self loadDoneButton];
+    }];
+}
+
+- (void)removeGroupView {
+    // Resign the text field responders
+    [_nameInput resignFirstResponder];
+    
+    // Animate the transition
+    [UIView animateWithDuration:1.0f animations:^{
+        [_addGroupView setFrame:CGRectMake(_addGroupView.frame.origin.x, -(_addGroupView.frame.size.height), _addGroupView.frame.size.width, _addGroupView.frame.size.height)];
+    } completion:^(BOOL completion){
+        [_addGroupView removeFromSuperview];
+        [self loadAddButton];
+    }];
+}
+
+- (IBAction)addGroup {
+    
+    if ([_nameInput.text length] > 0) {
+        // Send to server
+        [[[APIController alloc] initWithDelegate:self forcing:YES] groupCreateGroupAtEvent:[[EventToken sharedInstance] eventID] withTokenID:[[HumanToken sharedInstance] tokenID]];
+        
+        // Remove view
+        [self removeGroupView];
+    }
 }
 
 #pragma mark - Collection View Data Source

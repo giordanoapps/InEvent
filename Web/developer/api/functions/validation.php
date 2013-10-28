@@ -248,14 +248,14 @@
 					");
 
 					$details = getMemberDetails($core->memberID);
-					$details = $details["data"][0];
 					$events = getMemberEvents($core->memberID);
 
 					// Return some information
-					$details["events"] = $events["data"];
-					$details["tokenID"] = $sessionKey;
+					$details["data"][0]["events"] = $events["data"];
+					$details["data"][0]["tokenID"] = $sessionKey;
 					
-					return $details;
+					return $details["data"][0];
+					
 				} else {
 					http_status_code(500);
 				}

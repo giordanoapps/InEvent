@@ -65,21 +65,29 @@
 
 	<div class="documentationFunctionBox">
 		<p class="documentFunctionName">
-			<span>person.edit(<b>tokenID</b>, <b>name</b> = null, <b>email</b> = null, <b>cpf</b> = null, <b>rg</b> = null, <b>telephone</b> = null, <b>university</b> = null, <b>course</b> = null)</span>
-			<img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=person.edit&tokenID=$tokenID" data-post="member=">
+			<span>person.getDetails(<b>tokenID</b>)</span>
+			<img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=person.getDetails&tokenID=$tokenID">
 		</p>
 
-		<p class="documentFunctionDescription">Edita a conta com nome <i>name</i>, email <i>email</i>, CPF <i>cpf</i>, RG <i>rg</i>, telefone <i>telephone</i>, universidade <i>university</i> e curso <i>course</i>.</p>
+		<p class="documentFunctionDescription">Retorna todos detalhes da pessoa com token <i>tokenID</i>.</p>
 
 		<div class="documentationFunctionParametersBox">
 			<p><b>tokenID</b><sub>GET</sub> : id de autenticação </p>
-			<p><b>name</b><sub>POST</sub> : nome da pessoa </p>
-			<p><b>email</b><sub>POST</sub> : email da pessoa </p>
-			<p><b>cpf</b><sub>POST</sub> : CPF da pessoa </p>
-			<p><b>rg</b><sub>POST</sub> : RG da pessoa </p>
-			<p><b>telephone</b><sub>POST</sub> : telefone da pessoa </p>
-			<p><b>university</b><sub>POST</sub> : universidade da pessoa </p>
-			<p><b>course</b><sub>POST</sub> : curso da pessoa </p>
+		</div>
+	</div>
+
+	<div class="documentationFunctionBox">
+		<p class="documentFunctionName">
+			<span>person.edit(<b>tokenID</b>, <b>name</b>, <b>value</b>)</span>
+			<img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=person.edit&tokenID=$tokenID&name=nome" data-post="value=valor">
+		</p>
+
+		<p class="documentFunctionDescription">Edita o valor <i>value</i> no campo <i>name</i> da pessoa com token <i>tokenID</i>.</p>
+
+		<div class="documentationFunctionParametersBox">
+			<p><b>tokenID</b><sub>GET</sub> : id de autenticação </p>
+			<p><b>name</b><sub>GET</sub> : nome do campo </p>
+            <p><b>value</b><sub>POST</sub> : valor do campo </p>
 		</div>
 	</div>
 	
@@ -154,19 +162,6 @@
 			<p><b>tokenID</b><sub>GET</sub> : id de autenticação </p>
 			<p><b>oldPassword</b><sub>GET</sub> : senha antiga </p>
 			<p><b>newPassword</b><sub>GET</sub> : senha nova </p>
-		</div>
-	</div>
-	
-	<div class="documentationFunctionBox">
-		<p class="documentFunctionName">
-			<span>person.getWorkingEvents(<b>tokenID</b>)</span>
-			<img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=person.getWorkingEvents&tokenID=$tokenID">
-		</p>
-
-		<p class="documentFunctionDescription">Retorna todas os eventos em que a pessoa com o <i>tokenID</i> está trabalhando.</p>
-
-		<div class="documentationFunctionParametersBox">
-			<p><b>tokenID</b><sub>GET</sub> : id de autenticação </p>
 		</div>
 	</div>
 

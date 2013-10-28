@@ -14,7 +14,6 @@
 #import "NSString+HTML.h"
 #import "HumanToken.h"
 #import "EventToken.h"
-#import "GAI.h"
 #import "UIPlaceHolderTextView.h"
 #import "CoolBarButtonItem.h"
 
@@ -88,7 +87,7 @@
     locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     [locationManager startUpdatingLocation];
     
-    // Schedule details
+    // Event details
     [self loadData];
 }
 
@@ -288,13 +287,11 @@
 }
 
 - (void)loadMenuButton {
-    // Right Button
     self.leftBarButton = [[CoolBarButtonItem alloc] initCustomButtonWithImage:[UIImage imageNamed:@"32-Pencil-_-Edit.png"] frame:CGRectMake(0, 0, 42.0, 30.0) insets:UIEdgeInsetsMake(5.0, 11.0, 5.0, 11.0) target:self action:@selector(startEditing)];
     self.navigationItem.leftBarButtonItem = self.leftBarButton;
 }
 
 - (void)loadDoneButton {
-    // Right Button
     self.leftBarButton = [[CoolBarButtonItem alloc] initCustomButtonWithImage:[UIImage imageNamed:@"32-Check-2.png"] frame:CGRectMake(0, 0, 42.0, 30.0) insets:UIEdgeInsetsMake(5.0, 11.0, 5.0, 11.0) target:self action:@selector(endEditing)];
     self.navigationItem.leftBarButtonItem = self.leftBarButton;
 }
@@ -463,12 +460,14 @@
 
 - (void)apiController:(APIController *)apiController didLoadDictionaryFromServer:(NSDictionary *)dictionary {
     
-    if ([[dictionary objectForKey:@"data"] count] > 0) {
-        // Assign the data object to the companies
-        eventData = [[dictionary objectForKey:@"data"] objectAtIndex:0];
-        
-        // Paint the UI
-        [self paint];
+    if ([apiController.method isEqualToString:@"getSingle"]) {
+        if ([[dictionary objectForKey:@"data"] count] > 0) {
+            // Assign the data object to the event
+            eventData = [[dictionary objectForKey:@"data"] objectAtIndex:0];
+            
+            // Paint the UI
+            [self paint];
+        }
     }
     
     // Stop refreshing
