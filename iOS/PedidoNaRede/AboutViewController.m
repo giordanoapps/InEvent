@@ -40,11 +40,8 @@
 //    _leftArrow.transform = CGAffineTransformMakeRotation(0.2f);
     
     // About
-    NSString *html = @"<p style='font-family: TrebuchetMS; font-size: 160%; text-align: center;'><b>InEvent</b> é um produto do <b>Estúdio Trilha</b>.</p>";
-    [_aboutText loadHTMLString:html baseURL:nil];
-    
-    _aboutText.scrollView.scrollEnabled = NO;
-    _aboutText.scrollView.bounces = NO;
+    _aboutText.scrollEnabled = NO;
+    _aboutText.bounces = NO;
 }
 
 - (void)didReceiveMemoryWarning

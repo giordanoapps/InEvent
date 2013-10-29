@@ -17,7 +17,7 @@
 #import "ColorThemeController.h"
 #import "HumanToken.h"
 #import "EventToken.h"
-#import "APIController.h"
+#import "InEventAPI.h"
 #import "CoolBarButtonItem.h"
 #import "NSString+HTML.h"
 #import "NSObject+Triangle.h"
@@ -243,7 +243,7 @@
     
     // Field will always have a placeholder, so we can cast it as a UITextField
     if (![((UITextField *)field).placeholder isEqualToString:((UITextField *)field).text]) {
-        [[[APIController alloc] initWithDelegate:self forcing:YES] activityEditField:name withValue:((UITextField *)field).text atActivity:activityID withTokenID:tokenID];
+        [[[InEventActivityAPIController alloc] initWithDelegate:self forcing:YES] editField:name withValue:((UITextField *)field).text atActivity:activityID withTokenID:tokenID];
     }
     
     // Change text view editable mode
@@ -527,7 +527,7 @@
 
 #pragma mark - APIController Delegate
 
-- (void)apiController:(APIController *)apiController didLoadDictionaryFromServer:(NSDictionary *)dictionary {
+- (void)apiController:(InEventAPIController *)apiController didLoadDictionaryFromServer:(NSDictionary *)dictionary {
     
     if ([apiController.method isEqualToString:@"edit"]) {
             

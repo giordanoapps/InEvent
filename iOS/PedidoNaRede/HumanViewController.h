@@ -10,15 +10,15 @@
 #import <MapKit/MapKit.h>
 #import <CoreLocation/CoreLocation.h>
 #import "WrapperViewController.h"
-#import "APIController.h"
 
-@interface HumanViewController : WrapperViewController <APIControllerDelegate>
+@interface HumanViewController : WrapperViewController <InEventAPIControllerDelegate>
 
 @property (nonatomic, strong) IBOutlet UIScrollView *view;
 @property (nonatomic, strong) IBOutlet UIView *wrapper;
 @property (nonatomic, strong) IBOutlet UIImageView *photo;
 @property (nonatomic, strong) IBOutlet UITextField *name;
-@property (nonatomic, strong) IBOutlet UITextField *description;
+@property (nonatomic, strong) IBOutlet UITextField *role;
+@property (nonatomic, strong) IBOutlet UITextField *company;
 @property (nonatomic, strong) IBOutlet UITextField *email;
 @property (nonatomic, strong) IBOutlet UITextField *telephone;
 @property (nonatomic, strong) IBOutlet UITextField *location;

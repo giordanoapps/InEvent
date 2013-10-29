@@ -6,6 +6,7 @@
 //  Copyright (c) 2013 Pedro Góes. All rights reserved.
 //
 
+#import <Parse/Parse.h>
 #import "MarketplaceViewController.h"
 #import "MarketplaceViewCell.h"
 #import "AppDelegate.h"
@@ -19,7 +20,7 @@
 #import "GAI.h"
 #import "GAIDictionaryBuilder.h"
 #import "Enrollment.h"
-#import <Parse/Parse.h>
+#import "InEventAPI.h"
 
 @interface MarketplaceViewController () {
     UIRefreshControl *refreshControl;
@@ -89,9 +90,9 @@
     
     if ([[HumanToken sharedInstance] isMemberAuthenticated]) {
         NSString *tokenID = [[HumanToken sharedInstance] tokenID];
-        [[[APIController alloc] initWithDelegate:self forcing:forcing] eventGetEventsWithTokenID:tokenID];
+        [[[InEventEventAPIController alloc] initWithDelegate:self forcing:forcing] getEventsWithTokenID:tokenID];
     } else {
-        [[[APIController alloc] initWithDelegate:self forcing:forcing] eventGetEvents];
+        [[[InEventEventAPIController alloc] initWithDelegate:self forcing:forcing] getEvents];
     }
 }
 
@@ -103,7 +104,7 @@
     NSIndexPath *swipedIndexPath = [self.tableView indexPathForRowAtPoint:swipeLocation];
     
     NSString *tokenID = [[HumanToken sharedInstance] tokenID];
-    [[[APIController alloc] initWithDelegate:self forcing:YES] eventRequestEnrollmentAtEvent:[[[self.events objectAtIndex:swipedIndexPath.row] objectForKey:@"id"] integerValue] withTokenID:tokenID];
+    [[[InEventEventAPIController alloc] initWithDelegate:self forcing:YES] requestEnrollmentAtEvent:[[[self.events objectAtIndex:swipedIndexPath.row] objectForKey:@"id"] integerValue] withTokenID:tokenID];
 }
 
 #pragma mark - Table View Data Source
@@ -204,7 +205,7 @@
 
 #pragma mark - APIController Delegate
 
-- (void)apiController:(APIController *)apiController didLoadDictionaryFromServer:(NSDictionary *)dictionary {
+- (void)apiController:(InEventAPIController *)apiController didLoadDictionaryFromServer:(NSDictionary *)dictionary {
     
     if ([apiController.method isEqualToString:@"getEvents"]) {
         // Assign the data object to the companies
@@ -221,7 +222,7 @@
     }
 }
 
-- (void)apiController:(APIController *)apiController didFailWithError:(NSError *)error {
+- (void)apiController:(InEventAPIController *)apiController didFailWithError:(NSError *)error {
     [super apiController:apiController didFailWithError:error];
     
     [refreshControl endRefreshing];

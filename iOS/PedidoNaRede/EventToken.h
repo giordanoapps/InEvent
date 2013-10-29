@@ -7,9 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "APIController.h"
+#import "InEventAPIController.h"
 
-@interface EventToken : NSObject <APIControllerDelegate>
+@interface EventToken : NSObject <InEventAPIControllerDelegate>
 
 @property (assign, nonatomic) NSInteger eventID;
 @property (strong, nonatomic) NSString *name;

@@ -348,12 +348,12 @@
 
 #pragma mark - APIController Delegate
 
-- (void)apiController:(APIController *)apiController didLoadDictionaryFromServer:(NSDictionary *)dictionary {
+- (void)apiController:(InEventAPIController *)apiController didLoadDictionaryFromServer:(NSDictionary *)dictionary {
     
     [refreshControl endRefreshing];
 }
 
-- (void)apiController:(APIController *)apiController didFailWithError:(NSError *)error {
+- (void)apiController:(InEventAPIController *)apiController didFailWithError:(NSError *)error {
     [super apiController:apiController didFailWithError:error];
     
     [refreshControl endRefreshing];

@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "WrapperViewController.h"
 
-@interface StreamDetailViewController : WrapperViewController <APIControllerDelegate, UIGestureRecognizerDelegate, UISplitViewControllerDelegate>
+@interface StreamDetailViewController : WrapperViewController <InEventAPIControllerDelegate, UIGestureRecognizerDelegate, UISplitViewControllerDelegate>
 
 @end

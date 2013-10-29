@@ -27,7 +27,7 @@
 
 			// Create a cURL request
 		    $ch = curl_init();
-		    $baseURL = "https://api.linkedin.com/v1/people/~:(id,first-name,last-name,email-address)?oauth2_access_token=" . $linkedInToken . "&format=json";
+		    $baseURL = "https://api.linkedin.com/v1/people/~:(id,first-name,last-name,email-address,picture-url)?oauth2_access_token=" . $linkedInToken . "&format=json";
 		    curl_setopt($ch, CURLOPT_URL, $baseURL);
 		    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		    $userProfile = json_decode(curl_exec($ch), true);
@@ -36,6 +36,7 @@
 				$linkedInID = $userProfile['id'];
 				$name = $userProfile['firstName'] . $userProfile['lastName'];
 				$email = $userProfile['emailAddress'];
+				$image = $userProfile['pictureUrl'];
 
 				// We now see if the current member has a profile with us
 				$result = resourceForQuery(
@@ -69,6 +70,7 @@
 							"UPDATE
 								`member`
 							SET
+								`member`.`image` = '$image',
 								`member`.`linkedInID` = '$linkedInID'
 							WHERE 1
 								AND `member`.`id` = $memberID
@@ -233,7 +235,7 @@
 			$value = getEmptyAttribute($_POST['value']);
 			
 			// We list all the fields that can be edited by the activity platform
-			$validFields = array("name", "description", "cpf", "rg", "usp", "telephone", "city", "email", "university", "course", "facebookID", "linkedInID");
+			$validFields = array("name", "role", "company", "cpf", "rg", "usp", "telephone", "city", "email", "university", "course", "facebookID", "linkedInID");
 
 			if (in_array($name, $validFields) == TRUE) {
 

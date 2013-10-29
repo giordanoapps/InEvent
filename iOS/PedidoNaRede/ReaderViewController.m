@@ -14,6 +14,7 @@
 #import "UtilitiesController.h"
 #import "CoolBarButtonItem.h"
 #import "ReaderViewCell.h"
+#import "InEventAPI.h"
 
 @interface ReaderViewController () {
     UIRefreshControl *refreshControl;
@@ -133,7 +134,7 @@
     if ([[HumanToken sharedInstance] isMemberAuthenticated]) {
         NSString *tokenID = [[HumanToken sharedInstance] tokenID];
         NSInteger activityID = [[_activityData objectForKey:@"id"] integerValue];
-        [[[APIController alloc] initWithDelegate:self forcing:forcing] activityGetPeopleAtActivity:activityID withTokenID:tokenID];
+        [[[InEventActivityAPIController alloc] initWithDelegate:self forcing:forcing] getPeopleAtActivity:activityID withTokenID:tokenID];
     }
 }
 
@@ -184,7 +185,7 @@
 
     if ([_nameInput.text length] > 0 && [_emailInput.text length] > 0) {
         // Send to server
-        [[[APIController alloc] initWithDelegate:self forcing:YES] activityRequestEnrollmentForPersonWithName:_nameInput.text andEmail:_emailInput.text atActivity:[[_activityData objectForKey:@"id"] integerValue] withTokenID:[[HumanToken sharedInstance] tokenID]];
+        [[[InEventActivityAPIController alloc] initWithDelegate:self forcing:YES] requestEnrollmentForPersonWithName:_nameInput.text andEmail:_emailInput.text atActivity:[[_activityData objectForKey:@"id"] integerValue] withTokenID:[[HumanToken sharedInstance] tokenID]];
         
         // Remove view
         [self removePersonView];
@@ -315,7 +316,7 @@
         
         if (memberID != 0) {
             // Send it to the server
-            [[[APIController alloc] initWithDelegate:self forcing:YES] activityConfirmEntranceForPerson:memberID atActivity:[[_activityData objectForKey:@"id"] integerValue] withTokenID:[[HumanToken sharedInstance] tokenID]];
+            [[[InEventActivityAPIController alloc] initWithDelegate:self forcing:YES] confirmEntranceForPerson:memberID atActivity:[[_activityData objectForKey:@"id"] integerValue] withTokenID:[[HumanToken sharedInstance] tokenID]];
         }
     } else {
         
@@ -323,7 +324,7 @@
         
         if (memberID != 0) {
             // Send it to the server
-            [[[APIController alloc] initWithDelegate:self forcing:YES] activityRevokeEntranceForPerson:memberID atActivity:[[_activityData objectForKey:@"id"] integerValue] withTokenID:[[HumanToken sharedInstance] tokenID]];
+            [[[InEventActivityAPIController alloc] initWithDelegate:self forcing:YES] revokeEntranceForPerson:memberID atActivity:[[_activityData objectForKey:@"id"] integerValue] withTokenID:[[HumanToken sharedInstance] tokenID]];
         }
     }
 }
@@ -333,7 +334,7 @@
     
     if (memberID != 0) {
         // Send it to the server
-        [[[APIController alloc] initWithDelegate:self forcing:YES] activityConfirmPaymentForPerson:memberID atActivity:[[_activityData objectForKey:@"id"] integerValue] withTokenID:[[HumanToken sharedInstance] tokenID]];
+        [[[InEventActivityAPIController alloc] initWithDelegate:self forcing:YES] confirmPaymentForPerson:memberID atActivity:[[_activityData objectForKey:@"id"] integerValue] withTokenID:[[HumanToken sharedInstance] tokenID]];
     }
 }
 
@@ -468,7 +469,7 @@
 
 #pragma mark - APIController Delegate
 
-- (void)apiController:(APIController *)apiController didLoadDictionaryFromServer:(NSDictionary *)dictionary {
+- (void)apiController:(InEventAPIController *)apiController didLoadDictionaryFromServer:(NSDictionary *)dictionary {
     
     if ([apiController.method isEqualToString:@"getPeople"]) {
         // Assign the data object to the companies
@@ -487,13 +488,13 @@
     }
 }
 
-- (void)apiController:(APIController *)apiController didFailWithError:(NSError *)error {
+- (void)apiController:(InEventAPIController *)apiController didFailWithError:(NSError *)error {
     [super apiController:apiController didFailWithError:error];
     
     [refreshControl endRefreshing];
 }
 
-- (void)apiController:(APIController *)apiController didSaveForLaterWithError:(NSError *)error {
+- (void)apiController:(InEventAPIController *)apiController didSaveForLaterWithError:(NSError *)error {
     
     if ([apiController.method isEqualToString:@"getPeople"]) {
         // Save the path of the current file object

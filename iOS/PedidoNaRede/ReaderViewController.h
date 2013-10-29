@@ -8,9 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "WrapperViewController.h"
-#import "APIController.h"
 
-@interface ReaderViewController : WrapperViewController <UITableViewDelegate, UITableViewDataSource, APIControllerDelegate, UITextFieldDelegate, UIGestureRecognizerDelegate>
+@interface ReaderViewController : WrapperViewController <UITableViewDelegate, UITableViewDataSource, InEventAPIControllerDelegate, UITextFieldDelegate, UIGestureRecognizerDelegate>
 
 @property (strong, nonatomic) NSDictionary *activityData;
 

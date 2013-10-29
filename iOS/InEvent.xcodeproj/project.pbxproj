@@ -70,7 +70,6 @@
 		EB28747B16A71F1700A06781 /* StepperView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB28747A16A71F1700A06781 /* StepperView.xib */; };
 		EB30CAF117D6D09E00584FB8 /* UIButton+Components.m in Sources */ = {isa = PBXBuildFile; fileRef = EB30CAF017D6D09E00584FB8 /* UIButton+Components.m */; };
 		EB39397616654B4400580A4E /* AlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB39393116654B4400580A4E /* AlertView.m */; };
-		EB39397716654B4400580A4E /* APIController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB39393316654B4400580A4E /* APIController.m */; };
 		EB39397816654B4400580A4E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EB39393516654B4400580A4E /* AppDelegate.m */; };
 		EB39398B16654B4400580A4E /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB39395016654B4400580A4E /* MapViewController.m */; };
 		EB39398D16654B4400580A4E /* MapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB39395216654B4400580A4E /* MapViewController.xib */; };
@@ -263,6 +262,13 @@
 		EBCD0EE6181DBC6000CE225C /* 32-Map.png in Resources */ = {isa = PBXBuildFile; fileRef = EBCD0EE5181DBC6000CE225C /* 32-Map.png */; };
 		EBCD0EE8181DBCB900CE225C /* 32-Mail.png in Resources */ = {isa = PBXBuildFile; fileRef = EBCD0EE7181DBCB900CE225C /* 32-Mail.png */; };
 		EBCD0EEA181DBCCA00CE225C /* 32-Mail@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBCD0EE9181DBCCA00CE225C /* 32-Mail@2x.png */; };
+		EBCD0EFD181F8C9700CE225C /* InEventActivityAPIController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBCD0EF0181F8C9700CE225C /* InEventActivityAPIController.m */; };
+		EBCD0EFE181F8C9700CE225C /* InEventAdAPIController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBCD0EF2181F8C9700CE225C /* InEventAdAPIController.m */; };
+		EBCD0EFF181F8C9700CE225C /* InEventAPIController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBCD0EF4181F8C9700CE225C /* InEventAPIController.m */; };
+		EBCD0F00181F8C9700CE225C /* InEventEventAPIController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBCD0EF6181F8C9700CE225C /* InEventEventAPIController.m */; };
+		EBCD0F01181F8C9700CE225C /* InEventGroupAPIController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBCD0EF8181F8C9700CE225C /* InEventGroupAPIController.m */; };
+		EBCD0F02181F8C9700CE225C /* InEventPersonAPIController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBCD0EFA181F8C9700CE225C /* InEventPersonAPIController.m */; };
+		EBCD0F03181F8C9700CE225C /* InEventPhotoAPIController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBCD0EFC181F8C9700CE225C /* InEventPhotoAPIController.m */; };
 		EBD055A717AF8CF3008355E8 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD055A517AF8CF3008355E8 /* AboutViewController.m */; };
 		EBD055A817AF8CF3008355E8 /* AboutViewController~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBD055A617AF8CF3008355E8 /* AboutViewController~iphone.xib */; };
 		EBD055AC17AF919C008355E8 /* 16-Footprints.png in Resources */ = {isa = PBXBuildFile; fileRef = EBD055AA17AF919C008355E8 /* 16-Footprints.png */; };
@@ -451,8 +457,6 @@
 		EB30CAF017D6D09E00584FB8 /* UIButton+Components.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+Components.m"; sourceTree = "<group>"; };
 		EB39393016654B4400580A4E /* AlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlertView.h; sourceTree = "<group>"; };
 		EB39393116654B4400580A4E /* AlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlertView.m; sourceTree = "<group>"; };
-		EB39393216654B4400580A4E /* APIController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APIController.h; sourceTree = "<group>"; };
-		EB39393316654B4400580A4E /* APIController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APIController.m; sourceTree = "<group>"; };
 		EB39393416654B4400580A4E /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		EB39393516654B4400580A4E /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		EB39394F16654B4400580A4E /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
@@ -728,6 +732,22 @@
 		EBCD0EE5181DBC6000CE225C /* 32-Map.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Map.png"; sourceTree = "<group>"; };
 		EBCD0EE7181DBCB900CE225C /* 32-Mail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Mail.png"; sourceTree = "<group>"; };
 		EBCD0EE9181DBCCA00CE225C /* 32-Mail@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Mail@2x.png"; sourceTree = "<group>"; };
+		EBCD0EEF181F8C9700CE225C /* InEventActivityAPIController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InEventActivityAPIController.h; path = InEventAPI/InEventActivityAPIController.h; sourceTree = "<group>"; };
+		EBCD0EF0181F8C9700CE225C /* InEventActivityAPIController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InEventActivityAPIController.m; path = InEventAPI/InEventActivityAPIController.m; sourceTree = "<group>"; };
+		EBCD0EF1181F8C9700CE225C /* InEventAdAPIController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InEventAdAPIController.h; path = InEventAPI/InEventAdAPIController.h; sourceTree = "<group>"; };
+		EBCD0EF2181F8C9700CE225C /* InEventAdAPIController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InEventAdAPIController.m; path = InEventAPI/InEventAdAPIController.m; sourceTree = "<group>"; };
+		EBCD0EF3181F8C9700CE225C /* InEventAPIController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InEventAPIController.h; path = InEventAPI/InEventAPIController.h; sourceTree = "<group>"; };
+		EBCD0EF4181F8C9700CE225C /* InEventAPIController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InEventAPIController.m; path = InEventAPI/InEventAPIController.m; sourceTree = "<group>"; };
+		EBCD0EF5181F8C9700CE225C /* InEventEventAPIController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InEventEventAPIController.h; path = InEventAPI/InEventEventAPIController.h; sourceTree = "<group>"; };
+		EBCD0EF6181F8C9700CE225C /* InEventEventAPIController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InEventEventAPIController.m; path = InEventAPI/InEventEventAPIController.m; sourceTree = "<group>"; };
+		EBCD0EF7181F8C9700CE225C /* InEventGroupAPIController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InEventGroupAPIController.h; path = InEventAPI/InEventGroupAPIController.h; sourceTree = "<group>"; };
+		EBCD0EF8181F8C9700CE225C /* InEventGroupAPIController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InEventGroupAPIController.m; path = InEventAPI/InEventGroupAPIController.m; sourceTree = "<group>"; };
+		EBCD0EF9181F8C9700CE225C /* InEventPersonAPIController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InEventPersonAPIController.h; path = InEventAPI/InEventPersonAPIController.h; sourceTree = "<group>"; };
+		EBCD0EFA181F8C9700CE225C /* InEventPersonAPIController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InEventPersonAPIController.m; path = InEventAPI/InEventPersonAPIController.m; sourceTree = "<group>"; };
+		EBCD0EFB181F8C9700CE225C /* InEventPhotoAPIController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InEventPhotoAPIController.h; path = InEventAPI/InEventPhotoAPIController.h; sourceTree = "<group>"; };
+		EBCD0EFC181F8C9700CE225C /* InEventPhotoAPIController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InEventPhotoAPIController.m; path = InEventAPI/InEventPhotoAPIController.m; sourceTree = "<group>"; };
+		EBCD0F07182039F000CE225C /* InEventAPIControllerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = InEventAPIControllerDelegate.h; path = InEventAPI/InEventAPIControllerDelegate.h; sourceTree = "<group>"; };
+		EBCD0F0818203D0D00CE225C /* InEventAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = InEventAPI.h; path = InEventAPI/InEventAPI.h; sourceTree = "<group>"; };
 		EBD055A417AF8CF3008355E8 /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
 		EBD055A517AF8CF3008355E8 /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
 		EBD055A617AF8CF3008355E8 /* AboutViewController~iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "AboutViewController~iphone.xib"; sourceTree = "<group>"; };
@@ -1182,6 +1202,7 @@
 		EB53F6451709141300715E2D /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				EBCD0EEB181F8B3900CE225C /* InEventAPI */,
 				EB01FFBA181B3AFA00089915 /* AFNetworking */,
 				EBA89EB317AFED5E00D9CD6B /* CustomTabBar */,
 				EB53F6441709140500715E2D /* GoogleAnalytics */,
@@ -1347,8 +1368,6 @@
 		EB8974EF180CC58200DB2486 /* General */ = {
 			isa = PBXGroup;
 			children = (
-				EB39393216654B4400580A4E /* APIController.h */,
-				EB39393316654B4400580A4E /* APIController.m */,
 				EB39393416654B4400580A4E /* AppDelegate.h */,
 				EB39393516654B4400580A4E /* AppDelegate.m */,
 				EBD27B6116D827C300DA6ACE /* ColorThemeController.h */,
@@ -1579,6 +1598,30 @@
 				EB837CB9171AE45400FA1EBC /* 16-User@2x.png */,
 			);
 			name = "Sliding Menu";
+			sourceTree = "<group>";
+		};
+		EBCD0EEB181F8B3900CE225C /* InEventAPI */ = {
+			isa = PBXGroup;
+			children = (
+				EBCD0EEF181F8C9700CE225C /* InEventActivityAPIController.h */,
+				EBCD0EF0181F8C9700CE225C /* InEventActivityAPIController.m */,
+				EBCD0EF1181F8C9700CE225C /* InEventAdAPIController.h */,
+				EBCD0EF2181F8C9700CE225C /* InEventAdAPIController.m */,
+				EBCD0F0818203D0D00CE225C /* InEventAPI.h */,
+				EBCD0EF3181F8C9700CE225C /* InEventAPIController.h */,
+				EBCD0EF4181F8C9700CE225C /* InEventAPIController.m */,
+				EBCD0F07182039F000CE225C /* InEventAPIControllerDelegate.h */,
+				EBCD0EF5181F8C9700CE225C /* InEventEventAPIController.h */,
+				EBCD0EF6181F8C9700CE225C /* InEventEventAPIController.m */,
+				EBCD0EF7181F8C9700CE225C /* InEventGroupAPIController.h */,
+				EBCD0EF8181F8C9700CE225C /* InEventGroupAPIController.m */,
+				EBCD0EF9181F8C9700CE225C /* InEventPersonAPIController.h */,
+				EBCD0EFA181F8C9700CE225C /* InEventPersonAPIController.m */,
+				EBCD0EFB181F8C9700CE225C /* InEventPhotoAPIController.h */,
+				EBCD0EFC181F8C9700CE225C /* InEventPhotoAPIController.m */,
+			);
+			name = InEventAPI;
+			path = PedidoNaRede;
 			sourceTree = "<group>";
 		};
 		EBD055A917AF8D0A008355E8 /* Extra */ = {
@@ -2172,11 +2215,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				EB89751818132E2A00DB2486 /* QuizOptionViewCell.m in Sources */,
+				EBCD0F03181F8C9700CE225C /* InEventPhotoAPIController.m in Sources */,
 				EB3939D51666CF9F00580A4E /* MenuViewController.m in Sources */,
 				EB39397616654B4400580A4E /* AlertView.m in Sources */,
 				EB01FF82181B349B00089915 /* LIALinkedInApplication.m in Sources */,
 				EB50B922181D98F40023A185 /* REComposeBackgroundView.m in Sources */,
-				EB39397716654B4400580A4E /* APIController.m in Sources */,
 				EB39397816654B4400580A4E /* AppDelegate.m in Sources */,
 				EB39398B16654B4400580A4E /* MapViewController.m in Sources */,
 				EB50B925181D98F40023A185 /* REComposeViewController.m in Sources */,
@@ -2187,6 +2230,8 @@
 				EB3939A716654BB900580A4E /* main.m in Sources */,
 				EB897515181056D800DB2486 /* SebraeColorThemeController.m in Sources */,
 				EB01FFD0181B3AFA00089915 /* AFImageRequestOperation.m in Sources */,
+				EBCD0F02181F8C9700CE225C /* InEventPersonAPIController.m in Sources */,
+				EBCD0EFE181F8C9700CE225C /* InEventAdAPIController.m in Sources */,
 				EB3939C616654BE300580A4E /* GTMNSString+HTML.m in Sources */,
 				EB01FFCF181B3AFA00089915 /* AFHTTPRequestOperation.m in Sources */,
 				EB3939C716654BE300580A4E /* NSString+HTML.m in Sources */,
@@ -2199,6 +2244,7 @@
 				EB8974E5180CC02C00DB2486 /* QuizViewController.m in Sources */,
 				EB3939CB16654BE300580A4E /* PaperFoldNavigationController.m in Sources */,
 				EB8974FD180CCDB000DB2486 /* PersonViewController.m in Sources */,
+				EBCD0F00181F8C9700CE225C /* InEventEventAPIController.m in Sources */,
 				EB50B91F181D98F40023A185 /* DEComposeRuledView.m in Sources */,
 				EB01FFD2181B3AFA00089915 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				EB3939CD16654BE300580A4E /* PaperFoldSwipeHintView.m in Sources */,
@@ -2249,14 +2295,17 @@
 				EBE72F97181AE11C00A3A02D /* SocialLoginViewController.m in Sources */,
 				EB4FC57C171061AF00CA43EC /* NSString+URLEncoding.m in Sources */,
 				EB01FFCE181B3AFA00089915 /* AFHTTPClient.m in Sources */,
+				EBCD0EFF181F8C9700CE225C /* InEventAPIController.m in Sources */,
 				EB897507180CE35E00DB2486 /* PeopleViewCell.m in Sources */,
 				EB4FC5851710644000CA43EC /* HumanToken.m in Sources */,
+				EBCD0F01181F8C9700CE225C /* InEventGroupAPIController.m in Sources */,
 				EB4FC58F1710DFE000CA43EC /* EventToken.m in Sources */,
 				EBE8A5011712EA9C00A8A2BD /* UITabBarController+ShowHideBar.m in Sources */,
 				EB1FE9E317FF0CA0001C2906 /* FieldView.m in Sources */,
 				EB1FEB8517171FC3009834FC /* LogViewController.m in Sources */,
 				EB1FEB89171729A6009834FC /* LogItemViewCell.m in Sources */,
 				EBB1E7AA1717B93700B73DDF /* PopoverView.m in Sources */,
+				EBCD0EFD181F8C9700CE225C /* InEventActivityAPIController.m in Sources */,
 				EB5FD40B171ED1EB00B76552 /* CustomPopoverBackgroundView.m in Sources */,
 				EB6749FC1749A5F200748549 /* IntelligentSplitViewController.m in Sources */,
 				EB78EF6C17559B0C0016B527 /* UIImage+ResizeAndCrop.m in Sources */,

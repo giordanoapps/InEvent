@@ -13,6 +13,7 @@
 #import "HumanToken.h"
 #import "EventToken.h"
 #import "NSString+HTML.h"
+#import "InEventAPI.h"
 
 @interface FeedbackViewController () {
     UIRefreshControl *refreshControl;
@@ -152,9 +153,9 @@
     NSString *tokenID = [[HumanToken sharedInstance] tokenID];
     
     if (_type == FeedbackTypeEvent) {
-        [[[APIController alloc] initWithDelegate:self forcing:forcing] eventGetOpinionFromEvent:_referenceID withToken:tokenID];
+        [[[InEventEventAPIController alloc] initWithDelegate:self forcing:forcing] getOpinionFromEvent:_referenceID withToken:tokenID];
     } else if (_type == FeedbackTypeActivity) {
-        [[[APIController alloc] initWithDelegate:self forcing:forcing] activityGetOpinionFromActivity:_referenceID withToken:tokenID];
+        [[[InEventActivityAPIController alloc] initWithDelegate:self forcing:forcing] getOpinionFromActivity:_referenceID withToken:tokenID];
     }
 }
 
@@ -200,9 +201,9 @@
     NSString *tokenID = [[HumanToken sharedInstance] tokenID];
     
     if (_type == FeedbackTypeEvent) {
-        [[[APIController alloc] initWithDelegate:self forcing:YES] eventSendOpinionWithRating:_rating withMessage:_textView.text toEvent:_referenceID withToken:tokenID];
+        [[[InEventEventAPIController alloc] initWithDelegate:self forcing:YES] sendOpinionWithRating:_rating withMessage:_textView.text toEvent:_referenceID withToken:tokenID];
     } else if (_type == FeedbackTypeActivity) {
-        [[[APIController alloc] initWithDelegate:self forcing:YES] activitySendOpinionWithRating:_rating toActivity:_referenceID withToken:tokenID];
+        [[[InEventActivityAPIController alloc] initWithDelegate:self forcing:YES] sendOpinionWithRating:_rating toActivity:_referenceID withToken:tokenID];
     }
     
     [self dismissViewControllerAnimated:YES completion:^{
@@ -223,7 +224,7 @@
 
 #pragma mark - APIController Delegate
 
-- (void)apiController:(APIController *)apiController didLoadDictionaryFromServer:(NSDictionary *)dictionary {
+- (void)apiController:(InEventAPIController *)apiController didLoadDictionaryFromServer:(NSDictionary *)dictionary {
     
     if ([apiController.method isEqualToString:@"getOpinion"]) {
         NSArray *answers = [dictionary objectForKey:@"data"];
@@ -259,7 +260,7 @@
     [refreshControl endRefreshing];
 }
 
-- (void)apiController:(APIController *)apiController didSaveForLaterWithError:(NSError *)error {
+- (void)apiController:(InEventAPIController *)apiController didSaveForLaterWithError:(NSError *)error {
 
     if ([apiController.method isEqualToString:@"getOpinion"]) {
         // Save the path of the current file object

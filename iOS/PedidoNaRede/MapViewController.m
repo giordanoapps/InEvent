@@ -6,15 +6,15 @@
 //  Copyright (c) 2012 Pedro Góes. All rights reserved.
 //
 
-#import "MapViewController.h"
 #import <QuartzCore/QuartzCore.h>
+#import <Parse/Parse.h>
+#import "MapViewController.h"
 #import "AppDelegate.h"
 #import "NSString+HTML.h"
 #import "MKPointExpandedAnnotation.h"
 #import "EventToken.h"
 #import "GAI.h"
 #import "GAIDictionaryBuilder.h"
-#import <Parse/Parse.h>
 
 @interface MapViewController () {
     UIRefreshControl *refreshControl;
@@ -309,7 +309,7 @@
 
 #pragma mark - APIController Delegate
 
-- (void)apiController:(APIController *)apiController didLoadDictionaryFromServer:(NSDictionary *)dictionary {
+- (void)apiController:(InEventAPIController *)apiController didLoadDictionaryFromServer:(NSDictionary *)dictionary {
     
     // Assign the data object to the companies
     self.companies = [dictionary objectForKey:@"data"];

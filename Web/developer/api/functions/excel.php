@@ -72,7 +72,10 @@
 					// Clean the variables
 					// Item
 					$name = "";
+					$role = "";
+					$company = "";
 					$email = "";
+					$telephone = "";
 					
 					// Get the cell iterator
 					$cellIterator = $row->getCellIterator();

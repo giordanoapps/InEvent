@@ -14,7 +14,7 @@
 #import "HumanViewController.h"
 #import "ColorThemeController.h"
 #import "AppDelegate.h"
-#import "APIController.h"
+#import "InEventAPI.h"
 #import "HumanToken.h"
 #import "NSString+HTML.h"
 #import "EventToken.h"
@@ -79,7 +79,7 @@
 
 #pragma mark - APIController DataSource
 
-- (void)apiController:(APIController *)apiController didLoadDictionaryFromServer:(NSDictionary *)dictionary {
+- (void)apiController:(InEventAPIController *)apiController didLoadDictionaryFromServer:(NSDictionary *)dictionary {
     
     if ([apiController.method isEqualToString:@"signIn"] ||
         [apiController.method isEqualToString:@"enroll"] ||
@@ -154,7 +154,7 @@
             NSString *accessToken = [accessTokenData objectForKey:@"access_token"];
             
             // Notify our servers about the access token
-            [[[APIController alloc] initWithDelegate:self forcing:YES] personSignInWithLinkedInToken:accessToken];
+            [[[InEventPersonAPIController alloc] initWithDelegate:self forcing:YES] signInWithLinkedInToken:accessToken];
             
         } failure:^(NSError *error) {
             // Session is closed
@@ -191,7 +191,7 @@
                  [self cancelButtonWasPressed];
                  
                  // Notify our servers about the access token
-                 [[[APIController alloc] initWithDelegate:self forcing:YES] personSignInWithFacebookToken:FBSession.activeSession.accessTokenData.accessToken];
+                 [[[InEventPersonAPIController alloc] initWithDelegate:self forcing:YES] signInWithFacebookToken:FBSession.activeSession.accessTokenData.accessToken];
                  
              } else if (session.state == FBSessionStateClosedLoginFailed) {
                  // Session is closed

@@ -8,6 +8,7 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import <Social/Social.h>
+#import "InEventAPI.h"
 #import "FrontViewController.h"
 #import "UtilitiesController.h"
 #import "UIImageView+WebCache.h"
@@ -199,9 +200,9 @@
 
 - (void)forceDataReload:(BOOL)forcing {
     if ([[HumanToken sharedInstance] isMemberAuthenticated]) {
-        [[[APIController alloc] initWithDelegate:self forcing:forcing] eventGetSingleEvent:[[EventToken sharedInstance] eventID] WithTokenID:[[HumanToken sharedInstance] tokenID]];
+        [[[InEventEventAPIController alloc] initWithDelegate:self forcing:forcing] getSingleEvent:[[EventToken sharedInstance] eventID] WithTokenID:[[HumanToken sharedInstance] tokenID]];
     } else {
-        [[[APIController alloc] initWithDelegate:self forcing:forcing] eventGetSingleEvent:[[EventToken sharedInstance] eventID]];
+        [[[InEventEventAPIController alloc] initWithDelegate:self forcing:forcing] getSingleEvent:[[EventToken sharedInstance] eventID]];
     }
 }
 
@@ -330,7 +331,7 @@
     
     // Field will always have a placeholder, so we can cast it as a UITextField
     if (![((UITextField *)field).placeholder isEqualToString:((UITextField *)field).text]) {
-        [[[APIController alloc] initWithDelegate:self forcing:YES] eventEditField:name withValue:((UITextField *)field).text atEvent:eventID withTokenID:tokenID];
+        [[[InEventEventAPIController alloc] initWithDelegate:self forcing:YES] editField:name withValue:((UITextField *)field).text atEvent:eventID withTokenID:tokenID];
     }
 }
 
@@ -458,7 +459,7 @@
 
 #pragma mark - APIController Delegate
 
-- (void)apiController:(APIController *)apiController didLoadDictionaryFromServer:(NSDictionary *)dictionary {
+- (void)apiController:(InEventAPIController *)apiController didLoadDictionaryFromServer:(NSDictionary *)dictionary {
     
     if ([apiController.method isEqualToString:@"getSingle"]) {
         if ([[dictionary objectForKey:@"data"] count] > 0) {
@@ -474,7 +475,7 @@
     [refreshControl endRefreshing];
 }
 
-- (void)apiController:(APIController *)apiController didFailWithError:(NSError *)error {
+- (void)apiController:(InEventAPIController *)apiController didFailWithError:(NSError *)error {
     [super apiController:apiController didFailWithError:error];
     
     [refreshControl endRefreshing];

@@ -158,7 +158,7 @@
     
     UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(10.0, 12.0, tableView.frame.size.width, 32.0)];
     [title setText:[[_headers objectAtIndex:section] uppercaseString]];
-    [title setFont:[UIFont fontWithName:@"Thonburi-Bold" size:14.0]];
+    [title setFont:[UIFont fontWithName:@"Thonburi-Bold" size:16.0]];
     [title setTextColor:[ColorThemeController navigationBarTextColor]];
     [title setBackgroundColor:[UIColor clearColor]];
     
@@ -193,7 +193,7 @@
         [cell.textLabel setTextColor:[ColorThemeController navigationBarTextColor]];
         [cell.textLabel setHighlightedTextColor:[ColorThemeController navigationBarTextColor]];
         [cell.textLabel setBackgroundColor:[UIColor clearColor]];
-        [cell.textLabel setFont:[UIFont fontWithName:@"Thonburi" size:16.0]];
+        [cell.textLabel setFont:[UIFont fontWithName:@"Thonburi" size:18.0]];
         
         UIView *background = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, tableView.frame.size.width, 36.0)];
         [background setBackgroundColor:[ColorThemeController navigationBarBackgroundColor]];

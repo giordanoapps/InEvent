@@ -9,9 +9,8 @@
 #import <UIKit/UIKit.h>
 
 #import "WrapperViewController.h"
-#import "APIController.h"
 
-@interface PeopleViewController : WrapperViewController <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, APIControllerDelegate>
+@interface PeopleViewController : WrapperViewController <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, InEventAPIControllerDelegate>
 
 @property (strong, nonatomic) IBOutlet UICollectionView *collectionView;
 

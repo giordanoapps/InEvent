@@ -22,6 +22,7 @@
 #import "GAI.h"
 #import "CoolBarButtonItem.h"
 #import "Schedule.h"
+#import "InEventEventAPIController.h"
 
 @interface ScheduleViewController () {
     UIRefreshControl *refreshControl;
@@ -103,9 +104,9 @@
     
     if ([[HumanToken sharedInstance] isMemberAuthenticated]) {
         NSString *tokenID = [[HumanToken sharedInstance] tokenID];
-        [[[APIController alloc] initWithDelegate:self forcing:forcing] eventGetActivitiesAtEvent:[[EventToken sharedInstance] eventID] withTokenID:tokenID];
+        [[[InEventEventAPIController alloc] initWithDelegate:self forcing:forcing] getActivitiesAtEvent:[[EventToken sharedInstance] eventID] withTokenID:tokenID];
     } else {
-        [[[APIController alloc] initWithDelegate:self forcing:forcing] eventGetActivitiesAtEvent:[[EventToken sharedInstance] eventID]];
+        [[[InEventEventAPIController alloc] initWithDelegate:self forcing:forcing] getActivitiesAtEvent:[[EventToken sharedInstance] eventID]];
     }
 }
 
@@ -309,7 +310,7 @@
 
 #pragma mark - APIController Delegate
 
-- (void)apiController:(APIController *)apiController didLoadDictionaryFromServer:(NSDictionary *)dictionary {
+- (void)apiController:(InEventAPIController *)apiController didLoadDictionaryFromServer:(NSDictionary *)dictionary {
     
     // Assign the data object to the companies
     activities = [dictionary objectForKey:@"data"];
@@ -346,7 +347,7 @@
     }
 }
 
-- (void)apiController:(APIController *)apiController didFailWithError:(NSError *)error {
+- (void)apiController:(InEventAPIController *)apiController didFailWithError:(NSError *)error {
     [super apiController:apiController didFailWithError:error];
 
     [refreshControl endRefreshing];

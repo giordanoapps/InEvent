@@ -8,11 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "WrapperViewController.h"
-#import "APIController.h"
+#import "InEventAPIController.h"
 #import "REComposeViewController.h"
 #import "REComposeSheetView.h"
 
-@interface StreamViewController : WrapperViewController <UITableViewDelegate, UITableViewDataSource, UINavigationControllerDelegate, UITextFieldDelegate, APIControllerDelegate, UIImagePickerControllerDelegate, REComposeViewControllerDelegate>
+@interface StreamViewController : WrapperViewController <UITableViewDelegate, UITableViewDataSource, UINavigationControllerDelegate, UITextFieldDelegate, InEventAPIControllerDelegate, UIImagePickerControllerDelegate, REComposeViewControllerDelegate>
 
 @property (strong, nonatomic) IBOutlet UITextField *searchField;
 @property (strong, nonatomic) IBOutlet UILabel *hashView;

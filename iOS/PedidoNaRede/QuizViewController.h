@@ -8,9 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "WrapperViewController.h"
-#import "APIController.h"
+#import "InEventAPIController.h"
 
-@interface QuizViewController : WrapperViewController <UITableViewDelegate, UITableViewDataSource, UINavigationControllerDelegate, APIControllerDelegate>
+@interface QuizViewController : WrapperViewController <UITableViewDelegate, UITableViewDataSource, UINavigationControllerDelegate, InEventAPIControllerDelegate>
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 

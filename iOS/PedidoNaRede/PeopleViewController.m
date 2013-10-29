@@ -16,6 +16,7 @@
 #import "CoolBarButtonItem.h"
 #import "PeopleViewCell.h"
 #import "PeopleGroupViewCell.h"
+#import "InEventAPI.h"
 
 @interface PeopleViewController () {
     UIRefreshControl *refreshControl;
@@ -92,9 +93,9 @@
 - (void)forceDataReload:(BOOL)forcing {
     
     if ([[HumanToken sharedInstance] isMemberAuthenticated]) {
-        [[[APIController alloc] initWithDelegate:self forcing:forcing] eventGetGroupsAtEvent:[[EventToken sharedInstance] eventID] withTokenID:[[HumanToken sharedInstance] tokenID]];
+        [[[InEventEventAPIController alloc] initWithDelegate:self forcing:forcing] getGroupsAtEvent:[[EventToken sharedInstance] eventID] withTokenID:[[HumanToken sharedInstance] tokenID]];
     } else {
-        [[[APIController alloc] initWithDelegate:self forcing:forcing] eventGetGroupsAtEvent:[[EventToken sharedInstance] eventID]];
+        [[[InEventEventAPIController alloc] initWithDelegate:self forcing:forcing] getGroupsAtEvent:[[EventToken sharedInstance] eventID]];
     }
 }
 
@@ -144,7 +145,7 @@
     
     if ([_nameInput.text length] > 0) {
         // Send to server
-        [[[APIController alloc] initWithDelegate:self forcing:YES] groupCreateGroupAtEvent:[[EventToken sharedInstance] eventID] withTokenID:[[HumanToken sharedInstance] tokenID]];
+        [[[InEventGroupAPIController alloc] initWithDelegate:self forcing:YES] createGroupAtEvent:[[EventToken sharedInstance] eventID] withTokenID:[[HumanToken sharedInstance] tokenID]];
         
         // Remove view
         [self removeGroupView];
@@ -258,7 +259,7 @@
     // Load some data
     NSInteger groupID = [[[groups objectAtIndex:indexPath.row] objectForKey:@"id"] integerValue];
     UICollectionView *cellView = [(PeopleViewCell *)[collectionView cellForItemAtIndexPath:indexPath] collectionView];
-    [[[APIController alloc] initWithDelegate:self forcing:YES withUserInfo:@{@"key": cellView}] groupGetPeopleAtGroup:groupID withTokenID:[[HumanToken sharedInstance] tokenID]];
+    [[[InEventGroupAPIController alloc] initWithDelegate:self forcing:YES withUserInfo:@{@"key": cellView}] getPeopleAtGroup:groupID withTokenID:[[HumanToken sharedInstance] tokenID]];
     
 //    [self.collectionView performBatchUpdates:^{
 //        [self.collectionView reloadItemsAtIndexPaths:@[selectedPath]];
@@ -288,7 +289,7 @@
 
 #pragma mark - APIController Delegate
 
-- (void)apiController:(APIController *)apiController didLoadDictionaryFromServer:(NSDictionary *)dictionary {
+- (void)apiController:(InEventAPIController *)apiController didLoadDictionaryFromServer:(NSDictionary *)dictionary {
     
     if ([apiController.method isEqualToString:@"getGroups"]) {
         // Assign the data object to the groups
@@ -314,13 +315,13 @@
     [refreshControl endRefreshing];
 }
 
-- (void)apiController:(APIController *)apiController didFailWithError:(NSError *)error {
+- (void)apiController:(InEventAPIController *)apiController didFailWithError:(NSError *)error {
     [super apiController:apiController didFailWithError:error];
     
     [refreshControl endRefreshing];
 }
 
-- (void)apiController:(APIController *)apiController didSaveForLaterWithError:(NSError *)error {
+- (void)apiController:(InEventAPIController *)apiController didSaveForLaterWithError:(NSError *)error {
     
     if ([apiController.method isEqualToString:@"getPeople"]) {
         // Save the path of the current file object

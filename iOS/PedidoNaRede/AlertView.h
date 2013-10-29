@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "APIController.h"
+#import "InEventAPIController.h"
 
 @class AlertView;
 

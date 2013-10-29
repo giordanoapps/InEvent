@@ -11,7 +11,7 @@
 
 @class HumanViewController;
 
-@interface HumanLoginViewController : WrapperViewController
+@interface HumanLoginViewController : WrapperViewController <InEventAPIControllerDelegate>
 
 @property (nonatomic, strong) IBOutlet UIControl *view;
 @property (nonatomic, strong) IBOutlet UILabel *accountLabel;

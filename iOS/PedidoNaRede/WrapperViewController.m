@@ -22,7 +22,7 @@
     UITapGestureRecognizer *behindRecognizer;
 }
 
-@property (strong, nonatomic) APIController *apiController;
+@property (strong, nonatomic) InEventAPIController *apiController;
 @property (strong, nonatomic) UIBarButtonItem *barButtonItem;
 
 @end
@@ -332,7 +332,7 @@
 #pragma mark - APIController Delegate
 
 
-- (void)apiController:(APIController *)apiController didFailWithError:(NSError *)error {
+- (void)apiController:(InEventAPIController *)apiController didFailWithError:(NSError *)error {
     // Implement a method that allows every failing requisition to be reloaded
     
     AlertView *alertView;
@@ -367,7 +367,7 @@
     [alertView show];
 }
 
-- (void)apiController:(APIController *)apiController didSaveForLaterWithError:(NSError *)error {
+- (void)apiController:(InEventAPIController *)apiController didSaveForLaterWithError:(NSError *)error {
     
     CGRect rect = CGRectMake((self.view.frame.size.width - 100.0f) / 2.0f, -100.0f, 100.0f, 100.0f);
     UIView *view = [[UIView alloc] initWithFrame:rect];

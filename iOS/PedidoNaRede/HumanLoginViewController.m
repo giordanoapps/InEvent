@@ -6,19 +6,19 @@
 //  Copyright (c) 2013 Pedro Góes. All rights reserved.
 //
 
-#import "HumanLoginViewController.h"
-#import "HumanViewController.h"
 #import <FacebookSDK/FacebookSDK.h>
 #import <QuartzCore/QuartzCore.h>
+#import <Parse/Parse.h>
+#import "HumanLoginViewController.h"
+#import "HumanViewController.h"
 #import "ColorThemeController.h"
 #import "AppDelegate.h"
-#import "APIController.h"
 #import "HumanToken.h"
 #import "NSString+HTML.h"
 #import "EventToken.h"
 #import "GAI.h"
 #import "GAIDictionaryBuilder.h"
-#import <Parse/Parse.h>
+#import "InEventAPI.h"
 
 @interface HumanLoginViewController ()
 
@@ -243,7 +243,7 @@
         [_personAction setTitle:NSLocalizedString(@"Logging ...", nil) forState:UIControlStateNormal];
         
         // Notify our servers about the login attempt
-        [[[APIController alloc] initWithDelegate:self forcing:YES] personSignIn:_personEmail.text withPassword:_personPassword.text];
+        [[[InEventPersonAPIController alloc] initWithDelegate:self forcing:YES] signIn:_personEmail.text withPassword:_personPassword.text];
         
     } else {
         // Give some data man!
@@ -259,7 +259,7 @@
         [_personAction setTitle:NSLocalizedString(@"Enrolling ...", nil) forState:UIControlStateNormal];
         
         // Notify our servers about the login attempt
-        [[[APIController alloc] initWithDelegate:self forcing:YES] personEnroll:_personName.text withPassword:_personPassword.text withEmail:_personEmail.text];
+        [[[InEventPersonAPIController alloc] initWithDelegate:self forcing:YES] enroll:_personName.text withPassword:_personPassword.text withEmail:_personEmail.text];
         
     } else {
         // Give some data man!
@@ -270,7 +270,7 @@
 
 #pragma mark - APIController DataSource
 
-- (void)apiController:(APIController *)apiController didFailWithError:(NSError *)error {
+- (void)apiController:(InEventAPIController *)apiController didFailWithError:(NSError *)error {
     // Implement a method that allows every failing requisition to be reloaded
     
     // Reset password
@@ -285,7 +285,7 @@
     }
 }
 
-- (void)apiController:(APIController *)apiController didLoadDictionaryFromServer:(NSDictionary *)dictionary {
+- (void)apiController:(InEventAPIController *)apiController didLoadDictionaryFromServer:(NSDictionary *)dictionary {
     
     if ([apiController.method isEqualToString:@"signIn"] ||
         [apiController.method isEqualToString:@"enroll"] ||

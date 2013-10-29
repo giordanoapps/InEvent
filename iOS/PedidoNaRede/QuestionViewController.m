@@ -12,7 +12,7 @@
 #import "ColorThemeController.h"
 #import "HumanToken.h"
 #import "EventToken.h"
-#import "APIController.h"
+#import "InEventAPI.h"
 #import "CoolBarButtonItem.h"
 #import "NSString+HTML.h"
 #import "NSObject+Triangle.h"
@@ -139,27 +139,33 @@
     _activityData = activityData;
     
     [self loadData];
-    [self loadQuestions];
+}
+
+#pragma mark - Loader
+
+- (void)loadData {
+    [self forceDataReload:NO];
+}
+
+- (void)reloadData {
+    [self forceDataReload:YES];
+}
+
+- (void)forceDataReload:(BOOL)forcing {
+    
+    if ([[HumanToken sharedInstance] isMemberAuthenticated]) {
+        NSString *tokenID = [[HumanToken sharedInstance] tokenID];
+        NSInteger activityID = [[_activityData objectForKey:@"id"] integerValue];
+        [[[InEventActivityAPIController alloc] initWithDelegate:self forcing:forcing] getQuestionsAtActivity:activityID withTokenID:tokenID];
+    }
+    
+    _questionWrapper.hidden = ([[HumanToken sharedInstance] isMemberAuthenticated]) ? NO : YES;
 }
 
 #pragma mark - Private Methods
 
-- (void)loadData {
-    
-    if (_activityData && [[HumanToken sharedInstance] isMemberAuthenticated]) {
-        _questionWrapper.hidden = NO;
-    }
-}
-
 - (void)cleanData {
     _questionWrapper.hidden = YES;
-}
-
-- (void)loadQuestions {
-    NSInteger activityID = [[_activityData objectForKey:@"id"] integerValue];
-    NSString *tokenID = [[HumanToken sharedInstance] tokenID];
-    
-    [[[APIController alloc] initWithDelegate:self forcing:YES] activityGetQuestionsAtActivity:activityID withTokenID:tokenID];
 }
 
 - (void)didTap {
@@ -175,10 +181,10 @@
         // Send the message to our servers
         NSString *tokenID = [[HumanToken sharedInstance] tokenID];
         NSInteger activityID = [[_activityData objectForKey:@"id"] integerValue];
-        [[[APIController alloc] initWithDelegate:self forcing:YES] activitySendQuestion:_questionInput.text toActivity:activityID withTokenID:tokenID];
+        [[[InEventActivityAPIController alloc] initWithDelegate:self forcing:YES] sendQuestion:_questionInput.text toActivity:activityID withTokenID:tokenID];
         
         // Load these questions
-        [self loadQuestions];
+        [self loadData];
         
         [_questionInput setText:@""];
     }
@@ -288,7 +294,7 @@
     NSString *tokenID = [[HumanToken sharedInstance] tokenID];
     NSInteger questionID = [[[_questionData objectAtIndex:indexPath.row] objectForKey:@"id"] integerValue];
 
-    [[[APIController alloc] initWithDelegate:self forcing:YES] activityUpvoteQuestion:questionID withTokenID:tokenID];
+    [[[InEventActivityAPIController alloc] initWithDelegate:self forcing:YES] upvoteQuestion:questionID withTokenID:tokenID];
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -308,13 +314,13 @@
         NSString *tokenID = [[HumanToken sharedInstance] tokenID];
         NSInteger questionID = [[[_questionData objectAtIndex:indexPath.row] objectForKey:@"id"] integerValue];
         
-        [[[APIController alloc] initWithDelegate:self forcing:YES] activityRemoveQuestion:questionID withTokenID:tokenID];
+        [[[InEventActivityAPIController alloc] initWithDelegate:self forcing:YES] removeQuestion:questionID withTokenID:tokenID];
     }
 }
 
 #pragma mark - APIController Delegate
 
-- (void)apiController:(APIController *)apiController didLoadDictionaryFromServer:(NSDictionary *)dictionary {
+- (void)apiController:(InEventAPIController *)apiController didLoadDictionaryFromServer:(NSDictionary *)dictionary {
     
     if ([apiController.method isEqualToString:@"getQuestions"]) {
         // Assign the data object
@@ -334,13 +340,13 @@
     }
 }
 
-- (void)apiController:(APIController *)apiController didFailWithError:(NSError *)error {
+- (void)apiController:(InEventAPIController *)apiController didFailWithError:(NSError *)error {
     [super apiController:apiController didFailWithError:error];
     
     [refreshControl endRefreshing];
 }
 
-- (void)apiController:(APIController *)apiController didSaveForLaterWithError:(NSError *)error {
+- (void)apiController:(InEventAPIController *)apiController didSaveForLaterWithError:(NSError *)error {
     
     if ([apiController.method isEqualToString:@"getQuestions"]) {
         // Save the path of the current file object

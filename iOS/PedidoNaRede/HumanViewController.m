@@ -14,6 +14,7 @@
 #import "NSString+HTML.h"
 #import "CoolBarButtonItem.h"
 #import "UIImageView+WebCache.h"
+#import "InEventPersonAPIController.h"
 
 @interface HumanViewController () {
     UIRefreshControl *refreshControl;
@@ -65,7 +66,8 @@
     
     // Text fields
     _name.textColor = [ColorThemeController tableViewCellTextColor];
-    _description.textColor = [ColorThemeController tableViewCellTextColor];
+    _role.textColor = [ColorThemeController tableViewCellTextColor];
+    _company.textColor = [ColorThemeController tableViewCellTextColor];
     _telephone.textColor = [ColorThemeController tableViewCellTextColor];
     _email.textColor = [ColorThemeController tableViewCellTextColor];
     _location.textColor = [ColorThemeController tableViewCellTextColor];
@@ -102,7 +104,7 @@
 
 - (void)forceDataReload:(BOOL)forcing {
     if ([[HumanToken sharedInstance] isMemberAuthenticated]) {
-        [[[APIController alloc] initWithDelegate:self forcing:forcing] personGetDetailsWithToken:[[HumanToken sharedInstance] tokenID]];
+        [[[InEventPersonAPIController alloc] initWithDelegate:self forcing:forcing] getDetailsWithToken:[[HumanToken sharedInstance] tokenID]];
     }
 }
 
@@ -116,33 +118,22 @@
         if ([[personData objectForKey:@"facebookID"] integerValue] != 0) {
             [self.photo setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://graph.facebook.com/%@/picture?width=%d&height=%d", [personData objectForKey:@"facebookID"], (int)(self.photo.frame.size.width * [[UIScreen mainScreen] scale]), (int)(self.photo.frame.size.height * [[UIScreen mainScreen] scale])]] placeholderImage:[UIImage imageNamed:@"128-user"]];
             [_photo.layer setCornerRadius:_photo.frame.size.width / 2.0f];
-        } else if ([[personData objectForKey:@"linkedInID"] integerValue] != 0) {
-            [self.photo setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://graph.facebook.com/%@/picture?width=%d&height=%d", [personData objectForKey:@"facebookID"], (int)(self.photo.frame.size.width * [[UIScreen mainScreen] scale]), (int)(self.photo.frame.size.height * [[UIScreen mainScreen] scale])]] placeholderImage:[UIImage imageNamed:@"128-user"]];
+        } else if (![[personData objectForKey:@"linkedInID"] isEqualToString:@""]) {
+            [self.photo setImageWithURL:[NSURL URLWithString:[personData objectForKey:@"image"]] placeholderImage:[UIImage imageNamed:@"128-user"]];
             [_photo.layer setCornerRadius:_photo.frame.size.width / 2.0f];
         } else {
             [self.photo setImage:[UIImage imageNamed:@"128-user"]];
             [_photo.layer setCornerRadius:0.0f];
         }
         
-        // Name
+        // Text fields
         self.name.text = [[personData objectForKey:@"name"] stringByDecodingHTMLEntities];
-        
-        // Description
-        self.description.text = [[personData objectForKey:@"description"] stringByDecodingHTMLEntities];
-        
-        // Telephone
+        self.role.text = [[personData objectForKey:@"role"] stringByDecodingHTMLEntities];
+        self.company.text = [[personData objectForKey:@"company"] stringByDecodingHTMLEntities];
         self.telephone.text = [[personData objectForKey:@"telephone"] stringByDecodingHTMLEntities];
-
-        // Email
         self.email.text = [[personData objectForKey:@"email"] stringByDecodingHTMLEntities];
-        
-        // Location
         self.location.text = [[personData objectForKey:@"city"] stringByDecodingHTMLEntities];
-        
-        // CPF
         self.cpf.text = [[personData objectForKey:@"cpf"] stringByDecodingHTMLEntities];
-        
-        // RG
         self.rg.text = [[personData objectForKey:@"rg"] stringByDecodingHTMLEntities];
         
         // Map
@@ -195,7 +186,8 @@
     
     // Set the placeholders
     [self.name setPlaceholder:self.name.text];
-    [self.description setPlaceholder:self.description.text];
+    [self.role setPlaceholder:self.role.text];
+    [self.company setPlaceholder:self.company.text];
     [self.telephone setPlaceholder:self.telephone.text];
     [self.email setPlaceholder:self.email.text];
     [self.location setPlaceholder:self.location.text];
@@ -215,7 +207,7 @@
     
     // Field will always have a placeholder, so we can cast it as a UITextField
     if (![((UITextField *)field).placeholder isEqualToString:((UITextField *)field).text]) {
-        [[[APIController alloc] initWithDelegate:self forcing:YES] personEditField:name withValue:((UITextField *)field).text withTokenID:tokenID];
+        [[[InEventPersonAPIController alloc] initWithDelegate:self forcing:YES] editField:name withValue:((UITextField *)field).text withTokenID:tokenID];
     }
 }
 
@@ -223,7 +215,8 @@
     
     // Save the fields
     [self saveEditing:self.name forName:@"name"];
-    [self saveEditing:self.description forName:@"description"];
+    [self saveEditing:self.role forName:@"role"];
+    [self saveEditing:self.company forName:@"company"];
     [self saveEditing:self.telephone forName:@"telephone"];
     [self saveEditing:self.email forName:@"email"];
     [self saveEditing:self.location forName:@"city"];
@@ -369,7 +362,7 @@
 
 #pragma mark - APIController Delegate
 
-- (void)apiController:(APIController *)apiController didLoadDictionaryFromServer:(NSDictionary *)dictionary {
+- (void)apiController:(InEventAPIController *)apiController didLoadDictionaryFromServer:(NSDictionary *)dictionary {
     
     if ([apiController.method isEqualToString:@"getDetails"]) {
         // Assign the data object to the person
@@ -386,7 +379,7 @@
     [refreshControl endRefreshing];
 }
 
-- (void)apiController:(APIController *)apiController didFailWithError:(NSError *)error {
+- (void)apiController:(InEventAPIController *)apiController didFailWithError:(NSError *)error {
     [super apiController:apiController didFailWithError:error];
     
     [refreshControl endRefreshing];

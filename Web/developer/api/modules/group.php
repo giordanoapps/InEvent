@@ -1,56 +1,46 @@
 <?php
-// -------------------------------------- ACTIVITY --------------------------------------- //
+// -------------------------------------- GROUP --------------------------------------- //
 	
 	if ($method === "create") {
 
 		$eventID = getTokenForEvent();
 
 		// Permission
-		if ($core->workAtEvent) {
+		if (eventHasMember($core->eventID, $core->memberID)) {
 
 			// Insert a new activity
 			$insert = resourceForQuery(
 				"INSERT INTO
-					`activity`
+					`group`
 					(
 						`eventID`,
-						`groupID`,
 						`name`,
 						`description`,
-						`latitude`,
-						`longitude`,
 						`location`,
 						`dateBegin`,
 						`dateEnd`,
-						`capacity`,
-						`general`,
 						`highlight`
 					)
 				VALUES
 					(
 						$eventID,
-						0,
 						'',
 						'',
-						0,
-						0,
 						'',
 						NOW(),
 						NOW(),
-						0,
-						1,
 						0
 					)
 			");
 
-			$activityID = mysql_insert_id();
+			$groupID = mysql_insert_id();
 
 			// Send a push notification
-			if ($globalDev == 0) pushActivityCreation($eventID, $activityID);
+			// if ($globalDev == 0) pushActivityCreation($eventID, $groupID);
 
 			// Return its data
 			if ($format == "json") {
-				$data["activityID"] = $activityID;
+				$data["groupID"] = $groupID;
 				echo json_encode($data);
 			} elseif ($format == "html") {
 				$result = getActivitiesForMemberAtActivityQuery($activityID, $core->memberID);
@@ -60,14 +50,14 @@
 			}
 
 		} else {
-			http_status_code(401, "personID doesn't work at event");
+			http_status_code(401, "personID is not enrolled at the event");
 		}
 
 	} else
 
 	if ($method === "edit") {
 
-		$activityID = getTokenForGroup();
+		$groupID = getTokenForGroup();
 
 		if (isset($_GET['name']) && isset($_POST['value'])) {
 
@@ -75,184 +65,59 @@
 			$value = getEmptyAttribute($_POST['value']);
 
 			// Permission
-			if ($core->workAtEvent) {
+			if (eventHasMember($core->eventID, $core->memberID)) {
 			
 				// We list all the fields that can be edited by the activity platform
-				$validFields = array("name", "description", "latitude", "longitude", "location", "dayBegin", "monthBegin", "hourBegin", "minuteBegin", "dayEnd", "monthEnd", "hourEnd", "minuteEnd", "capacity");
+				$validFields = array("name", "description", "location", "dateBegin", "dateEnd", "highlight");
 
 				if (in_array($name, $validFields) == TRUE) {
 
-					// Month
-					if ($name == "monthBegin" || $name == "monthEnd") {
+					// Date
+					if ($name == "dateBegin" || $name == "dateEnd") {
 
-						if ($value > 0 && $value <= 12) {
+						$timezone = date("P");
 
-							$name = str_replace("month", "date", $name);
-
-							$update = resourceForQuery(
-								"UPDATE
-									`activity` 
-								SET
-									`$name` = ((`$name` - INTERVAL MONTH(`$name`) MONTH) + INTERVAL $value MONTH)
-								WHERE
-									`activity`.`id` = $activityID
-							");
-
-						} else {
-							http_status_code(406, "month must be valid");
-						}
-
-					// Day
-					} elseif ($name == "dayBegin" || $name == "dayEnd") {
-
-						if ($value > 0 && $value <= 31) {
-
-							$name = str_replace("day", "date", $name);
-
-							$update = resourceForQuery(
-								"UPDATE
-									`activity` 
-								SET
-									`$name` = ((`$name` - INTERVAL DAY(`$name`) DAY) + INTERVAL $value DAY)
-								WHERE
-									`activity`.`id` = $activityID
-							");
-
-						} else {
-							http_status_code(406, "day must be valid");
-						}
-
-					// Hour
-					} elseif ($name == "hourBegin" || $name == "hourEnd") {
-
-						if ($value >= 0 && $value < 24) {
-
-							$name = str_replace("hour", "date", $name);
-							$timezone = date("P");
-
-							$update = resourceForQuery(
-								"UPDATE
-									`activity` 
-								SET
-									`$name` = CONVERT_TZ(((`$name` - INTERVAL HOUR(`$name`) HOUR) + INTERVAL $value HOUR), '$timezone','+00:00')
-								WHERE
-									`activity`.`id` = $activityID
-							");
-
-						} else {
-							http_status_code(406, "hour must be valid");
-						}
-
-					// Minute
-					} elseif ($name == "minuteBegin" || $name == "minuteEnd") {
-
-						if ($value >= 0 && $value < 60) {
-
-							$name = str_replace("minute", "date", $name);
-
-							$update = resourceForQuery(
-								"UPDATE
-									`activity` 
-								SET
-									`$name` = ((`$name` - INTERVAL MINUTE(`$name`) MINUTE) + INTERVAL $value MINUTE)
-								WHERE
-									`activity`.`id` = $activityID
-							");
-
-						} else {
-							http_status_code(406, "minute must be valid");
-						}
-
-					// Capacity
-					} elseif ($name == "capacity") {
-
-						// See the intentions of the person
-						if ($value == 0) {
-
-							// Approve everyone in the activity
-							$update = resourceForQuery(
-								"UPDATE
-									`activityMember` 
-								SET
-									`activityMember`.`approved` = 1
-								WHERE 1
-									AND `activityMember`.`activityID` = $activityID
-							");
-							
-						} else {
-
-							// Get the event capacity
-							$result = resourceForQuery(
-								"SELECT
-									`activity`.`capacity`
-								FROM
-									`activity`
-								WHERE 1
-									AND `activity`.`id` = $activityID
-							");
-
-							if (mysql_num_rows($result) > 0) {
-
-								$capacity = mysql_result($result, 0, "capacity");
-
-								$result = resourceForQuery(
-									"SELECT
-										`activityMember`.`id`
-									FROM
-										`activityMember`
-									WHERE 1
-										AND `activityMember`.`activityID` = $activityID
-										AND `activityMember`.`approved` = 1
-									LIMIT
-										$capacity
-								");
-
-								$lastApproved = (mysql_num_rows($result) > 0) ? mysql_result($result, mysql_num_rows($result) - 1, "id") : 0;
-
-								// Deny a bunch of folks that are beyond the limit
-								$update = resourceForQuery(
-									"UPDATE
-										`activityMember` 
-									SET
-										`activityMember`.`approved` = 0
-									WHERE 1
-										AND `activityMember`.`activityID` = $activityID
-										AND `activityMember`.`id` > $lastApproved
-								");
-
-							} else {
-								http_status_code(404, "activityID capacity not found");
-							}
-						}
-
-						// Update the number of seats
 						$update = resourceForQuery(
 							"UPDATE
-								`activity`
+								`group` 
 							SET
-								`$name` = '$value'
+								`$name` = CONVERT_TZ(STR_TO_DATE('$value', '%d/%m/%y %k:%i'), '$timezone', '+00:00')
 							WHERE
-								`activity`.`id` = $activityID
+								`group`.`id` = $groupID
+						");
+
+					// Highlight
+					} elseif ($name == "highlight") {
+
+						if ($value < 0 || $value > 1) $value = 0;
+
+						$update = resourceForQuery(
+							"UPDATE
+								`group`
+							SET
+								`$name` = $value
+							WHERE
+								`group`.`id` = $groupID
 						");
 
 					// The rest
 					} else {
 						$update = resourceForQuery(
 							"UPDATE
-								`activity`
+								`group`
 							SET
 								`$name` = '$value'
 							WHERE
-								`activity`.`id` = $activityID
+								`group`.`id` = $groupID
 						");
 					}
 
 					// Send a push notification
-					if ($globalDev == 0) pushActivityUpdate(getEventForActivity($activityID), $activityID);
+					// if ($globalDev == 0) pushActivityUpdate(getEventForActivity($groupID), $groupID);
 
 					// Return its data
 					if ($format == "json") {
-						$data["activityID"] = $activityID;
+						$data["groupID"] = $groupID;
 						echo json_encode($data);
 					} elseif ($format == "html") {
 						$result = getActivitiesForMemberAtActivityQuery($activityID, $core->memberID);
@@ -265,7 +130,7 @@
 					http_status_code(406, "name field doesn't exist");
 				}
 			} else {
-				http_status_code(401, "personID doesn't work at event");
+				http_status_code(401, "personID is not enrolled at the event");
 			}
 	    } else {
 	    	http_status_code(404, "name and value are required parameters");
@@ -275,36 +140,36 @@
 
 	if ($method === "remove") {
 
-		$activityID = getTokenForGroup();
+		$groupID = getTokenForGroup();
 
 		// Permission
 		if ($core->workAtEvent) {
 
-			// Remove the activity
+			// Remove the group
 			$delete = resourceForQuery(
 				"DELETE FROM
-					`activity`
+					`group`
 				WHERE 1
-					AND `activity`.`id` = $activityID
+					AND `group`.`id` = $groupID
 			");
 
-			// Remove people from activity
+			// Remove people from group
 			$delete = resourceForQuery(
 				"DELETE FROM
-					`activityMember`
+					`groupMember`
 				WHERE 1
-					AND `activityMember`.`activityID` = $activityID
+					AND `groupMember`.`groupID` = $groupID
 			");
 
 			// Send a push notification
-			if ($globalDev == 0) pushActivityRemove(getEventForActivity($activityID), $activityID);
+			// if ($globalDev == 0) pushActivityRemove(getEventForActivity($groupID), $groupID);
 
 			// Return its data
 			if ($format == "json") {
-				$data["activityID"] = $activityID;
+				$data["groupID"] = $groupID;
 				echo json_encode($data);
 			} elseif ($format == "html") {
-				$result = getActivitiesForMemberAtActivityQuery($activityID, $core->memberID);
+				$result = getActivitiesForMemberAtActivityQuery($groupID, $core->memberID);
 				printAgendaItem(mysql_fetch_assoc($result), "member");
 			} else {
 				http_status_code(405, "this format is not available");
@@ -318,7 +183,7 @@
 
 	if ($method === "requestEnrollment") {
 
-		$activityID = getTokenForGroup();
+		$groupID = getTokenForGroup();
 
 		if (isset($_GET['name']) && $_GET['name'] != "null" && isset($_GET['email']) && $_GET['email'] != "null") {
 
@@ -331,7 +196,7 @@
 				$personID = getPersonForEmail($email, $name);
 
 				// Enroll the person at the event if necessary
-				processEventEnrollmentWithActivity($activityID, $personID);
+				processEventEnrollmentWithActivity($groupID, $personID);
 
 			} else {
 				http_status_code(401, "personID doesn't work at event");
@@ -349,13 +214,13 @@
 				FROM
 					`activityMember`
 				WHERE 1
-					AND `activityMember`.`activityID` = $activityID
+					AND `activityMember`.`groupID` = $groupID
 					AND `activityMember`.`memberID` = $personID
 			");
 
 			if (mysql_num_rows($result) == 0) {
 				// Enroll people at the activity
-				$success = processActivityEnrollment($activityID, $personID);
+				$success = processActivityEnrollment($groupID, $personID);
 			} else {
 				$success = true;
 			}
@@ -363,10 +228,10 @@
 			if ($success) {
 				// Return its data
 				if ($format == "json") {
-					$result = getActivitiesForMemberAtActivityQuery($activityID, $personID);
+					$result = getActivitiesForMemberAtActivityQuery($groupID, $personID);
 					echo printInformation("activity", $result, true, 'json');
 				} elseif ($format == "html") {
-					$result = getActivitiesForMemberAtActivityQuery($activityID, $personID);
+					$result = getActivitiesForMemberAtActivityQuery($groupID, $personID);
 					printAgendaItem(mysql_fetch_assoc($result), "member");
 				} else {
 					http_status_code(405, "this format is not available");
@@ -382,7 +247,7 @@
 
 	if ($method === "dismissEnrollment") {
 
-		$activityID = getTokenForGroup();
+		$groupID = getTokenForGroup();
 
 		if (isset($_GET['personID']) && $_GET['personID'] != "null") {
 
@@ -398,14 +263,14 @@
 		if ($personID != 0) {
 
 			// Get some properties
-			$groupID = getGroupForActivity($activityID);
+			$groupID = getGroupForActivity($groupID);
 				
 			// Remove the current person
 			$delete = resourceForQuery(
 				"DELETE FROM
 					`activityMember`
 				WHERE 1
-					AND `activityMember`.`activityID` = $activityID
+					AND `activityMember`.`groupID` = $groupID
 					AND `activityMember`.`memberID` = $personID
 			");
 
@@ -420,7 +285,7 @@
 			// 	FROM
 			// 		`activity`
 			// 	LEFT JOIN
-			// 		`activityMember` ON `activity`.`id` = `activityMember`.`activityID`
+			// 		`activityMember` ON `activity`.`id` = `activityMember`.`groupID`
 			// 	LEFT JOIN
 			// 		`activityGroup` ON `activity`.`groupID` = `activityGroup`.`id` AND `activity`.`groupID` = $groupID
 			// 	WHERE 1
@@ -429,8 +294,8 @@
 			// 		`activity`.`groupID`,
 			// 		`activityMember`.`memberID`
 			// 	HAVING 0
-			// 		OR ((`activityMember`.`priori` = 1 AND `activity`.`id` = $activityID) AND COALESCE(`activityGroup`.`limit`, 99999) <= SUM(`activityMember`.`approved`))
-			// 		OR ((`activityMember`.`priori` = 0 AND `activity`.`id` = $activityID) AND COALESCE(`activityGroup`.`limit`, 99999) > SUM(`activityMember`.`approved`))
+			// 		OR ((`activityMember`.`priori` = 1 AND `activity`.`id` = $groupID) AND COALESCE(`activityGroup`.`limit`, 99999) <= SUM(`activityMember`.`approved`))
+			// 		OR ((`activityMember`.`priori` = 0 AND `activity`.`id` = $groupID) AND COALESCE(`activityGroup`.`limit`, 99999) > SUM(`activityMember`.`approved`))
 			// 	ORDER BY
 			// 		`activityMember`.`id` ASC
 			// ");
@@ -443,7 +308,7 @@
 				FROM
 					`activityMember`
 				WHERE 1
-					AND `activityMember`.`activityID` = $activityID
+					AND `activityMember`.`groupID` = $groupID
 					AND `activityMember`.`approved` = 0
 				ORDER BY
 					`activityMember`.`id` ASC
@@ -461,7 +326,7 @@
 					FROM
 						`activity`
 					LEFT JOIN
-						`activityMember` ON `activity`.`id` = `activityMember`.`activityID` AND `activityMember`.`memberID` = $memberID
+						`activityMember` ON `activity`.`id` = `activityMember`.`groupID` AND `activityMember`.`memberID` = $memberID
 		            LEFT JOIN
 		                `activityGroup` ON `activity`.`groupID` = `activityGroup`.`id`
 					WHERE 1
@@ -497,7 +362,7 @@
 							FROM
 								`activity`
 							INNER JOIN
-								`activityMember` ON `activityMember`.`activityID` = `activity`.`id`
+								`activityMember` ON `activityMember`.`groupID` = `activity`.`id`
 				 			LEFT JOIN
 								`activityGroup` ON `activity`.`groupID` = `activityGroup`.`id`
 							WHERE 1
@@ -550,10 +415,10 @@
 			if ($delete) {
 				// Return its data
 				if ($format == "json") {
-					$result = getActivitiesForMemberAtActivityQuery($activityID, $personID);
+					$result = getActivitiesForMemberAtActivityQuery($groupID, $personID);
 					echo printInformation("activity", $result, true, 'json');
 				} elseif ($format == "html") {
-					$result = getActivitiesForMemberAtActivityQuery($activityID, $core->memberID);
+					$result = getActivitiesForMemberAtActivityQuery($groupID, $core->memberID);
 					printAgendaItem(mysql_fetch_assoc($result), "member");
 				} else {
 					http_status_code(405, "this format is not available");	
@@ -562,7 +427,7 @@
 				http_status_code(500, "row deletion could not be completed");
 			}
 		} else {
-			http_status_code(400, "activityID is a required parameter");
+			http_status_code(400, "groupID is a required parameter");
 		}
 		
 	} else
@@ -573,7 +438,7 @@
 		|| $method === "confirmEntrance"
 		|| $method === "revokeEntrance") {
 
-		$activityID = getTokenForGroup();
+		$groupID = getTokenForGroup();
 
 		if (isset($_GET["personID"])) {
 
@@ -600,7 +465,7 @@
 					SET
 						$attribute
 					WHERE 1
-						AND `activityMember`.`activityID` = $activityID
+						AND `activityMember`.`groupID` = $groupID
 						AND `activityMember`.`memberID` = $personID
 				");
 
@@ -622,7 +487,7 @@
 				http_status_code(401, "personID doesn't work at event");
 			}
 		} else {
-			http_status_code(400, "activityID and personID are required parameters");
+			http_status_code(400, "groupID and personID are required parameters");
 		}
 		
 	} else

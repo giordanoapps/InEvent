@@ -10,7 +10,7 @@
 			$url = getAttribute($_POST['url']);
 
 			// Permission
-			if (eventHasMember($eventID, $core->memberID)) {
+			if (eventHasMember($core->eventID, $core->memberID)) {
 
 				// Insert a new activity
 				$insert = resourceForQuery(

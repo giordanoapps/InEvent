@@ -10,7 +10,7 @@
 #import "ScheduleViewCell.h"
 #import "ColorThemeController.h"
 #import "HumanToken.h"
-#import "APIController.h"
+#import "InEventAPIController.h"
 #import "NSObject+Triangle.h"
 
 @implementation ScheduleViewCell

@@ -37,7 +37,7 @@
             <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=group.create&tokenID=$tokenID&eventID=1">
         </p>
 
-       <p class="documentFunctionDescription">Cria uma atividade dentro do evento <i>eventID</i>.</p>
+       <p class="documentFunctionDescription">Cria um grupo dentro do evento <i>eventID</i>.</p>
 
         <div class="documentationFunctionParametersBox">
             <p><b>tokenID</b><sub>GET</sub> : id de autenticação </p>
@@ -67,7 +67,7 @@
             <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=group.remove&tokenID=$tokenID&groupID=1">
         </p>
 
-        <p class="documentFunctionDescription">Remove a atividade <i>groupID</i>.</p>
+        <p class="documentFunctionDescription">Remove o grupo <i>groupID</i>.</p>
 
         <div class="documentationFunctionParametersBox">
             <p><b>tokenID</b><sub>GET</sub> : id de autenticação </p>
@@ -81,7 +81,7 @@
             <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=group.requestEnrollment&tokenID=$tokenID&groupID=1&name=null&email=null">
         </p>
 
-        <p class="documentFunctionDescription">Solicita a entrada da pessoa com email <i>email</i> na atividade <i>groupID</i>. Se o nome <i>name</i> e email <i>email</i> da pessoa não for especificada ou o <i>tokenID</i> fornecido não tiver permissão para enviar para a pessoa com email <i>email</i>, será utilizada a pessoa associada ao <i>tokenID</i>.</p>
+        <p class="documentFunctionDescription">Solicita a entrada da pessoa com email <i>email</i> no grupo <i>groupID</i>. Se o nome <i>name</i> e email <i>email</i> da pessoa não for especificada ou o <i>tokenID</i> fornecido não tiver permissão para enviar para a pessoa com email <i>email</i>, será utilizada a pessoa associada ao <i>tokenID</i>.</p>
 
         <div class="documentationFunctionParametersBox">
             <p><b>tokenID</b><sub>GET</sub> : id de autenticação </p>
@@ -112,7 +112,7 @@
             <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=group.confirmApproval&tokenID=$tokenID&groupID=1&personID=1">
         </p>
 
-        <p class="documentFunctionDescription">Confirma que a pessoa <i>personID</i> está aprovada na atividade <i>groupID</i>.</p>
+        <p class="documentFunctionDescription">Confirma que a pessoa <i>personID</i> está aprovada no grupo <i>groupID</i>.</p>
 
         <div class="documentationFunctionParametersBox">
             <p><b>tokenID</b><sub>GET</sub> : id de autenticação </p>
@@ -127,7 +127,7 @@
             <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=group.revokeApproval&tokenID=$tokenID&groupID=1&personID=1">
         </p>
 
-        <p class="documentFunctionDescription">Nega que a pessoa <i>personID</i> está aprovada na atividade <i>groupID</i>.</p>
+        <p class="documentFunctionDescription">Nega que a pessoa <i>personID</i> está aprovada no grupo <i>groupID</i>.</p>
 
         <div class="documentationFunctionParametersBox">
             <p><b>tokenID</b><sub>GET</sub> : id de autenticação </p>
@@ -142,7 +142,7 @@
             <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=group.confirmEntrance&tokenID=$tokenID&groupID=1&personID=1">
         </p>
 
-        <p class="documentFunctionDescription">Confirma que a pessoa <i>personID</i> está presente na atividade <i>groupID</i>.</p>
+        <p class="documentFunctionDescription">Confirma que a pessoa <i>personID</i> está presente no grupo <i>groupID</i>.</p>
 
         <div class="documentationFunctionParametersBox">
             <p><b>tokenID</b><sub>GET</sub> : id de autenticação </p>
@@ -157,7 +157,7 @@
             <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=group.revokeEntrance&tokenID=$tokenID&groupID=1&personID=1">
         </p>
 
-        <p class="documentFunctionDescription">Nega que a pessoa <i>personID</i> está presente na atividade <i>groupID</i>.</p>
+        <p class="documentFunctionDescription">Nega que a pessoa <i>personID</i> está presente no grupo <i>groupID</i>.</p>
 
         <div class="documentationFunctionParametersBox">
             <p><b>tokenID</b><sub>GET</sub> : id de autenticação </p>
@@ -172,7 +172,7 @@
             <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=group.getPeople&tokenID=$tokenID&groupID=1&selection=all&order=name">
         </p>
 
-        <p class="documentFunctionDescription">Retorna todas as pessoas que foram confirmadas na atividade <i>groupID</i>, filtradas por uma seleção <i>selection</i> e ordem <i>order</i>.</p>
+        <p class="documentFunctionDescription">Retorna todas as pessoas que foram confirmadas no grupo <i>groupID</i>, filtradas por uma seleção <i>selection</i> e ordem <i>order</i>.</p>
 
         <div class="documentationFunctionParametersBox">
             <p><b>tokenID</b><sub>GET</sub> : id de autenticação </p>

@@ -10,11 +10,10 @@
 #import <MapKit/MapKit.h>
 #import <CoreLocation/CoreLocation.h>
 #import "WrapperViewController.h"
-#import "APIController.h"
 
 @class UIPlaceHolderTextView;
 
-@interface FrontViewController : WrapperViewController <APIControllerDelegate, UIGestureRecognizerDelegate, CLLocationManagerDelegate>
+@interface FrontViewController : WrapperViewController <InEventAPIControllerDelegate, UIGestureRecognizerDelegate, CLLocationManagerDelegate>
 
 @property (strong, nonatomic) IBOutlet UIScrollView *view;
 @property (strong, nonatomic) IBOutlet UIImageView *cover;

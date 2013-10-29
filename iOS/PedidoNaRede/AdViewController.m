@@ -10,6 +10,7 @@
 #import "EventToken.h"
 #import "UtilitiesController.h"
 #import "UIImageView+WebCache.h"
+#import "InEventAPI.h"
 
 @interface AdViewController () {
     NSArray *adData;
@@ -62,7 +63,7 @@
 }
 
 - (void)forceDataReload:(BOOL)forcing {
-    [[[APIController alloc] initWithDelegate:self forcing:forcing] adGetAdsAtEvent:[[EventToken sharedInstance] eventID]];
+    [[[InEventAdAPIController alloc] initWithDelegate:self forcing:forcing] getAdsAtEvent:[[EventToken sharedInstance] eventID]];
 }
 
 #pragma mark - Painter Methods
@@ -94,7 +95,7 @@
         }];
         
         // Mark the ad as seen
-        [[[APIController alloc] initWithDelegate:self forcing:YES] adSeenAd:[[singleAd objectForKey:@"id"] integerValue]];
+        [[[InEventAdAPIController alloc] initWithDelegate:self forcing:YES] seenAd:[[singleAd objectForKey:@"id"] integerValue]];
     }
 }
 
@@ -107,7 +108,7 @@
 
 #pragma mark - APIController Delegate
 
-- (void)apiController:(APIController *)apiController didLoadDictionaryFromServer:(NSDictionary *)dictionary {
+- (void)apiController:(InEventAPIController *)apiController didLoadDictionaryFromServer:(NSDictionary *)dictionary {
     
     if ([apiController.method isEqualToString:@"getAds"]) {
         
@@ -127,7 +128,7 @@
     }
 }
 
-- (void)apiController:(APIController *)apiController didFailWithError:(NSError *)error {
+- (void)apiController:(InEventAPIController *)apiController didFailWithError:(NSError *)error {
 
     if ([self.delegate respondsToSelector:@selector(adController:shouldLoadController:)]) {
         [self.delegate adController:self shouldLoadController:NO];

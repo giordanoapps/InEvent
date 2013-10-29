@@ -8,9 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "WrapperViewController.h"
-#import "APIController.h"
 
-@interface ScheduleViewController : WrapperViewController <UITableViewDelegate, UITableViewDataSource, UINavigationControllerDelegate, APIControllerDelegate>
+@interface ScheduleViewController : WrapperViewController <UITableViewDelegate, UITableViewDataSource, UINavigationControllerDelegate, InEventAPIControllerDelegate>
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 

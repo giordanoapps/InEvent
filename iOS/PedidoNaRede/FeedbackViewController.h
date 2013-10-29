@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "WrapperViewController.h"
-#import "APIController.h"
 
 typedef enum {
     FeedbackTypeEvent = 0,
@@ -17,7 +16,7 @@ typedef enum {
 
 @class UIPlaceHolderTextView;
 
-@interface FeedbackViewController : WrapperViewController <APIControllerDelegate, UITextViewDelegate>
+@interface FeedbackViewController : WrapperViewController <InEventAPIControllerDelegate, UITextViewDelegate>
 
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (strong, nonatomic) IBOutlet UIView *box;
