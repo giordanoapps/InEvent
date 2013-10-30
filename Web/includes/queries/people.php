@@ -9,6 +9,7 @@
                 `member`.`id` AS `memberID`,
                 `member`.`name`,
                 `member`.`email`,
+                `member`.`image`,
                 `eventMember`.`position` AS `enrollmentID`,
                 `activityMember`.`position`,
                 `activityMember`.`approved`,
@@ -40,6 +41,7 @@
                 `member`.`id` AS `memberID`,
                 `member`.`name`,
                 `member`.`email`,
+                `member`.`image`,
                 `groupMember`.`approved`,
                 `groupMember`.`present`
             FROM
@@ -76,9 +78,9 @@
             "SELECT
                 `member`.`id` AS `memberID`,
                 `member`.`name`,
-                `member`.`cpf`, 
-                `member`.`rg`, 
-                `member`.`usp`, 
+                `member`.`role`,
+                `member`.`company`,
+                `member`.`image`,
                 `member`.`telephone`, 
                 `member`.`city`, 
                 `member`.`email`, 

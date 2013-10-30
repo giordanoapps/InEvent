@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <UIKit/UIKit.h>
 #import "WrapperViewController.h"
 
 @interface PersonViewController : WrapperViewController <InEventAPIControllerDelegate, UIGestureRecognizerDelegate, UISplitViewControllerDelegate>

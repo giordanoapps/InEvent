@@ -91,11 +91,11 @@
  
  */
 
-#import "PeopleGroupViewLayout.h"
+#import "GroupCirclePeopleViewLayout.h"
 
 #define ITEM_SIZE 40
 
-@interface PeopleGroupViewLayout()
+@interface GroupCirclePeopleViewLayout()
 
 // arrays to keep track of insert, delete index paths
 @property (nonatomic, strong) NSMutableArray *deleteIndexPaths;
@@ -103,7 +103,7 @@
 
 @end
 
-@implementation PeopleGroupViewLayout
+@implementation GroupCirclePeopleViewLayout
 
 -(void)prepareLayout
 {

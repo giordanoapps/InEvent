@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PeopleGroupViewLayout : UICollectionViewLayout
+@interface GroupCirclePeopleViewLayout : UICollectionViewLayout
 
 @property (nonatomic, assign) CGPoint center;
 @property (nonatomic, assign) CGFloat radius;

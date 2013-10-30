@@ -475,6 +475,12 @@
     [refreshControl endRefreshing];
 }
 
+- (void)apiController:(InEventAPIController *)apiController didSaveForLaterWithError:(NSError *)error {
+    [super apiController:apiController didSaveForLaterWithError:error];
+    
+    [refreshControl endRefreshing];
+}
+
 - (void)apiController:(InEventAPIController *)apiController didFailWithError:(NSError *)error {
     [super apiController:apiController didFailWithError:error];
     

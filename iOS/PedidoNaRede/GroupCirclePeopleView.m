@@ -1,16 +1,18 @@
 //
-//  PeopleGroupViewCell.m
+//  PeopleGroupView.m
 //  InEvent
 //
 //  Created by Pedro Góes on 15/10/13.
 //  Copyright (c) 2013 Pedro Góes. All rights reserved.
 //
 
-#import "PeopleGroupViewCell.h"
+#import "GroupCirclePeopleView.h"
+#import "GroupCirclePeopleViewCell.h"
+#import "GroupCirclePeopleViewLayout.h"
 #import "ColorThemeController.h"
 #import <QuartzCore/QuartzCore.h>
 
-@implementation PeopleGroupViewCell
+@implementation GroupCirclePeopleView
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -29,10 +31,10 @@
 }
 
 - (void)configureCell {
-    
-    // Label
-//    [self.initial setBackgroundColor:[ColorThemeController tableViewCellBackgroundColor]];
-//    [self.initial.layer setCornerRadius:self.initial.frame.size.width / 2.0f];
+    // Collection
+    self.backgroundColor = [ColorThemeController tableViewBackgroundColor];
+    self.collectionViewLayout = [[GroupCirclePeopleViewLayout alloc] init];
 }
+
 
 @end

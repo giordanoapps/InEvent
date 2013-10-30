@@ -4,7 +4,7 @@
         return getGroupsForMemberQuery("AND `group`.`eventID` = $eventID", $memberID, $exclusive);
     }
 
-    function getGroupsForMemberAtActivityQuery($groupID, $memberID, $exclusive = false) {
+    function getGroupsForMemberAtGroupQuery($groupID, $memberID, $exclusive = false) {
         return getGroupsForMemberQuery("AND `group`.`id` = $groupID", $memberID, $exclusive);
     }
     

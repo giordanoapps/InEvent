@@ -7,11 +7,26 @@
 	 * @param  string $email     email of the person
 	 * @return integer           memberID
 	 */
-	function createMember($name, $password, $email, $cpf = "", $rg = "", $usp = "", $telephone = "", $city = "", $university = "", $course = "", $linkedInID = "", $facebookID = 0) {
+	function createMember($details) {
 
+		// Required
+		$name = getAttribute($details["name"]);
+		$email = getAttribute($details["email"]);
+
+		// Optional
+		$password = (isset($details["password"])) ? getAttribute($details["password"]) : "123456";
 		$hash = Bcrypt::hash($password);
+		$cpf = (isset($details["cpf"])) ? getEmptyAttribute($details["cpf"]) : "";
+		$rg = (isset($details["rg"])) ? getEmptyAttribute($details["rg"]) : "";
+		$city = (isset($details["city"])) ? getEmptyAttribute($details["city"]) : "";
+		$university = (isset($details["university"])) ? getEmptyAttribute($details["university"]) : "";
+		$course = (isset($details["course"])) ? getEmptyAttribute($details["course"]) : "";
+		$telephone = (isset($details["telephone"])) ? getEmptyAttribute($details["telephone"]) : "";
+		$usp = (isset($details["usp"])) ? getEmptyAttribute($details["usp"]) : "";
+		$linkedInID = (isset($details["linkedInID"])) ? getEmptyAttribute($details["linkedInID"]) : "";
+		$facebookID = (isset($details["facebookID"])) ? getEmptyAttribute($details["facebookID"]) : 0;
 
-		// Insert the name 
+		// Insert the person 
 		$insert = resourceForQuery(
 			"INSERT INTO
 				`member`

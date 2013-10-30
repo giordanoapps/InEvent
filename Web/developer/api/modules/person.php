@@ -92,7 +92,7 @@
 					// Create a random password for the newly created member
 					$password = "123456";
 					// Create the member
-					$memberID = createMember($name, $password, $email, "", "", "", "", "", "", "", 0, "", $linkedInID);
+					$memberID = createMember(array("name" => $name, "password" => $password, "email" => $email, "linkedInID" => $linkedInID));
 
 					if ($memberID != 0) {
 						// Return the desired data
@@ -183,7 +183,7 @@
 						// Create a random password for the newly created member
 						$password = "123456";
 						// Create the member
-						$memberID = createMember($name, $password, $email, "", "", "", "", "", "", "", $facebookID);
+						$memberID = createMember(array("name" => $name, "password" => $password, "email" => $email, "facebookID" => $facebookID));
 
 						if ($memberID != 0) {
 							// Return the desired data
@@ -273,19 +273,7 @@
 			// include_once("../../includes/registrationCheck.php");
 
 			// Get the provided data
-			// Required
-			$name = getAttribute($_REQUEST["name"]);
 			$email = getAttribute($_REQUEST["email"]);
-
-			// Optional
-			$password = (isset($_POST["password"])) ? getAttribute($_REQUEST["password"]) : "123456";
-			$cpf = (isset($_POST["cpf"])) ? getEmptyAttribute($_POST["cpf"]) : "";
-			$rg = (isset($_POST["rg"])) ? getEmptyAttribute($_POST["rg"]) : "";
-			$city = (isset($_POST["city"])) ? getEmptyAttribute($_POST["city"]) : "";
-			$university = (isset($_POST["university"])) ? getEmptyAttribute($_POST["university"]) : "";
-			$course = (isset($_POST["course"])) ? getEmptyAttribute($_POST["course"]) : "";
-			$telephone = (isset($_POST["telephone"])) ? getEmptyAttribute($_POST["telephone"]) : "";
-			$usp = (isset($_POST["usp"])) ? getEmptyAttribute($_POST["usp"]) : "";
 
 			// See if the person exists
 			$result = resourceForQuery(
@@ -299,7 +287,11 @@
 
 			if (mysql_num_rows($result) == 0) {
 
-				$memberID = createMember($name, $password, $email, $cpf, $rg, $usp, $telephone, $city, $university, $course);
+				// Save the password for later
+				$password = (isset($_REQUEST["password"])) ? getAttribute($_REQUEST["password"]) : "123456";
+
+				// Create the member
+				$memberID = createMember($_REQUEST);
 
 				if ($memberID != 0) {
 					// Return the desired data

@@ -182,7 +182,7 @@
 				if (mysql_num_rows($result) > 0) {
 					$personID = mysql_result($result, 0, "id");
 				} else {
-					$personID = createMember($name, $password, $email);
+					$personID = createMember(array("name" => $name, "password" => $password, "email" => $email));
 					$data = processLogIn($email, $password);
 				}
 

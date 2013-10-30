@@ -253,15 +253,13 @@
 
 - (UITableViewCell *)tableView:(UITableView *)aTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    static NSString * CustomCellIdentifier = @"CustomCellIdentifier";
-    ScheduleViewCell * cell = (ScheduleViewCell *)[aTableView dequeueReusableCellWithIdentifier: CustomCellIdentifier];
+    static NSString *CustomCellIdentifier = @"CustomCellIdentifier";
+    ScheduleViewCell *cell = (ScheduleViewCell *)[aTableView dequeueReusableCellWithIdentifier:CustomCellIdentifier];
     
     if (cell == nil) {
         [aTableView registerNib:[UINib nibWithNibName:@"ScheduleViewCell" bundle:nil] forCellReuseIdentifier:CustomCellIdentifier];
-        cell =  (ScheduleViewCell *)[aTableView dequeueReusableCellWithIdentifier: CustomCellIdentifier];
+        cell = (ScheduleViewCell *)[aTableView dequeueReusableCellWithIdentifier:CustomCellIdentifier];
     }
-    
-    [cell configureCell];
     
     NSDictionary *dictionary = [[activities objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
     
@@ -345,6 +343,12 @@
             }
         }
     }
+}
+
+- (void)apiController:(InEventAPIController *)apiController didSaveForLaterWithError:(NSError *)error {
+    [super apiController:apiController didSaveForLaterWithError:error];
+    
+    [refreshControl endRefreshing];
 }
 
 - (void)apiController:(InEventAPIController *)apiController didFailWithError:(NSError *)error {

@@ -92,13 +92,23 @@
 								$name = $value;
 								break;
 							case 1:
+								$role = $value;
+								break;
+							case 2:
+								$company = $value;
+								break;
+							case 3:
 								$email = $value;
+								break;
+							case 4:
+								$telephone = $value;
 								break;
 						}
 					}
 
 					// Get the person for the given email
-					$personID = getPersonForEmail($email, $name);
+					$personID = getPersonForEmail($email);
+					if ($personID == 0) $personID = createMember(array("name" => $name, "role" => $role, "company" => $company, "email" => $email, "telephone" => $telephone));
 
 					if ($type == "event") {
 						// Enroll the person at all the activities

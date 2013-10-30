@@ -148,8 +148,8 @@
 		EB837CBA171AE45400FA1EBC /* 16-User@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB837CB9171AE45400FA1EBC /* 16-User@2x.png */; };
 		EB8974E5180CC02C00DB2486 /* QuizViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB8974E3180CC02C00DB2486 /* QuizViewController.m */; };
 		EB8974E6180CC02C00DB2486 /* QuizViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB8974E4180CC02C00DB2486 /* QuizViewController.xib */; };
-		EB8974EB180CC52000DB2486 /* PeopleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB8974E9180CC52000DB2486 /* PeopleViewController.m */; };
-		EB8974EC180CC52000DB2486 /* PeopleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB8974EA180CC52000DB2486 /* PeopleViewController.xib */; };
+		EB8974EB180CC52000DB2486 /* GroupCircleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB8974E9180CC52000DB2486 /* GroupCircleViewController.m */; };
+		EB8974EC180CC52000DB2486 /* GroupCircleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB8974EA180CC52000DB2486 /* GroupCircleViewController.xib */; };
 		EB8974F5180CC85200DB2486 /* 32-Group.png in Resources */ = {isa = PBXBuildFile; fileRef = EB8974F4180CC85200DB2486 /* 32-Group.png */; };
 		EB8974F7180CC86700DB2486 /* 32-Group@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB8974F6180CC86700DB2486 /* 32-Group@2x.png */; };
 		EB8974F9180CC96900DB2486 /* 16-Group@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB8974F8180CC96900DB2486 /* 16-Group@2x.png */; };
@@ -157,12 +157,12 @@
 		EB8974FE180CCDB000DB2486 /* PersonViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB8974FC180CCDB000DB2486 /* PersonViewController.xib */; };
 		EB897500180CDF2D00DB2486 /* 16-Day-Calendar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB8974FF180CDF2D00DB2486 /* 16-Day-Calendar@2x.png */; };
 		EB897502180CDFE200DB2486 /* 16-Day-Calendar.png in Resources */ = {isa = PBXBuildFile; fileRef = EB897501180CDFE200DB2486 /* 16-Day-Calendar.png */; };
-		EB897504180CE33500DB2486 /* PeopleViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB897503180CE33500DB2486 /* PeopleViewCell.xib */; };
-		EB897507180CE35E00DB2486 /* PeopleViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EB897506180CE35E00DB2486 /* PeopleViewCell.m */; };
-		EB89750A180D142E00DB2486 /* PeopleGroupView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB897509180D142E00DB2486 /* PeopleGroupView.m */; };
-		EB89750D180D147600DB2486 /* PeopleGroupViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = EB89750C180D147600DB2486 /* PeopleGroupViewLayout.m */; };
-		EB897510180D166900DB2486 /* PeopleGroupViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EB89750F180D166900DB2486 /* PeopleGroupViewCell.m */; };
-		EB897512180D20B100DB2486 /* PeopleGroupViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB897511180D20B100DB2486 /* PeopleGroupViewCell.xib */; };
+		EB897504180CE33500DB2486 /* GroupCircleViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB897503180CE33500DB2486 /* GroupCircleViewCell.xib */; };
+		EB897507180CE35E00DB2486 /* GroupCircleViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EB897506180CE35E00DB2486 /* GroupCircleViewCell.m */; };
+		EB89750A180D142E00DB2486 /* GroupCirclePeopleView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB897509180D142E00DB2486 /* GroupCirclePeopleView.m */; };
+		EB89750D180D147600DB2486 /* GroupCirclePeopleViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = EB89750C180D147600DB2486 /* GroupCirclePeopleViewLayout.m */; };
+		EB897510180D166900DB2486 /* GroupCirclePeopleViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EB89750F180D166900DB2486 /* GroupCirclePeopleViewCell.m */; };
+		EB897512180D20B100DB2486 /* GroupCirclePeopleViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB897511180D20B100DB2486 /* GroupCirclePeopleViewCell.xib */; };
 		EB897515181056D800DB2486 /* SebraeColorThemeController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB897514181056D800DB2486 /* SebraeColorThemeController.m */; };
 		EB89751818132E2A00DB2486 /* QuizOptionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EB89751718132E2A00DB2486 /* QuizOptionViewCell.m */; };
 		EB89751A18132E3A00DB2486 /* View.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB89751918132E3A00DB2486 /* View.xib */; };
@@ -233,6 +233,16 @@
 		EBA1864F1731DAEB00336733 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBAAFD22161FCF020007637B /* Foundation.framework */; };
 		EBA186551731DAEB00336733 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = EBA186531731DAEB00336733 /* InfoPlist.strings */; };
 		EBA186581731DAEB00336733 /* Allocation.m in Sources */ = {isa = PBXBuildFile; fileRef = EBA186571731DAEB00336733 /* Allocation.m */; };
+		EBA2C2501820CF8D00399D4F /* PeopleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBA2C24E1820CF8D00399D4F /* PeopleViewController.m */; };
+		EBA2C2511820CF8D00399D4F /* PeopleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBA2C24F1820CF8D00399D4F /* PeopleViewController.xib */; };
+		EBA2C2551820D53B00399D4F /* GroupViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EBA2C2541820D53B00399D4F /* GroupViewCell.m */; };
+		EBA2C2571820D55700399D4F /* GroupViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBA2C2561820D55700399D4F /* GroupViewCell.xib */; };
+		EBA2C25B1820D72F00399D4F /* GroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBA2C2591820D72F00399D4F /* GroupViewController.m */; };
+		EBA2C25C1820D72F00399D4F /* GroupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBA2C25A1820D72F00399D4F /* GroupViewController.xib */; };
+		EBA2C2601820D91000399D4F /* PeopleViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EBA2C25F1820D91000399D4F /* PeopleViewCell.m */; };
+		EBA2C2641820D94D00399D4F /* PeopleViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBA2C2631820D94D00399D4F /* PeopleViewCell.xib */; };
+		EBA2C2681820E1A500399D4F /* 16-Users@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBA2C2671820E1A500399D4F /* 16-Users@2x.png */; };
+		EBA2C26A1820E1BC00399D4F /* 16-Users.png in Resources */ = {isa = PBXBuildFile; fileRef = EBA2C2691820E1BC00399D4F /* 16-Users.png */; };
 		EBA89EB217AFEAFA00D9CD6B /* PushController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBA89EB117AFEAFA00D9CD6B /* PushController.m */; };
 		EBAAFD21161FCF020007637B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBAAFD20161FCF020007637B /* UIKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		EBAAFD23161FCF020007637B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBAAFD22161FCF020007637B /* Foundation.framework */; };
@@ -591,9 +601,9 @@
 		EB8974E2180CC02C00DB2486 /* QuizViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QuizViewController.h; path = PedidoNaRede/QuizViewController.h; sourceTree = "<group>"; };
 		EB8974E3180CC02C00DB2486 /* QuizViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QuizViewController.m; path = PedidoNaRede/QuizViewController.m; sourceTree = "<group>"; };
 		EB8974E4180CC02C00DB2486 /* QuizViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = QuizViewController.xib; path = PedidoNaRede/QuizViewController.xib; sourceTree = "<group>"; };
-		EB8974E8180CC52000DB2486 /* PeopleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PeopleViewController.h; path = PedidoNaRede/PeopleViewController.h; sourceTree = "<group>"; };
-		EB8974E9180CC52000DB2486 /* PeopleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PeopleViewController.m; path = PedidoNaRede/PeopleViewController.m; sourceTree = "<group>"; };
-		EB8974EA180CC52000DB2486 /* PeopleViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PeopleViewController.xib; path = PedidoNaRede/PeopleViewController.xib; sourceTree = "<group>"; };
+		EB8974E8180CC52000DB2486 /* GroupCircleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GroupCircleViewController.h; path = PedidoNaRede/GroupCircleViewController.h; sourceTree = "<group>"; };
+		EB8974E9180CC52000DB2486 /* GroupCircleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GroupCircleViewController.m; path = PedidoNaRede/GroupCircleViewController.m; sourceTree = "<group>"; };
+		EB8974EA180CC52000DB2486 /* GroupCircleViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GroupCircleViewController.xib; path = PedidoNaRede/GroupCircleViewController.xib; sourceTree = "<group>"; };
 		EB8974F4180CC85200DB2486 /* 32-Group.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Group.png"; sourceTree = "<group>"; };
 		EB8974F6180CC86700DB2486 /* 32-Group@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Group@2x.png"; sourceTree = "<group>"; };
 		EB8974F8180CC96900DB2486 /* 16-Group@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "16-Group@2x.png"; sourceTree = "<group>"; };
@@ -602,16 +612,16 @@
 		EB8974FC180CCDB000DB2486 /* PersonViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PersonViewController.xib; path = PedidoNaRede/PersonViewController.xib; sourceTree = "<group>"; };
 		EB8974FF180CDF2D00DB2486 /* 16-Day-Calendar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "16-Day-Calendar@2x.png"; sourceTree = "<group>"; };
 		EB897501180CDFE200DB2486 /* 16-Day-Calendar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "16-Day-Calendar.png"; sourceTree = "<group>"; };
-		EB897503180CE33500DB2486 /* PeopleViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PeopleViewCell.xib; path = PedidoNaRede/PeopleViewCell.xib; sourceTree = "<group>"; };
-		EB897505180CE35E00DB2486 /* PeopleViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PeopleViewCell.h; path = PedidoNaRede/PeopleViewCell.h; sourceTree = "<group>"; };
-		EB897506180CE35E00DB2486 /* PeopleViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PeopleViewCell.m; path = PedidoNaRede/PeopleViewCell.m; sourceTree = "<group>"; };
-		EB897508180D142E00DB2486 /* PeopleGroupView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PeopleGroupView.h; path = PedidoNaRede/PeopleGroupView.h; sourceTree = "<group>"; };
-		EB897509180D142E00DB2486 /* PeopleGroupView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PeopleGroupView.m; path = PedidoNaRede/PeopleGroupView.m; sourceTree = "<group>"; };
-		EB89750B180D147600DB2486 /* PeopleGroupViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PeopleGroupViewLayout.h; path = PedidoNaRede/PeopleGroupViewLayout.h; sourceTree = "<group>"; };
-		EB89750C180D147600DB2486 /* PeopleGroupViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PeopleGroupViewLayout.m; path = PedidoNaRede/PeopleGroupViewLayout.m; sourceTree = "<group>"; };
-		EB89750E180D166900DB2486 /* PeopleGroupViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PeopleGroupViewCell.h; path = PedidoNaRede/PeopleGroupViewCell.h; sourceTree = "<group>"; };
-		EB89750F180D166900DB2486 /* PeopleGroupViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PeopleGroupViewCell.m; path = PedidoNaRede/PeopleGroupViewCell.m; sourceTree = "<group>"; };
-		EB897511180D20B100DB2486 /* PeopleGroupViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PeopleGroupViewCell.xib; path = PedidoNaRede/PeopleGroupViewCell.xib; sourceTree = "<group>"; };
+		EB897503180CE33500DB2486 /* GroupCircleViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GroupCircleViewCell.xib; path = PedidoNaRede/GroupCircleViewCell.xib; sourceTree = "<group>"; };
+		EB897505180CE35E00DB2486 /* GroupCircleViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GroupCircleViewCell.h; path = PedidoNaRede/GroupCircleViewCell.h; sourceTree = "<group>"; };
+		EB897506180CE35E00DB2486 /* GroupCircleViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GroupCircleViewCell.m; path = PedidoNaRede/GroupCircleViewCell.m; sourceTree = "<group>"; };
+		EB897508180D142E00DB2486 /* GroupCirclePeopleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GroupCirclePeopleView.h; path = PedidoNaRede/GroupCirclePeopleView.h; sourceTree = "<group>"; };
+		EB897509180D142E00DB2486 /* GroupCirclePeopleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GroupCirclePeopleView.m; path = PedidoNaRede/GroupCirclePeopleView.m; sourceTree = "<group>"; };
+		EB89750B180D147600DB2486 /* GroupCirclePeopleViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GroupCirclePeopleViewLayout.h; path = PedidoNaRede/GroupCirclePeopleViewLayout.h; sourceTree = "<group>"; };
+		EB89750C180D147600DB2486 /* GroupCirclePeopleViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GroupCirclePeopleViewLayout.m; path = PedidoNaRede/GroupCirclePeopleViewLayout.m; sourceTree = "<group>"; };
+		EB89750E180D166900DB2486 /* GroupCirclePeopleViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GroupCirclePeopleViewCell.h; path = PedidoNaRede/GroupCirclePeopleViewCell.h; sourceTree = "<group>"; };
+		EB89750F180D166900DB2486 /* GroupCirclePeopleViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GroupCirclePeopleViewCell.m; path = PedidoNaRede/GroupCirclePeopleViewCell.m; sourceTree = "<group>"; };
+		EB897511180D20B100DB2486 /* GroupCirclePeopleViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GroupCirclePeopleViewCell.xib; path = PedidoNaRede/GroupCirclePeopleViewCell.xib; sourceTree = "<group>"; };
 		EB897513181056D800DB2486 /* SebraeColorThemeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SebraeColorThemeController.h; path = PedidoNaRede/SebraeColorThemeController.h; sourceTree = "<group>"; };
 		EB897514181056D800DB2486 /* SebraeColorThemeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SebraeColorThemeController.m; path = PedidoNaRede/SebraeColorThemeController.m; sourceTree = "<group>"; };
 		EB89751618132E2A00DB2486 /* QuizOptionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QuizOptionViewCell.h; path = PedidoNaRede/QuizOptionViewCell.h; sourceTree = "<group>"; };
@@ -696,6 +706,20 @@
 		EBA186561731DAEB00336733 /* Allocation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Allocation.h; sourceTree = "<group>"; };
 		EBA186571731DAEB00336733 /* Allocation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Allocation.m; sourceTree = "<group>"; };
 		EBA186591731DAEB00336733 /* Allocation-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Allocation-Prefix.pch"; sourceTree = "<group>"; };
+		EBA2C24D1820CF8D00399D4F /* PeopleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PeopleViewController.h; path = PedidoNaRede/PeopleViewController.h; sourceTree = "<group>"; };
+		EBA2C24E1820CF8D00399D4F /* PeopleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PeopleViewController.m; path = PedidoNaRede/PeopleViewController.m; sourceTree = "<group>"; };
+		EBA2C24F1820CF8D00399D4F /* PeopleViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PeopleViewController.xib; path = PedidoNaRede/PeopleViewController.xib; sourceTree = "<group>"; };
+		EBA2C2531820D53B00399D4F /* GroupViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GroupViewCell.h; path = PedidoNaRede/GroupViewCell.h; sourceTree = "<group>"; };
+		EBA2C2541820D53B00399D4F /* GroupViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GroupViewCell.m; path = PedidoNaRede/GroupViewCell.m; sourceTree = "<group>"; };
+		EBA2C2561820D55700399D4F /* GroupViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GroupViewCell.xib; path = PedidoNaRede/GroupViewCell.xib; sourceTree = "<group>"; };
+		EBA2C2581820D72F00399D4F /* GroupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GroupViewController.h; path = PedidoNaRede/GroupViewController.h; sourceTree = "<group>"; };
+		EBA2C2591820D72F00399D4F /* GroupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GroupViewController.m; path = PedidoNaRede/GroupViewController.m; sourceTree = "<group>"; };
+		EBA2C25A1820D72F00399D4F /* GroupViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GroupViewController.xib; path = PedidoNaRede/GroupViewController.xib; sourceTree = "<group>"; };
+		EBA2C25E1820D91000399D4F /* PeopleViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PeopleViewCell.h; path = PedidoNaRede/PeopleViewCell.h; sourceTree = "<group>"; };
+		EBA2C25F1820D91000399D4F /* PeopleViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PeopleViewCell.m; path = PedidoNaRede/PeopleViewCell.m; sourceTree = "<group>"; };
+		EBA2C2631820D94D00399D4F /* PeopleViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PeopleViewCell.xib; path = PedidoNaRede/PeopleViewCell.xib; sourceTree = "<group>"; };
+		EBA2C2671820E1A500399D4F /* 16-Users@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "16-Users@2x.png"; sourceTree = "<group>"; };
+		EBA2C2691820E1BC00399D4F /* 16-Users.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "16-Users.png"; sourceTree = "<group>"; };
 		EBA89EB017AFEAFA00D9CD6B /* PushController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PushController.h; sourceTree = "<group>"; };
 		EBA89EB117AFEAFA00D9CD6B /* PushController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PushController.m; sourceTree = "<group>"; };
 		EBAAFD1C161FCF020007637B /* InEvent.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InEvent.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1319,27 +1343,24 @@
 			name = Quiz;
 			sourceTree = "<group>";
 		};
-		EB8974ED180CC52400DB2486 /* People */ = {
+		EB8974ED180CC52400DB2486 /* Group Circle */ = {
 			isa = PBXGroup;
 			children = (
-				EB897508180D142E00DB2486 /* PeopleGroupView.h */,
-				EB897509180D142E00DB2486 /* PeopleGroupView.m */,
-				EB89750E180D166900DB2486 /* PeopleGroupViewCell.h */,
-				EB89750F180D166900DB2486 /* PeopleGroupViewCell.m */,
-				EB897511180D20B100DB2486 /* PeopleGroupViewCell.xib */,
-				EB89750B180D147600DB2486 /* PeopleGroupViewLayout.h */,
-				EB89750C180D147600DB2486 /* PeopleGroupViewLayout.m */,
-				EB897505180CE35E00DB2486 /* PeopleViewCell.h */,
-				EB897506180CE35E00DB2486 /* PeopleViewCell.m */,
-				EB897503180CE33500DB2486 /* PeopleViewCell.xib */,
-				EB8974E8180CC52000DB2486 /* PeopleViewController.h */,
-				EB8974E9180CC52000DB2486 /* PeopleViewController.m */,
-				EB8974EA180CC52000DB2486 /* PeopleViewController.xib */,
-				EB8974FA180CCDB000DB2486 /* PersonViewController.h */,
-				EB8974FB180CCDB000DB2486 /* PersonViewController.m */,
-				EB8974FC180CCDB000DB2486 /* PersonViewController.xib */,
+				EB897508180D142E00DB2486 /* GroupCirclePeopleView.h */,
+				EB897509180D142E00DB2486 /* GroupCirclePeopleView.m */,
+				EB89750E180D166900DB2486 /* GroupCirclePeopleViewCell.h */,
+				EB89750F180D166900DB2486 /* GroupCirclePeopleViewCell.m */,
+				EB897511180D20B100DB2486 /* GroupCirclePeopleViewCell.xib */,
+				EB89750B180D147600DB2486 /* GroupCirclePeopleViewLayout.h */,
+				EB89750C180D147600DB2486 /* GroupCirclePeopleViewLayout.m */,
+				EB897505180CE35E00DB2486 /* GroupCircleViewCell.h */,
+				EB897506180CE35E00DB2486 /* GroupCircleViewCell.m */,
+				EB897503180CE33500DB2486 /* GroupCircleViewCell.xib */,
+				EB8974E8180CC52000DB2486 /* GroupCircleViewController.h */,
+				EB8974E9180CC52000DB2486 /* GroupCircleViewController.m */,
+				EB8974EA180CC52000DB2486 /* GroupCircleViewController.xib */,
 			);
-			name = People;
+			name = "Group Circle";
 			sourceTree = "<group>";
 		};
 		EB8974EE180CC54D00DB2486 /* Classes */ = {
@@ -1350,12 +1371,14 @@
 				EB1FEA061800FE46001C2906 /* Feedback */,
 				EB79CC5417ED814100C16CF5 /* Front */,
 				EB8974EF180CC58200DB2486 /* General */,
+				EB8974ED180CC52400DB2486 /* Group Circle */,
+				EBA2C25D1820D73200399D4F /* Group Rectangle */,
 				EB25BAA016FE73F7003F142F /* Human */,
 				EB1FEB8C17172A16009834FC /* Log */,
 				EBFCCF4A16987F3700A5AE73 /* Map */,
 				EB59020417D5D7D60032143C /* Marketplace */,
 				EB1FE9FB17FF9CF6001C2906 /* Material */,
-				EB8974ED180CC52400DB2486 /* People */,
+				EBA2C2521820CF9600399D4F /* People */,
 				EBD6FE3F180645B1006D0E73 /* Photos */,
 				EB79CC4517EB82C100C16CF5 /* Question */,
 				EB8974E7180CC06900DB2486 /* Quiz */,
@@ -1451,6 +1474,35 @@
 				EBA186591731DAEB00336733 /* Allocation-Prefix.pch */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		EBA2C2521820CF9600399D4F /* People */ = {
+			isa = PBXGroup;
+			children = (
+				EBA2C24D1820CF8D00399D4F /* PeopleViewController.h */,
+				EBA2C24E1820CF8D00399D4F /* PeopleViewController.m */,
+				EBA2C24F1820CF8D00399D4F /* PeopleViewController.xib */,
+				EBA2C25E1820D91000399D4F /* PeopleViewCell.h */,
+				EBA2C25F1820D91000399D4F /* PeopleViewCell.m */,
+				EBA2C2631820D94D00399D4F /* PeopleViewCell.xib */,
+				EB8974FA180CCDB000DB2486 /* PersonViewController.h */,
+				EB8974FB180CCDB000DB2486 /* PersonViewController.m */,
+				EB8974FC180CCDB000DB2486 /* PersonViewController.xib */,
+			);
+			name = People;
+			sourceTree = "<group>";
+		};
+		EBA2C25D1820D73200399D4F /* Group Rectangle */ = {
+			isa = PBXGroup;
+			children = (
+				EBA2C2581820D72F00399D4F /* GroupViewController.h */,
+				EBA2C2591820D72F00399D4F /* GroupViewController.m */,
+				EBA2C25A1820D72F00399D4F /* GroupViewController.xib */,
+				EBA2C2531820D53B00399D4F /* GroupViewCell.h */,
+				EBA2C2541820D53B00399D4F /* GroupViewCell.m */,
+				EBA2C2561820D55700399D4F /* GroupViewCell.xib */,
+			);
+			name = "Group Rectangle";
 			sourceTree = "<group>";
 		};
 		EBA89EB317AFED5E00D9CD6B /* CustomTabBar */ = {
@@ -1596,6 +1648,8 @@
 				EBDA918417ACB40A00969A08 /* 16-Safari@2x.png */,
 				EB25BA9116FE6EC9003F142F /* 16-User.png */,
 				EB837CB9171AE45400FA1EBC /* 16-User@2x.png */,
+				EBA2C2691820E1BC00399D4F /* 16-Users.png */,
+				EBA2C2671820E1A500399D4F /* 16-Users@2x.png */,
 			);
 			name = "Sliding Menu";
 			sourceTree = "<group>";
@@ -1947,13 +2001,14 @@
 				EBE8D1F916A88ED8003A196A /* blackButton@2x.png in Resources */,
 				EB8974F7180CC86700DB2486 /* 32-Group@2x.png in Resources */,
 				EBE8D1FA16A88ED8003A196A /* blackButtonHighlight.png in Resources */,
+				EBA2C2511820CF8D00399D4F /* PeopleViewController.xib in Resources */,
 				EBE8D1FB16A88ED8003A196A /* blackButtonHighlight@2x.png in Resources */,
 				EB7FF95617EEDB300017E599 /* 32-Facebook-Like-2@2x.png in Resources */,
 				EBE8D1FC16A88ED8003A196A /* blueButton.png in Resources */,
 				EBE8D1FD16A88ED8003A196A /* blueButton@2x.png in Resources */,
 				EB97145C17F2DDDB009260AE /* logo@114.png in Resources */,
 				EBE8D1FE16A88ED8003A196A /* blueButtonHighlight.png in Resources */,
-				EB897504180CE33500DB2486 /* PeopleViewCell.xib in Resources */,
+				EB897504180CE33500DB2486 /* GroupCircleViewCell.xib in Resources */,
 				EBE8D1FF16A88ED8003A196A /* blueButtonHighlight@2x.png in Resources */,
 				EBE8D20016A88ED8003A196A /* greenButton.png in Resources */,
 				EBE8D20116A88ED8003A196A /* greenButton@2x.png in Resources */,
@@ -2014,7 +2069,8 @@
 				EB9AB78E16A125B3005D4CAA /* barButtonDisabled.png in Resources */,
 				EB8974F5180CC85200DB2486 /* 32-Group.png in Resources */,
 				EB9AB78F16A125B3005D4CAA /* barButtonDisabled@2x.png in Resources */,
-				EB897512180D20B100DB2486 /* PeopleGroupViewCell.xib in Resources */,
+				EBA2C2681820E1A500399D4F /* 16-Users@2x.png in Resources */,
+				EB897512180D20B100DB2486 /* GroupCirclePeopleViewCell.xib in Resources */,
 				EB9AB79016A125B3005D4CAA /* barButtonPressed.png in Resources */,
 				EBE72FA4181AF26600A3A02D /* 32-Facebook-2.png in Resources */,
 				EB97146417F2DE30009260AE /* logo@80.png in Resources */,
@@ -2132,10 +2188,12 @@
 				EBC59D8117BEC48600E0FC67 /* 64-Marker.png in Resources */,
 				EBC59D8317BEC49E00E0FC67 /* 64-Footprints.png in Resources */,
 				EBC59D8517BEC4DD00E0FC67 /* 32-Map@2x.png in Resources */,
-				EB8974EC180CC52000DB2486 /* PeopleViewController.xib in Resources */,
+				EB8974EC180CC52000DB2486 /* GroupCircleViewController.xib in Resources */,
 				EBC59D8717BEC58100E0FC67 /* 64-Balloons.png in Resources */,
 				EBC59D8917BEC59B00E0FC67 /* 32-Create-_-Write@2x.png in Resources */,
+				EBA2C2641820D94D00399D4F /* PeopleViewCell.xib in Resources */,
 				EBD6FE4B180654AC006D0E73 /* 32-Image@2x.png in Resources */,
+				EBA2C25C1820D72F00399D4F /* GroupViewController.xib in Resources */,
 				EB97144A17F2DD11009260AE /* Images.xcassets in Resources */,
 				EBC59D8D17BEC5C300E0FC67 /* 64-Cloud-Download.png in Resources */,
 				EBEACD7517C2F65200C65F3F /* AboutViewController~ipad.xib in Resources */,
@@ -2143,7 +2201,9 @@
 				EB50B924181D98F40023A185 /* REComposeViewController.bundle in Resources */,
 				EB97145E17F2DDDB009260AE /* logo@144.png in Resources */,
 				EB59020917D5D83A0032143C /* MarketplaceViewCell.xib in Resources */,
+				EBA2C26A1820E1BC00399D4F /* 16-Users.png in Resources */,
 				EB79CC4A17EB82D500C16CF5 /* QuestionViewController.xib in Resources */,
+				EBA2C2571820D55700399D4F /* GroupViewCell.xib in Resources */,
 				EB01FFDA181BA56C00089915 /* google_dark.png in Resources */,
 				EB79CC4C17ED803600C16CF5 /* 32-Favorite.png in Resources */,
 				EB79CC4E17ED803F00C16CF5 /* 32-Unfavorite.png in Resources */,
@@ -2238,7 +2298,7 @@
 				EB01FFD4181B3AFA00089915 /* AFURLConnectionOperation.m in Sources */,
 				EB3939C816654BE300580A4E /* FacingView.m in Sources */,
 				EB3939C916654BE300580A4E /* FoldView.m in Sources */,
-				EB897510180D166900DB2486 /* PeopleGroupViewCell.m in Sources */,
+				EB897510180D166900DB2486 /* GroupCirclePeopleViewCell.m in Sources */,
 				EB617C2E1808D0F5004F39D2 /* StreamViewCell.m in Sources */,
 				EB3939CA16654BE300580A4E /* MultiFoldView.m in Sources */,
 				EB8974E5180CC02C00DB2486 /* QuizViewController.m in Sources */,
@@ -2250,22 +2310,25 @@
 				EB3939CD16654BE300580A4E /* PaperFoldSwipeHintView.m in Sources */,
 				EB3939CE16654BE300580A4E /* PaperFoldView.m in Sources */,
 				EB3939CF16654BE300580A4E /* ShadowView.m in Sources */,
+				EBA2C2501820CF8D00399D4F /* PeopleViewController.m in Sources */,
 				EB3939D016654BE300580A4E /* TouchThroughUIView.m in Sources */,
 				EB3939D116654BE300580A4E /* UIView+Screenshot.m in Sources */,
 				EB3939D216654BE300580A4E /* PaperFoldMenuController.m in Sources */,
 				EBB7EAEE16801393005DA44C /* WrapperViewController.m in Sources */,
 				EB01FFD6181B3AFA00089915 /* UIImageView+AFNetworking.m in Sources */,
 				EB01FF84181B349B00089915 /* LIALinkedInHttpClient.m in Sources */,
+				EBA2C2551820D53B00399D4F /* GroupViewCell.m in Sources */,
 				EBA0C6EB1697C754005904AE /* MKPointExpandedAnnotation.m in Sources */,
 				EB9AB77216A0921A005D4CAA /* DemoViewController.m in Sources */,
 				EBAD3CB416A27BFB003735AD /* UIImage+Color.m in Sources */,
 				EB28747916A71EF600A06781 /* StepperView.m in Sources */,
+				EBA2C25B1820D72F00399D4F /* GroupViewController.m in Sources */,
 				EB1FE9F917FF9CF1001C2906 /* MaterialViewController.m in Sources */,
 				EB73E9A416AC912A000A9039 /* UtilitiesController.m in Sources */,
 				EBD0DB5616AF953B00F78F93 /* UIViewController+Present.m in Sources */,
 				EB8C7D9216D17AEB00F3C721 /* UIHelpers.m in Sources */,
 				EB8C7D9316D17AEB00F3C721 /* SSCheckBoxView.m in Sources */,
-				EB89750D180D147600DB2486 /* PeopleGroupViewLayout.m in Sources */,
+				EB89750D180D147600DB2486 /* GroupCirclePeopleViewLayout.m in Sources */,
 				EBD27B6316D827C300DA6ACE /* ColorThemeController.m in Sources */,
 				EB50B921181D98F40023A185 /* RECommonFunctions.m in Sources */,
 				EBFD3A3516DA8CDE00AD33C5 /* UIPlaceHolderTextView.m in Sources */,
@@ -2275,7 +2338,7 @@
 				EB7FC68316DC4225007C006D /* SDImageCache.m in Sources */,
 				EB7FC68416DC4225007C006D /* SDWebImageCompat.m in Sources */,
 				EBD6FE3D180645A6006D0E73 /* StreamViewController.m in Sources */,
-				EB89750A180D142E00DB2486 /* PeopleGroupView.m in Sources */,
+				EB89750A180D142E00DB2486 /* GroupCirclePeopleView.m in Sources */,
 				EB7FC68516DC4225007C006D /* SDWebImageDecoder.m in Sources */,
 				EB7FC68616DC4225007C006D /* SDWebImageDownloader.m in Sources */,
 				EB7FC68716DC4225007C006D /* SDWebImageDownloaderOperation.m in Sources */,
@@ -2286,7 +2349,7 @@
 				EBB28D5A16E3D6BC0090AB40 /* NSCache+Assertions.m in Sources */,
 				EBDC99A816E83631009BB6D7 /* CoolBarButtonItem.m in Sources */,
 				EB25BA9E16FE73F2003F142F /* HumanViewController.m in Sources */,
-				EB8974EB180CC52000DB2486 /* PeopleViewController.m in Sources */,
+				EB8974EB180CC52000DB2486 /* GroupCircleViewController.m in Sources */,
 				EB25BAA416FE84D6003F142F /* HumanLoginViewController.m in Sources */,
 				EB01FFD3181B3AFA00089915 /* AFPropertyListRequestOperation.m in Sources */,
 				EB25BAA9170280F1003F142F /* LauchImageViewController.m in Sources */,
@@ -2296,7 +2359,7 @@
 				EB4FC57C171061AF00CA43EC /* NSString+URLEncoding.m in Sources */,
 				EB01FFCE181B3AFA00089915 /* AFHTTPClient.m in Sources */,
 				EBCD0EFF181F8C9700CE225C /* InEventAPIController.m in Sources */,
-				EB897507180CE35E00DB2486 /* PeopleViewCell.m in Sources */,
+				EB897507180CE35E00DB2486 /* GroupCircleViewCell.m in Sources */,
 				EB4FC5851710644000CA43EC /* HumanToken.m in Sources */,
 				EBCD0F01181F8C9700CE225C /* InEventGroupAPIController.m in Sources */,
 				EB4FC58F1710DFE000CA43EC /* EventToken.m in Sources */,
@@ -2318,6 +2381,7 @@
 				EB01FF85181B349B00089915 /* NSString+LIAEncode.m in Sources */,
 				EBDFF54117BC057100BBFC1D /* ScheduleItemViewController.m in Sources */,
 				EBDFF54E17BE0C4500BBFC1D /* NSObject+Triangle.m in Sources */,
+				EBA2C2601820D91000399D4F /* PeopleViewCell.m in Sources */,
 				EB59020217D5D7D20032143C /* MarketplaceViewController.m in Sources */,
 				EB59020817D5D83A0032143C /* MarketplaceViewCell.m in Sources */,
 				EB01FFD5181B3AFA00089915 /* AFXMLRequestOperation.m in Sources */,

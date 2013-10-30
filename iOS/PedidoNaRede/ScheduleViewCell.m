@@ -24,6 +24,12 @@
     return self;
 }
 
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    
+    [self configureCell];
+}
+
 - (void)configureCell {
 
     // We can define the background view and its color

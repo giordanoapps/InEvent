@@ -8,6 +8,9 @@
 		// Permission
 		if (eventHasMember($core->eventID, $core->memberID)) {
 
+			// Some properties
+			$name = (isset($_POST['name']) && $_POST['name'] != "null") ? getAttribute($_POST['name']) : "Grupo";
+
 			// Insert a new activity
 			$insert = resourceForQuery(
 				"INSERT INTO
@@ -24,11 +27,11 @@
 				VALUES
 					(
 						$eventID,
-						'',
-						'',
-						'',
+						'$name',
+						'Descri&ccedil;&atilde;o do grupo',
+						'Sua localidade',
 						NOW(),
-						NOW(),
+						DATE_ADD(NOW(), INTERVAL 2 HOUR),
 						0
 					)
 			");
@@ -43,7 +46,7 @@
 				$data["groupID"] = $groupID;
 				echo json_encode($data);
 			} elseif ($format == "html") {
-				$result = getActivitiesForMemberAtActivityQuery($activityID, $core->memberID);
+				$result = getGroupsForMemberAtGroupQuery($activityID, $core->memberID);
 				printAgendaItem(mysql_fetch_assoc($result), "member");
 			} else {
 				http_status_code(405, "this format is not available");
@@ -120,7 +123,7 @@
 						$data["groupID"] = $groupID;
 						echo json_encode($data);
 					} elseif ($format == "html") {
-						$result = getActivitiesForMemberAtActivityQuery($activityID, $core->memberID);
+						$result = getGroupsForMemberAtGroupQuery($activityID, $core->memberID);
 						printAgendaItem(mysql_fetch_assoc($result), "member");
 					} else {
 						http_status_code(405, "this format is not available");
@@ -169,7 +172,7 @@
 				$data["groupID"] = $groupID;
 				echo json_encode($data);
 			} elseif ($format == "html") {
-				$result = getActivitiesForMemberAtActivityQuery($groupID, $core->memberID);
+				$result = getGroupsForMemberAtGroupQuery($groupID, $core->memberID);
 				printAgendaItem(mysql_fetch_assoc($result), "member");
 			} else {
 				http_status_code(405, "this format is not available");
@@ -193,10 +196,11 @@
 				$email = getAttribute($_GET['email']);
 
 				// Get the person for the given email
-				$personID = getPersonForEmail($email, $name);
+				$personID = getPersonForEmail($email);
+				if ($personID == 0) $personID = createMember(array("name" => $name, "password" => "123456", "email" => $email));
 
 				// Enroll the person at the event if necessary
-				processEventEnrollmentWithActivity($groupID, $personID);
+				processEventEnrollmentWithGroup($groupID, $personID);
 
 			} else {
 				http_status_code(401, "personID doesn't work at event");
@@ -210,17 +214,17 @@
 			// See if the member is enrolled at this activity
 			$result = resourceForQuery(
 				"SELECT
-					`activityMember`.`id`
+					`groupMember`.`id`
 				FROM
-					`activityMember`
+					`groupMember`
 				WHERE 1
-					AND `activityMember`.`groupID` = $groupID
-					AND `activityMember`.`memberID` = $personID
+					AND `groupMember`.`groupID` = $groupID
+					AND `groupMember`.`memberID` = $personID
 			");
 
 			if (mysql_num_rows($result) == 0) {
 				// Enroll people at the activity
-				$success = processActivityEnrollment($groupID, $personID);
+				$success = processGroupEnrollment($groupID, $personID);
 			} else {
 				$success = true;
 			}
@@ -228,10 +232,10 @@
 			if ($success) {
 				// Return its data
 				if ($format == "json") {
-					$result = getActivitiesForMemberAtActivityQuery($groupID, $personID);
+					$result = getGroupsForMemberAtGroupQuery($groupID, $personID);
 					echo printInformation("activity", $result, true, 'json');
 				} elseif ($format == "html") {
-					$result = getActivitiesForMemberAtActivityQuery($groupID, $personID);
+					$result = getGroupsForMemberAtGroupQuery($groupID, $personID);
 					printAgendaItem(mysql_fetch_assoc($result), "member");
 				} else {
 					http_status_code(405, "this format is not available");
@@ -261,164 +265,37 @@
 		}
 
 		if ($personID != 0) {
-
-			// Get some properties
-			$groupID = getGroupForActivity($groupID);
 				
 			// Remove the current person
 			$delete = resourceForQuery(
 				"DELETE FROM
-					`activityMember`
+					`groupMember`
 				WHERE 1
-					AND `activityMember`.`groupID` = $groupID
-					AND `activityMember`.`memberID` = $personID
+					AND `groupMember`.`groupID` = $groupID
+					AND `groupMember`.`memberID` = $personID
 			");
 
-			// Check if the person is on the limit of activities for the given group
-			// $result = resourceForQuery(
-			// 	"SELECT
-			// 		`activity`.`id`,
-			// 		`activityMember`.`id`,
-			// 		`activityMember`.`priori`,
-			// 		`activityMember`.`approved`,
-			// 		`activityGroup`.`limit`,
-			// 	FROM
-			// 		`activity`
-			// 	LEFT JOIN
-			// 		`activityMember` ON `activity`.`id` = `activityMember`.`groupID`
-			// 	LEFT JOIN
-			// 		`activityGroup` ON `activity`.`groupID` = `activityGroup`.`id` AND `activity`.`groupID` = $groupID
-			// 	WHERE 1
-					
-			// 	GROUP BY
-			// 		`activity`.`groupID`,
-			// 		`activityMember`.`memberID`
-			// 	HAVING 0
-			// 		OR ((`activityMember`.`priori` = 1 AND `activity`.`id` = $groupID) AND COALESCE(`activityGroup`.`limit`, 99999) <= SUM(`activityMember`.`approved`))
-			// 		OR ((`activityMember`.`priori` = 0 AND `activity`.`id` = $groupID) AND COALESCE(`activityGroup`.`limit`, 99999) > SUM(`activityMember`.`approved`))
-			// 	ORDER BY
-			// 		`activityMember`.`id` ASC
-			// ");
-			
 			$result = resourceForQuery(
 				"SELECT
-					`activityMember`.`id`,
-					`activityMember`.`priori`,
-					`activityMember`.`memberID`
+					`groupMember`.`id`,
+					`groupMember`.`priori`,
+					`groupMember`.`memberID`
 				FROM
-					`activityMember`
+					`groupMember`
 				WHERE 1
-					AND `activityMember`.`groupID` = $groupID
-					AND `activityMember`.`approved` = 0
+					AND `groupMember`.`groupID` = $groupID
+					AND `groupMember`.`approved` = 0
 				ORDER BY
-					`activityMember`.`id` ASC
+					`groupMember`.`id` ASC
 			");
-
-			for ($i = 0; $i < mysql_num_rows($result); $i++) {
-				
-				$requestID = mysql_result($result, $i, "id");
-				$priori = mysql_result($result, $i, "priori");
-				$memberID = mysql_result($result, $i, "memberID");
-
-				$resultExtrapolated = resourceForQuery(
-					"SELECT
-						IF(COALESCE(`activityGroup`.`limit`, 99999) <= SUM(`activityMember`.`approved`), 1, 0) AS `extrapolated`
-					FROM
-						`activity`
-					LEFT JOIN
-						`activityMember` ON `activity`.`id` = `activityMember`.`groupID` AND `activityMember`.`memberID` = $memberID
-		            LEFT JOIN
-		                `activityGroup` ON `activity`.`groupID` = `activityGroup`.`id`
-					WHERE 1
-						AND `activity`.`groupID` = $groupID
-					GROUP BY
-						`activity`.`groupID`
-				");
-
-				$extrapolated = (mysql_num_rows($resultExtrapolated) > 0) ? mysql_result($resultExtrapolated, 0, "extrapolated") : 0;
-
-				// If the person extrapolated, we can only overwrite it if the user explicity gave us permition to do so
-				if ($extrapolated == 1 && $priori == 1) {
-					// Get the next person on the line and grant a place on the activity
-					$update = resourceForQuery(
-						"UPDATE
-							`activityMember`
-						SET
-							`activityMember`.`approved` = 1
-						WHERE 1
-							AND `activityMember`.`id` = $requestID
-						ORDER BY
-							`activityMember`.`id` ASC
-						LIMIT 1
-					");
-
-					// If we didn't alter something (a person had his schedule modified), we must remove from other activities
-					if (mysql_affected_rows() > 0) {
-						// Assert that the granted person doesn't stay approved on other activities of the same group
-						$resultOther = resourceForQuery(
-						// echo (
-							"SELECT
-								`activityMember`.`id`
-							FROM
-								`activity`
-							INNER JOIN
-								`activityMember` ON `activityMember`.`groupID` = `activity`.`id`
-				 			LEFT JOIN
-								`activityGroup` ON `activity`.`groupID` = `activityGroup`.`id`
-							WHERE 1
-								AND `activityMember`.`memberID` = $memberID
-								AND `activityMember`.`approved` = 1
-								AND `activityMember`.`id` != $requestID
-								AND `activityGroup`.`id` = $groupID
-							ORDER BY
-								`activityMember`.`id` ASC
-							LIMIT 1
-						");
-
-						if (mysql_num_rows($resultOther) > 0) {
-							$requestID = mysql_result($resultOther, 0, "id");
-
-							$update = resourceForQuery(
-								"UPDATE
-									`activityMember`
-					            SET
-					            	`activityMember`.`approved` = 0
-								WHERE 1
-									AND `activityMember`.`id` = $requestID
-							");
-						}
-					}
-
-					break;
-
-				// Otherwise we just get the next one
-				} elseif ($extrapolated == 0) {
-					$update = resourceForQuery(
-						"UPDATE
-							`activityMember`
-						SET
-							`activityMember`.`approved` = 1
-						WHERE 1
-							AND `activityMember`.`id` = $requestID
-						ORDER BY
-							`activityMember`.`id` ASC
-						LIMIT 1
-					");
-
-					break;
-
-				} else {
-					http_status_code(400, "personID has chosen to not replace his activity");
-				}
-			}
 
 			if ($delete) {
 				// Return its data
 				if ($format == "json") {
-					$result = getActivitiesForMemberAtActivityQuery($groupID, $personID);
+					$result = getGroupsForMemberAtGroupQuery($groupID, $personID);
 					echo printInformation("activity", $result, true, 'json');
 				} elseif ($format == "html") {
-					$result = getActivitiesForMemberAtActivityQuery($groupID, $core->memberID);
+					$result = getGroupsForMemberAtGroupQuery($groupID, $core->memberID);
 					printAgendaItem(mysql_fetch_assoc($result), "member");
 				} else {
 					http_status_code(405, "this format is not available");	
@@ -449,24 +326,24 @@
 
 				// See which field we want to update
 				if ($method === "confirmApproval") {
-					$attribute = "`activityMember`.`approved` = 1";
+					$attribute = "`groupMember`.`approved` = 1";
 				} elseif ($method === "revokeApproval") {
-					$attribute = "`activityMember`.`approved` = 0";
+					$attribute = "`groupMember`.`approved` = 0";
 				} elseif ($method === "confirmEntrance") {
-					$attribute = "`activityMember`.`present` = 1";
+					$attribute = "`groupMember`.`present` = 1";
 				} elseif ($method === "revokeEntrance") {
-					$attribute = "`activityMember`.`present` = 0";
+					$attribute = "`groupMember`.`present` = 0";
 				}
 
 				// Update based on the attribute
 				$update = resourceForQuery(
 					"UPDATE
-						`activityMember`
+						`groupMember`
 					SET
 						$attribute
 					WHERE 1
-						AND `activityMember`.`groupID` = $groupID
-						AND `activityMember`.`memberID` = $personID
+						AND `groupMember`.`groupID` = $groupID
+						AND `groupMember`.`memberID` = $personID
 				");
 
 				if ($update) {

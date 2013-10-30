@@ -9,6 +9,15 @@
 		return processEventEnrollmentWithEvent($eventID, $personID);
 	}
 
+	function processEventEnrollmentWithGroup($groupID, $personID) {
+
+		// Get the eventID
+		$eventID = getEventForGroup($groupID);
+
+		// Enroll the person at the event
+		return processEventEnrollmentWithEvent($eventID, $personID);
+	}
+
 	function processEventEnrollmentWithEvent($eventID, $personID) {
 
 		$result = resourceForQuery(

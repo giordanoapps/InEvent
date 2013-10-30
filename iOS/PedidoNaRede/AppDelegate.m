@@ -11,6 +11,7 @@
 #import "AboutViewController.h"
 #import "ScheduleViewController.h"
 #import "ScheduleItemViewController.h"
+#import "GroupViewController.h"
 #import "PeopleViewController.h"
 #import "PersonViewController.h"
 #import "StreamViewController.h"
@@ -32,6 +33,7 @@
 @property (strong, nonatomic) UIViewController *humanViewController;
 @property (strong, nonatomic) UIViewController *scheduleViewController;
 @property (strong, nonatomic) UIViewController *photosViewController;
+@property (strong, nonatomic) UIViewController *groupViewController;
 @property (strong, nonatomic) UIViewController *peopleViewController;
 @property (strong, nonatomic) UIViewController *aboutViewController;
 
@@ -129,13 +131,14 @@
     [self loadHumanController];
     [self loadScheduleController];
     [self loadPhotosController];
+    [self loadGroupController];
     [self loadPeopleController];
     [self loadAboutController];
     
     // Global Controller
     _menuController = [[MenuViewController alloc] initWithMenuWidth:180.0 numberOfFolds:3];
     [_menuController setDelegate:self];
-    [_menuController setViewControllers:[NSMutableArray arrayWithObjects:_humanViewController, _scheduleViewController, _photosViewController, _peopleViewController, _aboutViewController, nil]];
+    [_menuController setViewControllers:[NSMutableArray arrayWithObjects:_humanViewController, _scheduleViewController, _photosViewController, _groupViewController, _peopleViewController, _aboutViewController, nil]];
     
     // Set the default theme color
     [[ColorThemeController sharedInstance] setTheme:ColorThemePetoskeyStone];
@@ -204,6 +207,23 @@
 - (void)loadAboutController {
     
     _aboutViewController = [[UINavigationController alloc] initWithRootViewController:[[AboutViewController alloc] initWithNibName:@"AboutViewController" bundle:nil]];
+}
+
+- (void)loadGroupController {
+    
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        _groupViewController = [[UINavigationController alloc] initWithRootViewController:[[GroupViewController alloc] initWithNibName:@"GroupViewController" bundle:nil]];
+    } else {
+        _peopleViewController = [[IntelligentSplitViewController alloc] init];
+        PeopleViewController *pvc = [[PeopleViewController alloc] initWithNibName:@"PeopleViewController" bundle:nil];
+        UINavigationController *npvc = [[UINavigationController alloc] initWithRootViewController:pvc];
+        PersonViewController *pivc = [[PersonViewController alloc] initWithNibName:@"PersonViewController" bundle:nil];
+        UINavigationController *npivc = [[UINavigationController alloc] initWithRootViewController:pivc];
+        ((UISplitViewController *)_peopleViewController).title = pvc.title;
+        ((UISplitViewController *)_peopleViewController).tabBarItem.image = pvc.tabBarItem.image;
+        ((UISplitViewController *)_peopleViewController).delegate = pivc;
+        ((UISplitViewController *)_peopleViewController).viewControllers = @[npvc, npivc];
+    }
 }
 
 - (void)loadHumanController {

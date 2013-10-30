@@ -33,15 +33,16 @@
 
     <div class="documentationFunctionBox">
         <p class="documentFunctionName">
-            <span>group.create(<b>tokenID</b>, <b>eventID</b>)</span>
-            <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=group.create&tokenID=$tokenID&eventID=1">
+            <span>group.create(<b>tokenID</b>, <b>eventID</b>, <b>name</b> = null)</span>
+            <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=group.create&tokenID=$tokenID&eventID=1" data-post="name=null">
         </p>
 
-       <p class="documentFunctionDescription">Cria um grupo dentro do evento <i>eventID</i>.</p>
+       <p class="documentFunctionDescription">Cria um grupo nomeado <i>name</i> dentro do evento <i>eventID</i>.</p>
 
         <div class="documentationFunctionParametersBox">
             <p><b>tokenID</b><sub>GET</sub> : id de autenticação </p>
             <p><b>eventID</b><sub>GET</sub> : id do evento </p>
+            <p><b>name</b><sub>POST</sub> : nome do grupo </p>
         </div>
     </div>
 

@@ -19,6 +19,4 @@
 
 @property (assign, nonatomic) NSInteger approved;
 
-- (void)configureCell;
-
 @end

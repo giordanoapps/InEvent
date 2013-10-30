@@ -27,7 +27,7 @@
 				`eventMember`
 			WHERE 1
 				AND `eventMember`.`eventID` = $eventID
-				AND `member`.`id` = $memberID
+				AND `eventMember`.`memberID` = $memberID
 		");
 
 		if (mysql_num_rows($result) > 0) {
@@ -46,6 +46,24 @@
 				`activity`
 			WHERE 1
 				AND `activity`.`id` = $activityID
+		");
+
+		if (mysql_num_rows($result) > 0) {
+			return mysql_result($result, 0, "eventID");
+		} else {
+			return 0;
+		}
+	}
+
+    function getEventForGroup($groupID) {
+
+		$result = resourceForQuery(
+			"SELECT
+				`group`.`eventID`
+			FROM
+				`group`
+			WHERE 1
+				AND `group`.`id` = $groupID
 		");
 
 		if (mysql_num_rows($result) > 0) {
@@ -127,7 +145,7 @@
 		}
 	}
 
-	function getPersonForEmail($email, $name = "") {
+	function getPersonForEmail($email) {
 
 		$result = resourceForQuery(
 			"SELECT
@@ -141,7 +159,7 @@
 		if (mysql_num_rows($result) > 0) {
 			$personID = mysql_result($result, 0, "id");
 		} else {
-			$personID = createMember($name, "123456", $email);
+			$personID = 0;
 		}
 
 		return $personID;

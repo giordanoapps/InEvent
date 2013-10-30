@@ -1,5 +1,5 @@
 //
-//  PeopleViewController.h
+//  PeopleViewCell.h
 //  InEvent
 //
 //  Created by Pedro Góes on 30/10/13.
@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "WrapperViewController.h"
 
-@interface PeopleViewController : WrapperViewController <InEventAPIControllerDelegate, UIGestureRecognizerDelegate, UISplitViewControllerDelegate>
+@interface GroupViewCell : UITableViewCell
 
+@property (strong, nonatomic) IBOutlet UILabel *name;
+@property (strong, nonatomic) IBOutlet UILabel *description;
 @property (strong, nonatomic) IBOutlet UICollectionView *collectionView;
 
 @end

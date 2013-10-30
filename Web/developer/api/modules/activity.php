@@ -8,6 +8,9 @@
 		// Permission
 		if ($core->workAtEvent) {
 
+			// Some properties
+			$name = (isset($_POST['name']) && $_POST['name'] != "null") ? getAttribute($_POST['name']) : "Nome da atividade";
+
 			// Insert a new activity
 			$insert = resourceForQuery(
 				"INSERT INTO
@@ -30,13 +33,13 @@
 					(
 						$eventID,
 						0,
-						'Nome da atividade',
+						'$name',
 						'Descri&ccedil;&atilde;o da atividade',
 						0,
 						0,
 						'Sua localidade',
 						NOW(),
-						NOW(),
+						DATE_ADD(NOW(), INTERVAL 1 HOUR),
 						0,
 						1,
 						0
@@ -345,7 +348,8 @@
 				$email = getAttribute($_GET['email']);
 
 				// Get the person for the given email
-				$personID = getPersonForEmail($email, $name);
+				$personID = getPersonForEmail($email);
+				if ($personID == 0) $personID = createMember(array("name" => $name, "password" => "123456", "email" => $email));
 
 				// Enroll the person at the event if necessary
 				processEventEnrollmentWithActivity($activityID, $personID);
@@ -772,7 +776,8 @@
 				`member`.`name` AS `memberName`,
 				`activityQuestion`.`memberID`,
 				`activityQuestion`.`text`,
-				COUNT(`activityQuestion`.`id`) AS `votes`
+				COUNT(`activityQuestion`.`id`) AS `votes`,
+				IF(`member`.`id` = $core->memberID, 1, 0) AS `owner`
 			FROM
 				`activityQuestion`
 			INNER JOIN

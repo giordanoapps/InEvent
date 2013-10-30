@@ -1,5 +1,5 @@
 //
-//  PeopleGroupViewCell.h
+//  PeopleGroupView.h
 //  InEvent
 //
 //  Created by Pedro Góes on 15/10/13.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PeopleGroupViewCell : UICollectionViewCell
-
-@property (strong, nonatomic) IBOutlet UILabel *initial;
+@interface GroupCirclePeopleView : UICollectionView
 
 @end
