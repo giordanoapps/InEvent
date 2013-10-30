@@ -53,11 +53,9 @@
     [_wrapper.layer setMasksToBounds:YES];
     
     // Title
-//    [((UIButton *)_name).titleLabel setNumberOfLines:2];
     [_name setTextColor:[ColorThemeController tableViewCellTextColor]];
     
     // Description
-//    [((UIButton *)_description).titleLabel setNumberOfLines:0];
     [_description setBackgroundColor:[ColorThemeController tableViewCellBackgroundColor]];
     
     // Line
@@ -65,7 +63,6 @@
     [self createBottomIdentation];
     
     // Map
-    [_map setShowsUserLocation:YES];
 //    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:-33.86 longitude:151.20 zoom:6];
 //    _map = [GMSMapView mapWithFrame:CGRectZero camera:camera];
 //    _map.myLocationEnabled = YES;

@@ -46,7 +46,8 @@
 {
     [super viewDidLoad];
     
-    [self loadAddButton];
+    // Add Button
+    if ([[HumanToken sharedInstance] isMemberAuthenticated]) [self loadAddButton];
     
     // Refresh Control
     refreshControl = [[UIRefreshControl alloc] init];

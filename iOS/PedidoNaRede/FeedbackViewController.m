@@ -153,9 +153,9 @@
     NSString *tokenID = [[HumanToken sharedInstance] tokenID];
     
     if (_type == FeedbackTypeEvent) {
-        [[[InEventEventAPIController alloc] initWithDelegate:self forcing:forcing] getOpinionFromEvent:_referenceID withToken:tokenID];
+        [[[InEventEventAPIController alloc] initWithDelegate:self forcing:forcing] getOpinionFromEvent:_referenceID withTokenID:tokenID];
     } else if (_type == FeedbackTypeActivity) {
-        [[[InEventActivityAPIController alloc] initWithDelegate:self forcing:forcing] getOpinionFromActivity:_referenceID withToken:tokenID];
+        [[[InEventActivityAPIController alloc] initWithDelegate:self forcing:forcing] getOpinionFromActivity:_referenceID withTokenID:tokenID];
     }
 }
 
@@ -201,9 +201,9 @@
     NSString *tokenID = [[HumanToken sharedInstance] tokenID];
     
     if (_type == FeedbackTypeEvent) {
-        [[[InEventEventAPIController alloc] initWithDelegate:self forcing:YES] sendOpinionWithRating:_rating withMessage:_textView.text toEvent:_referenceID withToken:tokenID];
+        [[[InEventEventAPIController alloc] initWithDelegate:self forcing:YES] sendOpinionWithRating:_rating withMessage:_textView.text toEvent:_referenceID withTokenID:tokenID];
     } else if (_type == FeedbackTypeActivity) {
-        [[[InEventActivityAPIController alloc] initWithDelegate:self forcing:YES] sendOpinionWithRating:_rating toActivity:_referenceID withToken:tokenID];
+        [[[InEventActivityAPIController alloc] initWithDelegate:self forcing:YES] sendOpinionWithRating:_rating toActivity:_referenceID withTokenID:tokenID];
     }
     
     [self dismissViewControllerAnimated:YES completion:^{

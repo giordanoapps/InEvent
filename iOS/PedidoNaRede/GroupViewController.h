@@ -13,4 +13,8 @@
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 
+@property (strong, nonatomic) IBOutlet UIView *addGroupView;
+@property (strong, nonatomic) IBOutlet UITextField *nameInput;
+@property (strong, nonatomic) IBOutlet UIButton *addGroupButton;
+
 @end

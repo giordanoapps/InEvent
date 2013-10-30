@@ -18,6 +18,7 @@
 #import "GroupViewCell.h"
 #import "PeopleViewCell.h"
 #import "InEventAPI.h"
+#import "GroupDetailViewController.h"
 
 @interface GroupViewController () {
     UIRefreshControl *refreshControl;
@@ -35,7 +36,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.title = NSLocalizedString(@"Group", nil);
+        self.title = NSLocalizedString(@"Groups", nil);
         self.tabBarItem.image = [UIImage imageNamed:@"16-Users"];
         peopleCache = [[NSCache alloc] init];
     }
@@ -45,6 +46,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    // Add Button
+    if ([[HumanToken sharedInstance] isMemberAuthenticated]) [self loadAddButton];
     
     // Refresh Control
     refreshControl = [[UIRefreshControl alloc] init];
@@ -92,10 +96,63 @@
     }
 }
 
+#pragma mark - Bar Methods
+
+- (void)loadAddButton {
+    // Right Button
+    self.rightBarButton = [[CoolBarButtonItem alloc] initCustomButtonWithImage:[UIImage imageNamed:@"32-Plus-2.png"] frame:CGRectMake(0, 0, 42.0, 30.0) insets:UIEdgeInsetsMake(5.0, 11.0, 5.0, 11.0) target:self action:@selector(loadAddGroupView)];
+    self.navigationItem.rightBarButtonItem = self.rightBarButton;
+}
+
+- (void)loadDoneButton {
+    // Right Button
+    self.rightBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(removeGroupView)];
+    self.navigationItem.rightBarButtonItem = self.rightBarButton;
+}
+
+#pragma mark - Add People Methods
+
+- (void)loadAddGroupView {
+    // Add the frame
+    [_addGroupView setFrame:CGRectMake(_addGroupView.frame.origin.x, -(_addGroupView.frame.size.height), self.view.frame.size.width, _addGroupView.frame.size.height)];
+    [self.view addSubview:_addGroupView];
+    
+    // Animate the transition
+    [UIView animateWithDuration:1.0f animations:^{
+        [_addGroupView setFrame:CGRectMake(_addGroupView.frame.origin.x, _addGroupView.frame.origin.y + _addGroupView.frame.size.height, _addGroupView.frame.size.width, _addGroupView.frame.size.height)];
+    } completion:^(BOOL completion){
+        [self loadDoneButton];
+    }];
+}
+
+- (void)removeGroupView {
+    // Resign the text field responders
+    [_nameInput resignFirstResponder];
+    
+    // Animate the transition
+    [UIView animateWithDuration:1.0f animations:^{
+        [_addGroupView setFrame:CGRectMake(_addGroupView.frame.origin.x, -(_addGroupView.frame.size.height), _addGroupView.frame.size.width, _addGroupView.frame.size.height)];
+    } completion:^(BOOL completion){
+        [_addGroupView removeFromSuperview];
+        [self loadAddButton];
+    }];
+}
+
+- (IBAction)addGroup {
+    
+    if ([_nameInput.text length] > 0) {
+        // Send to server
+        [[[InEventGroupAPIController alloc] initWithDelegate:self forcing:YES] createGroupAtEvent:[[EventToken sharedInstance] eventID] withName:_nameInput.text withTokenID:[[HumanToken sharedInstance] tokenID]];
+        
+        // Remove view
+        [self removeGroupView];
+    }
+}
+
 #pragma mark - Table View Data Source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return [groups count];
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -136,27 +193,28 @@
     return cell;
 }
 
-//- (void)tableView:(UITableView *)aTableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-//    
-//    ScheduleItemViewController *sivc;
-//    
-//    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-//        sivc = [[ScheduleItemViewController alloc] initWithNibName:@"ScheduleItemViewController" bundle:nil];
-//    } else {
-//        // Find the sibling navigation controller first child and send the appropriate data
-//        sivc = (ScheduleItemViewController *)[[[self.splitViewController.viewControllers lastObject] viewControllers] objectAtIndex:0];
-//    }
-//    
-//    NSDictionary *dictionary = [[activities objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
-//    
-//    [sivc setTitle:[[dictionary objectForKey:@"name"] stringByDecodingHTMLEntities]];
-//    [sivc setActivityData:dictionary];
-//    
-//    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-//        [self.navigationController pushViewController:sivc animated:YES];
-//        [aTableView deselectRowAtIndexPath:indexPath animated:YES];
-//    }
-//}
+- (void)tableView:(UITableView *)aTableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    GroupDetailViewController *gdvc;
+    
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        gdvc = [[GroupDetailViewController alloc] initWithNibName:@"GroupDetailViewController" bundle:nil];
+    } else {
+        // Find the sibling navigation controller first child and send the appropriate data
+        gdvc = (GroupDetailViewController *)[[[self.splitViewController.viewControllers lastObject] viewControllers] objectAtIndex:0];
+    }
+    
+    NSDictionary *dictionary = [groups objectAtIndex:indexPath.row];
+    
+    [gdvc setTitle:[[dictionary objectForKey:@"name"] stringByDecodingHTMLEntities]];
+    [gdvc setGroupData:[groups objectAtIndex:indexPath.row]];
+    [gdvc setPeopleData:[peopleCache objectForKey:indexPath]];
+    
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        [self.navigationController pushViewController:gdvc animated:YES];
+        [aTableView deselectRowAtIndexPath:indexPath animated:YES];
+    }
+}
 
 #pragma mark - Collection View Data Source
 
@@ -186,48 +244,6 @@
     
     return cell;
 }
-
-#pragma mark - Collection View Delegate
-
-//- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-//    
-//    if ([collectionView isEqual:_collectionView]) {
-//        
-//        if (selectedPath && [selectedPath compare:indexPath] == NSOrderedSame) {
-//            
-//            // Update the UI
-//            [self buildPeopleViewCell:(GroupCircleViewCell *)[self.collectionView cellForItemAtIndexPath:selectedPath] withDictionary:[groups objectAtIndex:selectedPath.row]];
-//            
-//            // Reset the selected path
-//            selectedPath = nil;
-//            
-//        } else {
-//            
-//            // Reload the old index path
-//            if (selectedPath != nil) {
-//                NSIndexPath *oldSelectedPath = selectedPath;
-//                selectedPath = indexPath;
-//                [self buildPeopleViewCell:(GroupCircleViewCell *)[self.collectionView cellForItemAtIndexPath:oldSelectedPath] withDictionary:[groups objectAtIndex:oldSelectedPath.row]];
-//                
-//            } else {
-//                // Save the indexPath
-//                selectedPath = indexPath;
-//            }
-//            
-//            // Load some data
-//            NSInteger groupID = [[[groups objectAtIndex:indexPath.row] objectForKey:@"id"] integerValue];
-//            UICollectionView *cellView = [(GroupCircleViewCell *)[collectionView cellForItemAtIndexPath:indexPath] collectionView];
-//            [[[InEventGroupAPIController alloc] initWithDelegate:self forcing:YES withUserInfo:@{@"key": cellView}] getPeopleAtGroup:groupID withTokenID:[[HumanToken sharedInstance] tokenID]];
-//            
-//            //    [self.collectionView performBatchUpdates:^{
-//            //        [self.collectionView reloadItemsAtIndexPaths:@[selectedPath]];
-//            //        [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
-//            //    } completion:nil];
-//        }
-//    } else {
-//        NSLog(@"22");
-//    }
-//}
 
 #pragma mark – UICollectionViewDelegateFlowLayout
 
@@ -266,7 +282,7 @@
         // Reload some specific rows
         [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
         
-    } else if ([apiController.method isEqualToString:@"requestEnrollment"]) {
+    } else if ([apiController.method isEqualToString:@"create"]) {
         [self reloadData];
     }
     

@@ -14,7 +14,7 @@
 #import "NSString+HTML.h"
 #import "CoolBarButtonItem.h"
 #import "UIImageView+WebCache.h"
-#import "InEventPersonAPIController.h"
+#import "InEventAPI.h"
 
 @interface HumanViewController () {
     UIRefreshControl *refreshControl;
@@ -104,7 +104,7 @@
 
 - (void)forceDataReload:(BOOL)forcing {
     if ([[HumanToken sharedInstance] isMemberAuthenticated]) {
-        [[[InEventPersonAPIController alloc] initWithDelegate:self forcing:forcing] getDetailsWithToken:[[HumanToken sharedInstance] tokenID]];
+        [[[InEventPersonAPIController alloc] initWithDelegate:self forcing:forcing] getDetailsWithTokenID:[[HumanToken sharedInstance] tokenID]];
     }
 }
 
@@ -118,7 +118,7 @@
         if ([[personData objectForKey:@"facebookID"] integerValue] != 0) {
             [self.photo setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://graph.facebook.com/%@/picture?width=%d&height=%d", [personData objectForKey:@"facebookID"], (int)(self.photo.frame.size.width * [[UIScreen mainScreen] scale]), (int)(self.photo.frame.size.height * [[UIScreen mainScreen] scale])]] placeholderImage:[UIImage imageNamed:@"128-user"]];
             [_photo.layer setCornerRadius:_photo.frame.size.width / 2.0f];
-        } else if (![[personData objectForKey:@"linkedInID"] isEqualToString:@""]) {
+        } else if (![[personData objectForKey:@"image"] isEqualToString:@""]) {
             [self.photo setImageWithURL:[NSURL URLWithString:[personData objectForKey:@"image"]] placeholderImage:[UIImage imageNamed:@"128-user"]];
             [_photo.layer setCornerRadius:_photo.frame.size.width / 2.0f];
         } else {

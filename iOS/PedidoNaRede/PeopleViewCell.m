@@ -7,6 +7,7 @@
 //
 
 #import "PeopleViewCell.h"
+#import "ColorThemeController.h"
 
 @implementation PeopleViewCell
 
@@ -26,25 +27,25 @@
     [self configureCell];
 }
 
-//- (void)dealloc {
-//    [self removeObserver:self forKeyPath:@"initial"];
-//    [self removeObserver:self forKeyPath:@"image"];
-//}
+- (void)dealloc {
+//    [self.initial removeObserver:self forKeyPath:@"bounds"];
+}
+
+- (void)layoutSubviews {
+    [self.initial.layer setCornerRadius:self.initial.frame.size.width / 2.2f];
+}
 
 - (void)configureCell {
 //    [self addObserver:self forKeyPath:@"initial" options:NSKeyValueObservingOptionNew context:NULL];
-//    [self addObserver:self forKeyPath:@"image" options:NSKeyValueObservingOptionNew context:NULL];
+//    [self addObserver:self forKeyPath:@"bounds" options:0 context:NULL];
+    
+    [self.initial.layer setCornerRadius:self.initial.frame.size.width / 2.2f];
+    [self.initial setBackgroundColor:[ColorThemeController tableViewCellBackgroundColor]];
 }
 
 //- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
 //    
-//    if ([keyPath isEqualToString:@"initial"]) {
-//        [_image setHidden:YES];
-//        [_initial setHidden:NO];
-//    } else if ([keyPath isEqualToString:@"image"]) {
-//        [_image setHidden:NO];
-//        [_initial setHidden:YES];
-//    }
+//    [self.initial.layer setCornerRadius:self.initial.frame.size.width / 2.5f];
 //}
 
 @end

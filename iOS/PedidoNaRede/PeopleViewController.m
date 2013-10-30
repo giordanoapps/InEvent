@@ -103,11 +103,16 @@
     PeopleViewCell *cell = (PeopleViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"PeopleViewCell" forIndexPath:indexPath];
     
     NSDictionary *dictionary = [people objectAtIndex:indexPath.row];
-    if ([[dictionary objectForKey:@"image"] length] > 0) {
-        [cell.image setImageWithURL:[NSURL URLWithString:[[dictionary objectForKey:@"image"] stringByDecodingHTMLEntities]]];
+    
+    if ([[dictionary objectForKey:@"facebookID"] integerValue] != 0) {
+        [cell.image setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://graph.facebook.com/%@/picture?width=%d&height=%d", [dictionary objectForKey:@"facebookID"], (int)(cell.image.frame.size.width * [[UIScreen mainScreen] scale]), (int)(cell.image.frame.size.height * [[UIScreen mainScreen] scale])]] placeholderImage:[UIImage imageNamed:@"128-user"]];
         [cell.image setHidden:NO];
         [cell.initial setHidden:YES];
-    } else if ([[dictionary objectForKey:@"name"] length] > 0) {
+    } else if (![[dictionary objectForKey:@"image"] isEqualToString:@""]) {
+        [cell.image setImageWithURL:[NSURL URLWithString:[[dictionary objectForKey:@"image"] stringByDecodingHTMLEntities]] placeholderImage:[UIImage imageNamed:@"128-user"]];
+        [cell.image setHidden:NO];
+        [cell.initial setHidden:YES];
+    } else if (![[dictionary objectForKey:@"name"] isEqualToString:@""]) {
         NSString *name = [[dictionary objectForKey:@"name"] stringByDecodingHTMLEntities];
         NSMutableArray *split = [NSMutableArray arrayWithArray:[[name stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] componentsSeparatedByString:@" "]];
         if ([split count] > 1) {

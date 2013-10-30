@@ -86,6 +86,8 @@
                 `member`.`email`, 
                 `member`.`university`, 
                 `member`.`course`,
+                `member`.`facebookID`,
+                `member`.`linkedInID`,
                 `eventMember`.`position` AS `enrollmentID`,
                 `eventMember`.`approved`,
                 `eventMember`.`roleID`,

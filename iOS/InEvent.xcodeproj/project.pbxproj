@@ -243,6 +243,10 @@
 		EBA2C2641820D94D00399D4F /* PeopleViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBA2C2631820D94D00399D4F /* PeopleViewCell.xib */; };
 		EBA2C2681820E1A500399D4F /* 16-Users@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBA2C2671820E1A500399D4F /* 16-Users@2x.png */; };
 		EBA2C26A1820E1BC00399D4F /* 16-Users.png in Resources */ = {isa = PBXBuildFile; fileRef = EBA2C2691820E1BC00399D4F /* 16-Users.png */; };
+		EBA2C26E18216BB000399D4F /* GroupDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBA2C26C18216BB000399D4F /* GroupDetailViewController.m */; };
+		EBA2C26F18216BB000399D4F /* GroupDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBA2C26D18216BB000399D4F /* GroupDetailViewController.xib */; };
+		EBA2C27118216BFC00399D4F /* 32-Image@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBA2C27018216BFC00399D4F /* 32-Image@2x.png */; };
+		EBA2C27318216C9D00399D4F /* 32-V-Card-3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBA2C27218216C9D00399D4F /* 32-V-Card-3@2x.png */; };
 		EBA89EB217AFEAFA00D9CD6B /* PushController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBA89EB117AFEAFA00D9CD6B /* PushController.m */; };
 		EBAAFD21161FCF020007637B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBAAFD20161FCF020007637B /* UIKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		EBAAFD23161FCF020007637B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBAAFD22161FCF020007637B /* Foundation.framework */; };
@@ -301,7 +305,6 @@
 		EBD6FE45180646B6006D0E73 /* StreamDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBD6FE43180646B6006D0E73 /* StreamDetailViewController.xib */; };
 		EBD6FE4718064B24006D0E73 /* 16-Image-2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBD6FE4618064B24006D0E73 /* 16-Image-2@2x.png */; };
 		EBD6FE4918064B51006D0E73 /* 16-Image-2.png in Resources */ = {isa = PBXBuildFile; fileRef = EBD6FE4818064B51006D0E73 /* 16-Image-2.png */; };
-		EBD6FE4B180654AC006D0E73 /* 32-Image@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBD6FE4A180654AC006D0E73 /* 32-Image@2x.png */; };
 		EBD6FE4D18065501006D0E73 /* 32-Image.png in Resources */ = {isa = PBXBuildFile; fileRef = EBD6FE4C18065501006D0E73 /* 32-Image.png */; };
 		EBD6FE4F18065528006D0E73 /* 32-Cog.png in Resources */ = {isa = PBXBuildFile; fileRef = EBD6FE4E18065528006D0E73 /* 32-Cog.png */; };
 		EBD8E4E917AF557A00D0F30C /* 32-Minus.png in Resources */ = {isa = PBXBuildFile; fileRef = EBD8E4E817AF557A00D0F30C /* 32-Minus.png */; };
@@ -720,6 +723,11 @@
 		EBA2C2631820D94D00399D4F /* PeopleViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PeopleViewCell.xib; path = PedidoNaRede/PeopleViewCell.xib; sourceTree = "<group>"; };
 		EBA2C2671820E1A500399D4F /* 16-Users@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "16-Users@2x.png"; sourceTree = "<group>"; };
 		EBA2C2691820E1BC00399D4F /* 16-Users.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "16-Users.png"; sourceTree = "<group>"; };
+		EBA2C26B18216BB000399D4F /* GroupDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GroupDetailViewController.h; path = PedidoNaRede/GroupDetailViewController.h; sourceTree = "<group>"; };
+		EBA2C26C18216BB000399D4F /* GroupDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GroupDetailViewController.m; path = PedidoNaRede/GroupDetailViewController.m; sourceTree = "<group>"; };
+		EBA2C26D18216BB000399D4F /* GroupDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GroupDetailViewController.xib; path = PedidoNaRede/GroupDetailViewController.xib; sourceTree = "<group>"; };
+		EBA2C27018216BFC00399D4F /* 32-Image@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Image@2x.png"; sourceTree = "<group>"; };
+		EBA2C27218216C9D00399D4F /* 32-V-Card-3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-V-Card-3@2x.png"; sourceTree = "<group>"; };
 		EBA89EB017AFEAFA00D9CD6B /* PushController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PushController.h; sourceTree = "<group>"; };
 		EBA89EB117AFEAFA00D9CD6B /* PushController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PushController.m; sourceTree = "<group>"; };
 		EBAAFD1C161FCF020007637B /* InEvent.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InEvent.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -801,7 +809,6 @@
 		EBD6FE43180646B6006D0E73 /* StreamDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = StreamDetailViewController.xib; path = PedidoNaRede/StreamDetailViewController.xib; sourceTree = "<group>"; };
 		EBD6FE4618064B24006D0E73 /* 16-Image-2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "16-Image-2@2x.png"; sourceTree = "<group>"; };
 		EBD6FE4818064B51006D0E73 /* 16-Image-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "16-Image-2.png"; sourceTree = "<group>"; };
-		EBD6FE4A180654AC006D0E73 /* 32-Image@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "32-Image@2x.png"; path = "../32-Image@2x.png"; sourceTree = "<group>"; };
 		EBD6FE4C18065501006D0E73 /* 32-Image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Image.png"; sourceTree = "<group>"; };
 		EBD6FE4E18065528006D0E73 /* 32-Cog.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Cog.png"; sourceTree = "<group>"; };
 		EBD8E4E817AF557A00D0F30C /* 32-Minus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Minus.png"; sourceTree = "<group>"; };
@@ -1501,6 +1508,9 @@
 				EBA2C2531820D53B00399D4F /* GroupViewCell.h */,
 				EBA2C2541820D53B00399D4F /* GroupViewCell.m */,
 				EBA2C2561820D55700399D4F /* GroupViewCell.xib */,
+				EBA2C26B18216BB000399D4F /* GroupDetailViewController.h */,
+				EBA2C26C18216BB000399D4F /* GroupDetailViewController.m */,
+				EBA2C26D18216BB000399D4F /* GroupDetailViewController.xib */,
 			);
 			name = "Group Rectangle";
 			sourceTree = "<group>";
@@ -1732,7 +1742,7 @@
 				EBD6FE4E18065528006D0E73 /* 32-Cog.png */,
 				EB95437217ACBE7300229EE2 /* 32-Cog@2x.png */,
 				EBD6FE4C18065501006D0E73 /* 32-Image.png */,
-				EBD6FE4A180654AC006D0E73 /* 32-Image@2x.png */,
+				EBA2C27018216BFC00399D4F /* 32-Image@2x.png */,
 			);
 			name = "Bar Buttons Icons";
 			sourceTree = "<group>";
@@ -1858,6 +1868,7 @@
 				EB79CC4D17ED803F00C16CF5 /* 32-Unfavorite.png */,
 				EB1FE9EE17FF87D2001C2906 /* 32-Users.png */,
 				EB1FE9F017FF884E001C2906 /* 32-Users@2x.png */,
+				EBA2C27218216C9D00399D4F /* 32-V-Card-3@2x.png */,
 				EBC59D8617BEC58100E0FC67 /* 64-Balloons.png */,
 				EBDFF53817BBF5FD00BBFC1D /* 64-Bended-Arrow-Left.png */,
 				EBDFF53917BBF5FD00BBFC1D /* 64-Bended-Arrow-Up.png */,
@@ -2096,6 +2107,7 @@
 				EB8C7D8716D17AEB00F3C721 /* cb_glossy_off@2x.png in Resources */,
 				EB97146B17F2DEF8009260AE /* logo@29.png in Resources */,
 				EB8C7D8816D17AEB00F3C721 /* cb_glossy_on.png in Resources */,
+				EBA2C27118216BFC00399D4F /* 32-Image@2x.png in Resources */,
 				EB8C7D8916D17AEB00F3C721 /* cb_glossy_on@2x.png in Resources */,
 				EB8C7D8A16D17AEB00F3C721 /* cb_green_off.png in Resources */,
 				EB8C7D8B16D17AEB00F3C721 /* cb_green_off@2x.png in Resources */,
@@ -2105,6 +2117,7 @@
 				EB8C7D8D16D17AEB00F3C721 /* cb_green_on@2x.png in Resources */,
 				EB8C7D8E16D17AEB00F3C721 /* cb_mono_off.png in Resources */,
 				EB8C7D8F16D17AEB00F3C721 /* cb_mono_off@2x.png in Resources */,
+				EBA2C27318216C9D00399D4F /* 32-V-Card-3@2x.png in Resources */,
 				EB8C7D9016D17AEB00F3C721 /* cb_mono_on.png in Resources */,
 				EBD6FE45180646B6006D0E73 /* StreamDetailViewController.xib in Resources */,
 				EB97145B17F2DDDB009260AE /* logo@76.png in Resources */,
@@ -2121,6 +2134,7 @@
 				EB25BA9216FE6EC9003F142F /* 16-User.png in Resources */,
 				EB25BA9F16FE73F2003F142F /* HumanViewController.xib in Resources */,
 				EBD6FE4F18065528006D0E73 /* 32-Cog.png in Resources */,
+				EBA2C26F18216BB000399D4F /* GroupDetailViewController.xib in Resources */,
 				EB25BAA516FE84D6003F142F /* HumanLoginViewController.xib in Resources */,
 				EB25BAAA170280F1003F142F /* LauchImageViewController.xib in Resources */,
 				EB25BAB017028CC9003F142F /* Default-Portrait~ipad.png in Resources */,
@@ -2192,7 +2206,6 @@
 				EBC59D8717BEC58100E0FC67 /* 64-Balloons.png in Resources */,
 				EBC59D8917BEC59B00E0FC67 /* 32-Create-_-Write@2x.png in Resources */,
 				EBA2C2641820D94D00399D4F /* PeopleViewCell.xib in Resources */,
-				EBD6FE4B180654AC006D0E73 /* 32-Image@2x.png in Resources */,
 				EBA2C25C1820D72F00399D4F /* GroupViewController.xib in Resources */,
 				EB97144A17F2DD11009260AE /* Images.xcassets in Resources */,
 				EBC59D8D17BEC5C300E0FC67 /* 64-Cloud-Download.png in Resources */,
@@ -2386,6 +2399,7 @@
 				EB59020817D5D83A0032143C /* MarketplaceViewCell.m in Sources */,
 				EB01FFD5181B3AFA00089915 /* AFXMLRequestOperation.m in Sources */,
 				EB30CAF117D6D09E00584FB8 /* UIButton+Components.m in Sources */,
+				EBA2C26E18216BB000399D4F /* GroupDetailViewController.m in Sources */,
 				EB79CC4917EB82D500C16CF5 /* QuestionViewController.m in Sources */,
 				EB79CC5217ED813D00C16CF5 /* FrontViewController.m in Sources */,
 			);
