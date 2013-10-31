@@ -16,7 +16,6 @@
 @property (nonatomic, strong) IBOutlet UILabel *socialLabel;
 @property (nonatomic, strong) IBOutlet UIButton *inButton;
 @property (nonatomic, strong) IBOutlet UIButton *fbButton;
-@property (nonatomic, strong) IBOutlet UIButton *twButton;
 @property (nonatomic, strong) IBOutlet UIView *separator1;
 @property (nonatomic, strong) IBOutlet UIButton *accountLabel;
 

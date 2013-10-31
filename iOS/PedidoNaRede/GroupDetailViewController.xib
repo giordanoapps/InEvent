@@ -32,13 +32,13 @@
                             <rect key="frame" x="48" y="12" width="232" height="30"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" name="Thonburi" family="Thonburi" pointSize="20"/>
-                            <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="phonePad"/>
+                            <textInputTraits key="textInputTraits" keyboardType="alphabet"/>
                         </textField>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="pedro.goes@usp.br" minimumFontSize="17" id="vj2-M4-FvG" userLabel="Description">
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Descrição da atividade" minimumFontSize="17" id="vj2-M4-FvG" userLabel="Description">
                             <rect key="frame" x="48" y="33" width="232" height="30"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" name="Thonburi" family="Thonburi" pointSize="16"/>
-                            <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="emailAddress"/>
+                            <textInputTraits key="textInputTraits" keyboardType="alphabet"/>
                         </textField>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="32-Map.png" id="Fgd-sj-Yrp" userLabel="Location">
                             <rect key="frame" x="10" y="67" width="30" height="30"/>

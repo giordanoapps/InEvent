@@ -26,6 +26,7 @@
     NSString *dataPath;
     NSMutableArray *groups;
     NSCache *peopleCache;
+    BOOL shouldReloadPeople;
 }
 
 @end
@@ -39,6 +40,7 @@
         self.title = NSLocalizedString(@"Groups", nil);
         self.tabBarItem.image = [UIImage imageNamed:@"16-Users"];
         peopleCache = [[NSCache alloc] init];
+        shouldReloadPeople = NO;
     }
     return self;
 }
@@ -187,7 +189,7 @@
     } else {
         // Download some data
         NSInteger groupID = [[dictionary objectForKey:@"id"] integerValue];
-        [[[InEventGroupAPIController alloc] initWithDelegate:self forcing:NO withUserInfo:@{@"key": indexPath}] getPeopleAtGroup:groupID withTokenID:[[HumanToken sharedInstance] tokenID]];
+        [[[InEventGroupAPIController alloc] initWithDelegate:self forcing:shouldReloadPeople withUserInfo:@{@"key": indexPath}] getPeopleAtGroup:groupID withTokenID:[[HumanToken sharedInstance] tokenID]];
     }
     
     return cell;
@@ -213,6 +215,12 @@
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
         [self.navigationController pushViewController:gdvc animated:YES];
         [aTableView deselectRowAtIndexPath:indexPath animated:YES];
+    }
+}
+
+-(void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if ([indexPath row] == ((NSIndexPath*)[[tableView indexPathsForVisibleRows] lastObject]).row){
+        shouldReloadPeople = NO;
     }
 }
 
@@ -267,6 +275,9 @@
         
         // Save the path of the current file object
         dataPath = apiController.path;
+        
+        // Reload all the participants
+        shouldReloadPeople = YES;
         
         // Reload all table data
         [self.tableView reloadData];

@@ -4,6 +4,74 @@
 		"selected_items":
 		[
 			[
+				"activ",
+				"activityQuestion"
+			],
+			[
+				"ques",
+				"questionID"
+			],
+			[
+				"mysql_num",
+				"mysql_num_rows"
+			],
+			[
+				"pass",
+				"password"
+			],
+			[
+				"json_",
+				"json_encode"
+			],
+			[
+				"user",
+				"userProfile"
+			],
+			[
+				"font",
+				"font-weight"
+			],
+			[
+				"me",
+				"memberID"
+			],
+			[
+				"face",
+				"facebookID"
+			],
+			[
+				"pro",
+				"propagateSave"
+			],
+			[
+				"memer",
+				"memberID"
+			],
+			[
+				"table",
+				"table-cell"
+			],
+			[
+				"ac",
+				"activityID"
+			],
+			[
+				"tool",
+				"toolBonus"
+			],
+			[
+				"date",
+				"dateBeginMax"
+			],
+			[
+				"dat",
+				"dateBeginOld"
+			],
+			[
+				"insert",
+				"insertBefore"
+			],
+			[
 				"mem",
 				"member"
 			],
@@ -20,10 +88,6 @@
 				"position"
 			],
 			[
-				"ac",
-				"activity"
-			],
-			[
 				"acti",
 				"activity"
 			],
@@ -38,10 +102,6 @@
 			[
 				"sele",
 				"selection"
-			],
-			[
-				"font",
-				"font-weight"
 			],
 			[
 				"map",
@@ -82,10 +142,6 @@
 			[
 				"activi",
 				"activity"
-			],
-			[
-				"activ",
-				"activityID"
 			],
 			[
 				"actii",
@@ -204,10 +260,6 @@
 				"personID"
 			],
 			[
-				"ques",
-				"question"
-			],
-			[
 				"mysql_in",
 				"mysql_insert_id"
 			],
@@ -322,10 +374,6 @@
 			[
 				"or",
 				"organized"
-			],
-			[
-				"date",
-				"dateBegin"
 			],
 			[
 				"member",
@@ -452,10 +500,6 @@
 				"cursor"
 			],
 			[
-				"pro",
-				"projectInfo"
-			],
-			[
 				"di",
 				"display"
 			],
@@ -470,116 +514,56 @@
 			[
 				"enter",
 				"enterpriseID"
-			],
-			[
-				"resource",
-				"resourceForQuery"
-			],
-			[
-				"mysql_num",
-				"mysql_num_rows"
-			],
-			[
-				"pare",
-				"parentHeight"
-			],
-			[
-				"po",
-				"positionX"
-			],
-			[
-				"initW",
-				"initWithNibName"
-			],
-			[
-				"_me",
-				"_message"
-			],
-			[
-				"_mess",
-				"_messageBox"
-			],
-			[
-				"A",
-				"APIController"
-			],
-			[
-				"API",
-				"APIControllerDataSource"
-			],
-			[
-				"_pro",
-				"_projectTitle"
-			],
-			[
-				"new",
-				"newPassword"
 			]
 		]
 	},
 	"buffers":
 	[
 		{
-			"file": "Web/event.php",
+			"file": "Web/developer/api/modules/group.php",
 			"settings":
 			{
-				"buffer_size": 3749,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "Web/js/modules/event.js",
-			"settings":
-			{
-				"buffer_size": 13988,
+				"buffer_size": 11794,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "Web/js/modules/tools.js",
+			"file": "Web/includes/queries/group.php",
 			"settings":
 			{
-				"buffer_size": 3503,
+				"buffer_size": 2435,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "Web/developer/api/modules/activity.php",
+			"file": "Web/includes/function/utils.php",
 			"settings":
 			{
-				"buffer_size": 22959,
+				"buffer_size": 8023,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "Web/includes/email/personEnrollment.html",
+			"file": "Web/developer/documentation/group.php",
 			"settings":
 			{
-				"buffer_size": 1128,
+				"buffer_size": 10028,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "Web/includes/email/passwordRecovery.html",
+			"file": "Web/includes/queries/people.php",
 			"settings":
 			{
-				"buffer_size": 953,
+				"buffer_size": 3808,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "Web/includes/email/passwordChange.html",
+			"file": "Web/includes/wrap/people.php",
 			"settings":
 			{
-				"buffer_size": 831,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "Web/includes/email/activityEnrollment.html",
-			"settings":
-			{
-				"buffer_size": 872,
+				"buffer_size": 7800,
 				"line_ending": "Unix"
 			}
 		},
@@ -587,23 +571,15 @@
 			"file": "Web/includes/email/event.php",
 			"settings":
 			{
-				"buffer_size": 417,
+				"buffer_size": 1527,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "Web/includes/email/eventEnrollment.html",
+			"file": "Web/developer/api/modules/activity.php",
 			"settings":
 			{
-				"buffer_size": 924,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "Web/developer/api/functions/event.php",
-			"settings":
-			{
-				"buffer_size": 3805,
+				"buffer_size": 26352,
 				"line_ending": "Unix"
 			}
 		},
@@ -611,7 +587,7 @@
 			"file": "Web/css/default.css",
 			"settings":
 			{
-				"buffer_size": 52986,
+				"buffer_size": 55225,
 				"line_ending": "Unix"
 			}
 		},
@@ -768,91 +744,126 @@
 	},
 	"file_history":
 	[
-		"/Users/pedro/Sites/InEvent-dev/Web/people.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/includes/email/eventEnrollment.html",
+		"/Users/pedro/Sites/InEvent-dev/Web/developer/api/functions/event.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/appURL.php",
 		"/Users/pedro/Sites/InEvent-dev/Web/developer/documentation/activity.php",
 		"/Users/pedro/Sites/InEvent-dev/Web/developer/api/modules/activity.php",
-		"/Users/pedro/Sites/InEvent-dev/Web/js/modules/people.js",
-		"/Users/pedro/Sites/InEvent-dev/Web/includes/queries/activity.php",
-		"/Users/pedro/Sites/InEvent-dev/Web/includes/queries/people.php",
 		"/Users/pedro/Sites/InEvent-dev/Web/developer/api/modules/event.php",
-		"/Users/pedro/Sites/InEvent-dev/Web/js/modules/forgot.js",
-		"/Users/pedro/Sites/InEvent-dev/Web/includes/wrap/people.php",
-		"/Users/pedro/Sites/InEvent-dev/Web/event.php",
-		"/Users/pedro/Sites/InEvent-dev/Web/js/modules/event.js",
-		"/Users/pedro/Sites/InEvent-dev/Web/developer/api/functions/event.php",
-		"/Users/pedro/Sites/InEvent-dev/Web/developer/api/functions/activity.php",
-		"/Users/pedro/Sites/InEvent-dev/Web/includes/wrap/event.php",
-		"/Users/pedro/Sites/InEvent-dev/Web/includes/queries/event.php",
-		"/Users/pedro/Sites/InEvent-dev/Web/includes/function/utils.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/includes/queries/people.php",
 		"/Users/pedro/Sites/InEvent-dev/Web/developer/api/modules/person.php",
-		"/Users/pedro/Sites/InEvent-dev/Web/certificate.php",
-		"/Users/pedro/Sites/InEvent-dev/Web/js/modules/marketplace.js",
-		"/Users/pedro/Sites/InEvent-dev/Web/js/modules/front.js",
-		"/Users/pedro/Sites/InEvent-dev/Web/developer/api/functions/excel.php",
-		"/Users/pedro/Sites/InEvent-dev/Web/includes/function/format.php",
-		"/Users/pedro/Sites/InEvent-dev/Web/includes/function/generic.php",
 		"/Users/pedro/Sites/InEvent-dev/Web/developer/api/functions/person.php",
-		"/Users/pedro/Sites/InEvent-dev/Web/includes/connection.php",
-		"/Users/pedro/Sites/InEvent-dev/Web/includes/connection_sample.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/developer/api/functions/excel.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/developer/documentation/person.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/developer/documentation/photo.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/js/modules/data.js",
+		"/Users/pedro/Sites/InEvent-dev/Web/includes/function/utils.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/developer/api/modules/group.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/includes/queries/group.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/developer/api/functions/activity.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/developer/api/header.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/developer/api/functions/group.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/developer/documentation/group.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/includes/function/generic.php",
+		"/Users/pedro/Sites/InEvent-dev/README.md",
+		"/Users/pedro/Sites/InEvent-dev/Web/includes/social.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/developer/api/modules/photo.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/includes/function/security.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/developer/api/functions/validation.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/includes/queries/event.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/includes/header.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/includes/function/format.php",
+		"/Users/pedro/Sites/InEvent-dev/iOS/PedidoNaRede/ScheduleItemViewController.h",
+		"/Users/pedro/Sites/InEvent-dev/Web/js/modules/event.js",
+		"/Users/pedro/Sites/InEvent-dev/Web/includes/wrap/event.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/includes/push.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/developer/api/index.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/developer/index.php",
 		"/Users/pedro/Sites/InEvent-dev/Web/developer/documentation/event.php",
-		"/Users/pedro/Sites/InEvent-dev/Web/includes/email/activity.php",
-		"/Users/pedro/Sites/InEvent-dev/Web/includes/function/runtime.php",
-		"/Users/pedro/Sites/InEvent-dev/iOS/PedidoNaRede/Localizable.strings",
+		"/Users/pedro/Sites/InEvent-dev/Web/js/developer.js",
+		"/Users/pedro/Sites/InEvent-dev/Web/js/modules/people.js",
+		"/Users/pedro/Sites/InEvent-dev/Web/includes/email/event.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/includes/email.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/classes/facebook-php-sdk/facebook.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/classes/facebook-php-sdk/base_facebook.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/includes/email/personEnrollment.html",
+		"/Users/pedro/Sites/InEvent-dev/Web/event.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/includes/wrap/people.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/front.php",
+		"/Users/pedro/Sites/InEvent-dev/iOS/PedidoNaRede/FrontViewController.m",
+		"/Users/pedro/Sites/InEvent-dev/iOS/PedidoNaRede/UIView+Components.m",
+		"/Users/pedro/Sites/InEvent-dev/Web/js/modules/tools.js",
+		"/Users/pedro/Sites/InEvent-dev/Web/js/modules/register.js",
+		"/Users/pedro/Sites/InEvent-dev/Web/data.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/js/modules/validator.js",
+		"/Users/pedro/Sites/InEvent-dev/Web/js/modules/front.js",
+		"/Users/pedro/Sites/InEvent-dev/Web/includes/html/bar.php",
+		"/Users/pedro/Sites/InEvent-dev/iOS/PedidoNaRede/APIController.h",
+		"/Users/pedro/Sites/InEvent-dev/iOS/PedidoNaRede/APIController.m",
+		"/Users/pedro/Sites/InEvent-dev/Web/includes/queries.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/js/modules/subscribe.js",
+		"/Users/pedro/Sites/InEvent-dev/Web/subscribe.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/includes/email/personSubscribed.html",
+		"/Users/pedro/Sites/InEvent-dev/Web/includes/push/activity.php",
 		"/Users/pedro/Sites/InEvent-dev/iOS/PedidoNaRede/es.lproj/Localizable.strings",
 		"/Users/pedro/Sites/InEvent-dev/iOS/PedidoNaRede/pt.lproj/Localizable.strings",
+		"/Users/pedro/Sites/InEvent-dev/iOS/PedidoNaRede/Localizable.strings",
 		"/Users/pedro/Sites/InEvent-dev/iOS/PedidoNaRede/en.lproj/Localizable.strings",
-		"/Users/pedro/Sites/InEvent-dev/Web/includes/html/bar.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/includes/email/person.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/includes/html/header.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/js/modules/ajax.js",
+		"/Users/pedro/Sites/InEvent-dev/Web/js/common.js",
+		"/Users/pedro/Sites/InEvent-dev/Web/unsubscribe.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/includes/email/personUnsubscribed.html",
+		"/Users/pedro/Sites/InEvent-dev/Web/js/modules/unsubscribe.js",
+		"/Users/pedro/Sites/InEvent-dev/Web/includes/email/activityEnrollment.html",
+		"/Users/pedro/Sites/InEvent-dev/Web/includes/email/appAttributes.html",
+		"/Users/pedro/Sites/InEvent-dev/Web/includes/email/passwordChange.html",
+		"/Users/pedro/Sites/InEvent-dev/Web/includes/email/passwordRecovery.html",
+		"/Users/pedro/Sites/InEvent-dev/Web/includes/email/app.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/css/complete.min.css",
+		"/Users/pedro/Sites/InEvent-dev/Web/includes/queries/activity.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/includes/push/person.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/terms.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/js/modules/marketplace.js",
 		"/Users/pedro/Sites/InEvent-dev/Web/js/modules/bar.js",
+		"/Users/pedro/Sites/InEvent-dev/Web/developer/documentation/ad.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/developer/api/modules/ad.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/js/modules/field.js",
+		"/Users/pedro/Sites/InEvent-dev/Web/includes/push/event.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/css/perfect-scrollbar-0.4.5.min.css",
+		"/Users/pedro/Sites/InEvent-dev/Web/people.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/includes/email/app.html",
+		"/Users/pedro/Sites/InEvent-dev/Web/js/modules/forgot.js",
+		"/Users/pedro/Sites/InEvent-dev/Web/certificate.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/includes/connection.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/includes/connection_sample.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/includes/email/activity.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/includes/function/runtime.php",
 		"/Users/pedro/Sites/InEvent-dev/Web/js/modules/reinstate.js",
 		"/Users/pedro/Sites/InEvent-dev/Web/reinstate.php",
-		"/Users/pedro/Sites/InEvent-dev/Web/developer/documentation/person.php",
-		"/Users/pedro/Sites/InEvent-dev/Web/includes/email/person.php",
-		"/Users/pedro/Sites/InEvent-dev/Web/includes/email/passwordChange.html",
 		"/Users/pedro/Sites/InEvent-dev/Web/includes/check/login.php",
 		"/Users/pedro/Sites/InEvent-dev/Web/css/default.css",
-		"/Users/pedro/Sites/InEvent-dev/Web/includes/email/eventEnrollment.html",
-		"/Users/pedro/Sites/InEvent-dev/Web/includes/email/passwordRecovery.html",
-		"/Users/pedro/Sites/InEvent-dev/Web/includes/email/personEnrollment.html",
-		"/Users/pedro/Sites/InEvent-dev/Web/includes/email/activityEnrollment.html",
-		"/Users/pedro/Sites/InEvent-dev/Web/includes/email/event.php",
-		"/Users/pedro/Sites/InEvent-dev/Web/includes/header.php",
-		"/Users/pedro/Sites/InEvent-dev/Web/developer/api/header.php",
 		"/Users/pedro/Sites/InEvent-dev/Web/js/modules/np.js",
-		"/Users/pedro/Sites/InEvent-dev/Web/js/modules/tools.js",
 		"/Users/pedro/Sites/InEvent-dev/iOS/PedidoNaRede/QuestionViewController.m",
 		"/Users/pedro/Sites/InEvent-dev/iOS/InEvent.xcworkspace/xcshareddata/WorkspaceSettings.xcsettings",
 		"/Users/pedro/Sites/InEvent-dev/Web/location.php",
 		"/Users/pedro/Sites/InEvent-dev/Web/js/modules/location.js",
-		"/Users/pedro/Sites/InEvent-dev/Web/js/modules/ajax.js",
-		"/Users/pedro/Sites/InEvent-dev/Web/includes/html/header.php",
-		"/Users/pedro/Sites/InEvent-dev/Web/js/common.js",
 		"/Users/pedro/Sites/InEvent-dev/iOS/PedidoNaRede/PaperFoldMenuController/PaperFold/PaperFoldNavigationController.h",
-		"/Users/pedro/Sites/InEvent-dev/Web/js/developer.js",
-		"/Users/pedro/Sites/InEvent-dev/Web/front.php",
 		"/Users/pedro/Sites/InEvent-dev/Web/includes/wrap/marketplace.php",
 		"/Users/pedro/Sites/InEvent-dev/Web/error_log",
 		"/Users/pedro/Sites/InEvent-dev/iOS/PedidoNaRede/FrontViewController.xib",
 		"/Users/pedro/Sites/InEvent-dev/iOS/PedidoNaRede/ScheduleItemViewController.xib",
-		"/Users/pedro/Sites/InEvent-dev/README.md",
 		"/Users/pedro/Sites/InEvent-dev/iOS/PedidoNaRede/MapViewController.h",
 		"/Users/pedro/Sites/InEvent-dev/iOS/PedidoNaRede/MapViewController.m",
-		"/Users/pedro/Sites/InEvent-dev/Web/includes/email.php",
 		"/Users/pedro/Sites/InEvent-dev/Web/js/modules/window.js",
 		"/Users/pedro/Sites/InEvent-dev/Web/.htaccess",
-		"/Users/pedro/Sites/InEvent-dev/Web/includes/function/security.php",
-		"/Users/pedro/Sites/InEvent-dev/Web/developer/api/functions/validation.php",
 		"/Users/pedro/Sites/InEvent-dev/Web/index.php",
 		"/Users/pedro/Sites/InEvent-dev/Web/js/modules/about.js",
 		"/Users/pedro/Sites/InEvent-dev/Web/js/modules/home.js",
-		"/Users/pedro/Sites/InEvent-dev/Web/developer/index.php",
-		"/Users/pedro/Sites/InEvent-dev/Web/developer/api/index.php",
 		"/Users/pedro/Sites/InEvent-dev/Web/developer/api/modules/opinion.php",
 		"/Users/pedro/Sites/InEvent-dev/Web/developer/documentation/opinion.php",
-		"/Users/pedro/Sites/InEvent-dev/Web/js/modules/register.js",
-		"/Users/pedro/Sites/InEvent-dev/Web/js/modules/data.js",
-		"/Users/pedro/Sites/InEvent-dev/Web/js/modules/validator.js",
 		"/Users/pedro/Sites/InEvent-dev/Web/js/lib/jquery.validate.js",
-		"/Users/pedro/Sites/InEvent-dev/Web/data.php",
 		"/Users/pedro/Sites/InEvent-dev/Web/register.php",
 		"/Users/pedro/Sites/InEvent-dev/Web/forgot.php",
 		"/Users/pedro/Sites/InEvent-dev/Web/js/modules/cookie.js",
@@ -860,42 +871,7 @@
 		"/Users/pedro/Sites/InEvent-dev/Web/js/modules/loaders.js",
 		"/Users/pedro/Sites/InEvent-dev/Web/marketplace.php",
 		"/Users/pedro/Sites/InEvent-dev/Web/hot.php",
-		"/Users/pedro/Sites/InEvent-dev/Web/hotsite.php",
-		"/Users/pedro/Sites/InEvent-dev/Web/includes/push/carte.php",
-		"/Users/pedro/Sites/InEvent-dev/Web/includes/html/wrapper.php",
-		"/Users/pedro/Sites/InEvent-dev/Web/home.php",
-		"/Users/pedro/Sites/InEvent-dev/Web/js/default.php",
-		"/Users/pedro/Sites/InEvent-dev/Web/css/printer.css",
-		"/Users/pedro/Sites/InEvent-dev/Web/includes/check/security.php",
-		"/Users/pedro/Sites/InEvent-dev/Web/includes/push.php",
-		"/Users/pedro/Sites/InEvent-dev/Web/includes/queries.php",
-		"/Users/pedro/Sites/InEvent-dev/Web/includes/function/notification.php",
-		"/Users/pedro/Sites/InEvent-dev/Web/includes/singleton/security.php",
-		"/Users/pedro/Sites/InEvent-dev/Web/includes/singleton/core.php",
-		"/Users/pedro/Sites/InEvent-dev/Web/includes/social.php",
-		"/Users/pedro/Sites/InEvent-dev/Web/includes/function/bcrypt.php",
-		"/Users/pedro/Sites/InEvent-dev/Web/includes/constant.php",
-		"/Users/pedro/Sites/InEvent-dev/Web/developer/documentation/howTo.php",
-		"/Users/pedro/Sites/InEvent-dev/Web/js/modules/notification.js",
-		"/Users/pedro/Sites/InEvent-dev/Web/css/perfect-scrollbar-0.4.4.min.css",
-		"/Users/pedro/Sites/InEvent/Web/includes/queries/activity.php",
-		"/Users/pedro/Sites/InEvent/Web/developer/api/functions/person.php",
-		"/Users/pedro/Sites/InEvent/Web/developer/api/modules/person.php",
-		"/Users/pedro/Sites/InEvent/Web/js/modules/event.js",
-		"/Users/pedro/Sites/InEvent/Web/developer/api/modules/activity.php",
-		"/Users/pedro/Sites/InEvent/Web/classes/Swift/lib/classes/Swift/Transport/Esmtp/Authenticator.php",
-		"/Users/pedro/Sites/InEvent/Web/includes/wrap/people.php",
-		"/Users/pedro/Sites/InEvent/Web/js/modules/people.js",
-		"/Users/pedro/Sites/InEvent/Web/marketplace.php",
-		"/Users/pedro/Sites/InEvent/Web/developer/api/modules/event.php",
-		"/Users/pedro/Sites/InEvent/Web/includes/queries/people.php",
-		"/Users/pedro/Sites/InEvent/Web/people.php",
-		"/Users/pedro/Sites/InEvent/Web/ajax.php",
-		"/Users/pedro/Sites/InEvent/Web/includes/function/notification.php",
-		"/Users/pedro/Sites/InEvent/Web/event.php",
-		"/Users/pedro/Sites/InEvent/Web/includes/queries/event.php",
-		"/Users/pedro/Sites/InEvent/Web/developer/api/header.php",
-		"/Users/pedro/Sites/InEvent/Web/includes/check/login.php"
+		"/Users/pedro/Sites/InEvent-dev/Web/hotsite.php"
 	],
 	"find":
 	{
@@ -906,6 +882,9 @@
 		"height": 95.0,
 		"where_history":
 		[
+			"/Users/pedro/Sites/InEvent-dev,-/Users/pedro/Sites/InEvent-dev/Web/classes/*,-/Users/pedro/Sites/InEvent-dev/Web/js/lib/*",
+			"/Users/pedro/Sites/InEvent-dev/Web,-/Users/pedro/Sites/InEvent-dev/Web/classes/*,-/Users/pedro/Sites/InEvent-dev/Web/js/lib/*",
+			"/Users/pedro/Sites/InEvent-dev/,-/Users/pedro/Sites/InEvent-dev/Web/classes/*,-/Users/pedro/Sites/InEvent-dev/Web/js/lib/*",
 			"/Users/pedro/Sites/InEvent-dev/Web/,-/Users/pedro/Sites/InEvent-dev/Web/classes/*,-/Users/pedro/Sites/InEvent-dev/Web/js/lib/*",
 			"/Users/pedro/Sites/InEvent-dev/",
 			"/Users/pedro/Sites/InEvent-dev/Web/,-/Users/pedro/Sites/InEvent-dev/Web/classes/*,-/Users/pedro/Sites/InEvent-dev/Web/js/lib/*",
@@ -922,137 +901,137 @@
 	},
 	"find_state":
 	{
-		"case_sensitive": false,
+		"case_sensitive": true,
 		"find_history":
 		[
-			"name",
-			"$name",
-			"sendEventEnrollmentEmail",
+			"sendEventEnrollmentEmail($eventID, $personID)",
+			"details",
+			"processLogIn",
+			"company",
+			"Pedro",
+			"evento",
+			"_GET",
+			"Sua localidade",
+			"`member`.`id`",
+			"activity",
+			"activityID",
+			"activityMember",
+			"activity",
+			"activityID",
+			"getEventForActivity",
+			"activityID",
+			"Activity",
+			"getActivitiesForMemberAtActivityQuery",
+			"activityGroup",
+			"activity",
+			"activityMember",
+			"createMember",
+			"linkedInID",
+			"createMember",
+			"crea",
+			"createMember",
+			"_POST",
+			"_REQUEST",
+			"usp",
+			"createMember",
+			"getPersonForEmail",
+			"activity",
 			"event",
-			"insert",
-			"Opinion",
-			"rating",
-			"pontuação",
-			"edit",
-			"paid",
-			"Entrance",
-			"present",
-			"Entrance",
-			"getPe",
-			"memberID",
-			"#peopleContent .toolBoxOptions .bottom .action",
-			"http_status_code(404",
-			"http_status_code(404);",
-			"$result",
-			"result",
-			"row",
+			"activityID",
+			"umo",
+			"atividade",
+			"getPersonForEmail",
+			"registrationData",
+			"details",
+			"twitterID",
+			"description",
+			"SET",
+			"UPDATE",
+			"$details",
+			");\n",
+			"$details",
+			"`member`.",
+			"activityID",
+			"email",
+			"$details = getMemberDetails($memberID);",
+			"data",
+			"details",
+			"event",
+			"$data[\"tokenID\"] = $tokenID;",
+			"SocialLoginViewController",
+			"defaultPhoto",
+			"eventID",
+			"dateBegin",
+			"event",
+			"activityID",
+			",'+",
 			"month",
-			"day",
-			"hour",
-			"keyup",
-			"click",
-			"focusout",
-			"title",
-			"roleID",
-			"enrollmentID",
-			"getPe",
-			"internalMemberID",
+			"facebookID",
+			"email",
+			"facebookToken",
+			"Facebook",
+			"facebook",
+			"tokenID",
+			"([",
+			"))",
+			"T[",
+			"inevent://?eventID={{eventID}}&tokenID={{tokenID}}",
+			"event",
+			"sendEventEnrollmentEmail",
+			"nick",
+			"<p",
+			"0;",
+			"464646",
+			"DDD",
+			"bac",
+			"white",
+			"\"123456",
+			"processLogIn",
+			"CONVERT",
+			"Begin",
+			"val",
+			"echo",
+			"'",
+			"dateEnd",
+			"	height: 60px;",
+			"get",
+			"view",
+			"self.view.",
+			"self.view",
+			"_POST",
+			"button",
+			"bar .anchor li",
+			"4, \"0\", STR_PAD_LEFT",
 			"memberID",
+			"explanation",
+			"description",
+			", $",
 			"name",
-			"$data['memberID']",
-			"options",
-			"realConte",
-			"requestEnrollment",
-			"memberID",
-			"INSERT",
+			"email",
+			"agendaItem",
+			"checkbox",
+			"$core->workAtEvent",
+			"-o-transform: translate(0%, -50%);",
+			"transfor",
+			"-webkit-transform: translate(0%, -50%);",
+			"transla",
+			"trans",
+			"general",
+			"location",
+			"longitude",
+			"latitude",
+			"general",
+			"dateEnd",
+			"general",
 			"edit",
-			"$(this)",
-			"requestEnrollment",
-			"email",
-			"row",
-			"email",
-			"present",
-			"eventMember",
-			"requestID",
-			"reques",
-			"position",
-			"requestID",
-			"activityMember",
-			"memberID",
-			"printPeopleAtEvent",
-			"memberID",
-			"`activity`",
-			"activity",
-			"row",
-			"id",
-			"cover",
-			"html_entity_decode",
-			"ENT_QUOTES",
-			"trigger",
-			"roleID",
-			"data-filter",
-			"value",
-			"key",
-			"namespace",
-			"null",
-			"order",
-			"eventMember",
-			"getPe",
-			"getPeop",
-			"toolBoxOpti",
-			"chosen",
-			"select",
-			"a",
-			"uniqueidentifier",
-			"UniqueIdentifier",
-			"telephone",
-			"university",
-			"email",
-			"completeFilter",
-			"filterOrder",
-			"completeOrder",
-			"order",
-			"getPeopleAtActivityQuery",
-			"getPeopleAtEventQuery",
-			"ASC",
-			"validOrder",
-			"=>",
-			",",
-			"activity",
-			"runtime",
-			"activity",
-			"validOrder",
-			"order",
-			"getPeopleAtActivityQuery",
-			"printPeopleAtActivity",
-			"requestID",
-			"activityID",
-			"id",
-			"activityMember",
-			"id",
-			"activity",
-			"activityID",
-			"activityMember",
-			"text",
-			"$hash",
-			"hash",
-			"password",
-			"row",
-			"update",
-			"oldPassword",
-			"email",
-			"sendRecovery",
-			"oldPassword",
-			"email",
-			"forgo",
-			"old",
-			"<a href=\"inevent.us\">InEvent</a>",
-			"getPeopleAtEventQuery",
-			"getActivitiesForMemberAtEventQuery",
-			"\"123456\"",
-			"md5((string)rand())",
-			"$2a$08$MTUzMjQ4Mzg2MDUwOTE3NOQXWqXG12Xf3sbxC8ivbnyVwk6mDeo8a",
-			"md5((string)rand())"
+			"e",
+			"edit",
+			"toolBon",
+			"title",
+			"toolBo",
+			"general",
+			"toolBonusMap",
+			"toolBo"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -1060,6 +1039,7 @@
 		"regex": false,
 		"replace_history":
 		[
+			"		<p style=\"margin: 0; padding: 10px 0; text-align: center; font-size: 80%\">\n			<a href=\"http://inevent.us\" style=\"color: #4747DB\">InEvent</a> | <a href=\"http://estudiotrilha.com.br/\" style=\"color: #4747DB\">Estúdio Trilha</a> | <a href=\"https://www.facebook.com/ineventapp\" style=\"color: #4747DB\">Facebook</a> | <a href=\"http://inevent.us/#unsubscribe\" style=\"color: #4747DB\">Unsubscribe :(</a>\n		</p>",
 			"<a href=\"http://inevent.us\">InEvent</a>",
 			"\"123456\"",
 			"\"Thonburi\" family=\"Thonburi\" ",
@@ -1126,23 +1106,23 @@
 	"groups":
 	[
 		{
-			"selected": 10,
+			"selected": 7,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "Web/event.php",
+					"file": "Web/developer/api/modules/group.php",
 					"settings":
 					{
-						"buffer_size": 3749,
+						"buffer_size": 11794,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1005,
-								889
+								6049,
+								6049
 							]
 						],
 						"settings":
@@ -1151,44 +1131,17 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 3262.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "Web/js/modules/event.js",
+					"file": "Web/includes/queries/group.php",
 					"settings":
 					{
-						"buffer_size": 13988,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								10768,
-								10768
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 6213.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "Web/js/modules/tools.js",
-					"settings":
-					{
-						"buffer_size": 3503,
+						"buffer_size": 2435,
 						"regions":
 						{
 						},
@@ -1201,61 +1154,9 @@
 						],
 						"settings":
 						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 866.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "Web/developer/api/modules/activity.php",
-					"settings":
-					{
-						"buffer_size": 22959,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								20479,
-								20479
-							]
-						],
-						"settings":
-						{
 							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 11458.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "Web/includes/email/personEnrollment.html",
-					"settings":
-					{
-						"buffer_size": 1128,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								510,
-								579
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.tmLanguage"
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -1264,24 +1165,109 @@
 					"type": "text"
 				},
 				{
-					"buffer": 5,
-					"file": "Web/includes/email/passwordRecovery.html",
+					"buffer": 2,
+					"file": "Web/includes/function/utils.php",
 					"settings":
 					{
-						"buffer_size": 953,
+						"buffer_size": 8023,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								529,
-								529
+								489,
+								489
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/HTML/HTML.tmLanguage"
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "Web/developer/documentation/group.php",
+					"settings":
+					{
+						"buffer_size": 10028,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2343,
+								2343
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 85.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "Web/includes/queries/people.php",
+					"settings":
+					{
+						"buffer_size": 3808,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 930.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "Web/includes/wrap/people.php",
+					"settings":
+					{
+						"buffer_size": 7800,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2047,
+								2047
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -1291,23 +1277,24 @@
 				},
 				{
 					"buffer": 6,
-					"file": "Web/includes/email/passwordChange.html",
+					"file": "Web/includes/email/event.php",
 					"settings":
 					{
-						"buffer_size": 831,
+						"buffer_size": 1527,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								823,
-								498
+								20,
+								65
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/HTML/HTML.tmLanguage"
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -1317,96 +1304,18 @@
 				},
 				{
 					"buffer": 7,
-					"file": "Web/includes/email/activityEnrollment.html",
+					"file": "Web/developer/api/modules/activity.php",
 					"settings":
 					{
-						"buffer_size": 872,
+						"buffer_size": 26352,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								456,
-								456
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 8,
-					"file": "Web/includes/email/event.php",
-					"settings":
-					{
-						"buffer_size": 417,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								20,
-								44
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 9,
-					"file": "Web/includes/email/eventEnrollment.html",
-					"settings":
-					{
-						"buffer_size": 924,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								543,
-								543
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 10,
-					"file": "Web/developer/api/functions/event.php",
-					"settings":
-					{
-						"buffer_size": 3805,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1327,
-								1327
+								20555,
+								20555
 							]
 						],
 						"settings":
@@ -1415,7 +1324,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 470.0,
+						"translation.y": 11498.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -1427,19 +1336,19 @@
 			"sheets":
 			[
 				{
-					"buffer": 11,
+					"buffer": 8,
 					"file": "Web/css/default.css",
 					"settings":
 					{
-						"buffer_size": 52986,
+						"buffer_size": 55225,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								37804,
-								37804
+								25042,
+								25042
 							]
 						],
 						"settings":
@@ -1448,13 +1357,13 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 33648.0,
+						"translation.y": 23942.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
-					"buffer": 12,
+					"buffer": 9,
 					"file": "Web/css/mobile.css",
 					"settings":
 					{
@@ -1465,8 +1374,8 @@
 						"selection":
 						[
 							[
-								64,
-								91
+								431,
+								433
 							]
 						],
 						"settings":
@@ -1511,7 +1420,7 @@
 		"cols":
 		[
 			0.0,
-			0.662509451884,
+			0.736042559401,
 			1.0
 		],
 		"rows":
@@ -1532,35 +1441,63 @@
 		"selected_items":
 		[
 			[
+				"mod/ac",
+				"Web/developer/api/modules/activity.php"
+			],
+			[
 				"fun/eve",
 				"Web/developer/api/functions/event.php"
 			],
 			[
-				"email/eve",
-				"Web/includes/email/event.php"
-			],
-			[
-				"acti",
-				"Web/includes/email/activityEnrollment.html"
+				"appur",
+				"Web/appURL.php"
 			],
 			[
 				"eventen",
 				"Web/includes/email/eventEnrollment.html"
 			],
 			[
-				"passwo",
-				"Web/includes/email/passwordChange.html"
+				"mail/event",
+				"Web/includes/email/event.php"
 			],
 			[
-				"passw",
-				"Web/includes/email/passwordRecovery.html"
+				"wrap/peo",
+				"Web/includes/wrap/people.php"
 			],
 			[
-				"persone",
-				"Web/includes/email/personEnrollment.html"
+				"que/peo",
+				"Web/includes/queries/people.php"
 			],
 			[
-				"mo/act",
+				"excel",
+				"Web/developer/api/functions/excel.php"
+			],
+			[
+				"quer/peo",
+				"Web/includes/queries/people.php"
+			],
+			[
+				"fun/perso",
+				"Web/developer/api/functions/person.php"
+			],
+			[
+				"mo/per",
+				"Web/developer/api/modules/person.php"
+			],
+			[
+				"func/ex",
+				"Web/developer/api/functions/excel.php"
+			],
+			[
+				"mod/per",
+				"Web/developer/api/modules/person.php"
+			],
+			[
+				"mo/eve",
+				"Web/developer/api/modules/event.php"
+			],
+			[
+				"mo/ac",
 				"Web/developer/api/modules/activity.php"
 			],
 			[
@@ -1568,480 +1505,452 @@
 				"Web/developer/documentation/activity.php"
 			],
 			[
-				"mo/ac",
-				"Web/developer/api/modules/activity.php"
-			],
-			[
-				"too",
-				"Web/js/modules/tools.js"
-			],
-			[
-				"peo",
-				"Web/js/modules/people.js"
-			],
-			[
-				"even.js",
-				"Web/js/modules/event.js"
-			],
-			[
-				"even",
-				"Web/event.php"
-			],
-			[
-				"modu/ac",
-				"Web/developer/api/modules/activity.php"
-			],
-			[
-				"wrp/pe",
-				"Web/includes/wrap/people.php"
-			],
-			[
-				"for",
-				"Web/js/modules/forgot.js"
-			],
-			[
-				"mo/eve",
-				"Web/developer/api/modules/event.php"
-			],
-			[
-				"que/pe",
-				"Web/includes/queries/people.php"
-			],
-			[
-				"que/ac",
-				"Web/includes/queries/activity.php"
+				"docu/gro",
+				"Web/developer/documentation/group.php"
 			],
 			[
 				"utils",
 				"Web/includes/function/utils.php"
 			],
 			[
-				"que/eve",
-				"Web/includes/queries/event.php"
+				"que/gr",
+				"Web/includes/queries/group.php"
 			],
 			[
-				"wrap/eve",
-				"Web/includes/wrap/event.php"
+				"modules/gr",
+				"Web/developer/api/modules/group.php"
 			],
 			[
-				"event",
-				"Web/event.php"
+				"fun/gr",
+				"Web/developer/api/functions/group.php"
 			],
 			[
-				"fun/ac",
-				"Web/developer/api/functions/activity.php"
-			],
-			[
-				"peop",
-				"Web/js/modules/people.js"
-			],
-			[
-				"wrap/pe",
-				"Web/includes/wrap/people.php"
-			],
-			[
-				"func/eve",
-				"Web/developer/api/functions/event.php"
+				"header",
+				"Web/developer/api/header.php"
 			],
 			[
 				"func/ac",
 				"Web/developer/api/functions/activity.php"
 			],
 			[
-				"wrp/p",
-				"Web/includes/wrap/people.php"
-			],
-			[
-				"wrap/per",
-				"Web/developer/api/modules/person.php"
-			],
-			[
-				"qu/pe",
-				"Web/includes/queries/people.php"
-			],
-			[
-				"certi",
-				"Web/certificate.php"
-			],
-			[
-				"wrap/pers",
-				"Web/developer/api/modules/person.php"
-			],
-			[
-				"event.js",
-				"Web/js/modules/event.js"
-			],
-			[
-				"do/ac",
-				"Web/developer/documentation/activity.php"
-			],
-			[
-				"cert",
-				"Web/certificate.php"
-			],
-			[
-				"que/ev",
-				"Web/includes/queries/event.php"
-			],
-			[
-				"que/peo",
-				"Web/includes/queries/people.php"
-			],
-			[
-				"peopl",
-				"Web/js/modules/people.js"
-			],
-			[
-				"mar",
-				"Web/js/modules/marketplace.js"
-			],
-			[
-				"mo/fron",
-				"Web/js/modules/front.js"
-			],
-			[
-				"mo/acti",
-				"Web/developer/api/modules/activity.php"
-			],
-			[
-				"exce",
-				"Web/developer/api/functions/excel.php"
-			],
-			[
-				"form",
-				"Web/includes/function/format.php"
-			],
-			[
-				"q/pe",
-				"Web/includes/queries/people.php"
-			],
-			[
-				"qu/pp",
-				"Web/includes/queries/people.php"
-			],
-			[
-				"wrp/ev",
-				"Web/includes/wrap/event.php"
-			],
-			[
-				"conn",
-				"Web/includes/connection.php"
-			],
-			[
-				"fun/per",
-				"Web/developer/api/functions/person.php"
-			],
-			[
-				"mo/pers",
-				"Web/developer/api/modules/person.php"
-			],
-			[
-				"gener",
-				"Web/includes/function/generic.php"
-			],
-			[
-				"uti",
-				"Web/includes/function/utils.php"
-			],
-			[
-				"fun/ex",
-				"Web/developer/api/functions/excel.php"
-			],
-			[
-				"doc/eve",
-				"Web/developer/documentation/event.php"
-			],
-			[
-				"mod/ac",
-				"Web/developer/api/modules/activity.php"
-			],
-			[
-				"/ac",
-				"Web/includes/email/activity.php"
-			],
-			[
-				"runt",
-				"Web/includes/function/runtime.php"
-			],
-			[
-				"u",
-				"Web/includes/function/utils.php"
-			],
-			[
-				"util",
-				"Web/includes/function/utils.php"
-			],
-			[
-				"locali",
-				"iOS/PedidoNaRede/es.lproj/Localizable.strings"
-			],
-			[
-				"locabr",
-				"iOS/PedidoNaRede/pt.lproj/Localizable.strings"
-			],
-			[
-				"loca",
-				"iOS/PedidoNaRede/en.lproj/Localizable.strings"
-			],
-			[
-				"do/eve",
-				"Web/developer/documentation/event.php"
-			],
-			[
-				"do/a",
-				"Web/developer/documentation/activity.php"
-			],
-			[
-				"fnc/eve",
+				"func/eve",
 				"Web/developer/api/functions/event.php"
 			],
 			[
-				"rein",
-				"Web/reinstate.php"
+				"peo",
+				"Web/includes/queries/people.php"
 			],
 			[
-				"passwordc",
-				"Web/includes/email/passwordChange.html"
+				"quer/gr",
+				"Web/includes/queries/group.php"
 			],
 			[
-				"emai/pe",
-				"Web/includes/email/person.php"
-			],
-			[
-				"login",
-				"Web/includes/check/login.php"
-			],
-			[
-				"mod/per",
+				"mod/pers",
 				"Web/developer/api/modules/person.php"
-			],
-			[
-				"do/pe",
-				"Web/developer/documentation/person.php"
-			],
-			[
-				"bar",
-				"Web/js/modules/bar.js"
-			],
-			[
-				"defa",
-				"Web/css/default.css"
-			],
-			[
-				"qu/ac",
-				"Web/includes/queries/activity.php"
-			],
-			[
-				"mo/ev",
-				"Web/developer/api/modules/event.php"
-			],
-			[
-				"enroll",
-				"Web/includes/email/eventEnrollment.html"
-			],
-			[
-				"qu/eve",
-				"Web/includes/queries/event.php"
-			],
-			[
-				"wrap/peo",
-				"Web/includes/wrap/people.php"
-			],
-			[
-				"front",
-				"Web/js/modules/front.js"
-			],
-			[
-				"mrket",
-				"Web/js/modules/marketplace.js"
-			],
-			[
-				"people",
-				"Web/js/modules/people.js"
-			],
-			[
-				"heade",
-				"Web/developer/api/header.php"
-			],
-			[
-				"email/",
-				"Web/includes/email/passwordRecovery.html"
-			],
-			[
-				"email/p",
-				"Web/includes/email/person.php"
-			],
-			[
-				"fun/pers",
-				"Web/developer/api/functions/person.php"
-			],
-			[
-				"ema/eve",
-				"Web/includes/email/event.php"
-			],
-			[
-				"docum/ac",
-				"Web/developer/documentation/activity.php"
-			],
-			[
-				"module/ac",
-				"Web/developer/api/modules/activity.php"
-			],
-			[
-				"tools",
-				"Web/js/modules/tools.js"
-			],
-			[
-				"qu",
-				"iOS/PedidoNaRede/QuestionViewController.m"
-			],
-			[
-				"wra/ee",
-				"Web/includes/wrap/event.php"
-			],
-			[
-				"event/wra",
-				"iOS/InEvent.xcworkspace/xcshareddata/WorkspaceSettings.xcsettings"
-			],
-			[
-				"eventjs",
-				"Web/js/modules/event.js"
-			],
-			[
-				"np.js",
-				"Web/js/modules/np.js"
-			],
-			[
-				"comm",
-				"Web/js/common.js"
-			],
-			[
-				"header",
-				"Web/includes/html/header.php"
-			],
-			[
-				"head",
-				"Web/includes/header.php"
-			],
-			[
-				"com",
-				"Web/js/common.js"
-			],
-			[
-				"np.",
-				"Web/js/modules/np.js"
-			],
-			[
-				"ajax",
-				"Web/js/modules/ajax.js"
-			],
-			[
-				"loca.j",
-				"Web/js/modules/location.js"
-			],
-			[
-				"deve",
-				"Web/js/developer.js"
-			],
-			[
-				"doc/ev",
-				"Web/developer/documentation/event.php"
-			],
-			[
-				"wrap/mar",
-				"Web/includes/wrap/marketplace.php"
-			],
-			[
-				"error",
-				"Web/error_log"
-			],
-			[
-				"wra/ac",
-				"Web/developer/api/modules/activity.php"
-			],
-			[
-				"qu/ev",
-				"Web/includes/queries/event.php"
-			],
-			[
-				"mo/even",
-				"Web/developer/api/modules/event.php"
-			],
-			[
-				"wrp/eve",
-				"Web/includes/wrap/event.php"
-			],
-			[
-				"func/u",
-				"Web/includes/function/utils.php"
-			],
-			[
-				"do/event",
-				"Web/developer/documentation/event.php"
 			],
 			[
 				"mod/eve",
 				"Web/developer/api/modules/event.php"
 			],
 			[
-				"ques",
-				"iOS/PedidoNaRede/QuestionViewController.m"
+				"mo/pers",
+				"Web/developer/documentation/person.php"
 			],
 			[
-				"mapvi",
-				"iOS/PedidoNaRede/MapViewController.h"
-			],
-			[
-				"mapview",
-				"iOS/PedidoNaRede/MapViewController.m"
+				"mod/gr",
+				"Web/developer/api/modules/group.php"
 			],
 			[
 				"read",
 				"README.md"
 			],
 			[
-				"documentat",
+				"gener",
+				"Web/includes/function/generic.php"
+			],
+			[
+				"socia",
+				"Web/includes/social.php"
+			],
+			[
+				"sec",
+				"Web/includes/function/security.php"
+			],
+			[
+				"valida",
+				"Web/developer/api/functions/validation.php"
+			],
+			[
+				"validat",
+				"Web/developer/api/functions/validation.php"
+			],
+			[
+				"docum/ac",
 				"Web/developer/documentation/activity.php"
 			],
 			[
-				"fun/pe",
-				"Web/developer/api/functions/person.php"
+				"mo/ph",
+				"Web/developer/api/modules/photo.php"
 			],
 			[
-				"activi",
-				"Web/includes/email/activityEnrollment.html"
+				"doc/gro",
+				"Web/developer/documentation/group.php"
 			],
 			[
-				"email/ac",
-				"Web/includes/email/activity.php"
+				"mo/gr",
+				"Web/developer/api/modules/group.php"
 			],
 			[
-				"email.p",
-				"Web/includes/email.php"
+				"mo/gro",
+				"Web/developer/api/modules/group.php"
 			],
 			[
 				"excel.p",
 				"Web/developer/api/functions/excel.php"
 			],
 			[
-				"web/pe",
-				"Web/people.php"
+				"data.js",
+				"Web/js/modules/data.js"
 			],
 			[
-				"mo/event",
-				"Web/developer/api/modules/event.php"
+				"func/pers",
+				"Web/developer/api/functions/person.php"
 			],
 			[
-				"wind",
-				"Web/js/modules/window.js"
+				"func/per",
+				"Web/developer/api/functions/person.php"
 			],
 			[
-				"web/peo",
-				"Web/people.php"
+				"includes/for",
+				"Web/includes/function/format.php"
 			],
 			[
-				"quer/pe",
-				"Web/includes/queries/people.php"
+				"doc/a",
+				"Web/developer/documentation/activity.php"
+			],
+			[
+				"doc/person",
+				"Web/developer/documentation/person.php"
+			],
+			[
+				"scheduleitem",
+				"iOS/PedidoNaRede/ScheduleItemViewController.h"
+			],
+			[
+				"doc/pers",
+				"Web/developer/documentation/person.php"
+			],
+			[
+				"fun/per",
+				"Web/developer/api/functions/person.php"
+			],
+			[
+				"func/va",
+				"Web/developer/api/functions/validation.php"
+			],
+			[
+				"do/p",
+				"Web/developer/documentation/photo.php"
+			],
+			[
+				"que/eve",
+				"Web/includes/queries/event.php"
+			],
+			[
+				"mo/p",
+				"Web/developer/api/modules/photo.php"
+			],
+			[
+				"photo",
+				"Web/developer/api/modules/photo.php"
+			],
+			[
+				"doc/even",
+				"Web/developer/documentation/event.php"
+			],
+			[
+				"index",
+				"Web/developer/index.php"
+			],
+			[
+				"fun/pers",
+				"Web/developer/api/functions/person.php"
+			],
+			[
+				"develo",
+				"Web/js/developer.js"
+			],
+			[
+				"includes/",
+				"Web/includes/push.php"
+			],
+			[
+				"social",
+				"Web/includes/social.php"
+			],
+			[
+				"modu/peo",
+				"Web/developer/api/modules/person.php"
+			],
+			[
+				"mo/peo",
+				"Web/js/modules/people.js"
+			],
+			[
+				"face",
+				"Web/classes/facebook-php-sdk/facebook.php"
+			],
+			[
+				"base_fa",
+				"Web/classes/facebook-php-sdk/base_facebook.php"
+			],
+			[
+				"ema",
+				"Web/includes/email.php"
+			],
+			[
+				"email/eve",
+				"Web/includes/email/event.php"
+			],
+			[
+				"eventenr",
+				"Web/includes/email/eventEnrollment.html"
+			],
+			[
+				"app",
+				"Web/appURL.php"
+			],
+			[
+				"appu",
+				"Web/appURL.php"
+			],
+			[
+				"mail/eve",
+				"Web/includes/email/event.php"
+			],
+			[
+				"email/",
+				"Web/includes/email/personEnrollment.html"
+			],
+			[
+				"event.",
+				"Web/js/modules/event.js"
+			],
+			[
+				"mod/go",
+				"Web/developer/api/modules/group.php"
+			],
+			[
+				"mo/act",
+				"Web/developer/api/modules/activity.php"
+			],
+			[
+				"docu/pers",
+				"Web/developer/documentation/person.php"
+			],
+			[
+				"wrap/eve",
+				"Web/includes/wrap/event.php"
+			],
+			[
+				"heade",
+				"Web/includes/header.php"
+			],
+			[
+				"event.js",
+				"Web/js/modules/event.js"
+			],
+			[
+				"quer/",
+				"Web/includes/queries/event.php"
+			],
+			[
+				"frontview",
+				"iOS/PedidoNaRede/FrontViewController.m"
+			],
+			[
+				"modu/eve",
+				"Web/js/modules/event.js"
+			],
+			[
+				"uiview+co",
+				"iOS/PedidoNaRede/UIView+Components.m"
+			],
+			[
+				"head",
+				"Web/includes/header.php"
+			],
+			[
+				"front",
+				"Web/front.php"
+			],
+			[
+				"wrap/p",
+				"Web/includes/wrap/people.php"
+			],
+			[
+				"too",
+				"Web/js/modules/tools.js"
+			],
+			[
+				"people",
+				"Web/js/modules/people.js"
+			],
+			[
+				"people.js",
+				"Web/js/modules/people.js"
+			],
+			[
+				"modu/ac",
+				"Web/developer/api/modules/activity.php"
+			],
+			[
+				"eve.js",
+				"Web/js/modules/event.js"
+			],
+			[
+				"web/eve",
+				"Web/event.php"
+			],
+			[
+				"data",
+				"Web/data.php"
+			],
+			[
+				"registe",
+				"Web/js/modules/register.js"
+			],
+			[
+				"do/person",
+				"Web/developer/documentation/person.php"
+			],
+			[
+				"bar",
+				"Web/includes/html/bar.php"
+			],
+			[
+				"event",
+				"Web/event.php"
+			],
+			[
+				"validation",
+				"Web/developer/api/functions/validation.php"
+			],
+			[
+				"quer",
+				"Web/includes/queries.php"
+			],
+			[
+				"doc/eve",
+				"Web/developer/documentation/event.php"
+			],
+			[
+				"apicon",
+				"iOS/PedidoNaRede/APIController.m"
+			],
+			[
+				"api",
+				"iOS/PedidoNaRede/APIController.h"
+			],
+			[
+				"do/gr",
+				"Web/developer/documentation/group.php"
+			],
+			[
+				"loca",
+				"iOS/PedidoNaRede/es.lproj/Localizable.strings"
+			],
+			[
+				"local",
+				"iOS/PedidoNaRede/en.lproj/Localizable.strings"
+			],
+			[
+				"localiz",
+				"iOS/PedidoNaRede/pt.lproj/Localizable.strings"
+			],
+			[
+				"push/ac",
+				"Web/includes/push/activity.php"
+			],
+			[
+				"subs",
+				"Web/js/modules/subscribe.js"
+			],
+			[
+				"person",
+				"Web/includes/email/personSubscribed.html"
+			],
+			[
+				"emai/per",
+				"Web/includes/email/person.php"
+			],
+			[
+				"email/per",
+				"Web/includes/email/person.php"
+			],
+			[
+				"uns",
+				"Web/js/modules/unsubscribe.js"
+			],
+			[
+				"personub",
+				"Web/includes/email/personUnsubscribed.html"
+			],
+			[
+				"ema/per",
+				"Web/includes/email/person.php"
+			],
+			[
+				"unsubs",
+				"Web/js/modules/unsubscribe.js"
+			],
+			[
+				"comm",
+				"Web/js/common.js"
+			],
+			[
+				"unsu",
+				"Web/unsubscribe.php"
+			],
+			[
+				"appa",
+				"Web/includes/email/appAttributes.html"
+			],
+			[
+				"acti",
+				"Web/includes/email/activityEnrollment.html"
+			],
+			[
+				"email",
+				"Web/includes/email.php"
+			],
+			[
+				"complete",
+				"Web/css/complete.min.css"
+			],
+			[
+				"ajax",
+				"Web/js/modules/ajax.js"
+			],
+			[
+				"que/ac",
+				"Web/includes/queries/activity.php"
+			],
+			[
+				"wrap",
+				"Web/includes/wrap/people.php"
+			],
+			[
+				"bar.js",
+				"Web/js/modules/bar.js"
+			],
+			[
+				"marke",
+				"Web/js/modules/marketplace.js"
+			],
+			[
+				"fun/ac",
+				"Web/developer/api/functions/activity.php"
 			]
 		],
 		"width": 0.0

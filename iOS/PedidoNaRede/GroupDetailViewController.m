@@ -16,6 +16,7 @@
 #import "UIImageView+WebCache.h"
 #import "InEventAPI.h"
 #import "PeopleViewCell.h"
+#import "PersonViewController.h"
 
 @interface GroupDetailViewController () {
     UIRefreshControl *refreshControl;
@@ -270,6 +271,29 @@
     }
     
     return cell;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+    PersonViewController *pvc;
+    
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        pvc = [[PersonViewController alloc] initWithNibName:@"PersonViewController" bundle:nil];
+    } else {
+        // Find the sibling navigation controller first child and send the appropriate data
+        pvc = (PersonViewController *)[[[self.splitViewController.viewControllers lastObject] viewControllers] objectAtIndex:0];
+    }
+    
+    NSDictionary *dictionary = [_peopleData objectAtIndex:indexPath.row];
+    
+    [pvc setTitle:[[dictionary objectForKey:@"name"] stringByDecodingHTMLEntities]];
+    [pvc setPersonData:[_peopleData objectAtIndex:indexPath.row]];
+    
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        [self.navigationController pushViewController:pvc animated:YES];
+        [collectionView deselectItemAtIndexPath:indexPath animated:YES];
+    }
+    
 }
 
 #pragma mark – UICollectionViewDelegateFlowLayout

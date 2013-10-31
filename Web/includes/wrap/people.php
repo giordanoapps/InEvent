@@ -115,8 +115,6 @@
                     <td data-order="name">Nome <?php if ($order == "name") echo $imageOrder ?></td>
                     <td data-order="email">Email <?php if ($order == "email") echo $imageOrder ?></td>
                     <td data-order="present">Presença <?php if ($order == "present") echo $imageOrder ?></td>
-                    <td data-order="cpf">CPF <?php if ($order == "cpf") echo $imageOrder ?></td>
-                    <td data-order="rg">RG <?php if ($order == "rg") echo $imageOrder ?></td>
                 </tr>
             </thead>
             <tbody>
@@ -145,12 +143,6 @@
                     </td>
                     <td>
                         <p class="present"><?php echo $data['present'] ?> %</p>
-                    </td>
-                    <td>
-                        <p class="cpf"><?php echo $data['cpf'] ?></p>
-                    </td>
-                    <td>
-                        <p class="rg"><?php echo $data['rg'] ?></p>
                     </td>
                     <!-- <td>
                         <input

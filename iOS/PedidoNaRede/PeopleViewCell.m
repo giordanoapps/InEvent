@@ -32,14 +32,14 @@
 }
 
 - (void)layoutSubviews {
-    [self.initial.layer setCornerRadius:self.initial.frame.size.width / 2.2f];
+//    [self.initial.layer setCornerRadius:self.initial.frame.size.width / 2.2f];
 }
 
 - (void)configureCell {
 //    [self addObserver:self forKeyPath:@"initial" options:NSKeyValueObservingOptionNew context:NULL];
 //    [self addObserver:self forKeyPath:@"bounds" options:0 context:NULL];
     
-    [self.initial.layer setCornerRadius:self.initial.frame.size.width / 2.2f];
+//    [self.initial.layer setCornerRadius:self.initial.frame.size.width / 2.2f];
     [self.initial setBackgroundColor:[ColorThemeController tableViewCellBackgroundColor]];
 }
 

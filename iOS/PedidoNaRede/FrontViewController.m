@@ -71,6 +71,9 @@
 //    _cover.layer.shadowOffset = CGSizeMake(1.0f, 1.0f);
 //    _cover.layer.shadowColor = [[ColorThemeController shadowColor] CGColor];
     
+    // Details
+    _details.backgroundColor = [ColorThemeController tableViewBackgroundColor];
+    
     // Wrapper
     _wrapper.backgroundColor = [ColorThemeController tableViewCellBackgroundColor];
     _wrapper.layer.cornerRadius = 4.0f;

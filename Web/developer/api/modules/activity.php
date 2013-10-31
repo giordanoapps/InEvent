@@ -776,14 +776,16 @@
 				`member`.`name` AS `memberName`,
 				`activityQuestion`.`memberID`,
 				`activityQuestion`.`text`,
-				COUNT(`activityQuestion`.`id`) AS `votes`,
-				IF(`member`.`id` = $core->memberID, 1, 0) AS `owner`
+				COUNT(DISTINCT `activityQuestion`.`id`) AS `votes`,
+				IF(ISNULL(`activityQuestionMemberUpVoted`.`memberID`), 0, 1) AS `upvoted`
 			FROM
 				`activityQuestion`
 			INNER JOIN
 				`member` ON `member`.`id` = `activityQuestion`.`memberID`
 			LEFT JOIN
 				`activityQuestionMember` ON `activityQuestion`.`id` = `activityQuestionMember`.`questionID`
+			LEFT JOIN
+				`activityQuestionMember` AS `activityQuestionMemberUpVoted` ON `activityQuestion`.`id` = `activityQuestionMemberUpVoted`.`questionID` AND `activityQuestionMemberUpVoted`.`memberID` = $core->memberID
 			WHERE 1
 				AND `activityQuestion`.`activityID` = $activityID
 			GROUP BY

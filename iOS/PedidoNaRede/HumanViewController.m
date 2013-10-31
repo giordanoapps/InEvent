@@ -66,8 +66,8 @@
     
     // Text fields
     _name.textColor = [ColorThemeController tableViewCellTextColor];
-    _role.textColor = [ColorThemeController tableViewCellTextColor];
-    _company.textColor = [ColorThemeController tableViewCellTextColor];
+    _role.textColor = [ColorThemeController tableViewCellTextHighlightedColor];
+    _company.textColor = [ColorThemeController tableViewCellTextHighlightedColor];
     _telephone.textColor = [ColorThemeController tableViewCellTextColor];
     _email.textColor = [ColorThemeController tableViewCellTextColor];
     _location.textColor = [ColorThemeController tableViewCellTextColor];

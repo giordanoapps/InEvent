@@ -25,7 +25,7 @@
                         </collectionViewFlowLayout>
                         <cells/>
                     </collectionView>
-                    <view alpha="0.5" contentMode="scaleToFill" id="mq4-xh-NXj">
+                    <view contentMode="scaleToFill" id="mq4-xh-NXj">
                         <rect key="frame" x="0.0" y="0.0" width="170" height="100"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>

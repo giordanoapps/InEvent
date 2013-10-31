@@ -307,6 +307,8 @@
 		EBD6FE4918064B51006D0E73 /* 16-Image-2.png in Resources */ = {isa = PBXBuildFile; fileRef = EBD6FE4818064B51006D0E73 /* 16-Image-2.png */; };
 		EBD6FE4D18065501006D0E73 /* 32-Image.png in Resources */ = {isa = PBXBuildFile; fileRef = EBD6FE4C18065501006D0E73 /* 32-Image.png */; };
 		EBD6FE4F18065528006D0E73 /* 32-Cog.png in Resources */ = {isa = PBXBuildFile; fileRef = EBD6FE4E18065528006D0E73 /* 32-Cog.png */; };
+		EBD7BB6D1822405400C17556 /* 32-Mail-Highlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBD7BB6C1822405400C17556 /* 32-Mail-Highlighted@2x.png */; };
+		EBD7BB6F182240A800C17556 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBD7BB6E182240A800C17556 /* MessageUI.framework */; };
 		EBD8E4E917AF557A00D0F30C /* 32-Minus.png in Resources */ = {isa = PBXBuildFile; fileRef = EBD8E4E817AF557A00D0F30C /* 32-Minus.png */; };
 		EBDA918117ACB10100969A08 /* 16-Check.png in Resources */ = {isa = PBXBuildFile; fileRef = EBDA917F17ACB10100969A08 /* 16-Check.png */; };
 		EBDA918217ACB10100969A08 /* 16-Check@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBDA918017ACB10100969A08 /* 16-Check@2x.png */; };
@@ -811,6 +813,8 @@
 		EBD6FE4818064B51006D0E73 /* 16-Image-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "16-Image-2.png"; sourceTree = "<group>"; };
 		EBD6FE4C18065501006D0E73 /* 32-Image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Image.png"; sourceTree = "<group>"; };
 		EBD6FE4E18065528006D0E73 /* 32-Cog.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Cog.png"; sourceTree = "<group>"; };
+		EBD7BB6C1822405400C17556 /* 32-Mail-Highlighted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Mail-Highlighted@2x.png"; sourceTree = "<group>"; };
+		EBD7BB6E182240A800C17556 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		EBD8E4E817AF557A00D0F30C /* 32-Minus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Minus.png"; sourceTree = "<group>"; };
 		EBDA917F17ACB10100969A08 /* 16-Check.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "16-Check.png"; sourceTree = "<group>"; };
 		EBDA918017ACB10100969A08 /* 16-Check@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "16-Check@2x.png"; sourceTree = "<group>"; };
@@ -908,6 +912,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EBD7BB6F182240A800C17556 /* MessageUI.framework in Frameworks */,
 				EB53F643170913BC00715E2D /* SystemConfiguration.framework in Frameworks */,
 				EBEA9FD41795879300C6FEEC /* MobileCoreServices.framework in Frameworks */,
 				EB1FE9E017FE8582001C2906 /* CoreFoundation.framework in Frameworks */,
@@ -1554,6 +1559,7 @@
 		EBAAFD1F161FCF020007637B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				EBD7BB6E182240A800C17556 /* MessageUI.framework */,
 				EB25BA8716FE636B003F142F /* Accounts.framework */,
 				EB25BA8816FE636B003F142F /* AdSupport.framework */,
 				EB3F1A0C16F90F4F005052E7 /* AudioToolbox.framework */,
@@ -1852,6 +1858,7 @@
 				EB8974F4180CC85200DB2486 /* 32-Group.png */,
 				EB8974F6180CC86700DB2486 /* 32-Group@2x.png */,
 				EBD27B6516D8604200DA6ACE /* 32-Looking-Glass.png */,
+				EBD7BB6C1822405400C17556 /* 32-Mail-Highlighted@2x.png */,
 				EBCD0EE7181DBCB900CE225C /* 32-Mail.png */,
 				EBCD0EE9181DBCCA00CE225C /* 32-Mail@2x.png */,
 				EBCD0EE5181DBC6000CE225C /* 32-Map.png */,
@@ -2165,6 +2172,7 @@
 				EBA1862D172B910100336733 /* stripes.png in Resources */,
 				EBDA918117ACB10100969A08 /* 16-Check.png in Resources */,
 				EB1FEA0818032D7D001C2906 /* 32-Plus-2.png in Resources */,
+				EBD7BB6D1822405400C17556 /* 32-Mail-Highlighted@2x.png in Resources */,
 				EBDA918217ACB10100969A08 /* 16-Check@2x.png in Resources */,
 				EBDA918517ACB40A00969A08 /* 16-Safari.png in Resources */,
 				EBDA918617ACB40A00969A08 /* 16-Safari@2x.png in Resources */,

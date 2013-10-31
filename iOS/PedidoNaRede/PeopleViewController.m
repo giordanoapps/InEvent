@@ -16,12 +16,13 @@
 #import "CoolBarButtonItem.h"
 #import "InEventAPI.h"
 #import "PeopleViewCell.h"
+#import "PersonViewController.h"
 
 @interface PeopleViewController () {
     UIRefreshControl *refreshControl;
     NSIndexPath *selectedPath;
     NSString *dataPath;
-    NSMutableArray *people;
+    NSMutableArray *peopleData;
 }
 
 @end
@@ -95,14 +96,14 @@
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return [people count];
+    return [peopleData count];
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
         
     PeopleViewCell *cell = (PeopleViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"PeopleViewCell" forIndexPath:indexPath];
     
-    NSDictionary *dictionary = [people objectAtIndex:indexPath.row];
+    NSDictionary *dictionary = [peopleData objectAtIndex:indexPath.row];
     
     if ([[dictionary objectForKey:@"facebookID"] integerValue] != 0) {
         [cell.image setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://graph.facebook.com/%@/picture?width=%d&height=%d", [dictionary objectForKey:@"facebookID"], (int)(cell.image.frame.size.width * [[UIScreen mainScreen] scale]), (int)(cell.image.frame.size.height * [[UIScreen mainScreen] scale])]] placeholderImage:[UIImage imageNamed:@"128-user"]];
@@ -135,6 +136,25 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
 
+    PersonViewController *pvc;
+    
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        pvc = [[PersonViewController alloc] initWithNibName:@"PersonViewController" bundle:nil];
+    } else {
+        // Find the sibling navigation controller first child and send the appropriate data
+        pvc = (PersonViewController *)[[[self.splitViewController.viewControllers lastObject] viewControllers] objectAtIndex:0];
+    }
+    
+    NSDictionary *dictionary = [peopleData objectAtIndex:indexPath.row];
+    
+    [pvc setTitle:[[dictionary objectForKey:@"name"] stringByDecodingHTMLEntities]];
+    [pvc setPersonData:[peopleData objectAtIndex:indexPath.row]];
+    
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        [self.navigationController pushViewController:pvc animated:YES];
+        [collectionView deselectItemAtIndexPath:indexPath animated:YES];
+    }
+    
 }
 
 #pragma mark - APIController Delegate
@@ -143,7 +163,7 @@
     
     if ([apiController.method isEqualToString:@"getPeople"]) {
         // Assign the data object to the groups
-        people = [NSMutableArray arrayWithArray:[dictionary objectForKey:@"data"]];
+        peopleData = [NSMutableArray arrayWithArray:[dictionary objectForKey:@"data"]];
         
         // Save the path of the current file object
         dataPath = apiController.path;
@@ -171,7 +191,7 @@
         dataPath = apiController.path;
     } else {
         // Save the current object
-        [[NSDictionary dictionaryWithObject:people forKey:@"data"] writeToFile:dataPath atomically:YES];
+        [[NSDictionary dictionaryWithObject:peopleData forKey:@"data"] writeToFile:dataPath atomically:YES];
         
         // Load the UI controls
         [super apiController:apiController didSaveForLaterWithError:error];

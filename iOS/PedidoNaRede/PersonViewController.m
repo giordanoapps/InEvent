@@ -18,7 +18,6 @@
 
 @interface PersonViewController () {
     UIRefreshControl *refreshControl;
-    NSDictionary *personData;
     BOOL editingMode;
     CLLocationManager *locationManager;
 }
@@ -33,9 +32,6 @@
     if (self) {
         self.title = NSLocalizedString(@"Me", nil);
         self.tabBarItem.image = [UIImage imageNamed:@"16-User"];
-        
-        // Register for some updates
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadData) name:@"personNotification" object:nil];
     }
     return self;
 }
@@ -47,15 +43,12 @@
     // Right Button
     [self loadMenuButton];
     
+    // Details
+    _socialWrapper.backgroundColor = [ColorThemeController tableViewCellBackgroundColor];
+     
     // Wrapper
     _wrapper.backgroundColor = [ColorThemeController tableViewCellBackgroundColor];
     _wrapper.layer.cornerRadius = 4.0f;
-    
-    // Refresh Control
-    refreshControl = [[UIRefreshControl alloc] init];
-    refreshControl.tintColor = [UIColor grayColor];
-    [refreshControl addTarget:self action:@selector(reloadData) forControlEvents:UIControlEventValueChanged];
-    [self.view addSubview:refreshControl];
     
     // Scroll View
     self.view.contentSize = CGSizeMake(self.view.frame.size.width, 550.0f);
@@ -66,24 +59,29 @@
     
     // Text fields
     _name.textColor = [ColorThemeController tableViewCellTextColor];
-    _role.textColor = [ColorThemeController tableViewCellTextColor];
-    _company.textColor = [ColorThemeController tableViewCellTextColor];
+    _role.textColor = [ColorThemeController tableViewCellTextHighlightedColor];
+    _company.textColor = [ColorThemeController tableViewCellTextHighlightedColor];
     _telephone.textColor = [ColorThemeController tableViewCellTextColor];
     _email.textColor = [ColorThemeController tableViewCellTextColor];
     _location.textColor = [ColorThemeController tableViewCellTextColor];
-    
-    // Person details
-    [self checkSession];
-    
-    // Restart Facebook connection
-    [self connectWithFacebook];
 }
 
-- (void)viewWillAppear:(BOOL)animated{
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    // Session
-    [self checkSession];
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        [self cleanData];
+        [self paint];
+    }
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+        [self cleanData];
+        [self paint];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -92,63 +90,61 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Loader Methods
+#pragma mark - Setter Methods
 
-- (void)loadData {
-    [self forceDataReload:NO];
-}
-
-- (void)reloadData {
-    [self forceDataReload:YES];
-}
-
-- (void)forceDataReload:(BOOL)forcing {
-    if ([[HumanToken sharedInstance] isMemberAuthenticated]) {
-        [[[InEventPersonAPIController alloc] initWithDelegate:self forcing:forcing] getDetailsWithTokenID:[[HumanToken sharedInstance] tokenID]];
-    }
+- (void)setPersonData:(NSDictionary *)personData {
+    _personData = personData;
+    
+    [self paint];
 }
 
 #pragma mark - Painter Methods
 
 - (void)paint {
     
-    if (personData) {
+    if (_personData) {
         
         // Photo
-        if ([[personData objectForKey:@"facebookID"] integerValue] != 0) {
-            [self.photo setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://graph.facebook.com/%@/picture?width=%d&height=%d", [personData objectForKey:@"facebookID"], (int)(self.photo.frame.size.width * [[UIScreen mainScreen] scale]), (int)(self.photo.frame.size.height * [[UIScreen mainScreen] scale])]] placeholderImage:[UIImage imageNamed:@"128-user"]];
+        if ([[_personData objectForKey:@"facebookID"] length] > 1) {
+            [self.photo setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://graph.facebook.com/%@/picture?width=%d&height=%d", [_personData objectForKey:@"facebookID"], (int)(self.photo.frame.size.width * [[UIScreen mainScreen] scale]), (int)(self.photo.frame.size.height * [[UIScreen mainScreen] scale])]] placeholderImage:[UIImage imageNamed:@"128-user"]];
             [_photo.layer setCornerRadius:_photo.frame.size.width / 2.0f];
-        } else if (![[personData objectForKey:@"image"] isEqualToString:@""]) {
-            [self.photo setImageWithURL:[NSURL URLWithString:[personData objectForKey:@"image"]] placeholderImage:[UIImage imageNamed:@"128-user"]];
+        } else if ([[_personData objectForKey:@"image"] length] > 1) {
+            [self.photo setImageWithURL:[NSURL URLWithString:[_personData objectForKey:@"image"]] placeholderImage:[UIImage imageNamed:@"128-user"]];
             [_photo.layer setCornerRadius:_photo.frame.size.width / 2.0f];
         } else {
             [self.photo setImage:[UIImage imageNamed:@"128-user"]];
             [_photo.layer setCornerRadius:0.0f];
         }
         
+        // Social
+        [_fbButton setHidden:([[_personData objectForKey:@"facebookID"] length] > 1) ? NO : YES];
+        [_inButton setHidden:([[_personData objectForKey:@"linkedInID"] length] > 1) ? NO : YES];
+        [_socialWrapper setHidden:(_fbButton.hidden && _inButton.hidden) ? YES : NO];
+        
         // Text fields
-        self.name.text = [[personData objectForKey:@"name"] stringByDecodingHTMLEntities];
-        self.role.text = [[personData objectForKey:@"role"] stringByDecodingHTMLEntities];
-        self.company.text = [[personData objectForKey:@"company"] stringByDecodingHTMLEntities];
-        self.telephone.text = [[personData objectForKey:@"telephone"] stringByDecodingHTMLEntities];
-        self.email.text = [[personData objectForKey:@"email"] stringByDecodingHTMLEntities];
-        self.location.text = [[personData objectForKey:@"city"] stringByDecodingHTMLEntities];
-        self.cpf.text = [[personData objectForKey:@"cpf"] stringByDecodingHTMLEntities];
-        self.rg.text = [[personData objectForKey:@"rg"] stringByDecodingHTMLEntities];
+        self.name.text = [[_personData objectForKey:@"name"] stringByDecodingHTMLEntities];
+        self.role.text = [[_personData objectForKey:@"role"] stringByDecodingHTMLEntities];
+        self.company.text = [[_personData objectForKey:@"company"] stringByDecodingHTMLEntities];
+        self.telephone.text = [[_personData objectForKey:@"telephone"] stringByDecodingHTMLEntities];
+        self.email.text = [[_personData objectForKey:@"email"] stringByDecodingHTMLEntities];
+        self.location.text = [[_personData objectForKey:@"city"] stringByDecodingHTMLEntities];
         
         // Map
         [self reloadMap];
     }
 }
 
-
-#pragma mark - Public Methods
-
-- (void)checkSession {
-
-}
-
 #pragma mark - Private Methods
+
+- (void)cleanData {
+    self.navigationItem.rightBarButtonItem = nil;
+    [self.name setText:NSLocalizedString(@"Name", nil)];
+    [self.role setText:NSLocalizedString(@"Role", nil)];
+    [self.company setText:NSLocalizedString(@"Company", nil)];
+    [self.telephone setText:NSLocalizedString(@"Telephone", nil)];
+    [self.email setText:NSLocalizedString(@"Email", nil)];
+    [self.location setText:NSLocalizedString(@"Location", nil)];
+}
 
 - (void)loadMenuButton {
     self.rightBarButton = [[CoolBarButtonItem alloc] initCustomButtonWithImage:[UIImage imageNamed:@"32-Cog"] frame:CGRectMake(0, 0, 42.0, 30.0) insets:UIEdgeInsetsMake(5.0, 11.0, 5.0, 11.0) target:self action:@selector(alertActionSheet)];
@@ -162,6 +158,48 @@
     self.navigationItem.rightBarButtonItem = self.rightBarButton;
 }
 
+#pragma mark - Actions
+
+- (IBAction)loadWebView:(id)sender {
+    
+    NSURL *url;
+    
+    if (sender == _fbButton) {
+        url = [self assembleFacebookURL];
+    } else if (sender == _inButton) {
+        url = [self assembleLinkedInURL];
+    }
+    
+    UIViewController *viewController = [[UIViewController alloc] init];
+    UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+    [webView setScalesPageToFit:YES];
+    [webView setHidden:YES];
+    [webView loadRequest:[NSURLRequest requestWithURL:url]];
+    [viewController.view addSubview:webView];
+    
+    [self.navigationController pushViewController:viewController animated:YES];
+}
+
+#pragma mark - Mail
+
+- (IBAction)openMail:(id)sender {
+
+    if ([MFMailComposeViewController canSendMail]) {
+        MFMailComposeViewController *mailer = [[MFMailComposeViewController alloc] init];
+        mailer.mailComposeDelegate = self;
+        [mailer setSubject:@"InEvent Quick Meetup"];
+        [mailer setToRecipients:@[[_personData objectForKey:@"email"]]];
+        [mailer addAttachmentData:UIImagePNGRepresentation([UIImage imageNamed:@"logo@40.png"]) mimeType:@"image/png" fileName:@"InEventImage"];
+        NSString *emailBody = NSLocalizedString(@"Hi, can we meet up very quick?", nil);
+        [mailer setMessageBody:emailBody isHTML:NO];
+        [self presentViewController:mailer animated:YES completion:NULL];
+        
+    } else {
+        AlertView *alertView = [[AlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"Please create an email account first", nil) delegate:self cancelButtonTitle:nil otherButtonTitle:NSLocalizedString(@"Ok", nil)];
+        [alertView show];
+    }
+}
+
 #pragma mark - Editing
 
 - (void)startEditing {
@@ -173,8 +211,6 @@
     [self.telephone setPlaceholder:self.telephone.text];
     [self.email setPlaceholder:self.email.text];
     [self.location setPlaceholder:self.location.text];
-    [self.cpf setPlaceholder:self.cpf.text];
-    [self.rg setPlaceholder:self.rg.text];
     
     // Start editing
     editingMode = YES;
@@ -202,8 +238,6 @@
     [self saveEditing:self.telephone forName:@"telephone"];
     [self saveEditing:self.email forName:@"email"];
     [self saveEditing:self.location forName:@"city"];
-    [self saveEditing:self.cpf forName:@"cpf"];
-    [self saveEditing:self.rg forName:@"rg"];
     
     // End editing
     [self.view endEditing:YES];
@@ -232,44 +266,20 @@
     if ([title isEqualToString:NSLocalizedString(@"Edit fields", nil)]) {
         [self startEditing];
     } else if ([title isEqualToString:NSLocalizedString(@"Logout", nil)]) {
-        [self logoutButtonWasPressed];
+//        [self logoutButtonWasPressed];
     }
+}
+
+#pragma mark - LinkedIn Methods
+
+- (NSURL *)assembleLinkedInURL {
+    return [NSURL URLWithString:[NSString stringWithFormat:@"http://www.linkedin.com/profile/view?id=%@", [_personData objectForKey:@"linkedInID"]]];
 }
 
 #pragma mark - Facebook Methods
 
-- (void)logoutButtonWasPressed {
-    
-    // Remove Facebook Login
-    if (FBSession.activeSession.isOpen) {
-        [FBSession.activeSession closeAndClearTokenInformation];
-    }
-    
-    // Remove InEvent Login
-    if ([[HumanToken sharedInstance] isMemberAuthenticated]) {
-        [[HumanToken sharedInstance] removeMember];
-    }
-    
-    // Update the current state of the schedule controller
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"scheduleCurrentState" object:nil userInfo:nil];
-    
-    // Load the login form
-    [self checkSession];
-}
-
-- (void)connectWithFacebook {
-    if (!FBSession.activeSession.isOpen) {
-        
-        [FBSession openActiveSessionWithReadPermissions:@[@"basic_info", @"email"]
-                                           allowLoginUI:NO
-                                      completionHandler:^(FBSession *session, FBSessionState state, NSError *error) {}];
-        
-        [FBSession openActiveSessionWithPublishPermissions:@[@"publish_stream"]
-                                           defaultAudience:FBSessionDefaultAudienceEveryone
-                                              allowLoginUI:NO
-                                         completionHandler:
-         ^(FBSession *session, FBSessionState state, NSError *error) {}];
-    }
+- (NSURL *)assembleFacebookURL {
+    return [NSURL URLWithString:[NSString stringWithFormat:@"http://www.facebook.com/%@", [_personData objectForKey:@"facebookID"]]];
 }
 
 #pragma mark - Map
@@ -313,7 +323,7 @@
     
     // Search using Apple API
     MKLocalSearchRequest *request = [[MKLocalSearchRequest alloc] init];
-    request.naturalLanguageQuery = [[personData objectForKey:@"city"] stringByDecodingHTMLEntities];
+    request.naturalLanguageQuery = [[_personData objectForKey:@"city"] stringByDecodingHTMLEntities];
     request.region = _map.region;
     
     MKLocalSearch *localSearch = [[MKLocalSearch alloc] initWithRequest:request];
@@ -323,7 +333,7 @@
         
         [response.mapItems enumerateObjectsUsingBlock:^(MKMapItem *item, NSUInteger idx, BOOL *stop) {
             MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
-            annotation.title = [[personData objectForKey:@"name"] stringByDecodingHTMLEntities];
+            annotation.title = [[_personData objectForKey:@"name"] stringByDecodingHTMLEntities];
             [annotations addObject:annotation];
         }];
         
@@ -342,13 +352,21 @@
     }
 }
 
+#pragma mark - Mail Composer Delegate
+
+- (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error {
+    
+    // Remove the mail view
+    [self dismissViewControllerAnimated:YES completion:NULL];
+}
+
 #pragma mark - APIController Delegate
 
 - (void)apiController:(InEventAPIController *)apiController didLoadDictionaryFromServer:(NSDictionary *)dictionary {
     
     if ([apiController.method isEqualToString:@"getDetails"]) {
         // Assign the data object to the person
-        personData = dictionary;
+        _personData = dictionary;
         
         // Assign the working events
         [[HumanToken sharedInstance] setWorkingEvents:[dictionary objectForKey:@"events"]];
