@@ -181,9 +181,7 @@ public class SplashActivity extends Activity implements Runnable
     private void analyzeIntent()
     {
         Intent intent = getIntent();
-        System.out.println(intent);
-        if (Intent.ACTION_VIEW.equals(intent.getAction()) &&
-                getIntent().getCategories().contains(Intent.CATEGORY_BROWSABLE))
+        if (Intent.ACTION_VIEW.equals(intent.getAction()))
         {
             // Obtain the sharedPreference
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -224,6 +222,10 @@ public class SplashActivity extends Activity implements Runnable
                     {
                         Log.w(InEvent.NAME, "Could parse query parameters", e);
                     }
+                    catch (Exception e)
+                    {
+                        Log.w(InEvent.NAME, "Error parsing query parameters", e);
+                    }
                 }
 
                 final String[] projection = new String[] { Event.Columns._ID_FULL };
@@ -232,7 +234,7 @@ public class SplashActivity extends Activity implements Runnable
                 selectionArgs[0] = path;
 
                 Cursor c = getContentResolver().query(Event.CONTENT_URI, projection, selection, selectionArgs, null);
-                if (c.getCount() == 1)
+                if (c.getCount() == 1 && c.moveToFirst())
                 {
                     long eventID = c.getLong(0);
                     preferences.edit()
