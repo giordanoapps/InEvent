@@ -36,6 +36,8 @@
         android:layout_height="match_parent"
         android:background="@drawable/abc_item_background_holo_light"
         android:contentDescription="@string/description_question_upvote"
+        android:drawablePadding="-5dp"
+        android:text="132"
         android:drawableTop="@drawable/ic_question_upvote_normal"
         android:gravity="center_horizontal"
         android:textSize="14sp" />

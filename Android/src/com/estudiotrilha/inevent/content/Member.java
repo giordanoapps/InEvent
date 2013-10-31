@@ -22,6 +22,7 @@ import android.text.Html;
 import android.util.Log;
 
 import com.estudiotrilha.android.net.ConnectionHelper;
+import com.estudiotrilha.android.utils.JsonUtils;
 import com.estudiotrilha.inevent.InEvent;
 import com.estudiotrilha.inevent.provider.InEventProvider;
 
@@ -141,7 +142,7 @@ public class Member implements Serializable
         try
         {
             m = new Member(
-                    json.getLong(MEMBER_ID),
+                    json.getLong(JsonUtils.ID),
                     Html.fromHtml(json.getString(NAME)).toString(),
                     json.getString(TOKEN_ID)
             );

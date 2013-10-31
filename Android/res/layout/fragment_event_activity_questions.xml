@@ -24,8 +24,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="@string/empty_eventActivityQuestions"
-            android:textSize="22sp"
-            android:visibility="gone" />
+            android:textSize="22sp" />
     </ViewAnimator>
 
     <View

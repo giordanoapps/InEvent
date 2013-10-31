@@ -166,7 +166,7 @@ public class AttendanceFragment extends Fragment implements LoaderCallbacks<Curs
     public void onViewCreated(View view, Bundle savedInstanceState)
     {
         super.onViewCreated(view, savedInstanceState);
-        view.setBackgroundResource(android.R.color.background_light);
+        view.setBackgroundResource(R.color.app_windownBackground);
         mListView = (ListView) view.findViewById(android.R.id.list);
 
         // Add the adapter to the list

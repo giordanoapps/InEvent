@@ -21,11 +21,13 @@ import android.support.v4.widget.CursorAdapter;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -115,7 +117,6 @@ public class EventActivityQuestionsFragment extends Fragment implements LoaderCa
         super.onViewCreated(view, savedInstanceState);
 
         ListView listView = (ListView) view.findViewById(android.R.id.list);
-        listView.setEmptyView(view.findViewById(android.R.id.empty));
         listView.setAdapter(mAdapter);
         setListShown(false);
 
@@ -130,6 +131,20 @@ public class EventActivityQuestionsFragment extends Fragment implements LoaderCa
             }
             @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             @Override public void afterTextChanged(Editable s) {}
+        });
+        mNewQuestion.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
+            {
+                if (actionId == EditorInfo.IME_ACTION_SEND && mNewQuestion.getText().length() > 0)
+                {
+                    String tokenID = LoginManager.getInstance(getActivity()).getTokenId();
+                    long activityID = getArguments().getLong(ARGS_ACTIVITY_ID);
+
+                    sendQuestion(tokenID, activityID);
+                }
+                return false;
+            }
         });
         mSendQuestion.setEnabled(mNewQuestion.getText().length() > 0);
         mSendQuestion.setOnClickListener(this);
@@ -180,7 +195,14 @@ public class EventActivityQuestionsFragment extends Fragment implements LoaderCa
         // Null check
         if (view != null)
         {
-            ((ViewAnimator) view.findViewById(R.id.viewAnimator)).setDisplayedChild(shown ? Utils.VIEW_ANIMATOR_CONTENT : Utils.VIEW_ANIMATOR_LOADING);
+            ((ViewAnimator) view.findViewById(R.id.viewAnimator))
+                .setDisplayedChild(
+                    shown ?
+                        (mAdapter.isEmpty() ?
+                            Utils.VIEW_ANIMATOR_MESSAGE :
+                            Utils.VIEW_ANIMATOR_CONTENT) :
+                        Utils.VIEW_ANIMATOR_LOADING
+                );
         }
     }
 
@@ -200,20 +222,7 @@ public class EventActivityQuestionsFragment extends Fragment implements LoaderCa
         switch (v.getId())
         {
         case R.id.question_sendQuestion:
-            try
-            {
-                // Create the connection
-                HttpURLConnection connection = Activity.Api.sendQuestion(tokenID, activityID);
-                String post = Activity.Api.Post.sendQuestion(mNewQuestion.getText().toString().trim());
-
-                // Send the api request
-                ApiRequest.getJsonFromConnection(ApiRequestCode.ACTIVITY_SEND_QUESTION, connection, this, post);
-            }
-            catch (IOException e)
-            {
-                Log.e(InEvent.NAME, "Error creating connection for " +
-                        "activity.sendQuestion(tokenID, activityID="+activityID+", question="+mNewQuestion.getText()+")", e);
-            }
+            sendQuestion(tokenID, activityID);
             break;
 
         case R.id.question_votes:
@@ -236,6 +245,24 @@ public class EventActivityQuestionsFragment extends Fragment implements LoaderCa
         }
     }
 
+    private void sendQuestion(String tokenID, long activityID)
+    {
+        try
+        {
+            // Create the connection
+            HttpURLConnection connection = Activity.Api.sendQuestion(tokenID, activityID);
+            String post = Activity.Api.Post.sendQuestion(mNewQuestion.getText().toString().trim());
+
+            // Send the api request
+            ApiRequest.getJsonFromConnection(ApiRequestCode.ACTIVITY_SEND_QUESTION, connection, this, post);
+        }
+        catch (IOException e)
+        {
+            Log.e(InEvent.NAME, "Error creating connection for " +
+                    "activity.sendQuestion(tokenID, activityID="+activityID+", question="+mNewQuestion.getText()+")", e);
+        }
+    }
+
 
     @Override
     public void handleResponse(int requestCode, JSONObject json, int responseCode)
@@ -245,6 +272,8 @@ public class EventActivityQuestionsFragment extends Fragment implements LoaderCa
             switch (requestCode)
             {
             case ApiRequestCode.ACTIVITY_SEND_QUESTION:
+                // Clear the text field
+                mNewQuestion.setText("");
             case ApiRequestCode.ACTIVITY_UPVOTE_QUESTION:
                 // refresh the question list
                 refresh();
@@ -352,7 +381,7 @@ public class EventActivityQuestionsFragment extends Fragment implements LoaderCa
     
                 // Vote image
                 int image = (voted ? R.drawable.ic_question_upvote_voted : R.drawable.ic_question_upvote_normal);
-                voteView.setCompoundDrawables(null, getResources().getDrawable(image), null, null);
+                voteView.setCompoundDrawablesWithIntrinsicBounds(0, image, 0, 0);
 
                 // Add the id to it
                 voteView.setTag(getItemId(c.getPosition()));

@@ -71,7 +71,7 @@ public class EventDetailDialogFragment extends DialogFragment implements LoaderC
         View view = inflater.inflate(R.layout.fragment_event_detail, container, false);
 //        if (!getResources().getBoolean(R.bool.useDialogs))
 //        {
-            view.setBackgroundResource(android.R.color.background_light);
+            view.setBackgroundResource(R.color.app_windownBackground);
 //        }
         mViewAnimator = (ViewAnimator) view.findViewById(R.id.event_detail_container);
         return view;
