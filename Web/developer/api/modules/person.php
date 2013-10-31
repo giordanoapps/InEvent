@@ -38,69 +38,74 @@
 				$email = $userProfile['emailAddress'];
 				$image = $userProfile['pictureUrl'];
 
-				// We now see if the current member has a profile with us
-				$result = resourceForQuery(
-					"SELECT
-						`member`.`id`,
-						`member`.`name`,
-						`member`.`linkedInID`,
-						COALESCE(`memberSessions`.`sessionKey`, '') AS `sessionKey`
-					FROM
-						`member`
-					LEFT JOIN
-						`memberSessions` ON `memberSessions`.`memberID` = `member`.`id`
-					WHERE 0
-						OR `member`.`linkedInID` = '$linkedInID'
-						OR BINARY `member`.`email` = '$email'
-					ORDER BY
-						`memberSessions`.`id` DESC
-				");
+				if (!empty($linkedInID) && !empty($name) && !empty($email) && !empty($image)) {
+					// We now see if the current member has a profile with us
+					$result = resourceForQuery(
+						"SELECT
+							`member`.`id`,
+							`member`.`name`,
+							`member`.`linkedInID`,
+							COALESCE(`memberSessions`.`sessionKey`, '') AS `sessionKey`
+						FROM
+							`member`
+						LEFT JOIN
+							`memberSessions` ON `memberSessions`.`memberID` = `member`.`id`
+						WHERE 0
+							OR `member`.`linkedInID` = '$linkedInID'
+							OR BINARY `member`.`email` = '$email'
+						ORDER BY
+							`memberSessions`.`id` DESC
+					");
 
-				// Member already has a profile with us
-				if (mysql_num_rows($result) > 0) {
+					// Member already has a profile with us
+					if (mysql_num_rows($result) > 0) {
 
-					$memberID = mysql_result($result, 0, "id");
-					$name = mysql_result($result, 0, "name");
-					$tokenID = mysql_result($result, 0, "sessionKey");
-					$savedSocialID = mysql_result($result, 0, "linkedInID");
+						$memberID = mysql_result($result, 0, "id");
+						$name = mysql_result($result, 0, "name");
+						$tokenID = mysql_result($result, 0, "sessionKey");
+						$savedSocialID = mysql_result($result, 0, "linkedInID");
 
-					// Update the facebook token if necessary
-					if (empty($savedSocialID)) {
-						$update = resourceForQuery(
-							"UPDATE
-								`member`
-							SET
-								`member`.`image` = '$image',
-								`member`.`linkedInID` = '$linkedInID'
-							WHERE 1
-								AND `member`.`id` = $memberID
-						");
-					}
+						// Update the facebook token if necessary
+						if (empty($savedSocialID)) {
+							$update = resourceForQuery(
+								"UPDATE
+									`member`
+								SET
+									`member`.`image` = '$image',
+									`member`.`linkedInID` = '$linkedInID'
+								WHERE 1
+									AND `member`.`id` = $memberID
+							");
+						}
 
-					// Get the member details and events
-					$details = getMemberDetails($memberID);
-					$events = getMemberEvents($memberID);
+						// Get the member details and events
+						$details = getMemberDetails($memberID);
+						$events = getMemberEvents($memberID);
 
-					// Return some information
-					$details["data"][0]["events"] = $events["data"];
-					$details["data"][0]["tokenID"] = $tokenID;
+						// Return some information
+						$details["data"][0]["events"] = $events["data"];
+						$details["data"][0]["tokenID"] = $tokenID;
 
-					echo json_encode($details["data"][0]);
+						echo json_encode($details["data"][0]);
 
-				} else {
-
-					// Create a random password for the newly created member
-					$password = "123456";
-					// Create the member
-					$memberID = createMember(array("name" => $name, "password" => $password, "email" => $email, "linkedInID" => $linkedInID));
-
-					if ($memberID != 0) {
-						// Return the desired data
-						$data = processLogIn($email, $password);
-						echo json_encode($data);
 					} else {
-						http_status_code(500);
+
+						// Create a random password for the newly created member
+						$password = "123456";
+						// Create the member
+						$memberID = createMember(array("name" => $name, "password" => $password, "email" => $email, "linkedInID" => $linkedInID));
+
+						if ($memberID != 0) {
+							// Return the desired data
+							$data = processLogIn($email, $password);
+							echo json_encode($data);
+						} else {
+							http_status_code(500);
+						}
 					}
+				} else {
+					// No user, return a non authenticated code
+					http_status_code(400, "linkedInID, name, email and image are required parameters");
 				}
 			} else {
 				// No user, return a non authenticated code
@@ -117,19 +122,15 @@
 		if (isset($_GET["facebookToken"])) {
 
 			$facebookToken = getAttribute($_GET["facebookToken"]);
-
 			$facebook->setAccessToken($facebookToken);
-			$userID = $facebook->getUser();
 
-			if ($userID) {
-				// We have a user ID, so probably a logged in user.
-				// If not, we'll get an exception, which we handle below.
-				try {
-					$userProfile = $facebook->api('/me?fields=name,email', 'GET');
-					$facebookID = $userProfile['id'];
-					$name = $userProfile['name'];
-					$email = $userProfile['email'];
+			try {
+				$userProfile = $facebook->api('/me', 'GET');
+				$facebookID = (isset($userProfile['id'])) ? $userProfile['id'] : 0;
+				$name = (isset($userProfile['name'])) ? $userProfile['name'] : "";
+				$email = (isset($userProfile['email'])) ? $userProfile['email'] : "";
 
+				if (!empty($facebookID) && !empty($name) && !empty($email)) {
 					// We now see if the current member has a profile with us
 					$result = resourceForQuery(
 						"SELECT
@@ -193,16 +194,16 @@
 							http_status_code(500);
 						}
 					}
-				} catch(FacebookApiException $e) {
-					// If the user is logged out, you can have a 
-					// user ID even though the access token is invalid.
-					// In this case, we'll get an exception, so we'll
-					// just ask the user to login again here.
-					http_status_code(503, "facebook error");
+				} else {
+					// No user, return a non authenticated code
+					http_status_code(400, "facebookID, name and email are required parameters");
 				}
-			} else {
-				// No user, return a non authenticated code
-				http_status_code(401, "personID is not authenticated");
+			} catch(FacebookApiException $e) {
+				// If the user is logged out, you can have a 
+				// user ID even though the access token is invalid.
+				// In this case, we'll get an exception, so we'll
+				// just ask the user to login again here.
+				http_status_code(503, "facebook error");
 			}
 		} else {
 			http_status_code(400, "facebookToken is a required parameter");
@@ -289,9 +290,9 @@
 
 				// Save the password for later
 				$password = (isset($_REQUEST["password"])) ? getAttribute($_REQUEST["password"]) : "123456";
-
+				
 				// Create the member
-				$memberID = createMember($_REQUEST);
+				$memberID = createMember(array_map("getEmptyAttribute", $_REQUEST));
 
 				if ($memberID != 0) {
 					// Return the desired data

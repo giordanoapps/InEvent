@@ -195,10 +195,13 @@
                  
              } else if (session.state == FBSessionStateClosedLoginFailed) {
                  // Session is closed
-                 AlertView *alertView = [[AlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"Facebook couldn't log you in! Try again?", nil) delegate:self cancelButtonTitle:nil otherButtonTitle:NSLocalizedString(@"Ok", nil)];
+                 AlertView *alertView = [[AlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"Are you logged in on Facebook?", nil) delegate:self cancelButtonTitle:nil otherButtonTitle:NSLocalizedString(@"Ok", nil)];
                  [alertView show];
              }
          }];
+    } else {
+        // Notify our servers about the access token
+        [[[InEventPersonAPIController alloc] initWithDelegate:self forcing:YES] signInWithFacebookToken:FBSession.activeSession.accessTokenData.accessToken];
     }
 }
 

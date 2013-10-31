@@ -173,7 +173,6 @@
     UIViewController *viewController = [[UIViewController alloc] init];
     UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     [webView setScalesPageToFit:YES];
-    [webView setHidden:YES];
     [webView loadRequest:[NSURLRequest requestWithURL:url]];
     [viewController.view addSubview:webView];
     

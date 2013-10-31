@@ -9,64 +9,72 @@
 	 */
 	function createMember($details) {
 
-		// Required
-		$name = getAttribute($details["name"]);
-		$email = getAttribute($details["email"]);
+		if (isset($details["name"]) && isset($details["email"])) {
+			// Required
+			$name = $details["name"];
+			$email = $details["email"];
 
-		// Optional
-		$password = (isset($details["password"])) ? getAttribute($details["password"]) : "123456";
-		$hash = Bcrypt::hash($password);
-		$cpf = (isset($details["cpf"])) ? getEmptyAttribute($details["cpf"]) : "";
-		$rg = (isset($details["rg"])) ? getEmptyAttribute($details["rg"]) : "";
-		$city = (isset($details["city"])) ? getEmptyAttribute($details["city"]) : "";
-		$university = (isset($details["university"])) ? getEmptyAttribute($details["university"]) : "";
-		$course = (isset($details["course"])) ? getEmptyAttribute($details["course"]) : "";
-		$telephone = (isset($details["telephone"])) ? getEmptyAttribute($details["telephone"]) : "";
-		$usp = (isset($details["usp"])) ? getEmptyAttribute($details["usp"]) : "";
-		$linkedInID = (isset($details["linkedInID"])) ? getEmptyAttribute($details["linkedInID"]) : "";
-		$facebookID = (isset($details["facebookID"])) ? getEmptyAttribute($details["facebookID"]) : 0;
+			// Optional
+			$password = (isset($details["password"])) ? $details["password"] : "123456";
+			$hash = Bcrypt::hash($password);
+			$cpf = (isset($details["cpf"])) ? $details["cpf"] : "";
+			$rg = (isset($details["rg"])) ? $details["rg"] : "";
+			$city = (isset($details["city"])) ? $details["city"] : "";
+			$university = (isset($details["university"])) ? $details["university"] : "";
+			$course = (isset($details["course"])) ? $details["course"] : "";
+			$telephone = (isset($details["telephone"])) ? $details["telephone"] : "";
+			$usp = (isset($details["usp"])) ? $details["usp"] : "";
+			$linkedInID = (isset($details["linkedInID"])) ? $details["linkedInID"] : "";
+			$facebookID = (isset($details["facebookID"])) ? $details["facebookID"] : 0;
 
-		// Insert the person 
-		$insert = resourceForQuery(
-			"INSERT INTO
-				`member`
-				(
-					`name`,
-					`password`,
-					`cpf`,
-					`rg`,
-					`usp`,
-					`telephone`,
-					`city`,
-					`email`,
-					`university`,
-					`course`,
-					`facebookID`,
-					`linkedInID`
-				)
-			VALUES 
-				(
-					'$name',
-					'$hash',
-					'$cpf',
-					'$rg',
-					'$usp',
-					'$telephone',
-					'$city',
-					'$email',
-					'$university',
-					'$course',
-					$facebookID,
-					'$linkedInID'
-				)
-		");
+			// Insert the person 
+			$insert = resourceForQuery(
+				"INSERT INTO
+					`member`
+					(
+						`name`,
+						`password`,
+						`cpf`,
+						`rg`,
+						`usp`,
+						`telephone`,
+						`city`,
+						`email`,
+						`university`,
+						`course`,
+						`facebookID`,
+						`linkedInID`
+					)
+				VALUES 
+					(
+						'$name',
+						'$hash',
+						'$cpf',
+						'$rg',
+						'$usp',
+						'$telephone',
+						'$city',
+						'$email',
+						'$university',
+						'$course',
+						$facebookID,
+						'$linkedInID'
+					)
+			");
 
-		$memberID = mysql_insert_id();
+			$memberID = mysql_insert_id();
 
-		// Send an email
-		sendEnrollmentEmail($name, $password, $email);
+			// Make the first login
+			processLogIn($email, $password);
 
-		return $memberID;
+			// Send an email
+			sendEnrollmentEmail($name, $password, $email);
+
+			return $memberID;
+
+		} else {
+			http_status_code(400, "name and email are required parameters");
+		}
 	}
 
 	/**

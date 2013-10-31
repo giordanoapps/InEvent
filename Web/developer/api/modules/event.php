@@ -170,21 +170,9 @@
 				$email = getAttribute($_GET['email']);
 				$password = "123456";
 
-				$result = resourceForQuery(
-					"SELECT
-						`member`.`id`
-					FROM
-						`member`
-					WHERE 1
-						AND BINARY `member`.`email` = '$email'
-				");
-
-				if (mysql_num_rows($result) > 0) {
-					$personID = mysql_result($result, 0, "id");
-				} else {
-					$personID = createMember(array("name" => $name, "password" => $password, "email" => $email));
-					$data = processLogIn($email, $password);
-				}
+				// Get the person for the given email
+				$personID = getPersonForEmail($email);
+				if ($personID == 0) $personID = createMember(array("name" => $name, "password" => $password, "email" => $email));
 
 			} else {
 				http_status_code(401, "Person doesn't work at event");

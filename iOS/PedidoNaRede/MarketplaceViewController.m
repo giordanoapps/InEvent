@@ -76,6 +76,11 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+    // Reload data to calculate the right frame
+    [self.tableView reloadData];
+}
+
 #pragma mark - Notification
 
 - (void)loadData {
