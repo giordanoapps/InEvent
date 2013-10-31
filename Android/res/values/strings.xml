@@ -17,6 +17,7 @@
     <string name="action_event_enroll">Enroll</string>
     <string name="action_eventActivity_enroll">Enroll</string>
     <string name="action_eventActivity_managePeople">Manage People</string>
+    <string name="action_eventActivity_questions">Questions</string>
     <string name="action_eventActivity_unenroll">Unenroll</string>
     <string name="action_location">Location</string>
     <string name="action_login">Login</string>
@@ -70,6 +71,7 @@
     <string name="hint_event_state">State</string>
     <string name="hint_eventActivity_name">Name</string>
     <string name="hint_eventActivity_time">Time</string>
+    <string name="hint_eventActivityQuestion_new">New question</string>
     <string name="hint_search">Search</string>
 
     <!-- Messages -->
@@ -77,6 +79,7 @@
     <string name="message_about_inEvent"><b>InEvent</b>, powered by</string>
     <string name="message_attender_absent">Absent</string>
     <string name="message_attender_present">Present</string>
+    <string name="message_event_notEnrolled">You are not approved in this event</string>
     <string name="message_loginNecessary">Login first</string>
 
     <!-- Loading Messages -->
@@ -89,6 +92,7 @@
     <string name="empty_eventActivities">Event activities will be shown here</string>
     <string name="empty_eventActivityAttenders">People enrolled for this activity will be displayed here</string>
     <string name="empty_eventActivityDescription">No description</string>
+    <string name="empty_eventActivityQuestions">No questions</string>
     <string name="empty_eventList">Events will be displayed here</string>
 
     <!-- Preferences -->
@@ -104,6 +108,8 @@
     <string name="description_event_cover">Event cover picture</string>
     <string name="description_event_info">Extra information about the event</string>
     <string name="description_preference_useMobileNetwork">Allow use of the mobile network to download data</string>
+    <string name="description_question_send">Send question</string>
+    <string name="description_question_upvote">Upvote this question</string>
     <string name="description_slidingMenu_close">Close sliding menu</string>
     <string name="description_slidingMenu_open">Open sliding menu</string>
 

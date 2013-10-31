@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         tools:ignore="UselessParent" >
 
-        <include layout="@layout/cell_loading" />
+        <!-- <include layout="@layout/cell_loading" /> -->
 
         <ScrollView
             android:layout_width="match_parent"

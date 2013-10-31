@@ -45,7 +45,7 @@ public class Activity
                 return String.format(Locale.ENGLISH, SEND_OPINION, rating);
             }
 
-            public static String sendOpinion(String question)
+            public static String sendQuestion(String question)
             {
                 return String.format(Locale.ENGLISH, SEND_QUESTION, question);
             }
@@ -273,6 +273,11 @@ public class Activity
     public static final String PATH     = "activity";
     public static final Uri CONTENT_URI = Uri.withAppendedPath(InEventProvider.CONTENT_URI, PATH);
 
+    // Approved state
+    public static final int APPROVED_OK        =  1;
+    public static final int APPROVED_WAIT_LIST =  0;
+    public static final int APPROVED_NOT       = -1;
+
 
     public static ContentValues valuesFromJson(JSONObject json, long eventID)
     {
@@ -292,7 +297,8 @@ public class Activity
         }
         catch (JSONException e)
         {
-            Log.w(InEvent.NAME, "Error retrieving information for Event from json = "+json, e);
+            Log.w(InEvent.NAME, "Error retrieving information for Activity from json = "+json, e);
+            cv = null;
         }
 
         return cv;

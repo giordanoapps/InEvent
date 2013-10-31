@@ -49,12 +49,8 @@ import com.estudiotrilha.inevent.service.DownloaderService;
 import com.estudiotrilha.inevent.service.UploaderService;
 
 
-public class EventActivityDetailActivity extends BaseActivity implements LoaderCallbacks<Cursor>, ResponseHandler
+public class EventActivityDetailActivity extends BaseActivity implements LoaderCallbacks<Cursor>, ResponseHandler, View.OnClickListener
 {
-    private static final int APPROVED_OK        =  1;
-    private static final int APPROVED_WAIT_LIST =  0;
-    private static final int APPROVED_NOT       = -1;
-
     private static final int ACTION_LOADING = 0;
     private static final int ACTION_ENROLL  = 1;
     private static final int ACTION_RATE    = 2;
@@ -108,35 +104,8 @@ public class EventActivityDetailActivity extends BaseActivity implements LoaderC
 
         // Show the Up button in the action bar.
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        findViewById(R.id.activity_ratingContainer).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                DialogFragment dialog = ActivityRatingFragmentDialog.instantiate();
-                dialog.show(getSupportFragmentManager(), null);
-            }
-        });
-        findViewById(R.id.action_eventActivity_enroll).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                if (mLoginManager.isSignedIn())
-                {
-                    if(getIntent().getBooleanExtra(EXTRA_EVENT_APPROVED, false))
-                    {
-                        if (enroll(getIntent().getLongExtra(EXTRA_ACTIVITY_ID, -1)))
-                        {
-                            // Show loading status
-                            ((ViewAnimator) findViewById(R.id.userActions)).setDisplayedChild(ACTION_LOADING);
-                        }
-                    }
-                }
-                else
-                {
-                    // TODO
-                }
-            }
-        });
+        findViewById(R.id.activity_ratingContainer).setOnClickListener(this);
+        findViewById(R.id.action_eventActivity_enroll).setOnClickListener(this);
 
         mTimeFormat = android.text.format.DateFormat.getTimeFormat(this);
     }
@@ -163,14 +132,16 @@ public class EventActivityDetailActivity extends BaseActivity implements LoaderC
         getMenuInflater().inflate(R.menu.activity_event_activity_detail, menu);
         if (mLoginManager.isSignedIn())
         {
+            menu.findItem(R.id.action_eventActivity_questions).setVisible(true);
+
             boolean eventApproval = getIntent().getBooleanExtra(EXTRA_EVENT_APPROVED, false);
             switch (mInfo.approved)
             {
-            case APPROVED_OK:
+            case Activity.APPROVED_OK:
                 menu.findItem(R.id.action_eventActivity_unenroll).setVisible(eventApproval);            
                 break;
 
-            case APPROVED_NOT:
+            case Activity.APPROVED_NOT:
                 menu.findItem(R.id.action_eventActivity_enroll).setVisible(eventApproval);
                 break;
             }
@@ -223,12 +194,58 @@ public class EventActivityDetailActivity extends BaseActivity implements LoaderC
             }
             return true;
 
+        case R.id.action_eventActivity_questions:
+        {
+            EventActivityQuestionsFragment fragment = EventActivityQuestionsFragment.instantiate(activityID, mInfo.approved);
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.mainContent, fragment)
+                    .addToBackStack(null)
+                    .commit();
+            return true;
+        }
+            
         case R.id.action_eventActivity_managePeople:
             // Open up the attendance control
             startActivity(PeopleActivity.newInstance(this, getIntent().getLongExtra(EXTRA_EVENT_ID, -1), activityID));
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+
+    private void setupViewInfo()
+    {
+        ((TextView) findViewById(R.id.activity_name)).setText(mInfo.name);
+        ((TextView) findViewById(R.id.activity_description)).setText(mInfo.description);
+
+        String dateLocation = mTimeFormat.format(mInfo.dateBegin)+" - "+mTimeFormat.format(mInfo.dateEnd)+" "+mInfo.location;
+
+        ((TextView) findViewById(R.id.activity_location)).setText(dateLocation);
+
+        ((RatingBar) findViewById(R.id.activity_rating)).setRating(mInfo.rating);
+        ViewAnimator userActions = (ViewAnimator) findViewById(R.id.userActions);
+
+        int color = 0;
+        switch (mInfo.approved)
+        {
+        case Activity.APPROVED_NOT:
+            color = getResources().getColor(R.color.light_gray);
+            userActions.setDisplayedChild(ACTION_ENROLL);
+            userActions.setVisibility(View.VISIBLE);
+            break;
+
+        case Activity.APPROVED_WAIT_LIST:
+            color = getResources().getColor(R.color.holo_red_dark);
+            userActions.setVisibility(View.GONE);
+            break;
+
+        case Activity.APPROVED_OK:
+            color = getResources().getColor(R.color.holo_green_dark);
+            userActions.setDisplayedChild(ACTION_RATE);
+            userActions.setVisibility(View.VISIBLE);
+            break;
+        }
+        ((TriangleView) findViewById(R.id.activity_approved)).setFillColor(color);
     }
 
 
@@ -267,6 +284,53 @@ public class EventActivityDetailActivity extends BaseActivity implements LoaderC
 
 
     @Override
+    public void onClick(View v)
+    {
+        switch (v.getId())
+        {
+        case R.id.activity_ratingContainer:
+            DialogFragment dialog = ActivityRatingFragmentDialog.instantiate();
+            dialog.show(getSupportFragmentManager(), null);
+            break;
+
+        case R.id.action_eventActivity_enroll:
+        {
+            if (mLoginManager.isSignedIn())
+            {
+                if(getIntent().getBooleanExtra(EXTRA_EVENT_APPROVED, false))
+                {
+                    if (enroll(getIntent().getLongExtra(EXTRA_ACTIVITY_ID, -1)))
+                    {
+                        // Show loading status
+                        ((ViewAnimator) findViewById(R.id.userActions)).setDisplayedChild(ACTION_LOADING);
+                    }
+                    else
+                    {
+                        // This shouldn't happen!
+                        showToast(R.string.error_internal);
+                    }
+                }
+                else
+                {
+                    // Not approved in the event
+                    showToast(R.string.message_event_notEnrolled);
+                }
+            }
+            else
+            {
+                // Can't enroll if not logged in
+                showToast(R.string.message_loginNecessary);
+            }
+            break;
+        }
+
+        default:
+            break;
+        }
+    }
+
+
+    @Override
     public Loader<Cursor> onCreateLoader(int code, Bundle args)
     {
         Uri uri = ContentUris.withAppendedId(Activity.CONTENT_URI, getIntent().getLongExtra(EXTRA_ACTIVITY_ID, -1));
@@ -298,40 +362,6 @@ public class EventActivityDetailActivity extends BaseActivity implements LoaderC
         supportInvalidateOptionsMenu();
 
         container.setDisplayedChild(Utils.VIEW_ANIMATOR_CONTENT);
-    }
-    private void setupViewInfo()
-    {
-        ((TextView) findViewById(R.id.activity_name)).setText(mInfo.name);
-        ((TextView) findViewById(R.id.activity_description)).setText(mInfo.description);
-
-        String dateLocation = mTimeFormat.format(mInfo.dateBegin)+" - "+mTimeFormat.format(mInfo.dateEnd)+" "+mInfo.location;
-
-        ((TextView) findViewById(R.id.activity_location)).setText(dateLocation);
-
-        ((RatingBar) findViewById(R.id.activity_rating)).setRating(mInfo.rating);
-        ViewAnimator userActions = (ViewAnimator) findViewById(R.id.userActions);
-
-        int color = 0;
-        switch (mInfo.approved)
-        {
-        case APPROVED_NOT:
-            color = getResources().getColor(R.color.light_gray);
-            userActions.setDisplayedChild(ACTION_ENROLL);
-            userActions.setVisibility(View.VISIBLE);
-            break;
-
-        case APPROVED_WAIT_LIST:
-            color = getResources().getColor(R.color.holo_red_dark);
-            userActions.setVisibility(View.GONE);
-            break;
-
-        case APPROVED_OK:
-            color = getResources().getColor(R.color.holo_green_dark);
-            userActions.setDisplayedChild(ACTION_RATE);
-            userActions.setVisibility(View.VISIBLE);
-            break;
-        }
-        ((TriangleView) findViewById(R.id.activity_approved)).setFillColor(color);
     }
     @Override public void onLoaderReset(Loader<Cursor> loader) {}
 

@@ -81,6 +81,27 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <!-- Make the app open the InEvent web link -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="inevent.us"
+                    android:scheme="http" />
+            </intent-filter>
+
+            <!-- Make the app open the InEvent scheme -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="inevent" />
+            </intent-filter>
         </activity>
 
         <!-- Settings -->
@@ -117,7 +138,9 @@
         <activity android:name="com.estudiotrilha.inevent.app.EventInfoActivity" />
 
         <!-- Event Activity Detail -->
-        <activity android:name="com.estudiotrilha.inevent.app.EventActivityDetailActivity" />
+        <activity
+            android:name="com.estudiotrilha.inevent.app.EventActivityDetailActivity"
+            android:uiOptions="splitActionBarWhenNarrow" />
 
         <!-- People -->
         <activity android:name="com.estudiotrilha.inevent.app.PeopleActivity" />

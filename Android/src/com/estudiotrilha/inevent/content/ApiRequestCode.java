@@ -18,4 +18,7 @@ public interface ApiRequestCode
     public static final int ACTIVITY_REVOKE_ENTRANCE     = 23;
     public static final int ACTIVITY_SEND_OPINION        = 24;
     public static final int ACTIVITY_GET_OPINION         = 25;
+    public static final int ACTIVITY_SEND_QUESTION       = 26;
+    public static final int ACTIVITY_GET_QUESTIONS       = 27;
+    public static final int ACTIVITY_UPVOTE_QUESTION     = 28;
 }

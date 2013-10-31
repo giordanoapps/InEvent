@@ -6,7 +6,6 @@ import java.net.HttpURLConnection;
 import org.apache.http.HttpStatus;
 import org.json.JSONObject;
 
-import android.R.color;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;

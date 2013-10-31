@@ -9,4 +9,6 @@ public class InEvent
 
     public static final String ACTION_TOAST_NOTIFICATION = InEvent.class.getPackage().getName()+".action.TOAST_NOTIFICATION";
     public static final String EXTRA_TOAST_MESSAGE       = InEvent.class.getPackage().getName()+".extra.TOAST_MESSAGE";
+
+    public static final String SCHEME_IN_EVENT = "inevent";
 }

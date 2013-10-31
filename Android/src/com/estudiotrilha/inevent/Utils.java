@@ -24,7 +24,7 @@ public class Utils
     public static final short VIEW_ANIMATOR_MESSAGE = 2;
     public static final short VIEW_ANIMATOR_ERROR   = 3;
 
-    public static final int MAX_DOWNLOAD_ATTEMPTS = 5;
+    public static final int MAX_DOWNLOAD_ATTEMPTS = 3;
 
 
     public static boolean checkConnectivity(Context c)

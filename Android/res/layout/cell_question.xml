@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="48dp"
+    android:orientation="horizontal" >
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:minHeight="48dp"
+        android:orientation="vertical"
+        android:padding="@dimen/default_textPadding" >
+
+        <TextView
+            android:id="@+id/question_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:id="@+id/question_owner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#6000"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <View style="@style/Divider.Vertical" />
+
+    <TextView
+        android:id="@+id/question_votes"
+        android:layout_width="48dp"
+        android:layout_height="match_parent"
+        android:background="@drawable/abc_item_background_holo_light"
+        android:contentDescription="@string/description_question_upvote"
+        android:drawablePadding="-10dp"
+        android:drawableTop="@drawable/ic_question_upvote_normal"
+        android:gravity="center_horizontal"
+        android:textSize="14sp" />
+
+</LinearLayout>

@@ -47,6 +47,7 @@ public class EventMember
         catch (JSONException e)
         {
             Log.w(InEvent.NAME, "Error retrieving information for Event from json = "+json, e);
+            cv = null;
         }
 
         return cv;
@@ -65,6 +66,7 @@ public class EventMember
         catch (JSONException e)
         {
             Log.w(InEvent.NAME, "Error retrieving information for Event from json = "+json, e);
+            cv = null;
         }
 
         return cv;

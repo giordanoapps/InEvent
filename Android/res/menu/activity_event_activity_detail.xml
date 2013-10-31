@@ -4,29 +4,35 @@
 
     <item
         android:id="@+id/action_eventActivity_enroll"
+        android:orderInCategory="5"
         android:title="@string/action_eventActivity_enroll"
         android:visible="false"
-        android:orderInCategory="5"
         trilha:showAsAction="never"/>
-
     <item
         android:id="@+id/action_eventActivity_unenroll"
+        android:orderInCategory="5"
         android:title="@string/action_eventActivity_unenroll"
         android:visible="false"
-        android:orderInCategory="5"
         trilha:showAsAction="never"/>
-
     <item
         android:id="@+id/action_eventActivity_managePeople"
+        android:icon="@drawable/ic_action_manage_people"
+        android:orderInCategory="8"
         android:title="@string/action_eventActivity_managePeople"
         android:visible="false"
-        android:orderInCategory="8"
-        trilha:showAsAction="never"/>
-
-
-    <item android:id="@+id/action_location"
-        android:title="@string/action_location"
-        android:icon="@drawable/ic_action_location_place"
-        android:orderInCategory="10"
         trilha:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/action_location"
+        android:icon="@drawable/ic_action_location_place"
+        android:orderInCategory="1"
+        android:title="@string/action_location"
+        trilha:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/action_eventActivity_questions"
+        android:icon="@drawable/ic_action_questions"
+        android:orderInCategory="3"
+        android:title="@string/action_eventActivity_questions"
+        android:visible="false"
+        trilha:showAsAction="ifRoom"/>
+
 </menu>

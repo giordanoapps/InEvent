@@ -28,6 +28,7 @@ import com.estudiotrilha.inevent.R;
 import com.estudiotrilha.inevent.Utils;
 import com.estudiotrilha.inevent.content.Activity;
 import com.estudiotrilha.inevent.content.ActivityMember;
+import com.estudiotrilha.inevent.content.ActivityQuestion;
 import com.estudiotrilha.inevent.content.ApiRequest;
 import com.estudiotrilha.inevent.content.Event;
 import com.estudiotrilha.inevent.content.EventMember;
@@ -81,6 +82,13 @@ public class DownloaderService extends IntentService implements ApiRequest.Respo
         Intent service = new Intent(c, DownloaderService.class);
         service.setData(Feedback.CONTENT_URI);
         service.putExtra(EXTRA_EVENT_ID, eventId);
+        c.startService(service);
+    }
+    public static void downloadEventActivityQuestions(Context c, long activityId)
+    {
+        Intent service = new Intent(c, DownloaderService.class);
+        service.setData(ActivityQuestion.CONTENT_URI);
+        service.putExtra(EXTRA_ACTIVITY_ID, activityId);
         c.startService(service);
     }
     public static void downloadEventActivityAttenders(Context c, long eventId, long activityId)
@@ -206,6 +214,19 @@ public class DownloaderService extends IntentService implements ApiRequest.Respo
                     connection = Event.Api.getOpinion(tokenID, id);
                 }
     
+                break;
+            }
+
+            case InEventProvider.URI_QUESTION:
+            {
+                // Download the event activity attenders list
+                syncMessage = "Syncing Questions";
+                apiMethodName = "activity.getQuestions(tokenID, activityID)";
+    
+                // Prepare the connection
+                String tokenID = mLoginManager.getTokenId();
+                long activityID = intent.getLongExtra(EXTRA_ACTIVITY_ID, -1);
+                connection = Activity.Api.getQuestions(tokenID, activityID);
                 break;
             }
 
@@ -497,6 +518,40 @@ public class DownloaderService extends IntentService implements ApiRequest.Respo
                     break;
                 }
 
+                case InEventProvider.URI_QUESTION:
+                {
+                    // Get some info
+                    long activityID = mIntent.getLongExtra(EXTRA_ACTIVITY_ID, -1);
+
+                    // Delete the previous stored activity questions
+                    deletes.add(
+                        ContentProviderOperation
+                            .newDelete(ActivityQuestion.CONTENT_URI)
+                            .withSelection(ActivityQuestion.Columns.ACTIVITY_ID_FULL+"="+activityID, null)
+                            .build()
+                    );
+
+                    // Get the new ones
+                    JSONArray questionsArray = json.getJSONArray(JsonUtils.DATA);
+                    for (int i = 0; i < questionsArray.length(); i++)
+                    {
+                        // Parse the json
+                        JSONObject jobj = questionsArray.getJSONObject(i);
+                        ContentValues values = ActivityQuestion.valuesFromJson(jobj, activityID);
+
+                        // Add the insert operation
+                        inserts.add(
+                            ContentProviderOperation
+                                .newInsert(ActivityQuestion.CONTENT_URI)
+                                .withValues(values)
+                                .build()
+                        );
+                    }
+
+                    allDoneLogMessage = "All questions from activity id="+activityID+" were downloaded successfully!";
+                    break;
+                }
+
                 default:
                     break;
                 }
@@ -517,8 +572,7 @@ public class DownloaderService extends IntentService implements ApiRequest.Respo
             }
             catch (JSONException e)
             {
-                Log.w(InEvent.NAME, "Couldn't properly parse the json = "+ json);
-                e.printStackTrace();
+                Log.w(InEvent.NAME, "Couldn't properly parse the json = "+ json, e);
             }
             catch (RemoteException e)
             {

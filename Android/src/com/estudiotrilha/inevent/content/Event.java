@@ -7,9 +7,13 @@ import static com.estudiotrilha.inevent.content.Event.Columns.ADDRESS;
 import static com.estudiotrilha.inevent.content.Event.Columns.CITY;
 import static com.estudiotrilha.inevent.content.Event.Columns.COVER;
 import static com.estudiotrilha.inevent.content.Event.Columns.DESCRIPTION;
+import static com.estudiotrilha.inevent.content.Event.Columns.ENROLLMENT_BEGIN;
+import static com.estudiotrilha.inevent.content.Event.Columns.ENROLLMENT_END;
 import static com.estudiotrilha.inevent.content.Event.Columns.LATITUDE;
 import static com.estudiotrilha.inevent.content.Event.Columns.LONGITUDE;
 import static com.estudiotrilha.inevent.content.Event.Columns.NAME;
+import static com.estudiotrilha.inevent.content.Event.Columns.NICKNAME;
+import static com.estudiotrilha.inevent.content.Event.Columns.ORGANIZATION;
 import static com.estudiotrilha.inevent.content.Event.Columns.STATE;
 
 import java.io.IOException;
@@ -180,28 +184,36 @@ public class Event
     public static final String TABLE_NAME = "event";
     public static interface Columns extends BaseColumns
     {
-        public static final String NAME        = "name";
-        public static final String COVER       = "cover";
-        public static final String DESCRIPTION = "description";
-        public static final String DATE_BEGIN  = "dateBegin";
-        public static final String DATE_END    = "dateEnd";
-        public static final String LATITUDE    = "latitude";
-        public static final String LONGITUDE   = "longitude";
-        public static final String ADDRESS     = "address";
-        public static final String CITY        = "city";
-        public static final String STATE       = "state";
+        public static final String NAME             = "name";
+        public static final String COVER            = "cover";
+        public static final String NICKNAME         = "nickname";
+        public static final String DESCRIPTION      = "description";
+        public static final String DATE_BEGIN       = "dateBegin";
+        public static final String DATE_END         = "dateEnd";
+        public static final String ENROLLMENT_BEGIN = "enrollmentBegin";
+        public static final String ENROLLMENT_END   = "enrollmentEnd";
+        public static final String LATITUDE         = "latitude";
+        public static final String LONGITUDE        = "longitude";
+        public static final String ADDRESS          = "address";
+        public static final String CITY             = "city";
+        public static final String STATE            = "state";
+        public static final String ORGANIZATION     = "fugleman";
         // Full names
-        public static final String _ID_FULL         = TABLE_NAME+"."+_ID;
-        public static final String NAME_FULL        = TABLE_NAME+"."+NAME;
-        public static final String COVER_FULL       = TABLE_NAME+"."+COVER;
-        public static final String DESCRIPTION_FULL = TABLE_NAME+"."+DESCRIPTION;
-        public static final String DATE_BEGIN_FULL  = TABLE_NAME+"."+DATE_BEGIN;
-        public static final String DATE_END_FULL    = TABLE_NAME+"."+DATE_END;
-        public static final String LATITUDE_FULL    = TABLE_NAME+"."+LATITUDE;
-        public static final String LONGITUDE_FULL   = TABLE_NAME+"."+LONGITUDE;
-        public static final String ADDRESS_FULL     = TABLE_NAME+"."+ADDRESS;
-        public static final String CITY_FULL        = TABLE_NAME+"."+CITY;
-        public static final String STATE_FULL       = TABLE_NAME+"."+STATE;
+        public static final String _ID_FULL              = TABLE_NAME+"."+_ID;
+        public static final String NAME_FULL             = TABLE_NAME+"."+NAME;
+        public static final String COVER_FULL            = TABLE_NAME+"."+COVER;
+        public static final String NICKNAME_FULL         = TABLE_NAME+"."+NICKNAME;
+        public static final String DESCRIPTION_FULL      = TABLE_NAME+"."+DESCRIPTION;
+        public static final String DATE_BEGIN_FULL       = TABLE_NAME+"."+DATE_BEGIN;
+        public static final String DATE_END_FULL         = TABLE_NAME+"."+DATE_END;
+        public static final String ENROLLMENT_BEGIN_FULL = TABLE_NAME+"."+ENROLLMENT_BEGIN;
+        public static final String ENROLLMENT_END_FULL   = TABLE_NAME+"."+ENROLLMENT_END;
+        public static final String LATITUDE_FULL         = TABLE_NAME+"."+LATITUDE;
+        public static final String LONGITUDE_FULL        = TABLE_NAME+"."+LONGITUDE;
+        public static final String ADDRESS_FULL          = TABLE_NAME+"."+ADDRESS;
+        public static final String CITY_FULL             = TABLE_NAME+"."+CITY;
+        public static final String STATE_FULL            = TABLE_NAME+"."+STATE;
+        public static final String ORGANIZATION_FULL     = TABLE_NAME+"."+ORGANIZATION;
 
 
         // Projections
@@ -211,6 +223,8 @@ public class Event
             Event.Columns.DESCRIPTION_FULL,
             Event.Columns.DATE_BEGIN_FULL,
             Event.Columns.DATE_END_FULL,
+            Event.Columns.ENROLLMENT_BEGIN_FULL,
+            Event.Columns.ENROLLMENT_END_FULL,
             Event.Columns.CITY_FULL,
             Event.Columns.STATE_FULL,
             EventMember.Columns.APPROVED_FULL
@@ -220,7 +234,10 @@ public class Event
             Event.Columns.NAME_FULL,
             Event.Columns.COVER_FULL,
             Event.Columns.DESCRIPTION_FULL,
+            Event.Columns.ORGANIZATION_FULL,
             Event.Columns.DATE_BEGIN_FULL,
+            Event.Columns.ENROLLMENT_BEGIN_FULL,
+            Event.Columns.ENROLLMENT_END_FULL,
             Event.Columns.LATITUDE_FULL,
             Event.Columns.LONGITUDE_FULL,
             Event.Columns.ADDRESS_FULL
@@ -248,18 +265,23 @@ public class Event
             cv.put(_ID, json.getLong(JsonUtils.ID));
             cv.put(NAME, Html.fromHtml(json.getString(NAME)).toString());
             cv.put(COVER, Html.fromHtml(json.getString(COVER)).toString());
+            cv.put(NICKNAME, Html.fromHtml(json.getString(NICKNAME)).toString());
             cv.put(DESCRIPTION, Html.fromHtml(json.getString(DESCRIPTION)).toString());
             cv.put(DATE_BEGIN, json.getLong(DATE_BEGIN));
             cv.put(DATE_END, json.getLong(DATE_END));
+            cv.put(ENROLLMENT_BEGIN, json.getLong(ENROLLMENT_BEGIN));
+            cv.put(ENROLLMENT_END, json.getLong(ENROLLMENT_END));
             cv.put(LATITUDE, json.getDouble(LATITUDE));
             cv.put(LONGITUDE, json.getDouble(LONGITUDE));
             cv.put(ADDRESS, Html.fromHtml(json.getString(ADDRESS)).toString());
             cv.put(CITY, Html.fromHtml(json.getString(CITY)).toString());
             cv.put(STATE, Html.fromHtml(json.getString(STATE)).toString());
+            cv.put(ORGANIZATION, Html.fromHtml(json.getString(ORGANIZATION)).toString());
         }
         catch (JSONException e)
         {
             Log.w(InEvent.NAME, "Error retrieving information for Event from json = "+json, e);
+            cv = null;
         }
 
         return cv;

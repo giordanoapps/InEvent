@@ -17,6 +17,7 @@
     <string name="action_event_enroll">Se Inscrever</string>
     <string name="action_eventActivity_enroll">Se Inscrever</string>
     <string name="action_eventActivity_managePeople">Gerenciar Pessoas</string>
+    <string name="action_eventActivity_questions">Perguntas</string>
     <string name="action_eventActivity_unenroll">Sair da atividade</string>
     <string name="action_location">Local</string>
     <string name="action_login">Fazer Login</string>
@@ -70,6 +71,7 @@
     <string name="hint_event_state">Estado</string>
     <string name="hint_eventActivity_name">Nome</string>
     <string name="hint_eventActivity_time">Horário</string>
+    <string name="hint_eventActivityQuestion_new">Nova pergunta</string>
     <string name="hint_search">Procurar</string>
 
     <!-- Messages -->
@@ -77,6 +79,7 @@
     <string name="message_about_inEvent"><b>InEvent</b>, um produto do</string>
     <string name="message_attender_absent">Ausente</string>
     <string name="message_attender_present">Presente</string>
+    <string name="message_event_notEnrolled">Você não está aprovado neste evento</string>
     <string name="message_loginNecessary">Faça o login primeiro</string>
 
     <!-- Loading Messages -->
@@ -89,6 +92,7 @@
     <string name="empty_eventActivities">As atividades do evento serão mostradas aqui</string>
     <string name="empty_eventActivityAttenders">Pessoas cadastradas nesta atividade aparecerão aqui</string>
     <string name="empty_eventActivityDescription">Nenhuma descrição</string>
+    <string name="empty_eventActivityQuestions">Nenhum pergunta ainda</string>
     <string name="empty_eventList">Aqui serão mostrados os eventos</string>
 
     <!-- Preferences -->
@@ -104,6 +108,8 @@
     <string name="description_event_cover">Foto de capa do evento</string>
     <string name="description_event_info">Mais informações sobre o evento</string>
     <string name="description_preference_useMobileNetwork">Permitir o uso da rede de dados móvel para baixar conteúdo</string>
+    <string name="description_question_send">Enviar pergunta</string>
+    <string name="description_question_upvote">Promover a pergunta</string>
     <string name="description_slidingMenu_close">Fechar menu lateral</string>
     <string name="description_slidingMenu_open">Abrir menu lateral</string>
 

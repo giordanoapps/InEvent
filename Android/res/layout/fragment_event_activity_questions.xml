@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_windownBackground"
+    android:orientation="vertical" >
+
+    <ViewAnimator
+        android:id="@id/viewAnimator"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" >
+
+        <include layout="@layout/cell_loading" />
+
+        <ListView
+            android:id="@android:id/list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@android:id/empty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textSize="22sp"
+            android:text="@string/empty_eventActivityQuestions" />
+    </ViewAnimator>
+
+    <View
+        style="@style/Divider.Horizontal"
+        android:layout_margin="0dp" />
+
+    <LinearLayout
+        android:id="@+id/question_sendContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="2dp" >
+
+        <EditText
+            android:id="@+id/question_newQuestion"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="@string/hint_eventActivityQuestion_new"
+            android:imeOptions="actionSend"
+            android:inputType="textCapSentences|textShortMessage"
+            android:padding="@dimen/default_textPadding"
+            android:textSize="18sp" />
+
+        <ImageButton
+            android:id="@+id/question_sendQuestion"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@drawable/abc_item_background_holo_light"
+            android:contentDescription="@string/description_question_send"
+            android:src="@drawable/ic_question_send" />
+    </LinearLayout>
+
+</LinearLayout>

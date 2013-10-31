@@ -67,6 +67,7 @@ public class Feedback
         catch (JSONException e)
         {
             Log.w(InEvent.NAME, "Error retrieving information of Rating from json = "+json, e);
+            cv = null;
         }
 
         return cv;

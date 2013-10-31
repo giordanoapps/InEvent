@@ -169,6 +169,7 @@ public class Member implements Serializable
         catch (JSONException e)
         {
             Log.w(InEvent.NAME, "Error retrieving information for Event from json = "+json, e);
+            cv = null;
         }
 
         return cv;

@@ -24,6 +24,7 @@ import com.estudiotrilha.android.utils.SQLiteUtils;
 import com.estudiotrilha.inevent.InEvent;
 import com.estudiotrilha.inevent.content.Activity;
 import com.estudiotrilha.inevent.content.ActivityMember;
+import com.estudiotrilha.inevent.content.ActivityQuestion;
 import com.estudiotrilha.inevent.content.Event;
 import com.estudiotrilha.inevent.content.EventMember;
 import com.estudiotrilha.inevent.content.LoginManager;
@@ -34,7 +35,7 @@ import com.estudiotrilha.inevent.content.Presence;
 
 public class InEventProvider extends ContentProvider
 {
-    private static final int DATABASE_VERSION = 5;
+    private static final int DATABASE_VERSION = 6;
 
     public final static UriMatcher uriMatcher;
 
@@ -53,6 +54,8 @@ public class InEventProvider extends ContentProvider
     public static final int URI_RATING_SINGLE      = 402;
     public static final int URI_PRESENCE           = 501;
     public static final int URI_PRESENCE_SINGLE    = 502;
+    public static final int URI_QUESTION           = 601;
+    public static final int URI_QUESTION_SINGLE    = 602;
 
     static
     {
@@ -70,6 +73,8 @@ public class InEventProvider extends ContentProvider
         uriMatcher.addURI(AUTHORITY, Feedback.PATH + "/#",          URI_RATING_SINGLE);
         uriMatcher.addURI(AUTHORITY, Presence.PATH,                 URI_PRESENCE);
         uriMatcher.addURI(AUTHORITY, Presence.PATH + "/#",          URI_PRESENCE_SINGLE);
+        uriMatcher.addURI(AUTHORITY, ActivityQuestion.PATH,         URI_QUESTION);
+        uriMatcher.addURI(AUTHORITY, ActivityQuestion.PATH + "/#",  URI_QUESTION_SINGLE);
     }
 
     private DatabaseOpenHelper mDatabaseOpenHelper;
@@ -128,6 +133,12 @@ public class InEventProvider extends ContentProvider
 
         case URI_PRESENCE_SINGLE:
             return ContentResolver.CURSOR_ITEM_BASE_TYPE+ IN_EVENT + Presence.PATH;
+
+        case URI_QUESTION:
+            return ContentResolver.CURSOR_DIR_BASE_TYPE + IN_EVENT + ActivityQuestion.PATH;
+
+        case URI_QUESTION_SINGLE:
+            return ContentResolver.CURSOR_ITEM_BASE_TYPE+ IN_EVENT + ActivityQuestion.PATH;
         }
 
         return null;
@@ -230,7 +241,6 @@ public class InEventProvider extends ContentProvider
                     " INNER JOIN " + Member.TABLE_NAME +
                     " ON " + ActivityMember.Columns.MEMBER_ID_FULL +"="+ Member.Columns._ID_FULL +
                     " WHERE " + selection +
-                    " GROUP BY " + Member.Columns._ID_FULL +
                     " ORDER BY " + sortOrder;
 
             c = mDatabase.rawQuery(query, selectionArgs);
@@ -261,7 +271,29 @@ public class InEventProvider extends ContentProvider
         }
         case URI_PRESENCE:
             c = mDatabase.query(Presence.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
-        break;
+            break;
+
+        case URI_QUESTION:
+        {
+            String project = "*";
+            if (projection != null)
+            {
+                // remove the brackets
+                project = Arrays.toString(projection);
+                project = project.substring(1,project.length()-1);
+            }
+            if (selection == null) selection = "1";
+
+            final String query = "SELECT "+ project +
+                    " FROM " + ActivityQuestion.TABLE_NAME +
+                    " LEFT JOIN " + Member.TABLE_NAME +
+                    " ON " + ActivityQuestion.Columns.MEMBER_ID_FULL +"="+ Member.Columns._ID_FULL +
+                    " WHERE " + selection +
+                    " ORDER BY " + sortOrder;
+
+            c = mDatabase.rawQuery(query, selectionArgs);
+            break;
+        }
 
         default:
             throw new IllegalArgumentException("Unsupported uri: "+uri);
@@ -311,7 +343,11 @@ public class InEventProvider extends ContentProvider
         case URI_PRESENCE:
             answer = mDatabase.insertWithOnConflict(Presence.TABLE_NAME, null, values, SQLiteDatabase.CONFLICT_REPLACE);
             break;
-            
+
+        case URI_QUESTION:
+            answer = mDatabase.insertWithOnConflict(ActivityQuestion.TABLE_NAME, null, values, SQLiteDatabase.CONFLICT_REPLACE);
+            break;
+
         default:
             throw new IllegalArgumentException("Unsupported uri: " + uri);
         }
@@ -454,7 +490,20 @@ public class InEventProvider extends ContentProvider
         }
         case URI_PRESENCE:
             result = mDatabase.delete(Presence.TABLE_NAME, selection, selectionArgs);
-        break;
+            break;
+
+        case URI_QUESTION_SINGLE:
+        {
+            // obtain the id
+            Long id = ContentUris.parseId(uri);
+    
+            // set the selection
+            selection = ActivityQuestion.Columns._ID+"=?";
+            selectionArgs = new String[] {id.toString()};
+        }
+        case URI_QUESTION:
+            result = mDatabase.delete(ActivityQuestion.TABLE_NAME, selection, selectionArgs);
+            break;
 
         default:
             throw new IllegalArgumentException("Unsupported uri: " + uri);
@@ -502,6 +551,7 @@ public class InEventProvider extends ContentProvider
         return results;
     }
 
+
     public static class DatabaseOpenHelper extends SQLiteOpenHelper
     {
         public DatabaseOpenHelper(Context context)
@@ -518,6 +568,7 @@ public class InEventProvider extends ContentProvider
             {
                 createEventTable(db);
                 createActivityTable(db);
+                createQuestionTable(db);
                 createMemberTable(db);
                 createRatingTable(db);
                 createPresenceTable(db);
@@ -574,6 +625,19 @@ public class InEventProvider extends ContentProvider
                 // do the updates for the version 5
                 createPresenceTable(db);
                 Log.i(InEvent.NAME, "Updated database to version 5");
+
+            case 5:
+                // do the updates for the version 6
+                db.execSQL("ALTER TABLE "+Event.TABLE_NAME+
+                        " ADD "+Event.Columns.NICKNAME+" TEXT");
+                db.execSQL("ALTER TABLE "+Event.TABLE_NAME+
+                        " ADD "+Event.Columns.ENROLLMENT_BEGIN+" INTEGER");
+                db.execSQL("ALTER TABLE "+Event.TABLE_NAME+
+                        " ADD "+Event.Columns.ENROLLMENT_END+" INTEGER");
+                db.execSQL("ALTER TABLE "+Event.TABLE_NAME+
+                        " ADD "+Event.Columns.ORGANIZATION+" TEXT");
+                createQuestionTable(db);
+                Log.i(InEvent.NAME, "Updated database to version 6");
             }
         }
 
@@ -585,14 +649,18 @@ public class InEventProvider extends ContentProvider
                     Event.Columns._ID + " INTEGER NOT NULL UNIQUE, " +
                     Event.Columns.NAME + " TEXT NOT NULL, " +
                     Event.Columns.COVER + " TEXT, " +
+                    Event.Columns.NICKNAME + " TEXT, " +
                     Event.Columns.DESCRIPTION + " TEXT, " +
                     Event.Columns.DATE_BEGIN + " INTEGER, " +
                     Event.Columns.DATE_END + " INTEGER, " +
+                    Event.Columns.ENROLLMENT_BEGIN + " INTEGER, " +
+                    Event.Columns.ENROLLMENT_END + " INTEGER, " +
                     Event.Columns.LATITUDE + " REAL, " +
                     Event.Columns.LONGITUDE + " REAL, " +
                     Event.Columns.ADDRESS + " TEXT, " +
                     Event.Columns.CITY + " TEXT, " +
-                    Event.Columns.STATE + " TEXT)"
+                    Event.Columns.STATE + " TEXT" +
+                    Event.Columns.ORGANIZATION + " TEXT)"
             );
 
             Log.i(InEvent.NAME, "Creating " + EventMember.TABLE_NAME + " table");
@@ -629,6 +697,20 @@ public class InEventProvider extends ContentProvider
                     ActivityMember.Columns.MEMBER_ID + SQLiteUtils.FOREIGN_KEY + ", " +
                     ActivityMember.Columns.APPROVED + SQLiteUtils.BOOLEAN + ", " +
                     ActivityMember.Columns.PRESENT + SQLiteUtils.BOOLEAN + ")"
+            );
+        }
+
+        private void createQuestionTable(SQLiteDatabase db)
+        {
+            Log.i(InEvent.NAME, "Creating " + ActivityQuestion.TABLE_NAME + " table");
+
+            db.execSQL("CREATE TABLE " + ActivityQuestion.TABLE_NAME + "(" +
+                    ActivityQuestion.Columns._ID + " INTEGER NOT NULL UNIQUE, " +
+                    ActivityQuestion.Columns.ACTIVITY_ID + " INTEGER NOT NULL, " +
+                    ActivityQuestion.Columns.MEMBER_ID + " INTEGER NOT NULL, " +
+                    ActivityQuestion.Columns.TEXT + " TEXT NOT NULL, " +
+                    ActivityQuestion.Columns.VOTES + " INTEGER NOT NULL DEFAULT 0, " +
+                    ActivityQuestion.Columns.UPVOTED + SQLiteUtils.BOOLEAN + ")"
             );
         }
 

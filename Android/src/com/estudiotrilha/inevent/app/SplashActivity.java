@@ -2,16 +2,27 @@ package com.estudiotrilha.inevent.app;
 
 import java.util.Calendar;
 
+import org.apache.http.HttpHost;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
+import com.estudiotrilha.android.utils.JsonUtils;
 import com.estudiotrilha.inevent.InEvent;
 import com.estudiotrilha.inevent.R;
 import com.estudiotrilha.inevent.content.ApiRequest;
+import com.estudiotrilha.inevent.content.Event;
+import com.estudiotrilha.inevent.content.LoginManager;
+import com.estudiotrilha.inevent.content.Member;
+import com.estudiotrilha.inevent.service.DownloaderService;
 import com.estudiotrilha.inevent.service.UploaderService;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.parse.Parse;
@@ -26,6 +37,7 @@ public class SplashActivity extends Activity implements Runnable
 
 
     private final Handler mHandler = new Handler();
+    private boolean       mReady   = false;
 
 
     @Override
@@ -37,6 +49,8 @@ public class SplashActivity extends Activity implements Runnable
         if (savedInstanceState == null)
         {
             ApiRequest.init(getApplicationContext());
+            // Make sure the events are updated
+            DownloaderService.downloadEvents(this);
             // Sync up!
             UploaderService.sync(this);
 
@@ -46,6 +60,18 @@ public class SplashActivity extends Activity implements Runnable
 //            // Setup the push notification configs
 //            PushService.setDefaultPushCallback(this, SplashActivity.class, R.drawable.ic_stat_notification_general);
 //            ParseInstallation.getCurrentInstallation().saveInBackground();
+
+            // Parse intent information if necessary
+            AsyncTask<Void,Void,Void> task = new AsyncTask<Void, Void, Void>() {
+                @Override
+                protected Void doInBackground(Void... params)
+                {
+                    analyzeIntent();
+                    mReady = true;
+                    return null;
+                }
+            };
+            task.execute();
         }
     }
 
@@ -77,7 +103,7 @@ public class SplashActivity extends Activity implements Runnable
         }
         else
         {
-            onSplashFinish();
+            run();
         }
 
         // Update the splash last shown time
@@ -133,6 +159,87 @@ public class SplashActivity extends Activity implements Runnable
     @Override
     public void run()
     {
-        onSplashFinish();
+        AsyncTask<Void,Void,Void> task = new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... params)
+            {
+                // Just wait!
+                while (!mReady);
+                return null;
+            }
+            @Override
+            protected void onPostExecute(Void result)
+            {
+                super.onPostExecute(result);
+                onSplashFinish();
+            }
+        };
+        task.execute();
+    }
+
+
+    private void analyzeIntent()
+    {
+        Intent intent = getIntent();
+        System.out.println(intent);
+        if (Intent.ACTION_VIEW.equals(intent.getAction()) &&
+                getIntent().getCategories().contains(Intent.CATEGORY_BROWSABLE))
+        {
+            // Obtain the sharedPreference
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+            // Then we are treating a special link
+            Uri uri = getIntent().getData();
+            String scheme = uri.getScheme();
+            if (InEvent.SCHEME_IN_EVENT.equals(scheme))
+            {
+                // TODO
+                System.out.println("URI: "+uri);
+            }
+            else if (HttpHost.DEFAULT_SCHEME_NAME.equals(scheme))
+            {
+                // get the nickname
+                String path = uri.getPathSegments().get(0);
+
+                if (path.startsWith("appURL.php"))
+                {
+                    try
+                    {
+                        long eventID = Long.parseLong(uri.getQueryParameter("eventID"));
+    
+                        long memberId = Long.parseLong(uri.getQueryParameter("memberID"));
+                        String name = uri.getQueryParameter("name");
+                        String tokenId = uri.getQueryParameter("tokenID");
+
+                        Member member = new Member(memberId, name, tokenId);
+                        LoginManager.getInstance(this).signIn(member);
+
+                        preferences.edit()
+                                .putLong(PreferencesActivity.EVENT_SELECTED, eventID)
+                                .commit();
+                        
+                        return;
+                    }
+                    catch (UnsupportedOperationException e)
+                    {
+                        Log.w(InEvent.NAME, "Could parse query parameters", e);
+                    }
+                }
+
+                final String[] projection = new String[] { Event.Columns._ID_FULL };
+                final String selection = Event.Columns.NICKNAME_FULL+"=?";
+                final String[] selectionArgs = new String[1];
+                selectionArgs[0] = path;
+
+                Cursor c = getContentResolver().query(Event.CONTENT_URI, projection, selection, selectionArgs, null);
+                if (c.getCount() == 1)
+                {
+                    long eventID = c.getLong(0);
+                    preferences.edit()
+                            .putLong(PreferencesActivity.EVENT_SELECTED, eventID)
+                            .commit();
+                }
+            }
+        }
     }
 }
