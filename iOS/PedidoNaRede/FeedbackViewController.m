@@ -282,6 +282,8 @@
         // Load the UI controls
         [super apiController:apiController didSaveForLaterWithError:error];
     }
+    
+    [refreshControl endRefreshing];
 }
 
 @end

@@ -120,7 +120,7 @@
     [self.view addSubview:_addGroupView];
     
     // Animate the transition
-    [UIView animateWithDuration:1.0f animations:^{
+    [UIView animateWithDuration:0.7f animations:^{
         [_addGroupView setFrame:CGRectMake(_addGroupView.frame.origin.x, _addGroupView.frame.origin.y + _addGroupView.frame.size.height, _addGroupView.frame.size.width, _addGroupView.frame.size.height)];
     } completion:^(BOOL completion){
         [self loadDoneButton];
@@ -132,7 +132,7 @@
     [_nameInput resignFirstResponder];
     
     // Animate the transition
-    [UIView animateWithDuration:1.0f animations:^{
+    [UIView animateWithDuration:0.7f animations:^{
         [_addGroupView setFrame:CGRectMake(_addGroupView.frame.origin.x, -(_addGroupView.frame.size.height), _addGroupView.frame.size.width, _addGroupView.frame.size.height)];
     } completion:^(BOOL completion){
         [_addGroupView removeFromSuperview];
@@ -294,14 +294,13 @@
         [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
         
     } else if ([apiController.method isEqualToString:@"create"]) {
+
+        // Reset our text field
+        [self.nameInput setText:@""];
+        
+        // Reload all our rows
         [self reloadData];
     }
-    
-    [refreshControl endRefreshing];
-}
-
-- (void)apiController:(InEventAPIController *)apiController didFailWithError:(NSError *)error {
-    [super apiController:apiController didFailWithError:error];
     
     [refreshControl endRefreshing];
 }
@@ -318,6 +317,14 @@
         // Load the UI controls
         [super apiController:apiController didSaveForLaterWithError:error];
     }
+    
+    [refreshControl endRefreshing];
+}
+
+- (void)apiController:(InEventAPIController *)apiController didFailWithError:(NSError *)error {
+    [super apiController:apiController didFailWithError:error];
+    
+    [refreshControl endRefreshing];
 }
 
 @end

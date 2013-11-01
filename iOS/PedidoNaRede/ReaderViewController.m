@@ -160,7 +160,7 @@
     [self.view addSubview:_addPersonView];
     
     // Animate the transition
-    [UIView animateWithDuration:1.0f animations:^{
+    [UIView animateWithDuration:0.7f animations:^{
         [_addPersonView setFrame:CGRectMake(_addPersonView.frame.origin.x, _addPersonView.frame.origin.y + _addPersonView.frame.size.height, _addPersonView.frame.size.width, _addPersonView.frame.size.height)];
     } completion:^(BOOL completion){
         [self loadDoneButton];
@@ -173,7 +173,7 @@
     [_emailInput resignFirstResponder];
     
     // Animate the transition
-    [UIView animateWithDuration:1.0f animations:^{
+    [UIView animateWithDuration:0.7f animations:^{
         [_addPersonView setFrame:CGRectMake(_addPersonView.frame.origin.x, -(_addPersonView.frame.size.height), _addPersonView.frame.size.width, _addPersonView.frame.size.height)];
     } completion:^(BOOL completion){
         [_addPersonView removeFromSuperview];
@@ -403,7 +403,7 @@
     
     if (cell == nil) {
         [aTableView registerNib:[UINib nibWithNibName:@"ReaderViewCell" bundle:nil] forCellReuseIdentifier:CustomCellIdentifier];
-        cell =  (ReaderViewCell *)[aTableView dequeueReusableCellWithIdentifier: CustomCellIdentifier];
+        cell = (ReaderViewCell *)[aTableView dequeueReusableCellWithIdentifier:CustomCellIdentifier];
     }
     
     [cell configureCell];
@@ -481,15 +481,15 @@
         // Reload all table data
         [self.tableView reloadData];
         
-        [refreshControl endRefreshing];
-        
     } else if ([apiController.method isEqualToString:@"requestEnrollment"]) {
+        
+        // Reset our text field
+        [self.nameInput setText:@""];
+        [self.emailInput setText:@""];
+        
+        // Reload all our rows
         [self reloadData];
     }
-}
-
-- (void)apiController:(InEventAPIController *)apiController didFailWithError:(NSError *)error {
-    [super apiController:apiController didFailWithError:error];
     
     [refreshControl endRefreshing];
 }
@@ -506,6 +506,14 @@
         // Load the UI controls
         [super apiController:apiController didSaveForLaterWithError:error];
     }
+    
+    [refreshControl endRefreshing];
+}
+
+- (void)apiController:(InEventAPIController *)apiController didFailWithError:(NSError *)error {
+    [super apiController:apiController didFailWithError:error];
+    
+    [refreshControl endRefreshing];
 }
 
 @end

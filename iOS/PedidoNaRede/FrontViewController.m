@@ -35,7 +35,10 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        self.title = [[EventToken sharedInstance] name];
+        self.tabBarItem.image = [UIImage imageNamed:@"16-Map"];
         
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadData) name:@"eventCurrentState" object:nil];
     }
     return self;
 }
@@ -48,11 +51,8 @@
     // Do any additional setup after loading the view from its nib.
     
     // Left Button
-    if ([[HumanToken sharedInstance] isMemberWorking]) [self loadMenuButton];
-    
-    // Right Button
-    [self loadDismissButton];
-    
+    if ([[HumanToken sharedInstance] isMemberAuthenticated]) [self loadMenuButton];
+
     // Refresh Control
     refreshControl = [[UIRefreshControl alloc] init];
     refreshControl.tintColor = [UIColor grayColor];
@@ -66,10 +66,6 @@
     // Image
     _cover.layer.masksToBounds = YES;
     _cover.layer.cornerRadius = 2.0f;
-//    _cover.layer.borderWidth = 0.4f;
-//    _cover.layer.borderColor = [[ColorThemeController borderColor] CGColor];
-//    _cover.layer.shadowOffset = CGSizeMake(1.0f, 1.0f);
-//    _cover.layer.shadowColor = [[ColorThemeController shadowColor] CGColor];
     
     // Details
     _details.backgroundColor = [ColorThemeController tableViewBackgroundColor];
@@ -77,12 +73,6 @@
     // Wrapper
     _wrapper.backgroundColor = [ColorThemeController tableViewCellBackgroundColor];
     _wrapper.layer.cornerRadius = 4.0f;
-    
-    // Name
-    [_name addObserver:self forKeyPath:@"contentSize" options:NSKeyValueObservingOptionNew context:NULL];
-
-    // Name
-    [_description addObserver:self forKeyPath:@"contentSize" options:NSKeyValueObservingOptionNew context:NULL];
     
     // Location Manager
     locationManager = [[CLLocationManager alloc] init];
@@ -97,27 +87,18 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) [self loadData];
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
     
-    // Window
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-        [self allocTapBehind];
-    }
+    // KVO
+    [_name addObserver:self forKeyPath:@"contentSize" options:NSKeyValueObservingOptionNew context:NULL];
+    [_description addObserver:self forKeyPath:@"contentSize" options:NSKeyValueObservingOptionNew context:NULL];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
+    // KVO
     [_name removeObserver:self forKeyPath:@"contentSize"];
     [_description removeObserver:self forKeyPath:@"contentSize"];
-    
-    // Window
-    [self deallocTapBehind];
 }
 
 - (void)didReceiveMemoryWarning
@@ -215,6 +196,9 @@
     
     if (eventData) {
         
+        // Title
+        self.title = [[EventToken sharedInstance] name];
+        
         // Cover
         __weak typeof(self) weakSelf = self;
         [self.cover setImageWithURL:[UtilitiesController urlWithFile:[eventData objectForKey:@"cover"]] completed:
@@ -259,6 +243,40 @@
     }
 }
 
+#pragma mark - ActionSheet Methods
+
+- (void)alertActionSheet {
+    
+    UIActionSheet *actionSheet;
+    
+    if ([[HumanToken sharedInstance] isMemberWorking]) {
+        actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Actions", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"Edit fields", nil), NSLocalizedString(@"Exit event", nil), nil];
+    } else {
+        actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Actions", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"Exit event", nil), nil];
+    }
+    
+    [actionSheet showFromBarButtonItem:self.rightBarButton animated:YES];
+}
+
+#pragma mark - ActionSheet Delegate
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    
+    NSString *title = [actionSheet buttonTitleAtIndex:buttonIndex];
+    
+    if ([title isEqualToString:NSLocalizedString(@"Edit fields", nil)]) {
+        [self startEditing];
+        
+    } else if ([title isEqualToString:NSLocalizedString(@"Exit event", nil)]) {
+        // Remove the tokenID and enterprise
+        [[EventToken sharedInstance] removeEvent];
+        
+        // Check for it again
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"verify" object:nil userInfo:@{@"type": @"enterprise"}];
+    }
+}
+
+
 #pragma mark - Twitter
 
 - (IBAction)sendTweet:(id)sender {
@@ -267,6 +285,9 @@
         SLComposeViewController *tweetSheet = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
         [tweetSheet setInitialText:[NSString stringWithFormat:@"%@ %@!", NSLocalizedString(@"Attending", nil), [[EventToken sharedInstance] name]]];
         [self presentViewController:tweetSheet animated:YES completion:nil];
+    } else {
+        AlertView *alertView = [[AlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"Please enable your Twitter account, through Settings -> Twitter -> Add Account", nil) delegate:self cancelButtonTitle:nil otherButtonTitle:NSLocalizedString(@"Ok", nil)];
+        [alertView show];
     }
 }
 
@@ -278,6 +299,9 @@
         SLComposeViewController *facebookPost = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
         [facebookPost setInitialText:[NSString stringWithFormat:@"%@ %@!", NSLocalizedString(@"Attending", nil), [[EventToken sharedInstance] name]]];
         [self presentViewController:facebookPost animated:YES completion:nil];
+    } else {
+        AlertView *alertView = [[AlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"Please enable your Facebook account, through Settings -> Facebook -> Account", nil) delegate:self cancelButtonTitle:nil otherButtonTitle:NSLocalizedString(@"Ok", nil)];
+        [alertView show];
     }
 }
 
@@ -291,19 +315,15 @@
 }
 
 - (void)loadMenuButton {
-    self.leftBarButton = [[CoolBarButtonItem alloc] initCustomButtonWithImage:[UIImage imageNamed:@"32-Pencil-_-Edit.png"] frame:CGRectMake(0, 0, 42.0, 30.0) insets:UIEdgeInsetsMake(5.0, 11.0, 5.0, 11.0) target:self action:@selector(startEditing)];
-    self.navigationItem.leftBarButtonItem = self.leftBarButton;
+    self.rightBarButton = [[CoolBarButtonItem alloc] initCustomButtonWithImage:[UIImage imageNamed:@"32-Cog"] frame:CGRectMake(0, 0, 42.0, 30.0) insets:UIEdgeInsetsMake(5.0, 11.0, 5.0, 11.0) target:self action:@selector(alertActionSheet)];
+    self.rightBarButton.accessibilityLabel = NSLocalizedString(@"Actions", nil);
+    self.rightBarButton.accessibilityTraits = UIAccessibilityTraitSummaryElement;
+    self.navigationItem.rightBarButtonItem = self.rightBarButton;
 }
 
 - (void)loadDoneButton {
-    self.leftBarButton = [[CoolBarButtonItem alloc] initCustomButtonWithImage:[UIImage imageNamed:@"32-Check-2.png"] frame:CGRectMake(0, 0, 42.0, 30.0) insets:UIEdgeInsetsMake(5.0, 11.0, 5.0, 11.0) target:self action:@selector(endEditing)];
-    self.navigationItem.leftBarButtonItem = self.leftBarButton;
-}
-
-- (void)loadDismissButton {
-    // Right Button
-    self.rightBarButton = self.navigationItem.rightBarButtonItem;
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(dismiss)];
+    self.rightBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(endEditing)];
+    self.navigationItem.rightBarButtonItem = self.rightBarButton;
 }
 
 #pragma mark - Editing

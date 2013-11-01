@@ -27,11 +27,16 @@
 				// if ($globalDev == 0) pushActivityCreation($eventID, $photoID);
 
 				// Return its data
-				if ($format == "json") {
-					$data["photoID"] = $photoID;
-					echo json_encode($data);
+				
+				if ($insert) {
+					if ($format == "json") {
+						$data["photoID"] = $photoID;
+						echo json_encode($data);
+					} else {
+						http_status_code(405, "this format is not available");
+					}
 				} else {
-					http_status_code(405, "this format is not available");
+					http_status_code(500, "insert inside photo has failed");
 				}
 
 			} else {

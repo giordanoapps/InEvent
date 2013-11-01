@@ -125,7 +125,7 @@
 - (UITableViewCell *)tableView:(UITableView *)aTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     static NSString *CustomCellIdentifier = @"CustomCellIdentifier";
-    MarketplaceViewCell *cell = (MarketplaceViewCell *)[aTableView dequeueReusableCellWithIdentifier: CustomCellIdentifier];
+    MarketplaceViewCell *cell = (MarketplaceViewCell *)[aTableView dequeueReusableCellWithIdentifier:CustomCellIdentifier];
     
     if (cell == nil) {
         [aTableView registerNib:[UINib nibWithNibName:@"MarketplaceViewCell" bundle:nil] forCellReuseIdentifier:CustomCellIdentifier];
@@ -197,7 +197,7 @@
     [currentInstallation saveEventually];
     
     // Update the current state of the schedule controller
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"scheduleCurrentState" object:nil userInfo:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"eventCurrentState" object:nil userInfo:nil];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"verify" object:nil userInfo:@{@"type": @"menu"}];
     
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -225,6 +225,12 @@
         // Force reload
         [self forceDataReload:YES];
     }
+}
+
+- (void)apiController:(InEventAPIController *)apiController didSaveForLaterWithError:(NSError *)error {
+    [super apiController:apiController didSaveForLaterWithError:error];
+    
+    [refreshControl endRefreshing];
 }
 
 - (void)apiController:(InEventAPIController *)apiController didFailWithError:(NSError *)error {

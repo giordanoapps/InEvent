@@ -23,7 +23,6 @@
 		EB01FFD6181B3AFA00089915 /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = EB01FFCD181B3AFA00089915 /* UIImageView+AFNetworking.m */; };
 		EB01FFD9181BA56C00089915 /* google_active.png in Resources */ = {isa = PBXBuildFile; fileRef = EB01FFD7181BA56C00089915 /* google_active.png */; };
 		EB01FFDA181BA56C00089915 /* google_dark.png in Resources */ = {isa = PBXBuildFile; fileRef = EB01FFD8181BA56C00089915 /* google_dark.png */; };
-		EB1FE9DC17FE4123001C2906 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB1FE9DB17FE4123001C2906 /* FacebookSDK.framework */; };
 		EB1FE9DE17FE841D001C2906 /* GoogleMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = EB1FE9DD17FE841D001C2906 /* GoogleMaps.bundle */; };
 		EB1FE9E017FE8582001C2906 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB1FE9DF17FE8582001C2906 /* CoreFoundation.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		EB1FE9E317FF0CA0001C2906 /* FieldView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1FE9E217FF0CA0001C2906 /* FieldView.m */; };
@@ -165,7 +164,7 @@
 		EB897512180D20B100DB2486 /* GroupCirclePeopleViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB897511180D20B100DB2486 /* GroupCirclePeopleViewCell.xib */; };
 		EB897515181056D800DB2486 /* SebraeColorThemeController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB897514181056D800DB2486 /* SebraeColorThemeController.m */; };
 		EB89751818132E2A00DB2486 /* QuizOptionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EB89751718132E2A00DB2486 /* QuizOptionViewCell.m */; };
-		EB89751A18132E3A00DB2486 /* View.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB89751918132E3A00DB2486 /* View.xib */; };
+		EB89751A18132E3A00DB2486 /* QuizOptionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB89751918132E3A00DB2486 /* QuizOptionViewCell.xib */; };
 		EB8C7D7E16D17AEB00F3C721 /* cb_box_off.png in Resources */ = {isa = PBXBuildFile; fileRef = EB8C7D6516D17AEB00F3C721 /* cb_box_off.png */; };
 		EB8C7D7F16D17AEB00F3C721 /* cb_box_off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB8C7D6616D17AEB00F3C721 /* cb_box_off@2x.png */; };
 		EB8C7D8016D17AEB00F3C721 /* cb_box_on.png in Resources */ = {isa = PBXBuildFile; fileRef = EB8C7D6716D17AEB00F3C721 /* cb_box_on.png */; };
@@ -267,9 +266,7 @@
 		EBC59D8117BEC48600E0FC67 /* 64-Marker.png in Resources */ = {isa = PBXBuildFile; fileRef = EBC59D8017BEC48600E0FC67 /* 64-Marker.png */; };
 		EBC59D8317BEC49E00E0FC67 /* 64-Footprints.png in Resources */ = {isa = PBXBuildFile; fileRef = EBC59D8217BEC49E00E0FC67 /* 64-Footprints.png */; };
 		EBC59D8517BEC4DD00E0FC67 /* 32-Map@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBC59D8417BEC4DD00E0FC67 /* 32-Map@2x.png */; };
-		EBC59D8717BEC58100E0FC67 /* 64-Balloons.png in Resources */ = {isa = PBXBuildFile; fileRef = EBC59D8617BEC58100E0FC67 /* 64-Balloons.png */; };
 		EBC59D8917BEC59B00E0FC67 /* 32-Create-_-Write@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBC59D8817BEC59B00E0FC67 /* 32-Create-_-Write@2x.png */; };
-		EBC59D8D17BEC5C300E0FC67 /* 64-Cloud-Download.png in Resources */ = {isa = PBXBuildFile; fileRef = EBC59D8C17BEC5C300E0FC67 /* 64-Cloud-Download.png */; };
 		EBC7AF4D1813331100D8DB6A /* 32-facebook.png in Resources */ = {isa = PBXBuildFile; fileRef = EBC7AF4C1813331100D8DB6A /* 32-facebook.png */; };
 		EBCD0EE2181DBB0700CE225C /* 32-Phone-Hook@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBCD0EE1181DBB0700CE225C /* 32-Phone-Hook@2x.png */; };
 		EBCD0EE4181DBB1C00CE225C /* 32-Phone-Hook.png in Resources */ = {isa = PBXBuildFile; fileRef = EBCD0EE3181DBB1C00CE225C /* 32-Phone-Hook.png */; };
@@ -309,6 +306,12 @@
 		EBD6FE4F18065528006D0E73 /* 32-Cog.png in Resources */ = {isa = PBXBuildFile; fileRef = EBD6FE4E18065528006D0E73 /* 32-Cog.png */; };
 		EBD7BB6D1822405400C17556 /* 32-Mail-Highlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBD7BB6C1822405400C17556 /* 32-Mail-Highlighted@2x.png */; };
 		EBD7BB6F182240A800C17556 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBD7BB6E182240A800C17556 /* MessageUI.framework */; };
+		EBD7BB7118239D1A00C17556 /* 256-picture.png in Resources */ = {isa = PBXBuildFile; fileRef = EBD7BB7018239D1A00C17556 /* 256-picture.png */; };
+		EBD7BB7318239D5100C17556 /* 256-Calendar.png in Resources */ = {isa = PBXBuildFile; fileRef = EBD7BB7218239D5100C17556 /* 256-Calendar.png */; };
+		EBD7BB7518239DCC00C17556 /* 256-Comment.png in Resources */ = {isa = PBXBuildFile; fileRef = EBD7BB7418239DCC00C17556 /* 256-Comment.png */; };
+		EBD7BB7718239E0C00C17556 /* 256-Tick.png in Resources */ = {isa = PBXBuildFile; fileRef = EBD7BB7618239E0C00C17556 /* 256-Tick.png */; };
+		EBD7BB7918239E8700C17556 /* 256-Earth.png in Resources */ = {isa = PBXBuildFile; fileRef = EBD7BB7818239E8700C17556 /* 256-Earth.png */; };
+		EBD7BB7B1823A32000C17556 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBD7BB7A1823A32000C17556 /* FacebookSDK.framework */; };
 		EBD8E4E917AF557A00D0F30C /* 32-Minus.png in Resources */ = {isa = PBXBuildFile; fileRef = EBD8E4E817AF557A00D0F30C /* 32-Minus.png */; };
 		EBDA918117ACB10100969A08 /* 16-Check.png in Resources */ = {isa = PBXBuildFile; fileRef = EBDA917F17ACB10100969A08 /* 16-Check.png */; };
 		EBDA918217ACB10100969A08 /* 16-Check@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBDA918017ACB10100969A08 /* 16-Check@2x.png */; };
@@ -413,7 +416,6 @@
 		EB01FFCD181B3AFA00089915 /* UIImageView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+AFNetworking.m"; sourceTree = "<group>"; };
 		EB01FFD7181BA56C00089915 /* google_active.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = google_active.png; sourceTree = "<group>"; };
 		EB01FFD8181BA56C00089915 /* google_dark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = google_dark.png; sourceTree = "<group>"; };
-		EB1FE9DB17FE4123001C2906 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = "../../../Documents/Objective-C/facebook-ios-sdk/build/FacebookSDK.framework"; sourceTree = "<group>"; };
 		EB1FE9DD17FE841D001C2906 /* GoogleMaps.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = GoogleMaps.bundle; path = GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle; sourceTree = "<group>"; };
 		EB1FE9DF17FE8582001C2906 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		EB1FE9E117FF0CA0001C2906 /* FieldView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FieldView.h; sourceTree = "<group>"; };
@@ -631,7 +633,7 @@
 		EB897514181056D800DB2486 /* SebraeColorThemeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SebraeColorThemeController.m; path = PedidoNaRede/SebraeColorThemeController.m; sourceTree = "<group>"; };
 		EB89751618132E2A00DB2486 /* QuizOptionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QuizOptionViewCell.h; path = PedidoNaRede/QuizOptionViewCell.h; sourceTree = "<group>"; };
 		EB89751718132E2A00DB2486 /* QuizOptionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QuizOptionViewCell.m; path = PedidoNaRede/QuizOptionViewCell.m; sourceTree = "<group>"; };
-		EB89751918132E3A00DB2486 /* View.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = View.xib; path = PedidoNaRede/View.xib; sourceTree = "<group>"; };
+		EB89751918132E3A00DB2486 /* QuizOptionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = QuizOptionViewCell.xib; path = PedidoNaRede/QuizOptionViewCell.xib; sourceTree = "<group>"; };
 		EB89751B18132E6F00DB2486 /* GAI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GAI.h; path = PedidoNaRede/GAI.h; sourceTree = "<group>"; };
 		EB89751C18132E6F00DB2486 /* GAIDictionaryBuilder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GAIDictionaryBuilder.h; path = PedidoNaRede/GAIDictionaryBuilder.h; sourceTree = "<group>"; };
 		EB89751D18132E6F00DB2486 /* GAIFields.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GAIFields.h; path = PedidoNaRede/GAIFields.h; sourceTree = "<group>"; };
@@ -757,9 +759,7 @@
 		EBC59D8017BEC48600E0FC67 /* 64-Marker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "64-Marker.png"; sourceTree = "<group>"; };
 		EBC59D8217BEC49E00E0FC67 /* 64-Footprints.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "64-Footprints.png"; sourceTree = "<group>"; };
 		EBC59D8417BEC4DD00E0FC67 /* 32-Map@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Map@2x.png"; sourceTree = "<group>"; };
-		EBC59D8617BEC58100E0FC67 /* 64-Balloons.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "64-Balloons.png"; sourceTree = "<group>"; };
 		EBC59D8817BEC59B00E0FC67 /* 32-Create-_-Write@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Create-_-Write@2x.png"; sourceTree = "<group>"; };
-		EBC59D8C17BEC5C300E0FC67 /* 64-Cloud-Download.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "64-Cloud-Download.png"; sourceTree = "<group>"; };
 		EBC7AF4C1813331100D8DB6A /* 32-facebook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-facebook.png"; sourceTree = "<group>"; };
 		EBCD0EE1181DBB0700CE225C /* 32-Phone-Hook@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Phone-Hook@2x.png"; sourceTree = "<group>"; };
 		EBCD0EE3181DBB1C00CE225C /* 32-Phone-Hook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Phone-Hook.png"; sourceTree = "<group>"; };
@@ -815,6 +815,12 @@
 		EBD6FE4E18065528006D0E73 /* 32-Cog.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Cog.png"; sourceTree = "<group>"; };
 		EBD7BB6C1822405400C17556 /* 32-Mail-Highlighted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Mail-Highlighted@2x.png"; sourceTree = "<group>"; };
 		EBD7BB6E182240A800C17556 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		EBD7BB7018239D1A00C17556 /* 256-picture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "256-picture.png"; sourceTree = "<group>"; };
+		EBD7BB7218239D5100C17556 /* 256-Calendar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "256-Calendar.png"; sourceTree = "<group>"; };
+		EBD7BB7418239DCC00C17556 /* 256-Comment.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "256-Comment.png"; sourceTree = "<group>"; };
+		EBD7BB7618239E0C00C17556 /* 256-Tick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "256-Tick.png"; sourceTree = "<group>"; };
+		EBD7BB7818239E8700C17556 /* 256-Earth.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "256-Earth.png"; sourceTree = "<group>"; };
+		EBD7BB7A1823A32000C17556 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
 		EBD8E4E817AF557A00D0F30C /* 32-Minus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Minus.png"; sourceTree = "<group>"; };
 		EBDA917F17ACB10100969A08 /* 16-Check.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "16-Check.png"; sourceTree = "<group>"; };
 		EBDA918017ACB10100969A08 /* 16-Check@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "16-Check@2x.png"; sourceTree = "<group>"; };
@@ -920,6 +926,7 @@
 				EBD6627617FE401F00B190E2 /* libz.dylib in Frameworks */,
 				EBD6627417FE401400B190E2 /* libicucore.dylib in Frameworks */,
 				EBD6627217FE3FFC00B190E2 /* libc++.dylib in Frameworks */,
+				EBD7BB7B1823A32000C17556 /* FacebookSDK.framework in Frameworks */,
 				EBD6627017FE3FE500B190E2 /* GLKit.framework in Frameworks */,
 				EBD6626E17FE3FD900B190E2 /* CoreText.framework in Frameworks */,
 				EBD6626C17FE3FC800B190E2 /* AVFoundation.framework in Frameworks */,
@@ -935,7 +942,6 @@
 				EB7FC68F16DC4623007C006D /* ImageIO.framework in Frameworks */,
 				EBAAFD23161FCF020007637B /* Foundation.framework in Frameworks */,
 				EBBDCB8B1623D3E700C32523 /* MapKit.framework in Frameworks */,
-				EB1FE9DC17FE4123001C2906 /* FacebookSDK.framework in Frameworks */,
 				EBEA9FCE179586B100C6FEEC /* Parse.framework in Frameworks */,
 				EBBDCB5916223A9E00C32523 /* QuartzCore.framework in Frameworks */,
 				EBEA9FD6179587A800C6FEEC /* Security.framework in Frameworks */,
@@ -1350,7 +1356,7 @@
 				EB8974E4180CC02C00DB2486 /* QuizViewController.xib */,
 				EB89751618132E2A00DB2486 /* QuizOptionViewCell.h */,
 				EB89751718132E2A00DB2486 /* QuizOptionViewCell.m */,
-				EB89751918132E3A00DB2486 /* View.xib */,
+				EB89751918132E3A00DB2486 /* QuizOptionViewCell.xib */,
 			);
 			name = Quiz;
 			sourceTree = "<group>";
@@ -1559,7 +1565,6 @@
 		EBAAFD1F161FCF020007637B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				EBD7BB6E182240A800C17556 /* MessageUI.framework */,
 				EB25BA8716FE636B003F142F /* Accounts.framework */,
 				EB25BA8816FE636B003F142F /* AdSupport.framework */,
 				EB3F1A0C16F90F4F005052E7 /* AudioToolbox.framework */,
@@ -1571,7 +1576,7 @@
 				EB7FC68C16DC4616007C006D /* CoreImage.framework */,
 				EBBDCB8C1623E51D00C32523 /* CoreLocation.framework */,
 				EBD6626D17FE3FD900B190E2 /* CoreText.framework */,
-				EB1FE9DB17FE4123001C2906 /* FacebookSDK.framework */,
+				EBD7BB7A1823A32000C17556 /* FacebookSDK.framework */,
 				EBAAFD22161FCF020007637B /* Foundation.framework */,
 				EBD6626F17FE3FE500B190E2 /* GLKit.framework */,
 				EB1FE9DD17FE841D001C2906 /* GoogleMaps.bundle */,
@@ -1584,6 +1589,7 @@
 				EBEA9FD11795877C00C6FEEC /* libz.1.1.3.dylib */,
 				EBD6627517FE401F00B190E2 /* libz.dylib */,
 				EBBDCB8A1623D3E700C32523 /* MapKit.framework */,
+				EBD7BB6E182240A800C17556 /* MessageUI.framework */,
 				EBEA9FD31795879300C6FEEC /* MobileCoreServices.framework */,
 				EBD6627717FE402900B190E2 /* OpenGLES.framework */,
 				EBEA9FCD179586B100C6FEEC /* Parse.framework */,
@@ -1840,6 +1846,11 @@
 			isa = PBXGroup;
 			children = (
 				EB97144117F2B306009260AE /* 128-user.png */,
+				EBD7BB7218239D5100C17556 /* 256-Calendar.png */,
+				EBD7BB7418239DCC00C17556 /* 256-Comment.png */,
+				EBD7BB7818239E8700C17556 /* 256-Earth.png */,
+				EBD7BB7018239D1A00C17556 /* 256-picture.png */,
+				EBD7BB7618239E0C00C17556 /* 256-Tick.png */,
 				EB1FE9F217FF8886001C2906 /* 32-Book-Large.png */,
 				EB1FE9F317FF8886001C2906 /* 32-Book-Large@2x.png */,
 				EB1FE9EC17FF5DEA001C2906 /* 32-Check-2.png */,
@@ -1876,12 +1887,10 @@
 				EB1FE9EE17FF87D2001C2906 /* 32-Users.png */,
 				EB1FE9F017FF884E001C2906 /* 32-Users@2x.png */,
 				EBA2C27218216C9D00399D4F /* 32-V-Card-3@2x.png */,
-				EBC59D8617BEC58100E0FC67 /* 64-Balloons.png */,
 				EBDFF53817BBF5FD00BBFC1D /* 64-Bended-Arrow-Left.png */,
 				EBDFF53917BBF5FD00BBFC1D /* 64-Bended-Arrow-Up.png */,
 				EB79CC5517ED833600C16CF5 /* 64-Clock-2.png */,
 				EB79CC5617ED833600C16CF5 /* 64-Clock.png */,
-				EBC59D8C17BEC5C300E0FC67 /* 64-Cloud-Download.png */,
 				EB60420A17B8B6A300D95012 /* 64-Flip-Clock.png */,
 				EBC59D8217BEC49E00E0FC67 /* 64-Footprints.png */,
 				EBC59D8017BEC48600E0FC67 /* 64-Marker.png */,
@@ -2071,6 +2080,7 @@
 				EB1FE9F117FF884E001C2906 /* 32-Users@2x.png in Resources */,
 				EB9AB77316A0921A005D4CAA /* DemoViewController.xib in Resources */,
 				EB1FE9EF17FF87D2001C2906 /* 32-Users.png in Resources */,
+				EBD7BB7318239D5100C17556 /* 256-Calendar.png in Resources */,
 				EB9AB78616A125B3005D4CAA /* barButton.png in Resources */,
 				EB9AB78716A125B3005D4CAA /* barButton@2x.png in Resources */,
 				EB7FF95817EEDDE00017E599 /* 32-Facebook-Like-2.png in Resources */,
@@ -2093,6 +2103,7 @@
 				EBE72FA4181AF26600A3A02D /* 32-Facebook-2.png in Resources */,
 				EB97146417F2DE30009260AE /* logo@80.png in Resources */,
 				EB9AB79116A125B3005D4CAA /* barButtonPressed@2x.png in Resources */,
+				EBD7BB7918239E8700C17556 /* 256-Earth.png in Resources */,
 				EB28747B16A71F1700A06781 /* StepperView.xib in Resources */,
 				EBD47D9216B07BA600F7295E /* Localizable.strings in Resources */,
 				EB8C7D7E16D17AEB00F3C721 /* cb_box_off.png in Resources */,
@@ -2108,7 +2119,7 @@
 				EB8C7D8416D17AEB00F3C721 /* cb_dark_on.png in Resources */,
 				EB01FFD9181BA56C00089915 /* google_active.png in Resources */,
 				EB8C7D8516D17AEB00F3C721 /* cb_dark_on@2x.png in Resources */,
-				EB89751A18132E3A00DB2486 /* View.xib in Resources */,
+				EB89751A18132E3A00DB2486 /* QuizOptionViewCell.xib in Resources */,
 				EB8C7D8616D17AEB00F3C721 /* cb_glossy_off.png in Resources */,
 				EB897502180CDFE200DB2486 /* 16-Day-Calendar.png in Resources */,
 				EB8C7D8716D17AEB00F3C721 /* cb_glossy_off@2x.png in Resources */,
@@ -2120,6 +2131,7 @@
 				EB8C7D8B16D17AEB00F3C721 /* cb_green_off@2x.png in Resources */,
 				EBE72F93181AE0CD00A3A02D /* in_dark.png in Resources */,
 				EB8C7D8C16D17AEB00F3C721 /* cb_green_on.png in Resources */,
+				EBD7BB7118239D1A00C17556 /* 256-picture.png in Resources */,
 				EB97145917F2DDDB009260AE /* logo@72.png in Resources */,
 				EB8C7D8D16D17AEB00F3C721 /* cb_green_on@2x.png in Resources */,
 				EB8C7D8E16D17AEB00F3C721 /* cb_mono_off.png in Resources */,
@@ -2139,6 +2151,7 @@
 				EB97146017F2DDDB009260AE /* logo@512.png in Resources */,
 				EB25BA9016FE6D21003F142F /* 16-Flag-2.png in Resources */,
 				EB25BA9216FE6EC9003F142F /* 16-User.png in Resources */,
+				EBD7BB7718239E0C00C17556 /* 256-Tick.png in Resources */,
 				EB25BA9F16FE73F2003F142F /* HumanViewController.xib in Resources */,
 				EBD6FE4F18065528006D0E73 /* 32-Cog.png in Resources */,
 				EBA2C26F18216BB000399D4F /* GroupDetailViewController.xib in Resources */,
@@ -2211,12 +2224,11 @@
 				EBC59D8317BEC49E00E0FC67 /* 64-Footprints.png in Resources */,
 				EBC59D8517BEC4DD00E0FC67 /* 32-Map@2x.png in Resources */,
 				EB8974EC180CC52000DB2486 /* GroupCircleViewController.xib in Resources */,
-				EBC59D8717BEC58100E0FC67 /* 64-Balloons.png in Resources */,
 				EBC59D8917BEC59B00E0FC67 /* 32-Create-_-Write@2x.png in Resources */,
 				EBA2C2641820D94D00399D4F /* PeopleViewCell.xib in Resources */,
 				EBA2C25C1820D72F00399D4F /* GroupViewController.xib in Resources */,
 				EB97144A17F2DD11009260AE /* Images.xcassets in Resources */,
-				EBC59D8D17BEC5C300E0FC67 /* 64-Cloud-Download.png in Resources */,
+				EBD7BB7518239DCC00C17556 /* 256-Comment.png in Resources */,
 				EBEACD7517C2F65200C65F3F /* AboutViewController~ipad.xib in Resources */,
 				EB59020317D5D7D20032143C /* MarketplaceViewController.xib in Resources */,
 				EB50B924181D98F40023A185 /* REComposeViewController.bundle in Resources */,
@@ -2545,7 +2557,7 @@
 					"$(inherited)",
 					"$(SRCROOT)",
 					"/Users/pedro/Sites/InEvent-dev/iOS",
-					"/Users/pedro/Documents/Objective-C/facebook-ios-sdk/build",
+					"/Users/pedro/Documents/GitHub/facebook-ios-sdk/build",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PedidoNaRede/InEvent-Prefix.pch";
@@ -2578,7 +2590,7 @@
 					"$(inherited)",
 					"$(SRCROOT)",
 					"/Users/pedro/Sites/InEvent-dev/iOS",
-					"/Users/pedro/Documents/Objective-C/facebook-ios-sdk/build",
+					"/Users/pedro/Documents/GitHub/facebook-ios-sdk/build",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PedidoNaRede/InEvent-Prefix.pch";

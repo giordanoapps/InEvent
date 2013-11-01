@@ -114,7 +114,7 @@
             [currentInstallation saveEventually];
             
             // Update the current state of the schedule controller
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"scheduleCurrentState" object:nil userInfo:nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"eventCurrentState" object:nil userInfo:nil];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"verify" object:nil userInfo:@{@"type": @"menu"}];
             
             // Go back to the other screen

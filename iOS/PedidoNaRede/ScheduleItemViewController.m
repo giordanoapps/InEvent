@@ -36,8 +36,8 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Add notification observer for new orders
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cleanData) name:@"scheduleCurrentState" object:nil];
+        // Add notification observer
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cleanData) name:@"eventCurrentState" object:nil];
     }
     return self;
 }

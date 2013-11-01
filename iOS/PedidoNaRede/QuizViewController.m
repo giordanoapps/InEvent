@@ -60,19 +60,19 @@
 
 - (UITableViewCell *)tableView:(UITableView *)aTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    static NSString * CustomCellIdentifier = @"CustomCellIdentifier";
-    QuizOptionViewCell * cell = (QuizOptionViewCell *)[aTableView dequeueReusableCellWithIdentifier: CustomCellIdentifier];
+    static NSString *CustomCellIdentifier = @"CustomCellIdentifier";
+    QuizOptionViewCell *cell = (QuizOptionViewCell *)[aTableView dequeueReusableCellWithIdentifier:CustomCellIdentifier];
     
     if (cell == nil) {
         [aTableView registerNib:[UINib nibWithNibName:@"QuizOptionViewCell" bundle:nil] forCellReuseIdentifier:CustomCellIdentifier];
-        cell =  (QuizOptionViewCell *)[aTableView dequeueReusableCellWithIdentifier: CustomCellIdentifier];
+        cell = (QuizOptionViewCell *)[aTableView dequeueReusableCellWithIdentifier:CustomCellIdentifier];
     }
     
-    NSDictionary *dictionary = [[inquiries objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
-    
-    NSDate *date = [NSDate dateWithTimeIntervalSince1970:[[dictionary objectForKey:@"dateBegin"] integerValue]];
-    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    NSDateComponents *components = [gregorian components:(NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:date];
+//    NSDictionary *dictionary = [[inquiries objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+//    
+//    NSDate *date = [NSDate dateWithTimeIntervalSince1970:[[dictionary objectForKey:@"dateBegin"] integerValue]];
+//    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+//    NSDateComponents *components = [gregorian components:(NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:date];
     
 //    cell.hour.text = [NSString stringWithFormat:@"%.2d", [components hour]];
 //    cell.minute.text = [NSString stringWithFormat:@"%.2d", [components minute]];

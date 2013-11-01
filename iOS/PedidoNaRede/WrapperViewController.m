@@ -49,9 +49,7 @@
     
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7) {
         // Navigation Bar
-        self.navigationController.navigationBar.barTintColor = [ColorThemeController navigationBarBackgroundColor];
         self.navigationController.navigationBar.translucent = NO;
-        self.navigationController.navigationBar.titleTextAttributes = @{UITextAttributeTextColor : [UIColor whiteColor]};
         // View Controller
         self.edgesForExtendedLayout = UIRectEdgeNone;
         self.extendedLayoutIncludesOpaqueBars = YES;
@@ -353,7 +351,7 @@
         }
         
         // Update the current state of the schedule controller
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"scheduleCurrentState" object:nil userInfo:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"eventCurrentState" object:nil userInfo:nil];
         
         [self setApiController:nil];
         

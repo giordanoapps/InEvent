@@ -12,6 +12,7 @@
 #import "ScheduleViewController.h"
 #import "ScheduleItemViewController.h"
 #import "GroupViewController.h"
+#import "FrontViewController.h"
 #import "PeopleViewController.h"
 #import "PersonViewController.h"
 #import "StreamViewController.h"
@@ -31,6 +32,7 @@
 @interface AppDelegate ()
 
 @property (strong, nonatomic) UIViewController *humanViewController;
+@property (strong, nonatomic) UIViewController *frontViewController;
 @property (strong, nonatomic) UIViewController *scheduleViewController;
 @property (strong, nonatomic) UIViewController *photosViewController;
 @property (strong, nonatomic) UIViewController *groupViewController;
@@ -84,7 +86,7 @@
     }
     
     // Update the current state of the schedule controller
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"scheduleCurrentState" object:nil userInfo:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"eventCurrentState" object:nil userInfo:nil];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"verify" object:nil userInfo:@{@"type": @"menu"}];
 
     return YES;
@@ -129,6 +131,7 @@
     
     // Each controller
     [self loadHumanController];
+    [self loadFrontController];
     [self loadScheduleController];
     [self loadPhotosController];
     [self loadGroupController];
@@ -138,7 +141,7 @@
     // Global Controller
     _menuController = [[MenuViewController alloc] initWithMenuWidth:180.0 numberOfFolds:3];
     [_menuController setDelegate:self];
-    [_menuController setViewControllers:[NSMutableArray arrayWithObjects:_humanViewController, _scheduleViewController, _photosViewController, _groupViewController, _peopleViewController, _aboutViewController, nil]];
+    [_menuController setViewControllers:[NSMutableArray arrayWithObjects:_humanViewController, _frontViewController, _scheduleViewController, _photosViewController, _groupViewController, _peopleViewController, _aboutViewController, nil]];
     
     // Set the default theme color
     [[ColorThemeController sharedInstance] setTheme:ColorThemePetoskeyStone];
@@ -207,6 +210,22 @@
 - (void)loadAboutController {
     
     _aboutViewController = [[UINavigationController alloc] initWithRootViewController:[[AboutViewController alloc] initWithNibName:@"AboutViewController" bundle:nil]];
+}
+
+- (void)loadFrontController {
+
+    FrontViewController *fvc = [[FrontViewController alloc] initWithNibName:@"FrontViewController" bundle:nil];
+    _frontViewController = [[UINavigationController alloc] initWithRootViewController:fvc];
+    
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        _frontViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+        _frontViewController.modalPresentationStyle = UIModalPresentationCurrentContext;
+    } else {
+        _frontViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+        _frontViewController.modalPresentationStyle = UIModalPresentationFormSheet;
+    }
+    
+    [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:_frontViewController animated:YES completion:nil];
 }
 
 - (void)loadGroupController {
@@ -303,6 +322,10 @@
     // ----------------------
     // UINavigationBar
     // ----------------------
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7) {
+        [[UINavigationBar appearance] setBarTintColor:[ColorThemeController navigationBarBackgroundColor]];
+        [[UINavigationBar appearance] setTitleTextAttributes:@{UITextAttributeTextColor : [UIColor whiteColor]}];
+    }
     [[UINavigationBar appearance] setBackgroundImage:[[UIImage alloc] imageWithColor:[ColorThemeController navigationBarBackgroundColor]] forBarMetrics:UIBarMetricsDefault];
     [[UINavigationBar appearance] setTitleVerticalPositionAdjustment:0.0 forBarMetrics:UIBarMetricsDefault];
  

@@ -44,7 +44,7 @@
         selection = ([[HumanToken sharedInstance] isMemberAuthenticated] && [[HumanToken sharedInstance] isMemberApproved]) ? ScheduleSubscribed : ScheduleAll;
         
         // Add notification observer for updates
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadData) name:@"scheduleCurrentState" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadData) name:@"eventCurrentState" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadData) name:@"activityNotification" object:nil];
     }
     return self;
@@ -56,6 +56,9 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    // Right Button
+    if ([[HumanToken sharedInstance] isMemberAuthenticated]) [self loadMenuButton];
     
     // Navigation delegate
     self.navigationController.delegate = self;
@@ -71,12 +74,6 @@
     refreshControl.tintColor = [UIColor grayColor];
     [refreshControl addTarget:self action:@selector(reloadData) forControlEvents:UIControlEventValueChanged];
     [self.tableView addSubview:refreshControl];
-    
-    // Right Button
-    self.rightBarButton = [[CoolBarButtonItem alloc] initCustomButtonWithImage:[UIImage imageNamed:@"32-Cog"] frame:CGRectMake(0, 0, 42.0, 30.0) insets:UIEdgeInsetsMake(5.0, 11.0, 5.0, 11.0) target:self action:@selector(alertActionSheet)];
-    self.rightBarButton.accessibilityLabel = NSLocalizedString(@"Event Actions", nil);
-    self.rightBarButton.accessibilityTraits = UIAccessibilityTraitSummaryElement;
-    self.navigationItem.rightBarButtonItem = self.rightBarButton;
 }
 
 - (void)didReceiveMemoryWarning
@@ -130,6 +127,15 @@
     }];
 }
 
+#pragma mark - Private Methods
+
+- (void)loadMenuButton {
+    self.rightBarButton = [[CoolBarButtonItem alloc] initCustomButtonWithImage:[UIImage imageNamed:@"32-Cog"] frame:CGRectMake(0, 0, 42.0, 30.0) insets:UIEdgeInsetsMake(5.0, 11.0, 5.0, 11.0) target:self action:@selector(alertActionSheet)];
+    self.rightBarButton.accessibilityLabel = NSLocalizedString(@"Actions", nil);
+    self.rightBarButton.accessibilityTraits = UIAccessibilityTraitSummaryElement;
+    self.navigationItem.rightBarButtonItem = self.rightBarButton;
+}
+
 #pragma mark - ActionSheet Methods
 
 - (void)alertActionSheet {
@@ -139,9 +145,7 @@
     UIActionSheet *actionSheet;
     
     if ([[HumanToken sharedInstance] isMemberAuthenticated]) {
-        actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Actions", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"Event details", nil), NSLocalizedString(@"Send feedback", nil), NSLocalizedString(@"Exit event", nil), nil];
-    } else {
-        actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Actions", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"Event details", nil), NSLocalizedString(@"Exit event", nil), nil];
+        actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Actions", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil otherButtonTitles: NSLocalizedString(@"Send feedback", nil), nil];
     }
     
     [actionSheet showFromBarButtonItem:self.rightBarButton animated:YES];
@@ -165,21 +169,6 @@
         
         [self loadData];
         
-    } else if ([title isEqualToString:NSLocalizedString(@"Event details", nil)]) {
-        // Load our reader
-        FrontViewController *fvc = [[FrontViewController alloc] initWithNibName:@"FrontViewController" bundle:nil];
-        UINavigationController *nfvc = [[UINavigationController alloc] initWithRootViewController:fvc];
-        
-        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-            nfvc.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-            nfvc.modalPresentationStyle = UIModalPresentationCurrentContext;
-        } else {
-            nfvc.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-            nfvc.modalPresentationStyle = UIModalPresentationFormSheet;
-        }
-        
-        [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:nfvc animated:YES completion:nil];
-        
     } else if ([title isEqualToString:NSLocalizedString(@"Send feedback", nil)]) {
         // Load our reader
         FeedbackViewController *fvc = [[FeedbackViewController alloc] initWithNibName:@"FeedbackViewController" bundle:nil];
@@ -197,12 +186,6 @@
         
         [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:nfvc animated:YES completion:nil];
         
-    } else if ([title isEqualToString:NSLocalizedString(@"Exit event", nil)]) {
-        // Remove the tokenID and enterprise
-        [[EventToken sharedInstance] removeEvent];
-        
-        // Check for it again
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"verify" object:nil userInfo:@{@"type": @"enterprise"}];
     }
 }
 

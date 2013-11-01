@@ -37,7 +37,7 @@
         self.questionData = [NSMutableArray array];
         
         // Add notification observer for new orders
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cleanData) name:@"scheduleCurrentState" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cleanData) name:@"eventCurrentState" object:nil];
     }
     return self;
 }
@@ -256,7 +256,7 @@
 - (UITableViewCell *)tableView:(UITableView *)aTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     static NSString *CustomCellIdentifier = @"CustomCellIdentifier";
-    UITableViewCell *cell = [aTableView dequeueReusableCellWithIdentifier: CustomCellIdentifier];
+    UITableViewCell *cell = [aTableView dequeueReusableCellWithIdentifier:CustomCellIdentifier];
     
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CustomCellIdentifier];
@@ -332,16 +332,10 @@
         // Reload all table data
         [self.tableView reloadData];
         
-        [refreshControl endRefreshing];
-        
     } else if ([apiController.method isEqualToString:@"upvoteQuestion"]) {
         // Reload all table data
         [self.tableView reloadData];
     }
-}
-
-- (void)apiController:(InEventAPIController *)apiController didFailWithError:(NSError *)error {
-    [super apiController:apiController didFailWithError:error];
     
     [refreshControl endRefreshing];
 }
@@ -360,6 +354,14 @@
         // Load the UI controls
         [super apiController:apiController didSaveForLaterWithError:error];
     }
+    
+    [refreshControl endRefreshing];
+}
+
+- (void)apiController:(InEventAPIController *)apiController didFailWithError:(NSError *)error {
+    [super apiController:apiController didFailWithError:error];
+    
+    [refreshControl endRefreshing];
 }
 
 @end

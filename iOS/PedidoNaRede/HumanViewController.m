@@ -269,7 +269,7 @@
     }
     
     // Update the current state of the schedule controller
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"scheduleCurrentState" object:nil userInfo:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"eventCurrentState" object:nil userInfo:nil];
     
     // Load the login form
     [self checkSession];
@@ -278,14 +278,14 @@
 - (void)connectWithFacebook {
     if (!FBSession.activeSession.isOpen) {
         
-        [FBSession openActiveSessionWithReadPermissions:@[@"basic_info", @"email"]
-                                           allowLoginUI:NO
-                                      completionHandler:^(FBSession *session, FBSessionState state, NSError *error) {}];
+        // Create our session
+        FBSession *session = [[FBSession alloc] initWithAppID:nil permissions:@[@"basic_info", @"email"] urlSchemeSuffix:nil tokenCacheStrategy:nil];
         
-        [FBSession openActiveSessionWithPublishPermissions:@[@"publish_stream"]
-                                           defaultAudience:FBSessionDefaultAudienceEveryone
-                                              allowLoginUI:NO
-                                         completionHandler:
+        // Set the active session
+        [FBSession setActiveSession:session];
+        
+        // Open the session
+        [session openWithBehavior:FBSessionLoginBehaviorUseSystemAccountIfPresent completionHandler:
          ^(FBSession *session, FBSessionState state, NSError *error) {}];
     }
 }

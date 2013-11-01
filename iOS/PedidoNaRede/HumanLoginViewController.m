@@ -97,10 +97,10 @@
 	_personEmail.placeholder = NSLocalizedString(@"Email", nil);
 	_personEmail.textColor = [ColorThemeController textColor];
     // Bottom Border
-    CALayer *bottomBorder = [CALayer layer];
-    bottomBorder.frame = CGRectMake(0.0f, _personEmail.frame.size.height - 1.0f, _personEmail.frame.size.width, 1.0f);
-    bottomBorder.backgroundColor = [[ColorThemeController tableViewCellBorderColor] CGColor];
-    [_personEmail.layer addSublayer:bottomBorder];
+    UIView *emailBorder = [[UIView alloc] initWithFrame:CGRectMake(0.0f, _personEmail.frame.size.height - 1.0f, _personEmail.frame.size.width, 1.0f)];
+    emailBorder.backgroundColor = [ColorThemeController tableViewCellBorderColor];
+    emailBorder.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    [_personEmail addSubview:emailBorder];
     
 	// Person name field
     _personName.backgroundColor = [UIColor clearColor];
@@ -112,10 +112,10 @@
 	_personName.placeholder = NSLocalizedString(@"Name", nil);
 	_personName.textColor = [ColorThemeController textColor];
     // Bottom Border
-    bottomBorder = [CALayer layer];
-    bottomBorder.frame = CGRectMake(0.0f, _personName.frame.size.height - 1.0f, _personName.frame.size.width, 1.0f);
-    bottomBorder.backgroundColor = [[ColorThemeController tableViewCellBorderColor] CGColor];
-    [_personName.layer addSublayer:bottomBorder];
+    UIView *nameBorder = [[UIView alloc] initWithFrame:CGRectMake(0.0f, _personEmail.frame.size.height - 1.0f, _personEmail.frame.size.width, 1.0f)];
+    nameBorder.backgroundColor = [ColorThemeController tableViewCellBorderColor];
+    nameBorder.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    [_personName addSubview:nameBorder];
     
 	// Person password field
     _personPassword.backgroundColor = [UIColor clearColor];
@@ -320,7 +320,7 @@
             [currentInstallation saveEventually];
             
             // Update the current state of the schedule controller
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"scheduleCurrentState" object:nil userInfo:nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"eventCurrentState" object:nil userInfo:nil];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"verify" object:nil userInfo:@{@"type": @"menu"}];
             
             // Hide box

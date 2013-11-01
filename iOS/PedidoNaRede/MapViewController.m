@@ -287,8 +287,8 @@
 
 - (UITableViewCell *)tableView:(UITableView *)aTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    static NSString * CustomCellIdentifier = @"CustomCellIdentifier";
-    UITableViewCell * cell = [aTableView dequeueReusableCellWithIdentifier: CustomCellIdentifier];
+    static NSString *CustomCellIdentifier = @"CustomCellIdentifier";
+    UITableViewCell *cell = [aTableView dequeueReusableCellWithIdentifier:CustomCellIdentifier];
     
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CustomCellIdentifier];
@@ -317,6 +317,12 @@
     [self reloadMap];
     // Reload all table data
     [self.tableView reloadData];
+    
+    [refreshControl endRefreshing];
+}
+
+- (void)apiController:(InEventAPIController *)apiController didSaveForLaterWithError:(NSError *)error {
+    [super apiController:apiController didSaveForLaterWithError:error];
     
     [refreshControl endRefreshing];
 }

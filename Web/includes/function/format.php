@@ -30,8 +30,7 @@
 					if (in_array($field, $secretFields) == FALSE) {
 						$notificationText["data"][$i][$field] = utf8_encode($row[$j]);
 					}
-				}
-				
+				}	
 			}
 		}
 		

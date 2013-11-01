@@ -45,7 +45,7 @@
     [self.menuTableView setBackgroundView:tableBgView];
     [self.menuTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     
-    _headers = @[NSLocalizedString(@"Your Account", nil), NSLocalizedString(@"General", nil), NSLocalizedString(@"About", nil)];
+    _headers = @[NSLocalizedString(@"Your Account", nil), NSLocalizedString(@"Event", nil), NSLocalizedString(@"Tools", nil), NSLocalizedString(@"About Us", nil)];
     
     // Selected the localization controller
     [self setSelectedIndex:1];
@@ -136,10 +136,14 @@
             break;
             
         case 1:
-            return 4;
+            return 1;
             break;
             
         case 2:
+            return 4;
+            break;
+            
+        case 3:
             return 1;
             break;
             
@@ -214,8 +218,8 @@
     }
     
     // Accessory view
-    if ((indexPath.section <= 1 && self.selectedIndex == indexPath.row + indexPath.section) ||
-        (indexPath.section == 2 && self.selectedIndex == [tableView numberOfSections])) {
+    if ((indexPath.section <= 2 && self.selectedIndex == indexPath.row + indexPath.section) ||
+        (indexPath.section == 3 && self.selectedIndex == [tableView numberOfSections])) {
         [cell setAccessoryView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"16-Check"]]];
     } else {
         [cell setAccessoryView:nil];
@@ -226,11 +230,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    if (indexPath.section <= 2) {
-        // We must transform the current indexPath into something that the library can read
-        NSIndexPath *transformed = [NSIndexPath indexPathForRow:[self calculateIndex:indexPath] inSection:0];
-        [super tableView:tableView didSelectRowAtIndexPath:transformed];
-    }
+    // We must transform the current indexPath into something that the library can read
+    NSIndexPath *transformed = [NSIndexPath indexPathForRow:[self calculateIndex:indexPath] inSection:0];
+    [super tableView:tableView didSelectRowAtIndexPath:transformed];
     
     // Reload all sections
     [tableView reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, [tableView numberOfSections] - 1)] withRowAnimation:UITableViewRowAnimationAutomatic];

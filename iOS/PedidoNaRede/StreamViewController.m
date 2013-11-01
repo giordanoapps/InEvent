@@ -19,11 +19,11 @@
 #import "EventToken.h"
 #import "GAI.h"
 #import "CoolBarButtonItem.h"
+#import "InEventAPI.h"
 
 @interface StreamViewController () {
     UIRefreshControl *refreshControl;
     NSArray *posts;
-    FBRequestConnection *requestConnection;
     NSCache *imagesCache;
 }
 
@@ -54,13 +54,17 @@
     // Navigation Delegate
     self.navigationController.delegate = self;
     
+    // Navigation Bar
+    [self loadPhotoButton];
+    
     // Hash View
     _hashView.textColor = [ColorThemeController tableViewCellTextHighlightedColor];
     
     // Text Field
-    _searchField.leftView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 14.0, 30.0)];
-    _searchField.leftViewMode = UITextFieldViewModeAlways;
     [_searchField addObserver:self forKeyPath:@"text" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:NULL];
+    [_searchField setFrame:CGRectMake(_searchField.frame.origin.x, _searchField.frame.origin.y, _searchField.frame.size.width, _searchField.frame.size.height * 1.5f)];
+    _searchField.leftView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, _hashView.frame.size.width * 1.8f, _searchField.frame.size.height)];
+    _searchField.leftViewMode = UITextFieldViewModeAlways;
     [_searchField setText:[[EventToken sharedInstance] nick]];
     
     // Table View
@@ -72,12 +76,6 @@
     refreshControl.tintColor = [UIColor grayColor];
     [refreshControl addTarget:self action:@selector(reloadData) forControlEvents:UIControlEventValueChanged];
     [self.tableView addSubview:refreshControl];
-    
-    // Right Button
-    self.rightBarButton = [[CoolBarButtonItem alloc] initCustomButtonWithImage:[UIImage imageNamed:@"32-Image"] frame:CGRectMake(0, 0, 42.0, 30.0) insets:UIEdgeInsetsMake(5.0, 11.0, 5.0, 11.0) target:self action:@selector(alertActionSheet)];
-    self.rightBarButton.accessibilityLabel = NSLocalizedString(@"Send photo", nil);
-    self.rightBarButton.accessibilityTraits = UIAccessibilityTraitSummaryElement;
-    self.navigationItem.rightBarButtonItem = self.rightBarButton;
 }
 
 - (void)didReceiveMemoryWarning
@@ -86,12 +84,28 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - Loader
+
+- (void)loadData {
+    [self forceDataReload:NO];
+}
+
+- (void)reloadData {
+    [self forceDataReload:YES];
+}
+
+- (void)forceDataReload:(BOOL)forcing {
+    
+    if ([[HumanToken sharedInstance] isMemberAuthenticated]) {
+        [[[InEventPhotoAPIController alloc] initWithDelegate:self forcing:forcing] getPhotosAtEvent:[[EventToken sharedInstance] eventID] withTokenID:[[HumanToken sharedInstance] tokenID]];
+    }
+}
 #pragma mark - Text Field Methods
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     
     if (object == _searchField) {
-        [self sendRequests];
+        [self reloadData];
     } else {
         [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
     }
@@ -100,13 +114,8 @@
 #pragma mark - Facebook Methods
 
 - (void)sendRequests {
-    FBRequestConnection *newConnection = [[FBRequestConnection alloc] init];
     
     FBRequestHandler handler = ^(FBRequestConnection *connection, id result, NSError *error) {
-        // output the results of the request
-        if (requestConnection && connection != requestConnection) return;
-        
-        requestConnection = nil;
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         
         if (error) {
@@ -122,18 +131,27 @@
             // Stop refreshing
             [refreshControl endRefreshing];
         }
-
     };
 
-    // Make the API request that uses FQL
-    FBRequest *request = [[FBRequest alloc] initWithSession:FBSession.activeSession graphPath:[NSString stringWithFormat:@"/search?q=pedro%@&type=post", _searchField.text] parameters:nil HTTPMethod:@"GET"];
-                          
-    [newConnection addRequest:request completionHandler:handler];
+    // Load Facebook hashtags
+    [FBRequestConnection startWithGraphPath:[NSString stringWithFormat:@"/search?q=%@&type=post", _searchField.text] parameters:nil HTTPMethod:@"GET" completionHandler:handler];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    
-    [requestConnection cancel];
-    requestConnection = newConnection;
-    [newConnection start];
+}
+
+#pragma mark - Bar Methods
+
+- (void)loadPhotoButton {
+    // Right Button
+    self.rightBarButton = [[CoolBarButtonItem alloc] initCustomButtonWithImage:[UIImage imageNamed:@"32-Image"] frame:CGRectMake(0, 0, 42.0, 30.0) insets:UIEdgeInsetsMake(5.0, 11.0, 5.0, 11.0) target:self action:@selector(alertActionSheet)];
+    self.rightBarButton.accessibilityLabel = NSLocalizedString(@"Send photo", nil);
+    self.rightBarButton.accessibilityTraits = UIAccessibilityTraitSummaryElement;
+    self.navigationItem.rightBarButtonItem = self.rightBarButton;
+}
+
+- (void)loadDoneButton {
+    // Right Button
+    self.rightBarButton = self.navigationItem.rightBarButtonItem;
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(removePersonView)];
 }
 
 #pragma mark - ActionSheet Methods
@@ -219,16 +237,17 @@
 
 - (UITableViewCell *)tableView:(UITableView *)aTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    static NSString * CustomCellIdentifier = @"CustomCellIdentifier";
-    StreamViewCell * cell = (StreamViewCell *)[aTableView dequeueReusableCellWithIdentifier:CustomCellIdentifier];
+    static NSString *CustomCellIdentifier = @"CustomCellIdentifier";
+    StreamViewCell *cell = (StreamViewCell *)[aTableView dequeueReusableCellWithIdentifier:CustomCellIdentifier];
     
     if (cell == nil) {
         [aTableView registerNib:[UINib nibWithNibName:@"StreamViewCell" bundle:nil] forCellReuseIdentifier:CustomCellIdentifier];
-        cell =  (StreamViewCell *)[aTableView dequeueReusableCellWithIdentifier:CustomCellIdentifier];
+        cell = (StreamViewCell *)[aTableView dequeueReusableCellWithIdentifier:CustomCellIdentifier];
     }
     
     NSDictionary *dictionary = [posts objectAtIndex:indexPath.row];
-    [cell.picture setImageWithURL:[NSURL URLWithString:[[dictionary objectForKey:@"picture"] stringByReplacingOccurrencesOfString:@"_s." withString:@"_n."]] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
+    
+    [cell.picture setImageWithURL:[NSURL URLWithString:[[dictionary objectForKey:@"url"] stringByReplacingOccurrencesOfString:@"_s." withString:@"_n."]] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
         
         // Save the image
         [imagesCache setObject:image forKey:indexPath];
@@ -269,8 +288,6 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
-    
-    [self sendRequests];
     
     return YES;
 }
@@ -318,37 +335,60 @@
         NSData *dataOptions = [NSJSONSerialization dataWithJSONObject:privacy options:0 error:nil];
         [params setObject:[[NSString alloc] initWithData:dataOptions encoding:NSUTF8StringEncoding] forKey:@"privacy"];
         
-        FBRequestHandler handler = ^(FBRequestConnection *connection, id result, NSError *error) {
+        FBRequestHandler postHandler = ^(FBRequestConnection *connection, id result, NSError *error) {
             
-            [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-            
-            if (error) {
-                //showing an alert for failure
-                //             [self alertWithTitle:@"Facebook" message:@"Unable to share the photo please try later."];
+            if (!error) {
+                
+                FBRequestHandler detailsHandler = ^(FBRequestConnection *connection, id result, NSError *error) {
+                    
+                    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+                    
+                    if (!error) {
+                        [[[InEventPhotoAPIController alloc] initWithDelegate:self forcing:YES] postPhoto:[(NSDictionary *)result objectForKey:@"source"] AtEvent:[[EventToken sharedInstance] eventID] withTokenID:[[HumanToken sharedInstance] tokenID]];
+                    } else {
+                        AlertView *alertView = [[AlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"Your photo wasn't posted publicly!", nil) delegate:self cancelButtonTitle:nil otherButtonTitle:NSLocalizedString(@"Ok", nil)];
+                        [alertView show];
+                    }
+    
+                };
+                
+                // Get details about the facebook photo
+                [FBRequestConnection startWithGraphPath:[NSString stringWithFormat:@"%@", [(NSDictionary *)result objectForKey:@"id"]] completionHandler:detailsHandler];
+
             } else {
-                //showing an alert for success
-                //             [UIUtils alertWithTitle:@"Facebook" message:@"Shared the photo successfully"];
+                AlertView *alertView = [[AlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"Your photo couldn't be posted to Facebook!", nil) delegate:self cancelButtonTitle:nil otherButtonTitle:NSLocalizedString(@"Ok", nil)];
+                [alertView show];
             }
         };
         
-        // Make the Facebook request
-//        FBRequestConnection *connection = [[FBRequestConnection alloc] init];
-//        FBRequest *request = [[FBRequest alloc] initWithSession:FBSession.activeSession graphPath:@"me/photos" parameters:params HTTPMethod:@"POST"];
-        [FBRequestConnection startForUploadPhoto:composeViewController.attachmentImage completionHandler:handler];
-    
-//    requestWithGraphPath:@"me/photos"
-//                                         andParams:params
-//                                     andHttpMethod:@"POST"
-//                                      andDelegate:self];
-//        [connection addRequest:request completionHandler:handler];
-//        [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-//        [connection start];
+        // Post Facebook photo
+        [FBRequestConnection startWithGraphPath:@"me/photos" parameters:params HTTPMethod:@"POST" completionHandler:postHandler];
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     }
 }
 
 #pragma mark - APIController Delegate
 
 - (void)apiController:(InEventAPIController *)apiController didLoadDictionaryFromServer:(NSDictionary *)dictionary {
+    
+    if ([apiController.method isEqualToString:@"getPhotos"]) {
+        // Assign the data object to the groups
+        posts = [NSMutableArray arrayWithArray:[dictionary objectForKey:@"data"]];
+
+        // Reload all table data
+        [self.tableView reloadData];
+        
+    } else if ([apiController.method isEqualToString:@"post"]) {
+        
+        // Reload all table data
+        [self.tableView reloadData];
+    }
+    
+    [refreshControl endRefreshing];
+}
+
+- (void)apiController:(InEventAPIController *)apiController didSaveForLaterWithError:(NSError *)error {
+    [super apiController:apiController didSaveForLaterWithError:error];
     
     [refreshControl endRefreshing];
 }

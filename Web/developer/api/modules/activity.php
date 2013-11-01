@@ -52,14 +52,18 @@
 			// if ($globalDev == 0) pushActivityCreation($eventID, $activityID);
 
 			// Return its data
-			if ($format == "json") {
-				$data["activityID"] = $activityID;
-				echo json_encode($data);
-			} elseif ($format == "html") {
-				$result = getActivitiesForMemberAtActivityQuery($activityID, $core->memberID);
-				printAgendaItem(mysql_fetch_assoc($result), "member");
+			if ($insert) {
+				if ($format == "json") {
+					$data["activityID"] = $activityID;
+					echo json_encode($data);
+				} elseif ($format == "html") {
+					$result = getActivitiesForMemberAtActivityQuery($activityID, $core->memberID);
+					printAgendaItem(mysql_fetch_assoc($result), "member");
+				} else {
+					http_status_code(405, "this format is not available");
+				}
 			} else {
-				http_status_code(405, "this format is not available");
+				http_status_code(500, "insert inside activity has failed");
 			}
 
 		} else {
@@ -320,14 +324,18 @@
 			if ($globalDev == 0) pushActivityRemove(getEventForActivity($activityID), $activityID);
 
 			// Return its data
-			if ($format == "json") {
-				$data["activityID"] = $activityID;
-				echo json_encode($data);
-			} elseif ($format == "html") {
-				$result = getActivitiesForMemberAtActivityQuery($activityID, $core->memberID);
-				printAgendaItem(mysql_fetch_assoc($result), "member");
+			if ($delete) {
+				if ($format == "json") {
+					$data["activityID"] = $activityID;
+					echo json_encode($data);
+				} elseif ($format == "html") {
+					$result = getActivitiesForMemberAtActivityQuery($activityID, $core->memberID);
+					printAgendaItem(mysql_fetch_assoc($result), "member");
+				} else {
+					http_status_code(405, "this format is not available");
+				}
 			} else {
-				http_status_code(405, "this format is not available");
+				http_status_code(500, "delete inside activity has failed");
 			}
 
 		} else {

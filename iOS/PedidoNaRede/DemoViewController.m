@@ -37,9 +37,9 @@
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Enter", nil) style:UIBarButtonItemStyleDone target:self action:@selector(showLogin)];
     
     // We need to setup up our content here
-    _images = @[@"64-Marker", @"64-Footprints", @"64-Cloud-Download", @"64-Create-_-Write", @"64-Balloons"];
-    _titles = @[NSLocalizedString(@"Welcome!", nil), NSLocalizedString(@"Timeline", nil), NSLocalizedString(@"Notifications", nil), NSLocalizedString(@"Questions!", nil), NSLocalizedString(@"Ready?", nil)];
-    _descriptions = @[NSLocalizedString(@"InEvent brings a whole new experience to your event", nil), NSLocalizedString(@"A timeline based on your previous choices!", nil), NSLocalizedString(@"Get updates instantly!", nil), NSLocalizedString(@"Post comments on every activity you go!", nil), NSLocalizedString(@"Let's go to your first event", nil)];
+    _images = @[@"256-Earth", @"256-Calendar", @"256-Picture", @"256-Comment", @"256-Tick"];
+    _titles = @[NSLocalizedString(@"Welcome!", nil), NSLocalizedString(@"Timeline", nil), NSLocalizedString(@"Photos", nil), NSLocalizedString(@"Groups", nil), NSLocalizedString(@"Ready?", nil)];
+    _descriptions = @[NSLocalizedString(@"InEvent brings a whole new experience to your event.", nil), NSLocalizedString(@"A timeline based on your activities!", nil), NSLocalizedString(@"Easily share photos among participants!", nil), NSLocalizedString(@"Join or create a group, a quick way to talk about topics of your choice!", nil), NSLocalizedString(@"Let's go to your first event.", nil)];
     
     _pageControl.numberOfPages = [_titles count];
 }

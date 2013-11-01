@@ -178,12 +178,6 @@
     [refreshControl endRefreshing];
 }
 
-- (void)apiController:(InEventAPIController *)apiController didFailWithError:(NSError *)error {
-    [super apiController:apiController didFailWithError:error];
-    
-    [refreshControl endRefreshing];
-}
-
 - (void)apiController:(InEventAPIController *)apiController didSaveForLaterWithError:(NSError *)error {
     
     if ([apiController.method isEqualToString:@"getPeople"]) {
@@ -196,6 +190,14 @@
         // Load the UI controls
         [super apiController:apiController didSaveForLaterWithError:error];
     }
+    
+    [refreshControl endRefreshing];
+}
+
+- (void)apiController:(InEventAPIController *)apiController didFailWithError:(NSError *)error {
+    [super apiController:apiController didFailWithError:error];
+    
+    [refreshControl endRefreshing];
 }
 
 @end
