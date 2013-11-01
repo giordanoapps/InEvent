@@ -9,7 +9,8 @@
 #import <FacebookSDK/FacebookSDK.h>
 #import <Social/Social.h>
 #import "StreamViewController.h"
-#import "StreamViewCell.h"
+#import "StreamTableViewCell.h"
+#import "StreamCollectionViewCell.h"
 #import "AppDelegate.h"
 #import "UtilitiesController.h"
 #import "UIViewController+Present.h"
@@ -67,15 +68,29 @@
     _searchField.leftViewMode = UITextFieldViewModeAlways;
     [_searchField setText:[[EventToken sharedInstance] nick]];
     
-    // Table View
-    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    _tableView.backgroundColor = [ColorThemeController tableViewBackgroundColor];
     
     // Refresh Control
     refreshControl = [[UIRefreshControl alloc] init];
     refreshControl.tintColor = [UIColor grayColor];
     [refreshControl addTarget:self action:@selector(reloadData) forControlEvents:UIControlEventValueChanged];
     [self.tableView addSubview:refreshControl];
+    
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        // Table View
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        self.tableView.backgroundColor = [ColorThemeController tableViewBackgroundColor];
+        [self.tableView addSubview:refreshControl];
+        
+    } else {
+        // Collection View
+        self.collectionView.alwaysBounceVertical = YES;
+        self.collectionView.backgroundColor = [ColorThemeController tableViewBackgroundColor];
+        [self.collectionView registerNib:[UINib nibWithNibName:@"StreamCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"StreamCollectionViewCell"];
+        [self.collectionView addSubview:refreshControl];
+    }
+    
+    // Load data
+    [self loadData];
 }
 
 - (void)didReceiveMemoryWarning
@@ -105,7 +120,7 @@
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     
     if (object == _searchField) {
-        [self reloadData];
+//        [self reloadData];
     } else {
         [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
     }
@@ -241,11 +256,11 @@
 - (UITableViewCell *)tableView:(UITableView *)aTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     static NSString *CustomCellIdentifier = @"CustomCellIdentifier";
-    StreamViewCell *cell = (StreamViewCell *)[aTableView dequeueReusableCellWithIdentifier:CustomCellIdentifier];
+    StreamTableViewCell *cell = (StreamTableViewCell *)[aTableView dequeueReusableCellWithIdentifier:CustomCellIdentifier];
     
     if (cell == nil) {
-        [aTableView registerNib:[UINib nibWithNibName:@"StreamViewCell" bundle:nil] forCellReuseIdentifier:CustomCellIdentifier];
-        cell = (StreamViewCell *)[aTableView dequeueReusableCellWithIdentifier:CustomCellIdentifier];
+        [aTableView registerNib:[UINib nibWithNibName:@"StreamTableViewCell" bundle:nil] forCellReuseIdentifier:CustomCellIdentifier];
+        cell = (StreamTableViewCell *)[aTableView dequeueReusableCellWithIdentifier:CustomCellIdentifier];
     }
     
     NSDictionary *dictionary = [posts objectAtIndex:indexPath.row];
@@ -257,37 +272,57 @@
         
         // Reload it
         [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    }];
+    
+    return cell;
+}
+
+#pragma mark - Collection View Data Source
+
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+    return 1;
+}
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    return [posts count];
+}
+
+#define VIEW_HEIGHT 200.0f
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if ([imagesCache objectForKey:indexPath] != NULL) {
+        CGSize size = ((UIImage *)[imagesCache objectForKey:indexPath]).size;
+        return CGSizeMake(VIEW_HEIGHT, (VIEW_HEIGHT / size.width) * size.height);
+    } else {
+        return CGSizeMake(VIEW_HEIGHT, 1.0f);
+    }
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+    StreamCollectionViewCell *cell = (StreamCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"StreamCollectionViewCell" forIndexPath:indexPath];
+    
+    NSDictionary *dictionary = [posts objectAtIndex:indexPath.row];
+    
+    [cell.picture setImageWithURL:[NSURL URLWithString:[[dictionary objectForKey:@"url"] stringByReplacingOccurrencesOfString:@"_s." withString:@"_n."]] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
+        
+        // Save the image
+        [imagesCache setObject:image forKey:indexPath];
+        
+        // Reload it
+        [self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
         
     }];
     
     return cell;
 }
 
-//- (void)tableView:(UITableView *)aTableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-//    
-//    ScheduleItemViewController *sivc;
-//    
-//    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-//        sivc = [[ScheduleItemViewController alloc] initWithNibName:@"ScheduleItemViewController" bundle:nil];
-//        [sivc setMoveKeyboardRatio:0.0f];
-//    } else {
-//        // Find the sibling navigation controller first child and send the appropriate data
-//        sivc = (ScheduleItemViewController *)[[[self.splitViewController.viewControllers lastObject] viewControllers] objectAtIndex:0];
-//        [sivc setMoveKeyboardRatio:0.5f];
-//    }
-//    
-//    NSDictionary *dictionary = [[posts objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
-//    
-//    [sivc setTitle:[[dictionary objectForKey:@"name"] stringByDecodingHTMLEntities]];
-//    [sivc setActivityData:dictionary];
-//    
-//    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-//        [self.navigationController pushViewController:sivc animated:YES];
-//        [aTableView deselectRowAtIndexPath:indexPath animated:YES];
-//    }
-//}
-
 #pragma mark - Text Field Delegate
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    return NO;
+}
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
@@ -352,7 +387,6 @@
                         AlertView *alertView = [[AlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"Your photo wasn't posted publicly!", nil) delegate:self cancelButtonTitle:nil otherButtonTitle:NSLocalizedString(@"Ok", nil)];
                         [alertView show];
                     }
-    
                 };
                 
                 // Get details about the facebook photo
@@ -375,16 +409,18 @@
 - (void)apiController:(InEventAPIController *)apiController didLoadDictionaryFromServer:(NSDictionary *)dictionary {
     
     if ([apiController.method isEqualToString:@"getPhotos"]) {
-        // Assign the data object to the groups
+        // Assign the data object to the photos
         posts = [NSMutableArray arrayWithArray:[dictionary objectForKey:@"data"]];
 
         // Reload all table data
-        [self.tableView reloadData];
+        ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) ? [self.tableView reloadData] : [self.collectionView reloadData];
         
     } else if ([apiController.method isEqualToString:@"post"]) {
+        // Assign the data object to the photos
+        posts = [NSMutableArray arrayWithArray:[dictionary objectForKey:@"data"]];
         
         // Reload all table data
-        [self.tableView reloadData];
+        ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) ? [self.tableView reloadData] : [self.collectionView reloadData];
     }
     
     [refreshControl endRefreshing];

@@ -115,8 +115,8 @@
 		EB59020917D5D83A0032143C /* MarketplaceViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB59020717D5D83A0032143C /* MarketplaceViewCell.xib */; };
 		EB5FD40B171ED1EB00B76552 /* CustomPopoverBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB5FD40A171ED1EB00B76552 /* CustomPopoverBackgroundView.m */; };
 		EB60420B17B8B6A300D95012 /* 64-Flip-Clock.png in Resources */ = {isa = PBXBuildFile; fileRef = EB60420A17B8B6A300D95012 /* 64-Flip-Clock.png */; };
-		EB617C2E1808D0F5004F39D2 /* StreamViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EB617C2D1808D0F5004F39D2 /* StreamViewCell.m */; };
-		EB617C301808D107004F39D2 /* StreamViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB617C2F1808D107004F39D2 /* StreamViewCell.xib */; };
+		EB617C2E1808D0F5004F39D2 /* StreamTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EB617C2D1808D0F5004F39D2 /* StreamTableViewCell.m */; };
+		EB617C301808D107004F39D2 /* StreamTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB617C2F1808D107004F39D2 /* StreamTableViewCell.xib */; };
 		EB6749FC1749A5F200748549 /* IntelligentSplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB6749FB1749A5F200748549 /* IntelligentSplitViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		EB73E9A416AC912A000A9039 /* UtilitiesController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB73E9A316AC912A000A9039 /* UtilitiesController.m */; };
 		EB78EF6C17559B0C0016B527 /* UIImage+ResizeAndCrop.m in Sources */ = {isa = PBXBuildFile; fileRef = EB78EF6B17559B0C0016B527 /* UIImage+ResizeAndCrop.m */; };
@@ -297,9 +297,7 @@
 		EBD6627617FE401F00B190E2 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = EBD6627517FE401F00B190E2 /* libz.dylib */; };
 		EBD6627817FE402900B190E2 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBD6627717FE402900B190E2 /* OpenGLES.framework */; };
 		EBD6FE3D180645A6006D0E73 /* StreamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD6FE3B180645A6006D0E73 /* StreamViewController.m */; };
-		EBD6FE3E180645A6006D0E73 /* StreamViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBD6FE3C180645A6006D0E73 /* StreamViewController.xib */; };
-		EBD6FE44180646B6006D0E73 /* StreamDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD6FE42180646B6006D0E73 /* StreamDetailViewController.m */; };
-		EBD6FE45180646B6006D0E73 /* StreamDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBD6FE43180646B6006D0E73 /* StreamDetailViewController.xib */; };
+		EBD6FE3E180645A6006D0E73 /* StreamViewController~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBD6FE3C180645A6006D0E73 /* StreamViewController~iphone.xib */; };
 		EBD6FE4718064B24006D0E73 /* 16-Image-2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBD6FE4618064B24006D0E73 /* 16-Image-2@2x.png */; };
 		EBD6FE4918064B51006D0E73 /* 16-Image-2.png in Resources */ = {isa = PBXBuildFile; fileRef = EBD6FE4818064B51006D0E73 /* 16-Image-2.png */; };
 		EBD6FE4D18065501006D0E73 /* 32-Image.png in Resources */ = {isa = PBXBuildFile; fileRef = EBD6FE4C18065501006D0E73 /* 32-Image.png */; };
@@ -308,10 +306,13 @@
 		EBD7BB6F182240A800C17556 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBD7BB6E182240A800C17556 /* MessageUI.framework */; };
 		EBD7BB7118239D1A00C17556 /* 256-Picture.png in Resources */ = {isa = PBXBuildFile; fileRef = EBD7BB7018239D1A00C17556 /* 256-Picture.png */; };
 		EBD7BB7318239D5100C17556 /* 256-Calendar.png in Resources */ = {isa = PBXBuildFile; fileRef = EBD7BB7218239D5100C17556 /* 256-Calendar.png */; };
-		EBD7BB7518239DCC00C17556 /* 256-Comment.png in Resources */ = {isa = PBXBuildFile; fileRef = EBD7BB7418239DCC00C17556 /* 256-Comment.png */; };
 		EBD7BB7718239E0C00C17556 /* 256-Tick.png in Resources */ = {isa = PBXBuildFile; fileRef = EBD7BB7618239E0C00C17556 /* 256-Tick.png */; };
 		EBD7BB7918239E8700C17556 /* 256-Earth.png in Resources */ = {isa = PBXBuildFile; fileRef = EBD7BB7818239E8700C17556 /* 256-Earth.png */; };
 		EBD7BB7B1823A32000C17556 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBD7BB7A1823A32000C17556 /* FacebookSDK.framework */; };
+		EBD7BB80182407C200C17556 /* StreamCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD7BB7F182407C200C17556 /* StreamCollectionViewCell.m */; };
+		EBD7BB821824086F00C17556 /* StreamCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBD7BB811824086F00C17556 /* StreamCollectionViewCell.xib */; };
+		EBD7BB8418240C0600C17556 /* StreamViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBD7BB8318240C0600C17556 /* StreamViewController~ipad.xib */; };
+		EBD7BB8618243A7500C17556 /* 256-Users.png in Resources */ = {isa = PBXBuildFile; fileRef = EBD7BB8518243A7500C17556 /* 256-Users.png */; };
 		EBD8E4E917AF557A00D0F30C /* 32-Minus.png in Resources */ = {isa = PBXBuildFile; fileRef = EBD8E4E817AF557A00D0F30C /* 32-Minus.png */; };
 		EBDA918117ACB10100969A08 /* 16-Check.png in Resources */ = {isa = PBXBuildFile; fileRef = EBDA917F17ACB10100969A08 /* 16-Check.png */; };
 		EBDA918217ACB10100969A08 /* 16-Check@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBDA918017ACB10100969A08 /* 16-Check@2x.png */; };
@@ -552,9 +553,9 @@
 		EB5FD409171ED1EB00B76552 /* CustomPopoverBackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomPopoverBackgroundView.h; sourceTree = "<group>"; };
 		EB5FD40A171ED1EB00B76552 /* CustomPopoverBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomPopoverBackgroundView.m; sourceTree = "<group>"; };
 		EB60420A17B8B6A300D95012 /* 64-Flip-Clock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "64-Flip-Clock.png"; sourceTree = "<group>"; };
-		EB617C2C1808D0F5004F39D2 /* StreamViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StreamViewCell.h; path = PedidoNaRede/StreamViewCell.h; sourceTree = "<group>"; };
-		EB617C2D1808D0F5004F39D2 /* StreamViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StreamViewCell.m; path = PedidoNaRede/StreamViewCell.m; sourceTree = "<group>"; };
-		EB617C2F1808D107004F39D2 /* StreamViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = StreamViewCell.xib; path = PedidoNaRede/StreamViewCell.xib; sourceTree = "<group>"; };
+		EB617C2C1808D0F5004F39D2 /* StreamTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StreamTableViewCell.h; path = PedidoNaRede/StreamTableViewCell.h; sourceTree = "<group>"; };
+		EB617C2D1808D0F5004F39D2 /* StreamTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StreamTableViewCell.m; path = PedidoNaRede/StreamTableViewCell.m; sourceTree = "<group>"; };
+		EB617C2F1808D107004F39D2 /* StreamTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = StreamTableViewCell.xib; path = PedidoNaRede/StreamTableViewCell.xib; sourceTree = "<group>"; };
 		EB6749FA1749A5E100748549 /* IntelligentSplitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IntelligentSplitViewController.h; path = PedidoNaRede/IntelligentSplitViewController.h; sourceTree = "<group>"; };
 		EB6749FB1749A5F200748549 /* IntelligentSplitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IntelligentSplitViewController.m; path = PedidoNaRede/IntelligentSplitViewController.m; sourceTree = "<group>"; };
 		EB72497617129444001DBA06 /* CustomTabBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomTabBar.h; sourceTree = "<group>"; };
@@ -805,10 +806,7 @@
 		EBD6627717FE402900B190E2 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		EBD6FE3A180645A6006D0E73 /* StreamViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StreamViewController.h; path = PedidoNaRede/StreamViewController.h; sourceTree = "<group>"; };
 		EBD6FE3B180645A6006D0E73 /* StreamViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StreamViewController.m; path = PedidoNaRede/StreamViewController.m; sourceTree = "<group>"; };
-		EBD6FE3C180645A6006D0E73 /* StreamViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = StreamViewController.xib; path = PedidoNaRede/StreamViewController.xib; sourceTree = "<group>"; };
-		EBD6FE41180646B6006D0E73 /* StreamDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StreamDetailViewController.h; path = PedidoNaRede/StreamDetailViewController.h; sourceTree = "<group>"; };
-		EBD6FE42180646B6006D0E73 /* StreamDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StreamDetailViewController.m; path = PedidoNaRede/StreamDetailViewController.m; sourceTree = "<group>"; };
-		EBD6FE43180646B6006D0E73 /* StreamDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = StreamDetailViewController.xib; path = PedidoNaRede/StreamDetailViewController.xib; sourceTree = "<group>"; };
+		EBD6FE3C180645A6006D0E73 /* StreamViewController~iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = "StreamViewController~iphone.xib"; path = "PedidoNaRede/StreamViewController~iphone.xib"; sourceTree = "<group>"; };
 		EBD6FE4618064B24006D0E73 /* 16-Image-2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "16-Image-2@2x.png"; sourceTree = "<group>"; };
 		EBD6FE4818064B51006D0E73 /* 16-Image-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "16-Image-2.png"; sourceTree = "<group>"; };
 		EBD6FE4C18065501006D0E73 /* 32-Image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Image.png"; sourceTree = "<group>"; };
@@ -817,10 +815,14 @@
 		EBD7BB6E182240A800C17556 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		EBD7BB7018239D1A00C17556 /* 256-Picture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "256-Picture.png"; sourceTree = "<group>"; };
 		EBD7BB7218239D5100C17556 /* 256-Calendar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "256-Calendar.png"; sourceTree = "<group>"; };
-		EBD7BB7418239DCC00C17556 /* 256-Comment.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "256-Comment.png"; sourceTree = "<group>"; };
 		EBD7BB7618239E0C00C17556 /* 256-Tick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "256-Tick.png"; sourceTree = "<group>"; };
 		EBD7BB7818239E8700C17556 /* 256-Earth.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "256-Earth.png"; sourceTree = "<group>"; };
 		EBD7BB7A1823A32000C17556 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
+		EBD7BB7E182407C200C17556 /* StreamCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StreamCollectionViewCell.h; path = PedidoNaRede/StreamCollectionViewCell.h; sourceTree = "<group>"; };
+		EBD7BB7F182407C200C17556 /* StreamCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StreamCollectionViewCell.m; path = PedidoNaRede/StreamCollectionViewCell.m; sourceTree = "<group>"; };
+		EBD7BB811824086F00C17556 /* StreamCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = StreamCollectionViewCell.xib; path = PedidoNaRede/StreamCollectionViewCell.xib; sourceTree = "<group>"; };
+		EBD7BB8318240C0600C17556 /* StreamViewController~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = "StreamViewController~ipad.xib"; path = "PedidoNaRede/StreamViewController~ipad.xib"; sourceTree = "<group>"; };
+		EBD7BB8518243A7500C17556 /* 256-Users.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "256-Users.png"; sourceTree = "<group>"; };
 		EBD8E4E817AF557A00D0F30C /* 32-Minus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Minus.png"; sourceTree = "<group>"; };
 		EBDA917F17ACB10100969A08 /* 16-Check.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "16-Check.png"; sourceTree = "<group>"; };
 		EBDA918017ACB10100969A08 /* 16-Check@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "16-Check@2x.png"; sourceTree = "<group>"; };
@@ -1717,15 +1719,16 @@
 		EBD6FE3F180645B1006D0E73 /* Photos */ = {
 			isa = PBXGroup;
 			children = (
+				EBD7BB7E182407C200C17556 /* StreamCollectionViewCell.h */,
+				EBD7BB7F182407C200C17556 /* StreamCollectionViewCell.m */,
+				EBD7BB811824086F00C17556 /* StreamCollectionViewCell.xib */,
+				EB617C2C1808D0F5004F39D2 /* StreamTableViewCell.h */,
+				EB617C2D1808D0F5004F39D2 /* StreamTableViewCell.m */,
+				EB617C2F1808D107004F39D2 /* StreamTableViewCell.xib */,
 				EBD6FE3A180645A6006D0E73 /* StreamViewController.h */,
 				EBD6FE3B180645A6006D0E73 /* StreamViewController.m */,
-				EBD6FE3C180645A6006D0E73 /* StreamViewController.xib */,
-				EB617C2C1808D0F5004F39D2 /* StreamViewCell.h */,
-				EB617C2D1808D0F5004F39D2 /* StreamViewCell.m */,
-				EB617C2F1808D107004F39D2 /* StreamViewCell.xib */,
-				EBD6FE41180646B6006D0E73 /* StreamDetailViewController.h */,
-				EBD6FE42180646B6006D0E73 /* StreamDetailViewController.m */,
-				EBD6FE43180646B6006D0E73 /* StreamDetailViewController.xib */,
+				EBD6FE3C180645A6006D0E73 /* StreamViewController~iphone.xib */,
+				EBD7BB8318240C0600C17556 /* StreamViewController~ipad.xib */,
 			);
 			name = Photos;
 			sourceTree = "<group>";
@@ -1865,8 +1868,8 @@
 			children = (
 				EB97144117F2B306009260AE /* 128-user.png */,
 				EBD7BB7218239D5100C17556 /* 256-Calendar.png */,
-				EBD7BB7418239DCC00C17556 /* 256-Comment.png */,
 				EBD7BB7818239E8700C17556 /* 256-Earth.png */,
+				EBD7BB8518243A7500C17556 /* 256-Users.png */,
 				EBD7BB7018239D1A00C17556 /* 256-Picture.png */,
 				EBD7BB7618239E0C00C17556 /* 256-Tick.png */,
 				EB1FE9F217FF8886001C2906 /* 32-Book-Large.png */,
@@ -2110,11 +2113,12 @@
 				EB1FE9EB17FF5A5C001C2906 /* 32-Pencil-_-Edit.png in Resources */,
 				EB9AB78C16A125B3005D4CAA /* barButtonBackPressed.png in Resources */,
 				EB9AB78D16A125B3005D4CAA /* barButtonBackPressed@2x.png in Resources */,
-				EB617C301808D107004F39D2 /* StreamViewCell.xib in Resources */,
+				EB617C301808D107004F39D2 /* StreamTableViewCell.xib in Resources */,
 				EBE72F9B181AE1A200A3A02D /* facebook_active.png in Resources */,
 				EB9AB78E16A125B3005D4CAA /* barButtonDisabled.png in Resources */,
 				EB8974F5180CC85200DB2486 /* 32-Group.png in Resources */,
 				EB9AB78F16A125B3005D4CAA /* barButtonDisabled@2x.png in Resources */,
+				EBD7BB821824086F00C17556 /* StreamCollectionViewCell.xib in Resources */,
 				EBA2C2681820E1A500399D4F /* 16-Users@2x.png in Resources */,
 				EB897512180D20B100DB2486 /* GroupCirclePeopleViewCell.xib in Resources */,
 				EB9AB79016A125B3005D4CAA /* barButtonPressed.png in Resources */,
@@ -2150,13 +2154,13 @@
 				EBE72F93181AE0CD00A3A02D /* in_dark.png in Resources */,
 				EB8C7D8C16D17AEB00F3C721 /* cb_green_on.png in Resources */,
 				EBD7BB7118239D1A00C17556 /* 256-Picture.png in Resources */,
+				EBD7BB8618243A7500C17556 /* 256-Users.png in Resources */,
 				EB97145917F2DDDB009260AE /* logo@72.png in Resources */,
 				EB8C7D8D16D17AEB00F3C721 /* cb_green_on@2x.png in Resources */,
 				EB8C7D8E16D17AEB00F3C721 /* cb_mono_off.png in Resources */,
 				EB8C7D8F16D17AEB00F3C721 /* cb_mono_off@2x.png in Resources */,
 				EBA2C27318216C9D00399D4F /* 32-V-Card-3@2x.png in Resources */,
 				EB8C7D9016D17AEB00F3C721 /* cb_mono_on.png in Resources */,
-				EBD6FE45180646B6006D0E73 /* StreamDetailViewController.xib in Resources */,
 				EB97145B17F2DDDB009260AE /* logo@76.png in Resources */,
 				EB1FE9F417FF8886001C2906 /* 32-Book-Large.png in Resources */,
 				EB97144217F2B306009260AE /* 128-user.png in Resources */,
@@ -2230,12 +2234,13 @@
 				EB3BD91317B8C47A008D066D /* ReaderViewController.xib in Resources */,
 				EB1FE9FA17FF9CF1001C2906 /* MaterialViewController.xib in Resources */,
 				EBDFF53A17BBF5FD00BBFC1D /* 64-Bended-Arrow-Left.png in Resources */,
+				EBD7BB8418240C0600C17556 /* StreamViewController~ipad.xib in Resources */,
 				EBDFF53B17BBF5FD00BBFC1D /* 64-Bended-Arrow-Up.png in Resources */,
 				EBDFF53D17BBF63700BBFC1D /* logo.png in Resources */,
 				EBDFF54217BC057100BBFC1D /* ScheduleItemViewController.xib in Resources */,
 				EB8974E6180CC02C00DB2486 /* QuizViewController.xib in Resources */,
 				EBDFF55117BE15A900BBFC1D /* 64-Speech-Bubbles.png in Resources */,
-				EBD6FE3E180645A6006D0E73 /* StreamViewController.xib in Resources */,
+				EBD6FE3E180645A6006D0E73 /* StreamViewController~iphone.xib in Resources */,
 				EB97145617F2DDDB009260AE /* logo@16.png in Resources */,
 				EBDFF55317BE95B200BBFC1D /* 32-Check.png in Resources */,
 				EBC59D8117BEC48600E0FC67 /* 64-Marker.png in Resources */,
@@ -2246,7 +2251,6 @@
 				EBA2C2641820D94D00399D4F /* PeopleViewCell.xib in Resources */,
 				EBA2C25C1820D72F00399D4F /* GroupViewController.xib in Resources */,
 				EB97144A17F2DD11009260AE /* Images.xcassets in Resources */,
-				EBD7BB7518239DCC00C17556 /* 256-Comment.png in Resources */,
 				EBEACD7517C2F65200C65F3F /* AboutViewController~ipad.xib in Resources */,
 				EB59020317D5D7D20032143C /* MarketplaceViewController.xib in Resources */,
 				EB50B924181D98F40023A185 /* REComposeViewController.bundle in Resources */,
@@ -2335,7 +2339,6 @@
 				EB39398B16654B4400580A4E /* MapViewController.m in Sources */,
 				EB50B925181D98F40023A185 /* REComposeViewController.m in Sources */,
 				EB39399716654B4400580A4E /* ScheduleViewCell.m in Sources */,
-				EBD6FE44180646B6006D0E73 /* StreamDetailViewController.m in Sources */,
 				EB50B920181D98F40023A185 /* DEComposeTextView.m in Sources */,
 				EB39399916654B4400580A4E /* ScheduleViewController.m in Sources */,
 				EB3939A716654BB900580A4E /* main.m in Sources */,
@@ -2350,7 +2353,7 @@
 				EB3939C816654BE300580A4E /* FacingView.m in Sources */,
 				EB3939C916654BE300580A4E /* FoldView.m in Sources */,
 				EB897510180D166900DB2486 /* GroupCirclePeopleViewCell.m in Sources */,
-				EB617C2E1808D0F5004F39D2 /* StreamViewCell.m in Sources */,
+				EB617C2E1808D0F5004F39D2 /* StreamTableViewCell.m in Sources */,
 				EB3939CA16654BE300580A4E /* MultiFoldView.m in Sources */,
 				EB8974E5180CC02C00DB2486 /* QuizViewController.m in Sources */,
 				EB3939CB16654BE300580A4E /* PaperFoldNavigationController.m in Sources */,
@@ -2363,6 +2366,7 @@
 				EB3939CF16654BE300580A4E /* ShadowView.m in Sources */,
 				EBA2C2501820CF8D00399D4F /* PeopleViewController.m in Sources */,
 				EB3939D016654BE300580A4E /* TouchThroughUIView.m in Sources */,
+				EBD7BB80182407C200C17556 /* StreamCollectionViewCell.m in Sources */,
 				EB3939D116654BE300580A4E /* UIView+Screenshot.m in Sources */,
 				EB3939D216654BE300580A4E /* PaperFoldMenuController.m in Sources */,
 				EBB7EAEE16801393005DA44C /* WrapperViewController.m in Sources */,

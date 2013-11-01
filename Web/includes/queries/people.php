@@ -10,6 +10,8 @@
                 `member`.`name`,
                 `member`.`email`,
                 `member`.`image`,
+                `member`.`facebookID`,
+                `member`.`linkedInID`,
                 `eventMember`.`position` AS `enrollmentID`,
                 `activityMember`.`position`,
                 `activityMember`.`approved`,
@@ -42,6 +44,8 @@
                 `member`.`name`,
                 `member`.`email`,
                 `member`.`image`,
+                `member`.`facebookID`,
+                `member`.`linkedInID`,
                 `groupMember`.`approved`,
                 `groupMember`.`present`
             FROM

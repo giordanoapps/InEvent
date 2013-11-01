@@ -1,19 +1,19 @@
 //
-//  StreamViewCell.m
+//  StreamCollectionViewCell.m
 //  InEvent
 //
-//  Created by Pedro Góes on 11/10/13.
+//  Created by Pedro Góes on 01/11/13.
 //  Copyright (c) 2013 Pedro Góes. All rights reserved.
 //
 
-#import "StreamViewCell.h"
+#import "StreamCollectionViewCell.h"
 #import "ColorThemeController.h"
 
-@implementation StreamViewCell
+@implementation StreamCollectionViewCell
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+- (id)initWithFrame:(CGRect)frame
 {
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
         [self configureCell];
@@ -32,18 +32,11 @@
     // We can define the background view and its color
     [self setBackgroundView:[[UIView alloc] initWithFrame:CGRectZero]];
     [self.backgroundView setBackgroundColor:[ColorThemeController tableViewCellBackgroundColor]];
-    [self setSelectionStyle:UITableViewCellEditingStyleNone];
     
     // Then we do the same with it's selected
     [self setSelectedBackgroundView:[[UIView alloc] initWithFrame:CGRectZero]];
     [self.selectedBackgroundView setBackgroundColor:[ColorThemeController tableViewCellSelectedBackgroundColor]];
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
-{
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
-}
 
 @end

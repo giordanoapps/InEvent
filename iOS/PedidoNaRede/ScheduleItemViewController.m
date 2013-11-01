@@ -110,6 +110,7 @@
 - (void)setActivityData:(NSDictionary *)activityData {
     _activityData = activityData;
     
+    [self cleanData];
     [self paint];
 }
 
@@ -167,6 +168,7 @@
 #pragma mark - Private Methods
 
 - (void)cleanData {
+    if (editingMode) [self endEditing];
     self.navigationItem.rightBarButtonItem = nil;
     [self defineStateForApproved:ScheduleStateUnknown withView:_wrapper];
     [_hour setText:@"00"];
@@ -193,7 +195,7 @@
 
     if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter]) {
         SLComposeViewController *tweetSheet = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
-        [tweetSheet setInitialText:[NSString stringWithFormat:@"%@ %@ - %@!", NSLocalizedString(@"Attending", nil), [[_activityData objectForKey:@"name"] stringByDecodingHTMLEntities], [[EventToken sharedInstance] name]]];
+        [tweetSheet setInitialText:[NSString stringWithFormat:@"%@ %@ - %@! #%@", NSLocalizedString(@"Attending", nil), [[_activityData objectForKey:@"name"] stringByDecodingHTMLEntities], [[EventToken sharedInstance] name], [[EventToken sharedInstance] nick]]];
         [self presentViewController:tweetSheet animated:YES completion:nil];
     } else {
         AlertView *alertView = [[AlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"Please enable your Twitter account, through Settings -> Twitter -> Add Account", nil) delegate:self cancelButtonTitle:nil otherButtonTitle:NSLocalizedString(@"Ok", nil)];
@@ -207,7 +209,7 @@
     
     if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]) {
         SLComposeViewController *facebookPost = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
-        [facebookPost setInitialText:[NSString stringWithFormat:@"%@ %@ - %@!", NSLocalizedString(@"Attending", nil), [[_activityData objectForKey:@"name"] stringByDecodingHTMLEntities], [[EventToken sharedInstance] name]]];
+        [facebookPost setInitialText:[NSString stringWithFormat:@"%@ %@ - %@! #%@", NSLocalizedString(@"Attending", nil), [[_activityData objectForKey:@"name"] stringByDecodingHTMLEntities], [[EventToken sharedInstance] name], [[EventToken sharedInstance] nick]]];
         [self presentViewController:facebookPost animated:YES completion:nil];
     } else {
         AlertView *alertView = [[AlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"Please enable your Facebook account, through Settings -> Facebook -> Account", nil) delegate:self cancelButtonTitle:nil otherButtonTitle:NSLocalizedString(@"Ok", nil)];

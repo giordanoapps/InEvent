@@ -112,10 +112,10 @@
     if (personData) {
         
         // Photo
-        if ([[personData objectForKey:@"facebookID"] integerValue] != 0) {
+        if ([[personData objectForKey:@"facebookID"] length] > 1) {
             [self.photo setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://graph.facebook.com/%@/picture?width=%d&height=%d", [personData objectForKey:@"facebookID"], (int)(self.photo.frame.size.width * [[UIScreen mainScreen] scale]), (int)(self.photo.frame.size.height * [[UIScreen mainScreen] scale])]] placeholderImage:[UIImage imageNamed:@"128-user"]];
             [_photo.layer setCornerRadius:_photo.frame.size.width / 2.0f];
-        } else if (![[personData objectForKey:@"image"] isEqualToString:@""]) {
+        } else if ([[personData objectForKey:@"image"] length] > 1) {
             [self.photo setImageWithURL:[NSURL URLWithString:[personData objectForKey:@"image"]] placeholderImage:[UIImage imageNamed:@"128-user"]];
             [_photo.layer setCornerRadius:_photo.frame.size.width / 2.0f];
         } else {

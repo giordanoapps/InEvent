@@ -47,8 +47,8 @@
     
     _headers = @[NSLocalizedString(@"Your Account", nil), NSLocalizedString(@"Event", nil), NSLocalizedString(@"Tools", nil), NSLocalizedString(@"About Us", nil)];
     
-    // Selected the localization controller
-    [self setSelectedIndex:1];
+    // Selected the schedule controller
+    [self setSelectedIndex:2];
     
     // Update the menu
     [self performSelector:@selector(reloadMenu)];

@@ -181,7 +181,7 @@
 
 - (void)calculateViewShift:(CGRect)frame {
     CGFloat keyboardHeight = (keyboardFrame.size.height / [[UIScreen mainScreen] scale]);
-    CGFloat viewAbsolutePosition = (self.view.frame.size.height - keyboardHeight) / 2.0f;
+    CGFloat viewAbsolutePosition = (self.view.frame.size.height - frame.size.height - keyboardHeight) / 2.0f;
     [self shiftParentView:viewAbsolutePosition - (currentViewShift + frame.origin.y)];
 }
 
@@ -320,7 +320,6 @@
     
     // Move view down if necessary
     if (shouldCancelKeyboardAnimation == NO) {
-//        [self performSelector:@selector(moveParentViewToPosition:) withObject:nil afterDelay:0.4f];
         [self shiftParentView:-(currentViewShift)];
     }
     
@@ -332,7 +331,12 @@
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView {
     
     // Move view if necessary
-//    [self checkKeyboardForPreponentParentView:textView];
+    if (currentViewShift != 0.0f) {
+        [self performSelector:@selector(checkKeyboardForPreponentParentView:) withObject:textView afterDelay:0.4f];
+        shouldCancelKeyboardAnimation = YES;
+    } else {
+        [self checkKeyboardForPreponentParentView:textView];
+    }
     
     return YES;
 }
@@ -340,7 +344,9 @@
 - (BOOL)textViewShouldEndEditing:(UITextView *)textView {
     
     // Move view down if necessary
-//    if (keyboardPosition == UIKeyboardPositionUp) [self moveParentViewToPosition:UIKeyboardPositionDown];
+    if (shouldCancelKeyboardAnimation == NO) {
+        [self shiftParentView:-(currentViewShift)];
+    }
     
     return YES;
 }

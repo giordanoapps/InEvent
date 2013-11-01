@@ -312,7 +312,7 @@
             
             // Notify our tracker about the new event
             id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-            [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"person" action:@"signIn" label:@"iOS" value:[NSNumber numberWithInteger:memberID]] build]];
+            [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"person" action:apiController.method label:@"iOS" value:[NSNumber numberWithInteger:memberID]] build]];
             
             // Notify our tracker about the new event
             PFInstallation *currentInstallation = [PFInstallation currentInstallation];

@@ -33,12 +33,18 @@
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" name="Thonburi" family="Thonburi" pointSize="20"/>
                             <textInputTraits key="textInputTraits" keyboardType="alphabet"/>
+                            <connections>
+                                <outlet property="delegate" destination="-1" id="oOx-Kv-l1l"/>
+                            </connections>
                         </textField>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Descrição da atividade" minimumFontSize="17" id="vj2-M4-FvG" userLabel="Description">
                             <rect key="frame" x="48" y="33" width="232" height="30"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" name="Thonburi" family="Thonburi" pointSize="16"/>
                             <textInputTraits key="textInputTraits" keyboardType="alphabet"/>
+                            <connections>
+                                <outlet property="delegate" destination="-1" id="gn7-3V-IXh"/>
+                            </connections>
                         </textField>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="32-Map.png" id="Fgd-sj-Yrp" userLabel="Location">
                             <rect key="frame" x="10" y="67" width="30" height="30"/>
@@ -49,6 +55,9 @@
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" name="Thonburi" family="Thonburi" pointSize="18"/>
                             <textInputTraits key="textInputTraits" keyboardType="alphabet"/>
+                            <connections>
+                                <outlet property="delegate" destination="-1" id="ygs-NX-IAs"/>
+                            </connections>
                         </textField>
                     </subviews>
                     <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>

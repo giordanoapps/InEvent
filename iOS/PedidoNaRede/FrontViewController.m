@@ -283,7 +283,7 @@
     
     if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter]) {
         SLComposeViewController *tweetSheet = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
-        [tweetSheet setInitialText:[NSString stringWithFormat:@"%@ %@!", NSLocalizedString(@"Attending", nil), [[EventToken sharedInstance] name]]];
+        [tweetSheet setInitialText:[NSString stringWithFormat:@"%@ %@! #%@", NSLocalizedString(@"Attending", nil), [[EventToken sharedInstance] name], [[EventToken sharedInstance] nick]]];
         [self presentViewController:tweetSheet animated:YES completion:nil];
     } else {
         AlertView *alertView = [[AlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"Please enable your Twitter account, through Settings -> Twitter -> Add Account", nil) delegate:self cancelButtonTitle:nil otherButtonTitle:NSLocalizedString(@"Ok", nil)];
@@ -297,7 +297,7 @@
     
     if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]) {
         SLComposeViewController *facebookPost = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
-        [facebookPost setInitialText:[NSString stringWithFormat:@"%@ %@!", NSLocalizedString(@"Attending", nil), [[EventToken sharedInstance] name]]];
+        [facebookPost setInitialText:[NSString stringWithFormat:@"%@ %@! #%@", NSLocalizedString(@"Attending", nil), [[EventToken sharedInstance] name], [[EventToken sharedInstance] nick]]];
         [self presentViewController:facebookPost animated:YES completion:nil];
     } else {
         AlertView *alertView = [[AlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"Please enable your Facebook account, through Settings -> Facebook -> Account", nil) delegate:self cancelButtonTitle:nil otherButtonTitle:NSLocalizedString(@"Ok", nil)];

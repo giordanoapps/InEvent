@@ -30,8 +30,8 @@
 				
 				if ($insert) {
 					if ($format == "json") {
-						$data["photoID"] = $photoID;
-						echo json_encode($data);
+						$result = getPhotosForEventQuery($eventID);
+						echo printInformation("photo", $result, true, 'json');
 					} else {
 						http_status_code(405, "this format is not available");
 					}
@@ -52,19 +52,7 @@
 
 		$eventID = getTokenForEvent();
 
-		$result = resourceForQuery(
-            "SELECT
-                `photo`.`id`,
-                `photo`.`url`,
-                UNIX_TIMESTAMP(`photo`.`date`) AS `date`
-            FROM
-                `photo`
-            WHERE 1
-                AND `photo`.`eventID` = $eventID
-            ORDER BY
-                `photo`.`date` ASC
-        ");
-
+		$result = getPhotosForEventQuery($eventID);
 		echo printInformation("photo", $result, true, 'json');
 
 	} else

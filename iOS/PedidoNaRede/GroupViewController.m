@@ -183,7 +183,7 @@
     cell.name.text = [[dictionary objectForKey:@"name"] stringByDecodingHTMLEntities];
     cell.description.text = [[dictionary objectForKey:@"description"] stringByDecodingHTMLEntities];
     
-    if ([peopleCache objectForKey:indexPath] != NULL) {
+    if (shouldReloadPeople == NO && [peopleCache objectForKey:indexPath] != NULL) {
         // Load offline data
         [cell.collectionView reloadData];
     } else {
@@ -240,15 +240,11 @@
         
     PeopleViewCell *cell = (PeopleViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"PeopleViewCell" forIndexPath:indexPath];
     
-    GroupViewCell *groupViewCell = (GroupViewCell *)[[collectionView superview] superview];
-    NSIndexPath *parentIndexPath = [self.tableView indexPathForCell:groupViewCell];
+    CGPoint point = [collectionView convertPoint:collectionView.bounds.origin toView:self.tableView];
+    NSIndexPath *parentIndexPath = [self.tableView indexPathForRowAtPoint:point];
     NSDictionary *dictionary = [[peopleCache objectForKey:parentIndexPath] objectAtIndex:indexPath.row];
     
-    if ([[dictionary objectForKey:@"image"] length] > 0) {
-        [cell.image setImageWithURL:[NSURL URLWithString:[[dictionary objectForKey:@"image"] stringByDecodingHTMLEntities]]];
-    } else if ([[dictionary objectForKey:@"name"] length] > 0) {
-        cell.initial.text = [[[dictionary objectForKey:@"name"] stringByDecodingHTMLEntities] substringToIndex:1];
-    }
+    [cell layoutInformation:dictionary withDesiredWordCount:1];
     
     return cell;
 }

@@ -8,7 +8,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PersonViewController">
             <connections>
                 <outlet property="company" destination="7Ky-2Z-YvI" id="ueI-Yi-8xZ"/>
-                <outlet property="email" destination="BFO-gP-15c" id="ViY-qy-E6F"/>
+                <outlet property="email" destination="hlc-V8-vrO" id="A0F-gU-4PL"/>
                 <outlet property="fbButton" destination="LSd-uu-awG" id="KD1-4p-r7N"/>
                 <outlet property="inButton" destination="hvP-gB-MwK" id="IgI-Q2-5Lc"/>
                 <outlet property="location" destination="6by-XS-bZX" id="OSa-ST-kTJ"/>
@@ -17,7 +17,7 @@
                 <outlet property="photo" destination="0j4-Wt-ITf" id="x84-ew-OXF"/>
                 <outlet property="role" destination="3km-6m-0gz" id="hbi-3e-M9w"/>
                 <outlet property="socialWrapper" destination="KPu-wf-6wX" id="WTm-lF-1AC"/>
-                <outlet property="telephone" destination="oc9-Hl-HAe" id="xf5-c6-Nik"/>
+                <outlet property="telephone" destination="pdP-E2-mgq" id="b4q-BM-Rge"/>
                 <outlet property="view" destination="f3v-ph-Tg1" id="hIc-x3-cbH"/>
                 <outlet property="wrapper" destination="4Gx-Ou-puI" id="jFH-qT-psk"/>
             </connections>
@@ -36,29 +36,44 @@
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" name="Thonburi" family="Thonburi" pointSize="20"/>
                             <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="alphabet"/>
+                            <connections>
+                                <outlet property="delegate" destination="-1" id="Jf3-rf-5zd"/>
+                            </connections>
                         </textField>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="CEO" minimumFontSize="17" id="3km-6m-0gz" userLabel="Role">
                             <rect key="frame" x="117" y="42" width="153" height="24"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" name="Thonburi" family="Thonburi" pointSize="18"/>
                             <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="alphabet"/>
+                            <connections>
+                                <outlet property="delegate" destination="-1" id="nRR-fN-KcT"/>
+                            </connections>
                         </textField>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Trilha" minimumFontSize="17" id="7Ky-2Z-YvI" userLabel="Company">
                             <rect key="frame" x="117" y="70" width="153" height="24"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" name="Thonburi" family="Thonburi" pointSize="18"/>
                             <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="alphabet"/>
+                            <connections>
+                                <outlet property="delegate" destination="-1" id="3Df-kM-H8B"/>
+                            </connections>
                         </textField>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="32-Phone-Hook.png" id="JwE-to-fgw" userLabel="Telephone">
                             <rect key="frame" x="10" y="178" width="30" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         </imageView>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="(16) 65774-9867" minimumFontSize="17" id="oc9-Hl-HAe" userLabel="Telephone">
+                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="(16) 65774-9867" id="pdP-E2-mgq" userLabel="Telephone" customClass="UIPlaceHolderTextView">
                             <rect key="frame" x="48" y="178" width="222" height="30"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <inset key="contentInset" minX="0.0" minY="-6" maxX="0.0" maxY="0.0"/>
                             <fontDescription key="fontDescription" name="Thonburi" family="Thonburi" pointSize="18"/>
-                            <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="phonePad"/>
-                        </textField>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            <dataDetectorType key="dataDetectorTypes" phoneNumber="YES"/>
+                            <connections>
+                                <outlet property="delegate" destination="-1" id="Znr-f1-DxS"/>
+                            </connections>
+                        </textView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="pOF-Ur-tT6" userLabel="Mail">
                             <rect key="frame" x="10" y="223" width="30" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -70,12 +85,18 @@
                                 <action selector="openMail:" destination="-1" eventType="touchUpInside" id="S7Y-Ia-rlG"/>
                             </connections>
                         </button>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="pedro.goes@usp.br" minimumFontSize="17" id="BFO-gP-15c" userLabel="Mail">
+                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="pedro.goes@usp.br" id="hlc-V8-vrO" userLabel="Mail" customClass="UIPlaceHolderTextView">
                             <rect key="frame" x="48" y="223" width="222" height="30"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <inset key="contentInset" minX="0.0" minY="-6" maxX="0.0" maxY="0.0"/>
                             <fontDescription key="fontDescription" name="Thonburi" family="Thonburi" pointSize="18"/>
-                            <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="emailAddress"/>
-                        </textField>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            <dataDetectorType key="dataDetectorTypes" link="YES"/>
+                            <connections>
+                                <outlet property="delegate" destination="-1" id="iDC-GM-32z"/>
+                            </connections>
+                        </textView>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="32-Map.png" id="b4V-Jw-uDL" userLabel="Location">
                             <rect key="frame" x="10" y="268" width="30" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -85,6 +106,9 @@
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" name="Thonburi" family="Thonburi" pointSize="18"/>
                             <textInputTraits key="textInputTraits" keyboardType="alphabet"/>
+                            <connections>
+                                <outlet property="delegate" destination="-1" id="7ud-61-IVR"/>
+                            </connections>
                         </textField>
                     </subviews>
                     <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>

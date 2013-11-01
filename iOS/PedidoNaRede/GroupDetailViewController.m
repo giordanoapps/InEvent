@@ -41,9 +41,6 @@
 {
     [super viewDidLoad];
     
-    // Right Button
-    [self loadMenuButton];
-    
     // Wrapper
     _wrapper.backgroundColor = [ColorThemeController tableViewCellBackgroundColor];
     _wrapper.layer.cornerRadius = 4.0f;
@@ -110,6 +107,7 @@
 - (void)setGroupData:(NSDictionary *)groupData {
     _groupData = groupData;
     
+    [self cleanData];
     [self paint];
 }
 
@@ -138,6 +136,7 @@
 #pragma mark - Private Methods
 
 - (void)cleanData {
+    if (editingMode) [self endEditing];
     self.navigationItem.rightBarButtonItem = nil;
     [_name setText:NSLocalizedString(@"Activity", nil)];
     [_description setText:@""];
@@ -199,11 +198,15 @@
 
 - (void)alertActionSheet {
     
-    if ([[HumanToken sharedInstance] isMemberAuthenticated]) {
-        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Actions", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"Edit fields", nil), NSLocalizedString(@"Enroll", nil), nil];
-        
-        [actionSheet showFromBarButtonItem:self.rightBarButton animated:YES];
+    UIActionSheet *actionSheet;
+    
+    if ([[HumanToken sharedInstance] isMemberWorking]) {
+        actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Actions", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"Edit fields", nil), NSLocalizedString(@"Enroll", nil), nil];
+    } else if ([[HumanToken sharedInstance] isMemberAuthenticated]) {
+        actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Actions", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"Enroll", nil), nil];
     }
+    
+    [actionSheet showFromBarButtonItem:self.rightBarButton animated:YES];
 }
 
 #pragma mark - ActionSheet Delegate
@@ -245,30 +248,7 @@
     PeopleViewCell *cell = (PeopleViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"PeopleViewCell" forIndexPath:indexPath];
     
     NSDictionary *dictionary = [_peopleData objectAtIndex:indexPath.row];
-    
-    if ([[dictionary objectForKey:@"facebookID"] integerValue] != 0) {
-        [cell.image setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://graph.facebook.com/%@/picture?width=%d&height=%d", [dictionary objectForKey:@"facebookID"], (int)(cell.image.frame.size.width * [[UIScreen mainScreen] scale]), (int)(cell.image.frame.size.height * [[UIScreen mainScreen] scale])]] placeholderImage:[UIImage imageNamed:@"128-user"]];
-        [cell.image setHidden:NO];
-        [cell.initial setHidden:YES];
-    } else if (![[dictionary objectForKey:@"image"] isEqualToString:@""]) {
-        [cell.image setImageWithURL:[NSURL URLWithString:[[dictionary objectForKey:@"image"] stringByDecodingHTMLEntities]] placeholderImage:[UIImage imageNamed:@"128-user"]];
-        [cell.image setHidden:NO];
-        [cell.initial setHidden:YES];
-    } else if (![[dictionary objectForKey:@"name"] isEqualToString:@""]) {
-        NSString *name = [[dictionary objectForKey:@"name"] stringByDecodingHTMLEntities];
-        NSMutableArray *split = [NSMutableArray arrayWithArray:[[name stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] componentsSeparatedByString:@" "]];
-        if ([split count] > 1) {
-            for (int i = 0; i < [split count]; i++) {
-                if ([[split objectAtIndex:i] length] == 0) [split removeObjectAtIndex:i];
-            }
-            
-            cell.initial.text = [NSString stringWithFormat:@"%@ %@.", [[split objectAtIndex:0] substringToIndex:1], [[split objectAtIndex:1] substringToIndex:1]];
-        } else {
-            cell.initial.text = [name substringToIndex:1];
-        }
-        [cell.image setHidden:YES];
-        [cell.initial setHidden:NO];
-    }
+    [cell layoutInformation:dictionary withDesiredWordCount:2];
     
     return cell;
 }

@@ -13,4 +13,6 @@
 @property (strong, nonatomic) IBOutlet UILabel *initial;
 @property (strong, nonatomic) IBOutlet UIImageView *image;
 
+- (void)layoutInformation:(NSDictionary *)dictionary withDesiredWordCount:(NSInteger)wordCount;
+
 @end

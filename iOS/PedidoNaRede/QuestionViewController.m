@@ -34,6 +34,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        self.title = NSLocalizedString(@"Question", nil);
         self.questionData = [NSMutableArray array];
         
         // Add notification observer for new orders
@@ -138,6 +139,7 @@
 - (void)setActivityData:(NSDictionary *)activityData {
     _activityData = activityData;
     
+    [self cleanData];
     [self loadData];
 }
 

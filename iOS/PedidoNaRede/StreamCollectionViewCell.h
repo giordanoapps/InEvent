@@ -1,14 +1,14 @@
 //
-//  StreamViewCell.h
+//  StreamCollectionViewCell.h
 //  InEvent
 //
-//  Created by Pedro Góes on 11/10/13.
+//  Created by Pedro Góes on 01/11/13.
 //  Copyright (c) 2013 Pedro Góes. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
-@interface StreamViewCell : UITableViewCell
+@interface StreamCollectionViewCell : UICollectionViewCell
 
 @property (strong, nonatomic) IBOutlet UIImageView *picture;
 

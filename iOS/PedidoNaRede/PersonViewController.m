@@ -14,6 +14,7 @@
 #import "NSString+HTML.h"
 #import "CoolBarButtonItem.h"
 #import "UIImageView+WebCache.h"
+#import "UIPlaceHolderTextView.h"
 #import "InEventPersonAPIController.h"
 
 @interface PersonViewController () {
@@ -39,9 +40,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    // Right Button
-    [self loadMenuButton];
     
     // Details
     _socialWrapper.backgroundColor = [ColorThemeController tableViewCellBackgroundColor];
@@ -95,6 +93,7 @@
 - (void)setPersonData:(NSDictionary *)personData {
     _personData = personData;
     
+    [self cleanData];
     [self paint];
 }
 
@@ -137,6 +136,7 @@
 #pragma mark - Private Methods
 
 - (void)cleanData {
+    if (editingMode) [self endEditing];
     self.navigationItem.rightBarButtonItem = nil;
     [self.name setText:NSLocalizedString(@"Name", nil)];
     [self.role setText:NSLocalizedString(@"Role", nil)];

@@ -17,12 +17,12 @@
 #import "PeopleViewController.h"
 #import "PersonViewController.h"
 #import "StreamViewController.h"
-#import "StreamDetailViewController.h"
 #import "ColorThemeController.h"
 #import "PushController.h"
 #import "HumanViewController.h"
 #import "LaunchImageViewController.h"
 #import "GAI.h"
+#import "GAIDictionaryBuilder.h"
 #import "HumanToken.h"
 #import "EventToken.h"
 #import "IntelligentSplitViewController.h"
@@ -85,6 +85,10 @@
             }
         }
     }
+    
+    // Notify our tracker about the new event
+    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"person" action:@"signInOneClick" label:@"iOS" value:[NSNumber numberWithInteger:[[HumanToken sharedInstance] memberID]]] build]];
     
     // Update the current state of the schedule controller
     [[NSNotificationCenter defaultCenter] postNotificationName:@"eventCurrentState" object:nil userInfo:nil];
@@ -210,23 +214,14 @@
 
 - (void)loadAboutController {
     
-    _aboutViewController = [[UINavigationController alloc] initWithRootViewController:[[AboutViewController alloc] initWithNibName:@"AboutViewController" bundle:nil]];
+    AboutViewController *avc = [[AboutViewController alloc] initWithNibName:@"AboutViewController" bundle:nil];
+    _aboutViewController = [[UINavigationController alloc] initWithRootViewController:avc];
 }
 
 - (void)loadFrontController {
 
     FrontViewController *fvc = [[FrontViewController alloc] initWithNibName:@"FrontViewController" bundle:nil];
     _frontViewController = [[UINavigationController alloc] initWithRootViewController:fvc];
-    
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        _frontViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-        _frontViewController.modalPresentationStyle = UIModalPresentationCurrentContext;
-    } else {
-        _frontViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-        _frontViewController.modalPresentationStyle = UIModalPresentationFormSheet;
-    }
-    
-    [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:_frontViewController animated:YES completion:nil];
 }
 
 - (void)loadGroupController {
@@ -270,19 +265,7 @@
 
 - (void)loadPhotosController {
     
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        _photosViewController = [[UINavigationController alloc] initWithRootViewController:[[StreamViewController alloc] initWithNibName:@"StreamViewController" bundle:nil]];
-    } else {
-        _photosViewController = [[IntelligentSplitViewController alloc] init];
-        StreamViewController *pvc = [[StreamViewController alloc] initWithNibName:@"StreamViewController" bundle:nil];
-        UINavigationController *npvc = [[UINavigationController alloc] initWithRootViewController:pvc];
-        StreamDetailViewController *pdvc = [[StreamDetailViewController alloc] initWithNibName:@"StreamDetailViewController" bundle:nil];
-        UINavigationController *npdvc = [[UINavigationController alloc] initWithRootViewController:pdvc];
-        ((UISplitViewController *)_photosViewController).title = pvc.title;
-        ((UISplitViewController *)_photosViewController).tabBarItem.image = pvc.tabBarItem.image;
-        ((UISplitViewController *)_photosViewController).delegate = pdvc;
-        ((UISplitViewController *)_photosViewController).viewControllers = @[npvc, npdvc];
-    }
+    _photosViewController = [[UINavigationController alloc] initWithRootViewController:[[StreamViewController alloc] initWithNibName:@"StreamViewController" bundle:nil]];
 }
 
 - (void)loadScheduleController {

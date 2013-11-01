@@ -12,10 +12,11 @@
 #import "REComposeViewController.h"
 #import "REComposeSheetView.h"
 
-@interface StreamViewController : WrapperViewController <UITableViewDelegate, UITableViewDataSource, UINavigationControllerDelegate, UITextFieldDelegate, InEventAPIControllerDelegate, UIImagePickerControllerDelegate, REComposeViewControllerDelegate>
+@interface StreamViewController : WrapperViewController <UITableViewDelegate, UITableViewDataSource, UICollectionViewDataSource, UICollectionViewDelegate, UINavigationControllerDelegate, UITextFieldDelegate, InEventAPIControllerDelegate, UIImagePickerControllerDelegate, REComposeViewControllerDelegate>
 
 @property (strong, nonatomic) IBOutlet UITextField *searchField;
 @property (strong, nonatomic) IBOutlet UILabel *hashView;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) IBOutlet UICollectionView *collectionView;
 
 @end
