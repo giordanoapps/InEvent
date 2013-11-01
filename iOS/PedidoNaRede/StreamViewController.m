@@ -158,6 +158,9 @@
 
 - (void)alertActionSheet {
     
+    // Restart Facebook connection
+    [self connectWithFacebook];
+    
     UIActionSheet *actionSheet;
     
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera] && [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {

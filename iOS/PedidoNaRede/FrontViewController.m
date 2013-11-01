@@ -50,8 +50,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    // Left Button
-    if ([[HumanToken sharedInstance] isMemberAuthenticated]) [self loadMenuButton];
+    // Right Button
+    [self loadMenuButton];
 
     // Refresh Control
     refreshControl = [[UIRefreshControl alloc] init];

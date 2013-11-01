@@ -6,13 +6,13 @@
 //  Copyright (c) 2013 Pedro Góes. All rights reserved.
 //
 
-#import "LauchImageViewController.h"
+#import "LaunchImageViewController.h"
 
-@interface LauchImageViewController ()
+@interface LaunchImageViewController ()
 
 @end
 
-@implementation LauchImageViewController
+@implementation LaunchImageViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {

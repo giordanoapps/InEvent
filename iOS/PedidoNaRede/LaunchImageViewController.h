@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LauchImageViewController : UIViewController
+@interface LaunchImageViewController : UIViewController
 
 @end

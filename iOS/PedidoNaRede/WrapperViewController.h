@@ -23,4 +23,7 @@
 - (void)deallocTapBehind;
 - (void)handleTapBehind:(UITapGestureRecognizer *)sender;
 
+// Facebook
+- (void)connectWithFacebook;
+
 @end

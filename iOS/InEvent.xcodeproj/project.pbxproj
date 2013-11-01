@@ -56,8 +56,8 @@
 		EB25BA9F16FE73F2003F142F /* HumanViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB25BA9D16FE73F2003F142F /* HumanViewController.xib */; };
 		EB25BAA416FE84D6003F142F /* HumanLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB25BAA216FE84D5003F142F /* HumanLoginViewController.m */; };
 		EB25BAA516FE84D6003F142F /* HumanLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB25BAA316FE84D6003F142F /* HumanLoginViewController.xib */; };
-		EB25BAA9170280F1003F142F /* LauchImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB25BAA7170280EF003F142F /* LauchImageViewController.m */; };
-		EB25BAAA170280F1003F142F /* LauchImageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB25BAA8170280F0003F142F /* LauchImageViewController.xib */; };
+		EB25BAA9170280F1003F142F /* LaunchImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB25BAA7170280EF003F142F /* LaunchImageViewController.m */; };
+		EB25BAAA170280F1003F142F /* LaunchImageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB25BAA8170280F0003F142F /* LaunchImageViewController.xib */; };
 		EB25BAB017028CC9003F142F /* Default-Portrait~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = EB25BAAF17028CC9003F142F /* Default-Portrait~ipad.png */; };
 		EB25BAB217028CD6003F142F /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = EB25BAB117028CD5003F142F /* Default-Landscape~ipad.png */; };
 		EB25BAB417028CDF003F142F /* Default-Portrait@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = EB25BAB317028CDF003F142F /* Default-Portrait@2x~ipad.png */; };
@@ -306,7 +306,7 @@
 		EBD6FE4F18065528006D0E73 /* 32-Cog.png in Resources */ = {isa = PBXBuildFile; fileRef = EBD6FE4E18065528006D0E73 /* 32-Cog.png */; };
 		EBD7BB6D1822405400C17556 /* 32-Mail-Highlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBD7BB6C1822405400C17556 /* 32-Mail-Highlighted@2x.png */; };
 		EBD7BB6F182240A800C17556 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBD7BB6E182240A800C17556 /* MessageUI.framework */; };
-		EBD7BB7118239D1A00C17556 /* 256-picture.png in Resources */ = {isa = PBXBuildFile; fileRef = EBD7BB7018239D1A00C17556 /* 256-picture.png */; };
+		EBD7BB7118239D1A00C17556 /* 256-Picture.png in Resources */ = {isa = PBXBuildFile; fileRef = EBD7BB7018239D1A00C17556 /* 256-Picture.png */; };
 		EBD7BB7318239D5100C17556 /* 256-Calendar.png in Resources */ = {isa = PBXBuildFile; fileRef = EBD7BB7218239D5100C17556 /* 256-Calendar.png */; };
 		EBD7BB7518239DCC00C17556 /* 256-Comment.png in Resources */ = {isa = PBXBuildFile; fileRef = EBD7BB7418239DCC00C17556 /* 256-Comment.png */; };
 		EBD7BB7718239E0C00C17556 /* 256-Tick.png in Resources */ = {isa = PBXBuildFile; fileRef = EBD7BB7618239E0C00C17556 /* 256-Tick.png */; };
@@ -457,9 +457,9 @@
 		EB25BAA116FE84D5003F142F /* HumanLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HumanLoginViewController.h; path = PedidoNaRede/HumanLoginViewController.h; sourceTree = "<group>"; };
 		EB25BAA216FE84D5003F142F /* HumanLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HumanLoginViewController.m; path = PedidoNaRede/HumanLoginViewController.m; sourceTree = "<group>"; };
 		EB25BAA316FE84D6003F142F /* HumanLoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = HumanLoginViewController.xib; path = PedidoNaRede/HumanLoginViewController.xib; sourceTree = "<group>"; };
-		EB25BAA6170280EE003F142F /* LauchImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LauchImageViewController.h; sourceTree = "<group>"; };
-		EB25BAA7170280EF003F142F /* LauchImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LauchImageViewController.m; sourceTree = "<group>"; };
-		EB25BAA8170280F0003F142F /* LauchImageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LauchImageViewController.xib; sourceTree = "<group>"; };
+		EB25BAA6170280EE003F142F /* LaunchImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaunchImageViewController.h; sourceTree = "<group>"; };
+		EB25BAA7170280EF003F142F /* LaunchImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaunchImageViewController.m; sourceTree = "<group>"; };
+		EB25BAA8170280F0003F142F /* LaunchImageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchImageViewController.xib; sourceTree = "<group>"; };
 		EB25BAAF17028CC9003F142F /* Default-Portrait~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Portrait~ipad.png"; path = "../Default-Portrait~ipad.png"; sourceTree = "<group>"; };
 		EB25BAB117028CD5003F142F /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Landscape~ipad.png"; path = "../Default-Landscape~ipad.png"; sourceTree = "<group>"; };
 		EB25BAB317028CDF003F142F /* Default-Portrait@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Portrait@2x~ipad.png"; path = "../Default-Portrait@2x~ipad.png"; sourceTree = "<group>"; };
@@ -815,7 +815,7 @@
 		EBD6FE4E18065528006D0E73 /* 32-Cog.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Cog.png"; sourceTree = "<group>"; };
 		EBD7BB6C1822405400C17556 /* 32-Mail-Highlighted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32-Mail-Highlighted@2x.png"; sourceTree = "<group>"; };
 		EBD7BB6E182240A800C17556 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
-		EBD7BB7018239D1A00C17556 /* 256-picture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "256-picture.png"; sourceTree = "<group>"; };
+		EBD7BB7018239D1A00C17556 /* 256-Picture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "256-Picture.png"; sourceTree = "<group>"; };
 		EBD7BB7218239D5100C17556 /* 256-Calendar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "256-Calendar.png"; sourceTree = "<group>"; };
 		EBD7BB7418239DCC00C17556 /* 256-Comment.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "256-Comment.png"; sourceTree = "<group>"; };
 		EBD7BB7618239E0C00C17556 /* 256-Tick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "256-Tick.png"; sourceTree = "<group>"; };
@@ -1384,14 +1384,16 @@
 		EB8974EE180CC54D00DB2486 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				EBD055A917AF8D0A008355E8 /* About */,
 				EB1FE9E917FF2B89001C2906 /* Ad */,
-				EBD055A917AF8D0A008355E8 /* Extra */,
+				EBD7BB7C1823D94C00C17556 /* Demo */,
 				EB1FEA061800FE46001C2906 /* Feedback */,
 				EB79CC5417ED814100C16CF5 /* Front */,
 				EB8974EF180CC58200DB2486 /* General */,
 				EB8974ED180CC52400DB2486 /* Group Circle */,
 				EBA2C25D1820D73200399D4F /* Group Rectangle */,
 				EB25BAA016FE73F7003F142F /* Human */,
+				EBD7BB7D1823D95500C17556 /* Launch Image */,
 				EB1FEB8C17172A16009834FC /* Log */,
 				EBFCCF4A16987F3700A5AE73 /* Map */,
 				EB59020417D5D7D60032143C /* Marketplace */,
@@ -1700,21 +1702,15 @@
 			path = PedidoNaRede;
 			sourceTree = "<group>";
 		};
-		EBD055A917AF8D0A008355E8 /* Extra */ = {
+		EBD055A917AF8D0A008355E8 /* About */ = {
 			isa = PBXGroup;
 			children = (
 				EBD055A417AF8CF3008355E8 /* AboutViewController.h */,
 				EBD055A517AF8CF3008355E8 /* AboutViewController.m */,
 				EBD055A617AF8CF3008355E8 /* AboutViewController~iphone.xib */,
 				EBEACD7417C2F65200C65F3F /* AboutViewController~ipad.xib */,
-				EB9AB76F16A0921A005D4CAA /* DemoViewController.h */,
-				EB9AB77016A0921A005D4CAA /* DemoViewController.m */,
-				EB9AB77116A0921A005D4CAA /* DemoViewController.xib */,
-				EB25BAA6170280EE003F142F /* LauchImageViewController.h */,
-				EB25BAA7170280EF003F142F /* LauchImageViewController.m */,
-				EB25BAA8170280F0003F142F /* LauchImageViewController.xib */,
 			);
-			name = Extra;
+			name = About;
 			path = PedidoNaRede;
 			sourceTree = "<group>";
 		};
@@ -1741,6 +1737,28 @@
 				EB897514181056D800DB2486 /* SebraeColorThemeController.m */,
 			);
 			name = Clients;
+			sourceTree = "<group>";
+		};
+		EBD7BB7C1823D94C00C17556 /* Demo */ = {
+			isa = PBXGroup;
+			children = (
+				EB9AB76F16A0921A005D4CAA /* DemoViewController.h */,
+				EB9AB77016A0921A005D4CAA /* DemoViewController.m */,
+				EB9AB77116A0921A005D4CAA /* DemoViewController.xib */,
+			);
+			name = Demo;
+			path = PedidoNaRede;
+			sourceTree = "<group>";
+		};
+		EBD7BB7D1823D95500C17556 /* Launch Image */ = {
+			isa = PBXGroup;
+			children = (
+				EB25BAA6170280EE003F142F /* LaunchImageViewController.h */,
+				EB25BAA7170280EF003F142F /* LaunchImageViewController.m */,
+				EB25BAA8170280F0003F142F /* LaunchImageViewController.xib */,
+			);
+			name = "Launch Image";
+			path = PedidoNaRede;
 			sourceTree = "<group>";
 		};
 		EBDA918F17ACBA5000969A08 /* Bar Buttons Icons */ = {
@@ -1849,7 +1867,7 @@
 				EBD7BB7218239D5100C17556 /* 256-Calendar.png */,
 				EBD7BB7418239DCC00C17556 /* 256-Comment.png */,
 				EBD7BB7818239E8700C17556 /* 256-Earth.png */,
-				EBD7BB7018239D1A00C17556 /* 256-picture.png */,
+				EBD7BB7018239D1A00C17556 /* 256-Picture.png */,
 				EBD7BB7618239E0C00C17556 /* 256-Tick.png */,
 				EB1FE9F217FF8886001C2906 /* 32-Book-Large.png */,
 				EB1FE9F317FF8886001C2906 /* 32-Book-Large@2x.png */,
@@ -2131,7 +2149,7 @@
 				EB8C7D8B16D17AEB00F3C721 /* cb_green_off@2x.png in Resources */,
 				EBE72F93181AE0CD00A3A02D /* in_dark.png in Resources */,
 				EB8C7D8C16D17AEB00F3C721 /* cb_green_on.png in Resources */,
-				EBD7BB7118239D1A00C17556 /* 256-picture.png in Resources */,
+				EBD7BB7118239D1A00C17556 /* 256-Picture.png in Resources */,
 				EB97145917F2DDDB009260AE /* logo@72.png in Resources */,
 				EB8C7D8D16D17AEB00F3C721 /* cb_green_on@2x.png in Resources */,
 				EB8C7D8E16D17AEB00F3C721 /* cb_mono_off.png in Resources */,
@@ -2156,7 +2174,7 @@
 				EBD6FE4F18065528006D0E73 /* 32-Cog.png in Resources */,
 				EBA2C26F18216BB000399D4F /* GroupDetailViewController.xib in Resources */,
 				EB25BAA516FE84D6003F142F /* HumanLoginViewController.xib in Resources */,
-				EB25BAAA170280F1003F142F /* LauchImageViewController.xib in Resources */,
+				EB25BAAA170280F1003F142F /* LaunchImageViewController.xib in Resources */,
 				EB25BAB017028CC9003F142F /* Default-Portrait~ipad.png in Resources */,
 				EBE72F9C181AE1A200A3A02D /* facebook_dark.png in Resources */,
 				EB25BAB217028CD6003F142F /* Default-Landscape~ipad.png in Resources */,
@@ -2385,7 +2403,7 @@
 				EB8974EB180CC52000DB2486 /* GroupCircleViewController.m in Sources */,
 				EB25BAA416FE84D6003F142F /* HumanLoginViewController.m in Sources */,
 				EB01FFD3181B3AFA00089915 /* AFPropertyListRequestOperation.m in Sources */,
-				EB25BAA9170280F1003F142F /* LauchImageViewController.m in Sources */,
+				EB25BAA9170280F1003F142F /* LaunchImageViewController.m in Sources */,
 				EB1FE9E717FF2B85001C2906 /* AdViewController.m in Sources */,
 				EB1FEA0D1803CB56001C2906 /* ReaderViewCell.m in Sources */,
 				EBE72F97181AE11C00A3A02D /* SocialLoginViewController.m in Sources */,

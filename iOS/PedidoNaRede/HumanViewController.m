@@ -74,9 +74,6 @@
     
     // Person details
     [self checkSession];
-    
-    // Restart Facebook connection
-    [self connectWithFacebook];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -273,21 +270,6 @@
     
     // Load the login form
     [self checkSession];
-}
-
-- (void)connectWithFacebook {
-    if (!FBSession.activeSession.isOpen) {
-        
-        // Create our session
-        FBSession *session = [[FBSession alloc] initWithAppID:nil permissions:@[@"basic_info", @"email"] urlSchemeSuffix:nil tokenCacheStrategy:nil];
-        
-        // Set the active session
-        [FBSession setActiveSession:session];
-        
-        // Open the session
-        [session openWithBehavior:FBSessionLoginBehaviorUseSystemAccountIfPresent completionHandler:
-         ^(FBSession *session, FBSessionState state, NSError *error) {}];
-    }
 }
 
 #pragma mark - Map

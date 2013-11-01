@@ -12,6 +12,7 @@
 #import "ScheduleViewController.h"
 #import "ScheduleItemViewController.h"
 #import "GroupViewController.h"
+#import "GroupDetailViewController.h"
 #import "FrontViewController.h"
 #import "PeopleViewController.h"
 #import "PersonViewController.h"
@@ -20,7 +21,7 @@
 #import "ColorThemeController.h"
 #import "PushController.h"
 #import "HumanViewController.h"
-#import "LauchImageViewController.h"
+#import "LaunchImageViewController.h"
 #import "GAI.h"
 #import "HumanToken.h"
 #import "EventToken.h"
@@ -233,15 +234,15 @@
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
         _groupViewController = [[UINavigationController alloc] initWithRootViewController:[[GroupViewController alloc] initWithNibName:@"GroupViewController" bundle:nil]];
     } else {
-        _peopleViewController = [[IntelligentSplitViewController alloc] init];
-        PeopleViewController *pvc = [[PeopleViewController alloc] initWithNibName:@"PeopleViewController" bundle:nil];
-        UINavigationController *npvc = [[UINavigationController alloc] initWithRootViewController:pvc];
-        PersonViewController *pivc = [[PersonViewController alloc] initWithNibName:@"PersonViewController" bundle:nil];
-        UINavigationController *npivc = [[UINavigationController alloc] initWithRootViewController:pivc];
-        ((UISplitViewController *)_peopleViewController).title = pvc.title;
-        ((UISplitViewController *)_peopleViewController).tabBarItem.image = pvc.tabBarItem.image;
-        ((UISplitViewController *)_peopleViewController).delegate = pivc;
-        ((UISplitViewController *)_peopleViewController).viewControllers = @[npvc, npivc];
+        _groupViewController = [[IntelligentSplitViewController alloc] init];
+        GroupViewController *gvc = [[GroupViewController alloc] initWithNibName:@"GroupViewController" bundle:nil];
+        UINavigationController *ngvc = [[UINavigationController alloc] initWithRootViewController:gvc];
+        GroupDetailViewController *gdvc = [[GroupDetailViewController alloc] initWithNibName:@"GroupDetailViewController" bundle:nil];
+        UINavigationController *ngdvc = [[UINavigationController alloc] initWithRootViewController:gdvc];
+        ((UISplitViewController *)_groupViewController).title = gvc.title;
+        ((UISplitViewController *)_groupViewController).tabBarItem.image = gvc.tabBarItem.image;
+        ((UISplitViewController *)_groupViewController).delegate = gdvc;
+        ((UISplitViewController *)_groupViewController).viewControllers = @[ngvc, ngdvc];
     }
 }
 

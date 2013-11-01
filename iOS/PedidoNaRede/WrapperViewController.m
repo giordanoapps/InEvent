@@ -7,6 +7,7 @@
 //
 
 #import <QuartzCore/QuartzCore.h>
+#import <FacebookSDK/FacebookSDK.h>
 #import "WrapperViewController.h"
 #import "AppDelegate.h"
 #import "MapViewController.h"
@@ -236,6 +237,23 @@
             [self.view.window removeGestureRecognizer:sender];
             [self dismissViewControllerAnimated:YES completion:nil];
         }
+    }
+}
+
+#pragma mark - Facebook Methods
+
+- (void)connectWithFacebook {
+    if (!FBSession.activeSession.isOpen) {
+        
+        // Create our session
+        FBSession *session = [[FBSession alloc] initWithAppID:nil permissions:@[@"basic_info", @"email"] urlSchemeSuffix:nil tokenCacheStrategy:nil];
+        
+        // Set the active session
+        [FBSession setActiveSession:session];
+        
+        // Open the session
+        [session openWithBehavior:FBSessionLoginBehaviorUseSystemAccountIfPresent completionHandler:
+         ^(FBSession *session, FBSessionState state, NSError *error) {}];
     }
 }
 
