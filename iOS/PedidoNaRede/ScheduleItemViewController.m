@@ -9,6 +9,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import <GoogleMaps/GoogleMaps.h>
 #import <Social/Social.h>
+#import "ScheduleViewController.h"
 #import "ScheduleItemViewController.h"
 #import "ReaderViewController.h"
 #import "QuestionViewController.h"
@@ -239,10 +240,42 @@
     // Save the fields
     NSString *tokenID = [[HumanToken sharedInstance] tokenID];
     NSInteger activityID = [[_activityData objectForKey:@"id"] integerValue];
+
+    NSString *placeholder = ((UITextField *)field).placeholder;
+    NSString *value = ((UITextField *)field).text;
     
     // Field will always have a placeholder, so we can cast it as a UITextField
-    if (![((UITextField *)field).placeholder isEqualToString:((UITextField *)field).text]) {
-        [[[InEventActivityAPIController alloc] initWithDelegate:self forcing:YES] editField:name withValue:((UITextField *)field).text atActivity:activityID withTokenID:tokenID];
+    if (![placeholder isEqualToString:value]) {
+        
+        // Send our request
+        [[[InEventActivityAPIController alloc] initWithDelegate:self forcing:YES] editField:name withValue:value atActivity:activityID withTokenID:tokenID];
+        
+        // Dates
+        if ([name rangeOfString:@"Begin"].location != NSNotFound) {
+            
+            // Replace our values
+            if ([name isEqualToString:@"hourBegin"]) {
+                value = [NSString stringWithFormat:@"%d", ([[_activityData objectForKey:@"dateBegin"] integerValue] + ([value integerValue] - [placeholder integerValue]) * 60 * 60)];
+            } else if ([name isEqualToString:@"minuteBegin"]) {
+                value = [NSString stringWithFormat:@"%d", ([[_activityData objectForKey:@"dateBegin"] integerValue] + ([value integerValue] - [placeholder integerValue]) * 60)];
+            }
+            
+            // Replace our name method
+            name = [name stringByReplacingCharactersInRange:NSMakeRange(0, [name rangeOfString:@"Begin"].location) withString:@"date"];
+        }
+        
+        // Title
+        if ([name isEqualToString:@"name"]) {
+            self.title = value;
+        }
+        
+        // Change our dictionary
+        NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithDictionary:_activityData];
+        [dictionary setObject:value forKey:name];
+        [_delegate willChangeValueForKey:@"activities"];
+        [[_delegate.activities objectAtIndex:_parentIndexPath.section] replaceObjectAtIndex:_parentIndexPath.row withObject:dictionary];
+        [_delegate didChangeValueForKey:@"activities"];
+        _activityData = dictionary;
     }
     
     // Change text view editable mode

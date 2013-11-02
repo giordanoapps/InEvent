@@ -17,6 +17,8 @@
 #import "InEventAPI.h"
 #import "PeopleViewCell.h"
 #import "PersonViewController.h"
+#import "UIPlaceHolderTextView.h"
+#import "GroupViewController.h"
 
 @interface GroupDetailViewController () {
     UIRefreshControl *refreshControl;
@@ -173,10 +175,48 @@
     
     // Save the fields
     NSString *tokenID = [[HumanToken sharedInstance] tokenID];
+    NSInteger groupID = [[_groupData objectForKey:@"id"] integerValue];
+    
+    NSString *placeholder = ((UITextField *)field).placeholder;
+    NSString *value = ((UITextField *)field).text;
     
     // Field will always have a placeholder, so we can cast it as a UITextField
-    if (![((UITextField *)field).placeholder isEqualToString:((UITextField *)field).text]) {
-        [[[InEventGroupAPIController alloc] initWithDelegate:self forcing:YES] editField:name withValue:((UITextField *)field).text atGroup:[[_groupData objectForKey:@"id"] integerValue] withTokenID:tokenID];
+    if (![placeholder isEqualToString:value]) {
+        
+        // Send our request
+        [[[InEventGroupAPIController alloc] initWithDelegate:self forcing:YES] editField:name withValue:value atGroup:groupID withTokenID:tokenID];
+        
+        // Dates
+        if ([name rangeOfString:@"Begin"].location != NSNotFound) {
+            
+            // Replace our values
+            if ([name isEqualToString:@"hourBegin"]) {
+                value = [NSString stringWithFormat:@"%d", ([[_groupData objectForKey:@"dateBegin"] integerValue] + ([value integerValue] - [placeholder integerValue]) * 60 * 60)];
+            } else if ([name isEqualToString:@"minuteBegin"]) {
+                value = [NSString stringWithFormat:@"%d", ([[_groupData objectForKey:@"dateBegin"] integerValue] + ([value integerValue] - [placeholder integerValue]) * 60)];
+            }
+            
+            // Replace our name method
+            name = [name stringByReplacingCharactersInRange:NSMakeRange(0, [name rangeOfString:@"Begin"].location) withString:@"date"];
+        }
+        
+        // Title
+        if ([name isEqualToString:@"name"]) {
+            self.title = value;
+        }
+        
+        // Change our dictionary
+        NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithDictionary:_groupData];
+        [dictionary setObject:value forKey:name];
+        [_delegate willChangeValueForKey:@"groups"];
+        [_delegate.groups replaceObjectAtIndex:_parentIndexPath.row withObject:dictionary];
+        [_delegate didChangeValueForKey:@"groups"];
+        _groupData = dictionary;
+    }
+    
+    // Change text view editable mode
+    if ([field isKindOfClass:[UIPlaceHolderTextView class]]) {
+        [((UIPlaceHolderTextView *)field) setEditable:NO];
     }
 }
 
@@ -293,22 +333,17 @@
 
 - (void)apiController:(InEventAPIController *)apiController didLoadDictionaryFromServer:(NSDictionary *)dictionary {
     
-    if ([apiController.method isEqualToString:@"getDetails"]) {
-        // Assign the data object to people
-        _peopleData = [dictionary objectForKey:@"data"];
-        
-        // Assign the working events
-        [[HumanToken sharedInstance] setWorkingEvents:[dictionary objectForKey:@"events"]];
-        
-        // Pain the UI
-        [self paint];
-        
-    } else if ([apiController.method isEqualToString:@"requestEnrollment"]) {
+    if ([apiController.method isEqualToString:@"getPeople"]) {
         // Assign the data object to people
         _peopleData = [dictionary objectForKey:@"data"];
         
         // Reload data
         [self.collectionView reloadData];
+        
+    } else if ([apiController.method isEqualToString:@"requestEnrollment"]) {
+
+        // Load the updated group
+        [self reloadData];
     }
     
     // Stop refreshing

@@ -9,12 +9,14 @@
 #import <UIKit/UIKit.h>
 #import "WrapperViewController.h"
 
-@interface GroupViewController : WrapperViewController <InEventAPIControllerDelegate, UIGestureRecognizerDelegate, UISplitViewControllerDelegate, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
+@interface GroupViewController : WrapperViewController <InEventAPIControllerDelegate, UIGestureRecognizerDelegate, UINavigationControllerDelegate, UISplitViewControllerDelegate, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 
 @property (strong, nonatomic) IBOutlet UIView *addGroupView;
 @property (strong, nonatomic) IBOutlet UITextField *nameInput;
 @property (strong, nonatomic) IBOutlet UIButton *addGroupButton;
+
+@property (strong, nonatomic) NSMutableArray *groups;
 
 @end

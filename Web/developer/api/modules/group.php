@@ -236,7 +236,7 @@
 					echo printInformation("activity", $result, true, 'json');
 				} elseif ($format == "html") {
 					$result = getGroupsForMemberAtGroupQuery($groupID, $personID);
-					printAgendaItem(mysql_fetch_assoc($result), "member");
+					// printAgendaItem(mysql_fetch_assoc($result), "member");
 				} else {
 					http_status_code(405, "this format is not available");
 				}

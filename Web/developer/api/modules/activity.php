@@ -85,12 +85,26 @@
 			if ($core->workAtEvent) {
 			
 				// We list all the fields that can be edited by the activity platform
-				$validFields = array("name", "description", "latitude", "longitude", "location", "dayBegin", "monthBegin", "hourBegin", "minuteBegin", "dayEnd", "monthEnd", "hourEnd", "minuteEnd", "capacity", "general", "highlight");
+				$validFields = array("name", "description", "latitude", "longitude", "location", "dateBegin", "dayBegin", "monthBegin", "hourBegin", "minuteBegin", "dateEnd", "dayEnd", "monthEnd", "hourEnd", "minuteEnd", "capacity", "general", "highlight");
 
 				if (in_array($name, $validFields) == TRUE) {
 
+					// Date
+					if ($name == "dateBegin" || $name == "dateEnd") {
+
+						$timezone = date("P");
+
+						$update = resourceForQuery(
+							"UPDATE
+								`event` 
+							SET
+								`$name` = CONVERT_TZ(FROM_UNIXTIME($value), '$timezone', '+00:00')
+							WHERE
+								`event`.`id` = $eventID
+						");
+
 					// Month
-					if ($name == "monthBegin" || $name == "monthEnd") {
+					} elseif ($name == "monthBegin" || $name == "monthEnd") {
 
 						if ($value > 0 && $value <= 12) {
 

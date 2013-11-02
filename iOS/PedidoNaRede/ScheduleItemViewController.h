@@ -13,6 +13,7 @@
 
 @class GMSMapView;
 @class UIPlaceHolderTextView;
+@class ScheduleViewController;
 
 @interface ScheduleItemViewController : WrapperViewController <InEventAPIControllerDelegate, UIGestureRecognizerDelegate, UISplitViewControllerDelegate, CLLocationManagerDelegate>
 
@@ -29,6 +30,8 @@
 @property (strong, nonatomic) IBOutlet MKMapView *map;
 //@property (strong, nonatomic) IBOutlet GMSMapView *map;
 
+@property (weak, nonatomic) ScheduleViewController *delegate;
+@property (weak, nonatomic) NSIndexPath *parentIndexPath;
 @property (strong, nonatomic) NSDictionary *activityData;
 
 @end

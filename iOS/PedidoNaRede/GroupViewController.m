@@ -24,7 +24,6 @@
     UIRefreshControl *refreshControl;
     NSIndexPath *selectedPath;
     NSString *dataPath;
-    NSMutableArray *groups;
     NSCache *peopleCache;
     BOOL shouldReloadPeople;
 }
@@ -41,6 +40,7 @@
         self.tabBarItem.image = [UIImage imageNamed:@"16-Users"];
         peopleCache = [[NSCache alloc] init];
         shouldReloadPeople = NO;
+        [self addObserver:self forKeyPath:@"groups" options:0 context:NULL];
     }
     return self;
 }
@@ -51,6 +51,9 @@
     
     // Add Button
     if ([[HumanToken sharedInstance] isMemberAuthenticated]) [self loadAddButton];
+    
+    // Navigation delegate
+    self.navigationController.delegate = self;
     
     // Refresh Control
     refreshControl = [[UIRefreshControl alloc] init];
@@ -96,6 +99,14 @@
     } else {
         [[[InEventEventAPIController alloc] initWithDelegate:self forcing:forcing] getGroupsAtEvent:[[EventToken sharedInstance] eventID]];
     }
+}
+
+#pragma mark - KVO
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    
+    // Save the current object
+    [[NSDictionary dictionaryWithObject:self.groups forKey:@"data"] writeToFile:dataPath atomically:YES];
 }
 
 #pragma mark - Bar Methods
@@ -158,7 +169,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [groups count];
+    return [_groups count];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -175,7 +186,7 @@
         cell = (GroupViewCell *)[aTableView dequeueReusableCellWithIdentifier:CustomCellIdentifier];
     }
     
-    NSDictionary *dictionary = [groups objectAtIndex:indexPath.row];
+    NSDictionary *dictionary = [_groups objectAtIndex:indexPath.row];
     
     [cell.collectionView registerNib:[UINib nibWithNibName:@"PeopleViewCell" bundle:nil] forCellWithReuseIdentifier:@"PeopleViewCell"];
     [cell.collectionView setDataSource:self];
@@ -206,11 +217,14 @@
         gdvc = (GroupDetailViewController *)[[[self.splitViewController.viewControllers lastObject] viewControllers] objectAtIndex:0];
     }
     
-    NSDictionary *dictionary = [groups objectAtIndex:indexPath.row];
+    NSDictionary *dictionary = [_groups objectAtIndex:indexPath.row];
     
     [gdvc setTitle:[[dictionary objectForKey:@"name"] stringByDecodingHTMLEntities]];
-    [gdvc setGroupData:[groups objectAtIndex:indexPath.row]];
+    [gdvc setDelegate:self];
+    [gdvc setParentIndexPath:indexPath];
+    [gdvc setGroupData:[_groups objectAtIndex:indexPath.row]];
     [gdvc setPeopleData:[peopleCache objectForKey:indexPath]];
+    
     
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
         [self.navigationController pushViewController:gdvc animated:YES];
@@ -218,7 +232,7 @@
     }
 }
 
--(void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     if ([indexPath row] == ((NSIndexPath*)[[tableView indexPathsForVisibleRows] lastObject]).row){
         shouldReloadPeople = NO;
     }
@@ -261,13 +275,21 @@
     return UIEdgeInsetsMake(0, 0, 0, 0);
 }
 
+#pragma mark - Navigation Controller Delegate
+
+- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    
+    // Reload all table data
+    [self loadData];
+}
+
 #pragma mark - APIController Delegate
 
 - (void)apiController:(InEventAPIController *)apiController didLoadDictionaryFromServer:(NSDictionary *)dictionary {
     
     if ([apiController.method isEqualToString:@"getGroups"]) {
         // Assign the data object to the groups
-        groups = [NSMutableArray arrayWithArray:[dictionary objectForKey:@"data"]];
+        _groups = [NSMutableArray arrayWithArray:[dictionary objectForKey:@"data"]];
         
         // Save the path of the current file object
         dataPath = apiController.path;
@@ -308,7 +330,7 @@
         dataPath = apiController.path;
     } else {
         // Save the current object
-        [[NSDictionary dictionaryWithObject:groups forKey:@"data"] writeToFile:dataPath atomically:YES];
+        [[NSDictionary dictionaryWithObject:_groups forKey:@"data"] writeToFile:dataPath atomically:YES];
         
         // Load the UI controls
         [super apiController:apiController didSaveForLaterWithError:error];
