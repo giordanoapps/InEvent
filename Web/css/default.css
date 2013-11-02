@@ -298,7 +298,7 @@ textarea, input {
 
 .loginBar .rightBar {
 	padding: 0;
-	width: 100%;
+	width: 60%;
 }
 
 .bar .rightBar p {
@@ -337,6 +337,8 @@ textarea, input {
 	line-height: normal;
 	height: auto;
 	font-size: 100%;
+	width: 166.67%;
+	left: -66.67%;
 }
 
 .bar .secondary {
@@ -520,6 +522,8 @@ textarea, input {
 	padding: 15px;
 	line-height: 0px;
 	margin: 0;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 	border-bottom: 1px solid #E0E0E0;
 	-moz-box-shadow: 0px 1px white inset;
 	-webkit-box-shadow: 0px 1px white inset;
@@ -1375,6 +1379,8 @@ textarea, input {
 	width: 25%;
 	padding: 1%;
 	background-color: rgba(245, 245, 245, 1.0);
+	-webkit-box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.22);
+	box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.22);
 	border-radius: 5px 5px 0 0;
 }
 
@@ -1396,6 +1402,8 @@ textarea, input {
 	text-align: left;
 	padding: 1%;
 	background-color: rgba(245, 245, 245, 1.0);
+	-webkit-box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.22);
+	box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.22);
 	border-radius: 0 0 5px 5px;
 }
 
@@ -1412,6 +1420,7 @@ textarea, input {
 #frontContent .left span {
 	padding: 0 2%;
 	width: 82%;
+	font-size: 90%;
 	vertical-align: middle;
 	display: inline-block;
 }
@@ -1453,7 +1462,7 @@ textarea, input {
 	overflow: hidden;
 }
 
-#eventContent .realContent {
+#eventContent .menuContent ~ .realContent {
 	padding-top: 44px;
 }
 
@@ -1557,21 +1566,25 @@ textarea, input {
 	position: absolute;
 	top: 50%;
 	-webkit-transform: translate(0%, -50%);
+	-moz-transform: translate(0%, -50%);
+	-o-transform: translate(0%, -50%);
 }
 
 #eventContent .agendaItem .right .middle {
 	width: 34%;
 	left: 34%;
 	position: relative;
-	min-height: 60px;
+	height: 60px;
 }
 
 #eventContent .agendaItem .right .bottom {
-	width: 18%;
+	width: 20%;
 	left: 68%;
 	position: absolute;
 	top: 50%;
 	-webkit-transform: translate(0%, -50%);
+	-moz-transform: translate(0%, -50%);
+	-o-transform: translate(0%, -50%);
 }
 
 #eventContent .agendaItem .right .bottom div {
@@ -1588,11 +1601,13 @@ textarea, input {
 }
 
 #eventContent .agendaItem .right .controls {
-	width: 14%;
-	left: 86%;
+	width: 12%;
+	left: 88%;
 	position: absolute;
 	top: 50%;
 	-webkit-transform: translate(0%, -50%);
+	-moz-transform: translate(0%, -50%);
+	-o-transform: translate(0%, -50%);
 }
 
 #eventContent.editingMode .agendaItem .right .controls .singleButton {
@@ -1635,6 +1650,7 @@ textarea, input {
 #eventContent .agendaItem .right .name {
 	font-size: 100%;
 	font-weight: bold;
+	padding: 1%;
 }
 
 #eventContent .agendaItem .right .description {
@@ -1773,6 +1789,49 @@ textarea, input {
 #eventContent .toolBonusMap,
 #eventContent .toolBonusMap #mapCanvas {
 	height: 350px;
+}
+
+/* @end */
+
+/* @group Options */
+
+#eventContent .toolBonusOptions {
+	padding: 5px 0;
+}
+
+#eventContent .toolBonusOptions div 	{
+	display: inline-block;
+	vertical-align: bottom;
+	width: 33%;
+}
+
+#eventContent .toolBonusOptions img {
+	width: 32px;
+	vertical-align: middle;
+}
+
+#eventContent .toolBonusOptions .title {
+	font-size: 100%;
+	margin: 0 auto;
+	padding-top: 5px;
+	text-align: center;
+	font-weight: bold;
+	display: block;
+}
+
+#eventContent .toolBonusOptions .explanation {
+	padding-bottom: 10px;
+	font-size: 85%;
+	display: block;
+	color: #A5A5A5;
+}
+
+#eventContent .toolBonusOptions .capacity {
+	font-weight: bold;
+}
+
+#eventContent .toolBonusOptions .checkbox {
+	cursor: pointer;
 }
 
 /* @end */

@@ -1,6 +1,6 @@
 //
 //  OrderItemViewCell.h
-//  PedidoNaRede
+//  InEvent
 //
 //  Created by Pedro Góes on 08/10/12.
 //  Copyright (c) 2012 Pedro Góes. All rights reserved.

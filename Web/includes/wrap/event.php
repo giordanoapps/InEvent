@@ -100,11 +100,12 @@
                     <?php if ($target == "event") { ?>
                         <div class="dock">
                             <ul>
-                                <li class="">
+                                <li>
                                     <img src="images/32-Users.png" alt="Pessoas" title="Número de pessoas inscritas na atividade">
                                     <span>
                                         <b class="entries"><?php echo $data['entries'] ?></b> /
-                                        <?php if ($data['capacity'] != 0) { echo $data['capacity']; } else { ?>&infin;<?php } ?></span>
+                                        <?php if ($data['capacity'] != 0) { echo $data['capacity']; } else { ?>&infin;<?php } ?>
+                                    </span>
                                 </li>
                             </ul>
                         </div>
@@ -179,7 +180,8 @@
                     "location" => "",
                     "dateBegin" => 0,
                     "dateEnd" => 0,
-                    "capacity" => "",
+                    "capacity" => 0,
+                    "general" => 1,
                     "highlight" => 0,
                     "approved" => ""
                 ),
@@ -218,6 +220,10 @@
     }
 
     function printAgendaItem($data, $enrolledAtEvent) {
+
+        // Get the singleton
+        $core = Core::singleton();
+
         ?>
         <li
             value="<?php echo $data['id'] ?>"
@@ -226,7 +232,18 @@
             data-latitude="<?php echo $data['latitude'] ?>"
             data-longitude="<?php echo $data['longitude'] ?>"
             data-dateBegin="<?php echo $data['dateBegin'] ?>"
-            data-dateEnd="<?php echo $data['dateEnd'] ?>">
+            data-monthBegin="<?php echo date("m", $data['dateBegin']) ?>"
+            data-dayBegin="<?php echo date("d", $data['dateBegin']) ?>"
+            data-hourBegin="<?php echo date("G", $data['dateBegin']) ?>"
+            data-minuteBegin="<?php echo date("i", $data['dateBegin']) ?>"
+            data-dateEnd="<?php echo $data['dateEnd'] ?>"
+            data-monthEnd="<?php echo date("m", $data['dateEnd']) ?>"
+            data-dayEnd="<?php echo date("d", $data['dateEnd']) ?>"
+            data-hourEnd="<?php echo date("G", $data['dateEnd']) ?>"
+            data-minuteEnd="<?php echo date("i", $data['dateEnd']) ?>"
+            data-capacity="<?php echo $data['capacity'] ?>"
+            data-general="<?php echo $data['general'] ?>"
+            data-highlight="<?php echo $data['highlight'] ?>">
             <div class="left">
                 <div class="upper">
                     <span class="dateBegin" name="dateBegin"><?php echo date("G:i", $data['dateBegin']) ?></span>
@@ -255,8 +272,12 @@
                         <span class="smallPadding limited location" name="location"><?php echo $data['location'] ?></span>
                     </a>
                     <div>
+                        <?php if ($core->workAtEvent) { ?>
+                        <img id="options" src="images/32-Cog.png" alt="Ajustes" title="Opções da atividade">
+                        <?php } else { ?>
                         <img src="images/32-Users.png" alt="Local" title="Número de vagas na atividade">
                         <span class="smallPadding capacity" name="capacity"><?php if ($data['capacity'] != 0) { echo $data['capacity']; } else { ?>&infin;<?php } ?></span>
+                        <?php } ?>
                     </div>
                     <span class="suckyVerticalAlign"></span>
                 </div>

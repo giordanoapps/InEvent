@@ -25,7 +25,7 @@
 
         <div class="documentationFunctionParametersBox">
             <p><b>tokenID</b><sub>GET</sub> : id de autenticação </p>
-            <p><b>eventID</b><sub>GET</sub> : id da atividade </p>
+            <p><b>eventID</b><sub>GET</sub> : id do evento </p>
             <p><b>name</b><sub>GET</sub> : nome do campo </p>
             <p><b>value</b><sub>POST</sub> : valor do campo </p>
         </div>
@@ -188,6 +188,20 @@
         </p>
 
         <p class="documentFunctionDescription">Retorna todas as atividades do evento <i>eventID</i>. Caso seja fornecido um <i>tokenID</i>, será informado se a pessoa associada ao <i>tokenID</i> está inscrita em cada atividade.</p>
+
+        <div class="documentationFunctionParametersBox">
+            <p><b>eventID</b><sub>GET</sub> : id do evento </p>
+            <p><b>tokenID</b><sub>GET</sub> : id de autenticação </p>
+        </div>
+    </div>
+
+    <div class="documentationFunctionBox">
+        <p class="documentFunctionName">
+            <span>event.getGroups(<b>eventID</b>, <b>tokenID</b> = null)</span>
+            <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=event.getGroups&tokenID=null&eventID=1">
+        </p>
+
+        <p class="documentFunctionDescription">Retorna todas os grupos do evento <i>eventID</i>. Caso seja fornecido um <i>tokenID</i>, será informado se a pessoa associada ao <i>tokenID</i> está inscrita em cada grupo.</p>
 
         <div class="documentationFunctionParametersBox">
             <p><b>eventID</b><sub>GET</sub> : id do evento </p>

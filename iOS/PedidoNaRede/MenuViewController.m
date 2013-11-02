@@ -45,10 +45,10 @@
     [self.menuTableView setBackgroundView:tableBgView];
     [self.menuTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     
-    _headers = @[NSLocalizedString(@"Your Account", nil), NSLocalizedString(@"General", nil), NSLocalizedString(@"About", nil)];
+    _headers = @[NSLocalizedString(@"Your Account", nil), NSLocalizedString(@"Event", nil), NSLocalizedString(@"Tools", nil), NSLocalizedString(@"About Us", nil)];
     
-    // Selected the localization controller
-    [self setSelectedIndex:1];
+    // Selected the schedule controller
+    [self setSelectedIndex:2];
     
     // Update the menu
     [self performSelector:@selector(reloadMenu)];
@@ -140,6 +140,10 @@
             break;
             
         case 2:
+            return 4;
+            break;
+            
+        case 3:
             return 1;
             break;
             
@@ -158,7 +162,7 @@
     
     UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(10.0, 12.0, tableView.frame.size.width, 32.0)];
     [title setText:[[_headers objectAtIndex:section] uppercaseString]];
-    [title setFont:[UIFont fontWithName:@"Thonburi-Bold" size:14.0]];
+    [title setFont:[UIFont fontWithName:@"Thonburi-Bold" size:16.0]];
     [title setTextColor:[ColorThemeController navigationBarTextColor]];
     [title setBackgroundColor:[UIColor clearColor]];
     
@@ -193,7 +197,7 @@
         [cell.textLabel setTextColor:[ColorThemeController navigationBarTextColor]];
         [cell.textLabel setHighlightedTextColor:[ColorThemeController navigationBarTextColor]];
         [cell.textLabel setBackgroundColor:[UIColor clearColor]];
-        [cell.textLabel setFont:[UIFont fontWithName:@"Thonburi" size:16.0]];
+        [cell.textLabel setFont:[UIFont fontWithName:@"Thonburi" size:18.0]];
         
         UIView *background = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, tableView.frame.size.width, 36.0)];
         [background setBackgroundColor:[ColorThemeController navigationBarBackgroundColor]];
@@ -214,8 +218,8 @@
     }
     
     // Accessory view
-    if ((indexPath.section <= 1 && self.selectedIndex == indexPath.row + indexPath.section) ||
-        (indexPath.section == 2 && self.selectedIndex == [tableView numberOfSections])) {
+    if ((indexPath.section <= 2 && self.selectedIndex == indexPath.row + indexPath.section) ||
+        (indexPath.section == 3 && self.selectedIndex == [tableView numberOfSections])) {
         [cell setAccessoryView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"16-Check"]]];
     } else {
         [cell setAccessoryView:nil];
@@ -226,14 +230,12 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    if (indexPath.section <= 2) {
-        // We must transform the current indexPath into something that the library can read
-        NSIndexPath *transformed = [NSIndexPath indexPathForRow:[self calculateIndex:indexPath] inSection:0];
-        [super tableView:tableView didSelectRowAtIndexPath:transformed];
-    }
+    // We must transform the current indexPath into something that the library can read
+    NSIndexPath *transformed = [NSIndexPath indexPathForRow:[self calculateIndex:indexPath] inSection:0];
+    [super tableView:tableView didSelectRowAtIndexPath:transformed];
     
     // Reload all sections
-    [tableView reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, [tableView numberOfSections])] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [tableView reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, [tableView numberOfSections] - 1)] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 @end

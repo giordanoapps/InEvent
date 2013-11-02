@@ -1,6 +1,6 @@
 //
 //  FeedbackViewController.m
-//  PedidoNaRede
+//  InEvent
 //
 //  Created by Pedro Góes on 24/02/13.
 //  Copyright (c) 2013 Pedro Góes. All rights reserved.
@@ -10,13 +10,13 @@
 #import "FeedbackViewController.h"
 #import "ColorThemeController.h"
 #import "UIPlaceHolderTextView.h"
-#import "ODRefreshControl.h"
 #import "HumanToken.h"
 #import "EventToken.h"
 #import "NSString+HTML.h"
+#import "InEventAPI.h"
 
 @interface FeedbackViewController () {
-    ODRefreshControl *refreshControl;
+    UIRefreshControl *refreshControl;
     BOOL hideCommentBox;
     NSString *dataPath;
 }
@@ -55,9 +55,11 @@
     [((UIControl *)self.view) addTarget:self action:@selector(dismissKeyboard) forControlEvents:UIControlEventTouchUpInside];
     
     // Refresh Control
-    refreshControl = [[ODRefreshControl alloc] initInScrollView:self.scrollView];
+    refreshControl = [[UIRefreshControl alloc] init];
+    refreshControl.tintColor = [UIColor grayColor];
     [refreshControl addTarget:self action:@selector(reloadData) forControlEvents:UIControlEventValueChanged];
-       
+    [self.scrollView addSubview:refreshControl];
+    
     // Box
     CGRect frame = self.view.frame;
     _box.frame = CGRectMake((frame.size.width - _box.frame.size.width) / 2.0f, (frame.size.height - _box.frame.size.height) / 2.0, _box.frame.size.width, _box.frame.size.height);
@@ -151,9 +153,9 @@
     NSString *tokenID = [[HumanToken sharedInstance] tokenID];
     
     if (_type == FeedbackTypeEvent) {
-        [[[APIController alloc] initWithDelegate:self forcing:forcing] eventGetOpinionFromEvent:_referenceID withToken:tokenID];
+        [[[InEventEventAPIController alloc] initWithDelegate:self forcing:forcing] getOpinionFromEvent:_referenceID withTokenID:tokenID];
     } else if (_type == FeedbackTypeActivity) {
-        [[[APIController alloc] initWithDelegate:self forcing:forcing] activityGetOpinionFromActivity:_referenceID withToken:tokenID];
+        [[[InEventActivityAPIController alloc] initWithDelegate:self forcing:forcing] getOpinionFromActivity:_referenceID withTokenID:tokenID];
     }
 }
 
@@ -199,9 +201,9 @@
     NSString *tokenID = [[HumanToken sharedInstance] tokenID];
     
     if (_type == FeedbackTypeEvent) {
-        [[[APIController alloc] initWithDelegate:self forcing:YES] eventSendOpinionWithRating:_rating withMessage:_textView.text toEvent:_referenceID withToken:tokenID];
+        [[[InEventEventAPIController alloc] initWithDelegate:self forcing:YES] sendOpinionWithRating:_rating withMessage:_textView.text toEvent:_referenceID withTokenID:tokenID];
     } else if (_type == FeedbackTypeActivity) {
-        [[[APIController alloc] initWithDelegate:self forcing:YES] activitySendOpinionWithRating:_rating toActivity:_referenceID withToken:tokenID];
+        [[[InEventActivityAPIController alloc] initWithDelegate:self forcing:YES] sendOpinionWithRating:_rating toActivity:_referenceID withTokenID:tokenID];
     }
     
     [self dismissViewControllerAnimated:YES completion:^{
@@ -222,7 +224,7 @@
 
 #pragma mark - APIController Delegate
 
-- (void)apiController:(APIController *)apiController didLoadDictionaryFromServer:(NSDictionary *)dictionary {
+- (void)apiController:(InEventAPIController *)apiController didLoadDictionaryFromServer:(NSDictionary *)dictionary {
     
     if ([apiController.method isEqualToString:@"getOpinion"]) {
         NSArray *answers = [dictionary objectForKey:@"data"];
@@ -258,7 +260,7 @@
     [refreshControl endRefreshing];
 }
 
-- (void)apiController:(APIController *)apiController didSaveForLaterWithError:(NSError *)error {
+- (void)apiController:(InEventAPIController *)apiController didSaveForLaterWithError:(NSError *)error {
 
     if ([apiController.method isEqualToString:@"getOpinion"]) {
         // Save the path of the current file object
@@ -280,6 +282,8 @@
         // Load the UI controls
         [super apiController:apiController didSaveForLaterWithError:error];
     }
+    
+    [refreshControl endRefreshing];
 }
 
 @end

@@ -6,13 +6,13 @@
 //  Copyright (c) 2013 Pedro Góes. All rights reserved.
 //
 
+#import <Parse/Parse.h>
 #import "MarketplaceViewController.h"
 #import "MarketplaceViewCell.h"
 #import "AppDelegate.h"
 #import "UtilitiesController.h"
 #import "UIViewController+Present.h"
 #import "UIImageView+WebCache.h"
-#import "ODRefreshControl.h"
 #import "UIViewController+AKTabBarController.h"
 #import "NSString+HTML.h"
 #import "HumanToken.h"
@@ -20,10 +20,10 @@
 #import "GAI.h"
 #import "GAIDictionaryBuilder.h"
 #import "Enrollment.h"
-#import <Parse/Parse.h>
+#import "InEventAPI.h"
 
 @interface MarketplaceViewController () {
-    ODRefreshControl *refreshControl;
+    UIRefreshControl *refreshControl;
 }
 
 @property (nonatomic, strong) NSArray *events;
@@ -56,8 +56,10 @@
     _tableView.backgroundColor = [ColorThemeController tableViewBackgroundColor];
     
     // Refresh Control
-    refreshControl = [[ODRefreshControl alloc] initInScrollView:self.tableView];
+    refreshControl = [[UIRefreshControl alloc] init];
+    refreshControl.tintColor = [UIColor grayColor];
     [refreshControl addTarget:self action:@selector(reloadData) forControlEvents:UIControlEventValueChanged];
+    [self.tableView addSubview:refreshControl];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -74,6 +76,11 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+    // Reload data to calculate the right frame
+    [self.tableView reloadData];
+}
+
 #pragma mark - Notification
 
 - (void)loadData {
@@ -88,9 +95,9 @@
     
     if ([[HumanToken sharedInstance] isMemberAuthenticated]) {
         NSString *tokenID = [[HumanToken sharedInstance] tokenID];
-        [[[APIController alloc] initWithDelegate:self forcing:forcing] eventGetEventsWithTokenID:tokenID];
+        [[[InEventEventAPIController alloc] initWithDelegate:self forcing:forcing] getEventsWithTokenID:tokenID];
     } else {
-        [[[APIController alloc] initWithDelegate:self forcing:forcing] eventGetEvents];
+        [[[InEventEventAPIController alloc] initWithDelegate:self forcing:forcing] getEvents];
     }
 }
 
@@ -102,7 +109,7 @@
     NSIndexPath *swipedIndexPath = [self.tableView indexPathForRowAtPoint:swipeLocation];
     
     NSString *tokenID = [[HumanToken sharedInstance] tokenID];
-    [[[APIController alloc] initWithDelegate:self forcing:YES] eventRequestEnrollmentAtEvent:[[[self.events objectAtIndex:swipedIndexPath.row] objectForKey:@"id"] integerValue] withTokenID:tokenID];
+    [[[InEventEventAPIController alloc] initWithDelegate:self forcing:YES] requestEnrollmentAtEvent:[[[self.events objectAtIndex:swipedIndexPath.row] objectForKey:@"id"] integerValue] withTokenID:tokenID];
 }
 
 #pragma mark - Table View Data Source
@@ -118,7 +125,7 @@
 - (UITableViewCell *)tableView:(UITableView *)aTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     static NSString *CustomCellIdentifier = @"CustomCellIdentifier";
-    MarketplaceViewCell *cell = (MarketplaceViewCell *)[aTableView dequeueReusableCellWithIdentifier: CustomCellIdentifier];
+    MarketplaceViewCell *cell = (MarketplaceViewCell *)[aTableView dequeueReusableCellWithIdentifier:CustomCellIdentifier];
     
     if (cell == nil) {
         [aTableView registerNib:[UINib nibWithNibName:@"MarketplaceViewCell" bundle:nil] forCellReuseIdentifier:CustomCellIdentifier];
@@ -177,6 +184,7 @@
     
     [[EventToken sharedInstance] setEventID:eventID];
     [[EventToken sharedInstance] setName:[[dictionary objectForKey:@"name"] stringByDecodingHTMLEntities]];
+    [[EventToken sharedInstance] setNick:[[dictionary objectForKey:@"nickname"] stringByDecodingHTMLEntities]];
     [[HumanToken sharedInstance] setApproved:[[dictionary objectForKey:@"approved"] integerValue]];
     
     // Notify our tracker about the new event
@@ -189,7 +197,7 @@
     [currentInstallation saveEventually];
     
     // Update the current state of the schedule controller
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"scheduleCurrentState" object:nil userInfo:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"eventCurrentState" object:nil userInfo:nil];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"verify" object:nil userInfo:@{@"type": @"menu"}];
     
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -202,7 +210,7 @@
 
 #pragma mark - APIController Delegate
 
-- (void)apiController:(APIController *)apiController didLoadDictionaryFromServer:(NSDictionary *)dictionary {
+- (void)apiController:(InEventAPIController *)apiController didLoadDictionaryFromServer:(NSDictionary *)dictionary {
     
     if ([apiController.method isEqualToString:@"getEvents"]) {
         // Assign the data object to the companies
@@ -219,7 +227,13 @@
     }
 }
 
-- (void)apiController:(APIController *)apiController didFailWithError:(NSError *)error {
+- (void)apiController:(InEventAPIController *)apiController didSaveForLaterWithError:(NSError *)error {
+    [super apiController:apiController didSaveForLaterWithError:error];
+    
+    [refreshControl endRefreshing];
+}
+
+- (void)apiController:(InEventAPIController *)apiController didFailWithError:(NSError *)error {
     [super apiController:apiController didFailWithError:error];
     
     [refreshControl endRefreshing];

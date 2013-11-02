@@ -11,16 +11,13 @@
 
 @class HumanViewController;
 
-@interface HumanLoginViewController : WrapperViewController
+@interface HumanLoginViewController : WrapperViewController <InEventAPIControllerDelegate>
 
-@property (nonatomic, strong) IBOutlet UIControl *topBox;
+@property (nonatomic, strong) IBOutlet UIControl *view;
+@property (nonatomic, strong) IBOutlet UILabel *accountLabel;
 @property (nonatomic, strong) IBOutlet UIControl *bottomBox;
 @property (nonatomic, strong) IBOutlet UIControl *bottomInternalBox;
-@property (nonatomic, strong) IBOutlet UIView *separator1;
 @property (nonatomic, strong) IBOutlet UIView *separator2;
-
-@property (nonatomic, strong) IBOutlet UIButton *facebook;
-
 @property (nonatomic, strong) IBOutlet UIView *personFieldWrapper;
 @property (nonatomic, strong) IBOutlet UIButton *loginButton;
 @property (nonatomic, strong) IBOutlet UIButton *registerButton;

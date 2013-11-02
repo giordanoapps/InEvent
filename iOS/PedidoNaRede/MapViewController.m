@@ -1,24 +1,23 @@
 //
 //  MapViewController.m
-//  PedidoNaRede
+//  InEvent
 //
 //  Created by Pedro Góes on 05/10/12.
 //  Copyright (c) 2012 Pedro Góes. All rights reserved.
 //
 
-#import "MapViewController.h"
 #import <QuartzCore/QuartzCore.h>
+#import <Parse/Parse.h>
+#import "MapViewController.h"
 #import "AppDelegate.h"
 #import "NSString+HTML.h"
 #import "MKPointExpandedAnnotation.h"
-#import "ODRefreshControl.h"
 #import "EventToken.h"
 #import "GAI.h"
 #import "GAIDictionaryBuilder.h"
-#import <Parse/Parse.h>
 
 @interface MapViewController () {
-    ODRefreshControl *refreshControl;
+    UIRefreshControl *refreshControl;
 }
 
 @property (nonatomic, strong) NSArray *companies;
@@ -40,12 +39,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    self.shouldMoveKeyboardUp = NO;
+    
     self.view.backgroundColor = [ColorThemeController navigationBarBackgroundColor];
     
     // The searchField will only be available on the master map class
-    if (_searchField) {
+    if (_searchField != nil) {
         
         // APIController
         [self loadData];
@@ -76,8 +74,10 @@
         _tableView.backgroundColor = [ColorThemeController tableViewBackgroundColor];
         
         // Refresh Control
-        refreshControl = [[ODRefreshControl alloc] initInScrollView:self.tableView];
-        [refreshControl addTarget:self action:@selector(loadData) forControlEvents:UIControlEventValueChanged];
+        refreshControl = [[UIRefreshControl alloc] init];
+        refreshControl.tintColor = [UIColor grayColor];
+        [refreshControl addTarget:self action:@selector(reloadData) forControlEvents:UIControlEventValueChanged];
+        [self.tableView addSubview:refreshControl];
     }
     
     if (_mapView) {
@@ -287,8 +287,8 @@
 
 - (UITableViewCell *)tableView:(UITableView *)aTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    static NSString * CustomCellIdentifier = @"CustomCellIdentifier";
-    UITableViewCell * cell = [aTableView dequeueReusableCellWithIdentifier: CustomCellIdentifier];
+    static NSString *CustomCellIdentifier = @"CustomCellIdentifier";
+    UITableViewCell *cell = [aTableView dequeueReusableCellWithIdentifier:CustomCellIdentifier];
     
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CustomCellIdentifier];
@@ -309,7 +309,7 @@
 
 #pragma mark - APIController Delegate
 
-- (void)apiController:(APIController *)apiController didLoadDictionaryFromServer:(NSDictionary *)dictionary {
+- (void)apiController:(InEventAPIController *)apiController didLoadDictionaryFromServer:(NSDictionary *)dictionary {
     
     // Assign the data object to the companies
     self.companies = [dictionary objectForKey:@"data"];
@@ -317,6 +317,12 @@
     [self reloadMap];
     // Reload all table data
     [self.tableView reloadData];
+    
+    [refreshControl endRefreshing];
+}
+
+- (void)apiController:(InEventAPIController *)apiController didSaveForLaterWithError:(NSError *)error {
+    [super apiController:apiController didSaveForLaterWithError:error];
     
     [refreshControl endRefreshing];
 }

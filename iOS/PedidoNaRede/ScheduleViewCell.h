@@ -1,6 +1,6 @@
 //
 //  ScheduleItemViewCell.h
-//  PedidoNaRede
+//  InEvent
 //
 //  Created by Pedro Góes on 08/10/12.
 //  Copyright (c) 2012 Pedro Góes. All rights reserved.
@@ -18,7 +18,5 @@
 @property (strong, nonatomic) IBOutlet UITextView *description;
 
 @property (assign, nonatomic) NSInteger approved;
-
-- (void)configureCell;
 
 @end

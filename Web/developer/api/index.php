@@ -20,12 +20,20 @@
 			include_once("modules/event.php");
 			break;
 
+		case "group":
+			include_once("modules/group.php");
+			break;
+
 		case "notification":
 			include_once("modules/notification.php");
 			break;
 
 		case "person":
 			include_once("modules/person.php");
+			break;
+
+		case "photo":
+			include_once("modules/photo.php");
 			break;
 
 		default:

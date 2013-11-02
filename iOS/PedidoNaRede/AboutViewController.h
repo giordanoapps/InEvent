@@ -14,7 +14,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *productImage;
 @property (strong, nonatomic) IBOutlet UIButton *companyImage;
 @property (strong, nonatomic) IBOutlet UIImageView *leftArrow;
-@property (strong, nonatomic) IBOutlet UIWebView *aboutText;
+@property (strong, nonatomic) IBOutlet UITextView *aboutText;
 
 - (IBAction)openProductPage:(id)sender;
 - (IBAction)openCompanyPage:(id)sender;

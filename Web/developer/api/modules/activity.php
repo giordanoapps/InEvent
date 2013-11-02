@@ -8,6 +8,9 @@
 		// Permission
 		if ($core->workAtEvent) {
 
+			// Some properties
+			$name = (isset($_POST['name']) && $_POST['name'] != "null") ? getAttribute($_POST['name']) : "Nome da atividade";
+
 			// Insert a new activity
 			$insert = resourceForQuery(
 				"INSERT INTO
@@ -30,13 +33,13 @@
 					(
 						$eventID,
 						0,
-						'',
-						'',
+						'$name',
+						'Descri&ccedil;&atilde;o da atividade',
 						0,
 						0,
-						'',
+						'Sua localidade',
 						NOW(),
-						NOW(),
+						DATE_ADD(NOW(), INTERVAL 1 HOUR),
 						0,
 						1,
 						0
@@ -46,17 +49,21 @@
 			$activityID = mysql_insert_id();
 
 			// Send a push notification
-			if ($globalDev == 0) pushActivityCreation($eventID, $activityID);
+			// if ($globalDev == 0) pushActivityCreation($eventID, $activityID);
 
 			// Return its data
-			if ($format == "json") {
-				$data["activityID"] = $activityID;
-				echo json_encode($data);
-			} elseif ($format == "html") {
-				$result = getActivitiesForMemberAtActivityQuery($activityID, $core->memberID);
-				printAgendaItem(mysql_fetch_assoc($result), "member");
+			if ($insert) {
+				if ($format == "json") {
+					$data["activityID"] = $activityID;
+					echo json_encode($data);
+				} elseif ($format == "html") {
+					$result = getActivitiesForMemberAtActivityQuery($activityID, $core->memberID);
+					printAgendaItem(mysql_fetch_assoc($result), "member");
+				} else {
+					http_status_code(405, "this format is not available");
+				}
 			} else {
-				http_status_code(405, "this format is not available");
+				http_status_code(500, "insert inside activity has failed");
 			}
 
 		} else {
@@ -78,12 +85,26 @@
 			if ($core->workAtEvent) {
 			
 				// We list all the fields that can be edited by the activity platform
-				$validFields = array("name", "description", "latitude", "longitude", "location", "dayBegin", "monthBegin", "hourBegin", "minuteBegin", "dayEnd", "monthEnd", "hourEnd", "minuteEnd", "capacity");
+				$validFields = array("name", "description", "latitude", "longitude", "location", "dateBegin", "dayBegin", "monthBegin", "hourBegin", "minuteBegin", "dateEnd", "dayEnd", "monthEnd", "hourEnd", "minuteEnd", "capacity", "general", "highlight");
 
 				if (in_array($name, $validFields) == TRUE) {
 
+					// Date
+					if ($name == "dateBegin" || $name == "dateEnd") {
+
+						$timezone = date("P");
+
+						$update = resourceForQuery(
+							"UPDATE
+								`event` 
+							SET
+								`$name` = CONVERT_TZ(FROM_UNIXTIME($value), '$timezone', '+00:00')
+							WHERE
+								`event`.`id` = $eventID
+						");
+
 					// Month
-					if ($name == "monthBegin" || $name == "monthEnd") {
+					} elseif ($name == "monthBegin" || $name == "monthEnd") {
 
 						if ($value > 0 && $value <= 12) {
 
@@ -128,12 +149,13 @@
 						if ($value >= 0 && $value < 24) {
 
 							$name = str_replace("hour", "date", $name);
+							$timezone = date("P");
 
 							$update = resourceForQuery(
 								"UPDATE
 									`activity` 
 								SET
-									`$name` = CONVERT_TZ(((`$name` - INTERVAL HOUR(`$name`) HOUR) + INTERVAL $value HOUR), '-03:00','+00:00')
+									`$name` = CONVERT_TZ(((`$name` - INTERVAL HOUR(`$name`) HOUR) + INTERVAL $value HOUR), '$timezone','+00:00')
 								WHERE
 									`activity`.`id` = $activityID
 							");
@@ -234,6 +256,19 @@
 								`activity`.`id` = $activityID
 						");
 
+					} elseif ($name == "general" || $name == "highlight") {
+
+						if ($value < 0 || $value > 1) $value = 0;
+
+						$update = resourceForQuery(
+							"UPDATE
+								`activity`
+							SET
+								`$name` = $value
+							WHERE
+								`activity`.`id` = $activityID
+						");
+
 					// The rest
 					} else {
 						$update = resourceForQuery(
@@ -247,7 +282,11 @@
 					}
 
 					// Send a push notification
-					if ($globalDev == 0) pushActivityUpdate(getEventForActivity($activityID), $activityID);
+					if ($globalDev == 0) {
+						if ($name == "hourBegin") {
+							pushActivityUpdate(getEventForActivity($activityID), $activityID);
+						}
+					}
 
 					// Return its data
 					if ($format == "json") {
@@ -299,14 +338,18 @@
 			if ($globalDev == 0) pushActivityRemove(getEventForActivity($activityID), $activityID);
 
 			// Return its data
-			if ($format == "json") {
-				$data["activityID"] = $activityID;
-				echo json_encode($data);
-			} elseif ($format == "html") {
-				$result = getActivitiesForMemberAtActivityQuery($activityID, $core->memberID);
-				printAgendaItem(mysql_fetch_assoc($result), "member");
+			if ($delete) {
+				if ($format == "json") {
+					$data["activityID"] = $activityID;
+					echo json_encode($data);
+				} elseif ($format == "html") {
+					$result = getActivitiesForMemberAtActivityQuery($activityID, $core->memberID);
+					printAgendaItem(mysql_fetch_assoc($result), "member");
+				} else {
+					http_status_code(405, "this format is not available");
+				}
 			} else {
-				http_status_code(405, "this format is not available");
+				http_status_code(500, "delete inside activity has failed");
 			}
 
 		} else {
@@ -327,7 +370,8 @@
 				$email = getAttribute($_GET['email']);
 
 				// Get the person for the given email
-				$personID = getPersonForEmail($email, $name);
+				$personID = getPersonForEmail($email);
+				if ($personID == 0) $personID = createMember(array("name" => $name, "password" => "123456", "email" => $email));
 
 				// Enroll the person at the event if necessary
 				processEventEnrollmentWithActivity($activityID, $personID);
@@ -754,13 +798,16 @@
 				`member`.`name` AS `memberName`,
 				`activityQuestion`.`memberID`,
 				`activityQuestion`.`text`,
-				COUNT(`activityQuestion`.`id`) AS `votes`
+				COUNT(DISTINCT `activityQuestion`.`id`) AS `votes`,
+				IF(ISNULL(`activityQuestionMemberUpVoted`.`memberID`), 0, 1) AS `upvoted`
 			FROM
 				`activityQuestion`
 			INNER JOIN
 				`member` ON `member`.`id` = `activityQuestion`.`memberID`
 			LEFT JOIN
 				`activityQuestionMember` ON `activityQuestion`.`id` = `activityQuestionMember`.`questionID`
+			LEFT JOIN
+				`activityQuestionMember` AS `activityQuestionMemberUpVoted` ON `activityQuestion`.`id` = `activityQuestionMemberUpVoted`.`questionID` AND `activityQuestionMemberUpVoted`.`memberID` = $core->memberID
 			WHERE 1
 				AND `activityQuestion`.`activityID` = $activityID
 			GROUP BY

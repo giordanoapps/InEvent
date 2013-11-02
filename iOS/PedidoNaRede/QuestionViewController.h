@@ -7,10 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-
 #import "WrapperViewController.h"
 
-@interface QuestionViewController : WrapperViewController <UITableViewDelegate, UITableViewDataSource, APIControllerDelegate, UIGestureRecognizerDelegate, UISplitViewControllerDelegate>
+@interface QuestionViewController : WrapperViewController <UITableViewDelegate, UITableViewDataSource, InEventAPIControllerDelegate, UIGestureRecognizerDelegate, UISplitViewControllerDelegate>
 
 @property (strong, nonatomic) IBOutlet UIView *wrapper;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;

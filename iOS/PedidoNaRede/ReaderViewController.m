@@ -12,16 +12,17 @@
 #import "NSString+HTML.h"
 #import "HumanToken.h"
 #import "UtilitiesController.h"
-#import "ODRefreshControl.h"
 #import "CoolBarButtonItem.h"
 #import "ReaderViewCell.h"
+#import "InEventAPI.h"
 
 @interface ReaderViewController () {
-    ODRefreshControl *refreshControl;
+    UIRefreshControl *refreshControl;
     NSIndexPath *hightlightedIndexPath;
     NSIndexPath *panIndexPath;
     CGPoint panStartLocation;
     NSString *dataPath;
+    NSArray *titleIndexes;
 }
 
 @property (nonatomic, strong) NSMutableArray *people;
@@ -36,6 +37,7 @@
     if (self) {
         self.title = NSLocalizedString(@"Reader", nil);
         self.people = [NSMutableArray array];
+        titleIndexes = @[@"A", @"B", @"C", @"D", @"E", @"F", @"G", @"H", @"I", @"J", @"K", @"L", @"M", @"N", @"O", @"P", @"Q", @"R", @"S", @"T", @"U", @"V", @"X", @"Z"];
     }
     return self;
 }
@@ -44,13 +46,18 @@
 {
     [super viewDidLoad];
     
-    // Load people
-    [self loadData];
+    // Add People View
+    [self loadAddButton];
     
     // View
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTap)];
     [tapGesture setDelegate:self];
     [self.view addGestureRecognizer:tapGesture];
+    
+    // Add person
+    [_nameInput setPlaceholder:NSLocalizedString(@"Name", nil)];
+    [_emailInput setPlaceholder:NSLocalizedString(@"Email", nil)];
+    [_addPersonButton setTitle:NSLocalizedString(@"Add person", nil) forState:UIControlStateNormal];
     
     // Number field
     [_numberInput setFrame:CGRectMake(_numberInput.frame.origin.x, _numberInput.frame.origin.y, _numberInput.frame.size.width, _numberInput.frame.size.height * 2.0)];
@@ -65,17 +72,10 @@
         [_numberInput.layer setBorderColor:[[ColorThemeController tableViewCellInternalBorderColor] CGColor]];
     }
     
-    // Name field
-    [_nameInput setPlaceholder:NSLocalizedString(@"Name", nil)];
- 
-    // Name field
-    [_emailInput setPlaceholder:NSLocalizedString(@"Email", nil)];
-    
     // Message Button
     if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {
         [_numberButton setBackgroundImage:[[UIImage imageNamed:@"greyButton"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)] forState:UIControlStateNormal];
         [_numberButton setBackgroundImage:[[UIImage imageNamed:@"greyButtonHighlight"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)] forState:UIControlStateHighlighted];
-        [_numberButton addTarget:self action:@selector(didTouch) forControlEvents:UIControlEventTouchUpInside];
         [_numberButton.layer setMasksToBounds:YES];
         [_numberButton.layer setCornerRadius:4.0];
         [_numberButton.layer setBorderWidth:0.6];
@@ -83,14 +83,17 @@
     }
     
     // Refresh Control
-    refreshControl = [[ODRefreshControl alloc] initInScrollView:self.tableView];
+    refreshControl = [[UIRefreshControl alloc] init];
+    refreshControl.tintColor = [UIColor grayColor];
     [refreshControl addTarget:self action:@selector(reloadData) forControlEvents:UIControlEventValueChanged];
+    [self.tableView addSubview:refreshControl];
     
     // Table View
+    [self.tableView setSectionIndexColor:[ColorThemeController tableViewCellTextColor]];
     [self.tableView setAllowsSelection:NO];
     
-    // Add People View
-    [self loadAddButton];
+    // Load people
+    [self loadData];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -133,7 +136,7 @@
     if ([[HumanToken sharedInstance] isMemberAuthenticated]) {
         NSString *tokenID = [[HumanToken sharedInstance] tokenID];
         NSInteger activityID = [[_activityData objectForKey:@"id"] integerValue];
-        [[[APIController alloc] initWithDelegate:self forcing:forcing] activityGetPeopleAtActivity:activityID withTokenID:tokenID];
+        [[[InEventActivityAPIController alloc] initWithDelegate:self forcing:forcing] getPeopleAtActivity:activityID withTokenID:tokenID];
     }
 }
 
@@ -159,7 +162,7 @@
     [self.view addSubview:_addPersonView];
     
     // Animate the transition
-    [UIView animateWithDuration:1.0f animations:^{
+    [UIView animateWithDuration:0.7f animations:^{
         [_addPersonView setFrame:CGRectMake(_addPersonView.frame.origin.x, _addPersonView.frame.origin.y + _addPersonView.frame.size.height, _addPersonView.frame.size.width, _addPersonView.frame.size.height)];
     } completion:^(BOOL completion){
         [self loadDoneButton];
@@ -172,7 +175,7 @@
     [_emailInput resignFirstResponder];
     
     // Animate the transition
-    [UIView animateWithDuration:1.0f animations:^{
+    [UIView animateWithDuration:0.7f animations:^{
         [_addPersonView setFrame:CGRectMake(_addPersonView.frame.origin.x, -(_addPersonView.frame.size.height), _addPersonView.frame.size.width, _addPersonView.frame.size.height)];
     } completion:^(BOOL completion){
         [_addPersonView removeFromSuperview];
@@ -184,7 +187,7 @@
 
     if ([_nameInput.text length] > 0 && [_emailInput.text length] > 0) {
         // Send to server
-        [[[APIController alloc] initWithDelegate:self forcing:YES] activityRequestEnrollmentForPersonWithName:_nameInput.text andEmail:_emailInput.text atActivity:[[_activityData objectForKey:@"id"] integerValue] withTokenID:[[HumanToken sharedInstance] tokenID]];
+        [[[InEventActivityAPIController alloc] initWithDelegate:self forcing:YES] requestEnrollmentForPersonWithName:_nameInput.text andEmail:_emailInput.text atActivity:[[_activityData objectForKey:@"id"] integerValue] withTokenID:[[HumanToken sharedInstance] tokenID]];
         
         // Remove view
         [self removePersonView];
@@ -299,7 +302,7 @@
     [_numberInput resignFirstResponder];
 }
 
-- (void)didTouch {
+- (IBAction)didTouch {
     // Get the current number and confirm it
     [self toggleEntranceForIndexPath:hightlightedIndexPath highligthing:YES];
     
@@ -315,7 +318,7 @@
         
         if (memberID != 0) {
             // Send it to the server
-            [[[APIController alloc] initWithDelegate:self forcing:YES] activityConfirmEntranceForPerson:memberID atActivity:[[_activityData objectForKey:@"id"] integerValue] withTokenID:[[HumanToken sharedInstance] tokenID]];
+            [[[InEventActivityAPIController alloc] initWithDelegate:self forcing:YES] confirmEntranceForPerson:memberID atActivity:[[_activityData objectForKey:@"id"] integerValue] withTokenID:[[HumanToken sharedInstance] tokenID]];
         }
     } else {
         
@@ -323,7 +326,7 @@
         
         if (memberID != 0) {
             // Send it to the server
-            [[[APIController alloc] initWithDelegate:self forcing:YES] activityRevokeEntranceForPerson:memberID atActivity:[[_activityData objectForKey:@"id"] integerValue] withTokenID:[[HumanToken sharedInstance] tokenID]];
+            [[[InEventActivityAPIController alloc] initWithDelegate:self forcing:YES] revokeEntranceForPerson:memberID atActivity:[[_activityData objectForKey:@"id"] integerValue] withTokenID:[[HumanToken sharedInstance] tokenID]];
         }
     }
 }
@@ -333,7 +336,7 @@
     
     if (memberID != 0) {
         // Send it to the server
-        [[[APIController alloc] initWithDelegate:self forcing:YES] activityConfirmPaymentForPerson:memberID atActivity:[[_activityData objectForKey:@"id"] integerValue] withTokenID:[[HumanToken sharedInstance] tokenID]];
+        [[[InEventActivityAPIController alloc] initWithDelegate:self forcing:YES] confirmPaymentForPerson:memberID atActivity:[[_activityData objectForKey:@"id"] integerValue] withTokenID:[[HumanToken sharedInstance] tokenID]];
     }
 }
 
@@ -344,9 +347,9 @@
         UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
         
         // Update and change the dictionaries inside people
-        NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithDictionary:[self.people objectAtIndex:indexPath.row]];
+        NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithDictionary:[self.people objectAtIndex:[self calculateIndex:indexPath]]];
         [dictionary setObject:attribute forKey:key];
-        [self.people replaceObjectAtIndex:indexPath.row withObject:dictionary];
+        [self.people replaceObjectAtIndex:[self calculateIndex:indexPath] withObject:dictionary];
         
         // Remove the current hightlighted cell
         [cell setSelected:NO animated:YES];
@@ -385,14 +388,78 @@
     }
 }
 
+#pragma mark - Index Methods
+
+- (NSInteger)calculateIndex:(NSIndexPath *)indexPath {
+    
+    NSInteger index = 0;
+    
+    for (int i = 0; i < [self.tableView numberOfSections]; i++) {
+        NSInteger numberRows = [self.tableView numberOfRowsInSection:i];
+        if (indexPath.section > i) {
+            index += numberRows;
+        } else {
+            for (int j = 0; j < numberRows; j++) {
+                if (indexPath.section == i && indexPath.row == j) {
+                    return index;
+                } else {
+                    index++;
+                }
+            }
+        }
+    }
+    
+    return index;
+}
+
+- (NSIndexPath *)calculateIndexPath:(NSInteger)index {
+    
+    NSInteger count = 0;
+    
+    for (int i = 0; i < [self.tableView numberOfSections]; i++) {
+        NSInteger numberRows = [self.tableView numberOfRowsInSection:i];
+        if (count + numberRows < i) {
+            count += numberRows;
+        } else {
+            for (int j = 0; j < numberRows; j++) {
+                if (index == count) {
+                    return [NSIndexPath indexPathForRow:j inSection:i];
+                } else {
+                    count++;
+                }
+            }
+        }
+    }
+    
+    return nil;
+}
+
 #pragma mark - Table View Data Source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)aTableView {
-    return 1;
+    return [titleIndexes count];
 }
 
 - (NSInteger)tableView:(UITableView *)aTableView numberOfRowsInSection:(NSInteger)section {
-    return [self.people count];
+    
+    NSString *letterIndex = [titleIndexes objectAtIndex:section];
+    NSInteger numLetters = 0;
+    BOOL countHasStarted = NO;
+    
+    for (int i = 0; i < [self.people count]; i++) {
+        NSString *name = [[self.people objectAtIndex:i] objectForKey:@"name"];
+        NSString *unaccentedString = [name stringByFoldingWithOptions:NSDiacriticInsensitiveSearch locale:[NSLocale currentLocale]];
+        NSString *firstLetter = ([unaccentedString length] > 0) ? [[unaccentedString capitalizedString] substringToIndex:1] : @"";
+        
+        if ([firstLetter isEqualToString:letterIndex]) {
+            numLetters++;
+            countHasStarted = YES;
+        } else if (countHasStarted) {
+            break;
+        }
+    }
+    
+    return numLetters;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)aTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -402,12 +469,12 @@
     
     if (cell == nil) {
         [aTableView registerNib:[UINib nibWithNibName:@"ReaderViewCell" bundle:nil] forCellReuseIdentifier:CustomCellIdentifier];
-        cell =  (ReaderViewCell *)[aTableView dequeueReusableCellWithIdentifier: CustomCellIdentifier];
+        cell = (ReaderViewCell *)[aTableView dequeueReusableCellWithIdentifier:CustomCellIdentifier];
     }
     
     [cell configureCell];
     
-    NSDictionary *dictionary = [self.people objectAtIndex:indexPath.row];
+    NSDictionary *dictionary = [self.people objectAtIndex:[self calculateIndex:indexPath]];
     cell.enrollmentID.text = [dictionary objectForKey:@"enrollmentID"];
     cell.name.text = [[dictionary objectForKey:@"name"] stringByDecodingHTMLEntities];
     cell.selectionStyle = UITableViewCellSelectionStyleBlue;
@@ -424,28 +491,44 @@
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (hightlightedIndexPath != nil && [hightlightedIndexPath compare:indexPath] == NSOrderedSame) {
+    if (hightlightedIndexPath != nil && [self calculateIndex:hightlightedIndexPath] == [self calculateIndex:indexPath]) {
         cell.selected = YES;
     } else {
         cell.selected = NO;
     }
 }
 
+- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
+    return titleIndexes;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index {
+    return [titleIndexes indexOfObject:title];
+}
+
 #pragma mark - Text Field Delegate
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    return YES;
+}
+
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField {
+    return YES;
+}
 
 - (void)textFieldDidChange:(UITextField *)textField {
     NSInteger number = [textField.text integerValue];
     
     for (int i = 0; i < [_people count]; i++) {
         if ([[[_people objectAtIndex:i] objectForKey:@"enrollmentID"] integerValue] == number) {
-            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
+            NSIndexPath *indexPath = [self calculateIndexPath:i];
             hightlightedIndexPath = indexPath;
             
             // Highlight it
             [[self.tableView cellForRowAtIndexPath:indexPath] setSelected:YES animated:YES];
             
             // Scroll to it
-            [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+            [self.tableView scrollToRowAtIndexPath:[self calculateIndexPath:i] atScrollPosition:UITableViewScrollPositionTop animated:YES];
         }
     }
 }
@@ -468,7 +551,7 @@
 
 #pragma mark - APIController Delegate
 
-- (void)apiController:(APIController *)apiController didLoadDictionaryFromServer:(NSDictionary *)dictionary {
+- (void)apiController:(InEventAPIController *)apiController didLoadDictionaryFromServer:(NSDictionary *)dictionary {
     
     if ([apiController.method isEqualToString:@"getPeople"]) {
         // Assign the data object to the companies
@@ -480,20 +563,20 @@
         // Reload all table data
         [self.tableView reloadData];
         
-        [refreshControl endRefreshing];
-        
     } else if ([apiController.method isEqualToString:@"requestEnrollment"]) {
+        
+        // Reset our text field
+        [self.nameInput setText:@""];
+        [self.emailInput setText:@""];
+        
+        // Reload all our rows
         [self reloadData];
     }
-}
-
-- (void)apiController:(APIController *)apiController didFailWithError:(NSError *)error {
-    [super apiController:apiController didFailWithError:error];
     
     [refreshControl endRefreshing];
 }
 
-- (void)apiController:(APIController *)apiController didSaveForLaterWithError:(NSError *)error {
+- (void)apiController:(InEventAPIController *)apiController didSaveForLaterWithError:(NSError *)error {
     
     if ([apiController.method isEqualToString:@"getPeople"]) {
         // Save the path of the current file object
@@ -505,6 +588,14 @@
         // Load the UI controls
         [super apiController:apiController didSaveForLaterWithError:error];
     }
+    
+    [refreshControl endRefreshing];
+}
+
+- (void)apiController:(InEventAPIController *)apiController didFailWithError:(NSError *)error {
+    [super apiController:apiController didFailWithError:error];
+    
+    [refreshControl endRefreshing];
 }
 
 @end

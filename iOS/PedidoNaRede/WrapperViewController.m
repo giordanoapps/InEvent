@@ -1,12 +1,13 @@
 //
 //  WrapperViewController.m
-//  PedidoNaRede
+//  InEvent
 //
 //  Created by Pedro Góes on 18/12/12.
 //  Copyright (c) 2012 Pedro Góes. All rights reserved.
 //
 
 #import <QuartzCore/QuartzCore.h>
+#import <FacebookSDK/FacebookSDK.h>
 #import "WrapperViewController.h"
 #import "AppDelegate.h"
 #import "MapViewController.h"
@@ -15,11 +16,14 @@
 #import "HumanToken.h"
 
 @interface WrapperViewController () {
+    BOOL shouldCancelKeyboardAnimation;
+    CGRect keyboardFrame;
+    CGRect componentFrame;
+    CGFloat currentViewShift;
     UITapGestureRecognizer *behindRecognizer;
 }
 
-@property (assign, nonatomic) BOOL isUp;
-@property (strong, nonatomic) APIController *apiController;
+@property (strong, nonatomic) InEventAPIController *apiController;
 @property (strong, nonatomic) UIBarButtonItem *barButtonItem;
 
 @end
@@ -31,9 +35,9 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        _shouldMoveKeyboardUp = YES;
-        _moveKeyboardRatio = 1.0;
-        _isUp = NO;
+        keyboardFrame = CGRectZero;
+        componentFrame = CGRectZero;
+        currentViewShift = 0.0f;
     }
     return self;
 }
@@ -44,11 +48,12 @@
     
     self.screenName = @"Wrapper";
     
-    // Navigation Bar
-    if ([[[UIDevice currentDevice] systemVersion] isEqualToString:@"7.0"]) {
-        self.navigationController.navigationBar.barTintColor = [ColorThemeController navigationBarBackgroundColor];
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7) {
+        // Navigation Bar
         self.navigationController.navigationBar.translucent = NO;
-        self.navigationController.navigationBar.titleTextAttributes = @{UITextAttributeTextColor : [UIColor whiteColor]};
+        // View Controller
+        self.edgesForExtendedLayout = UIRectEdgeNone;
+        self.extendedLayoutIncludesOpaqueBars = YES;
     }
 
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
@@ -59,8 +64,8 @@
     [super viewWillAppear:animated];
     
     // Register for keyboard notifications
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(saveKeyboardSize:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(saveKeyboardSize:) name:UIKeyboardWillHideNotification object:nil];
     
     // We check if the back button is already set, so we have to preserve it
     // The navigationBar items is an array that counts how many controllers we already have on the stack
@@ -125,15 +130,18 @@
 
 #pragma mark - Keyboard Notifications
 
-- (CGRect)calculateKeyboardFrame:(NSNotification*)notification {
-    CGRect keyboardFrame = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+- (void)saveKeyboardSize:(NSNotification*)notification {
+    CGRect keyboardFrameOriginal = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
     UIWindow *window = [[[UIApplication sharedApplication] windows]objectAtIndex:0];
     UIView *mainSubviewOfWindow = window.rootViewController.view;
-    CGRect keyboardFrameConverted = [mainSubviewOfWindow convertRect:keyboardFrame fromView:window];
+    keyboardFrame = [mainSubviewOfWindow convertRect:keyboardFrameOriginal fromView:window];
     
-    return keyboardFrameConverted;
+    if (!CGRectEqualToRect(componentFrame, CGRectZero)) {
+        [self checkKeyboardForPreponentParentView:nil];
+        componentFrame = CGRectZero;
+    }
     
-    // keyboard frame is in window coordinates
+    // Keyboard frame is in window coordinates
 //	NSDictionary *userInfo = [notification userInfo];
 //	CGRect keyboardFrame = [[userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
     
@@ -145,49 +153,46 @@
 //    
 //	// now this might be rotated, so convert it back
 //	coveredFrame = [self.view.window convertRect:coveredFrame toView:self.view.superview];
-    
-    return keyboardFrame;
+//    
+//    return keyboardFrame;
 }
 
-- (void)keyboardWillShow:(NSNotification*)notification {
-
-    // Only go up if the view is still DOWN and we should move the keyboard up
-    if (!_isUp && _shouldMoveKeyboardUp) {
-        [self moveViewUp:YES withNotification:notification];
-    }
-}
-
-- (void)keyboardWillHide:(NSNotification*)notification {
-
-    // Only go down if the view is UP
-    if (_isUp) {
-        [self moveViewUp:NO withNotification:notification];
-    }
-}
-
-- (void)moveViewUp:(BOOL)moveUp withNotification:(NSNotification*)notification {
-    // Move the view up/down whenever the keyboard is shown/dismissed
-
-    // Set our property
-    self.isUp = moveUp;
+- (void)checkKeyboardForPreponentParentView:(UIView *)component {
     
-    CGRect keyboardFrame = [self calculateKeyboardFrame:notification];
+    // Wait until the next cycle to hide the keyboard
+    shouldCancelKeyboardAnimation = NO;
     
-    // We apply the transformation bound to the screen pixel density
-    CGFloat offset = keyboardFrame.size.height * (_moveKeyboardRatio / [[UIScreen mainScreen] scale]);
-    CGRect rect = self.view.frame;
-    
-    if (self.tabBarController) {
-        offset -= self.tabBarController.tabBar.frame.size.height;
-    }
-    
-    if (moveUp) {
-        rect.origin.y -= offset;
+    // Process the keyboard state
+    if (component) {
+        CGRect correctFrame = [component convertRect:component.bounds toView:nil];
+        correctFrame.origin.y -= currentViewShift;
+//        NSLog(@"frame = %@\n", NSStringFromCGRect(correctFrame));
+        if (self.tabBarController) correctFrame.origin.y -= self.tabBarController.tabBar.frame.size.height;
+        
+        if (keyboardFrame.size.height == 0.0) {
+            componentFrame = correctFrame;
+        } else {
+            [self calculateViewShift:correctFrame];
+        }
     } else {
-        rect.origin.y += offset;
+        [self calculateViewShift:componentFrame];
     }
+}
+
+- (void)calculateViewShift:(CGRect)frame {
+    CGFloat keyboardHeight = (keyboardFrame.size.height / [[UIScreen mainScreen] scale]);
+    CGFloat viewAbsolutePosition = (self.view.frame.size.height - frame.size.height - keyboardHeight) / 2.0f;
+    [self shiftParentView:viewAbsolutePosition - (currentViewShift + frame.origin.y)];
+}
+
+- (void)shiftParentView:(CGFloat)shift {
     
-    [UIView animateWithDuration:0.2 animations:^{
+    CGRect rect = self.view.frame;
+
+    currentViewShift += shift;
+    rect.origin.y += shift;
+    
+    [UIView animateWithDuration:0.23 animations:^{
         self.view.frame = rect;
     }];
 }
@@ -235,6 +240,33 @@
     }
 }
 
+#pragma mark - Facebook Methods
+
+- (void)connectWithFacebook {
+    if (!FBSession.activeSession.isOpen) {
+        
+        // Create our session
+        FBSession *session = [[FBSession alloc] initWithAppID:nil permissions:@[@"basic_info", @"email"] urlSchemeSuffix:nil tokenCacheStrategy:nil];
+        
+        // Set the active session
+        [FBSession setActiveSession:session];
+        
+        // Open the session
+        [session openWithBehavior:FBSessionLoginBehaviorUseSystemAccountIfPresent completionHandler:
+         ^(FBSession *session, FBSessionState state, NSError *error) {}];
+    }
+}
+
+#pragma mark - View Controller Delegate
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    // Resign all view's first responders
+    [self.view endEditing:YES];
+    
+    // Clean the keyboard size
+    keyboardFrame = CGRectZero;
+}
+
 #pragma mark - Split View Controller Delegate
 
 - (void)splitViewController:(UISplitViewController *)splitController willHideViewController:(UIViewController *)viewController withBarButtonItem:(UIBarButtonItem *)barButtonItem forPopoverController:(UIPopoverController *)popoverController
@@ -269,9 +301,60 @@
     [self.navigationItem setLeftBarButtonItems:barButtons animated:YES];
 }
 
+#pragma mark - Text Field Delegate
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    
+    // Move view if necessary
+    if (currentViewShift != 0.0f) {
+        [self performSelector:@selector(checkKeyboardForPreponentParentView:) withObject:textField afterDelay:0.4f];
+        shouldCancelKeyboardAnimation = YES;
+    } else {
+        [self checkKeyboardForPreponentParentView:textField];
+    }
+    
+    return YES;
+}
+
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField {
+    
+    // Move view down if necessary
+    if (shouldCancelKeyboardAnimation == NO) {
+        [self shiftParentView:-(currentViewShift)];
+    }
+    
+    return YES;
+}
+
+#pragma mark - Text View Delegate
+
+- (BOOL)textViewShouldBeginEditing:(UITextView *)textView {
+    
+    // Move view if necessary
+    if (currentViewShift != 0.0f) {
+        [self performSelector:@selector(checkKeyboardForPreponentParentView:) withObject:textView afterDelay:0.4f];
+        shouldCancelKeyboardAnimation = YES;
+    } else {
+        [self checkKeyboardForPreponentParentView:textView];
+    }
+    
+    return YES;
+}
+
+- (BOOL)textViewShouldEndEditing:(UITextView *)textView {
+    
+    // Move view down if necessary
+    if (shouldCancelKeyboardAnimation == NO) {
+        [self shiftParentView:-(currentViewShift)];
+    }
+    
+    return YES;
+}
+
 #pragma mark - APIController Delegate
 
-- (void)apiController:(APIController *)apiController didFailWithError:(NSError *)error {
+
+- (void)apiController:(InEventAPIController *)apiController didFailWithError:(NSError *)error {
     // Implement a method that allows every failing requisition to be reloaded
     
     AlertView *alertView;
@@ -292,7 +375,7 @@
         }
         
         // Update the current state of the schedule controller
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"scheduleCurrentState" object:nil userInfo:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"eventCurrentState" object:nil userInfo:nil];
         
         [self setApiController:nil];
         
@@ -306,7 +389,7 @@
     [alertView show];
 }
 
-- (void)apiController:(APIController *)apiController didSaveForLaterWithError:(NSError *)error {
+- (void)apiController:(InEventAPIController *)apiController didSaveForLaterWithError:(NSError *)error {
     
     CGRect rect = CGRectMake((self.view.frame.size.width - 100.0f) / 2.0f, -100.0f, 100.0f, 100.0f);
     UIView *view = [[UIView alloc] initWithFrame:rect];

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "-[MarketplaceViewController tableView:didSelectRowAtIndexPath:]:MarketplaceViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[FrontViewController viewDidLoad]:FrontViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[WrapperViewController saveKeyboardSize:]:WrapperViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[WrapperViewController moveViewToPosition:]:WrapperViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[StreamViewController viewDidLoad]:StreamViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[FrontViewController viewDidAppear:]:FrontViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[FrontScrollView configureView]:FrontScrollView.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[WrapperViewController textFieldShouldBeginEditing:]:WrapperViewController.m">
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>

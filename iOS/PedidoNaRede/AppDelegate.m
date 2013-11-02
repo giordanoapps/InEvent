@@ -1,6 +1,6 @@
 //
 //  AppDelegate.m
-//  PedidoNaRede
+//  InEvent
 //
 //  Created by Pedro Góes on 05/10/12.
 //  Copyright (c) 2012 Pedro Góes. All rights reserved.
@@ -11,13 +11,20 @@
 #import "AboutViewController.h"
 #import "ScheduleViewController.h"
 #import "ScheduleItemViewController.h"
-#import "PhotosViewController.h"
-#import "PhotosDetailViewController.h"
+#import "GroupViewController.h"
+#import "GroupDetailViewController.h"
+#import "FrontViewController.h"
+#import "PeopleViewController.h"
+#import "PersonViewController.h"
+#import "StreamViewController.h"
 #import "ColorThemeController.h"
 #import "PushController.h"
 #import "HumanViewController.h"
-#import "LauchImageViewController.h"
+#import "LaunchImageViewController.h"
 #import "GAI.h"
+#import "GAIDictionaryBuilder.h"
+#import "HumanToken.h"
+#import "EventToken.h"
 #import "IntelligentSplitViewController.h"
 #import <FacebookSDK/FacebookSDK.h>
 #import <Parse/Parse.h>
@@ -26,8 +33,11 @@
 @interface AppDelegate ()
 
 @property (strong, nonatomic) UIViewController *humanViewController;
+@property (strong, nonatomic) UIViewController *frontViewController;
 @property (strong, nonatomic) UIViewController *scheduleViewController;
 @property (strong, nonatomic) UIViewController *photosViewController;
+@property (strong, nonatomic) UIViewController *groupViewController;
+@property (strong, nonatomic) UIViewController *peopleViewController;
 @property (strong, nonatomic) UIViewController *aboutViewController;
 
 @end
@@ -37,11 +47,54 @@
 #pragma mark - Facebook Methods
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-    return [FBSession.activeSession handleOpenURL:url];
+    
+    if ([url.scheme isEqualToString:@"inevent"]) {
+        return [self parseQueryString:[url query]];
+    } else {
+        return [FBSession.activeSession handleOpenURL:url];
+    }
 }
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
-    return [FBSession.activeSession handleOpenURL:url];
+    
+    if ([url.scheme isEqualToString:@"inevent"]) {
+        return [self parseQueryString:[url query]];
+    } else {
+        return [FBSession.activeSession handleOpenURL:url];
+    }
+}
+
+- (BOOL)parseQueryString:(NSString *)query {
+
+    NSArray *pairs = [query componentsSeparatedByString:@"&"];
+    
+    for (NSString *pair in pairs) {
+        NSArray *elements = [pair componentsSeparatedByString:@"="];
+        if ([elements count] >= 2) {
+            NSString *key = [[elements objectAtIndex:0] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+            NSString *val = [[elements objectAtIndex:1] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+            
+            if ([key isEqualToString:@"tokenID"]) {
+                [[HumanToken sharedInstance] setTokenID:val];
+            } else if ([key isEqualToString:@"eventID"]) {
+                [[EventToken sharedInstance] setEventID:[val integerValue]];
+            } else if ([key isEqualToString:@"name"]) {
+                [[HumanToken sharedInstance] setName:val];
+            } else if ([key isEqualToString:@"memberID"]) {
+                [[HumanToken sharedInstance] setMemberID:[val integerValue]];
+            }
+        }
+    }
+    
+    // Notify our tracker about the new event
+    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"person" action:@"signInOneClick" label:@"iOS" value:[NSNumber numberWithInteger:[[HumanToken sharedInstance] memberID]]] build]];
+    
+    // Update the current state of the schedule controller
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"eventCurrentState" object:nil userInfo:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"verify" object:nil userInfo:@{@"type": @"menu"}];
+
+    return YES;
 }
 
 #pragma mark - Parse Methods
@@ -58,11 +111,14 @@
     [PushController deliverPushNotification:userInfo];
 }
 
+
 #pragma mark - Cycle
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    NSDictionary *userInfo = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+    NSDictionary *userInfo;
+    
+    userInfo = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
     if (userInfo) {
         [PushController deliverPushNotification:userInfo];
         application.applicationIconBadgeNumber = 0;
@@ -71,6 +127,7 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
     // Status Bar
+    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:YES];
     if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {
         [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackOpaque];
     } else {
@@ -78,46 +135,18 @@
     }
     
     // Each controller
-    // Login View Controller
-    _humanViewController = [[UINavigationController alloc] initWithRootViewController:[[HumanViewController alloc] initWithNibName:@"HumanViewController" bundle:nil]];
-    
-    // Schedule View Controller
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        _scheduleViewController = [[UINavigationController alloc] initWithRootViewController:[[ScheduleViewController alloc] initWithNibName:@"ScheduleViewController" bundle:nil]];
-    } else {
-        _scheduleViewController = [[IntelligentSplitViewController alloc] init];
-        ScheduleViewController *svc = [[ScheduleViewController alloc] initWithNibName:@"ScheduleViewController" bundle:nil];
-        UINavigationController *nsvc = [[UINavigationController alloc] initWithRootViewController:svc];
-        ScheduleItemViewController *sivc = [[ScheduleItemViewController alloc] initWithNibName:@"ScheduleItemViewController" bundle:nil];
-        UINavigationController *nsivc = [[UINavigationController alloc] initWithRootViewController:sivc];
-        ((UISplitViewController *)_scheduleViewController).title = svc.title;
-        ((UISplitViewController *)_scheduleViewController).tabBarItem.image = svc.tabBarItem.image;
-        ((UISplitViewController *)_scheduleViewController).delegate = sivc;
-        ((UISplitViewController *)_scheduleViewController).viewControllers = @[nsvc, nsivc];
-    }
-
-    // Photos View Controller
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        _photosViewController = [[UINavigationController alloc] initWithRootViewController:[[PhotosViewController alloc] initWithNibName:@"PhotosViewController" bundle:nil]];
-    } else {
-        _photosViewController = [[IntelligentSplitViewController alloc] init];
-        PhotosViewController *pvc = [[PhotosViewController alloc] initWithNibName:@"PhotosViewController" bundle:nil];
-        UINavigationController *npvc = [[UINavigationController alloc] initWithRootViewController:pvc];
-        PhotosDetailViewController *pdvc = [[PhotosDetailViewController alloc] initWithNibName:@"PhotosDetailViewController" bundle:nil];
-        UINavigationController *npdvc = [[UINavigationController alloc] initWithRootViewController:pdvc];
-        ((UISplitViewController *)_photosViewController).title = pvc.title;
-        ((UISplitViewController *)_photosViewController).tabBarItem.image = pvc.tabBarItem.image;
-        ((UISplitViewController *)_photosViewController).delegate = pdvc;
-        ((UISplitViewController *)_photosViewController).viewControllers = @[npvc, npdvc];
-    }
-    
-    // About View Controller
-    _aboutViewController = [[UINavigationController alloc] initWithRootViewController:[[AboutViewController alloc] initWithNibName:@"AboutViewController" bundle:nil]];
+    [self loadHumanController];
+    [self loadFrontController];
+    [self loadScheduleController];
+    [self loadPhotosController];
+    [self loadGroupController];
+    [self loadPeopleController];
+    [self loadAboutController];
     
     // Global Controller
     _menuController = [[MenuViewController alloc] initWithMenuWidth:180.0 numberOfFolds:3];
     [_menuController setDelegate:self];
-    [_menuController setViewControllers:[NSMutableArray arrayWithObjects:_humanViewController, _scheduleViewController, _aboutViewController, nil]];
+    [_menuController setViewControllers:[NSMutableArray arrayWithObjects:_humanViewController, _frontViewController, _scheduleViewController, _photosViewController, _groupViewController, _peopleViewController, _aboutViewController, nil]];
     
     // Set the default theme color
     [[ColorThemeController sharedInstance] setTheme:ColorThemePetoskeyStone];
@@ -181,6 +210,82 @@
     [self storeEssentialData];
 }
 
+#pragma mark - Controllers
+
+- (void)loadAboutController {
+    
+    AboutViewController *avc = [[AboutViewController alloc] initWithNibName:@"AboutViewController" bundle:nil];
+    _aboutViewController = [[UINavigationController alloc] initWithRootViewController:avc];
+}
+
+- (void)loadFrontController {
+
+    FrontViewController *fvc = [[FrontViewController alloc] initWithNibName:@"FrontViewController" bundle:nil];
+    _frontViewController = [[UINavigationController alloc] initWithRootViewController:fvc];
+}
+
+- (void)loadGroupController {
+    
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        _groupViewController = [[UINavigationController alloc] initWithRootViewController:[[GroupViewController alloc] initWithNibName:@"GroupViewController" bundle:nil]];
+    } else {
+        _groupViewController = [[IntelligentSplitViewController alloc] init];
+        GroupViewController *gvc = [[GroupViewController alloc] initWithNibName:@"GroupViewController" bundle:nil];
+        UINavigationController *ngvc = [[UINavigationController alloc] initWithRootViewController:gvc];
+        GroupDetailViewController *gdvc = [[GroupDetailViewController alloc] initWithNibName:@"GroupDetailViewController" bundle:nil];
+        UINavigationController *ngdvc = [[UINavigationController alloc] initWithRootViewController:gdvc];
+        ((UISplitViewController *)_groupViewController).title = gvc.title;
+        ((UISplitViewController *)_groupViewController).tabBarItem.image = gvc.tabBarItem.image;
+        ((UISplitViewController *)_groupViewController).delegate = gdvc;
+        ((UISplitViewController *)_groupViewController).viewControllers = @[ngvc, ngdvc];
+    }
+}
+
+- (void)loadHumanController {
+    
+    _humanViewController = [[UINavigationController alloc] initWithRootViewController:[[HumanViewController alloc] initWithNibName:@"HumanViewController" bundle:nil]];
+}
+
+- (void)loadPeopleController {
+    
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        _peopleViewController = [[UINavigationController alloc] initWithRootViewController:[[PeopleViewController alloc] initWithNibName:@"PeopleViewController" bundle:nil]];
+    } else {
+        _peopleViewController = [[IntelligentSplitViewController alloc] init];
+        PeopleViewController *pvc = [[PeopleViewController alloc] initWithNibName:@"PeopleViewController" bundle:nil];
+        UINavigationController *npvc = [[UINavigationController alloc] initWithRootViewController:pvc];
+        PersonViewController *pivc = [[PersonViewController alloc] initWithNibName:@"PersonViewController" bundle:nil];
+        UINavigationController *npivc = [[UINavigationController alloc] initWithRootViewController:pivc];
+        ((UISplitViewController *)_peopleViewController).title = pvc.title;
+        ((UISplitViewController *)_peopleViewController).tabBarItem.image = pvc.tabBarItem.image;
+        ((UISplitViewController *)_peopleViewController).delegate = pivc;
+        ((UISplitViewController *)_peopleViewController).viewControllers = @[npvc, npivc];
+    }
+}
+
+- (void)loadPhotosController {
+    
+    _photosViewController = [[UINavigationController alloc] initWithRootViewController:[[StreamViewController alloc] initWithNibName:@"StreamViewController" bundle:nil]];
+}
+
+- (void)loadScheduleController {
+
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        _scheduleViewController = [[UINavigationController alloc] initWithRootViewController:[[ScheduleViewController alloc] initWithNibName:@"ScheduleViewController" bundle:nil]];
+    } else {
+        _scheduleViewController = [[IntelligentSplitViewController alloc] init];
+        ScheduleViewController *svc = [[ScheduleViewController alloc] initWithNibName:@"ScheduleViewController" bundle:nil];
+        UINavigationController *nsvc = [[UINavigationController alloc] initWithRootViewController:svc];
+        ScheduleItemViewController *sivc = [[ScheduleItemViewController alloc] initWithNibName:@"ScheduleItemViewController" bundle:nil];
+        UINavigationController *nsivc = [[UINavigationController alloc] initWithRootViewController:sivc];
+        ((UISplitViewController *)_scheduleViewController).title = svc.title;
+        ((UISplitViewController *)_scheduleViewController).tabBarItem.image = svc.tabBarItem.image;
+        ((UISplitViewController *)_scheduleViewController).delegate = sivc;
+        ((UISplitViewController *)_scheduleViewController).viewControllers = @[nsvc, nsivc];
+    }
+}
+
+
 #pragma mark - Creators
 
 - (void)createCustomAppearance {
@@ -201,6 +306,10 @@
     // ----------------------
     // UINavigationBar
     // ----------------------
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7) {
+        [[UINavigationBar appearance] setBarTintColor:[ColorThemeController navigationBarBackgroundColor]];
+        [[UINavigationBar appearance] setTitleTextAttributes:@{UITextAttributeTextColor : [UIColor whiteColor]}];
+    }
     [[UINavigationBar appearance] setBackgroundImage:[[UIImage alloc] imageWithColor:[ColorThemeController navigationBarBackgroundColor]] forBarMetrics:UIBarMetricsDefault];
     [[UINavigationBar appearance] setTitleVerticalPositionAdjustment:0.0 forBarMetrics:UIBarMetricsDefault];
  
@@ -251,7 +360,7 @@
 }
 
 - (void)loadEssentialData {
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"verify" object:nil userInfo:@{@"type": @"ad"}];
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"verify" object:nil userInfo:@{@"type": @"ad"}];
 }
 
 @end

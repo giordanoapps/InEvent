@@ -7,47 +7,107 @@
 	 * @param  string $email     email of the person
 	 * @return integer           memberID
 	 */
-	function createMember($name, $password, $email, $cpf = "", $rg = "", $usp = "", $telephone = "", $city = "", $university = "", $course = "") {
+	function createMember($details) {
 
-		$hash = Bcrypt::hash($password);
+		if (isset($details["name"]) && isset($details["email"])) {
+			// Required
+			$name = $details["name"];
+			$email = $details["email"];
 
-		// Insert the name 
-		$insert = resourceForQuery(
-			"INSERT INTO
+			// Optional
+			$password = (isset($details["password"])) ? $details["password"] : "123456";
+			$hash = Bcrypt::hash($password);
+			$cpf = (isset($details["cpf"])) ? $details["cpf"] : "";
+			$rg = (isset($details["rg"])) ? $details["rg"] : "";
+			$city = (isset($details["city"])) ? $details["city"] : "";
+			$university = (isset($details["university"])) ? $details["university"] : "";
+			$course = (isset($details["course"])) ? $details["course"] : "";
+			$telephone = (isset($details["telephone"])) ? $details["telephone"] : "";
+			$usp = (isset($details["usp"])) ? $details["usp"] : "";
+			$linkedInID = (isset($details["linkedInID"])) ? $details["linkedInID"] : "";
+			$facebookID = (isset($details["facebookID"])) ? $details["facebookID"] : 0;
+
+			// Insert the person 
+			$insert = resourceForQuery(
+				"INSERT INTO
+					`member`
+					(
+						`name`,
+						`password`,
+						`cpf`,
+						`rg`,
+						`usp`,
+						`telephone`,
+						`city`,
+						`email`,
+						`university`,
+						`course`,
+						`facebookID`,
+						`linkedInID`
+					)
+				VALUES 
+					(
+						'$name',
+						'$hash',
+						'$cpf',
+						'$rg',
+						'$usp',
+						'$telephone',
+						'$city',
+						'$email',
+						'$university',
+						'$course',
+						$facebookID,
+						'$linkedInID'
+					)
+			");
+
+			$memberID = mysql_insert_id();
+
+			// Make the first login
+			processLogIn($email, $password);
+
+			// Send an email
+			sendEnrollmentEmail($name, $password, $email);
+
+			return $memberID;
+
+		} else {
+			http_status_code(400, "name and email are required parameters");
+		}
+	}
+
+	/**
+	 * Get all the details about a member
+	 * @param  int  	$memberID 	id of the member
+	 * @return array           		companies
+	 */
+	function getMemberDetails($memberID) {
+
+		$result = resourceForQuery(
+			"SELECT
+				`member`.`id`,
+				`member`.`name`,
+				`member`.`role`,
+				`member`.`company`,
+				`member`.`image`,
+				`member`.`cpf`,
+				`member`.`rg`,
+				`member`.`usp`,
+				`member`.`telephone`,
+				`member`.`city`,
+				`member`.`email`,
+				`member`.`university`,
+				`member`.`course`,
+				`member`.`facebookID`,
+				`member`.`linkedInID`
+			FROM
 				`member`
-				(
-					`name`,
-					`password`,
-					`cpf`,
-					`rg`,
-					`usp`,
-					`telephone`,
-					`city`,
-					`email`,
-					`university`,
-					`course`
-				)
-			VALUES 
-				(
-					'$name',
-					'$hash',
-					'$cpf',
-					'$rg',
-					'$usp',
-					'$telephone',
-					'$city',
-					'$email',
-					'$university',
-					'$course'
-				)
+			WHERE 1
+				AND `member`.`id` = $memberID
 		");
 
-		$memberID = mysql_insert_id();
-
-		// Send an email
-		sendEnrollmentEmail($name, $password, $email);
-
-		return $memberID;
+		return printInformation("member", $result, true, 'object');
 	}
 
 	/**

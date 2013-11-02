@@ -1,4 +1,7 @@
-<?php include_once("includes/check/login.php") ?>
+<?php
+	include_once("includes/check/login.php")
+?>
+
 <?php include_once("includes/html/header.php") ?>
 <body>
 	<?php include_once("includes/html/bar.php") ?>
@@ -27,12 +30,12 @@
 	
 				<div class="dateBegin">
 					<img src="images/64-Clock.png" alt="Relógio" title="Horário de Início">
-					<span><?php echo date("j/m G:i", $data['dateBegin']) ?></span>
+					<span><?php echo strftime("%A, %d de %B às %Hh%M", $data['dateBegin']) ?></span>
 				</div>
 
 				<div class="dateEnd">
 					<img src="images/64-Clock-2.png" alt="Relógio" title="Horário de Término">
-					<span><?php echo date("j/m G:i", $data['dateEnd']) ?></span>
+					<span><?php echo strftime("%A, %d de %B às %Hh%M", $data['dateEnd']) ?></span>
 				</div>
 
 				<div class="location">

@@ -7,6 +7,8 @@
     // Include query modules
     include_once("queries/activity.php");
     include_once("queries/event.php");
+    include_once("queries/group.php");
     include_once("queries/people.php");
+	include_once("queries/photo.php");
 
 ?>

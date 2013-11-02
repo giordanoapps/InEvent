@@ -29,7 +29,7 @@
             LEFT JOIN
                 `eventMember` ON `event`.`id` = `eventMember`.`eventID` AND `eventMember`.`memberID` = $memberID
             WHERE 1
-                AND (`event`.`dateEnd` > NOW() OR `eventMember`.`approved` = 1)
+                AND (`event`.`enrollmentEnd` > NOW() OR `eventMember`.`approved` = 1)
                 $filter
             GROUP BY
                 `event`.`id`

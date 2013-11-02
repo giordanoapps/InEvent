@@ -1,6 +1,6 @@
 //
 //  UIViewController+Present.m
-//  PedidoNaRede
+//  InEvent
 //
 //  Created by Pedro Góes on 23/01/13.
 //  Copyright (c) 2013 Pedro Góes. All rights reserved.
@@ -12,7 +12,7 @@
 #import "MarketplaceViewController.h"
 #import "DemoViewController.h"
 #import "FeedbackViewController.h"
-#import "HumanLoginViewController.h"
+#import "SocialLoginViewController.h"
 #import "HumanToken.h"
 #import "EventToken.h"
 #import "AKTabBarController.h"
@@ -81,8 +81,7 @@
     
     if (![[HumanToken sharedInstance] isMemberAuthenticated]) {
         
-        HumanLoginViewController *hlvc = [[HumanLoginViewController alloc] initWithNibName:@"HumanLoginViewController" bundle:nil];
-        [hlvc setMoveKeyboardRatio:0.7];
+        SocialLoginViewController *hlvc = [[SocialLoginViewController alloc] initWithNibName:@"SocialLoginViewController" bundle:nil];
         UINavigationController *viewController = [[UINavigationController alloc] initWithRootViewController:hlvc];
     
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {

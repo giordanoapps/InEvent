@@ -119,57 +119,70 @@ define(modules, function($, common, cookie) {$(function() {
 	 */
 	$("#eventContent").on("click", ".toolEnroll", function() {
 
+		// Current element
 		var $elem = $(this);
-		var $agendaItem = $elem.closest(".agendaItem");
 
-		if ($agendaItem.length > 0) {
-			var namespace = "activity";
-			var eventID = undefined;
-			var activityID = $agendaItem.val();
-			var groupID = parseInt($agendaItem.attr("data-group"), 10);
-		} else {
-			var namespace = "event";
-			var eventID = cookie.read("eventID");
-			var activityID = undefined;
-		}
+		// See if the person is authenticated
+		if (cookie.read("tokenID") != null) {
 
-		// Hide the current button
-		$elem.hide(200);
+			var $agendaItem = $elem.closest(".agendaItem");
 
-		// We request the information on the server
-		$.post('developer/api/?' + $.param({
-			method: namespace + ".requestEnrollment",
-			activityID: activityID,
-			eventID: eventID,
-			format: "html"
-		}), {},
-		function(data, textStatus, jqXHR) {
-
-			if (jqXHR.status == 200) {
-
-				if ($agendaItem.length > 0) {
-
-					// Change the properties of the element
-					$elem.closest(".agendaItem").replaceWith(data);
-
-					// var $scheduleItem = $(data).addClass("scheduleItemInvisible");
-
-					// Find and replace the new element
-					// $(".scheduleItem[value = \"" + activityID + "\"]").replaceWith($scheduleItem);
-					// $scheduleItem.slideDown(300);
-
-					// Hide all activities that belong to the same group
-					// if (groupID != 0) $(".agendaItem[data-group = \"" + groupID + "\"]").find(".toolEnroll").hide(200);
-
-				} else {
-					// Reload page
-					window.location.reload();
-				}
+			if ($agendaItem.length > 0) {
+				var namespace = "activity";
+				var eventID = undefined;
+				var activityID = $agendaItem.val();
+				var groupID = parseInt($agendaItem.attr("data-group"), 10);
+			} else {
+				var namespace = "event";
+				var eventID = cookie.read("eventID");
+				var activityID = undefined;
 			}
 
-		}, 'html').fail(function(jqXHR, textStatus, errorThrown) {
-			$elem.fadeIn(300);
-		});
+			// Hide the current button
+			$elem.hide(200);
+
+			// We request the information on the server
+			$.post('developer/api/?' + $.param({
+				method: namespace + ".requestEnrollment",
+				activityID: activityID,
+				eventID: eventID,
+				format: "html"
+			}), {},
+			function(data, textStatus, jqXHR) {
+
+				if (jqXHR.status == 200) {
+
+					if ($agendaItem.length > 0) {
+
+						// Change the properties of the element
+						$elem.closest(".agendaItem").replaceWith(data);
+
+						// var $scheduleItem = $(data).addClass("scheduleItemInvisible");
+
+						// Find and replace the new element
+						// $(".scheduleItem[value = \"" + activityID + "\"]").replaceWith($scheduleItem);
+						// $scheduleItem.slideDown(300);
+
+						// Hide all activities that belong to the same group
+						// if (groupID != 0) $(".agendaItem[data-group = \"" + groupID + "\"]").find(".toolEnroll").hide(200);
+
+					} else {
+						// Reload page
+						window.location.reload();
+					}
+				}
+
+			}, 'html').fail(function(jqXHR, textStatus, errorThrown) {
+				$elem.fadeIn(300);
+			});
+
+		} else {
+			// Save it for later
+			localStorage.setItem("enrollAtEvent", eventID);
+
+			// Move to the event page
+			window.location.hash = "data";
+		}
 
 	});
 
@@ -278,7 +291,7 @@ define(modules, function($, common, cookie) {$(function() {
 	 * Start a text inline edition
 	 * @return {null}
 	 */
-	$("#eventContent").on("click", ".agendaItem .name, .agendaItem .description, .agendaItem .location, .agendaItem .capacity", function(event) {
+	$("#eventContent").on("click", ".name, .description, .location, .capacity", function(event) {
 
 		// Make sure that we are on editing mode
 		if (!$("#eventContent").hasClass("editingMode")) return true;
@@ -307,30 +320,31 @@ define(modules, function($, common, cookie) {$(function() {
 	 * Conclude a text inline edition
 	 * @return {null}
 	 */
-	$("#eventContent").on("keyup", ".agendaItem .titleInput", function(event) {
+	$("#eventContent").on("keyup", ".titleInput", function(event) {
 
 		// Remove the focus from the current field
 		var code = (event.keyCode ? event.keyCode : event.which);
 		if (code == 13) $(this).blur();
 	});
 
-	$("#eventContent").on("focusin", ".agendaItem .titleInput", function(event) {
+	$("#eventContent").on("focusin", ".titleInput", function(event) {
 		var $elem = $(this);
-		$elem.on("focusout", function() {
+		$elem.one("focusout", function() {
 			$elem.trigger("saveField");
 		})
 	});
 
-	$("#eventContent").on("saveField", ".agendaItem .titleInput", function(event) {
+	$("#eventContent").on("saveField", ".titleInput", function(event) {
 
 		var $elem = $(this);
 		var $agendaItem = $elem.closest(".agendaItem");
+		if ($agendaItem.length == 0) $agendaItem = $elem.closest(".toolBonus").prev(".agendaItem");
 
 		var activityID = $agendaItem.val();
 		var value = $elem.val();
 		var name = $elem.attr("name");
 		
-		$elem = $elem.field("removeField", {"class": "name"});
+		$elem = $elem.field("removeField", {"class": $elem.attr("class").replace(/titleInput/g, "")});
 
 		// We request the information on the server
 		$.post('developer/api/?' + $.param({
@@ -344,8 +358,7 @@ define(modules, function($, common, cookie) {$(function() {
 		function(data, textStatus, jqXHR) {
 
 			if (jqXHR.status == 200) {
-				// Replace the entry
-				$agendaItem.replaceWith(data);
+				if (name == "capacity") $agendaItem.attr("data-" + name, value);
 			}
 
 		}, 'html').fail(function(jqXHR, textStatus, errorThrown) {});
@@ -376,20 +389,16 @@ define(modules, function($, common, cookie) {$(function() {
 			$toolBonusCalendar.insertAfter($agendaItem).slideDown(200);
 		}
 
-		// Create both date objects
-		var dateBegin = new Date(parseInt($agendaItem.attr("data-dateBegin"), 10) * 1000);
-		var dateEnd = new Date(parseInt($agendaItem.attr("data-dateEnd"), 10) * 1000);
-
 		// Write the components
 		// ("0" + (this.getMonth() + 1)).slice(-2)
-		$toolBonusCalendar.find(".monthBegin").val(("0" + (dateBegin.getMonth() + 1)).slice(-2));
-		$toolBonusCalendar.find(".dayBegin").val(("0" + dateBegin.getDate()).slice(-2));
-		$toolBonusCalendar.find(".hourBegin").val(("0" + dateBegin.getHours()).slice(-2));
-		$toolBonusCalendar.find(".minuteBegin").val(("0" + dateBegin.getMinutes()).slice(-2));
-		$toolBonusCalendar.find(".monthEnd").val(("0" + (dateEnd.getMonth() + 1)).slice(-2));
-		$toolBonusCalendar.find(".dayEnd").val(("0" + dateEnd.getDate()).slice(-2));
-		$toolBonusCalendar.find(".hourEnd").val(("0" + dateEnd.getHours()).slice(-2));
-		$toolBonusCalendar.find(".minuteEnd").val(("0" + dateEnd.getMinutes()).slice(-2));
+		$toolBonusCalendar.find(".monthBegin").val($agendaItem.attr("data-monthBegin"));
+		$toolBonusCalendar.find(".dayBegin").val($agendaItem.attr("data-dayBegin"));
+		$toolBonusCalendar.find(".hourBegin").val($agendaItem.attr("data-hourBegin"));
+		$toolBonusCalendar.find(".minuteBegin").val($agendaItem.attr("data-minuteBegin"));
+		$toolBonusCalendar.find(".monthEnd").val($agendaItem.attr("data-monthEnd"));
+		$toolBonusCalendar.find(".dayEnd").val($agendaItem.attr("data-dayEnd"));
+		$toolBonusCalendar.find(".hourEnd").val($agendaItem.attr("data-hourEnd"));
+		$toolBonusCalendar.find(".minuteEnd").val($agendaItem.attr("data-minuteEnd"));
 
 		// Update the clocks onscreen
 		$toolBonusCalendar.find("input").trigger("keyup");
@@ -494,7 +503,7 @@ define(modules, function($, common, cookie) {$(function() {
 			$(this).val(("0" + parseInt($(this).val())).slice(-2));
 
 			// Get some properties
-			var $agendaItem = $(this).closest(".toolBonusCalendar").prev();
+			var $agendaItem = $(this).closest(".toolBonus").prev(".agendaItem");
 			var activityID = $agendaItem.val();
 			var name = $(this).attr("name");
 			var value = $(this).val();
@@ -630,6 +639,81 @@ define(modules, function($, common, cookie) {$(function() {
     	// Prevent the anchor from propagating
     	event.preventDefault();
 	    return false;
+	});
+
+	/**
+	  * OPTIONS BOX
+	  */
+
+	/**
+	 * Load the options
+	 * @return {null}
+	 */
+	$("#eventContent").on("click", "#options", function(event) {
+
+		// Make sure that we are on editing mode
+		if (!$("#eventContent").hasClass("editingMode")) return true;
+		
+		// Some variables
+		var $agendaItem = $(this).closest(".agendaItem");
+		var $toolBonusOptions = $("#eventContent .toolBonusOptions");
+
+		// Move or hide the tool
+		if ($toolBonusOptions.prev().is($agendaItem)) {
+			$toolBonusOptions.slideToggle(200);
+		} else {
+			$toolBonusOptions.insertAfter($agendaItem).slideDown(200);
+		}
+
+		// Get some properties
+		var activityID = $agendaItem.val();
+		var capacity = $agendaItem.attr("data-capacity");
+		var general = $agendaItem.attr("data-general");
+		var highlight = $agendaItem.attr("data-highlight");
+
+		// And some components
+		var $general = $toolBonusOptions.find(".general");
+		var $highlight = $toolBonusOptions.find(".highlight");
+
+		// Set the values
+		$toolBonusOptions.find(".capacity").html((capacity == 0) ? "&infin;" : capacity);
+		if (parseInt(general, 10) != parseInt($general.attr("data-value"), 10)) $general.trigger("click", [true]);
+		if (parseInt(highlight, 10) != parseInt($highlight.attr("data-value"), 10)) $highlight.trigger("click", [true]);
+		
+	});
+
+	/**
+	 * Change the property of the activity
+	 * @return {null}
+	 */
+	$("#eventContent").on("instantSave", ".checkbox.general, .checkbox.highlight", function(event) {
+
+		var $elem = $(this);
+		var $agendaItem = $(this).closest(".toolBonus").prev(".agendaItem");
+
+		// Get some properties
+		var activityID = $agendaItem.val();
+		var value = $elem.attr("data-value");
+		var name = $elem.attr("name");
+
+		// We request the information on the server
+		$.post('developer/api/?' + $.param({
+			method: "activity.edit",
+			activityID: activityID,
+			name: name,
+			format: "html"
+		}), {
+			value: value
+		},
+		function(data, textStatus, jqXHR) {
+			// Update the backend
+			$agendaItem.attr("data-" + name, value);
+			
+			// Replace with an updated element
+			$agendaItem.replaceWith(data);
+
+		}, 'html');
+
 	});
 
 });});

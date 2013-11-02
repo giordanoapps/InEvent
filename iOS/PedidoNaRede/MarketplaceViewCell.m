@@ -1,6 +1,6 @@
 //
 //  OrderItemViewCell.m
-//  PedidoNaRede
+//  InEvent
 //
 //  Created by Pedro Góes on 08/10/12.
 //  Copyright (c) 2012 Pedro Góes. All rights reserved.
@@ -10,9 +10,9 @@
 #import "MarketplaceViewCell.h"
 #import "ColorThemeController.h"
 #import "HumanToken.h"
-#import "APIController.h"
+#import "InEventAPIController.h"
 #import "NSObject+Triangle.h"
-#import "NSObject+Components.h"
+#import "UIButton+Components.h"
 #import "Enrollment.h"
 
 @implementation MarketplaceViewCell
@@ -54,7 +54,7 @@
     [_line setBackgroundColor:[ColorThemeController tableViewCellInternalBorderColor]];
     
     // Button
-    [self setUpButtonComponent:_status];
+    [_status setUpButtonComponent];
 }
 
 

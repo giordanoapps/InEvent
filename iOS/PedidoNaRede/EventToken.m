@@ -38,6 +38,12 @@
     [self storeEssentialData];
 }
 
+- (void)setNick:(NSString *)nick {
+    _nick = nick;
+    
+    [self storeEssentialData];
+}
+
 #pragma mark - User Methods
 
 - (BOOL)isEventSelected {
@@ -77,6 +83,7 @@
     // Set the values on the dictionary
     [dictionary setValue:[NSNumber numberWithInteger:_eventID] forKey:@"eventID"];
     [dictionary setValue:_name forKey:@"name"];
+    [dictionary setValue:_nick forKey:@"nick"];
     
     // Save it
     [dictionary writeToFile:[self essentialDataPath] atomically:YES];
@@ -88,6 +95,7 @@
     if (dictionary != nil) {
         _eventID = [[dictionary objectForKey:@"eventID"] integerValue];
         _name = [dictionary objectForKey:@"name"];
+        _nick = [dictionary objectForKey:@"nick"];
     } else {
         [self resetData];
     }
@@ -96,6 +104,7 @@
 - (void)resetData {
     _eventID = 0;
     _name = nil;
+    _nick = nil;
 }
 
 - (void)dealloc {

@@ -15,7 +15,6 @@
 #import "UtilitiesController.h"
 #import "UIViewController+Present.h"
 #import "UIImageView+WebCache.h"
-#import "ODRefreshControl.h"
 #import "UIViewController+AKTabBarController.h"
 #import "NSString+HTML.h"
 #import "HumanToken.h"
@@ -23,11 +22,12 @@
 #import "GAI.h"
 #import "CoolBarButtonItem.h"
 #import "Schedule.h"
+#import "InEventEventAPIController.h"
 
 @interface ScheduleViewController () {
-    ODRefreshControl *refreshControl;
-    NSArray *activities;
+    UIRefreshControl *refreshControl;
     ScheduleSelection selection;
+    NSString *dataPath;
 }
 
 @end
@@ -39,13 +39,13 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.title = NSLocalizedString(@"Schedule", nil);
-        self.tabBarItem.image = [UIImage imageNamed:@"16-Map"];
-        activities = [NSArray array];
+        self.tabBarItem.image = [UIImage imageNamed:@"16-Day-Calendar"];
         selection = ([[HumanToken sharedInstance] isMemberAuthenticated] && [[HumanToken sharedInstance] isMemberApproved]) ? ScheduleSubscribed : ScheduleAll;
         
         // Add notification observer for updates
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadData) name:@"scheduleCurrentState" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadData) name:@"eventCurrentState" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadData) name:@"activityNotification" object:nil];
+        [self addObserver:self forKeyPath:@"activities" options:0 context:NULL];
     }
     return self;
 }
@@ -57,6 +57,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    // Right Button
+    if ([[HumanToken sharedInstance] isMemberAuthenticated]) [self loadMenuButton];
+    
     // Navigation delegate
     self.navigationController.delegate = self;
     
@@ -67,14 +70,10 @@
     _tableView.backgroundColor = [ColorThemeController tableViewBackgroundColor];
     
     // Refresh Control
-    refreshControl = [[ODRefreshControl alloc] initInScrollView:self.tableView];
+    refreshControl = [[UIRefreshControl alloc] init];
+    refreshControl.tintColor = [UIColor grayColor];
     [refreshControl addTarget:self action:@selector(reloadData) forControlEvents:UIControlEventValueChanged];
-    
-    // Right Button
-    self.rightBarButton = [[CoolBarButtonItem alloc] initCustomButtonWithImage:[UIImage imageNamed:@"32-Cog"] frame:CGRectMake(0, 0, 42.0, 30.0) insets:UIEdgeInsetsMake(5.0, 11.0, 5.0, 11.0) target:self action:@selector(alertActionSheet)];
-    self.rightBarButton.accessibilityLabel = NSLocalizedString(@"Event Actions", nil);
-    self.rightBarButton.accessibilityTraits = UIAccessibilityTraitSummaryElement;
-    self.navigationItem.rightBarButtonItem = self.rightBarButton;
+    [self.tableView addSubview:refreshControl];
 }
 
 - (void)didReceiveMemoryWarning
@@ -102,26 +101,59 @@
     
     if ([[HumanToken sharedInstance] isMemberAuthenticated]) {
         NSString *tokenID = [[HumanToken sharedInstance] tokenID];
-        [[[APIController alloc] initWithDelegate:self forcing:forcing] eventGetActivitiesAtEvent:[[EventToken sharedInstance] eventID] withTokenID:tokenID];
+        [[[InEventEventAPIController alloc] initWithDelegate:self forcing:forcing] getActivitiesAtEvent:[[EventToken sharedInstance] eventID] withTokenID:tokenID];
     } else {
-        [[[APIController alloc] initWithDelegate:self forcing:forcing] eventGetActivitiesAtEvent:[[EventToken sharedInstance] eventID]];
+        [[[InEventEventAPIController alloc] initWithDelegate:self forcing:forcing] getActivitiesAtEvent:[[EventToken sharedInstance] eventID]];
     }
 }
 
-#pragma mark -
+#pragma mark - KVO
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    
+    // Save the current object
+    [[NSDictionary dictionaryWithObject:self.activities forKey:@"data"] writeToFile:dataPath atomically:YES];
+}
+
+#pragma mark - Red Line
+
+- (void)createRedLineAtPosition:(CGRect)frame {
+    UIView *redLine = [[UIView alloc] initWithFrame:CGRectMake(0.0f, frame.origin.y, frame.size.width, 2.5f)];
+    [redLine setBackgroundColor:[UIColor redColor]];
+    [redLine setAlpha:0.2f];
+    [self.tableView addSubview:redLine];
+    
+    // Remove red line
+    [self performSelector:@selector(removeRedLine:) withObject:redLine afterDelay:2.0f];
+}
+
+- (void)removeRedLine:(UIView *)redLine {
+    [UIView animateWithDuration:1.2f animations:^{
+        [redLine setAlpha:0.0f];
+    } completion:^(BOOL finished){
+        [redLine removeFromSuperview];
+    }];
+}
+
+#pragma mark - Private Methods
+
+- (void)loadMenuButton {
+    self.rightBarButton = [[CoolBarButtonItem alloc] initCustomButtonWithImage:[UIImage imageNamed:@"32-Cog"] frame:CGRectMake(0, 0, 42.0, 30.0) insets:UIEdgeInsetsMake(5.0, 11.0, 5.0, 11.0) target:self action:@selector(alertActionSheet)];
+    self.rightBarButton.accessibilityLabel = NSLocalizedString(@"Actions", nil);
+    self.rightBarButton.accessibilityTraits = UIAccessibilityTraitSummaryElement;
+    self.navigationItem.rightBarButtonItem = self.rightBarButton;
+}
 
 #pragma mark - ActionSheet Methods
 
 - (void)alertActionSheet {
     
-//    NSString *title = (selection == ScheduleSubscribed) ? NSLocalizedString(@"All activities", nil) : NSLocalizedString(@"My activities", nil);
+//    NSString *title = (selection == ScheduleSubscribed) ? NSLocalizedString(@"All _activities", nil) : NSLocalizedString(@"My _activities", nil);
     
     UIActionSheet *actionSheet;
     
     if ([[HumanToken sharedInstance] isMemberAuthenticated]) {
-        actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Actions", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"Event details", nil), NSLocalizedString(@"Send feedback", nil), NSLocalizedString(@"Exit event", nil), nil];
-    } else {
-        actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Actions", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"Event details", nil), NSLocalizedString(@"Exit event", nil), nil];
+        actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Actions", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil otherButtonTitles: NSLocalizedString(@"Send feedback", nil), nil];
     }
     
     [actionSheet showFromBarButtonItem:self.rightBarButton animated:YES];
@@ -133,41 +165,23 @@
     
     NSString *title = [actionSheet buttonTitleAtIndex:buttonIndex];
     
-    if ([title isEqualToString:NSLocalizedString(@"All activities", nil)]) {
-        // Get all the activities
+    if ([title isEqualToString:NSLocalizedString(@"All _activities", nil)]) {
+        // Get all the _activities
         selection = ScheduleAll;
         
         [self loadData];
         
-    } else if ([title isEqualToString:NSLocalizedString(@"My activities", nil)]) {
-        // Get only the activities that we are enrolled to
+    } else if ([title isEqualToString:NSLocalizedString(@"My _activities", nil)]) {
+        // Get only the _activities that we are enrolled to
         selection = ScheduleSubscribed;
         
         [self loadData];
-        
-    } else if ([title isEqualToString:NSLocalizedString(@"Event details", nil)]) {
-        // Load our reader
-        FrontViewController *fvc = [[FrontViewController alloc] initWithNibName:@"FrontViewController" bundle:nil];
-        UINavigationController *nfvc = [[UINavigationController alloc] initWithRootViewController:fvc];
-        
-        [fvc setMoveKeyboardRatio:0.4];
-        
-        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-            nfvc.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-            nfvc.modalPresentationStyle = UIModalPresentationCurrentContext;
-        } else {
-            nfvc.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-            nfvc.modalPresentationStyle = UIModalPresentationFormSheet;
-        }
-        
-        [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:nfvc animated:YES completion:nil];
         
     } else if ([title isEqualToString:NSLocalizedString(@"Send feedback", nil)]) {
         // Load our reader
         FeedbackViewController *fvc = [[FeedbackViewController alloc] initWithNibName:@"FeedbackViewController" bundle:nil];
         UINavigationController *nfvc = [[UINavigationController alloc] initWithRootViewController:fvc];
         
-        [fvc setMoveKeyboardRatio:0.7];
         [fvc setFeedbackType:FeedbackTypeEvent withReference:[[EventToken sharedInstance] eventID]];
         
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
@@ -180,23 +194,17 @@
         
         [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:nfvc animated:YES completion:nil];
         
-    } else if ([title isEqualToString:NSLocalizedString(@"Exit event", nil)]) {
-        // Remove the tokenID and enterprise
-        [[EventToken sharedInstance] removeEvent];
-        
-        // Check for it again
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"verify" object:nil userInfo:@{@"type": @"enterprise"}];
     }
 }
 
 #pragma mark - Table View Data Source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return [activities count];
+    return [_activities count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [[activities objectAtIndex:section] count];
+    return [[_activities objectAtIndex:section] count];
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
@@ -207,7 +215,7 @@
     [background setBackgroundColor:[ColorThemeController tableViewCellBackgroundColor]];
     [background setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
     
-    NSDictionary *dictionary = [[activities objectAtIndex:section] objectAtIndex:0];
+    NSDictionary *dictionary = [[_activities objectAtIndex:section] objectAtIndex:0];
     
     NSDate *date = [NSDate dateWithTimeIntervalSince1970:[[dictionary objectForKey:@"dateBegin"] integerValue]];
     NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
@@ -216,7 +224,7 @@
     UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(21.0, 6.0, tableView.frame.size.width, 32.0)];
     [title setText:[NSString stringWithFormat:@"%.2d/%.2d - %@", [components day], [components month], [UtilitiesController weekNameFromIndex:[components weekday]]]];
     [title setTextAlignment:NSTextAlignmentLeft];
-    [title setFont:[UIFont fontWithName:@"Thonburi-Bold" size:18.0]];
+    [title setFont:[UIFont fontWithName:@"Thonburi-Bold" size:17.0]];
     [title setTextColor:[ColorThemeController textColor]];
     [title setBackgroundColor:[UIColor clearColor]];
     
@@ -236,17 +244,15 @@
 
 - (UITableViewCell *)tableView:(UITableView *)aTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    static NSString * CustomCellIdentifier = @"CustomCellIdentifier";
-    ScheduleViewCell * cell = (ScheduleViewCell *)[aTableView dequeueReusableCellWithIdentifier: CustomCellIdentifier];
+    static NSString *CustomCellIdentifier = @"CustomCellIdentifier";
+    ScheduleViewCell *cell = (ScheduleViewCell *)[aTableView dequeueReusableCellWithIdentifier:CustomCellIdentifier];
     
     if (cell == nil) {
         [aTableView registerNib:[UINib nibWithNibName:@"ScheduleViewCell" bundle:nil] forCellReuseIdentifier:CustomCellIdentifier];
-        cell =  (ScheduleViewCell *)[aTableView dequeueReusableCellWithIdentifier: CustomCellIdentifier];
+        cell = (ScheduleViewCell *)[aTableView dequeueReusableCellWithIdentifier:CustomCellIdentifier];
     }
     
-    [cell configureCell];
-    
-    NSDictionary *dictionary = [[activities objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+    NSDictionary *dictionary = [[_activities objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
     
     NSDate *date = [NSDate dateWithTimeIntervalSince1970:[[dictionary objectForKey:@"dateBegin"] integerValue]];
     NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
@@ -267,16 +273,16 @@
     
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
         sivc = [[ScheduleItemViewController alloc] initWithNibName:@"ScheduleItemViewController" bundle:nil];
-        [sivc setMoveKeyboardRatio:0.0f];
     } else {
         // Find the sibling navigation controller first child and send the appropriate data
         sivc = (ScheduleItemViewController *)[[[self.splitViewController.viewControllers lastObject] viewControllers] objectAtIndex:0];
-        [sivc setMoveKeyboardRatio:0.0f];
     }
     
-    NSDictionary *dictionary = [[activities objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+    NSDictionary *dictionary = [[_activities objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
     
     [sivc setTitle:[[dictionary objectForKey:@"name"] stringByDecodingHTMLEntities]];
+    [sivc setDelegate:self];
+    [sivc setParentIndexPath:indexPath];
     [sivc setActivityData:dictionary];
     
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
@@ -290,34 +296,44 @@
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
     
     // Reload all table data
-    [self.tableView reloadData];
+    [self loadData];
 }
 
 #pragma mark - APIController Delegate
 
-- (void)apiController:(APIController *)apiController didLoadDictionaryFromServer:(NSDictionary *)dictionary {
+- (void)apiController:(InEventAPIController *)apiController didLoadDictionaryFromServer:(NSDictionary *)dictionary {
     
     // Assign the data object to the companies
-    activities = [dictionary objectForKey:@"data"];
+    _activities = [NSMutableArray arrayWithArray:[dictionary objectForKey:@"data"]];
     
     // Reload all table data
     [self.tableView reloadData];
     
+    // Save the path of the current file object
+    dataPath = apiController.path;
+    
+    // Stop refreshing
     [refreshControl endRefreshing];
     
     // Scroll to the current moment
     NSTimeInterval timestamp = [[NSDate date] timeIntervalSince1970];
     
-    for (int i = 0; i < [activities count]; i++) {
-        for (int j = 0; j < [[activities objectAtIndex:i] count]; j++) {
+    for (int i = 0; i < [_activities count]; i++) {
+        for (int j = 0; j < [[_activities objectAtIndex:i] count]; j++) {
             // Get the current dictionary
-            NSDictionary *activity = [[activities objectAtIndex:i] objectAtIndex:j];
+            NSDictionary *activity = [[_activities objectAtIndex:i] objectAtIndex:j];
             
             // See if it matches
             if (timestamp < [[activity objectForKey:@"dateEnd"] integerValue]) {
                 
+                // Current index path
+                NSIndexPath *currentPath = [NSIndexPath indexPathForRow:((j > 0) ? (j - 1) : j) inSection:i];
+                
+                // Create a temporary red line
+                [self createRedLineAtPosition:[self.tableView rectForRowAtIndexPath:currentPath]];
+                
                 // Scroll to the moment before the next activity finishes
-                [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:((j > 0) ? (j - 1) : j) inSection:i] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+                [self.tableView scrollToRowAtIndexPath:currentPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
                 
                 // Break the current loop
                 return;
@@ -326,7 +342,13 @@
     }
 }
 
-- (void)apiController:(APIController *)apiController didFailWithError:(NSError *)error {
+- (void)apiController:(InEventAPIController *)apiController didSaveForLaterWithError:(NSError *)error {
+    [super apiController:apiController didSaveForLaterWithError:error];
+    
+    [refreshControl endRefreshing];
+}
+
+- (void)apiController:(InEventAPIController *)apiController didFailWithError:(NSError *)error {
     [super apiController:apiController didFailWithError:error];
 
     [refreshControl endRefreshing];

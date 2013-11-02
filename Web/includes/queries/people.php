@@ -9,6 +9,9 @@
                 `member`.`id` AS `memberID`,
                 `member`.`name`,
                 `member`.`email`,
+                `member`.`image`,
+                `member`.`facebookID`,
+                `member`.`linkedInID`,
                 `eventMember`.`position` AS `enrollmentID`,
                 `activityMember`.`position`,
                 `activityMember`.`approved`,
@@ -33,6 +36,32 @@
         return $result;
     }
 
+    function getPeopleAtGroupQuery($groupID, $complement = "", $order = "`groupMember`.`id` ASC") {
+
+        $result = resourceForQuery(
+            "SELECT
+                `member`.`id` AS `memberID`,
+                `member`.`name`,
+                `member`.`email`,
+                `member`.`image`,
+                `member`.`facebookID`,
+                `member`.`linkedInID`,
+                `groupMember`.`approved`,
+                `groupMember`.`present`
+            FROM
+                `member`
+            INNER JOIN
+                `groupMember` ON `member`.`id` = `groupMember`.`memberID`
+            WHERE 1
+                AND `groupMember`.`groupID` = $groupID
+                $complement
+            ORDER BY
+                $order
+        ");
+
+        return $result;
+    }
+
     function getPeopleAtEventQuery($eventID, $complement = "", $order = "`member`.`name` ASC") {
 
         $result = resourceForQuery(
@@ -47,20 +76,22 @@
         ");
 
         // Count always return 1 row
-        $entries = mysql_result($result, 0, "entries");
+        $entries = (mysql_num_rows($result) > 0) ? mysql_result($result, 0, "entries") : 1;
 
         $result = resourceForQuery(
             "SELECT
                 `member`.`id` AS `memberID`,
                 `member`.`name`,
-                `member`.`cpf`, 
-                `member`.`rg`, 
-                `member`.`usp`, 
+                `member`.`role`,
+                `member`.`company`,
+                `member`.`image`,
                 `member`.`telephone`, 
                 `member`.`city`, 
                 `member`.`email`, 
                 `member`.`university`, 
                 `member`.`course`,
+                `member`.`facebookID`,
+                `member`.`linkedInID`,
                 `eventMember`.`position` AS `enrollmentID`,
                 `eventMember`.`approved`,
                 `eventMember`.`roleID`,

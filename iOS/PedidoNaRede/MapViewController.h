@@ -1,6 +1,6 @@
 //
 //  MapViewController.h
-//  PedidoNaRede
+//  InEvent
 //
 //  Created by Pedro Góes on 05/10/12.
 //  Copyright (c) 2012 Pedro Góes. All rights reserved.
@@ -10,9 +10,8 @@
 #import <MapKit/MapKit.h>
 #import <CoreLocation/CoreLocation.h>
 #import "WrapperViewController.h"
-#import "APIController.h"
 
-@interface MapViewController : WrapperViewController <MKMapViewDelegate, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, APIControllerDelegate, CLLocationManagerDelegate>
+@interface MapViewController : WrapperViewController <MKMapViewDelegate, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, InEventAPIControllerDelegate, CLLocationManagerDelegate>
 
 @property (nonatomic, strong) IBOutlet CLLocationManager *locationManager;
 @property (nonatomic, strong) IBOutlet UITextField *searchField;

@@ -19,7 +19,7 @@ Instalação
 
 Sobre
 --------
-InEvent é uma criação do Estúdio Trilha em parceria com a BrainWeb.
+InEvent é uma criação do Estúdio Trilha.
 
 English
 ========
@@ -43,4 +43,4 @@ Just open an issue on Github and I'll get to it as soon as possible.
 
 About
 --------
-InEvent is brought to you by Estúdio Trilha & BrainWeb.
+InEvent is brought to you by Estúdio Trilha.

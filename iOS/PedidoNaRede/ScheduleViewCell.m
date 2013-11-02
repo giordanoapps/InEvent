@@ -1,6 +1,6 @@
 //
 //  ScheduleItemViewCell.m
-//  PedidoNaRede
+//  InEvent
 //
 //  Created by Pedro Góes on 08/10/12.
 //  Copyright (c) 2012 Pedro Góes. All rights reserved.
@@ -10,7 +10,7 @@
 #import "ScheduleViewCell.h"
 #import "ColorThemeController.h"
 #import "HumanToken.h"
-#import "APIController.h"
+#import "InEventAPIController.h"
 #import "NSObject+Triangle.h"
 
 @implementation ScheduleViewCell
@@ -22,6 +22,12 @@
         [self configureCell];
     }
     return self;
+}
+
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    
+    [self configureCell];
 }
 
 - (void)configureCell {

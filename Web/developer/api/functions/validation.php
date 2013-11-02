@@ -120,6 +120,40 @@
 	}
 
 	/**
+     * Get groupID and suggest a company to be set
+     * @return groupID  id of person
+     */
+	function getTokenForGroup() {
+
+		if (isset ($_GET['groupID'])) {
+			$groupID = getAttribute($_GET['groupID']);
+
+			// Find the company where the the current member is sit (or standing up)
+			$result = resourceForQuery(
+				"SELECT
+					`group`.`eventID`
+				FROM
+					`group`
+				WHERE 1
+					AND `group`.`id` = $groupID
+			");
+
+			if (mysql_num_rows($result) > 0) {
+				// Load the token using the company as reference
+				getToken(mysql_result($result, 0, "eventID"));
+
+				// Return the table
+				return $groupID;
+
+			} else {
+				http_status_code(303, "Couldn't find the groupID");
+			}
+		} else {
+			http_status_code(400, "Couldn't find the groupID");
+		}
+	}
+
+	/**
 	 * Process the log in using the $_GET and $_POST
 	 * @param  [string] $email     email of the person
 	 * @param  [string] $password password of the person
@@ -213,15 +247,15 @@
 							`loginAttempts`.`remote` = INET_ATON('$security->remote')
 					");
 
+					$details = getMemberDetails($core->memberID);
 					$events = getMemberEvents($core->memberID);
 
 					// Return some information
-					$data["name"] = $core->name;
-					$data["memberID"] = $core->memberID;
-					$data["events"] = $events["data"];
-					$data["tokenID"] = $sessionKey;
+					$details["data"][0]["events"] = $events["data"];
+					$details["data"][0]["tokenID"] = $sessionKey;
 					
-					return $data;
+					return $details["data"][0];
+					
 				} else {
 					http_status_code(500);
 				}

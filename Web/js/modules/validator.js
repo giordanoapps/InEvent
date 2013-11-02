@@ -9,7 +9,7 @@ define(["jquery"], function($) {
 
 		cnpj = value.replace(/[^\d]+/g,'');
 
-		if (cnpj == '' || cnpj.length != 14) return true;
+		if (cnpj == '' || cnpj.length != 14) return false;
 
 		// Elimina CNPJs invalidos conhecidos
 		if (cnpj == "00000000000000" || 
@@ -61,11 +61,9 @@ define(["jquery"], function($) {
 	 */
 	$.validator.addMethod("cpf", function(value, element, parameters) {
 
-		console.log(this.optional(element));
-
 	    cpf = value.replace(/[^\d]+/g,'');
 	 
-	    if (cpf == '') return true;
+	    if (cpf == '') return false;
 	 
 	    // Elimina CPFs invalidos conhecidos
 	    if (cpf.length != 11 || 
