@@ -1363,7 +1363,7 @@ textarea, input {
 }
 
 #frontContent .cover {
-	height: 315px;
+	height: 355px;
 	width: 100%;
 	position: relative;
 	background-size: cover;
@@ -1388,9 +1388,9 @@ textarea, input {
 
 #frontContent .details .date {
 	position: absolute;
-	top: -8%;
+	top: -15px;
 	right: 5px;
-	font-size: 90%;
+	font-size: 80%;
 }
 
 #frontContent .details .dateBegin,

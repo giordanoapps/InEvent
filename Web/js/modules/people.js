@@ -18,7 +18,7 @@ define(modules, function($, common, cookie) {$(function() {
 		$(this).find(".scheduleItemSelectable").first().trigger("click");
 
 		// Create the scrollable container
-		$(this).find(".placerContent > ul").perfectScrollbar();
+		$(this).find(".placerContent > ul, .realContent").perfectScrollbar();
 	});
 
 // -------------------------------------- TOOLS -------------------------------------- //
