@@ -20,7 +20,7 @@
 @property (nonatomic, strong) IBOutlet UICollectionView *collectionView;
 
 @property (weak, nonatomic) GroupViewController *delegate;
-@property (weak, nonatomic) NSIndexPath *parentIndexPath;
+@property (strong, nonatomic) NSIndexPath *parentIndexPath;
 @property (strong, nonatomic) NSDictionary *groupData;
 @property (strong, nonatomic) NSArray *peopleData;
 

@@ -68,6 +68,7 @@
 							<li class="optionMenuDocumentationCategory optionMenuDocumentationSelected"><b>Como usar</b></li>
 							<li>Anúncio</li>
 							<li>Atividade</li>
+							<li>Concurso</li>
 							<li>Evento</li>
 							<li>Foto</li>
 							<li>Grupo</li>
@@ -81,6 +82,7 @@
 							include_once("documentation/howTo.php");
 							include_once("documentation/ad.php");
 							include_once("documentation/activity.php");
+							include_once("documentation/contest.php");
 							include_once("documentation/event.php");
 							include_once("documentation/photo.php");
 							include_once("documentation/group.php");

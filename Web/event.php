@@ -8,7 +8,6 @@
 <body>
 	<?php include_once("includes/html/bar.php") ?>
 	<div id="content">
-
 		<div id="eventContent" class="pageContent fullPageContent">
 			<div class="boardContent">
 	

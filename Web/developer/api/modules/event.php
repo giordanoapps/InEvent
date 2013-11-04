@@ -175,7 +175,7 @@
 				if ($personID == 0) $personID = createMember(array("name" => $name, "password" => $password, "email" => $email));
 
 			} else {
-				http_status_code(401, "Person doesn't work at event");
+				http_status_code(401, "personID doesn't work at event");
 			}
 		} else {
 			$personID = $core->memberID;

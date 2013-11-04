@@ -10,7 +10,7 @@
 			</ul>
 			
 			<ul class="rightBar">
-				<li><a target="_blank" href="https://www.facebook.com/pages/In-Event/150798025113523">Curta nossa página no Facebook!</a></li>
+				<li><a target="_blank" href="https://www.facebook.com/ineventapp">Curta nossa página no Facebook!</a></li>
 				<!-- <li><a href="mailto:contato@estudiotrilha.com.br">Sugestões? Problemas?</a></li> -->
 			</ul>
 		</div>
@@ -42,7 +42,7 @@
 			</ul>
 			
 			<ul class="rightBar">
-				<li><a target="_blank" href="https://www.facebook.com/pages/In-Event/150798025113523">Curta nossa página no Facebook!</a></li>
+				<li><a target="_blank" href="https://www.facebook.com/ineventapp">Curta nossa página no Facebook!</a></li>
 				<!-- <li><a href="mailto:contato@estudiotrilha.com.br">Sugestões? Problemas?</a></li> -->
 			</ul>
 		</div>

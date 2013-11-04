@@ -31,7 +31,7 @@
 //@property (strong, nonatomic) IBOutlet GMSMapView *map;
 
 @property (weak, nonatomic) ScheduleViewController *delegate;
-@property (weak, nonatomic) NSIndexPath *parentIndexPath;
+@property (strong, nonatomic) NSIndexPath *parentIndexPath;
 @property (strong, nonatomic) NSDictionary *activityData;
 
 @end
