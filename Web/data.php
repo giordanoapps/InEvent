@@ -36,7 +36,7 @@
 									WHERE
 										`member`.`id` = $core->memberID
 								");
-								$data = mysql_fetch_assoc($result);
+								$data = mysqli_fetch_assoc($result);
 							?>
 							
 							<!-- <p class="inputHeadline">Informe seus dados para o InEvent, a plataforma oficial da Semana SusIE!</p> -->

@@ -24,11 +24,11 @@
 		}
 	}
 
-	$result = mysql_query($query);
+	$result = mysqli_query($mysqli, $query);
 
 	// Create some constants as variables, because we want to use them inside strings without concatenating
-	for ($i = 0; $i < mysql_num_rows($result); $i++) {
-		define(mysql_result($result, $i, "constant"), mysql_result($result, $i, "id"));
+	while ($data = $result->fetch_array()) {
+		define($data["constant"], $data["id"]);
 	}
 
 ?>

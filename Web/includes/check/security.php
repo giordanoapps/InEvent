@@ -17,14 +17,14 @@
 	");
 
 	// Create an entry if the current ip never tried to log in inside our system
-	if (mysql_num_rows($result) == 0) {
+	if (mysqli_num_rows($result) == 0) {
 		$insert = resourceForQuery("INSERT INTO `loginAttempts` (`remote`, `attempts`) VALUES (INET_ATON('$security->remote'), 0)");
 
 		$security->attempts = 0;
 		$timestamp = time();
 	} else {
-		$security->attempts = mysql_result($result, 0, "attempts");
-		$timestamp = strtotime(mysql_result($result, 0, "date"));
+		$security->attempts = mysqli_result($result, 0, "attempts");
+		$timestamp = strtotime(mysqli_result($result, 0, "date"));
 	}
 
 	// Verify if the current timestamp allows the ip to attemp another login

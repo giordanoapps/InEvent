@@ -73,7 +73,7 @@ define(modules, function($) {$(function() {
 	 */
 	$(".errorBox").bind("ajaxError", function(event, jqXHR, settings) {
 		if (jqXHR.status != 408) {
-			$(this).fadeToggle(200).delay(6000).fadeToggle(2000);
+			$(this).stop(false, true).fadeToggle(200).delay(6000).fadeToggle(2000);
 		}
 	});
 

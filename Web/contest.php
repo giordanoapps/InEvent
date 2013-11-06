@@ -20,10 +20,10 @@
 	");
 
 	// See if we have an event
-	if (mysql_num_rows($result) > 0) {
+	if (mysqli_num_rows($result) > 0) {
 		// Include the default template
 		// See that contests are rare, because our core IS NOT to personalize things for free and WILL NEVER BE.
-		include_once("includes/template/" . mysql_result($result, 0, "template") . ".php");
+		include_once("includes/template/" . mysqli_result($result, 0, "template") . ".php");
 
 	} else {
 ?>

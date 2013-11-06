@@ -13,19 +13,19 @@
      * @return object 			encoded data
      */
 	function printInformation($table, $result, $data, $format = "json") {
-		$notificationText["count"] = mysql_num_rows($result);
+		$notificationText["count"] = mysqli_num_rows($result);
 		
 		$secretFields = array("password", "permission", "companyName", "sessionKey", "sessionAmount", "notificationTypeID", "delivered");
 
 		if ($data == true) {
 			$notificationText["data"] = array();
 			
-			for ($i = 0; $i < mysql_num_rows($result); $i++) {
+			for ($i = 0; $i < mysqli_num_rows($result); $i++) {
 			
-				$row = mysql_fetch_row($result);
+				$row = mysqli_fetch_row($result);
 				// And then creating bindings by their variable name
-				for ($j = 0; $j < mysql_num_fields($result); $j++) {
-					$field = mysql_field_name($result, $j);
+				for ($j = 0; $j < mysqli_num_fields($result); $j++) {
+					$field = mysqli_fetch_field_direct($result, $j)->name;
 					
 					if (in_array($field, $secretFields) == FALSE) {
 						$notificationText["data"][$i][$field] = utf8_encode($row[$j]);

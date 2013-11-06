@@ -46,7 +46,7 @@
 					)
 			");
 
-			$activityID = mysql_insert_id();
+			$activityID = mysqli_insert_id_new();
 
 			// Send a push notification
 			// if ($globalDev == 0) pushActivityCreation($eventID, $activityID);
@@ -58,7 +58,7 @@
 					echo json_encode($data);
 				} elseif ($format == "html") {
 					$result = getActivitiesForMemberAtActivityQuery($activityID, $core->memberID);
-					printAgendaItem(mysql_fetch_assoc($result), "member");
+					printAgendaItem(mysqli_fetch_assoc($result), "member");
 				} else {
 					http_status_code(405, "this format is not available");
 				}
@@ -212,9 +212,9 @@
 									AND `activity`.`id` = $activityID
 							");
 
-							if (mysql_num_rows($result) > 0) {
+							if (mysqli_num_rows($result) > 0) {
 
-								$capacity = mysql_result($result, 0, "capacity");
+								$capacity = mysqli_result($result, 0, "capacity");
 
 								$result = resourceForQuery(
 									"SELECT
@@ -228,7 +228,7 @@
 										$capacity
 								");
 
-								$lastApproved = (mysql_num_rows($result) > 0) ? mysql_result($result, mysql_num_rows($result) - 1, "id") : 0;
+								$lastApproved = (mysqli_num_rows($result) > 0) ? mysqli_result($result, mysqli_num_rows($result) - 1, "id") : 0;
 
 								// Deny a bunch of folks that are beyond the limit
 								$update = resourceForQuery(
@@ -294,7 +294,7 @@
 						echo json_encode($data);
 					} elseif ($format == "html") {
 						$result = getActivitiesForMemberAtActivityQuery($activityID, $core->memberID);
-						printAgendaItem(mysql_fetch_assoc($result), "member");
+						printAgendaItem(mysqli_fetch_assoc($result), "member");
 					} else {
 						http_status_code(405, "this format is not available");
 					}
@@ -344,7 +344,7 @@
 					echo json_encode($data);
 				} elseif ($format == "html") {
 					$result = getActivitiesForMemberAtActivityQuery($activityID, $core->memberID);
-					printAgendaItem(mysql_fetch_assoc($result), "member");
+					printAgendaItem(mysqli_fetch_assoc($result), "member");
 				} else {
 					http_status_code(405, "this format is not available");
 				}
@@ -396,7 +396,7 @@
 					AND `activityMember`.`memberID` = $personID
 			");
 
-			if (mysql_num_rows($result) == 0) {
+			if (mysqli_num_rows($result) == 0) {
 				// Enroll people at the activity
 				$success = processActivityEnrollment($activityID, $personID);
 			} else {
@@ -410,7 +410,7 @@
 					echo printInformation("activity", $result, true, 'json');
 				} elseif ($format == "html") {
 					$result = getActivitiesForMemberAtActivityQuery($activityID, $personID);
-					printAgendaItem(mysql_fetch_assoc($result), "member");
+					printAgendaItem(mysqli_fetch_assoc($result), "member");
 				} else {
 					http_status_code(405, "this format is not available");
 				}
@@ -500,11 +500,11 @@
 					`activityMember`.`id` ASC
 			");
 
-			for ($i = 0; $i < mysql_num_rows($result); $i++) {
+			for ($i = 0; $i < mysqli_num_rows($result); $i++) {
 				
-				$requestID = mysql_result($result, $i, "id");
-				$priori = mysql_result($result, $i, "priori");
-				$memberID = mysql_result($result, $i, "memberID");
+				$requestID = mysqli_result($result, $i, "id");
+				$priori = mysqli_result($result, $i, "priori");
+				$memberID = mysqli_result($result, $i, "memberID");
 
 				$resultExtrapolated = resourceForQuery(
 					"SELECT
@@ -521,7 +521,7 @@
 						`activity`.`groupID`
 				");
 
-				$extrapolated = (mysql_num_rows($resultExtrapolated) > 0) ? mysql_result($resultExtrapolated, 0, "extrapolated") : 0;
+				$extrapolated = (mysqli_num_rows($resultExtrapolated) > 0) ? mysqli_result($resultExtrapolated, 0, "extrapolated") : 0;
 
 				// If the person extrapolated, we can only overwrite it if the user explicity gave us permition to do so
 				if ($extrapolated == 1 && $priori == 1) {
@@ -539,7 +539,7 @@
 					");
 
 					// If we didn't alter something (a person had his schedule modified), we must remove from other activities
-					if (mysql_affected_rows() > 0) {
+					if (mysqli_affected_rows_new() > 0) {
 						// Assert that the granted person doesn't stay approved on other activities of the same group
 						$resultOther = resourceForQuery(
 						// echo (
@@ -561,8 +561,8 @@
 							LIMIT 1
 						");
 
-						if (mysql_num_rows($resultOther) > 0) {
-							$requestID = mysql_result($resultOther, 0, "id");
+						if (mysqli_num_rows($resultOther) > 0) {
+							$requestID = mysqli_result($resultOther, 0, "id");
 
 							$update = resourceForQuery(
 								"UPDATE
@@ -605,7 +605,7 @@
 					echo printInformation("activity", $result, true, 'json');
 				} elseif ($format == "html") {
 					$result = getActivitiesForMemberAtActivityQuery($activityID, $core->memberID);
-					printAgendaItem(mysql_fetch_assoc($result), "member");
+					printAgendaItem(mysqli_fetch_assoc($result), "member");
 				} else {
 					http_status_code(405, "this format is not available");	
 				}
@@ -774,8 +774,8 @@
 			} elseif ($format == "excel") {
 				resourceToExcel($result);
 			} elseif ($format == "gmail") {
-				for ($i = 0; $i < mysql_num_rows($result); $i++) {
-					echo ($i != 0 ? " , " : "") . mysql_result($result, $i, "name") . " <" . mysql_result($result, $i, "email") . ">";
+				for ($i = 0; $i < mysqli_num_rows($result); $i++) {
+					echo ($i != 0 ? " , " : "") . mysqli_result($result, $i, "name") . " <" . mysqli_result($result, $i, "email") . ">";
 				}
 			} else {
 				http_status_code(405, "this format is not available");	
@@ -846,7 +846,7 @@
 					AND (ISNULL(`activityQuestion`.`text`) OR BINARY `activityQuestion`.`text` != '$question')
 			");
 
-			$questionID = mysql_insert_id();
+			$questionID = mysqli_insert_id_new();
 
 			if ($insert) {
 				$data["questionID"] = $questionID;

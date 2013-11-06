@@ -58,12 +58,12 @@
 					");
 
 					// Member already has a profile with us
-					if (mysql_num_rows($result) > 0) {
+					if (mysqli_num_rows($result) > 0) {
 
-						$memberID = mysql_result($result, 0, "id");
-						$name = mysql_result($result, 0, "name");
-						$tokenID = mysql_result($result, 0, "sessionKey");
-						$savedSocialID = mysql_result($result, 0, "linkedInID");
+						$memberID = mysqli_result($result, 0, "id");
+						$name = mysqli_result($result, 0, "name");
+						$tokenID = mysqli_result($result, 0, "sessionKey");
+						$savedSocialID = mysqli_result($result, 0, "linkedInID");
 
 						// Update the facebook token if necessary
 						if (empty($savedSocialID)) {
@@ -150,12 +150,12 @@
 					");
 
 					// Member already has a profile with us
-					if (mysql_num_rows($result) > 0) {
+					if (mysqli_num_rows($result) > 0) {
 
-						$memberID = mysql_result($result, 0, "id");
-						$name = mysql_result($result, 0, "name");
-						$tokenID = mysql_result($result, 0, "sessionKey");
-						$savedSocialID = mysql_result($result, 0, "facebookID");
+						$memberID = mysqli_result($result, 0, "id");
+						$name = mysqli_result($result, 0, "name");
+						$tokenID = mysqli_result($result, 0, "sessionKey");
+						$savedSocialID = mysqli_result($result, 0, "facebookID");
 
 						// Update the facebook token if necessary
 						if (empty($savedSocialID)) {
@@ -286,7 +286,7 @@
 					OR BINARY `member`.`email` = '$email'
 			");
 
-			if (mysql_num_rows($result) == 0) {
+			if (mysqli_num_rows($result) == 0) {
 
 				// Save the password for later
 				$password = (isset($_REQUEST["password"])) ? getAttribute($_REQUEST["password"]) : "123456";
@@ -331,7 +331,7 @@
 			");
 
 			// Send an email if everything went alright
-			if (mysql_affected_rows() > 0) {
+			if (mysqli_affected_rows_new() > 0) {
 				sendRecoveryEmail($password, $email);
 			} else {
 				http_status_code(500, "Not a single email was found");
@@ -357,7 +357,7 @@
 			");
 
 			// Send an email if everything went alright
-			if (mysql_affected_rows() > 0) {
+			if (mysqli_affected_rows_new() > 0) {
 				sendSubscribedEmail($email);
 			} else {
 				http_status_code(500, "Not a single email was found");
@@ -384,7 +384,7 @@
 			");
 
 			// Send an email if everything went alright
-			if (mysql_affected_rows() > 0) {
+			if (mysqli_affected_rows_new() > 0) {
 				sendUnsubscribedEmail($email);
 			} else {
 				http_status_code(500, "Not a single email was found");
@@ -415,10 +415,10 @@
 					AND `member`.`id` = $core->memberID
 			");
 
-			if (mysql_num_rows($result) > 0) {
+			if (mysqli_num_rows($result) > 0) {
 
-				$oldHash = mysql_result($result, 0, "password");
-				$email = mysql_result($result, 0, "email");
+				$oldHash = mysqli_result($result, 0, "password");
+				$email = mysqli_result($result, 0, "email");
 
 				if (Bcrypt::check($oldPassword, $oldHash)) {
 
@@ -434,7 +434,7 @@
 					");
 
 					// Send an email if everything went alright
-					if (mysql_affected_rows() > 0) {
+					if (mysqli_affected_rows_new() > 0) {
 						sendPasswordChangeEmail($email);
 					} else {
 						http_status_code(500, "Not a single email was rewritten");

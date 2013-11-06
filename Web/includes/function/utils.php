@@ -11,7 +11,7 @@
 				AND `event`.`id` = $eventID
 		");
 
-		if (mysql_num_rows($result) > 0) {
+		if (mysqli_num_rows($result) > 0) {
 			return true;
 		} else {
 			return false;
@@ -30,7 +30,26 @@
 				AND `eventMember`.`memberID` = $memberID
 		");
 
-		if (mysql_num_rows($result) > 0) {
+		if (mysqli_num_rows($result) > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+    function appHasMember($appID, $memberID) {
+
+		$result = resourceForQuery(
+			"SELECT
+				`appMember`.`id`
+			FROM
+				`appMember`
+			WHERE 1
+				AND `appMember`.`appID` = $appID
+				AND `appMember`.`memberID` = $memberID
+		");
+
+		if (mysqli_num_rows($result) > 0) {
 			return true;
 		} else {
 			return false;
@@ -48,8 +67,8 @@
 				AND `activity`.`id` = $activityID
 		");
 
-		if (mysql_num_rows($result) > 0) {
-			return mysql_result($result, 0, "eventID");
+		if (mysqli_num_rows($result) > 0) {
+			return mysqli_result($result, 0, "eventID");
 		} else {
 			return 0;
 		}
@@ -66,8 +85,8 @@
 				AND `group`.`id` = $groupID
 		");
 
-		if (mysql_num_rows($result) > 0) {
-			return mysql_result($result, 0, "eventID");
+		if (mysqli_num_rows($result) > 0) {
+			return mysqli_result($result, 0, "eventID");
 		} else {
 			return 0;
 		}
@@ -84,8 +103,8 @@
 				AND `activity`.`id` = $activityID
 		");
 
-		if (mysql_num_rows($result) > 0) {
-			return html_entity_decode(mysql_result($result, 0, "name"), ENT_COMPAT, "UTF-8");
+		if (mysqli_num_rows($result) > 0) {
+			return html_entity_decode(mysqli_result($result, 0, "name"), ENT_COMPAT, "UTF-8");
 		} else {
 			return "";
 		}
@@ -102,8 +121,8 @@
 				AND `event`.`id` = $eventID
 		");
 
-		if (mysql_num_rows($result) > 0) {
-			return html_entity_decode(mysql_result($result, 0, "name"), ENT_COMPAT, "UTF-8");
+		if (mysqli_num_rows($result) > 0) {
+			return html_entity_decode(mysqli_result($result, 0, "name"), ENT_COMPAT, "UTF-8");
 		} else {
 			return "";
 		}
@@ -120,8 +139,8 @@
 				`activity`.`id` = $activityID
 		");
 
-		if (mysql_num_rows($result) > 0) {
-			return mysql_result($result, 0, "groupID");
+		if (mysqli_num_rows($result) > 0) {
+			return mysqli_result($result, 0, "groupID");
 		} else {
 			return 0;
 		}
@@ -138,8 +157,8 @@
 				`member`.`id` = $personID
 		");
 
-		if (mysql_num_rows($result) > 0) {
-			return mysql_result($result, 0, "email");
+		if (mysqli_num_rows($result) > 0) {
+			return mysqli_result($result, 0, "email");
 		} else {
 			return "";
 		}
@@ -156,8 +175,8 @@
 				AND BINARY `member`.`email` = '$email'
 		");
 
-		if (mysql_num_rows($result) > 0) {
-			$personID = mysql_result($result, 0, "id");
+		if (mysqli_num_rows($result) > 0) {
+			$personID = mysqli_result($result, 0, "id");
 		} else {
 			$personID = 0;
 		}
@@ -249,15 +268,15 @@
 
 		$result = resourceForQuery("SELECT `image` FROM `image` WHERE `hash`='$hash'");	
 
-		if (mysql_num_rows($result) > 0) {
+		if (mysqli_num_rows($result) > 0) {
 
-			if (file_exists(mysql_result($result, 0, "image"))) {
+			if (file_exists(mysqli_result($result, 0, "image"))) {
 				
 				// Delete the image
 				unlink($imageFile);
 
 				// Return the result
-				return mysql_result($result, 0, "image");
+				return mysqli_result($result, 0, "image");
 			} else {
 				$update = resourceForQuery("UPDATE `image` SET `image`='$imageFile' WHERE `hash`='$hash'");
 
@@ -294,12 +313,12 @@
 				`activity`.`eventID` = 4
 		");
 
-		for ($i = 0; $i < mysql_num_rows($result); $i++) {
+		for ($i = 0; $i < mysqli_num_rows($result); $i++) {
 
-			$id = mysql_result($result, $i, "id");
-			$name = htmlentities(mysql_result($result, $i, "name"), ENT_COMPAT | ENT_HTML401, "ISO-8859-1");
-			$description = htmlentities(mysql_result($result, $i, "description"), ENT_COMPAT | ENT_HTML401, "ISO-8859-1");
-			$location = htmlentities(mysql_result($result, $i, "location"), ENT_COMPAT | ENT_HTML401, "ISO-8859-1");
+			$id = mysqli_result($result, $i, "id");
+			$name = htmlentities(mysqli_result($result, $i, "name"), ENT_COMPAT | ENT_HTML401, "ISO-8859-1");
+			$description = htmlentities(mysqli_result($result, $i, "description"), ENT_COMPAT | ENT_HTML401, "ISO-8859-1");
+			$location = htmlentities(mysqli_result($result, $i, "location"), ENT_COMPAT | ENT_HTML401, "ISO-8859-1");
 
 			$insert = resourceForQuery(
 				"UPDATE
@@ -328,10 +347,10 @@
 				AND `activityMember`.`activityID` < 150
 		");
 
-		for ($i = 0; $i < mysql_num_rows($result); $i++) {
+		for ($i = 0; $i < mysqli_num_rows($result); $i++) {
 
-			$id = mysql_result($result, $i, "id");
-			$activityID = mysql_result($result, $i, "activityID");
+			$id = mysqli_result($result, $i, "id");
+			$activityID = mysqli_result($result, $i, "activityID");
 
 			$resultCount = resourceForQuery(
 				"SELECT
@@ -343,7 +362,7 @@
 					AND `activityMember`.`id` <= $id
 			");
 
-			$entries = mysql_result($resultCount, 0, "entries");
+			$entries = mysqli_result($resultCount, 0, "entries");
 
 			$insert = resourceForQuery(
 				"UPDATE
@@ -364,10 +383,10 @@
 		// 		`eventMember`
 		// ");
 
-		// for ($i = 0; $i < mysql_num_rows($result); $i++) {
+		// for ($i = 0; $i < mysqli_num_rows($result); $i++) {
 
-		// 	$id = mysql_result($result, $i, "id");
-		// 	$eventID = mysql_result($result, $i, "eventID");
+		// 	$id = mysqli_result($result, $i, "id");
+		// 	$eventID = mysqli_result($result, $i, "eventID");
 
 		// 	$resultCount = resourceForQuery(
 		// 		"SELECT
@@ -379,7 +398,7 @@
 		// 			AND `eventMember`.`id` <= $id
 		// 	");
 
-		// 	$entries = mysql_result($resultCount, 0, "entries");
+		// 	$entries = mysqli_result($resultCount, 0, "entries");
 
 		// 	$insert = resourceForQuery(
 		// 		"UPDATE

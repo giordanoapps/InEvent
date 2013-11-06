@@ -6,11 +6,11 @@
 
         ?><ul><?php
 
-        if (mysql_num_rows($result) > 0) {
+        if (mysqli_num_rows($result) > 0) {
 
             $day = 0;
 
-            while ($data = mysql_fetch_assoc($result)) {
+            while ($data = mysqli_fetch_assoc($result)) {
                 ?>
                 <li class="eventItem" value="<?php echo $data['id'] ?>">
                     <div class="upper">

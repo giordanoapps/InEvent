@@ -29,14 +29,14 @@ if (isset($_POST["email"]) && isset($_POST["password"])) {
 			`memberSessions`.`memberID`
 	");
 
-	if (mysql_num_rows($result) == 1) {
+	if (mysqli_num_rows($result) == 1) {
 		
-		$hash = mysql_result($result, 0, "password");
+		$hash = mysqli_result($result, 0, "password");
 
 		if (Bcrypt::check($password, $hash)) {
 
-			$core->memberID = mysql_result($result, 0, "id");
-			$core->name = mysql_result($result, 0, "name");
+			$core->memberID = mysqli_result($result, 0, "id");
+			$core->name = mysqli_result($result, 0, "name");
 
 			// Create a new unique random id for the given session
 			do {
@@ -50,7 +50,7 @@ if (isset($_POST["email"]) && isset($_POST["password"])) {
 						`memberSessions`.`sessionKey` = '$sessionKey'
 				");
 
-			} while (mysql_num_rows($resultSession) != 0);
+			} while (mysqli_num_rows($resultSession) != 0);
 
 			// Store it on our database
 			$insert = resourceForQuery(
@@ -62,7 +62,7 @@ if (isset($_POST["email"]) && isset($_POST["password"])) {
 			");
 
 			// Remove the last session if the member went above the limit
-			if (mysql_result($result, 0, "sessionAmount") > 5) {
+			if (mysqli_result($result, 0, "sessionAmount") > 5) {
 				// Remove the last sessionKey from the database
 				$delete = resourceForQuery(
 					"DELETE FROM
@@ -138,11 +138,11 @@ if (isset($_POST["email"]) && isset($_POST["password"])) {
 			`memberSessions`.`sessionKey` = '$hash'
 	");
 
-	if (mysql_num_rows($result) == 1) {
+	if (mysqli_num_rows($result) == 1) {
 		$core->auth = true;
 
-		$core->memberID = mysql_result($result, 0, "id");
-		$core->name = mysql_result($result, 0, "name");
+		$core->memberID = mysqli_result($result, 0, "id");
+		$core->name = mysqli_result($result, 0, "name");
 
 		// Reset the login count
 		$insert = resourceForQuery(

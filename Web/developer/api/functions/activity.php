@@ -20,7 +20,7 @@
 				AND `eventMember`.`approved` = 1
 		");
 
-		if (mysql_num_rows($result) > 0) {
+		if (mysqli_num_rows($result) > 0) {
 
 			// Find if the member is over his limit on different groups
 			$result = resourceForQuery(
@@ -39,7 +39,7 @@
 					`activity`.`groupID`
 			");
 
-			$valid = (mysql_num_rows($result) > 0) ? mysql_result($result, 0, "valid") : 1;
+			$valid = (mysqli_num_rows($result) > 0) ? mysqli_result($result, 0, "valid") : 1;
 
 			// Find how many people are already enrolled at this activity
 			$result = resourceForQuery(
@@ -54,7 +54,7 @@
 				LIMIT 1
 			");
 
-			$position = (mysql_num_rows($result) > 0) ? mysql_result($result, 0, "position") + 1 : 1;
+			$position = (mysqli_num_rows($result) > 0) ? mysqli_result($result, 0, "position") + 1 : 1;
 			
 			// Insert a new row seing if there are vacancies
 			$insert = resourceForQuery(
@@ -81,7 +81,7 @@
 			");
 
 			// Send an email if any row was inserted
-			if (mysql_affected_rows() > 0) {
+			if (mysqli_affected_rows_new() > 0) {
 
 				// Select some details about the activity
 				$result = resourceForQuery(
@@ -95,11 +95,11 @@
 					LIMIT 1
 				");
 
-				if (mysql_num_rows($result) > 0) {
+				if (mysqli_num_rows($result) > 0) {
 
 					// Get some properties
-					$activityName = mysql_result($result, 0, "name");
-					$activityHighlight = mysql_result($result, 0, "highlight");
+					$activityName = mysqli_result($result, 0, "name");
+					$activityHighlight = mysqli_result($result, 0, "highlight");
 
 					// Only send an email if the activity is important
 					if ($activityHighlight) sendActivityEnrollmentEmail($activityName, getEmailForPerson($personID));

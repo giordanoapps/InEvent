@@ -26,7 +26,7 @@
 
             $position = 0;
 
-            while ($data = mysql_fetch_assoc($result)) {
+            while ($data = mysqli_fetch_assoc($result)) {
 
                 ?>
                 <tr class="pickerItem" data-value="<?php echo $data['memberID'] ?>">
@@ -121,7 +121,7 @@
 
             <?php
 
-            while ($data = mysql_fetch_assoc($result)) {
+            while ($data = mysqli_fetch_assoc($result)) {
 
                 ?>
                 <tr class="pickerItem" data-value="<?php echo $data['memberID'] ?>">

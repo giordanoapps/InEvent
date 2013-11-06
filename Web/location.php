@@ -15,7 +15,7 @@
 				<div class="boardContentInnerWrapper">
 					<?php
 						$result = resourceForQuery("SELECT * FROM `company` WHERE `id`=$core->companyID");
-						$data = mysql_fetch_assoc($result);
+						$data = mysqli_fetch_assoc($result);
 					?>
 				
 					<div class="menuContent notFixed">

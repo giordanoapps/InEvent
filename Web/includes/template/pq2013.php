@@ -19,7 +19,7 @@
 
 				<p>O <a target="_blank" href="http://inevent.us/">InEvent</a>, aplicativo que torna seu evento mais interativo e divertido, criou, juntamente com a <a target="_blank" href="http://www.fejesp.org/">FEJESP</a>, um concurso exclusivo para o <a target="_blank" href="http://www.pq.fejesp.org/">17 Prêmio da Qualidade</a>!</p>
 
-				<p>Para participar, basta seguir as instruções abaixo e enviar sua criação até às 23:59 do dia 30/11/2013 (sábado de final de mês).</p>
+				<p>Para participar, basta seguir as instruções abaixo e enviar sua criação até às 23:59 do dia 30 de novembro (sábado de final de mês).</p>
 
 				<div class="crazyBlock">
 

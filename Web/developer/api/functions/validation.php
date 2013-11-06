@@ -27,12 +27,12 @@
 					`memberSessions`.`sessionKey` = '$hash'
 			");
 
-			if (mysql_num_rows($result) > 0) {
+			if (mysqli_num_rows($result) > 0) {
 				// Set the initial information of the member
 				$core->auth = true;
 
-				$core->name = mysql_result($result, 0, "name");
-				$core->memberID = mysql_result($result, 0, "id");
+				$core->name = mysqli_result($result, 0, "name");
+				$core->memberID = mysqli_result($result, 0, "id");
 
 				// Reset the login count
 				$update = resourceForQuery(
@@ -104,9 +104,9 @@
 					AND `activity`.`id` = $activityID
 			");
 
-			if (mysql_num_rows($result) > 0) {
+			if (mysqli_num_rows($result) > 0) {
 				// Load the token using the company as reference
-				getToken(mysql_result($result, 0, "eventID"));
+				getToken(mysqli_result($result, 0, "eventID"));
 
 				// Return the table
 				return $activityID;
@@ -138,9 +138,9 @@
 					AND `group`.`id` = $groupID
 			");
 
-			if (mysql_num_rows($result) > 0) {
+			if (mysqli_num_rows($result) > 0) {
 				// Load the token using the company as reference
-				getToken(mysql_result($result, 0, "eventID"));
+				getToken(mysqli_result($result, 0, "eventID"));
 
 				// Return the table
 				return $groupID;
@@ -186,14 +186,14 @@
 				`memberSessions`.`memberID`
 		");
 	
-		if (mysql_num_rows($result) == 1) {
+		if (mysqli_num_rows($result) == 1) {
 			
-			$hash = mysql_result($result, 0, "password");
+			$hash = mysqli_result($result, 0, "password");
 
 			if (Bcrypt::check($password, $hash)) {
 
-				$core->name = mysql_result($result, 0, "name");
-				$core->memberID = mysql_result($result, 0, "id");
+				$core->name = mysqli_result($result, 0, "name");
+				$core->memberID = mysqli_result($result, 0, "id");
 
 				// Create a unique random id for the given session
 				do {
@@ -207,7 +207,7 @@
 							`memberSessions`.`sessionKey` = '$sessionKey'
 					");
 
-				} while (mysql_num_rows($resultSession) != 0);
+				} while (mysqli_num_rows($resultSession) != 0);
 
 				// Store it on our database
 				$insert = resourceForQuery(
@@ -219,7 +219,7 @@
 				");
 				
 				// Remove the last session if the member went above the limit
-				if (mysql_result($result, 0, "sessionAmount") > 5) {
+				if (mysqli_result($result, 0, "sessionAmount") > 5) {
 					// Remove the last sessionKey from the database
 					$delete = resourceForQuery(
 						"DELETE FROM

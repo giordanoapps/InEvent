@@ -16,7 +16,7 @@ function sendEmail($title, $template, $email) {
             AND `emailBlacklist`.`email` = '$email'
     ");
 
-    if (mysql_num_rows($result) == 0) {
+    if (mysqli_num_rows($result) == 0) {
 
         // Import Swift parser
         require_once(__DIR__ . '/../classes/Swift/lib/swift_required.php');

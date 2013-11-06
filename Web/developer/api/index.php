@@ -16,6 +16,10 @@
 			include_once("modules/activity.php");
 			break;
 
+		case "app":
+			include_once("modules/app.php");
+			break;
+
 		case "contest":
 			include_once("modules/contest.php");
 			break;

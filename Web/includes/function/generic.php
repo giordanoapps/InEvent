@@ -10,9 +10,38 @@
      * @return object       query resource or boolean
      */
     function resourceForQuery($query) {
-        $result = mysql_query(replaceConstantForQuery($query)) or trigger_error(mysql_error() . " @ " . $query);
+
+        global $mysqli;
+
+        $result = mysqli_query($mysqli, replaceConstantForQuery($query)) or trigger_error(mysqli_error($mysqli) . " @ " . $query);
         
         return $result;
+    }
+
+    /**
+     * Transition from old PHP API
+     * @param  string   $query  Query
+     * @return object       query resource or boolean
+     */
+    function mysqli_result($res, $row, $field=0) { 
+        $res->data_seek($row);
+        $datarow = $res->fetch_array();
+        return $datarow[$field];
+    }
+
+    /**
+     * Transition from old PHP API
+     * @param  string   $query  Query
+     * @return object       query resource or boolean
+     */
+    function mysqli_insert_id_new() {
+        global $mysqli;
+        return mysqli_insert_id($mysqli);
+    }
+
+    function mysqli_affected_rows_new() {
+        global $mysqli;
+        return mysqli_affected_rows($mysqli);
     }
 
     /**

@@ -356,7 +356,7 @@ define(modules, function($, common, cookie) {$(function() {
 
 
 	/**
-	 * Remove a item from the person schedule
+	 * Change the person permission
 	 * @return {null}
 	 */
 	$("#peopleContent").on("click", ".head", function(event) {

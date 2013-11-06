@@ -1398,7 +1398,7 @@ textarea, input {
 	margin: 0 10px;
 	display: inline-block;
 	vertical-align: middle;
-	padding: 4px;
+	padding: 6px;
 	border-radius: 4px;
 	background-color: #F3F3F3;
 	border: 1px solid #DADADA;
@@ -3003,44 +3003,121 @@ textarea, input {
 
 /* @group Developer */
 
-.developerContent p {
+#developerContent p {
 	margin: 10px 0;
 }
 
-.developerContent .header {
-	font-size: 180%;
-	padding: 10px;
-	margin: 0 auto;
+#developerContent .boardContent {
+	border-radius: 0;
+}
+
+#developerContent .switch {
+	overflow: hidden;
+	height: 48px;
+}
+
+#developerContent .switch ul {
+	width: 100%;
+}
+
+#developerContent .switchCategory {
+	background-color: #F8F8F8;
+	padding: 12px 1%;
+	font-weight: bold;
+	width: 48%;
+	border-top: 1px solid white;
+	box-shadow: inset 0 -1px #C2C1C1;
+	-moz-box-shadow: inset 0 -1px #C2C1C1;
+	-webkit-box-shadow: inset 0 -1px #C2C1C1;
+	position: relative;
+	text-align: center;
+	float: left;
+	cursor: pointer;
+}
+
+#developerContent .switchCategorySelected,
+#developerContent .switchCategory:hover {
+	background-color: #F3F3F3;
+	box-shadow: inset 0px -1px #C9C9C9, inset 1px 0px 5px #CFCFCF;
+	-moz-box-shadow: inset 0px -1px #C9C9C9, inset 1px 0px 5px #CFCFCF;
+	-webkit-box-shadow: inset 0px -1px #C9C9C9, inset 1px 0px 5px #CFCFCF;
+	border-top: 1px solid #D8D8D8;
+}
+
+#developerContent .switchCategory img {
+	font-size: 100%;
+	vertical-align: middle;
+	display: inline-block;
+	color: #6D6D6D;
+	width: 36px;
 	text-align: center;
 }
 
-.developerContent .title {
-	font-size: 120%;
-	font-weight: bold;
-}
-
-.developerContent .description {
-	font-size: 85%;
-	color: #6D6D6D;
-}
-
-.documentation {
+#developerContent .switch li span {
+	margin: 0;
 	font-size: 100%;
+	position: relative;
+	padding-left: 5px;
+	display: inline-block;
+	vertical-align: middle;
+	border: 0;
 }
 
-.menuDocumentation {
+#developerContent .containerBox {
+	display: none;
+}
+
+#developerContent .containerBoxSelected {
+	display: block;
+}
+
+#developerContent .menuContent {
+	width: auto !important;
+	position: static;
+	overflow: hidden;
+	background-color: whiteSmoke;
+}
+
+#developerContent .menuContent .toolBoxOptions {
+	display: none;
+	width: 100%;
+	margin: 0 auto;
+	text-align: center;
+	padding: 1px 0 0 0;
+	position: relative;
+}
+
+#developerContent .menuContent .toolBoxOptionsCreate input[type="text"] {
+	padding: 4px 10px;
+	margin: 4px 0;
+	font-size: 80%;
+	text-align: justify;
+	width: 40%;
+}
+
+#developerContent .menuDocumentation,
+#developerContent .menuApplication {
 	width: 20%;	
 	margin: 0px auto;
 	padding: 0;
 	float: left;
 	font-size: 120%;
+	-moz-box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.22);
+	-webkit-box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.22);
+	box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.22);
 }
 
-.menuDocumentation ul {
+#developerContent .menuApplication {
+	font-size: 90%;
+}
+
+#developerContent .menuDocumentation ul,
+#developerContent .menuApplication ul {
 	width: 100%;
 }
 
-.menuDocumentation li {
+#developerContent .menuDocumentation li,
+#developerContent .menuApplication li {
 	padding: 10px;
 	border-bottom: 1px solid #D9D9D9;
 	cursor: pointer;
@@ -3050,41 +3127,106 @@ textarea, input {
 	box-shadow: 0px 1px #FFF inset;
 }
 
-.menuDocumentation .optionMenuDocumentationCategory {
+#developerContent .menuDocumentation .optionMenuDocumentationCategory {
 	font-weight: bold;
 	margin-top: 50px;
 }
 
-.menuDocumentation .optionMenuDocumentationCategory:first-child {
+#developerContent .menuDocumentation .optionMenuDocumentationCategory:first-child {
 	margin-top: 0;
 }
 
-.menuDocumentation .optionMenuDocumentationSelected,
-.menuDocumentation li:hover {
+#developerContent .menuDocumentation .optionMenuDocumentationSelected,
+#developerContent .menuDocumentation li:hover,
+#developerContent .menuApplication .optionMenuApplicationSelected,
+#developerContent .menuApplication li:hover {
 	border-bottom: 1px solid #ae0000;
 }
 
-.contentDocumentation {
+#developerContent .contentDocumentation,
+#developerContent .contentApplication {
 	font-size: inherit;
 	margin: 0px auto;
 	border-left: 1px solid #A2A2A2;
+	-moz-box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.22);
 	-webkit-box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.22);
 	box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.22);
-	padding: 20px;
 	overflow: hidden;
 	text-align: justify;
+	min-height: 700px;
+	position: relative;
 }
 
-.contentDocumentation h2 {
+#developerContent .contentApplication .title {
+	font-size: 160%;
+	margin: 15px 20px;
+	font-weight: bold;
+	display: block;
+}
+
+#developerContent.editingMode .title {
+	cursor: pointer;
+}
+
+#developerContent .contentApplication .secretBox {
+	position: absolute;
+	top: 0;
+	right: 0;
+	padding: 10px;
+	font-size: 80%;
+	border-radius: 0 0 0 10px;
+	border: 1px solid #DDD;
+	border-top: 0;
+	border-right: 0;
+	background-color: whiteSmoke;
+	-moz-box-shadow: inset 1px -1px 1px #FDFDFD;
+	-webkit-box-shadow: inset 1px -1px 1px #FDFDFD;
+	box-shadow: inset 1px -1px 1px #FDFDFD;
+}
+
+#developerContent .contentApplication .secretBox p {
+	margin: 2px 0;
+}
+
+#developerContent .contentApplication thead td {
+	cursor: pointer;
+}
+
+#developerContent .contentApplication thead img {
+	width: 24px;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+#developerContent .contentApplication .pickerItem td {
+	padding: 0;
+	font-size: 80%;
+}
+
+#developerContent .contentApplication .pickerItem p {
+	margin: 0;
+}
+
+#developerContent .contentApplication .pickerItem img {
+	cursor: pointer;
+	margin-top: 4px;
+	width: 20px;
+}
+
+#developerContent .contentDocumentation {
+	padding: 20px 40px 20px 20px;
+}
+
+#developerContent .contentDocumentation h2 {
 	margin-top: 0;
 	margin-bottom: 0.5em;
 }
 
-.contentDocumentation p {
+#developerContent .contentDocumentation p {
 	margin: 0.5em 0;
 }
 
-.contentDocumentation pre {
+#developerContent .contentDocumentation pre {
 	margin-left: 30px;
 	padding-left: 20px;
 	border-left: 1px solid #999999;
@@ -3092,58 +3234,56 @@ textarea, input {
 	word-wrap: break-word;
 }
 
-.contentDocumentation .link {
+#developerContent .contentDocumentation .link {
 	word-wrap: break-word;
 	font-family: monospace;
 	white-space: pre;
 	margin: 1em 0px;
 }
 
-.contentDocumentation .link:hover {
+#developerContent .contentDocumentation .link:hover {
 	color: #356094;
 }
 
-.contentDocumentation ul {
+#developerContent .contentDocumentation ul {
 	list-style: decimal;
 	width: 100%;
 }
 
-.contentDocumentation li {
+#developerContent .contentDocumentation li {
 	margin: 0 40px;
 	list-style: decimal;
 }
 
-.contentDocumentation .documentationBox {
+#developerContent .contentDocumentation .documentationBox {
 	display: none;
-	margin-right: 20px;
-	min-height: 700px;
 }
 
-.contentDocumentation .documentationBoxSelected {
+#developerContent .contentDocumentation .documentationBoxSelected {
 	display: block;
 }
 
-.contentDocumentation .documentationHeader {
+#developerContent .contentDocumentation .documentationHeader {
 	font-size: 120%;
 	font-weight: bold;
 	padding: 5px 0px 0px 0px;
 	margin: 0;
 }
 
-.contentDocumentation .documentationFunctionBox {
+#developerContent .contentDocumentation .documentationFunctionBox {
 	padding: 0 0 5px 30px;
 }
 
-.contentDocumentation .documentFunctionName {
+#developerContent .contentDocumentation .documentFunctionName {
 	border-bottom: 1px solid #D9D9D9;
 	padding: 4px 0;
 }
 
-.contentDocumentation .documentFunctionName span:nth-child(2) {
+#developerContent .contentDocumentation .documentFunctionName span:nth-child(2) {
 	float: right;
 }
 
-.contentDocumentation .documentFunctionName span:nth-child(2) img {
+#developerContent .contentDocumentation .documentFunctionName span:nth-child(2) img {
 	display: inline-block;
 	vertical-align: middle;
 	width: 24px;
@@ -3153,7 +3293,7 @@ textarea, input {
 	position: relative;
 }
 
-.contentDocumentation .tryItOut {
+#developerContent .contentDocumentation .tryItOut {
 	display: inline-block;
 	vertical-align: bottom;
 	width: 24px;
@@ -3161,7 +3301,7 @@ textarea, input {
 	cursor: pointer;
 }
 
-.contentDocumentation .documentFunctionDescription {
+#developerContent .contentDocumentation .documentFunctionDescription {
 	margin-left: 30px;
 	padding-left: 15px;
 	border-left: 1px solid #999999;
@@ -3169,28 +3309,28 @@ textarea, input {
 	margin-bottom: 1em;
 }
 
-.contentDocumentation .documentFunctionDescription img {
+#developerContent .contentDocumentation .documentFunctionDescription img {
 	width: 24px;
 	vertical-align: bottom;
 }
 
-.contentDocumentation .documentationFunctionParametersBox {
+#developerContent .contentDocumentation .documentationFunctionParametersBox {
 	margin-left: 30px;
 	padding-left: 20px;
 	border-left: 2px solid #D9D9D9;
 }
 
-.contentDocumentation .documentationFunctionParametersBox sub {
+#developerContent .contentDocumentation .documentationFunctionParametersBox sub {
 	font-size: 70%;
 	font-style: italic;
 }
 
-.demoDocumentation {
+#developerContent .demoDocumentation {
 	display: none;
 	margin: 30px 0 30px 30px;
 }
 
-.demoDocumentation div {
+#developerContent .demoDocumentation div {
 	padding: 5px 10px;
 	border: 1px solid #DFDFDF;
 	background-color: #FAFAFA;
@@ -3202,7 +3342,7 @@ textarea, input {
 	box-sizing: border-box;
 }
 
-.demoDocumentation input {
+#developerContent .demoDocumentation input {
 	color: inherit;
 	background-color: rgba(0, 0, 0, 0);
 	border: 0;
@@ -3210,17 +3350,17 @@ textarea, input {
 	width: 100%;
 }
 
-.demoDocumentation textarea {
+#developerContent .demoDocumentation textarea {
 	height: 300px;
 }
 
-.demoDocumentation pre,
-.contentDocumentation .json {
+#developerContent .demoDocumentation pre,
+#developerContent .contentDocumentation .json {
 	font-size: 80%;
 	margin-left: 30px;
 }
 
-.demoDocumentation .attribute {
+#developerContent .demoDocumentation .attribute {
 	border: 1px solid #9292CF;
 	margin: 0 1px;
 	display: inline-block;
@@ -3230,7 +3370,7 @@ textarea, input {
 	box-shadow: inset 1px 1px 2px #FFF9F9;
 }
 
-.demoDocumentation .inert {
+#developerContent .demoDocumentation .inert {
 	padding: 2px;
 	border: 0;
 	background-color: transparent;
@@ -3240,7 +3380,7 @@ textarea, input {
 	display: inline-block;
 }
 
-.demoDocumentation .inert input {
+#developerContent .demoDocumentation .inert input {
 	min-width: 44px;
 }
 
@@ -3308,15 +3448,15 @@ textarea, input {
 
 #wrapper .errorBox {
 	color: #DBDBDB;
-	background-color: #572020;
+	background-color: rgba(87, 32, 32, 0.9);
 	position: fixed;
 	top: 80px;
 	right: 10px;
 	border-radius: 10px;
 	padding: 12px;
-	-moz-box-shadow: inset 0px 0px 1px 1px #491818, 1px 1px 5px black;
-	-webkit-box-shadow: inset 0px 0px 1px 1px #491818, 1px 1px 5px black;
-	box-shadow: inset 0px 0px 1px 1px #491818, 1px 1px 5px black;
+	-moz-box-shadow: 1px 1px 5px #4E4E4E;;
+	-webkit-box-shadow: 1px 1px 5px #4E4E4E;
+	box-shadow: 1px 1px 5px #4E4E4E;
 	width: 250px;
 	margin: 0;
 	display: none;

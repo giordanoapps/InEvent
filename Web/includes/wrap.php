@@ -8,6 +8,7 @@
 include_once("wrap/collection.php");
 
 // Pages
+include_once("wrap/app.php");
 include_once("wrap/event.php");
 include_once("wrap/marketplace.php");
 include_once("wrap/people.php");

@@ -107,7 +107,7 @@
 						echo json_encode($data);
 					} elseif ($format == "html") {
 						$result = getActivitiesForMemberAtActivityQuery($eventID, $core->memberID);
-						printAgendaItem(mysql_fetch_assoc($result), "member");
+						printAgendaItem(mysqli_fetch_assoc($result), "member");
 					} else {
 						http_status_code(405, "this format is not available");
 					}
@@ -308,7 +308,7 @@
 						}
 					}
 
-					if (mysql_affected_rows() > 0) {
+					if (mysqli_affected_rows_new() > 0) {
 						// Return its data
 						if ($format == "json") {
 							$data["eventID"] = $eventID;
@@ -410,16 +410,16 @@
 				} elseif ($format == "excel") {
 					resourceToExcel($result);
 				} elseif ($format == "gmail") {
-					for ($i = 0; $i < mysql_num_rows($result); $i++) {
-						echo ($i != 0 ? " , " : "") . mysql_result($result, $i, "name") . " <" . mysql_result($result, $i, "email") . ">";
+					for ($i = 0; $i < mysqli_num_rows($result); $i++) {
+						echo ($i != 0 ? " , " : "") . mysqli_result($result, $i, "name") . " <" . mysqli_result($result, $i, "email") . ">";
 					}
 				} else {
 					http_status_code(405, "this format is not available");
 				}
 
 			} elseif ($method === "sendMail") {
-				for ($i = 0; $i < mysql_num_rows($result); $i++) {
-					sendAppInformation(mysql_result($result, $i, "email"));
+				for ($i = 0; $i < mysqli_num_rows($result); $i++) {
+					sendAppInformation(mysqli_result($result, $i, "email"));
 				}
 			}
 

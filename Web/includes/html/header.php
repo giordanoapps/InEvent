@@ -28,8 +28,12 @@
 	<link rel="stylesheet" href="css/default.css" type="text/css" media="all" />
 	<link rel="stylesheet" href="css/printer.css" type="text/css" media="print" />
 	<link rel="stylesheet" href="css/mobile.css" type="text/css" media="handheld, (max-device-width:480px)" />
+	<link rel="stylesheet" href="css/shCore.css" type="text/css" />
+	<link rel="stylesheet" href="css/shThemeDefault.css" type="text/css" />
 	
 	<script src="js/lib/require.js" type="text/javascript" data-main="js/common"></script>
+	<script src="js/lib/shCore.js" type="text/javascript"></script>
+	<script src="js/lib/shBrushJScript.js" type="text/javascript"></script>
 	<script src="js/lib/jquery.fileuploader.min.js" type="text/javascript"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?sensor=false&region=BR" type="text/javascript"></script>
 	

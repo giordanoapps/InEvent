@@ -15,7 +15,7 @@
 
         ?><ul><?php
 
-        $rows = mysql_num_rows($result);
+        $rows = mysqli_num_rows($result);
 
         // Display a row exclusive to all participants
         if ($target == "event") {
@@ -28,12 +28,12 @@
                 array(
                     "id" => 1,
                     "type" => "event",
-                    "dateBegin" => mysql_result($resultEvent, 0, "dateBegin"),
-                    "dateEnd" => mysql_result($resultEvent, 0, "dateEnd"),
+                    "dateBegin" => mysqli_result($resultEvent, 0, "dateBegin"),
+                    "dateEnd" => mysqli_result($resultEvent, 0, "dateEnd"),
                     "name" => "Todas as pessoas",
                     "description" => "",
                     "capacity" => "0",
-                    "entries" => mysql_result($resultEvent, 0, "entries")
+                    "entries" => mysqli_result($resultEvent, 0, "entries")
                 ),
                 "event"
             );
@@ -43,7 +43,7 @@
 
             $day = 0;
 
-            while ($data = mysql_fetch_assoc($result)) {
+            while ($data = mysqli_fetch_assoc($result)) {
 
                 if ($day != date("z", $data['dateBegin'])) {
                     $day = date("z", $data['dateBegin']);
@@ -137,7 +137,7 @@
         $result = getEventForMemberQuery($eventID, $memberID);
 
         // Push some details about the event
-        $data = mysql_fetch_assoc($result);
+        $data = mysqli_fetch_assoc($result);
 
         // Enrolled at event?
         $enrolledAtEvent = ($data['approved'] >= 0) ? true : false;
@@ -163,7 +163,7 @@
         // Get activities for this member
         $result = getActivitiesForMemberAtEventQuery($eventID, $memberID);
 
-        if (mysql_num_rows($result) > 0) {
+        if (mysqli_num_rows($result) > 0) {
 
             $day = 0;
 
@@ -189,7 +189,7 @@
             );
 
 
-            while ($data = mysql_fetch_assoc($result)) {
+            while ($data = mysqli_fetch_assoc($result)) {
 
                 if ($day != date("z", $data['dateBegin'])) {
                     $day = date("z", $data['dateBegin']);

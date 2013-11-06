@@ -25,7 +25,7 @@ define(["jquery", "common"], function($) {$(function() {
 					$(this).ajax("hashStartLoad");
 				// Or load a new one
 				} else if (href) {
-					window.location.hash = href.replace(fileType, "");
+					window.location.hash = href.replace(fileType, "").replace("/", "");
 				// Or use the current document to set the path
 				} else {
 
@@ -34,8 +34,8 @@ define(["jquery", "common"], function($) {$(function() {
 
 					// See if we are on the same position
 					if (appIndex == eventIndex) {
-
-						var hash = window.location.pathname.substring(eventIndex + 1).replace(fileType, "");
+						
+						var hash = window.location.pathname.replace(fileType, "").replace("/", "");
 
 						if (hash != "") {
 							window.location.hash = hash;

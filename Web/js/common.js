@@ -37,6 +37,7 @@ require.config({
 		'modules/bar': ['jquery'],
 		'modules/collection': ['jquery'],
 		'modules/data': ['jquery'],
+		'modules/developer': ['jquery'],
 		'modules/event': ['jquery'],
 		'modules/field': ['jquery'],
 		'modules/forgot': ['jquery'],
@@ -74,7 +75,6 @@ basic.push('modules/loaders');
 basic.push('modules/window');
 basic.push('modules/collection');
 basic.push('modules/bar');
-// basic.push('modules/notification');
 basic.push('modules/userSettings');
 basic.push('modules/tools');
 

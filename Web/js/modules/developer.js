@@ -1,25 +1,184 @@
+var modules = [];
+modules.push('jquery');
+modules.push('common');
+modules.push('modules/storageExpiration');
+
+define(modules, function($, common, storageExpiration) {$(function() {
+
 // -------------------------------------- DEVELOPER -------------------------------------- //
-
-requirejs.config({
-    "baseUrl": "../js/lib",
-    "urlArgs": "bust=" + (new Date()).getTime(),
-    "paths": {
-    	'jquery': 'jquery-1.8.3.min',
-		'google.analytics': 'analytics.min',
-      	'modules': '../modules'
-    },
-    shim: {
-		'jquery-ui': ['jquery']
-    }
-});
-
-define(["jquery", "modules/storageExpiration"], function($, storageExpiration) {$(function() {
 
 	/**
 	 * Change the currently selected documentation tab
 	 * @return {null}
 	 */
-	$(".developerContent").on("click", ".menuDocumentation li", function () {
+	$("#developerContent").on("click", ".switch li", function () {
+		
+		var index = $(this).index();
+		
+		if ($(".switchCategorySelected").index() != index) {
+			$(".switchCategorySelected").removeClass("switchCategorySelected");
+			$(this).addClass("switchCategorySelected");
+			
+			$(".containerBoxSelected").fadeOut(300, function () {
+				$(this).removeClass("containerBoxSelected");
+				$(".containerBox").eq(index).fadeIn(300, function() {
+					$(".menuContent").trigger("resizeBar");
+				}).addClass("containerBoxSelected");
+			});
+		}
+	
+	});
+
+	/**
+	 * Change the currently selected documentation tab
+	 * @return {null}
+	 */
+	$("#developerContent").on("click", ".menuApplication li", function () {
+		
+		var appID = $(this).val();
+
+		// We request the information on the server
+		$.post('developer/api/?' + $.param({
+			method: "app.getDetails",
+			appID: appID,
+			format: "html"
+		}), {},
+		function(data, textStatus, jqXHR) {
+
+			if (jqXHR.status == 200) {
+				// Update content
+				$(".contentApplication").html(data);
+			}
+
+		}, 'html');
+
+		// Change some classes
+		var className = "optionMenuApplicationSelected";
+		$(this).siblings("." + className).removeClass(className).end().addClass(className);
+	
+	});
+
+	/**
+	 * Toggle the box
+	 * @return {null}
+	 */
+	$("#developerContent").on("click", ".toolCreate", function(event) {
+		$(this).closest(".toolBox").siblings(".toolBoxOptionsCreate").slideToggle(400).find("input").first().focus();
+	});
+
+	/**
+	 * Add an app
+	 * @return {null}
+	 */
+	$("#developerContent").on("click", ".toolBoxOptionsCreate .singleButton", function(event) {
+		
+		// Hide the current button
+		var $elem = $(this).hide(200);
+
+		// Get some properties
+		var name = $elem.siblings(".name").val();
+
+		// We request the information on the server
+		$.post('developer/api/?' + $.param({
+			method: "app.create",
+			format: "html"
+		}), {
+			name: name
+		},
+		function(data, textStatus, jqXHR) {
+
+			if (jqXHR.status == 200) {
+				// Update content
+				$(".contentApplication").html(data);
+			}
+
+			$elem.fadeIn(300).parent().slideToggle(400);
+
+		}, 'html').fail(function(jqXHR, textStatus, errorThrown) {
+			$elem.fadeIn(300);
+		});
+
+	});
+
+	/**
+	  * TEXT BOX
+	  */
+
+	/**
+	 * Start a text inline edition
+	 * @return {null}
+	 */
+	$("#developerContent").on("click", ".title", function(event) {
+
+		// Make sure that we are on editing mode
+		if (!$("#developerContent").hasClass("editingMode")) return true;
+		if ($(this).hasClass("titleInput")) return true;
+
+		// Get the value
+		var value = $(this).text();
+
+		// Create the input
+		$(this).field("createField", "input", {
+			"class" : $(this).attr("class") + " titleInput",
+			"value" : value,
+			"placeholder": value,
+			"maxlength": 200
+		}).focus();
+
+		// Stop propagating
+		event.stopPropagation();
+
+    	// Prevent the anchor from propagating
+    	event.preventDefault();
+	    return false;
+	});
+
+	/**
+	 * Conclude a text inline edition
+	 * @return {null}
+	 */
+	$("#developerContent").on("keyup", ".titleInput", function(event) {
+
+		// Remove the focus from the current field
+		var code = (event.keyCode ? event.keyCode : event.which);
+		if (code == 13) $(this).blur();
+	});
+
+	$("#developerContent").on("focusin", ".titleInput", function(event) {
+		var $elem = $(this);
+		$elem.one("focusout", function() {
+			$elem.trigger("saveField");
+		})
+	});
+
+	$("#developerContent").on("saveField", ".titleInput", function(event) {
+
+		var $elem = $(this);
+
+		var appID = $(".optionMenuApplicationSelected").val();
+		var value = $elem.val();
+		var name = $elem.attr("name");
+		
+		$elem = $elem.field("removeField", {"class": $elem.attr("class").replace(/titleInput/g, "")});
+
+		// We request the information on the server
+		$.post('developer/api/?' + $.param({
+			method: "app.edit",
+			appID: appID,
+			name: name,
+			format: "html"
+		}), {
+			value: value
+		},
+		function(data, textStatus, jqXHR) {}, 'html').fail(function(jqXHR, textStatus, errorThrown) {});
+
+	});
+
+	/**
+	 * Change the currently selected documentation tab
+	 * @return {null}
+	 */
+	$("#developerContent").on("click", ".menuDocumentation li", function () {
 		
 		var index = $(this).index();
 		
@@ -43,7 +202,7 @@ define(["jquery", "modules/storageExpiration"], function($, storageExpiration) {
 	 * Trigger the inline api debugger
 	 * @return {null}
 	 */
-	$(".developerContent").on("click", ".documentFunctionName .tryItOut", function () {
+	$("#developerContent").on("click", ".documentFunctionName .tryItOut", function () {
 		
 		var $sibling = $(this).closest(".documentationFunctionBox").next();
 
@@ -71,7 +230,7 @@ define(["jquery", "modules/storageExpiration"], function($, storageExpiration) {
 	 * @param  {object} event
 	 * @return {null}
 	 */
-	$(".developerContent").on("keydown", ".demoDocumentation input", function (event) {
+	$("#developerContent").on("keydown", ".demoDocumentation input", function (event) {
 		
 		// If the user is typing, we should only process it what he hits enter
 		if (event.type == "keydown" && event.keyCode != 13) return;
@@ -113,7 +272,7 @@ define(["jquery", "modules/storageExpiration"], function($, storageExpiration) {
 	 * @param  {string} get   get attributes
 	 * @return {null}
 	 */
-	$(".developerContent").on("callback", ".demoDocumentation pre", function (event, post, get) {
+	$("#developerContent").on("callback", ".demoDocumentation pre", function (event, post, get) {
 		
 		var url = $(".oficialURL").text() + "?";
 		var $demoDocumentation = $(this).parents(".demoDocumentation");
@@ -234,7 +393,7 @@ define(["jquery", "modules/storageExpiration"], function($, storageExpiration) {
 		return processedAttributes;
 	};
 
-	$(".developerContent").on("keydown", ".demoDocumentation .inert input", function (event) {
+	$("#developerContent").on("keydown", ".demoDocumentation .inert input", function (event) {
 		$(this).parent().width((($(this).val().length + 2) * 8) + 'px');
 	});
 

@@ -27,7 +27,7 @@ include_once("function/utils.php");
 // Extra
 include_once("email.php");
 include_once("push.php");
-include_once("queries.php");
+include_once("query.php");
 include_once("wrap.php");
 
 // Set the default time zone
@@ -35,6 +35,7 @@ mysql_query("SET time_zone = '+00:00'");
 date_default_timezone_set('America/Sao_Paulo');
 setlocale(LC_ALL, "pt_BR", "pt_BR.iso-8859-1", "pt_BR.utf-8", "portuguese");
 
+// Error control
 if ($globalDev == 0) {
 	// Disable error reporting
 	error_reporting(0);

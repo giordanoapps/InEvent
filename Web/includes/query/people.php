@@ -76,7 +76,7 @@
         ");
 
         // Count always return 1 row
-        $entries = (mysql_num_rows($result) > 0) ? mysql_result($result, 0, "entries") : 1;
+        $entries = (mysqli_num_rows($result) > 0) ? mysqli_result($result, 0, "entries") : 1;
 
         $result = resourceForQuery(
             "SELECT

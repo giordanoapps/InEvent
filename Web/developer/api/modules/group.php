@@ -36,7 +36,7 @@
 					)
 			");
 
-			$groupID = mysql_insert_id();
+			$groupID = mysqli_insert_id_new();
 
 			// Send a push notification
 			// if ($globalDev == 0) pushActivityCreation($eventID, $groupID);
@@ -47,7 +47,7 @@
 				echo json_encode($data);
 			} elseif ($format == "html") {
 				$result = getGroupsForMemberAtGroupQuery($activityID, $core->memberID);
-				printAgendaItem(mysql_fetch_assoc($result), "member");
+				printAgendaItem(mysqli_fetch_assoc($result), "member");
 			} else {
 				http_status_code(405, "this format is not available");
 			}
@@ -124,7 +124,7 @@
 						echo json_encode($data);
 					} elseif ($format == "html") {
 						$result = getGroupsForMemberAtGroupQuery($activityID, $core->memberID);
-						printAgendaItem(mysql_fetch_assoc($result), "member");
+						printAgendaItem(mysqli_fetch_assoc($result), "member");
 					} else {
 						http_status_code(405, "this format is not available");
 					}
@@ -173,7 +173,7 @@
 				echo json_encode($data);
 			} elseif ($format == "html") {
 				$result = getGroupsForMemberAtGroupQuery($groupID, $core->memberID);
-				printAgendaItem(mysql_fetch_assoc($result), "member");
+				printAgendaItem(mysqli_fetch_assoc($result), "member");
 			} else {
 				http_status_code(405, "this format is not available");
 			}
@@ -222,7 +222,7 @@
 					AND `groupMember`.`memberID` = $personID
 			");
 
-			if (mysql_num_rows($result) == 0) {
+			if (mysqli_num_rows($result) == 0) {
 				// Enroll people at the activity
 				$success = processGroupEnrollment($groupID, $personID);
 			} else {
@@ -236,7 +236,7 @@
 					echo printInformation("activity", $result, true, 'json');
 				} elseif ($format == "html") {
 					$result = getGroupsForMemberAtGroupQuery($groupID, $personID);
-					// printAgendaItem(mysql_fetch_assoc($result), "member");
+					// printAgendaItem(mysqli_fetch_assoc($result), "member");
 				} else {
 					http_status_code(405, "this format is not available");
 				}
@@ -296,7 +296,7 @@
 					echo printInformation("activity", $result, true, 'json');
 				} elseif ($format == "html") {
 					$result = getGroupsForMemberAtGroupQuery($groupID, $core->memberID);
-					printAgendaItem(mysql_fetch_assoc($result), "member");
+					printAgendaItem(mysqli_fetch_assoc($result), "member");
 				} else {
 					http_status_code(405, "this format is not available");	
 				}
@@ -453,8 +453,8 @@
 			} elseif ($format == "excel") {
 				resourceToExcel($result);
 			} elseif ($format == "gmail") {
-				for ($i = 0; $i < mysql_num_rows($result); $i++) {
-					echo ($i != 0 ? " , " : "") . mysql_result($result, $i, "name") . " <" . mysql_result($result, $i, "email") . ">";
+				for ($i = 0; $i < mysqli_num_rows($result); $i++) {
+					echo ($i != 0 ? " , " : "") . mysqli_result($result, $i, "name") . " <" . mysqli_result($result, $i, "email") . ">";
 				}
 			} else {
 				http_status_code(405, "this format is not available");	

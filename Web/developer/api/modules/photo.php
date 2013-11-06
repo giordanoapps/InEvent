@@ -21,7 +21,7 @@
 						($eventID, '$url', NOW())
 				");
 
-				$photoID = mysql_insert_id();
+				$photoID = mysqli_insert_id_new();
 
 				// Send a push notification
 				// if ($globalDev == 0) pushActivityCreation($eventID, $photoID);

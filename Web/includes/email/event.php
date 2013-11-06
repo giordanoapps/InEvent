@@ -17,8 +17,8 @@
 		");
 
 		// Get some properties from the event
-		$event = mysql_result($result, 0, "name");
-		$nick = mysql_result($result, 0, "nickname");
+		$event = mysqli_result($result, 0, "name");
+		$nick = mysqli_result($result, 0, "nickname");
 
 		$result = resourceForQuery(
 			"SELECT
@@ -35,8 +35,8 @@
 		");
 
 		// Get some properties from the person
-		$name = mysql_result($result, 0, "name");
-		$tokenID = mysql_result($result, 0, "sessionKey");
+		$name = mysqli_result($result, 0, "name");
+		$tokenID = mysqli_result($result, 0, "sessionKey");
 
 	    // Replace some ocurrences
 	    $template = str_replace('{{event}}', $event, $template);

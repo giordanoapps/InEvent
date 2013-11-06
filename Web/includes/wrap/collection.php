@@ -12,11 +12,11 @@ function printCollectionForSearch($eventID, $searchText, $searchType) {
             AND `$searchType`.`name` LIKE '%$searchText%'
     ");
         
-    if (mysql_num_rows($result) > 0) {
-        for ($i = 0; $i < mysql_num_rows($result); $i++) {
+    if (mysqli_num_rows($result) > 0) {
+        for ($i = 0; $i < mysqli_num_rows($result); $i++) {
             ?>
-            <li value="<?php echo $position = mysql_result($result, $i, "id") ?>">
-                <?php echo $position = mysql_result($result, $i, "name") ?>
+            <li value="<?php echo $position = mysqli_result($result, $i, "id") ?>">
+                <?php echo $position = mysqli_result($result, $i, "name") ?>
             </li>
             <?php
         }

@@ -17,8 +17,8 @@
 						$result = getEventForEventQuery($core->eventID);
 					}
 
-					if (mysql_num_rows($result) > 0) {
-						$data = mysql_fetch_array($result);
+					if (mysqli_num_rows($result) > 0) {
+						$data = mysqli_fetch_array($result);
 				?>
 			
 				<div class="cover" style="background-image: url(images/<?php echo $data['cover'] ?>);"></div>

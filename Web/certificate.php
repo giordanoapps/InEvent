@@ -13,7 +13,7 @@
 				// Get only the activities where the person is present
 				$result = getActivitiesForMemberQuery("AND `activity`.`eventID` = $core->eventID AND `activityMember`.`present` = 1", $core->memberID, true);
 
-				if (mysql_num_rows($result) > 0) {
+				if (mysqli_num_rows($result) > 0) {
             ?>
 
 	            <table>
@@ -29,7 +29,7 @@
 	                <tbody>
 	                <?php
 
-	                while ($data = mysql_fetch_assoc($result)) {
+	                while ($data = mysqli_fetch_assoc($result)) {
 
 	                    ?>
 	                    <tr class="pickerItem">

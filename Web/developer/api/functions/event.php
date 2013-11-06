@@ -30,7 +30,7 @@
 				AND `eventMember`.`memberID` = $personID
 		");
 
-		if (mysql_num_rows($result) == 0) {
+		if (mysqli_num_rows($result) == 0) {
 
 			// Find how many people are already enrolled at this activity
 			$result = resourceForQuery(
@@ -45,7 +45,7 @@
 				LIMIT 1
 			");
 
-			$position = (mysql_num_rows($result) > 0) ? mysql_result($result, 0, "position") + 1 : 1;
+			$position = (mysqli_num_rows($result) > 0) ? mysqli_result($result, 0, "position") + 1 : 1;
 
 			// Insert the person on the event
 			$insert = resourceForQuery(
@@ -56,7 +56,7 @@
 					($eventID, $personID, $position, @(ROLE_ATTENDEE), 1)
 			");
 
-			if (mysql_affected_rows() > 0) {
+			if (mysqli_affected_rows_new() > 0) {
 
 				// Get some properties and send an email
 				sendEventEnrollmentEmail($eventID, $personID);
@@ -72,10 +72,10 @@
 						AND `activity`.`eventID` = $eventID
 				");
 
-				for ($i = 0; $i < mysql_num_rows($result); $i++) {
+				for ($i = 0; $i < mysqli_num_rows($result); $i++) {
 
 					// Get some properties
-					$activityID = mysql_result($result, $i, "id");
+					$activityID = mysqli_result($result, $i, "id");
 
 					// Find how many people are already enrolled at this activity
 					$resultPosition = resourceForQuery(
@@ -90,7 +90,7 @@
 						LIMIT 1
 					");
 
-					$position = (mysql_num_rows($resultPosition) > 0) ? mysql_result($resultPosition, 0, "position") + 1 : 1;
+					$position = (mysqli_num_rows($resultPosition) > 0) ? mysqli_result($resultPosition, 0, "position") + 1 : 1;
 
 					// Insert all the activities that are general
 					$insert = resourceForQuery(

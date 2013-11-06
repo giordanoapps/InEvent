@@ -1,3 +1,16 @@
+<?php
+
+    // API path
+    if ($globalDev == 1) {
+        define("URL", "http://inevent:8888/developer/api/");
+    } else {
+        $host = (strstr($_SERVER['HTTP_HOST'], "dev.") != FALSE) ? "dev.inevent.us" : "inevent.us";
+
+        define("URL", "http://" . $host . "/developer/api/");
+    }
+
+?>
+
 <!-- COMO USAR -->
 <div class="documentationBox documentationBoxSelected">
     <h2>Uso</h2>

@@ -15,14 +15,14 @@
 		$objPHPExcel->createSheet();
 
 		// Headers
-		for ($j = 0; $j < mysql_num_fields($result); $j++) {
+		for ($j = 0; $j < mysqli_num_fields($result); $j++) {
 			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($j, 1, mysql_field_name($result, $j));
 		}
 
 		// Content
-		for ($i = 0; $i < mysql_num_rows($result); $i++) {
-			for ($j = 0; $j < mysql_num_fields($result); $j++) {
-				$value = html_entity_decode(mysql_result($result, $i, $j), ENT_COMPAT, "UTF-8");
+		for ($i = 0; $i < mysqli_num_rows($result); $i++) {
+			for ($j = 0; $j < mysqli_num_fields($result); $j++) {
+				$value = html_entity_decode(mysqli_result($result, $i, $j), ENT_COMPAT, "UTF-8");
 				$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($j, $i + 2, $value);
 			}
 		}

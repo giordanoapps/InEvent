@@ -5,11 +5,11 @@
 		
 		<div class="bar top">
 			<ul class="leftBar">
-				<a href="home.php"><li>Home</li></a>
-				<a href="front.php"><li>Evento</li></a>
-				<a href="event.php"><li>Atividades</li></a>
+				<a href="/home.php"><li>Home</li></a>
+				<a href="/front.php"><li>Evento</li></a>
+				<a href="/event.php"><li>Atividades</li></a>
 				<?php if ($core->workAtEvent) { ?>
-					<a href="people.php"><li>Pessoas</li></a>
+					<a href="/people.php"><li>Pessoas</li></a>
 				<?php } ?>
 			</ul>
 			
@@ -34,9 +34,9 @@
 								");
 							?>
 							<input 
-								value="<?php if (mysql_num_rows($result) > 0) { echo mysql_result($result, 0, "name"); } ?>"
+								value="<?php if (mysqli_num_rows($result) > 0) { echo mysqli_result($result, 0, "name"); } ?>"
 								data-table="event"
-								data-value="<?php if (mysql_num_rows($result) > 0) { echo mysql_result($result, 0, "id"); } ?>"
+								data-value="<?php if (mysqli_num_rows($result) > 0) { echo mysqli_result($result, 0, "id"); } ?>"
 								type="text"
 								class="collectionSelectedInput"
 								name="collectionSelectedInput"
@@ -65,18 +65,18 @@
 									AND `eventMember`.`roleID` != @(ROLE_ATTENDEE)
 							");
 
-							if (mysql_num_rows($result) > 0) {
+							if (mysqli_num_rows($result) > 0) {
 								// Print the header
 								?><li class="header">TRABALHO</li><?php
 
 								// And then each one of the restaurants
-								for ($i = 0; $i < mysql_num_rows($result); $i++) {
+								for ($i = 0; $i < mysqli_num_rows($result); $i++) {
 									?>
 									<li
 										class="locationItem"
-										value="<?php echo mysql_result($result, $i, "id") ?>"
-										data-nick="<?php echo mysql_result($result, $i, "nickname") ?>">
-										<?php echo mysql_result($result, $i, "name") ?>
+										value="<?php echo mysqli_result($result, $i, "id") ?>"
+										data-nick="<?php echo mysqli_result($result, $i, "nickname") ?>">
+										<?php echo mysqli_result($result, $i, "name") ?>
 									</li>
 									<?php
 								}
@@ -87,9 +87,9 @@
 				<li class="loginInfo anchorInfo">
 					<div class="anchorInnerHock"><p><?php echo truncateName($core->name, 15) ?></p></div>
 					<ul class="loginBox anchorBox popover">
-						<a href="data.php"><li>Editar perfil</li></a>
-						<a href="reinstate.php"><li>Trocar senha</li></a>
-						<a href="logout.php"><li>Sair da conta</li></a>
+						<a href="/data.php"><li>Editar perfil</li></a>
+						<a href="/reinstate.php"><li>Trocar senha</li></a>
+						<a href="/logout.php"><li>Sair da conta</li></a>
 					</ul>
 				</li>
 			</ul>
@@ -99,14 +99,14 @@
 	
 		<div class="bar top loginBar">
 			<ul class="leftBar">
-				<a href="home.php"><li>InEvent</li></a>
-				<a href="front.php"><li>Evento</li></a>
-				<a href="event.php"><li>Atividades</li></a>
+				<a href="/home.php"><li>InEvent</li></a>
+				<a href="/front.php"><li>Evento</li></a>
+				<a href="/event.php"><li>Atividades</li></a>
 			</ul>
 			
 			<ul class="rightBar">
 
-				<a href="data.php"><li class="first">Registrar</li></a>
+				<a href="/data.php"><li class="first">Registrar</li></a>
 				
 				<li onclick="" class="userLoginLeading first">Entrar</li>
 				<li onclick="" class="userLoginBox secondary">
@@ -130,7 +130,7 @@
 									<p class="errorHint">Sua conta foi bloqueada por 10 minutos e uma nova senha foi enviada para seu email.</p>
 								<?php } ?>
 							<?php } ?>
-							<a class	="forgot" href="forgot.php">Esqueci a senha</a>
+							<a class	="forgot" href="/forgot.php">Esqueci a senha</a>
 						</form>
 					</div>
 				</li>

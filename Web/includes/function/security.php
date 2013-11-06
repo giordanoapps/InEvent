@@ -44,7 +44,7 @@
 						AND `event`.`nickname` = '$eventNick'
 				");
 
-				$eventID = (mysql_num_rows($result) > 0) ? mysql_result($result, 0, "id") : 0;
+				$eventID = (mysqli_num_rows($result) > 0) ? mysqli_result($result, 0, "id") : 0;
 
 			} elseif (isset($_COOKIE["eventID"])) {
 				$eventID = getAttribute($_COOKIE["eventID"]);
@@ -69,10 +69,10 @@
 
 		$result = resourceForQuery($query);
 
-		if (mysql_num_rows($result) > 0) {
-			$core->eventID = mysql_result($result, 0, "eventID");
-			$core->workAtEvent = (mysql_result($result, 0, "roleID") != ROLE_ATTENDEE) ? true : false;
-			$core->roleID = mysql_result($result, 0, "roleID");
+		if (mysqli_num_rows($result) > 0) {
+			$core->eventID = mysqli_result($result, 0, "eventID");
+			$core->workAtEvent = (mysqli_result($result, 0, "roleID") != ROLE_ATTENDEE) ? true : false;
+			$core->roleID = mysqli_result($result, 0, "roleID");
 		} else {
 			// Since permission is needed to be inside an event, we must reset the $core->eventID
 			// $core->eventID = 0;

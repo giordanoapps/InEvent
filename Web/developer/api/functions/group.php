@@ -17,7 +17,7 @@
 				AND `eventMember`.`approved` = 1
 		");
 
-		if (mysql_num_rows($result) > 0) {
+		if (mysqli_num_rows($result) > 0) {
 			
 			// Insert a new row seing if there are vacancies
 			$insert = resourceForQuery(
@@ -43,7 +43,7 @@
 			");
 
 			// Send an email if any row was inserted
-			if (mysql_affected_rows() > 0) {
+			if (mysqli_affected_rows_new() > 0) {
 
 				// Select some details about the group
 				$result = resourceForQuery(
@@ -57,11 +57,11 @@
 					LIMIT 1
 				");
 
-				if (mysql_num_rows($result) > 0) {
+				if (mysqli_num_rows($result) > 0) {
 
 					// Get some properties
-					$groupName = mysql_result($result, 0, "name");
-					$groupHighlight = mysql_result($result, 0, "highlight");
+					$groupName = mysqli_result($result, 0, "name");
+					$groupHighlight = mysqli_result($result, 0, "highlight");
 
 					// Only send an email if the group is important
 					if ($groupHighlight) sendActivityEnrollmentEmail($groupName, getEmailForPerson($personID));

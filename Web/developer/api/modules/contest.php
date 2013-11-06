@@ -44,7 +44,7 @@
 					AND `contestMember`.`memberID` = $core->memberID
 			");
 
-			if (mysql_num_rows($result) > 0) {
+			if (mysqli_num_rows($result) > 0) {
 
 				$update = resourceForQuery(
 					"UPDATE
@@ -80,10 +80,10 @@
 						AND `contest`.`dateEnd` > NOW()
 				");
 
-				if (mysql_num_rows($result) > 0)  {
+				if (mysqli_num_rows($result) > 0)  {
 
 					// Get one property
-					$contestID = mysql_result($result, 0, "id");
+					$contestID = mysqli_result($result, 0, "id");
 
 					$insert = resourceForQuery(
 						"INSERT INTO

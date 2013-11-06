@@ -62,7 +62,7 @@
 					)
 			");
 
-			$memberID = mysql_insert_id();
+			$memberID = mysqli_insert_id_new();
 
 			// Make the first login
 			processLogIn($email, $password);

@@ -15,16 +15,16 @@
 		
 		$statusCount = 0;
 		
-		for ($i = 0; $i < mysql_num_rows($result); $i++) {
+		for ($i = 0; $i < mysqli_num_rows($result); $i++) {
 			$notificationText["data"][$i] = array(
-				"id" => mysql_result($result, $i, "id"), 
-				"action" => mysql_result($result, $i, "action"),
-				"url" => mysql_result($result, $i, "url"),
-				"status" => mysql_result($result, $i, "status")
+				"id" => mysqli_result($result, $i, "id"), 
+				"action" => mysqli_result($result, $i, "action"),
+				"url" => mysqli_result($result, $i, "url"),
+				"status" => mysqli_result($result, $i, "status")
 			);
 			
 			// And we count how many notifications have not been seen yet
-			if (mysql_result($result, $i, "status") == 0) {
+			if (mysqli_result($result, $i, "status") == 0) {
 				$statusCount++;
 			}
 		}
@@ -51,7 +51,7 @@
 		");
 
 	 	// We just return the result
-		return mysql_result($result, 0, "count");
+		return mysqli_result($result, 0, "count");
 	}
 	
 	/**
@@ -189,8 +189,8 @@
 					`member`.`name`
 			");
 			
-			for ($i = 0; $i < mysql_num_rows($result); $i++) {
-				$memberID = mysql_result($result, $i, "id");
+			for ($i = 0; $i < mysqli_num_rows($result); $i++) {
+				$memberID = mysqli_result($result, $i, "id");
 				
 				// Add the notification
 				$insert = resourceForQuery(
