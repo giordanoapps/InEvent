@@ -87,7 +87,7 @@
 								<img src="images/64-Shuffle.png" alt="Aleatório" title="Escolher uma pessoa aleatória" class="toolRandom"/>
 							</div>
 							<div class="toolBoxLeft editingToolBox">
-								<img src="images/64-Users.png" alt="Pessoa" title="Adicionar nova pessoa à atividade" class="toolCreate"/>
+								<img src="images/64-Users.png" alt="Pessoa" title="Adicionar nova pessoa à atividade" class="toolPerson"/>
 								<img src="images/64-Box-Incoming-2.png" alt="Importar" title="Importar os dados a partir de uma planilha" class="toolImport"/>
 							</div>
 							

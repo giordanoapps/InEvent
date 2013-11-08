@@ -129,7 +129,7 @@ define(modules, function($, common, cookie) {$(function() {
 	 * Toggle the box
 	 * @return {null}
 	 */
-	$("#peopleContent").on("click", ".toolCreate", function(event) {
+	$("#peopleContent").on("click", ".toolPerson", function(event) {
 		$(this).closest(".toolBox").siblings(".toolBoxOptionsEnrollPerson").slideToggle(400).find("input").first().focus();
 	});
 

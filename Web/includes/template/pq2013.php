@@ -55,6 +55,8 @@
 
 				<p>A participação é individual por cada empresa júnior, ou seja, escolha um membro que irá ao Prêmio da Qualidade e peça que envie o vídeo nesta página.</p>
 
+				<p>Em caso de dúvidas ou sugestões, nos contate em <a href="mailto:contato@estudiotrilha.com.br">contato@estudiotrilha.com.br</a>.</p>
+
 				<p class="disclaimer">O regulamento oficial do concurso pode ser acessado em <a target="_blank" href="uploads/pq2013_regulamento.pdf">http://inevent.us/uploads/pq2013_regulamento.pdf</a>.</p>
 
 			</div>

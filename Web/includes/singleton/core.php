@@ -13,7 +13,11 @@ class Core {
     public $eventID = 0;
     public $workAtEvent = false;
     public $roleID = ROLE_ATTENDEE;
-    
+
+    // App
+    public $appID = 0;
+    public $workAtApp = false;
+
 	// Store a class instance
     static private $instance;
 

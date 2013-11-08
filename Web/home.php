@@ -33,7 +33,7 @@
 				</ul>
 			</div>
 		
-			<article class="section" style="	background-image: url(images/grande_auditorio__1_0.jpg);">
+			<article class="section" style="	background-image: url(uploads/sao_paulo.jpg);">
 				
 				<div class="deck" onclick="">
 					<div class="leftBox">
@@ -48,7 +48,7 @@
 				
 			</article>
 
-			<article class="section" style="	background-image: url(images/Northeast_Snow-0961b.jpg);">
+			<article class="section" style="	background-image: url(uploads/salvador.jpg);">
 				
 				<div class="deck" onclick="">
 					<div class="leftBox">
@@ -63,7 +63,7 @@
 				
 			</article>
 
-			<article class="section" style="	background-image: url(images/map.png);">
+			<article class="section" style="	background-image: url(uploads/rio.jpg);">
 				
 				<div class="deck" onclick="">
 					<div class="leftBox">
@@ -78,7 +78,7 @@
 				
 			</article>
 
-			<article class="section" style="	background-image: url(images/9750a42683.jpg);">
+			<article class="section" style="	background-image: url(uploads/brasilia.jpg);">
 				
 				<div class="deck" onclick="">
 					<div class="leftBox">

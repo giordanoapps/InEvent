@@ -45,11 +45,50 @@
 						</div>
 					</div>
 					<ul class="locationBox anchorBox popover">
+						<!-- SEARCH -->
 						<li class="header">PESQUISA</li>
 						<div class="collectionOptions">
 							<ul></ul>
 						</div>
-						
+	
+						<!-- APP -->
+						<?php
+							$result = resourceForQuery(
+								"SELECT
+									`event`.`id`,
+									`event`.`name`,
+									`event`.`nickname`
+								FROM
+									`event`
+								INNER JOIN
+									`appEvent` ON `appEvent`.`eventID` = `event`.`id`
+								INNER JOIN
+									`appMember` ON `appMember`.`appID` = `appEvent`.`eventID`
+								WHERE 1
+									AND `appMember`.`memberID` = $core->memberID
+								GROUP BY
+									`event`.`id`
+							");
+
+							if (mysqli_num_rows($result) > 0) {
+								// Print the header
+								?><li class="header">APLICAÇÃO</li><?php
+
+								// And then each one of the restaurants
+								for ($i = 0; $i < mysqli_num_rows($result); $i++) {
+									?>
+									<li
+										class="locationItem"
+										value="<?php echo mysqli_result($result, $i, "id") ?>"
+										data-nick="<?php echo mysqli_result($result, $i, "nickname") ?>">
+										<?php echo mysqli_result($result, $i, "name") ?>
+									</li>
+									<?php
+								}
+							}
+						?>
+
+						<!-- WORK -->
 						<?php
 							$result = resourceForQuery(
 								"SELECT

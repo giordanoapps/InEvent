@@ -5,7 +5,18 @@ modules.push('modules/storageExpiration');
 
 define(modules, function($, common, storageExpiration) {$(function() {
 
-// -------------------------------------- DEVELOPER -------------------------------------- //
+// -------------------------------------- LOADER -------------------------------------- //
+	
+	/**
+	 * Page initialization
+	 * @return {null}
+	 */
+	$("#developerContent").on("hashDidLoad", function() {
+		// Load the first application
+		$(this).find(".optionMenuApplicationCategory").first().trigger("click");
+	});
+
+// -------------------------------------- APPLICATION -------------------------------------- //
 
 	/**
 	 * Change the currently selected documentation tab
@@ -101,6 +112,51 @@ define(modules, function($, common, storageExpiration) {$(function() {
 	});
 
 	/**
+	 * Toggle the box
+	 * @return {null}
+	 */
+	$("#developerContent").on("click", ".toolPerson", function(event) {
+		$(this).closest(".toolBox").siblings(".toolBoxOptionsEnrollPerson").slideToggle(400).find("input").first().focus();
+	});
+
+	/**
+	 * Add a person to the activity
+	 * @return {null}
+	 */
+	$("#developerContent").on("click", ".toolBoxOptionsEnrollPerson .singleButton", function(event) {
+		
+		var $elem = $(this);
+
+		var appID = $(".optionMenuApplicationSelected").val();
+		var name = $elem.siblings(".name").val();
+		var email = $elem.siblings(".email").val();
+
+		// We request the information on the server
+		$.post('developer/api/?' + $.param({
+			method: "app.requestEnrollment",
+			appID: appID,
+			name: name,
+			email: email,
+			format: "html"
+		}), {},
+		function(data, textStatus, jqXHR) {
+
+			// Hide the toolbar
+			$elem.closest(".toolBoxOptionsEnrollPerson").slideToggle(400);
+
+			// Reload the table
+			// $scheduleItemSelected.trigger("click");
+			$(".contentApplication").html(data);
+
+			// Reset values
+			$elem.siblings(".name").val('');
+			$elem.siblings(".email").val('');
+
+		}, 'html');
+
+	});
+
+	/**
 	  * TEXT BOX
 	  */
 
@@ -170,9 +226,234 @@ define(modules, function($, common, storageExpiration) {$(function() {
 		}), {
 			value: value
 		},
-		function(data, textStatus, jqXHR) {}, 'html').fail(function(jqXHR, textStatus, errorThrown) {});
+		function(data, textStatus, jqXHR) {
+			// Update the text menu
+			$(".optionMenuApplicationSelected").text(value);
+
+		}, 'html').fail(function(jqXHR, textStatus, errorThrown) {});
 
 	});
+
+	/**
+	 * Remove a person from the app
+	 * @return {null}
+	 */
+	$("#developerContent").on("click", ".pickerItem .toolRemove", function(event) {
+
+		event.stopPropagation();
+
+		var $name = $(this).closest(".pickerItem").find(".name");
+		var name = $name.text();
+		var firstName = name.split(" ")[0];
+
+		// Create the input
+		$name
+			.field("createField", "input", {
+				"class" : $name.attr("class") + " removeInput",
+				"value" : "",
+				"placeholder": "Digite: " + firstName,
+				"data-first": firstName,
+				"data-name": name,
+			}).focus();
+
+		// Hide the current button
+		$(this).hide(300);
+
+	});
+
+	/**
+	 * Remove a person from the app
+	 * @return {null}
+	 */
+	$("#developerContent").on("keyup", ".pickerItem .removeInput", function(event) {
+
+		var code = (event.keyCode ? event.keyCode : event.which);
+		// Enter keycode
+		if (code == 13) {
+
+			var $elem = $(this);
+
+			if ($elem.val() == $elem.attr("data-first")) {
+				$elem = $elem.val($elem.attr("data-name")).field("removeField", {"class": $elem.attr("class").replace(/removeInput/g, "")});
+
+				var $pickerItem = $elem.closest(".pickerItem");
+				var appID = $(".optionMenuApplicationSelected").val();
+				var personID = $pickerItem.attr("data-value");
+
+				// We request the information on the server
+				$.post('developer/api/?' + $.param({
+					method: "app.dismissEnrollment",
+					personID: personID,
+					appID: appID,
+					format: "html"
+				}), {},
+				function(data, textStatus, jqXHR) {
+
+					if (jqXHR.status == 200) {
+						// Hide the current entry
+						$pickerItem.slideDown(600, function() {
+							$pickerItem.remove();
+						});
+					}
+
+				}, 'html').fail(function(jqXHR, textStatus, errorThrown) {
+					$elem.closest(".pickerItem").find(".toolRemove").fadeIn(300);
+				});
+			} else {
+				$elem = $elem.val($elem.attr("data-name")).field("removeField", {"class": $elem.attr("class").replace(/removeInput/g, "")});
+
+				// Show the button
+				$elem.closest(".pickerItem").find(".toolRemove").fadeIn(300);
+			}
+		}
+
+	});
+
+	/**
+	 * Attach an event to create a box to verify the person intention
+	 * @return {null}
+	 */
+	$("#developerContent").on("verifyStep", ".title", function(event, classUnique) {
+
+		event.stopPropagation();
+
+		var $name = $(this);
+		var name = $name.text();
+		var firstName = name.split(" ")[0];
+
+		// Create the input
+		$name
+			.field("createField", "input", {
+				"class" : $name.attr("class") + " " + classUnique,
+				"value" : "",
+				"placeholder": "Digite: " + firstName,
+				"data-first": firstName,
+				"data-name": name,
+				"data-class": classUnique
+			}).focus();
+
+	});
+
+	$("#developerContent").on("keyup", ".title", function(event) {
+
+		var code = (event.keyCode ? event.keyCode : event.which);
+		// Enter keycode
+		if (code == 13) {
+
+			// Capture the current element
+			var $elem = $(this);
+
+			// Get its unique class
+			var classUnique = $elem.attr("data-class");
+
+			if ($elem.val() == $elem.attr("data-first")) {
+				// Take the action
+				$elem = $elem
+					.val($elem.attr("data-name"))
+					.trigger("takeAction")
+					.field("removeField", {"class": $elem.attr("class").replace(classUnique, "", "g")});
+
+			} else {
+				// Revert the action
+				$elem = $elem
+					.val($elem.attr("data-name"))
+					.trigger("revertAction")
+					.field("removeField", {"class": $elem.attr("class").replace(classUnique, "", "g")});
+			}
+		}
+
+	});
+
+	/**
+	 * Renew app credentials
+	 * @return {null}
+	 */
+	$("#developerContent").on("click", ".secretBox .singleButton", function(event) {
+
+		// Create a box to verify the action
+		$(this).closest(".secretBox").siblings(".title").trigger("verifyStep", "renewInput");
+
+		// Hide the current button
+		$(this).hide(300);
+	});
+
+	$("#developerContent").on("takeAction", ".renewInput", function(event) {
+
+		var appID = $(".optionMenuApplicationSelected").val();
+
+		// We request the information on the server
+		$.post('developer/api/?' + $.param({
+			method: "app.renew",
+			appID: appID,
+			format: "html"
+		}), {},
+		function(data, textStatus, jqXHR) {
+
+			if (jqXHR.status == 200) {
+				// Hide the current entry
+				$(".contentApplication").html(data);
+			}
+
+		}, 'html').fail(function(jqXHR, textStatus, errorThrown) {
+			$elem.siblings(".secretBox").find(".singleButton").fadeIn(300);
+		});
+
+	});
+
+	$("#developerContent").on("revertAction", ".renewInput", function(event) {
+		// Show the button
+		$(this).siblings(".secretBox").find(".singleButton").fadeIn(300);
+	});
+
+	/**
+	 * Delete app from ecosystem
+	 * @return {null}
+	 */
+	$("#developerContent").on("click", ".wipeOut .singleButton", function(event) {
+
+		// Create a box to verify the action
+		$(this).closest(".wipeOut").siblings(".title").trigger("verifyStep", "wipeInput");
+
+		// Hide the current button
+		$(this).hide(300);
+	});
+
+	$("#developerContent").on("takeAction", ".wipeInput", function(event) {
+
+		var appID = $(".optionMenuApplicationSelected").val();
+
+		// We request the information on the server
+		$.post('developer/api/?' + $.param({
+			method: "app.remove",
+			appID: appID,
+			format: "html"
+		}), {},
+		function(data, textStatus, jqXHR) {
+
+			if (jqXHR.status == 200) {
+				// Get some properties
+				var $items = $(".optionMenuApplicationCategory");
+				var $itemSelected = $items.filter(".optionMenuApplicationSelected");
+
+				// Remove the current item
+				$itemSelected.slideUp(200, function() {
+					$itemSelected.remove();
+				});
+				$items.first().trigger("click");
+			}
+
+		}, 'html').fail(function(jqXHR, textStatus, errorThrown) {
+			$elem.siblings(".wipeOut").find(".singleButton").fadeIn(300);
+		});
+
+	});
+
+	$("#developerContent").on("revertAction", ".wipeInput", function(event) {
+		// Show the button
+		$(this).siblings(".wipeOut").find(".singleButton").fadeIn(300);
+	});
+
+// -------------------------------------- DOCUMENTATION -------------------------------------- //
 
 	/**
 	 * Change the currently selected documentation tab

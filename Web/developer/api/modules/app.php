@@ -68,32 +68,23 @@
 
 	if ($method === "getDetails") {
 
-		$tokenID = getToken();
+		$appID = getTokenForApp();
 
-		// Permission
-		if (isset($_GET["appID"])) {
+		if ($core->workAtApp) {
 
-			// Get some properties
-			$appID = getAttribute($_GET['appID']);
+	        // Get details about the app
+	        $result = getAppDetails($appID);
 
-			if (appHasMember($appID, $core->memberID)) {
-
-		        // Get details about the app
-		        $result = getAppDetails($appID);
-
-				if ($format == "json") {
-					echo printInformation("app", $result, true, 'json');
-				} elseif ($format == "html") {
-					printApplication(mysqli_fetch_assoc($result), "memberID");
-				} else {
-					http_status_code(405, "this format is not available");
-				}
-
+			if ($format == "json") {
+				echo printInformation("app", $result, true, 'json');
+			} elseif ($format == "html") {
+				printApplication(mysqli_fetch_assoc($result), "memberID");
 			} else {
-				http_status_code(401, "personID cannot access app");
+				http_status_code(405, "this format is not available");
 			}
+
 		} else {
-			http_status_code(400, "appID is a required parameters");
+			http_status_code(401, "personID cannot access app");
 		}
 
 	} else
@@ -123,9 +114,9 @@
 		$insert = resourceForQuery(
 			"INSERT INTO
 				`appMember`
-				(`appID`, `memberID`)
+				(`appID`, `memberID`, `roleID`)
 			VALUES
-				($appID, $core->memberID)
+				($appID, $core->memberID, @(ROLE_COORDINATOR))
 		");
 
 		// Return its data
@@ -148,16 +139,15 @@
 
 	if ($method === "edit") {
 
-		$tokenID = getToken();
+		$appID = getTokenForApp();
 
-		if (isset($_GET["appID"]) && isset($_GET['name']) && isset($_POST['value'])) {
+		if (isset($_GET['name']) && isset($_POST['value'])) {
 
 			$name = getAttribute($_GET['name']);
 			$value = getEmptyAttribute($_POST['value']);
-			$appID = getAttribute($_GET['appID']);
 
 			// Permission
-			if (appHasMember($appID, $core->memberID)) {
+			if ($core->workAtApp) {
 			
 				// We list all the fields that can be edited by the app platform
 				$validFields = array("name");
@@ -188,60 +178,189 @@
 					http_status_code(406, "name field doesn't exist");
 				}
 			} else {
-				http_status_code(401, "personID doesn't work at event");
+				http_status_code(401, "personID doesn't work at app");
 			}
 	    } else {
-	    	http_status_code(404, "appID, name and value are required parameters");
+	    	http_status_code(404, "name and value are required parameters");
 	    }
 
 	} else
 
 	if ($method === "remove") {
 
-		$tokenID = getToken();
+		$appID = getTokenForApp();
 
-		if (isset($_GET["appID"])) {
+		// Permission
+		if ($core->workAtApp) {
 
-			// Get some properties
-			$appID = getAttribute($_GET['appID']);
+			// Remove the app
+			$delete = resourceForQuery(
+				"DELETE FROM
+					`app`
+				WHERE 1
+					AND `app`.`id` = $appID
+			");
 
-			// Permission
-			if (appHasMember($appID, $core->memberID)) {
+			// Remove people from app
+			$delete = resourceForQuery(
+				"DELETE FROM
+					`appMember`
+				WHERE 1
+					AND `appMember`.`appID` = $appID
+			");
 
-				// Remove the app
-				$delete = resourceForQuery(
-					"DELETE FROM
-						`app`
-					WHERE 1
-						AND `app`.`id` = $appID
-				");
+	        // Get details about the app
+	        $result = getAppDetails($appID);
 
-				// Remove people from app
-				$delete = resourceForQuery(
-					"DELETE FROM
-						`appMember`
-					WHERE 1
-						AND `appMember`.`appID` = $appID
-				");
+			if ($format == "json") {
+				echo printInformation("app", $result, true, 'json');
+			} elseif ($format == "html") {
+				printApplication(mysqli_fetch_assoc($result), "memberID");
+			} else {
+				http_status_code(405, "this format is not available");
+			}
 
-		        // Get details about the app
-		        $result = getAppDetails($appID);
+		} else {
+			http_status_code(401, "personID cannot access app");
+		}
 
-				if ($format == "json") {
-					echo printInformation("app", $result, true, 'json');
-				} elseif ($format == "html") {
-					printApplication(mysqli_fetch_assoc($result), "memberID");
-				} else {
-					http_status_code(405, "this format is not available");
-				}
+	} else
+
+	if ($method === "renew") {
+
+		$appID = getTokenForApp();
+
+		// Permission
+		if ($core->workAtApp) {
+
+			// Create a new app secret
+			$secret = md5(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"));
+
+			// Update the app secret
+			$update = resourceForQuery(
+				"UPDATE
+					`app`
+				SET
+					`app`.`secret` = '$secret'
+				WHERE 1
+					AND `app`.`id` = $appID
+			");
+
+	        // Get details about the app
+	        $result = getAppDetails($appID);
+
+			if ($format == "json") {
+				echo printInformation("app", $result, true, 'json');
+			} elseif ($format == "html") {
+				printApplication(mysqli_fetch_assoc($result), "memberID");
+			} else {
+				http_status_code(405, "this format is not available");
+			}
+
+		} else {
+			http_status_code(401, "personID cannot access app");
+		}
+
+	} else
+
+	if ($method === "requestEnrollment") {
+
+		$appID = getTokenForApp();
+
+		if (isset($_GET['name']) && $_GET['name'] != "null" && isset($_GET['email']) && $_GET['email'] != "null") {
+
+			if ($core->workAtApp) {
+
+				$name = getAttribute($_GET['name']);
+				$email = getAttribute($_GET['email']);
+				$password = "123456";
+
+				// Get the person for the given email
+				$personID = getPersonForEmail($email);
+				if ($personID == 0) $personID = createMember(array("name" => $name, "password" => $password, "email" => $email));
 
 			} else {
 				http_status_code(401, "personID cannot access app");
 			}
 		} else {
-			http_status_code(400, "appID is a required parameters");
+			$personID = $core->memberID;
 		}
 
+		if ($personID != 0) {
+
+			// Enroll a person inside an app
+			$insert = resourceForQuery(
+				"INSERT INTO
+					`appMember`
+					(`appID`, `memberID`, `roleID`)
+				VALUES
+					($appID, $core->memberID, @(ROLE_COORDINATOR))
+			");
+
+			if ($insert) {
+				// Return its data
+				if ($format == "json") {
+					$data["appID"] = $appID;
+					echo json_encode($data);
+				} elseif ($format == "html") {
+					$result = getAppDetails($appID);
+					printApplication(mysqli_fetch_assoc($result), "memberID");
+				} else {
+					http_status_code(405, "this format is not available");
+				}
+			} else {
+				http_status_code(404, "personID insertion has failed");
+			}
+		} else {
+			http_status_code(400, "personID cannot be null");
+		}
+		
+	} else
+
+	if ($method === "dismissEnrollment") {
+
+		$appID = getTokenForApp();
+
+		if (isset($_GET['personID']) && $_GET['personID'] != "null") {
+
+			if ($core->workAtApp) {
+				$personID = getAttribute($_GET['personID']);
+			} else {
+				http_status_code(401, "personID cannot access app");
+			}
+
+		} else {
+			$personID = $core->memberID;
+		}
+
+		if ($personID != 0) {
+
+			// Remove from app
+			$delete = resourceForQuery(
+				"DELETE FROM
+					`appMember`
+				WHERE 1
+					AND `appMember`.`appID` = $appID
+					AND `appMember`.`memberID` = $personID
+			");
+			
+			if ($delete) {
+				// Return its data
+				if ($format == "json") {
+					$data["activityID"] = $activityID;
+					echo json_encode($data);
+				} elseif ($format == "html") {
+
+				} else {
+					http_status_code(405, "this format is not available");
+				}
+			} else {
+				http_status_code(500, "row deletion has failed");
+			}
+		} else {
+			http_status_code(400, "personID cannot be null");
+		}
+		
 	} else
 
 // ------------------------------------------------------------------------------------------- //

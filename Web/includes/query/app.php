@@ -37,4 +37,34 @@
         return $result;
     }
 
+    function getAppEventDetails($appID) {
+
+        $result = resourceForQuery(
+            "SELECT
+                `event`.`id` AS `eventID`,
+                `event`.`name`,
+                `event`.`nickname`,
+                UNIX_TIMESTAMP(`event`.`dateBegin`) AS `dateBegin`,
+                UNIX_TIMESTAMP(`event`.`dateEnd`) AS `dateEnd`,
+                UNIX_TIMESTAMP(`event`.`enrollmentBegin`) AS `enrollmentBegin`,
+                UNIX_TIMESTAMP(`event`.`enrollmentEnd`) AS `enrollmentEnd`,
+                `event`.`city`,
+                `event`.`state`,
+                `event`.`fugleman`,
+                COUNT(`eventMember`.`memberID`) AS `entries`
+            FROM
+                `appEvent`
+            INNER JOIN
+                `event` ON `event`.`id` = `appEvent`.`eventID`
+            LEFT JOIN
+                `eventMember` ON `event`.`id` = `eventMember`.`eventID`
+            WHERE 1
+                AND `appEvent`.`appID` = $appID
+            GROUP BY
+                `event`.`id`
+        ");
+
+        return $result;
+    }
+
 ?>

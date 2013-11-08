@@ -4,7 +4,7 @@
      * Get and validate the token from the client
      * @return string the desired token, loaded and validated
      */
-	function getToken($eventID = 0) {
+	function getToken() {
 
 		// Get the singleton
 		$core = Core::singleton();
@@ -48,10 +48,11 @@
 				if ($update) {
 					
 					// Validate the event
-					validateEvent($eventID);
+					validateEvent();
 
 					// If everything went by smoothly, we can return the tokenID
 					return $hash;
+					
 				} else {
 					http_status_code(500);
 				}
@@ -66,8 +67,8 @@
 	}
 
 	/**
-     * Get activityID and suggest a company to be set
-     * @return activityID  id of person
+     * Get eventID and suggest a company to be set
+     * @return eventID  id of person
      */
 	function getTokenForEvent() {
 
@@ -75,13 +76,37 @@
 			$eventID = getAttribute($_GET['eventID']);
 
 			// Load the token
-			getToken($eventID);
+			$core = Core::singleton();
+			$core->eventID = $eventID;
+			getToken();
 
 			// Return the table
 			return $eventID;
 
 		} else {
 			http_status_code(400, "Couldn't find the eventID");
+		}
+	}
+
+	/**
+     * Get appID and suggest a company to be set
+     * @return appID  id of app
+     */
+	function getTokenForApp() {
+
+		if (isset ($_GET['appID'])) {
+			$appID = getAttribute($_GET['appID']);
+
+			// Load the token
+			$core = Core::singleton();
+			$core->appID = $appID;
+			getToken();
+
+			// Return the table
+			return $appID;
+
+		} else {
+			http_status_code(400, "Couldn't find the appID");
 		}
 	}
 
@@ -106,7 +131,9 @@
 
 			if (mysqli_num_rows($result) > 0) {
 				// Load the token using the company as reference
-				getToken(mysqli_result($result, 0, "eventID"));
+				$core = Core::singleton();
+				$core->eventID = mysqli_result($result, 0, "eventID");
+				getToken();
 
 				// Return the table
 				return $activityID;
@@ -140,7 +167,9 @@
 
 			if (mysqli_num_rows($result) > 0) {
 				// Load the token using the company as reference
-				getToken(mysqli_result($result, 0, "eventID"));
+				$core = Core::singleton();
+				$core->eventID = mysqli_result($result, 0, "eventID");
+				getToken();
 
 				// Return the table
 				return $groupID;

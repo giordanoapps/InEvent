@@ -17,18 +17,20 @@
 
 	/**
 	 * Validate event
-	 * @param  integer $eventID [description]
 	 * @return [type]           [description]
 	 */
-	function validateEvent($eventID = 0) {
+	function validateEvent() {
 
 		// Get the singleton
 		$core = Core::singleton();
 
-		if ($eventID == 0 && (isset($_GET["eventID"]) || isset($_GET["eventNick"]) || isset($_COOKIE["eventID"]))) {
+		////////////////////////////
+		// EVENT ID
+		////////////////////////////
+		if ($core->eventID == 0 && (isset($_GET["eventID"]) || isset($_GET["eventNick"]) || isset($_COOKIE["eventID"]))) {
 			// See if a event has been selected
 			if (isset($_GET["eventID"])) {
-				$eventID = getAttribute($_GET["eventID"]);
+				$core->eventID = getAttribute($_GET["eventID"]);
 			} elseif (isset($_GET["eventNick"])) {
 
 				// Select the nickname
@@ -44,28 +46,57 @@
 						AND `event`.`nickname` = '$eventNick'
 				");
 
-				$eventID = (mysqli_num_rows($result) > 0) ? mysqli_result($result, 0, "id") : 0;
+				$core->eventID = (mysqli_num_rows($result) > 0) ? mysqli_result($result, 0, "id") : 0;
 
 			} elseif (isset($_COOKIE["eventID"])) {
-				$eventID = getAttribute($_COOKIE["eventID"]);
+				$core->eventID = getAttribute($_COOKIE["eventID"]);
 			}
 		}
-		
-		// Assign the variable to the property
-		$core->eventID = $eventID;
 
+		////////////////////////////
+		// APP VALIDATION
+		////////////////////////////
 		$query = (
 			"SELECT
-				`eventMember`.`eventID`,
-				`eventMember`.`roleID`
+				`appMember`.`appID`,
+				`appMember`.`roleID`
 			FROM
-				`eventMember`
+				`appMember`
 			WHERE 1
-				AND `eventMember`.`memberID` = $core->memberID
+				AND `appMember`.`memberID` = $core->memberID
 		");
 
 		// Append some information if the member has given it
-		if ($core->eventID != 0) $query .= "AND `eventMember`.`eventID` = $core->eventID";
+		if ($core->appID != 0) $query .= " AND `appMember`.`appID` = $core->appID";
+
+		$result = resourceForQuery($query);
+
+		if (mysqli_num_rows($result) > 0) {
+			$core->appID = mysqli_result($result, 0, "appID");
+			$core->workAtApp = (mysqli_result($result, 0, "roleID") != ROLE_ATTENDEE) ? true : false;
+		} else {
+			$core->workAtApp = false;
+		}
+
+		////////////////////////////
+		// EVENT VALIDATION
+		////////////////////////////
+		$query = (
+			"SELECT
+				`appEvent`.`eventID`,
+				`appEvent`.`appID`,
+				`appMember`.`roleID`
+			FROM
+				`appEvent`
+			INNER JOIN
+				`appMember` ON `appEvent`.`appID` = `appMember`.`appID`
+			WHERE 1
+				AND `appMember`.`memberID` = $core->memberID
+		");
+
+		// Append some information if the member has given it
+		if ($core->eventID != 0) $query .= " AND `appEvent`.`eventID` = $core->eventID";
+		if ($core->appID != 0) $query .= " AND `appEvent`.`appID` = $core->appID";
 
 		$result = resourceForQuery($query);
 
@@ -74,12 +105,38 @@
 			$core->workAtEvent = (mysqli_result($result, 0, "roleID") != ROLE_ATTENDEE) ? true : false;
 			$core->roleID = mysqli_result($result, 0, "roleID");
 		} else {
-			// Since permission is needed to be inside an event, we must reset the $core->eventID
-			// $core->eventID = 0;
-			$core->workAtEvent = false;
-			$core->roleID = ROLE_ATTENDEE;
+
+			$query = (
+				"SELECT
+					`eventMember`.`eventID`,
+					`eventMember`.`roleID`
+				FROM
+					`eventMember`
+				WHERE 1
+					AND `eventMember`.`memberID` = $core->memberID
+			");
+
+			// Append some information if the member has given it
+			if ($core->eventID != 0) $query .= " AND `eventMember`.`eventID` = $core->eventID";
+
+			$result = resourceForQuery($query);
+
+			if (mysqli_num_rows($result) > 0) {
+				$core->eventID = mysqli_result($result, 0, "eventID");
+				$core->workAtEvent = (mysqli_result($result, 0, "roleID") != ROLE_ATTENDEE) ? true : false;
+				$core->roleID = mysqli_result($result, 0, "roleID");
+			} else {
+				// Since permission is needed to be inside an event, we must reset the $core->eventID
+				// $core->eventID = 0;
+				$core->workAtEvent = false;
+				$core->roleID = ROLE_ATTENDEE;
+			}
+
 		}
 
+		////////////////////////////
+		// CLEAN UP
+		////////////////////////////
 		// Domain to current path
 		$path = substr($_SERVER['REQUEST_URI'], 0, strrpos($_SERVER['REQUEST_URI'], "/") + 1);
 

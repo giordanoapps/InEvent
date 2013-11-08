@@ -976,6 +976,7 @@ textarea, input {
 .singleButton.toolBoss,
 .singleButton.toolEarly,
 .singleButton.toolLate,
+.singleButton.toolDangerous,
 .singleButton.toolExpel,
 .singleButton.toolRemove {
 	padding: 4px 7px;
@@ -1010,7 +1011,8 @@ textarea, input {
 	color: #333;
 }
 
-.singleButton.toolLate {
+.singleButton.toolLate,
+.singleButton.toolDangerous {
 	background: #D31717;
 	border: solid 1px #B61111;
 }
@@ -3007,6 +3009,10 @@ textarea, input {
 	margin: 10px 0;
 }
 
+#developerContent table {
+	margin-bottom: 20px;
+}
+
 #developerContent .boardContent {
 	border-radius: 0;
 }
@@ -3087,7 +3093,7 @@ textarea, input {
 	position: relative;
 }
 
-#developerContent .menuContent .toolBoxOptionsCreate input[type="text"] {
+#developerContent .menuContent .toolBoxOptions input[type="text"] {
 	padding: 4px 10px;
 	margin: 4px 0;
 	font-size: 80%;
@@ -3108,7 +3114,7 @@ textarea, input {
 }
 
 #developerContent .menuApplication {
-	font-size: 90%;
+	font-size: 100%;
 }
 
 #developerContent .menuDocumentation ul,
@@ -3164,6 +3170,15 @@ textarea, input {
 	display: block;
 }
 
+#developerContent.editingMode .contentApplication .title {
+	margin: 30px 20px;
+}
+
+#developerContent .contentApplication input.title {
+	padding: 4px 10px;
+	font-size: 140%;
+}
+
 #developerContent.editingMode .title {
 	cursor: pointer;
 }
@@ -3172,7 +3187,8 @@ textarea, input {
 	position: absolute;
 	top: 0;
 	right: 0;
-	padding: 10px;
+	text-align: right;
+	padding: 6px 10px;
 	font-size: 80%;
 	border-radius: 0 0 0 10px;
 	border: 1px solid #DDD;
@@ -3186,6 +3202,15 @@ textarea, input {
 
 #developerContent .contentApplication .secretBox p {
 	margin: 2px 0;
+	font-family: monospace;
+}
+
+#developerContent .contentApplication .secretBox .toolDangerous {
+	display: none;
+}
+
+#developerContent.editingMode .contentApplication .secretBox .toolDangerous {
+	display: inline-block;
 }
 
 #developerContent .contentApplication thead td {
@@ -3211,6 +3236,43 @@ textarea, input {
 	cursor: pointer;
 	margin-top: 4px;
 	width: 20px;
+}
+
+#developerContent .pickerItem input {
+	padding: 3px 6px;
+	margin: 4px 0;
+	font-size: 90%;
+	text-align: center;
+}
+
+#developerContent .pickerItem .toolRemove {
+	display: none;
+}
+
+#developerContent.editingMode .pickerItem .toolRemove {
+	display: inline-block;
+}
+
+#developerContent .wipeOut {
+	text-align: right;
+	margin: 0 40px;
+	padding: 0px 10px 10px 10px;
+	border-radius: 4px;
+	border: 1px solid #DDD;
+	background-color: whiteSmoke;
+	-moz-box-shadow: inset 1px -1px 1px #FDFDFD;
+	-webkit-box-shadow: inset 1px -1px 1px #FDFDFD;
+	box-shadow: inset 1px -1px 1px #FDFDFD;
+	display: none;
+}
+
+#developerContent.editingMode .wipeOut {
+	display: block;
+}
+
+#developerContent .wipeOut p {
+	text-align: left;
+	font-weight: bold;
 }
 
 #developerContent .contentDocumentation {
