@@ -18,7 +18,7 @@ define(["jquery"], function($) {$(function() {
 
 				// We gotta check if the arguments are properly designed
 				if (typeof elementType !== "string") {
-					elementType = "div";
+					elementType = "input";
 				}
 				
 				if (typeof attrOptions !== "object") {
@@ -44,6 +44,7 @@ define(["jquery"], function($) {$(function() {
 					var $fieldContent = $(document.createElement(elementType))
 							.val(value) // We must set a value
 							.attr("name", name) // We must set a name
+							.attr("type", "text") // Set the field type
 							.addClass(className) // We must set the class it came with
 							.attr(attrOptions) // We must set attrOptions
 							.css(cssOptions); // We must set cssOptions

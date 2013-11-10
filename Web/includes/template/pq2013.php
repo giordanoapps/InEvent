@@ -24,7 +24,7 @@
 				<div class="crazyBlock">
 
 					<div class="instruction">
-						<p>Antes, conheça o aplicativo do InEvent! Ele está disponível para download em:</p>
+						<p>Antes, conheça o aplicativo do InEvent! Ele está disponível para download nas lojas</p>
 
 						<ul>
 							<li>
@@ -38,6 +38,8 @@
 								</a>
 							</li>
 						</ul>
+
+						<p>e também conta com uma <a href="https://docs.google.com/presentation/edit?id=1c0b-_NvEqYW_GbK279KZX9Siri0lyjDxo53j6BVpEZE" target="_blank">apresentação</a> especial!</p>
 					</div>
 
 					<div class="instruction">
@@ -45,8 +47,25 @@
 					</div>
 
 					<div class="instruction">
-						<p>Publique o vídeo no Youtube e informe o endereço:</p>
-						<input type="text" class="youtubeURL" placeholder="https://www.youtube.com/watch">
+
+						<?php
+
+						$result = resourceForQuery(
+							"SELECT
+						        `event`.`id`
+							FROM
+								`event`
+							WHERE 1
+								AND `event`.`id` = $core->eventID
+								AND `event`.`enrollmentBegin` < NOW()
+						");
+
+						if (mysqli_num_rows($result) > 0) { ?>
+							<p>Publique o vídeo no Youtube e informe o endereço:</p>
+							<input type="text" class="youtubeURL" placeholder="https://www.youtube.com/watch">
+						<?php } else { ?>
+							<p>Publique o vídeo no Youtube e <b>aguarde até a abertura das inscrições!</b></p>
+						<?php } ?>
 					</div>
 
 				</div>

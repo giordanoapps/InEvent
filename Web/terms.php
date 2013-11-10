@@ -35,7 +35,7 @@
 						
 						<p>Utilização: Para utilizar o aplicativo oficial do InEvent, é necessário ter um dispositivo compatível e obter o software desejado diretamente da loja oficial assim como determinada pelo dispositivo selecionado. Você concorda em jamais praticar, em qualquer instância, o ato de obter ou tentar obter os dados resguardados sigilosamente de outro estabelecimento sobre o qual não tem permissão.</p>
 						
-						<p>Privacidade: Todas as informações associadas as ações realizadas dentro do estabelecimento são confidenciais, ficando ao Estúdio Trilha responsável em não compartilhá-las sob nenhuma circunstância.</p>
+						<p>Privacidade: Todas as informações associadas as ações realizadas dentro do estabelecimento, exceto aquelas publicamente disponibilizadas pela pessoa física em seu perfil, são confidenciais, ficando ao Estúdio Trilha responsável em não compartilhá-las sob nenhuma circunstância.</p>
 						
 						<h3>Pessoa Jurídica</h3>
 						

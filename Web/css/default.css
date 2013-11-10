@@ -1356,8 +1356,7 @@ textarea, input {
 /* Front */
 
 #frontContent {
-	font-size: 120%;
-	padding-bottom: 0;
+	padding-bottom: 40px;
 }
 
 #frontContent .boardContent {
@@ -1373,7 +1372,12 @@ textarea, input {
 	background-position: center center;
 }
 
+#frontContent .menuContent ~ .cover {
+	margin-top: 44px;
+}
+
 #frontContent .details {
+	font-size: 120%;
 	margin: 0 auto;
 	position: relative;
 	text-align: left;
@@ -1384,8 +1388,29 @@ textarea, input {
 	box-shadow: -1px 1px 1px #F5F5F5;
 }
 
-#frontContent .details p {
-	margin: 5px 0;
+#frontContent .details p,
+#frontContent .details span {
+	margin: 0;
+	padding: 5px 0;
+}
+
+#frontContent.editingMode p,
+#frontContent.editingMode span {
+	cursor: pointer;
+}
+
+#frontContent .details input[type="text"] {
+	padding: 3px;
+	margin: 0 auto;
+	text-align: left;
+	font-size: 100%;
+}
+
+#frontContent .details textarea {
+	padding: 1%;
+	margin: 0 auto;
+	height: 200px;
+	width: 98%;
 }
 
 #frontContent .details .date {
@@ -1400,7 +1425,7 @@ textarea, input {
 	margin: 0 10px;
 	display: inline-block;
 	vertical-align: middle;
-	padding: 6px;
+	padding: 2px 6px;
 	border-radius: 4px;
 	background-color: #F3F3F3;
 	border: 1px solid #DADADA;
@@ -1428,6 +1453,7 @@ textarea, input {
 #frontContent .details .upper .title {
 	font-size: 120%;
 	font-weight: bold;
+	width: 98%;
 }
 
 #frontContent .details .upper .info {
@@ -1472,9 +1498,9 @@ textarea, input {
 
 #eventContent {
 	width: 100%;
-	height: 100%;
+/*	height: 100%;
 	position: fixed;
-	overflow: hidden;
+	overflow: hidden;*/
 }
 
 #eventContent .toolBoxOptions {
@@ -1538,7 +1564,7 @@ textarea, input {
 }
 
 #eventContent .realContent ul > li:last-of-type {
-	margin-bottom: 132px;
+	/*margin-bottom: 132px;*/
 }
 
 #eventContent .agendaItemHighlight {
@@ -1561,8 +1587,7 @@ textarea, input {
 	vertical-align: middle;
 }
 
-#eventContent .agendaItem .titleInput,
-#eventContent .agendaItem .titleInputRemove {
+#eventContent .agendaItem input[type="text"] {
 	padding: 4.5px;
 	margin: 9px 0;
 	font-size: 90%;
@@ -1746,59 +1771,63 @@ textarea, input {
 	border-right-color: #C51F1F;	
 }
 
-#eventContent .toolBonus {
+.toolBonus {
 	display: none;
 }
 
 /* @group Calendar */
 
-#eventContent .toolBonusCalendar p {
+.toolBonusCalendar {
+	text-align: center;
+}
+
+.toolBonusCalendar p {
 	margin: 0;
 }
 
-#eventContent .toolBonusCalendar .left,
-#eventContent .toolBonusCalendar .middle,
-#eventContent .toolBonusCalendar .right {
+.toolBonusCalendar .firstSection,
+.toolBonusCalendar .secondSection,
+.toolBonusCalendar .thirdSection {
 	display: inline-block;
 	vertical-align: top;
 	float: none;
 }
 
-#eventContent .toolBonusCalendar .left {
+.toolBonusCalendar .firstSection {
 	width: 30%;
 }
 
-#eventContent .toolBonusCalendar .middle {
+.toolBonusCalendar .secondSection {
 	width: 30%;
 }
 
-#eventContent .toolBonusCalendar .right {
+.toolBonusCalendar .thirdSection {
 	width: 38%;
 }
 
-#eventContent .toolBonusCalendar .dateBox,
-#eventContent .toolBonusCalendar .timeBox {
+.toolBonusCalendar .dateBox,
+.toolBonusCalendar .timeBox {
 	display: inline-block;
 	width: 50%;
 	padding: 5px 0;
 }
 
-#eventContent .toolBonusCalendar input {
+.toolBonusCalendar input {
 	padding: 2px;
 	border: 1px solid #A2A2A2;
 	background-color: #DDD;
 	font-size: 100%;
 	margin: 0;
-	text-align: center;
+	text-align: center !important;
 	width: 25%;
 	border-radius: 4px;
 }
 
-#eventContent .toolBonusCalendar .badTime {
+.toolBonusCalendar .badTime {
 	color: #DD2727;
 }
 
-#eventContent .toolBonusCalendar .title {
+.toolBonusCalendar .title {
 	display: block;
 	text-align: center;
 	margin: 10px 0;
@@ -1810,7 +1839,7 @@ textarea, input {
 	display: inline-block;
 }
 
-#eventContent .toolBonusCalendar .weekDays {
+.toolBonusCalendar .weekDays {
 	display: inline-block;
 	padding: 12px 20px;
 }

@@ -106,8 +106,8 @@
 						$data["eventID"] = $eventID;
 						echo json_encode($data);
 					} elseif ($format == "html") {
-						$result = getActivitiesForMemberAtActivityQuery($eventID, $core->memberID);
-						printAgendaItem(mysqli_fetch_assoc($result), "member");
+						$result = getEventForMemberQuery($core->eventID, $core->memberID);
+						printFrontAtEvent($result);
 					} else {
 						http_status_code(405, "this format is not available");
 					}

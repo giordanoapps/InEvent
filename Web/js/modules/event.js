@@ -15,7 +15,7 @@ define(modules, function($, common, cookie) {$(function() {
 	 */
 	$("#eventContent").on("hashDidLoad", function() {
 		// Create the scrollable container
-		$(this).find(".placerContent > ul, .realContent").perfectScrollbar();
+		// $(this).find(".placerContent > ul, .realContent").perfectScrollbar();
 	});
 
 // -------------------------------------- MENU -------------------------------------- //
@@ -279,7 +279,7 @@ define(modules, function($, common, cookie) {$(function() {
 		$("#eventContent .titleInput").trigger(event);
 
 		// Close all the bonus boxes
-		$(".toolBonus").slideUp(300);
+		$("#eventContent .toolBonus").slideUp(300);
 		
 	});
 
@@ -402,93 +402,6 @@ define(modules, function($, common, cookie) {$(function() {
 
 		// Update the clocks onscreen
 		$toolBonusCalendar.find("input").trigger("keyup");
-	});
-
-	/**
-	 * Update the month everytime the human hits any key
-	 * @return {null}
-	 */
-	$("#eventContent").on("keyup", ".calendarBox .month", function () {
-
-		var month = parseInt($(this).val(), 10);
-
-		if (month > 0 && month <= 12) {
-			$(this).removeClass("badTime");
-		} else {
-			$(this).addClass("badTime");
-		}
-	});
-
-	/**
-	 * Update the day everytime the human hits any key
-	 * @return {null}
-	 */
-	$("#eventContent").on("keyup", ".calendarBox .day", function () {
-
-		var day = parseInt($(this).val(), 10);
-
-		if (day > 0 && day <= 31) {
-			$(this).removeClass("badTime");
-		} else {
-			$(this).addClass("badTime");
-		}
-	});
-
-	/**
-	 * Update the hour and minute everytime the human hits any key
-	 * @return {null}
-	 */
-	$("#eventContent").on("keyup", ".calendarBox .hour", function () {
-		
-		var hour = parseInt($(this).val(), 10);
-
-		if (hour >= 0 && hour < 24) {
-			$(this).removeClass("badTime");
-
-			var mins = parseInt($(this).siblings(".minute").val(), 10) || 0;
-			var hdegree = hour * 30 + (mins / 2);
-			var hrotate = "rotate(" + hdegree + "deg)";
-
-			$(this).closest(".timeBox").siblings(".clock").find("#hour").css({
-				"-webkit-transform": hrotate,
-				"-moz-transform": hrotate,
-				"-ms-transform": hrotate,
-				"-o-transform": hrotate,
-				"transform": hrotate,
-			});
-		} else {
-			$(this).addClass("badTime");
-		}
-	});
-
-	/**
-	 * Update the minute everytime the human hits any key
-	 * @return {null}
-	 */
-	$("#eventContent").on("keyup", ".calendarBox .minute", function () {
-
-		var mins = parseInt($(this).val(), 10) || 0;
-
-		if (mins >= 0 && mins < 60) {
-			$(this).removeClass("badTime");
-
-			var mdegree = mins * 6;
-			var mrotate = "rotate(" + mdegree + "deg)";
-
-			// Update the hour
-			$(this).siblings(".hour").trigger("keyup");
-
-			// Update the minute
-			$(this).closest(".timeBox").siblings(".clock").find("#min").css({
-				"-webkit-transform": mrotate,
-				"-moz-transform": mrotate,
-				"-ms-transform": mrotate,
-				"-o-transform": mrotate,
-				"transform": mrotate,
-			});
-		} else {
-			$(this).addClass("badTime");
-		}
 	});
 
 	/**

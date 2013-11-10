@@ -44,7 +44,7 @@
 					<li class="toolBonus toolBonusCalendar">
 				        <div class="innerWrapper calendarBox">
 
-				            <div class="left">
+				            <div class="firstSection">
 				            
 				                <p class="title">Início</p>
 				                <ul class="clock">
@@ -65,7 +65,7 @@
 				                
 				            </div>
 				            
-				            <div class="middle">
+				            <div class="secondSection">
 				            
 				                <p class="title">Fim</p>
 				                <ul class="clock">

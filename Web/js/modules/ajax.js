@@ -25,30 +25,40 @@ define(["jquery", "common"], function($) {$(function() {
 					$(this).ajax("hashStartLoad");
 				// Or load a new one
 				} else if (href) {
-					window.location.hash = href.replace(fileType, "").replace("/", "");
+					var hash = href.replace(fileType, "").replace("/", "");
+					window.location.hash = hash;
 				// Or use the current document to set the path
 				} else {
 
 					var appIndex = window.location.origin.length;
 					var eventIndex = window.location.href.lastIndexOf('/');
 
-					// See if we are on the same position
-					if (appIndex == eventIndex) {
-						
-						var hash = window.location.pathname.replace(fileType, "").replace("/", "");
+					// See if we are on the same position so that no event has been found
+					var eventNick = (appIndex == eventIndex) ? "" : window.location.href.substring(appIndex + 1, eventIndex);
 
-						if (hash != "") {
-							window.location.hash = hash;
+					// Find the remaining hash
+					var hash = window.location.href.substr(eventIndex).replace(fileType, "").replace("/", "");
+
+					// Configure the right hash if empty
+					if (hash == "") {
+						if (eventNick == "") {
+							hash = "home";
 						} else {
-							window.location.hash = "home";
+							hash = "front";
 						}
+					}
+
+					// Load the updated location
+					if (eventNick == "") {
+						window.location.replace("/#" + hash);
 					} else {
-						window.location.hash = "front";
+						console.log(eventNick);
+						window.location.replace("/" + eventNick + "/#" + hash);
 					}
 				}
 
 				// Remove the old hash
-				if (oldHash != window.location.hash) {
+				if (oldHash != hash) {
 					// Undefine the module
 					require.undef("modules/" + oldHash.replace("#", ""));
 
