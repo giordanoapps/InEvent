@@ -16,22 +16,20 @@
                 data-dateBegin="<?php echo $data['dateBegin'] ?>"
                 data-monthBegin="<?php echo date("m", $data['dateBegin']) ?>"
                 data-dayBegin="<?php echo date("d", $data['dateBegin']) ?>"
-                data-hourBegin="<?php echo date("G", $data['dateBegin']) ?>"
+                data-hourBegin="<?php echo date("H", $data['dateBegin']) ?>"
                 data-minuteBegin="<?php echo date("i", $data['dateBegin']) ?>"
+                data-enrollmentBegin="<?php echo date("d/m/y H:i", $data['enrollmentBegin']) ?>"
                 data-dateEnd="<?php echo $data['dateEnd'] ?>"
                 data-monthEnd="<?php echo date("m", $data['dateEnd']) ?>"
                 data-dayEnd="<?php echo date("d", $data['dateEnd']) ?>"
-                data-hourEnd="<?php echo date("G", $data['dateEnd']) ?>"
-                data-minuteEnd="<?php echo date("i", $data['dateEnd']) ?>">
+                data-hourEnd="<?php echo date("H", $data['dateEnd']) ?>"
+                data-minuteEnd="<?php echo date("i", $data['dateEnd']) ?>"
+                data-enrollmentEnd="<?php echo date("d/m/y H:i", $data['enrollmentEnd']) ?>">
 
                 <div class="date">
                     <div class="dateBegin">
                         <img src="images/64-Clock.png" alt="Relógio" title="Horário de Início">
                         <span><?php echo strftime("%d de %B às %Hh%M", $data['dateBegin']) ?></span>
-                    </div>  
-                    <div class="dateEnd">
-                        <img src="images/64-Clock-2.png" alt="Relógio" title="Horário de Fim">
-                        <span><?php echo strftime("%d de %B às %Hh%M", $data['dateEnd']) ?></span>
                     </div>
                 </div>
 
@@ -41,7 +39,7 @@
 
                         <div class="firstSection">
                         
-                            <p class="title">Início</p>
+                            <p class="title">Início do evento</p>
                             <ul class="clock">
                                 <li id="sec"></li>
                                 <li id="hour"></li>
@@ -62,7 +60,7 @@
                         
                         <div class="secondSection">
                         
-                            <p class="title">Fim</p>
+                            <p class="title">Fim do evento</p>
                             <ul class="clock">
                                 <li id="sec"></li>
                                 <li id="hour"></li>
@@ -80,6 +78,23 @@
                             </div>
                         </div>
 
+                        <div class="enrollmentTrigger">
+                            <span>Inscrições</span>
+                            <img src="images/64-Bended-Arrow-Down.png" alt="Arrow down" class="pathArrow">
+                        </div>
+                    
+                    </div>
+
+                    <div class="enrollmentBox">
+                        <div>
+                            <p>Início das inscrições</p>
+                            <input type="text" class="enrollmentBegin" name="enrollmentBegin" placeholder="DD/MM/YY HH:MM" value="" data-serverParse="true">
+                        </div>
+
+                        <div>
+                            <p>Fim das inscrições</p>
+                            <input type="text" class="enrollmentEnd" name="enrollmentEnd" placeholder="DD/MM/YY HH:MM" value="" data-serverParse="true">
+                        </div>
                     </div>
                 </li>
 

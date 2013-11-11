@@ -51,25 +51,38 @@ define(modules, function($, common, cookie) {$(function() {
 		$toolBonusCalendar.find(".dayBegin").val($details.attr("data-dayBegin"));
 		$toolBonusCalendar.find(".hourBegin").val($details.attr("data-hourBegin"));
 		$toolBonusCalendar.find(".minuteBegin").val($details.attr("data-minuteBegin"));
+		$toolBonusCalendar.find(".enrollmentBegin").val($details.attr("data-enrollmentBegin"));
 		$toolBonusCalendar.find(".monthEnd").val($details.attr("data-monthEnd"));
 		$toolBonusCalendar.find(".dayEnd").val($details.attr("data-dayEnd"));
 		$toolBonusCalendar.find(".hourEnd").val($details.attr("data-hourEnd"));
 		$toolBonusCalendar.find(".minuteEnd").val($details.attr("data-minuteEnd"));
+		$toolBonusCalendar.find(".enrollmentEnd").val($details.attr("data-enrollmentEnd"));
 
 		// Update the clocks onscreen
 		$toolBonusCalendar.find("input").trigger("keyup");
 	});
 
 	/**
+	 * Load an additional box
+	 * @return {null}
+	 */
+	$("#frontContent").on("click", ".details .enrollmentTrigger", function() {
+		$(this).closest(".calendarBox").siblings(".enrollmentBox").slideToggle(200);
+		$(this).find(".pathArrow").toggleClass("rotateArrow");
+	});
+
+	/**
 	 * Send all the updates times to the server
 	 * @return {null}
 	 */
-	$("#frontContent").on("focusout", ".calendarBox input", function () {
+	$("#frontContent").on("focusout", ".toolBonusCalendar input", function () {
 
 		if (!$(this).hasClass("badTime")) {
 
 			// Fresh filter
-			$(this).val(("0" + parseInt($(this).val())).slice(-2));
+			if ($(this).attr("data-serverParse") != "true") {
+				$(this).val(("0" + parseInt($(this).val())).slice(-2));
+			}
 
 			// Get some properties
 			var $date = $(this).closest(".toolBonus").siblings(".date");

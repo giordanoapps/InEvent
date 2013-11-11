@@ -1785,6 +1785,10 @@ textarea, input {
 	margin: 0;
 }
 
+.toolBonusCalendar .calendarBox {
+	position: relative;
+}
+
 .toolBonusCalendar .firstSection,
 .toolBonusCalendar .secondSection,
 .toolBonusCalendar .thirdSection {
@@ -1842,6 +1846,39 @@ textarea, input {
 .toolBonusCalendar .weekDays {
 	display: inline-block;
 	padding: 12px 20px;
+}
+
+.toolBonusCalendar .enrollmentTrigger {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	font-weight: bold;
+	font-size: 90%;
+}
+
+.toolBonusCalendar .enrollmentTrigger > * {
+	vertical-align: bottom;
+	display: inline-block;
+}
+
+.toolBonusCalendar .enrollmentTrigger .pathArrow {
+	width: 32px;
+}
+
+.toolBonusCalendar .enrollmentTrigger .rotateArrow {
+	-webkit-transform: rotate(36deg);
+	-moz-transform: rotate(36deg);
+	-o-transform: rotate(36deg);
+	transform: rotate(36deg);
+}
+
+.toolBonusCalendar .enrollmentBox {
+	padding: 20px 0;
+	display: none;
+}
+
+.toolBonusCalendar .enrollmentBox input {
+	width: 50%;
 }
 
 /* @end */

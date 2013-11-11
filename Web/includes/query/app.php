@@ -46,8 +46,6 @@
                 `event`.`nickname`,
                 UNIX_TIMESTAMP(`event`.`dateBegin`) AS `dateBegin`,
                 UNIX_TIMESTAMP(`event`.`dateEnd`) AS `dateEnd`,
-                UNIX_TIMESTAMP(`event`.`enrollmentBegin`) AS `enrollmentBegin`,
-                UNIX_TIMESTAMP(`event`.`enrollmentEnd`) AS `enrollmentEnd`,
                 `event`.`city`,
                 `event`.`state`,
                 `event`.`fugleman`,
