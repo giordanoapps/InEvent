@@ -167,7 +167,7 @@ class qqFileUploader {
         
         if ($this->file->save($relativePath)){
             // See if we have a image
-            if (getimagesize($relativePath) != FALSE) {
+            if (getimagesize($relativePath) != FALSE && $this->file->getOption() != "exact") {
                 // No we are going to resize the image
                 // *** 1) Initialise / load image
                 $resizeObj = new resize($relativePath);

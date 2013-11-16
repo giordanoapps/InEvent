@@ -38,7 +38,7 @@ setlocale(LC_ALL, "pt_BR", "pt_BR.iso-8859-1", "pt_BR.utf-8", "portuguese");
 // Error control
 if ($globalDev == 0) {
 	// Disable error reporting
-	error_reporting(0);
+	 error_reporting(E_ALL);
 	ini_set('display_errors', 'Off');
 } else {
 	// Disable error reporting

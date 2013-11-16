@@ -16,7 +16,7 @@
 
 		// Headers
 		for ($j = 0; $j < mysqli_num_fields($result); $j++) {
-			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($j, 1, mysql_field_name($result, $j));
+			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($j, 1, mysqli_fetch_field_direct($result, $j)->name);
 		}
 
 		// Content

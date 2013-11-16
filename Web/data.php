@@ -111,14 +111,14 @@
 
 							<?php if ($core->auth) { ?>
 							<p class="halfWidth">
-								<span class="inputTitle">USP:</span>
+								<span class="inputTitle">Número universidade:</span>
 								<input
 									type="text"
 									name="usp"
 									id="usp"
 									class="usp"
 									value="<?php if ($core->auth) { echo $data["usp"]; } ?>"
-									placeholder="Número USP"
+									placeholder="Número universidade"
 								/>
 							</p>
 							<?php } ?>

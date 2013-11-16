@@ -4,6 +4,54 @@
 		"selected_items":
 		[
 			[
+				"toolBonus",
+				"toolBonusCalendar"
+			],
+			[
+				"enroll",
+				"enrollmentBegin"
+			],
+			[
+				"font",
+				"font-size"
+			],
+			[
+				"event",
+				"eventNick"
+			],
+			[
+				"evet",
+				"eventNick"
+			],
+			[
+				"substr",
+				"substring"
+			],
+			[
+				"tex",
+				"textarea"
+			],
+			[
+				"class",
+				"classUnique"
+			],
+			[
+				"rene",
+				"renewInput"
+			],
+			[
+				"marg",
+				"margin-bottom"
+			],
+			[
+				"date",
+				"dateBegin"
+			],
+			[
+				"si",
+				"siblings"
+			],
+			[
 				"fon",
 				"font-size"
 			],
@@ -14,10 +62,6 @@
 			[
 				"develo",
 				"developerContent"
-			],
-			[
-				"font",
-				"font-weight"
 			],
 			[
 				"bo",
@@ -78,10 +122,6 @@
 			[
 				"tool",
 				"toolBonus"
-			],
-			[
-				"date",
-				"dateBeginMax"
 			],
 			[
 				"dat",
@@ -222,10 +262,6 @@
 			[
 				"pad",
 				"padding-bottom"
-			],
-			[
-				"marg",
-				"margin-right"
 			],
 			[
 				"image",
@@ -478,116 +514,56 @@
 			[
 				"print",
 				"printCalendar"
-			],
-			[
-				"mo",
-				"month"
-			],
-			[
-				"comp",
-				"company"
-			],
-			[
-				"margin",
-				"margin-top"
-			],
-			[
-				"compa",
-				"companyID"
-			],
-			[
-				"a",
-				"auto"
-			],
-			[
-				"loca",
-				"localStorage"
-			],
-			[
-				"tr",
-				"trigger"
-			],
-			[
-				"en",
-				"enterpriseID"
-			],
-			[
-				"get",
-				"getItem"
 			]
 		]
 	},
 	"buffers":
 	[
 		{
-			"file": "Web/developer/documentation/app.php",
+			"file": "Web/js/modules/front.js",
 			"settings":
 			{
-				"buffer_size": 4437,
+				"buffer_size": 8356,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "Web/developer.php",
+			"file": "Web/developer/api/modules/event.php",
 			"settings":
 			{
-				"buffer_size": 4066,
+				"buffer_size": 13926,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "Web/js/modules/developer.js",
+			"file": "Web/includes/wrap/front.php",
 			"settings":
 			{
-				"buffer_size": 11102,
+				"buffer_size": 7063,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "Web/js/modules/window.js",
+			"file": "iOS/PedidoNaRede/HumanLoginViewController.m",
 			"settings":
 			{
-				"buffer_size": 2703,
+				"buffer_size": 16067,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "Web/includes/function/format.php",
+			"file": "iOS/PedidoNaRede/SocialLoginViewController.m",
 			"settings":
 			{
-				"buffer_size": 3616,
+				"buffer_size": 9492,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "Web/includes/wrap/app.php",
+			"file": "Web/developer/api/functions/person.php",
 			"settings":
 			{
-				"buffer_size": 2956,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "Web/includes/query/app.php",
-			"settings":
-			{
-				"buffer_size": 895,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "Web/js/modules/event.js",
-			"settings":
-			{
-				"buffer_size": 18902,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "Web/developer/api/modules/app.php",
-			"settings":
-			{
-				"buffer_size": 6037,
+				"buffer_size": 3725,
 				"line_ending": "Unix"
 			}
 		},
@@ -595,7 +571,7 @@
 			"file": "Web/css/default.css",
 			"settings":
 			{
-				"buffer_size": 61560,
+				"buffer_size": 64352,
 				"line_ending": "Unix"
 			}
 		}
@@ -744,74 +720,86 @@
 	},
 	"file_history":
 	[
-		"/Users/pedro/Sites/InEvent-dev/Web/developer/api/functions/activity.php",
-		"/Users/pedro/Sites/InEvent-dev/Web/js/modules/people.js",
+		"/Users/pedro/Sites/InEvent-dev/iOS/PedidoNaRede/HumanViewController.m",
+		"/Users/pedro/Sites/InEvent-dev/Web/developer/api/modules/activity.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/front.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/includes/wrap/front.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/includes/query/event.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/developer/api/modules/event.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/includes/connection.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/includes/html/header.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/includes/header.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/includes/email.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/includes/html/bar.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/includes/wrap/event.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/event.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/fileuploader.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/resize-class.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/js/modules/tools.js",
+		"/Users/pedro/Sites/InEvent-dev/Web/includes/wrap.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/includes/function/generic.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/includes/constant.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/includes/function/format.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/includes/template/pq2013.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/contest.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/js/modules/ajax.js",
+		"/Users/pedro/Sites/InEvent-dev/Web/terms.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/includes/query/app.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/ajax.php",
 		"/Users/pedro/Sites/InEvent-dev/Web/js/modules/event.js",
+		"/Users/pedro/Sites/InEvent-dev/Web/js/modules/field.js",
+		"/Users/pedro/Sites/InEvent-dev/Web/developer/api/modules/app.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/developer/documentation/app.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/includes/wrap/app.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/developer.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/js/modules/developer.js",
+		"/Users/pedro/Sites/InEvent-dev/Web/includes/singleton/core.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/developer/api/functions/validation.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/js/modules/people.js",
+		"/Users/pedro/Sites/InEvent-dev/Web/developer/documentation/event.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/includes/function/security.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/people.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/developer/api/modules/person.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/includes/check/login.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/js/modules/window.js",
+		"/Users/pedro/Sites/InEvent-dev/Web/home.php",
+		"/Users/pedro/Sites/InEvent-dev/Web/developer/api/functions/activity.php",
 		"/Users/pedro/Sites/InEvent-dev/Web/developer/api/functions/event.php",
 		"/Users/pedro/Sites/InEvent-dev/Web/developer/api/functions/group.php",
 		"/Users/pedro/Sites/InEvent-dev/InEvent.sublime-workspace",
 		"/Users/pedro/Sites/InEvent-dev/Web/developer/api/functions/person.php",
-		"/Users/pedro/Sites/InEvent-dev/Web/developer/api/modules/activity.php",
-		"/Users/pedro/Sites/InEvent-dev/Web/developer/api/modules/event.php",
-		"/Users/pedro/Sites/InEvent-dev/Web/developer/api/modules/person.php",
-		"/Users/pedro/Sites/InEvent-dev/Web/developer/api/modules/app.php",
 		"/Users/pedro/Sites/InEvent-dev/Web/developer/api/modules/group.php",
 		"/Users/pedro/Sites/InEvent-dev/Web/developer/api/modules/photo.php",
-		"/Users/pedro/Sites/InEvent-dev/Web/includes/function/generic.php",
 		"/Users/pedro/Sites/InEvent-dev/Web/developer/api/functions/excel.php",
-		"/Users/pedro/Sites/InEvent-dev/Web/includes/function/format.php",
-		"/Users/pedro/Sites/InEvent-dev/Web/developer.php",
 		"/Users/pedro/Sites/InEvent-dev/Web/developer/documentation/activity.php",
 		"/Users/pedro/Sites/InEvent-dev/Web/includes/wrap/people.php",
-		"/Users/pedro/Sites/InEvent-dev/Web/includes/wrap/app.php",
-		"/Users/pedro/Sites/InEvent-dev/Web/js/modules/developer.js",
-		"/Users/pedro/Sites/InEvent-dev/Web/people.php",
-		"/Users/pedro/Sites/InEvent-dev/Web/includes/query/app.php",
 		"/Users/pedro/Sites/InEvent-dev/Web/includes/query.php",
-		"/Users/pedro/Sites/InEvent-dev/Web/includes/wrap.php",
 		"/Users/pedro/Sites/InEvent-dev/Web/includes/wrap/developer.php",
 		"/Users/pedro/Sites/InEvent-dev/Web/includes/function/utils.php",
-		"/Users/pedro/Sites/InEvent-dev/Web/includes/header.php",
 		"/Users/pedro/Sites/InEvent-dev/Web/includes/queries.php",
-		"/Users/pedro/Sites/InEvent-dev/Web/includes/connection.php",
-		"/Users/pedro/Sites/InEvent-dev/Web/includes/constant.php",
 		"/Users/pedro/Sites/InEvent-dev/Web/certificate.php",
 		"/Users/pedro/Sites/InEvent-dev/Web/data.php",
-		"/Users/pedro/Sites/InEvent-dev/Web/includes/wrap/event.php",
 		"/Users/pedro/Sites/InEvent-dev/Web/includes/wrap/marketplace.php",
 		"/Users/pedro/Sites/InEvent-dev/Web/location.php",
-		"/Users/pedro/Sites/InEvent-dev/Web/front.php",
-		"/Users/pedro/Sites/InEvent-dev/Web/contest.php",
 		"/Users/pedro/Sites/InEvent-dev/Web/includes/email/event.php",
 		"/Users/pedro/Sites/InEvent-dev/Web/includes/function/notification.php",
-		"/Users/pedro/Sites/InEvent-dev/Web/includes/function/security.php",
-		"/Users/pedro/Sites/InEvent-dev/Web/includes/html/bar.php",
 		"/Users/pedro/Sites/InEvent-dev/Web/includes/queries/people.php",
 		"/Users/pedro/Sites/InEvent-dev/Web/includes/wrap/collection.php",
 		"/Users/pedro/Sites/InEvent-dev/Web/developer/api/error_log",
-		"/Users/pedro/Sites/InEvent-dev/Web/developer/api/functions/validation.php",
 		"/Users/pedro/Sites/InEvent-dev/Web/developer/api/modules/contest.php",
-		"/Users/pedro/Sites/InEvent-dev/Web/includes/check/login.php",
 		"/Users/pedro/Sites/InEvent-dev/Web/includes/check/security.php",
-		"/Users/pedro/Sites/InEvent-dev/Web/includes/email.php",
 		"/Users/pedro/Sites/InEvent-dev/Web/error_log",
 		"/Users/pedro/Sites/InEvent-dev/Web/css/default.css",
 		"/Users/pedro/Sites/InEvent-dev/Web/classes/Swift/lib/classes/Swift/CharacterReader/GenericFixedWidthReader.php",
 		"/Users/pedro/Sites/InEvent-dev/Web/css/mobile.css",
 		"/Users/pedro/Sites/InEvent-dev/Web/js/common.js",
-		"/Users/pedro/Sites/InEvent-dev/Web/event.php",
-		"/Users/pedro/Sites/InEvent-dev/Web/developer/documentation/app.php",
 		"/Users/pedro/Sites/InEvent-dev/Web/developer/documentation/person.php",
 		"/Users/pedro/Sites/InEvent-dev/Web/developer/index.php",
-		"/Users/pedro/Sites/InEvent-dev/Web/js/modules/ajax.js",
-		"/Users/pedro/Sites/InEvent-dev/Web/js/modules/window.js",
 		"/Users/pedro/Sites/InEvent-dev/Web/developer/api/index.php",
 		"/Users/pedro/Sites/InEvent-dev/Web/developer/documentation/howTo.php",
-		"/Users/pedro/Sites/InEvent-dev/Web/includes/html/header.php",
 		"/Users/pedro/Sites/InEvent-dev/Web/js/lib/shBrushJScript.js",
 		"/Users/pedro/Sites/InEvent-dev/Web/js/developer.js",
 		"/Users/pedro/Sites/InEvent-dev/Web/includes/queries/activity.php",
-		"/Users/pedro/Sites/InEvent-dev/Web/includes/template/pq2013.php",
 		"/Users/pedro/Sites/InEvent-dev/Web/js/modules/data.js",
 		"/Users/pedro/Sites/InEvent-dev/Web/js/modules/front.js",
 		"/Users/pedro/Sites/InEvent-dev/Web/developer/documentation/ad.php",
@@ -835,13 +823,11 @@
 		"/Users/pedro/Sites/InEvent-dev/Web/includes/queries/event.php",
 		"/Users/pedro/Sites/InEvent-dev/iOS/PedidoNaRede/ScheduleItemViewController.h",
 		"/Users/pedro/Sites/InEvent-dev/Web/includes/push.php",
-		"/Users/pedro/Sites/InEvent-dev/Web/developer/documentation/event.php",
 		"/Users/pedro/Sites/InEvent-dev/Web/classes/facebook-php-sdk/facebook.php",
 		"/Users/pedro/Sites/InEvent-dev/Web/classes/facebook-php-sdk/base_facebook.php",
 		"/Users/pedro/Sites/InEvent-dev/Web/includes/email/personEnrollment.html",
 		"/Users/pedro/Sites/InEvent-dev/iOS/PedidoNaRede/FrontViewController.m",
 		"/Users/pedro/Sites/InEvent-dev/iOS/PedidoNaRede/UIView+Components.m",
-		"/Users/pedro/Sites/InEvent-dev/Web/js/modules/tools.js",
 		"/Users/pedro/Sites/InEvent-dev/Web/js/modules/register.js",
 		"/Users/pedro/Sites/InEvent-dev/Web/js/modules/validator.js",
 		"/Users/pedro/Sites/InEvent-dev/iOS/PedidoNaRede/APIController.h",
@@ -861,17 +847,7 @@
 		"/Users/pedro/Sites/InEvent-dev/Web/includes/email/app.php",
 		"/Users/pedro/Sites/InEvent-dev/Web/css/complete.min.css",
 		"/Users/pedro/Sites/InEvent-dev/Web/includes/push/person.php",
-		"/Users/pedro/Sites/InEvent-dev/Web/terms.php",
-		"/Users/pedro/Sites/InEvent-dev/Web/js/modules/marketplace.js",
-		"/Users/pedro/Sites/InEvent-dev/Web/js/modules/bar.js",
-		"/Users/pedro/Sites/InEvent-dev/Web/developer/api/modules/ad.php",
-		"/Users/pedro/Sites/InEvent-dev/Web/js/modules/field.js",
-		"/Users/pedro/Sites/InEvent-dev/Web/includes/push/event.php",
-		"/Users/pedro/Sites/InEvent-dev/Web/css/perfect-scrollbar-0.4.5.min.css",
-		"/Users/pedro/Sites/InEvent-dev/Web/includes/email/app.html",
-		"/Users/pedro/Sites/InEvent-dev/Web/js/modules/forgot.js",
-		"/Users/pedro/Sites/InEvent-dev/Web/includes/connection_sample.php",
-		"/Users/pedro/Sites/InEvent-dev/Web/includes/email/activity.php"
+		"/Users/pedro/Sites/InEvent-dev/Web/js/modules/marketplace.js"
 	],
 	"find":
 	{
@@ -879,7 +855,7 @@
 	},
 	"find_in_files":
 	{
-		"height": 95.0,
+		"height": 0.0,
 		"where_history":
 		[
 			"/Users/pedro/Sites/InEvent-dev,-/Users/pedro/Sites/InEvent-dev/Web/classes/*,-/Users/pedro/Sites/InEvent-dev/Web/js/lib/*",
@@ -904,6 +880,99 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"enrolledAtEvent",
+			".carteContent",
+			"#f",
+			"\"G",
+			"120deg",
+			"transf",
+			"rotate",
+			"calendarx",
+			"enrollmentBegin",
+			"YYYY",
+			" </p>",
+			"<p>",
+			"enrollmentBegin",
+			"Início",
+			"hourEnd",
+			"hou",
+			"enrollmentBegin",
+			"0 AS `enrollmentBegin`,",
+			"'date",
+			"date",
+			"UNIX_TIMESTAMP(`event`.`dateBegin`) AS `enrollmentBegin`,",
+			"getEventForMemberQuery",
+			"                UNIX_TIMESTAMP(`event`.`enrollmentBegin`) AS `enrollmentBegin`,\n                UNIX_TIMESTAMP(`event`.`enrollmentEnd`) AS `enrollmentEnd`,",
+			"enrollmentBegin",
+			"contest",
+			"dateBegin",
+			"$core",
+			"event",
+			"agendaItem",
+			"eventContent",
+			"\"#eventContent\"",
+			"right",
+			"middle",
+			"#eventContent ",
+			"input",
+			"address",
+			"location",
+			"activity",
+			"EVENTID",
+			"eventID",
+			"activityID",
+			"input[type=\"text\"]",
+			"input",
+			"eventContent",
+			"menuConte",
+			"tokenID",
+			"$tokenID = getTokenForApp();",
+			"$items.filter(\".optionMenuApplicationSelected\")",
+			"renewInput",
+			"secretBox",
+			"renewInput",
+			"eventID",
+			"city",
+			"nickname",
+			"$data['nickname']",
+			"date(",
+			"date",
+			"data",
+			"email",
+			"memberID",
+			"member",
+			"title",
+			"/title",
+			"removeInput",
+			"peopleContent",
+			"toolCreate",
+			"ROLE_A",
+			"@ROLE",
+			"titleInput",
+			"peopleContent",
+			"var appID = $(\".optionMenuApplicationSelected\").val();",
+			"activityID",
+			"event",
+			"eventID",
+			"if (appHasMember($appID, $core->memberID)) {",
+			"eventMember",
+			"aplicacação",
+			"appo",
+			"event",
+			"request",
+			"peopleContent",
+			"right",
+			"activityID",
+			"eventID",
+			"activityID",
+			"$eventID",
+			"eventID",
+			"validateEvent",
+			"workAtEvent",
+			"atividade",
+			"renewCredentials",
+			"resourceForQuery",
+			"eventMember",
 			"name",
 			"agendaItem",
 			"activity",
@@ -938,100 +1007,7 @@
 			"activ",
 			"activity",
 			"queries",
-			"condition",
-			"eventMember",
-			"eventID",
-			"#peopleContent",
-			"#peopleConten",
-			"FFF",
-			"memberID",
-			"inset -1px -1px #C9C9C9, inset 0px 0px 5px #CFCFCF",
-			"email",
-			"enrollmentID",
-			"name",
-			"activityID",
-			"secret",
-			"str",
-			"groupID",
-			"activity",
-			"inset 0px 0px 1px 1px #491818, 1px 1px 5px blac",
-			"app",
-			"mysql_fetch_array",
-			"mysql_fetch_assoc",
-			"constant",
-			"mysql_result",
-			"new mysqli",
-			"mysqli_num_rows($mysqli, ",
-			"mysqli_num_rows(",
-			"mysql_num_rows",
-			"user",
-			"member",
-			"params",
-			"email",
-			"<p><b>appID</b><sub>GET</sub> : id da atividade </p>",
-			"person",
-			"activity",
-			"getDetails",
-			"activity",
-			"demoDocumentation",
-			"contentDocumentation",
-			"700",
-			"menuConte",
-			"event",
-			"shCore",
-			"documentation",
-			"../",
-			".developerContent",
-			"developerContent",
-			"replace",
-			"href=\"",
-			"desc",
-			">\n",
-			"inset -1px -1px #C2C1C1, inset 0px 0px 5px #B6B6B6",
-			"contentBox",
-			"documentationBoxSelected",
-			"documentation",
-			"contentDocumentation",
-			"developerContent",
-			"optionMenuDocumentationSelected",
-			"switchCategory",
-			"menuDocumentation",
-			".menuDocumentation",
-			"client",
-			"-1px 1px 1px #D6D6D6",
-			"D1D1D1",
-			"EEE",
-			"https://www.facebook.com/pages/In-Event/150798025113523",
-			"enrolled",
-			"phoyo",
-			"defaultPhoto",
-			"getPeo",
-			"\",",
-			"Facebook",
-			"createMember",
-			"createMe",
-			"processLogIn",
-			"processL",
-			"password",
-			"getEmptyAttribute",
-			"]) :",
-			"])",
-			"getAttribute(",
-			"createMember",
-			"sendEventEnrollmentEmail($eventID, $personID)",
-			"details",
-			"processLogIn",
-			"company",
-			"Pedro",
-			"evento",
-			"_GET",
-			"Sua localidade",
-			"`member`.`id`",
-			"activity",
-			"activityID",
-			"activityMember",
-			"activity",
-			"activityID"
+			"condition"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -1118,51 +1094,50 @@
 	"groups":
 	[
 		{
-			"selected": 2,
+			"selected": 5,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "Web/developer/documentation/app.php",
+					"file": "Web/js/modules/front.js",
 					"settings":
 					{
-						"buffer_size": 4437,
+						"buffer_size": 8356,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1294,
-								1294
+								385,
+								385
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 220.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "Web/developer.php",
+					"file": "Web/developer/api/modules/event.php",
 					"settings":
 					{
-						"buffer_size": 4066,
+						"buffer_size": 13926,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1992,
-								1992
+								2799,
+								2799
 							]
 						],
 						"settings":
@@ -1171,193 +1146,109 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 918.0,
+						"translation.y": 1482.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 2,
-					"file": "Web/js/modules/developer.js",
+					"file": "Web/includes/wrap/front.php",
 					"settings":
 					{
-						"buffer_size": 11102,
+						"buffer_size": 7063,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2650,
-								2650
+								479,
+								479
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"translate_tabs_to_spaces": false
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 1539.0,
+						"translation.y": 91.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 3,
-					"file": "Web/js/modules/window.js",
+					"file": "iOS/PedidoNaRede/HumanLoginViewController.m",
 					"settings":
 					{
-						"buffer_size": 2703,
+						"buffer_size": 16067,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2409,
-								2409
+								12822,
+								12822
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"translate_tabs_to_spaces": false
+							"syntax": "Packages/Objective-C/Objective-C.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 690.0,
+						"translation.y": 4336.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 4,
-					"file": "Web/includes/function/format.php",
+					"file": "iOS/PedidoNaRede/SocialLoginViewController.m",
 					"settings":
 					{
-						"buffer_size": 3616,
+						"buffer_size": 9492,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								894,
-								919
+								0,
+								0
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"translate_tabs_to_spaces": false
+							"syntax": "Packages/Objective-C/Objective-C.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 1221.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 5,
-					"file": "Web/includes/wrap/app.php",
+					"file": "Web/developer/api/functions/person.php",
 					"settings":
 					{
-						"buffer_size": 2956,
+						"buffer_size": 3725,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								307,
-								307
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "Web/includes/query/app.php",
-					"settings":
-					{
-						"buffer_size": 895,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								208,
-								208
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 7,
-					"file": "Web/js/modules/event.js",
-					"settings":
-					{
-						"buffer_size": 18902,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								6964,
-								8996
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 4908.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 8,
-					"file": "Web/developer/api/modules/app.php",
-					"settings":
-					{
-						"buffer_size": 6037,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								4023,
-								4023
-							],
-							[
-								4250,
-								4250
+								2236,
+								2236
 							]
 						],
 						"settings":
@@ -1366,7 +1257,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1797.0,
+						"translation.y": 1136.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -1378,23 +1269,19 @@
 			"sheets":
 			[
 				{
-					"buffer": 9,
+					"buffer": 6,
 					"file": "Web/css/default.css",
 					"settings":
 					{
-						"buffer_size": 61560,
+						"buffer_size": 64352,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								54003,
-								54003
-							],
-							[
-								54120,
-								54120
+								29283,
+								31055
 							]
 						],
 						"settings":
@@ -1403,7 +1290,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 47574.0,
+						"translation.y": 28572.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -1439,7 +1326,7 @@
 		"cols":
 		[
 			0.0,
-			0.686913953632,
+			0.696898110101,
 			1.0
 		],
 		"rows":
@@ -1460,24 +1347,216 @@
 		"selected_items":
 		[
 			[
-				"mo/app",
-				"Web/developer/api/modules/app.php"
+				"func/pers",
+				"Web/developer/api/functions/person.php"
+			],
+			[
+				"social",
+				"iOS/PedidoNaRede/SocialLoginViewController.m"
+			],
+			[
+				"human",
+				"iOS/PedidoNaRede/HumanLoginViewController.m"
+			],
+			[
+				"wrap/fro",
+				"Web/includes/wrap/front.php"
+			],
+			[
+				"mod/eve",
+				"Web/developer/api/modules/event.php"
+			],
+			[
+				"mod/ac",
+				"Web/developer/api/modules/activity.php"
+			],
+			[
+				"wrap/eve",
+				"Web/includes/wrap/event.php"
+			],
+			[
+				"event",
+				"Web/event.php"
+			],
+			[
+				"bar",
+				"Web/includes/html/bar.php"
+			],
+			[
+				"resi",
+				"Web/resize-class.php"
+			],
+			[
+				"file",
+				"Web/fileuploader.php"
+			],
+			[
+				"email.p",
+				"Web/includes/email.php"
+			],
+			[
+				"heade",
+				"Web/includes/header.php"
+			],
+			[
+				"header",
+				"Web/includes/html/header.php"
+			],
+			[
+				"conn",
+				"Web/includes/connection.php"
+			],
+			[
+				"tools",
+				"Web/js/modules/tools.js"
+			],
+			[
+				"head",
+				"Web/includes/header.php"
+			],
+			[
+				"que/eve",
+				"Web/includes/query/event.php"
+			],
+			[
+				"wrap/fr",
+				"Web/includes/wrap/front.php"
+			],
+			[
+				"front",
+				"Web/front.php"
+			],
+			[
+				"forma",
+				"Web/includes/function/format.php"
+			],
+			[
+				"con",
+				"Web/includes/constant.php"
+			],
+			[
+				"gener",
+				"Web/includes/function/generic.php"
+			],
+			[
+				"wrap",
+				"Web/includes/wrap.php"
+			],
+			[
+				"fron",
+				"Web/front.php"
+			],
+			[
+				"quer/",
+				"Web/includes/query/event.php"
+			],
+			[
+				"quer/app",
+				"Web/includes/query/app.php"
+			],
+			[
+				"ter",
+				"Web/terms.php"
+			],
+			[
+				"aj",
+				"Web/js/modules/ajax.js"
+			],
+			[
+				"ajax",
+				"Web/ajax.php"
+			],
+			[
+				"pq2",
+				"Web/includes/template/pq2013.php"
+			],
+			[
+				"field",
+				"Web/js/modules/field.js"
 			],
 			[
 				"event.js",
 				"Web/js/modules/event.js"
 			],
 			[
-				"peop",
-				"Web/js/modules/people.js"
+				"quer/ev",
+				"Web/includes/query/event.php"
 			],
 			[
 				"que/app",
 				"Web/includes/query/app.php"
 			],
 			[
+				"people",
+				"Web/people.php"
+			],
+			[
+				"func/se",
+				"Web/includes/function/security.php"
+			],
+			[
+				"sec",
+				"Web/includes/function/security.php"
+			],
+			[
+				"valida",
+				"Web/developer/api/functions/validation.php"
+			],
+			[
+				"doc/even",
+				"Web/developer/documentation/event.php"
+			],
+			[
+				"mo/pe",
+				"Web/developer/api/modules/person.php"
+			],
+			[
+				"peop",
+				"Web/js/modules/people.js"
+			],
+			[
+				"wra/app",
+				"Web/includes/wrap/app.php"
+			],
+			[
+				"fun/vali",
+				"Web/developer/api/functions/validation.php"
+			],
+			[
+				"core",
+				"Web/includes/singleton/core.php"
+			],
+			[
+				"mod/app",
+				"Web/developer/api/modules/app.php"
+			],
+			[
 				"wrap/app",
 				"Web/includes/wrap/app.php"
+			],
+			[
+				"fun/sec",
+				"Web/includes/function/security.php"
+			],
+			[
+				"func/val",
+				"Web/developer/api/functions/validation.php"
+			],
+			[
+				"home",
+				"Web/home.php"
+			],
+			[
+				"pq20",
+				"Web/includes/template/pq2013.php"
+			],
+			[
+				"conte",
+				"Web/contest.php"
+			],
+			[
+				"mo/app",
+				"Web/developer/api/modules/app.php"
 			],
 			[
 				"format",
@@ -1492,28 +1571,12 @@
 				"Web/js/modules/developer.js"
 			],
 			[
-				"gener",
-				"Web/includes/function/generic.php"
-			],
-			[
 				"fun/pers",
 				"Web/developer/api/functions/person.php"
 			],
 			[
-				"people",
-				"Web/js/modules/people.js"
-			],
-			[
-				"quer/app",
-				"Web/includes/query/app.php"
-			],
-			[
 				"que",
 				"Web/includes/query.php"
-			],
-			[
-				"wrap",
-				"Web/includes/wrap.php"
 			],
 			[
 				"que/ap",
@@ -1522,10 +1585,6 @@
 			[
 				"app",
 				"Web/includes/query/app.php"
-			],
-			[
-				"heade",
-				"Web/includes/header.php"
 			],
 			[
 				"quer",
@@ -1568,20 +1627,8 @@
 				"Web/developer/api/modules/person.php"
 			],
 			[
-				"con",
-				"Web/contest.php"
-			],
-			[
 				"cons",
 				"Web/includes/constant.php"
-			],
-			[
-				"conn",
-				"Web/includes/connection.php"
-			],
-			[
-				"head",
-				"Web/includes/header.php"
 			],
 			[
 				"genr",
@@ -1616,10 +1663,6 @@
 				"Web/event.php"
 			],
 			[
-				"bar",
-				"Web/includes/html/bar.php"
-			],
-			[
 				"shbr",
 				"Web/js/lib/shBrushJScript.js"
 			],
@@ -1630,18 +1673,6 @@
 			[
 				"comm",
 				"Web/js/common.js"
-			],
-			[
-				"header",
-				"Web/includes/html/header.php"
-			],
-			[
-				"fron",
-				"Web/front.php"
-			],
-			[
-				"ajax",
-				"Web/js/modules/ajax.js"
 			],
 			[
 				"hot",
@@ -1676,28 +1707,12 @@
 				"Web/includes/wrap/people.php"
 			],
 			[
-				"front",
-				"Web/front.php"
-			],
-			[
 				"peo",
 				"Web/js/modules/people.js"
 			],
 			[
-				"event",
-				"Web/event.php"
-			],
-			[
-				"conte",
-				"Web/contest.php"
-			],
-			[
 				"wrapp",
 				"Web/includes/html/wrapper.php"
-			],
-			[
-				"mod/ac",
-				"Web/developer/api/modules/activity.php"
 			],
 			[
 				"mo/eve",
@@ -1718,10 +1733,6 @@
 			[
 				"group",
 				"Web/developer/api/modules/group.php"
-			],
-			[
-				"func/pers",
-				"Web/developer/api/functions/person.php"
 			],
 			[
 				"que/peopl",
@@ -1754,14 +1765,6 @@
 			[
 				"mod/p",
 				"Web/developer/api/modules/photo.php"
-			],
-			[
-				"forma",
-				"Web/includes/function/format.php"
-			],
-			[
-				"mod/eve",
-				"Web/developer/api/modules/event.php"
 			],
 			[
 				"email/eve",
@@ -1854,122 +1857,6 @@
 			[
 				"que/gr",
 				"Web/includes/queries/group.php"
-			],
-			[
-				"modules/gr",
-				"Web/developer/api/modules/group.php"
-			],
-			[
-				"fun/gr",
-				"Web/developer/api/functions/group.php"
-			],
-			[
-				"func/ac",
-				"Web/developer/api/functions/activity.php"
-			],
-			[
-				"quer/gr",
-				"Web/includes/queries/group.php"
-			],
-			[
-				"mod/gr",
-				"Web/developer/api/modules/group.php"
-			],
-			[
-				"read",
-				"README.md"
-			],
-			[
-				"sec",
-				"Web/includes/function/security.php"
-			],
-			[
-				"valida",
-				"Web/developer/api/functions/validation.php"
-			],
-			[
-				"validat",
-				"Web/developer/api/functions/validation.php"
-			],
-			[
-				"docum/ac",
-				"Web/developer/documentation/activity.php"
-			],
-			[
-				"doc/gro",
-				"Web/developer/documentation/group.php"
-			],
-			[
-				"mo/gr",
-				"Web/developer/api/modules/group.php"
-			],
-			[
-				"mo/gro",
-				"Web/developer/api/modules/group.php"
-			],
-			[
-				"excel.p",
-				"Web/developer/api/functions/excel.php"
-			],
-			[
-				"data.js",
-				"Web/js/modules/data.js"
-			],
-			[
-				"includes/for",
-				"Web/includes/function/format.php"
-			],
-			[
-				"doc/a",
-				"Web/developer/documentation/activity.php"
-			],
-			[
-				"doc/person",
-				"Web/developer/documentation/person.php"
-			],
-			[
-				"scheduleitem",
-				"iOS/PedidoNaRede/ScheduleItemViewController.h"
-			],
-			[
-				"func/va",
-				"Web/developer/api/functions/validation.php"
-			],
-			[
-				"do/p",
-				"Web/developer/documentation/photo.php"
-			],
-			[
-				"que/eve",
-				"Web/includes/queries/event.php"
-			],
-			[
-				"mo/p",
-				"Web/developer/api/modules/photo.php"
-			],
-			[
-				"photo",
-				"Web/developer/api/modules/photo.php"
-			],
-			[
-				"doc/even",
-				"Web/developer/documentation/event.php"
-			],
-			[
-				"develo",
-				"Web/js/developer.js"
-			],
-			[
-				"includes/",
-				"Web/includes/push.php"
-			],
-			[
-				"social",
-				"Web/includes/social.php"
-			],
-			[
-				"modu/peo",
-				"Web/developer/api/modules/person.php"
 			]
 		],
 		"width": 0.0

@@ -89,25 +89,43 @@ define(modules, function($, common, storageExpiration) {$(function() {
 		// Get some properties
 		var name = $elem.siblings(".name").val();
 
-		// We request the information on the server
-		$.post('developer/api/?' + $.param({
-			method: "app.create",
-			format: "html"
-		}), {
-			name: name
-		},
-		function(data, textStatus, jqXHR) {
+		// Get the minimum length
+		if (name.length > 3) {
 
-			if (jqXHR.status == 200) {
-				// Update content
-				$(".contentApplication").html(data);
-			}
+			// We request the information on the server
+			$.post('developer/api/?' + $.param({
+				method: "app.create",
+				format: "html"
+			}), {
+				name: name
+			},
+			function(data, textStatus, jqXHR) {
 
-			$elem.fadeIn(300).parent().slideToggle(400);
+				if (jqXHR.status == 200) {
 
-		}, 'html').fail(function(jqXHR, textStatus, errorThrown) {
-			$elem.fadeIn(300);
-		});
+					// Get some properties
+					var $updatedItem = $(data);
+					var $originalItem = $(".optionMenuApplicationCategory").last();
+
+					// Copy the item
+					$originalItem.clone().insertAfter($originalItem)
+						.text($updatedItem.filter(".title").text())
+						.val($updatedItem.filter(".secretBox").attr("data-appid"))
+						.trigger("click");
+
+				}
+
+				// Reset UI
+				$elem.fadeIn(300).siblings(".name").val('').closest(".toolBoxOptionsCreate").slideToggle(400);
+
+			}, 'html').fail(function(jqXHR, textStatus, errorThrown) {
+				$elem.fadeIn(300);
+			});
+
+		} else {
+			// Reset UI
+			$elem.fadeIn(300).siblings(".name").val('');
+		}
 
 	});
 

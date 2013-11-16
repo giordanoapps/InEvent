@@ -386,7 +386,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		01A9A353CC7D4F35B9275C85 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		5A6A516917D844488748DC44 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB01FF7A181B349B00089915 /* LIALinkedInApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LIALinkedInApplication.h; sourceTree = "<group>"; };
 		EB01FF7B181B349B00089915 /* LIALinkedInApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LIALinkedInApplication.m; sourceTree = "<group>"; };
@@ -417,6 +416,7 @@
 		EB01FFCD181B3AFA00089915 /* UIImageView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+AFNetworking.m"; sourceTree = "<group>"; };
 		EB01FFD7181BA56C00089915 /* google_active.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = google_active.png; sourceTree = "<group>"; };
 		EB01FFD8181BA56C00089915 /* google_dark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = google_dark.png; sourceTree = "<group>"; };
+		EB1FC3F4183690AA00A7DD63 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		EB1FE9DD17FE841D001C2906 /* GoogleMaps.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = GoogleMaps.bundle; path = GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle; sourceTree = "<group>"; };
 		EB1FE9DF17FE8582001C2906 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		EB1FE9E117FF0CA0001C2906 /* FieldView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FieldView.h; sourceTree = "<group>"; };
@@ -1553,7 +1553,6 @@
 				EB39392B16654B4400580A4E /* Resources */,
 				EB8974EE180CC54D00DB2486 /* Classes */,
 				EBAAFD1D161FCF020007637B /* Products */,
-				01A9A353CC7D4F35B9275C85 /* Pods.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -2019,6 +2018,7 @@
 				en,
 				pt,
 				es,
+				fr,
 			);
 			mainGroup = EBAAFD11161FCF020007637B;
 			productRefGroup = EBAAFD1D161FCF020007637B /* Products */;
@@ -2464,6 +2464,7 @@
 				EBD47D9316B07BA600F7295E /* en */,
 				EBD47D9616B07BAD00F7295E /* pt */,
 				EBD47D9716B0854900F7295E /* es */,
+				EB1FC3F4183690AA00A7DD63 /* fr */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -2569,7 +2570,6 @@
 		};
 		EBAAFD55161FCF030007637B /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 01A9A353CC7D4F35B9275C85 /* Pods.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -2601,7 +2601,6 @@
 		};
 		EBAAFD56161FCF030007637B /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 01A9A353CC7D4F35B9275C85 /* Pods.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;

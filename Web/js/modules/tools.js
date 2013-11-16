@@ -52,10 +52,10 @@ define(["jquery", "common", "modules/cookie"], function($, common, cookie) {$(fu
 	 */
 	$(document).on({
 		"mouseenter": function () {
-			$(this).find("#file-uploader").show();
+			$(this).find(".file-uploader").show();
 		},
 		"mouseleave": function () {
-			$(this).find("#file-uploader").hide();
+			$(this).find(".file-uploader").hide();
 		},
 	}, ".infoContainerImage");
 

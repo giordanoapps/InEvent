@@ -26,6 +26,63 @@ define(modules, function($, common, cookie) {$(function() {
 	});
 
 	/**
+	 * Create the uploader on edit
+	 * @return {null}
+	 */
+	$("#frontContent").on("click", ".toolBox .toolPreferences", function() {
+
+		// Create the uploader
+		$(this).closest("#frontContent").find('.file-uploader').each(function () {
+			var uploader = new qq.FileUploader({
+				// pass the dom node (ex. $(selector)[0] for jQuery users)
+				element: $(this)[0],
+				// extra params for image processing
+				params: {
+					"option": "exact"
+				},
+				// path to server-side upload script
+				action: 'fileuploader.php',
+
+				onSubmit: function(id, fileName) {
+					$(this.element).siblings("progress").show();
+				},
+				
+				onProgress: function(id, fileName, loaded, total) {
+					$(this.element).siblings("progress").val(100*loaded/total);
+				},
+
+				onComplete: function(id, fileName, responseJSON) {
+					// Adjust the interface
+					$(this.element).siblings("progress").hide();
+					var $imageContainer = $(this.element).parent(".infoContainerImage");
+					$imageContainer.css("background-image", "url(" + responseJSON.path + ")");
+
+					// Get some properties
+					var name = $imageContainer.attr("name");
+					var value = responseJSON.path;
+
+					// Save it
+					$.post('developer/api/?' + $.param({
+						method: "event.edit",
+						eventID: cookie.read("eventID"),
+						name: name,
+						format: "html"
+					}), {
+						value: value
+					}, function(data, textStatus, jqXHR) {
+
+						if (jqXHR.status == 200) {
+							// Replace the old one
+							
+						}
+
+					}, 'html').fail(function(jqXHR, textStatus, errorThrown) {});
+				}
+			});
+		});
+	});
+
+	/**
 	  * CALENDAR BOX
 	  */
 

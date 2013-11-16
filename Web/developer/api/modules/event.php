@@ -14,7 +14,7 @@
 			if ($core->workAtEvent) {
 			
 				// We list all the fields that can be edited by the event platform
-				$validFields = array("name", "nickname", "description", "latitude", "longitude", "address", "city", "state", "dateBegin", "dayBegin", "monthBegin", "hourBegin", "minuteBegin", "enrollmentBegin", "dateEnd", "dayEnd", "monthEnd", "hourEnd", "minuteEnd", "enrollmentEnd", "fugleman");
+				$validFields = array("name", "nickname", "description", "cover", "latitude", "longitude", "address", "city", "state", "dateBegin", "dayBegin", "monthBegin", "hourBegin", "minuteBegin", "enrollmentBegin", "dateEnd", "dayEnd", "monthEnd", "hourEnd", "minuteEnd", "enrollmentEnd", "fugleman");
 
 				if (in_array($name, $validFields) == TRUE) {
 

@@ -63,7 +63,7 @@
 								INNER JOIN
 									`appEvent` ON `appEvent`.`eventID` = `event`.`id`
 								INNER JOIN
-									`appMember` ON `appMember`.`appID` = `appEvent`.`eventID`
+									`appMember` ON `appMember`.`appID` = `appEvent`.`appID`
 								WHERE 1
 									AND `appMember`.`memberID` = $core->memberID
 								GROUP BY

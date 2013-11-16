@@ -10,7 +10,7 @@
 
             <p class="title" name="name"><?php echo $details["name"] ?></p>
 
-            <div class="secretBox">
+            <div class="secretBox" data-appID="<?php echo $details['id'] ?>">
                 <p><b>appID</b>: <?php echo str_pad($details['id'], 32, "0", STR_PAD_LEFT) ?></p>
                 <p><b>appSecret</b>: <?php echo $details['secret'] ?></p>
                 <input

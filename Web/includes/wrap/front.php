@@ -9,7 +9,10 @@
             $data = mysqli_fetch_array($result);
 
         ?>
-            <div class="cover" style="background-image: url(images/<?php echo $data['cover'] ?>);"></div>
+            <div class="cover infoContainerImage" name="cover" style="background-image: url(images/<?php echo $data['cover'] ?>);">
+                <div class="file-uploader"></div>
+                <progress value="0" max="100"></progress>
+            </div>
 
             <div
                 class="details"
@@ -34,7 +37,7 @@
                 </div>
 
                 <!-- ToolBonus Calendar -->
-                <li class="toolBonus toolBonusCalendar">
+                <div class="toolBonus toolBonusCalendar">
                     <div class="innerWrapper calendarBox">
 
                         <div class="firstSection">
@@ -96,7 +99,7 @@
                             <input type="text" class="enrollmentEnd" name="enrollmentEnd" placeholder="DD/MM/YY HH:MM" value="" data-serverParse="true">
                         </div>
                     </div>
-                </li>
+                </div>
 
                 <div class="upper">
                     <p class="title" name="name"><?php echo $data['name'] ?></p>

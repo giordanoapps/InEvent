@@ -86,7 +86,7 @@
 
 		$result = resourceForQuery(
 			"SELECT
-				`member`.`id`,
+				`member`.`id` AS `memberID`,
 				`member`.`name`,
 				`member`.`role`,
 				`member`.`company`,
