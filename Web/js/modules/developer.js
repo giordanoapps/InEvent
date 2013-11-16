@@ -73,15 +73,15 @@ define(modules, function($, common, storageExpiration) {$(function() {
 	 * Toggle the box
 	 * @return {null}
 	 */
-	$("#developerContent").on("click", ".toolCreate", function(event) {
-		$(this).closest(".toolBox").siblings(".toolBoxOptionsCreate").slideToggle(400).find("input").first().focus();
+	$("#developerContent").on("click", ".toolApp", function(event) {
+		$(this).closest(".toolBox").siblings(".toolBoxOptionsCreateApp").slideToggle(400).find("input").first().focus();
 	});
 
 	/**
 	 * Add an app
 	 * @return {null}
 	 */
-	$("#developerContent").on("click", ".toolBoxOptionsCreate .singleButton", function(event) {
+	$("#developerContent").on("click", ".toolBoxOptionsCreateApp .singleButton", function(event) {
 		
 		// Hide the current button
 		var $elem = $(this).hide(200);
@@ -101,22 +101,18 @@ define(modules, function($, common, storageExpiration) {$(function() {
 			},
 			function(data, textStatus, jqXHR) {
 
-				if (jqXHR.status == 200) {
+				// Get some properties
+				var $updatedItem = $(data);
+				var $originalItem = $(".optionMenuApplicationCategory").last();
 
-					// Get some properties
-					var $updatedItem = $(data);
-					var $originalItem = $(".optionMenuApplicationCategory").last();
-
-					// Copy the item
-					$originalItem.clone().insertAfter($originalItem)
-						.text($updatedItem.filter(".title").text())
-						.val($updatedItem.filter(".secretBox").attr("data-appid"))
-						.trigger("click");
-
-				}
+				// Copy the item
+				$originalItem.clone().insertAfter($originalItem)
+					.text($updatedItem.filter(".title").text())
+					.val($updatedItem.filter(".secretBox").attr("data-appid"))
+					.trigger("click");
 
 				// Reset UI
-				$elem.fadeIn(300).siblings(".name").val('').closest(".toolBoxOptionsCreate").slideToggle(400);
+				$elem.fadeIn(300).siblings(".name").val('').closest(".toolBoxOptionsCreateApp").slideToggle(400);
 
 			}, 'html').fail(function(jqXHR, textStatus, errorThrown) {
 				$elem.fadeIn(300);
@@ -151,16 +147,17 @@ define(modules, function($, common, storageExpiration) {$(function() {
 
 		// We request the information on the server
 		$.post('developer/api/?' + $.param({
-			method: "app.requestEnrollment",
+			method: "app.addPerson",
 			appID: appID,
-			name: name,
-			email: email,
 			format: "html"
-		}), {},
+		}), {
+			name: name,
+			email: email
+		},
 		function(data, textStatus, jqXHR) {
 
 			// Hide the toolbar
-			$elem.closest(".toolBoxOptionsEnrollPerson").slideToggle(400);
+			$elem.fadeIn(300).closest(".toolBoxOptionsEnrollPerson").slideToggle(400);
 
 			// Reload the table
 			// $scheduleItemSelected.trigger("click");
@@ -170,7 +167,58 @@ define(modules, function($, common, storageExpiration) {$(function() {
 			$elem.siblings(".name").val('');
 			$elem.siblings(".email").val('');
 
-		}, 'html');
+		}, 'html').fail(function(jqXHR, textStatus, errorThrown) {
+			$elem.fadeIn(300);
+		});
+
+	});
+
+	/**
+	 * Toggle the box
+	 * @return {null}
+	 */
+	$("#developerContent").on("click", ".toolEvent", function(event) {
+		$(this).closest(".toolBox").siblings(".toolBoxOptionsAddEvent").slideToggle(400).find("input").first().focus();
+	});
+
+	/**
+	 * Add an app
+	 * @return {null}
+	 */
+	$("#developerContent").on("click", ".toolBoxOptionsAddEvent .singleButton", function(event) {
+		
+		// Hide the current button
+		var $elem = $(this).hide(200);
+
+		// Get some properties
+		var appID = $(".optionMenuApplicationSelected").val();
+		var name = $elem.siblings(".name").val();
+		var nickname = $elem.siblings(".nickname").val();
+
+		// We request the information on the server
+		$.post('developer/api/?' + $.param({
+			method: "app.addEvent",
+			appID: appID,
+			format: "html"
+		}), {
+			name: name,
+			nickname: nickname
+		},
+		function(data, textStatus, jqXHR) {
+
+			// Hide the toolbar
+			$elem.fadeIn(300).closest(".toolBoxOptionsAddEvent").slideToggle(400);
+
+			// Reload the table
+			$(".contentApplication").html(data);
+
+			// Reset values
+			$elem.siblings(".name").val('');
+			$elem.siblings(".nickname").val('');
+
+		}, 'html').fail(function(jqXHR, textStatus, errorThrown) {
+			$elem.fadeIn(300);
+		});
 
 	});
 
@@ -300,7 +348,7 @@ define(modules, function($, common, storageExpiration) {$(function() {
 
 				// We request the information on the server
 				$.post('developer/api/?' + $.param({
-					method: "app.dismissEnrollment",
+					method: "app.dismissPerson",
 					personID: personID,
 					appID: appID,
 					format: "html"

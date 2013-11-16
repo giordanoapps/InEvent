@@ -98,7 +98,9 @@
                             <p class="eventID"><b><?php echo str_pad($data['eventID'], 3, "0", STR_PAD_LEFT) ?></b></p>
                         </td>
                         <td>
-                            <p class="name"><?php echo ucwords(strtolower($data['name'])) ?></p>
+                            <a href="/<?php echo $data['nickname'] ?>/#front" target="_blank">
+                                <p class="name"><?php echo $data['name'] ?></p>
+                            </a>
                         </td>
                         <td>
                             <p class="nickname"><?php echo "#" . $data['nickname'] ?></p>

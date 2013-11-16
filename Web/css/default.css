@@ -1515,13 +1515,23 @@ textarea, input {
 	margin-bottom: 2%;
 }
 
-#frontContent .details .middle div {
+#frontContent .details .middle div,
+#frontContent .details .middle p {
 	display: inline-block;
-	vertical-align: bottom;
+	vertical-align: middle;
 }
 
 #frontContent .details .middle img {
 	width: 36px;
+}
+
+#frontContent .details .middle .nicknameWrapper {
+	margin: 0 10px;
+	font-size: 90%;
+}
+
+#frontContent .details .middle .nickname {
+	font-weight: bold;
 }
 
 #frontContent .details .bottom .description {

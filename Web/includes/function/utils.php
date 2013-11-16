@@ -128,6 +128,24 @@
 		}
 	}
 
+    function getEventForNickname($nickname) {
+
+		$result = resourceForQuery(
+			"SELECT
+				`event`.`id`
+			FROM
+				`event`
+			WHERE 1
+				AND `event`.`nickname` = '$nickname'
+		");
+
+		if (mysqli_num_rows($result) > 0) {
+			return mysqli_result($result, 0, "id");
+		} else {
+			return "";
+		}
+	}
+
     function getGroupForActivity($activityID) {
 
 		$result = resourceForQuery(

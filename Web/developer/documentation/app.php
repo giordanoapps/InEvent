@@ -95,7 +95,7 @@
             <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=app.renew&tokenID=$tokenID&appID=1">
         </p>
 
-        <p class="documentFunctionDescription">Renova as credencias da aplicação <i>appID</i>, revogando as atuais e criando novas.</p>
+        <p class="documentFunctionDescription">Renova as credenciais da aplicação <i>appID</i>, revogando as atuais e criando novas.</p>
 
         <div class="documentationFunctionParametersBox">
             <p><b>tokenID</b><sub>GET</sub> : id de autenticação </p>
@@ -105,8 +105,8 @@
 
     <div class="documentationFunctionBox">
         <p class="documentFunctionName">
-            <span>app.requestEnrollment(<b>tokenID</b>, <b>appID</b>, <b>name</b> = null, <b>email</b> = null)</span>
-            <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=app.requestEnrollment&tokenID=$tokenID&appID=1&name=null&email=null">
+            <span>app.addPerson(<b>tokenID</b>, <b>appID</b>, <b>name</b> = null, <b>email</b> = null)</span>
+            <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=app.addPerson&tokenID=$tokenID&appID=1" data-post="name=null&email=null">
         </p>
 
         <p class="documentFunctionDescription">Solicita a entrada da pessoa <i>personID</i> na aplicação <i>appID</i>. Se o nome <i>name</i> e email <i>email</i> da pessoa não for especificada ou o <i>tokenID</i> fornecido não tiver permissão para enviar para a pessoa com email <i>email</i>, será utilizada a pessoa associada ao <i>tokenID</i>.</p>
@@ -114,15 +114,15 @@
         <div class="documentationFunctionParametersBox">
             <p><b>tokenID</b><sub>GET</sub> : id de autenticação </p>
             <p><b>appID</b><sub>GET</sub> : id da aplicação </p>
-            <p><b>name</b><sub>GET</sub> : nome da pessoa </p>
-            <p><b>email</b><sub>GET</sub> : email da pessoa </p>
+            <p><b>name</b><sub>POST</sub> : nome da pessoa </p>
+            <p><b>email</b><sub>POST</sub> : email da pessoa </p>
         </div>
     </div>
 
     <div class="documentationFunctionBox">
         <p class="documentFunctionName">
-            <span>app.dismissEnrollment(<b>tokenID</b>, <b>appID</b>, <b>personID</b> = null)</span>
-            <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=app.dismissEnrollment&tokenID=$tokenID&appID=1&personID=null">
+            <span>app.dismissPerson(<b>tokenID</b>, <b>appID</b>, <b>personID</b> = null)</span>
+            <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=app.dismissPerson&tokenID=$tokenID&appID=1&personID=null">
         </p>
 
         <p class="documentFunctionDescription">Solicita a remoção da pessoa <i>personID</i> na aplicação <i>appID</i>. Se a pessoa <i>personID</i> não for especificada ou o <i>tokenID</i> fornecido não tiver permissão para enviar para a pessoa <i>personID</i>, será utilizada a pessoa associada ao <i>tokenID</i>.</p>
@@ -131,6 +131,22 @@
             <p><b>tokenID</b><sub>GET</sub> : id de autenticação </p>
             <p><b>appID</b><sub>GET</sub> : id da aplicação </p>
             <p><b>personID</b><sub>GET</sub> : id da pessoa </p>
+        </div>
+    </div>
+
+    <div class="documentationFunctionBox">
+        <p class="documentFunctionName">
+            <span>app.addEvent(<b>tokenID</b>, <b>appID</b>, <b>name</b>, <b>nickname</b>)</span>
+            <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=app.addEvent&tokenID=$tokenID&appID=1" data-post="name=Nome&nickname=Apelido">
+        </p>
+
+        <p class="documentFunctionDescription">Solicita a adição do evento com nome <i>name</i> e apelido <i>nickname</i> na aplicação <i>appID</i>.</p>
+
+        <div class="documentationFunctionParametersBox">
+            <p><b>tokenID</b><sub>GET</sub> : id de autenticação </p>
+            <p><b>appID</b><sub>GET</sub> : id da aplicação </p>
+            <p><b>name</b><sub>GET</sub> : nome do evento </p>
+            <p><b>nickname</b><sub>GET</sub> : apelido (<i>hashtag</i>) do evento </p>
         </div>
     </div>
 

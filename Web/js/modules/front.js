@@ -175,7 +175,7 @@ define(modules, function($, common, cookie) {$(function() {
 	 * Start a text inline edition
 	 * @return {null}
 	 */
-	$("#frontContent").on("click", ".title, .address, .city, .state, .fugleman, .description", function(event) {
+	$("#frontContent").on("click", ".title, .address, .city, .state, .fugleman, .nickname, .description", function(event) {
 
 		// Make sure that we are on editing mode
 		if (!$("#frontContent").hasClass("editingMode")) return true;
@@ -251,6 +251,7 @@ define(modules, function($, common, cookie) {$(function() {
 			if (jqXHR.status == 200) {
 				// Update event name
 				if (name == "name") $(".locationItem[value=" + cookie.read("eventID") + "]").text(value);
+				if (name == "nickname") window.location.replace('/' + value);
 			}
 
 		}, 'html').fail(function(jqXHR, textStatus, errorThrown) {});

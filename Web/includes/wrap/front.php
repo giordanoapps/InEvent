@@ -118,6 +118,7 @@
                             <input type="button" value="Inscrever" title="Se inscreva para escolher as atividades dentro do evento" class="singleButton toolEnroll">
                         <?php } ?>
                     </div>
+                    <p class="nicknameWrapper">#<span class="nickname" name="nickname"><?php echo $data['nickname'] ?></span></p>
                 </div>
 
                 <div class="bottom">

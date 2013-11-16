@@ -1,5 +1,72 @@
 <?php
 
+	/**
+	 * Create a new event inside the platform
+	 * @param  array $details    information
+	 * @return integer           eventID
+	 */
+	function createEvent($details) {
+
+		if (isset($details["name"]) && isset($details["nickname"])) {
+
+			// Required
+			$name = $details["name"];
+			$nickname = $details["nickname"];
+
+			// Insert the event 
+			$insert = resourceForQuery(
+				"INSERT INTO
+					`event`
+					(
+						`name`,
+						`nickname`,
+						`description`,
+						`cover`,
+						`dateBegin`,
+						`dateEnd`,
+						`enrollmentBegin`,
+						`enrollmentEnd`,
+						`latitude`,
+						`longitude`,
+						`address`,
+						`city`,
+						`state`,
+						`fugleman`
+					)
+				VALUES 
+					(
+						'$name',
+						'$nickname',
+						'Descri&ccedil;&atilde;o do evento',
+						'images/logo@512.png',
+						NOW(),
+						DATE_ADD(NOW(), INTERVAL 1 MONTH),
+						NOW(),
+						DATE_ADD(NOW(), INTERVAL 1 MONTH),
+						0,
+						0,
+						'Seu endere&ccedil;o',
+						'Sua cidade',
+						'Seu estado',
+						'Organizador'
+					)
+			");
+
+			$eventID = mysqli_insert_id_new();
+
+			return $eventID;
+
+		} else {
+			http_status_code(400, "name and nickname are required parameters");
+		}
+	}
+
+	/**
+	 * Get the event for a given activity and pass the message along
+	 * @param  int $activityID id of activity
+	 * @param  int $personID   id of person
+	 * @return object
+	 */
 	function processEventEnrollmentWithActivity($activityID, $personID) {
 
 		// Get the eventID
@@ -9,6 +76,12 @@
 		return processEventEnrollmentWithEvent($eventID, $personID);
 	}
 
+	/**
+	 * Get the event for a given group and pass the message along
+	 * @param  int $groupID 	id of group
+	 * @param  int $personID   	id of person
+	 * @return object
+	 */
 	function processEventEnrollmentWithGroup($groupID, $personID) {
 
 		// Get the eventID
@@ -18,6 +91,12 @@
 		return processEventEnrollmentWithEvent($eventID, $personID);
 	}
 
+	/**
+	 * Enroll a person inside an event
+	 * @param  int $eventID 	id of event
+	 * @param  int $personID   	id of person
+	 * @return object
+	 */
 	function processEventEnrollmentWithEvent($eventID, $personID) {
 
 		$result = resourceForQuery(
@@ -114,6 +193,11 @@
 
 	}
 
+	/**
+	 * Group all activities in days
+	 * @param  object $data activities
+	 * @return object
+	 */
 	function groupActivitiesInDays($data) {
 
 		$dayTimestamp = 0;

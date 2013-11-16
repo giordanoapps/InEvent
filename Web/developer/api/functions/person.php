@@ -2,9 +2,7 @@
 
 	/**
 	 * Create a new member inside the platform
-	 * @param  string $name      name of the person
-	 * @param  string $password  password of the person
-	 * @param  string $email     email of the person
+	 * @param  array $details    information
 	 * @return integer           memberID
 	 */
 	function createMember($details) {

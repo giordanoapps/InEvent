@@ -57,7 +57,7 @@ define(["jquery", "common", "modules/cookie"], function($, common, cookie) {$(fu
 		"mouseleave": function () {
 			$(this).find(".file-uploader").hide();
 		},
-	}, ".infoContainerImage");
+	}, ".editingMode .infoContainerImage");
 
 	/**
 	  * CHECKBOX TOOL

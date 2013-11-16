@@ -22,16 +22,23 @@
 
 					<div class="menuContent">
 
-						<!-- ToolBox Create -->
-						<div class="toolBoxOptions toolBoxOptionsCreate">
+						<!-- ToolBox Create App -->
+						<div class="toolBoxOptions toolBoxOptionsCreateApp">
 							<input type="text" placeholder="Nome da aplicação \o/" class="name">
 							<input type="button" value="Criar" class="singleButton">
 						</div>
 						
 						<!-- ToolBox Enroll People -->
 						<div class="toolBoxOptions toolBoxOptionsEnrollPerson">
-							<input type="text" placeholder="Nome completo" class="name">
+							<input type="text" placeholder="Nome da pessoa" class="name">
 							<input type="text" placeholder="Email" class="email">
+							<input type="button" value="Criar" class="singleButton">
+						</div>
+
+						<!-- ToolBox Add Event -->
+						<div class="toolBoxOptions toolBoxOptionsAddEvent">
+							<input type="text" placeholder="Nome do evento" class="name">
+							<input type="text" placeholder="Apelido (hashtag) do evento" class="nickname">
 							<input type="button" value="Criar" class="singleButton">
 						</div>
 
@@ -42,8 +49,9 @@
 
 								</div>
 								<div class="toolBoxLeft editingToolBox">
-									<img src="images/32-Plus.png" alt="Adicionar" title="Adicionar uma atividade à agenda" class="toolCreate"/>
+									<img src="images/64-iPad.png" alt="Aplicação" title="Adicionar uma nova aplicação" class="toolApp"/>
 									<img src="images/64-Users.png" alt="Pessoa" title="Adicionar nova pessoa à aplicação" class="toolPerson"/>
+									<img src="images/64-Balloons.png" alt="Evento" title="Adicionar novo evento à aplicação" class="toolEvent"/>
 								</div>
 								
 								<div class="toolBoxRight">

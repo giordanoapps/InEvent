@@ -263,16 +263,17 @@
 
 	} else
 
-	if ($method === "requestEnrollment") {
+	if ($method === "addPerson") {
 
 		$appID = getTokenForApp();
 
-		if (isset($_GET['name']) && $_GET['name'] != "null" && isset($_GET['email']) && $_GET['email'] != "null") {
+		if (isset($_POST['name']) && $_POST['name'] != "null" && isset($_POST['email']) && $_POST['email'] != "null") {
 
 			if ($core->workAtApp) {
 
-				$name = getAttribute($_GET['name']);
-				$email = getAttribute($_GET['email']);
+				// Get some properties
+				$name = getAttribute($_POST['name']);
+				$email = getAttribute($_POST['email']);
 				$password = "123456";
 
 				// Get the person for the given email
@@ -317,7 +318,7 @@
 		
 	} else
 
-	if ($method === "dismissEnrollment") {
+	if ($method === "dismissPerson") {
 
 		$appID = getTokenForApp();
 
@@ -356,6 +357,61 @@
 				}
 			} else {
 				http_status_code(500, "row deletion has failed");
+			}
+		} else {
+			http_status_code(400, "personID cannot be null");
+		}
+		
+	} else
+
+	if ($method === "addEvent") {
+
+		$appID = getTokenForApp();
+
+		if (isset($_POST['name']) && $_POST['name'] != "null" && isset($_POST['nickname']) && $_POST['nickname'] != "null") {
+
+			// Get some properties
+			$name = getAttribute($_POST['name']);
+			$nickname = getAttribute($_POST['nickname']);
+
+			if ($core->workAtApp) {
+				
+				// Get the event for the given nickname
+				$eventID = getEventForNickname($nickname);
+
+				if ($eventID == 0) {
+
+					// Create event
+					$eventID = createEvent(array("name" => $name, "nickname" => $nickname));
+
+					// Attach it to our app
+					$insert = resourceForQuery(
+						"INSERT INTO
+							`appEvent`
+							(`appID`, `eventID`)
+						VALUES 
+							($appID, $eventID)
+					");
+
+					if ($insert) {
+						// Return its data
+						if ($format == "json") {
+							$data["appID"] = $appID;
+							echo json_encode($data);
+						} elseif ($format == "html") {
+							$result = getAppDetails($appID);
+							printApplication(mysqli_fetch_assoc($result), "memberID");
+						} else {
+							http_status_code(405, "this format is not available");
+						}
+					} else {
+						http_status_code(500, "app attachment failed");
+					}
+				} else {
+					http_status_code(406, "nickname is not available");
+				}
+			} else {
+				http_status_code(401, "personID cannot access app");
 			}
 		} else {
 			http_status_code(400, "personID cannot be null");
