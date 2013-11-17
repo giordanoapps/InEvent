@@ -12,7 +12,7 @@
 		// We make sure the user has provided it, otherwise we can already deny the request
 		if (isset($_GET['tokenID']) || isset($_COOKIE['tokenID'])) {
 
-			$hash = isset($_GET["tokenID"]) ? getAttribute($_GET["tokenID"]) : getAttribute($_COOKIE["tokenID"]);
+			$hash = (isset($_GET["tokenID"]) && strlen($_GET["tokenID"]) == 60) ? getAttribute($_GET["tokenID"]) : getAttribute($_COOKIE["tokenID"]);
 			$remote = $_SERVER['REMOTE_ADDR'];
 
 			$result = resourceForQuery(
@@ -54,15 +54,15 @@
 					return $hash;
 					
 				} else {
-					http_status_code(500);
+					http_status_code(500, "database could not be reset");
 				}
 
 			} else {
 				// If the tokenID hasn't been found, we just deny the request
-				http_status_code(401);
+				http_status_code(401, "tokenID does not exist");
 			}
 		} else {
-			http_status_code(401);
+			http_status_code(401, "tokenID could not be found");
 		}
 	}
 
@@ -273,7 +273,7 @@
 							`loginAttempts`.`attempts` = 0,
 							`loginAttempts`.`date` = NOW()
 						WHERE
-							`loginAttempts`.`remote` = INET_ATON('$security->remote')
+							`loginAttempts`.`remote` = INET_ATON('$remote')
 					");
 
 					$details = getMemberDetails($core->memberID);

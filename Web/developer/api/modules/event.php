@@ -1,6 +1,47 @@
 <?php
 // -------------------------------------- EVENT --------------------------------------- //
-	
+
+	if ($method === "create") {
+
+		$tokenID = getToken();
+
+		if (isset($_POST['name']) && $_POST['name'] != "null" && isset($_POST['nickname']) && $_POST['nickname'] != "null") {
+
+			// Get some properties
+			$name = getAttribute($_POST['name']);
+			$nickname = getAttribute($_POST['nickname']);
+				
+			// Get the event for the given nickname
+			$eventID = getEventForNickname($nickname);
+
+			if ($eventID == 0) {
+
+				// Create event
+				$eventID = createEvent(array("name" => $name, "nickname" => $nickname));
+
+				// Attach its creator to the event
+				$insert = processEventEnrollmentWithEvent($eventID, $core->memberID);
+
+				if ($insert) {
+					// Return its data
+					if ($format == "json") {
+						$result = getEventForMemberQuery($eventID, $core->memberID);
+						echo printInformation("event", $result, true, 'json');
+					} else {
+						http_status_code(405, "this format is not available");
+					}
+				} else {
+					http_status_code(500, "app attachment failed");
+				}
+			} else {
+				http_status_code(406, "nickname is not available");
+			}
+		} else {
+			http_status_code(400, "personID cannot be null");
+		}
+		
+	} else
+
 	if ($method === "edit") {
 
 		$eventID = getTokenForEvent();
@@ -191,8 +232,6 @@
 				if ($format == "json") {
 					$data["eventID"] = $eventID;
 					echo json_encode($data);
-				} elseif ($format == "html") {
-
 				} else {
 					http_status_code(405, "this format is not available");
 				}
@@ -258,8 +297,6 @@
 				if ($format == "json") {
 					$data["activityID"] = $activityID;
 					echo json_encode($data);
-				} elseif ($format == "html") {
-
 				} else {
 					http_status_code(405, "this format is not available");
 				}

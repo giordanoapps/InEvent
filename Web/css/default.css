@@ -1541,6 +1541,80 @@ textarea, input {
 
 /* @end */
 
+/* Balcony */
+
+#balconyContent {
+	font-size: 200%;
+}
+
+#balconyContent .boardContent {
+	border-radius: 0;
+}
+
+#balconyContent .section {
+	padding: 15px 0;
+	border-bottom: 1px solid #D1D1D1;
+	-moz-box-shadow: 0px 1px 0px #FFF;
+	-webkit-box-shadow: 0px 0px 0px #FFF;
+	box-shadow: 0px 1px 0px #FFF;
+	opacity: 0.12;
+}
+
+#balconyContent .sectionFocus {
+	opacity: 1.0;
+}
+
+#balconyContent p {
+	margin: 0 0 10px 0;
+}
+
+#balconyContent input[type="text"] {
+	font-size: 100%;
+	text-align: center;
+	width: 90%;
+	margin: 5px 0;
+	vertical-align: middle;
+	display: inline-block;
+}
+
+#balconyContent .payment input[type="text"] {
+	width: 25%;
+}
+
+#balconyContent .singleButton {
+	font-size: 70%;
+	display: block;
+	margin: 12px auto;
+	padding: 6px 10px;
+}
+
+#balconyContent .duplicatedValue {
+	color: #FFC75F;
+}
+
+#balconyContent .badValue {
+	color: #DD2727;
+}
+
+#balconyContent .information {
+	font-size: 60%;
+}
+
+#balconyContent .value {
+	padding: 15px 0;
+	width: 100%;
+	text-align: center;
+	margin: 0 auto;
+}
+
+#balconyContent .payment .singleButton {
+	display: inline-block;
+	vertical-align: middle;
+	display: none;
+}
+
+/* @end */
+
 /* Event */
 
 #eventContent {

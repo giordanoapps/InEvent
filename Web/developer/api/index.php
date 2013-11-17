@@ -40,6 +40,10 @@
 			include_once("modules/person.php");
 			break;
 
+		case "payment":
+			include_once("modules/payment.php");
+			break;
+
 		case "photo":
 			include_once("modules/photo.php");
 			break;

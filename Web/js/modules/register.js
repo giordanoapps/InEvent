@@ -34,15 +34,8 @@ define(["jquery", "modules/cookie"], function($, cookie) {$(function() {
 
 			if (jqXHR.status == 200) {
 
-				try {
-					var jsonReturn = JSON.parse(data);
-				} catch (Exception) {
-					console.log("Couldn't parse JSON");
-					return 0;
-				}
-
 				// Create our cookie
-				cookie.create("tokenID", jsonReturn.tokenID, 30);
+				cookie.create("tokenID", data.tokenID, 30);
 
 				// Remove the registration data
 				localStorage.removeItem("registrationData");
@@ -89,7 +82,7 @@ define(["jquery", "modules/cookie"], function($, cookie) {$(function() {
 				}
 			}
 
-		}, 'html').fail(function(jqXHR, textStatus, errorThrown) {
+		}, 'json').fail(function(jqXHR, textStatus, errorThrown) {
 
 			// Case the company or member is already registered
 			if (jqXHR.status == 303 || jqXHR.status == 409) {

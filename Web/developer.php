@@ -110,6 +110,7 @@
 							<li>Evento</li>
 							<li>Foto</li>
 							<li>Grupo</li>
+							<li>Pagamento</li>
 							<li>Pessoa</li>
 						</ul>
 					</div>
@@ -125,6 +126,7 @@
 							include_once("developer/documentation/event.php");
 							include_once("developer/documentation/photo.php");
 							include_once("developer/documentation/group.php");
+							include_once("developer/documentation/payment.php");
 							include_once("developer/documentation/person.php");
 						?>
 

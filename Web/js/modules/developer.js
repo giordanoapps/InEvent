@@ -2,8 +2,9 @@ var modules = [];
 modules.push('jquery');
 modules.push('common');
 modules.push('modules/storageExpiration');
+modules.push('modules/cookie');
 
-define(modules, function($, common, storageExpiration) {$(function() {
+define(modules, function($, common, storageExpiration, cookie) {$(function() {
 
 // -------------------------------------- LOADER -------------------------------------- //
 	
@@ -565,7 +566,7 @@ define(modules, function($, common, storageExpiration) {$(function() {
 			$demoDocumentation.insertAfter($(this).parents(".documentationFunctionBox")).show(200);
 
 			// Append the token if it is available
-			$demoDocumentation.find(".token").val(storageExpiration.load("devTokenID"));
+			$demoDocumentation.find(".token").val(storageExpiration.load("devTokenID") || cookie.read("tokenID"));
 
 			// Trigger a custom event
 			$demoDocumentation.find("pre").trigger("callback", [post, get]);

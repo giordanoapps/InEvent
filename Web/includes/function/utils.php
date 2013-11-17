@@ -128,6 +128,24 @@
 		}
 	}
 
+    function getEventNick($eventID) {
+
+		$result = resourceForQuery(
+			"SELECT
+				`event`.`nickname`
+			FROM
+				`event`
+			WHERE 1
+				AND `event`.`id` = $eventID
+		");
+
+		if (mysqli_num_rows($result) > 0) {
+			return html_entity_decode(mysqli_result($result, 0, "nickname"), ENT_COMPAT, "UTF-8");
+		} else {
+			return "";
+		}
+	}
+	
     function getEventForNickname($nickname) {
 
 		$result = resourceForQuery(

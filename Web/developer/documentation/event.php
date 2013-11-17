@@ -17,6 +17,21 @@
 
     <div class="documentationFunctionBox">
         <p class="documentFunctionName">
+            <span>event.create(<b>tokenID</b>, <b>name</b>, <b>nickname</b>)</span>
+            <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=event.create&tokenID=$tokenID" data-post="name=Nome&nickname=Apelido">
+        </p>
+
+        <p class="documentFunctionDescription">Cria o evento nomeado <i>name</i> e apelido <i>nickname</i>. O mesmo será marcado como não pago, o que exige a criação de um pagamento através de <u>payment.create</u>.</p>
+
+        <div class="documentationFunctionParametersBox">
+            <p><b>tokenID</b><sub>GET</sub> : id de autenticação </p>
+            <p><b>name</b><sub>GET</sub> : nome do evento </p>
+            <p><b>nickname</b><sub>GET</sub> : apelido (<i>hashtag</i>) do evento </p>
+        </div>
+    </div>
+
+    <div class="documentationFunctionBox">
+        <p class="documentFunctionName">
             <span>event.edit(<b>tokenID</b>, <b>eventID</b>, <b>name</b>, <b>value</b>)</span>
             <img src="../images/64-Chemical.png" alt="Try it out!" class="tryItOut" data-get="method=event.edit&tokenID=$tokenID&eventID=1&name=nome" data-post="value=valor">
         </p>

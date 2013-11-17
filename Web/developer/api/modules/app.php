@@ -295,7 +295,7 @@
 					`appMember`
 					(`appID`, `memberID`, `roleID`)
 				VALUES
-					($appID, $core->memberID, @(ROLE_COORDINATOR))
+					($appID, $personID, @(ROLE_COORDINATOR))
 			");
 
 			if ($insert) {
@@ -350,8 +350,6 @@
 				if ($format == "json") {
 					$data["activityID"] = $activityID;
 					echo json_encode($data);
-				} elseif ($format == "html") {
-
 				} else {
 					http_status_code(405, "this format is not available");
 				}

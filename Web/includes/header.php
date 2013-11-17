@@ -20,7 +20,7 @@ include_once("singleton/security.php");
 
 // Other functions
 include_once("function/format.php");
-include_once("function/notification.php");
+include_once("function/payment.php");
 include_once("function/security.php");
 include_once("function/utils.php");
 
