@@ -42,7 +42,7 @@ define(modules, function($, common, cookie) {$(function() {
 			$(this).find(".title").text("Olá " + name);
 
 			// Hide all the inputs
-			$(this).find("input").slideUp(400);			
+			$(this).find("input").fadeOut(400);			
 
 			// Jump to the next section
 			$(this).next().trigger("validateSection");

@@ -96,7 +96,7 @@ define(modules, function($) {$(function() {
 					minlength: jQuery.format("Insira pelo menos {0} caracteres")
 				},
 				usp: {
-					required: "Insira um número USP válido",
+					required: "Insira um número universitário válido",
 					minlength: jQuery.format("Insira {0} caracteres")
 				},
 				telephone: {

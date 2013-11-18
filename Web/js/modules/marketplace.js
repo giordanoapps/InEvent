@@ -98,8 +98,7 @@ define(modules, function($, common, cookie) {$(function() {
 				// We request the information on the server
 				$.post('developer/api/?' + $.param({
 					method: "event.dismissEnrollment",
-					eventID: eventID,
-					format: "html"
+					eventID: eventID
 				}), {},
 				function(data, textStatus, jqXHR) {
 

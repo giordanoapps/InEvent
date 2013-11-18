@@ -22,7 +22,18 @@
 				// Attach its creator to the event
 				$insert = processEventEnrollmentWithEvent($eventID, $core->memberID);
 
-				if ($insert) {
+				// Confirm its admin powers
+				$update = resourceForQuery(
+					"UPDATE
+						`eventMember`
+					SET
+						`eventMember`.`roleID` = @(ROLE_COORDINATOR)
+					WHERE 1
+						AND `eventMember`.`eventID` = $eventID
+						AND `eventMember`.`memberID` = $core->memberID
+				");
+
+				if ($update) {
 					// Return its data
 					if ($format == "json") {
 						$result = getEventForMemberQuery($eventID, $core->memberID);
@@ -230,6 +241,9 @@
 			if ($sucess) {
 				// Return its data
 				if ($format == "json") {
+					$data["eventID"] = $eventID;
+					echo json_encode($data);
+				} elseif ($format == "html") {
 					$data["eventID"] = $eventID;
 					echo json_encode($data);
 				} else {

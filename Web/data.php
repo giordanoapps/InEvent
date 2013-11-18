@@ -67,7 +67,7 @@
 								/>
 							</p>
 
-							<?php if ($core->auth) { ?>
+							<?php /* if ($core->auth) { ?>
 							<p class="halfWidth">
 								<span class="inputTitle">CPF:</span>
 								<input
@@ -121,7 +121,7 @@
 									placeholder="Número universidade"
 								/>
 							</p>
-							<?php } ?>
+							<?php } */?>
 							
 							<?php if (!$core->auth) { ?>
 							<p class="halfWidth">

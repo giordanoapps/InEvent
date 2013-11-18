@@ -1562,6 +1562,10 @@ textarea, input {
 
 #balconyContent .sectionFocus {
 	opacity: 1.0;
+	-webkit-transition: opacity 0.5s linear;
+	-moz-transition: opacity 0.5s linear;
+	-o-transition: opacity 0.5s linear;
+	transition: opacity 0.5s linear;
 }
 
 #balconyContent p {

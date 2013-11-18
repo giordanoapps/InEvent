@@ -216,8 +216,7 @@ define(modules, function($, common, cookie) {$(function() {
 		// We request the information on the server
 		$.post('developer/api/?' + $.param({
 			method: "activity.dismissEnrollment",
-			activityID: activityID,
-			format: "html"
+			activityID: activityID
 		}), {},
 		function(data, textStatus, jqXHR) {
 

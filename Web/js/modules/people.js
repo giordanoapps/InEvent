@@ -512,8 +512,7 @@ define(modules, function($, common, cookie) {$(function() {
 				$.post('developer/api/?' + $.param({
 					method: "activity.dismissEnrollment",
 					personID: personID,
-					activityID: activityID,
-					format: "html"
+					activityID: activityID
 				}), {},
 				function(data, textStatus, jqXHR) {
 
